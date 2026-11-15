@@ -9,7 +9,7 @@ http_interactions:
         is 12 * 12? Answer with just the number."}],"stream":false,"reasoning_effort":"high"}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,17 +24,19 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:31:45 GMT
+      - Sun, 15 Nov 2026 01:34:43 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
       Mistral-Correlation-Id:
-      - 01a1d6d2-d8ce-74e9-b1f8-27c426162586
+      - 01a1dcd7-a6a3-7948-8ba3-69e01e5a232d
       X-Kong-Request-Id:
-      - 01a1d6d2-d8ce-74e9-b1f8-27c426162586
+      - 01a1dcd7-a6a3-7948-8ba3-69e01e5a232d
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
@@ -48,32 +50,30 @@ http_interactions:
       X-Ratelimit-Remaining-Req-Minute:
       - '99'
       X-Envoy-Upstream-Service-Time:
-      - '501'
+      - '574'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '501'
+      - '576'
       X-Kong-Proxy-Latency:
-      - '14'
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
+      - '17'
       X-Content-Type-Options:
       - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"2766e9a15da14e3c86a712e21578c632","created":1794605504,"model":"mistral-small-latest","usage":{"prompt_tokens":31,"total_tokens":97,"completion_tokens":66,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":60},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":[{"type":"thinking","thinking":[{"type":"text","text":"The
+      string: '{"id":"40b7ee831f1c464a81404dd74bfa84c8","created":1794706482,"model":"mistral-small-latest","usage":{"prompt_tokens":31,"total_tokens":97,"completion_tokens":66,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":60},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":[{"type":"thinking","thinking":[{"type":"text","text":"The
         user is asking for the product of 12 multiplied by 12. I know that 12 times
         12 is a basic multiplication fact. Let me calculate it:\n\n12 * 12 = 144\n\nSo,
         the answer is 144."}],"closed":true},{"type":"text","text":"144"}]}}]}'
-  recorded_at: Fri, 13 Nov 2026 21:31:45 GMT
-recorded_with: VCR 6.4.1
+  recorded_at: Sun, 15 Nov 2026 01:34:43 GMT
+recorded_with: VCR 6.4.0

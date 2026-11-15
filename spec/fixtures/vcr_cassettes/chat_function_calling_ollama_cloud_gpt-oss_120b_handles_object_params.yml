@@ -13,7 +13,7 @@ http_interactions:
         window to schedule"}},"required":["window"],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -30,36 +30,33 @@ http_interactions:
       Content-Type:
       - application/json
       X-Build-Commit:
-      - be2a079e0a02b03cf1b3d1cab78f88a8b6c055b8
+      - 9259ed42dedddf2a22abf15e2a28fc3662da6272
       X-Build-Time:
-      - '2026-11-13T11:19:30-08:00'
+      - '2026-11-14T15:25:41-08:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Content-Length:
-      - '856'
+      - '671'
       Date:
-      - Fri, 13 Nov 2026 21:29:26 GMT
+      - Sun, 15 Nov 2026 01:30:24 GMT
       Server:
       - Google Frontend
       Traceparent:
-      - 00-1236b50009e5a534a12d081f4d16ebd0-26e830a4aa088ae2-00
+      - 00-c761a0c3a4412c1300f1cbc1bc0152c4-f677107ce96c21a1-00
       X-Cloud-Trace-Context:
-      - 1236b50009e5a534a12d081f4d16ebd0/2803544251823590114
+      - c761a0c3a4412c1300f1cbc1bc0152c4/17759681784237007265
       Via:
       - 1.1 google
       Alt-Svc:
       - h3=":443"; ma=2592000
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-595","object":"chat.completion","created":1794605366,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"The
-        user wants to call the object_params tool with specific window start and end
-        dates. We need to use the functions.object_params tool. The tool takes param
-        object with window: Record\u003cstring, any\u003e. So we pass window: {start:
-        \"2025-01-01\", end: \"2025-01-02\"}.\n\nWe should call it in the commentary
-        channel.","tool_calls":[{"id":"call_t76ai8bv","index":0,"type":"function","function":{"name":"object_params","arguments":"{\"window\":{\"end\":\"2025-01-02\",\"start\":\"2025-01-01\"}}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":159,"completion_tokens":128,"total_tokens":287,"prompt_tokens_details":{"cached_tokens":64}}}
+      string: '{"id":"chatcmpl-543","object":"chat.completion","created":1794706224,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"User
+        wants to call object params tool with window start and end dates. We need
+        to invoke functions.object_params with appropriate params.","tool_calls":[{"id":"call_1vxxv65l","index":0,"type":"function","function":{"name":"object_params","arguments":"{\"window\":{\"end\":\"2025-01-02\",\"start\":\"2025-01-01\"}}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":159,"completion_tokens":77,"total_tokens":236,"prompt_tokens_details":{"cached_tokens":64}}}
 
         '
-  recorded_at: Fri, 13 Nov 2026 21:29:26 GMT
-recorded_with: VCR 6.4.1
+  recorded_at: Sun, 15 Nov 2026 01:30:24 GMT
+recorded_with: VCR 6.4.0

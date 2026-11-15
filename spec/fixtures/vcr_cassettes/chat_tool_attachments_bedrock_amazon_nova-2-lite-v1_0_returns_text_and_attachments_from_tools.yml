@@ -10,11 +10,11 @@ http_interactions:
         a sample text file named ruby.txt","inputSchema":{"json":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}}]}}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261113T213446Z
+      - 20261115T013601Z
       X-Amz-Content-Sha256:
       - ad211b6145d6e1a8236ab60556c1a0213c25f35780290c3eefe9a4a97da90fb9
       Authorization:
@@ -30,7 +30,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:34:47 GMT
+      - Sun, 15 Nov 2026 01:36:02 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -38,30 +38,30 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - '0553900d-61d3-45fb-9cfa-042e02015088'
+      - 896fd2ab-6118-4cc1-a2f7-93702e6a32e0
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":466},"output":{"message":{"content":[{"toolUse":{"input":{},"name":"file_fetch","toolUseId":"tooluse_ve9gHy7fYh5iFCJzbMNX9L"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"inputTokens":935,"outputTokens":14,"serverToolUsage":{},"totalTokens":949}}'
-  recorded_at: Fri, 13 Nov 2026 21:34:47 GMT
+      string: '{"metrics":{"latencyMs":640},"output":{"message":{"content":[{"toolUse":{"input":{},"name":"file_fetch","toolUseId":"tooluse_PGZnSnwoiWl5Os7jmAbWwW"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"inputTokens":935,"outputTokens":14,"serverToolUsage":{},"totalTokens":949}}'
+  recorded_at: Sun, 15 Nov 2026 01:36:02 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.amazon.nova-2-lite-v1:0/converse
     body:
       encoding: UTF-8
       string: '{"messages":[{"role":"user","content":[{"text":"Call file_fetch to
-        get ruby.txt, then repeat the contents of the attached file."}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_ve9gHy7fYh5iFCJzbMNX9L","name":"file_fetch","input":{}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_ve9gHy7fYh5iFCJzbMNX9L","content":[{"text":"Fetched
+        get ruby.txt, then repeat the contents of the attached file."}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_PGZnSnwoiWl5Os7jmAbWwW","name":"file_fetch","input":{}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_PGZnSnwoiWl5Os7jmAbWwW","content":[{"text":"Fetched
         the file."},{"text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
         is the best.</file>"}]}}]}],"inferenceConfig":{"maxTokens":65535},"toolConfig":{"tools":[{"toolSpec":{"name":"file_fetch","description":"Fetches
         a sample text file named ruby.txt","inputSchema":{"json":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}}]}}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261113T213447Z
+      - 20261115T013602Z
       X-Amz-Content-Sha256:
-      - 8137644c24dd9e4803ec6792f1bae5f8de3f70ce019a383029afeb321d63ed4f
+      - db33ebd56487081cab6fa18a3dc90c3fc4578ee906842cf896057efac205ee7d
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
@@ -75,18 +75,18 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:34:48 GMT
+      - Sun, 15 Nov 2026 01:36:03 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '261'
+      - '259'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 0b5a178e-59e0-4986-b860-19ce92e41573
+      - a529b75e-6f08-4c4e-82d9-0464935d90ca
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":393},"output":{"message":{"content":[{"text":"The
-        contents of `ruby.txt` are:\n\n**Ruby is the best.**"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":997,"outputTokens":18,"serverToolUsage":{},"totalTokens":1015}}'
-  recorded_at: Fri, 13 Nov 2026 21:34:48 GMT
-recorded_with: VCR 6.4.1
+      string: '{"metrics":{"latencyMs":527},"output":{"message":{"content":[{"text":"The
+        contents of ruby.txt are:\n\n**Ruby is the best.**"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":997,"outputTokens":16,"serverToolUsage":{},"totalTokens":1013}}'
+  recorded_at: Sun, 15 Nov 2026 01:36:03 GMT
+recorded_with: VCR 6.4.0

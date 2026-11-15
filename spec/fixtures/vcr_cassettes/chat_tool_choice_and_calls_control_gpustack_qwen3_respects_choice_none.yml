@@ -12,7 +12,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}],"tool_choice":"none"}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -26,22 +26,22 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Resp-Start-Time:
+      - '1794706878610'
+      X-Envoy-Upstream-Service-Time:
+      - '1342'
       Date:
-      - Fri, 13 Nov 2026 21:39:18 GMT
+      - Sun, 15 Nov 2026 01:41:16 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
       - ''
+      Req-Arrive-Time:
+      - '1794706877264'
       Content-Type:
       - application/json; charset=utf-8
-      Req-Arrive-Time:
-      - '1794605958643'
-      Resp-Start-Time:
-      - '1794605959953'
-      X-Envoy-Upstream-Service-Time:
-      - '1306'
       Req-Cost-Time:
-      - '1310'
+      - '1346'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
@@ -53,10 +53,10 @@ http_interactions:
         the user is asking for the weather in Berlin, and they provided the coordinates
         52.5200 latitude and 13.4050 longitude. I need to use the weather function
         to get the current weather for that location. Let me check the function parameters.
-        The function requires latitude and longitude as strings. The user has given
-        both values, so I should format them into the tool call. I''ll make sure to
-        include them correctly in the JSON object under the arguments. No other parameters
-        are needed since the function doesn''t have any other required properties.
-        Alright, I''ll structure the tool call with the provided coordinates.\n"}}],"created":1794605959,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":172,"prompt_tokens":231,"total_tokens":403,"prompt_tokens_details":{"cached_tokens":230}},"id":"chatcmpl-69XNbtvy0IKdxAvnLHDMDkZ8mWkaXZ23","timings":{"cache_n":230,"prompt_n":1,"prompt_ms":8.714,"prompt_per_token_ms":8.714,"prompt_per_second":114.75786091347257,"predicted_n":172,"predicted_ms":1252.397,"predicted_per_token_ms":7.323959064327485,"predicted_per_second":136.53817439677675}}'
-  recorded_at: Fri, 13 Nov 2026 21:39:19 GMT
-recorded_with: VCR 6.4.1
+        The function requires latitude and longitude as strings. The user has already
+        given those values, so I should format them into the tool call correctly.
+        I''ll make sure to include both parameters in the JSON object under the arguments.
+        No other properties are needed since the function doesn''t require anything
+        else. Alright, that''s all I need to do here.\n"}}],"created":1794706878,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":170,"prompt_tokens":231,"total_tokens":401,"prompt_tokens_details":{"cached_tokens":230}},"id":"chatcmpl-Qw3Xy94z1SbxeDkwKCaEZsQ4ghbkC0fj","timings":{"cache_n":230,"prompt_n":1,"prompt_ms":8.822,"prompt_per_token_ms":8.822,"prompt_per_second":113.35298118340513,"predicted_n":170,"predicted_ms":1253.73,"predicted_per_token_ms":7.4185207100591715,"predicted_per_second":134.7977634737942}}'
+  recorded_at: Sun, 15 Nov 2026 01:41:18 GMT
+recorded_with: VCR 6.4.0

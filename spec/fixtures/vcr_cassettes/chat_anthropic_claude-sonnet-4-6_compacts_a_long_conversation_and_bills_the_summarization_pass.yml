@@ -5411,7 +5411,7 @@ http_interactions:
       Anthropic-Beta:
       - compact-2026-01-12
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -5428,7 +5428,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:21:49 GMT
+      - Sun, 15 Nov 2026 01:21:13 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -5440,31 +5440,31 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '9961000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-11-13T21:21:49Z'
+      - '2026-11-15T01:21:13Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-11-13T21:21:49Z'
+      - '2026-11-15T01:21:13Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-11-13T21:21:45Z'
+      - '2026-11-15T01:21:08Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '11961000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-11-13T21:21:49Z'
+      - '2026-11-15T01:21:13Z'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Request-Id:
       - "<REQUEST_ID>"
       Traceresponse:
-      - 00-f5e04a2c16a70c33414bb2e295593132-955c5a81b506fa07-01
+      - 00-53a0dc4bea18cdbd579c315b08bce360-f6ca5bfa588ccffe-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
@@ -5476,7 +5476,7 @@ http_interactions:
       Server:
       - cloudflare
       Server-Timing:
-      - x-originResponse;dur=4571
+      - x-originResponse;dur=5492
       Cf-Cache-Status:
       - DYNAMIC
       X-Robots-Tag:
@@ -5485,11 +5485,15 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-sonnet-4-6","id":"msg_011Ch1dQXesZmnanEUUv1D44","type":"message","role":"assistant","content":[{"type":"compaction","content":"The
-        user asked me to identify which animal jumps in their notes, which consisted
-        entirely of the repeated sentence \"The quick brown fox jumps over the lazy
-        dog.\" I correctly answered \"The fox jumps.\" The task is complete - no further
-        action needed."},{"type":"text","text":"Based on your notes, **the fox** jumps
-        (over the lazy dog)."}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":153,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"iterations":[{"input_tokens":99195,"output_tokens":69,"cache_read_input_tokens":0,"cache_creation_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"type":"compaction"},{"input_tokens":153,"output_tokens":20,"cache_read_input_tokens":0,"cache_creation_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"type":"message"}],"output_tokens":20,"service_tier":"standard","inference_geo":"<GOOGLE_CLOUD_LOCATION>","speed":"standard"},"diagnostics":null,"context_management":{"applied_edits":[]}}'
-  recorded_at: Fri, 13 Nov 2026 21:21:49 GMT
-recorded_with: VCR 6.4.1
+      string: '{"model":"claude-sonnet-4-6","id":"msg_011Ch3qUDErtWTT8nene1v4p","type":"message","role":"assistant","content":[{"type":"compaction","content":"The
+        user shared notes consisting entirely of the repeated sentence \"The quick
+        brown fox jumps over the lazy dog.\" They then asked which animal jumps in
+        the notes. The answer is the fox. The user also asked for a summary of the
+        transcript for continuity purposes. The task is complete - the answer to the
+        question \"which animal jumps?\" is \"the fox.\" No further steps are needed."},{"type":"text","text":"Based
+        on our conversation, you asked about notes containing the repeated sentence
+        \"The quick brown fox jumps over the lazy dog,\" and you wanted to know which
+        animal jumps.\n\n**The answer is the fox.**\n\nIs there anything else you''d
+        like to know?"}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":182,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"iterations":[{"input_tokens":99195,"output_tokens":98,"cache_read_input_tokens":0,"cache_creation_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"type":"compaction"},{"input_tokens":182,"output_tokens":57,"cache_read_input_tokens":0,"cache_creation_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"type":"message"}],"output_tokens":57,"service_tier":"standard","inference_geo":"<GOOGLE_CLOUD_LOCATION>","speed":"standard"},"diagnostics":null,"context_management":{"applied_edits":[]}}'
+  recorded_at: Sun, 15 Nov 2026 01:21:13 GMT
+recorded_with: VCR 6.4.0

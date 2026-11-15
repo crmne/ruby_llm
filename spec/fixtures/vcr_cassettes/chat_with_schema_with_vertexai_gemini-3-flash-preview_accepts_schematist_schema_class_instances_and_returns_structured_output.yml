@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -22,12 +22,12 @@ http_interactions:
     headers:
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
-      Date:
-      - Fri, 13 Nov 2026 21:23:28 GMT
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
       Pragma:
       - no-cache
+      Date:
+      - Sun, 15 Nov 2026 01:21:50 GMT
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/cloud-platform openid",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Fri, 13 Nov 2026 21:23:28 GMT
+  recorded_at: Sun, 15 Nov 2026 01:21:50 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-3-flash-preview:generateContent
@@ -66,7 +66,7 @@ http_interactions:
         Alice who is 28 years old"}]}],"generationConfig":{"responseMimeType":"application/json","responseJsonSchema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"number"}},"required":["name","age"],"additionalProperties":false}}}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -81,7 +81,7 @@ http_interactions:
       message: OK
     headers:
       X-Goog-Request-Id:
-      - 0H_3aoHLKIqOu_EP0frq8Ag
+      - Lgn5arzNKOXDtfAP3OziyA0
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -89,7 +89,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Fri, 13 Nov 2026 21:23:31 GMT
+      - Sun, 15 Nov 2026 01:21:52 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -113,7 +113,7 @@ http_interactions:
                 "parts": [
                   {
                     "text": "{\"name\":\"Alice\",\"age\":28}",
-                    "thoughtSignature": "AY89a1824NGVc/iZgoM4ePQiWsHs0vXj1VMxT8FfbmkdVUTQhs+jG+1/X9l6owsoPbq0YH4WE19Pz5lLBjpJkhDTwVW1laQ5nhQxpdzpWpU/7QtNXtzrUPpkqi4onv0idRXL6r/X0vz7e70LfAijlfYQ9s+xHc+FvxSXv+rGRWn1U2q2GTZ2yDlf8cVvxA0CUnRFLoNXBcC3TwJzghqMgiWmYEVUC8scuKIkUBD3ROGOnWQhl/QeIxWW3LgSFRWY5RP4uqJ6Z5+5R764AGNt2zr86NjUjCILvRWbtDoKnblDQmrIqXKl56SIytX3ybxImOf+zQytw06trfuyGwaFmMujjDJhPhojLCYOBDp0Bw4ggxvlbKFF7NWqws98vwnhH+CGdJqiB/IN7NBRIv3BsBhH4wcab1YrIJVQ7BAdIjvTWnUE1QPZmY9zO0fvxgP08+p4ZGUIjUPPTt0nNEb57wmZ8gpi2Iyr5gvRUZPZW3JYMHjyCN9ee+mc/1MTkW9DPA9D0uX3w0az8jqrcYyPJuVn7qZt1ppZZbNihdDuQpEIZoLGF8QSeuhb8vLdRM/kj67+qal09hTE2p17F3v3mXxOwyxYP96gU0ECnrnMX66s5V+YwtAJ8P7mNDF+gAkF7ZZMN3whmpBQy0zKlV//cZwrMTJ0HXjKEiL4Qi0cf0o/Lr7EVAiyaMh3cG54x6bPzUw/zSP8HhGOo/OKK/047EAMVRM0OLuxxjhm8mWjGrBViecR04kq359yB9bSQf+bFFTG24QImj91MWgA4HlGI8jbc+7jLZOD/g+y99N/rEk8j2Oen8WY0jGMxsWQusramoB/IedBvRrClQkFmpfn0qPoM+d5r7E1AO1a71Dkrs2JPE49wJUI1W6t4e4JwnWFyNMDxpQUQZDK7z9q/nilut2Me/JNyry3efStFc94Hc7Gzw0NhgdAmVdMIXVKvBu2H+84CG78AXB3oJSPQzoi4f7UuXySHDEs/Ysz0eH6P/3zrPXCbbAJeLm86AzgvVcKruLBjLA9aBWZjxPetO7FPcxsuofCcYA8wW2sghZUVmILxmg1dr4rDyQOjC1QpWDhl0kHyj8XzYQ6vTXtsCAWzMD6mdkU29KqtSriAz6lTZs4BpG2BuXPnAoKv7lDvk3ylCSf/h8Ai7t/S1JUVvf1KMNmo4mGHXLD7mWPXFXU0BDs3NNydJbWQYY="
+                    "thoughtSignature": "AY89a1/vDtCi9tCWlwjykPCwZ2zJBUJ3nAjIflQK4A/6/8vpz+5IqKi0ZyTBGeMmhXhI0XHqVtHz4v6MOrowpDaXL8KQDUoIVtwteZwRjYptopJCpNQ0XoSe3dVpvJSliLn6NlifoCym51YHBI8tyBIeI7Sr3J5pEWPNCoojMnc1yx8mLkxo2JsNV8Zc5WxN8KPmf4qXLnprcd+Ttf3R+vTvumZdcleDEygeEY2WYWsGNwoLmPX3xJzM4N0Gsuaer6/CuJ1f4bxVfJUkpW+bUSnjEOQZ0uxFzs9+XUTjaIZ6KLv7Ine/UX35lBNhdr/zX7bXWVaXOKuBBVvCj6IVh7bAyZtDiArDCbxz9TwPMLuheMtR8L9Gaxd5SQ4REhjIPzPC4K/VZTiQz0y7bJsUzZsjyDRDneQx16f5Vd/A7twNkLh28yPyCNtC4JMgHWbhIGJ1dKBl2a2ubrOn7FkAiOqQoyVN4AttmZw1hlZOtmwTprMlOXi9AXvSoT9jQVm2pwEelGH6NhjGgWd4Jv9X7g7x8NFlwmPIZnptlogIspwCUWRs7//TTYqdZFUN/UAKw9k5PeZYbZd+zILlFOr2Sk3RsN8mb9Om50hoo5X+9G8RhaUX4ererT5S+ptTNQVwoH8tuQTVFVxTSRtyPGJdmXUKFn7j+njdOGKODbSXH0b+vodfQl8RYFr00+W+SJXcm7eNvNPUN5eVSUjrVFg0Yjur8YCvpIzP6XlOCuO3MjEQDSjOTIA/O/m3GrqI7hJzK4pwNpaQFSvGcThU/tpYn2zp8xkc8kIimnjUHBah3e79fweQ5COmF6ZNC+nEh71GbqmnXgZbW6dXslfmt9AGITlS72MsiUBahs0/39TggG3ulr7One7ymLVm3SIlU7JW22kXT5qvA9v6LXlPbuQtlvMJgAVEhOjL4B+Urf/3OTGVXyz9YhAlUHudVoJZoJxauAORkyJJO7l+k1seP15pHvbAfHzMl46jqz1qHupAwFrBLoRgcayoNTDm/bkfyXdg5QHzeRTx1i3BnL0k+d1rFuiX4PXyWv7iphfqr1FUEybppJqTCt4ekvTPF+oSt6xtEcmrfRu/avInWs/N/SqX1SxvsOOSEQ9ZpsHwv6FbowBN3QggspNgaTnhGKG1JxdnSnbYVGr+qHWcBDhSVMRNGIiVrVr3vRAvHMxHR7vKrg2gYt1uu9MTT+DtESd/C92XPZbb0AgoiCWTg1g5qz1PuGJtpPTwjwXghuHgeLCkIvD4dmqvxAs1IlmUF+u/fb0wj0D2qqFGYU1UJrpKe46zHlr6pRjZ+tIjBZ23uvc1T529v0+aCcZQalr/95kWQsEG+n6UoKg1lYHkgayPqtj4Sz7BmFQp39FaOajbvy/RSGr9aU+2/n4IuvXyVg9zgonoiEvWele983gUK84/isDmRMs6rfvvAfE58Su5Bal/XsU9"
                   }
                 ]
               },
@@ -123,7 +123,7 @@ http_interactions:
           "usageMetadata": {
             "promptTokenCount": 77,
             "candidatesTokenCount": 10,
-            "totalTokenCount": 341,
+            "totalTokenCount": 396,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -137,11 +137,11 @@ http_interactions:
                 "tokenCount": 10
               }
             ],
-            "thoughtsTokenCount": 254
+            "thoughtsTokenCount": 309
           },
           "modelVersion": "gemini-3-flash-preview",
-          "createTime": "2026-11-13T21:23:28.664961Z",
-          "responseId": "0H_3aoHLKIqOu_EP0frq8Ag"
+          "createTime": "2026-11-15T01:21:50.665276Z",
+          "responseId": "Lgn5arzNKOXDtfAP3OziyA0"
         }
-  recorded_at: Fri, 13 Nov 2026 21:23:31 GMT
-recorded_with: VCR 6.4.1
+  recorded_at: Sun, 15 Nov 2026 01:21:52 GMT
+recorded_with: VCR 6.4.0

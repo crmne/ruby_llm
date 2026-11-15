@@ -12,7 +12,7 @@ http_interactions:
         description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:28:36 GMT
+      - Sun, 15 Nov 2026 01:29:12 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -37,7 +37,7 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       X-Internal-Adhoc-Canary:
-      - '2666295442'
+      - '1897954185'
       Msh-Gid:
       - "<MOONSHOT_GROUP_ID>"
       Msh-Org-Id:
@@ -45,7 +45,7 @@ http_interactions:
       Msh-Project-Id:
       - "<MOONSHOT_PROJECT_ID>"
       Msh-Request-Id:
-      - 2da1816a-dfa9-11f1-bec7-00163e5443c0
+      - f0f54e50-e093-11f1-89f0-00163e05d0f4
       Msh-Trace-Mode:
       - 'on'
       Msh-Uid:
@@ -57,7 +57,7 @@ http_interactions:
       Vary:
       - Origin
       X-Msh-Trace-Id:
-      - a83716ec745152a72cdeb92d11433ad0
+      - 00de007a19633f7a68b230d28503a55d
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Cf-Cache-Status:
@@ -68,10 +68,9 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"chatcmpl-1b2cd2c2-e314-9c9e-a16e-fa0f8a718d2d","object":"chat.completion","created":1794605313,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
-        call the tool with the specified parameters.","tool_calls":[{"index":0,"id":"any_of_params_0_a4df9054","type":"function","function":{"name":"any_of_params","arguments":"{\"status\":\"pending\",\"task\":\"Review
-        PR\"}"}}],"reasoning_content":"The user wants me to call the any_of_params
-        tool with task \"Review PR\" and status \"pending\". Let me make that call
-        and report the result."},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":223,"completion_tokens":110,"total_tokens":333,"completion_tokens_details":{"reasoning_tokens":32},"prompt_tokens_details":{"cache_write_tokens":0}}}'
-  recorded_at: Fri, 13 Nov 2026 21:28:36 GMT
-recorded_with: VCR 6.4.1
+      string: '{"id":"chatcmpl-6af90ae09abcb66cdd1e77ed","object":"chat.completion","created":1794706144,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"index":0,"id":"any_of_params_0_700b26ee","type":"function","function":{"name":"any_of_params","arguments":"{\"task\":
+        \"Review PR\", \"status\": \"pending\"}"}}],"reasoning_content":"The user
+        wants me to call the any_of_params tool with task \"Review PR\" and status
+        \"pending\". Let me make that call."},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":223,"completion_tokens":94,"total_tokens":317,"completion_tokens_details":{"reasoning_tokens":28},"prompt_tokens_details":{"cache_write_tokens":0}}}'
+  recorded_at: Sun, 15 Nov 2026 01:29:12 GMT
+recorded_with: VCR 6.4.0

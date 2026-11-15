@@ -10,7 +10,7 @@ http_interactions:
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:25:08 GMT
+      - Sun, 15 Nov 2026 01:23:51 GMT
       X-Llm-D-Flow-Queue-Duration-Ms:
       - '0'
       Vary:
@@ -36,22 +36,24 @@ http_interactions:
       - chunked
     body:
       encoding: UTF-8
-      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":322,"completion_tokens":37,"total_tokens":359,"completion_tokens_details":{"reasoning_tokens":18},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"tool_calls":[{"id":"chatcmpl-tool-931be40e3622cce9","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"The
-        user wants to use the best_language_to_learn tool. Let''s call it.\n"},"index":0,"logprobs":null,"finish_reason":"tool_calls","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-ed028137-151b-4a40-95a5-0958a8a56eed","object":"chat.completion","created":1794605109,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
-  recorded_at: Fri, 13 Nov 2026 21:25:09 GMT
+      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":322,"completion_tokens":40,"total_tokens":362,"completion_tokens_details":{"reasoning_tokens":21},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"tool_calls":[{"id":"chatcmpl-tool-ac16d4e2d5c88d39","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"The
+        user is asking me to use the best_language_to_learn tool. Let''s try calling
+        it.\n"},"index":0,"logprobs":null,"finish_reason":"tool_calls","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-87c43773-69f7-4404-8f6f-6f55fd20d3ca","object":"chat.completion","created":1794705832,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
+  recorded_at: Sun, 15 Nov 2026 01:23:56 GMT
 - request:
     method: post
     uri: https://inference.hetzner.com/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"Qwen3.8-27B","messages":[{"role":"user","content":"Use the
-        best_language_to_learn tool to tell me which language to learn."},{"role":"assistant","content":"","tool_calls":[{"id":"chatcmpl-tool-931be40e3622cce9","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"The
-        user wants to use the best_language_to_learn tool. Let''s call it.\n","reasoning_content":"The
-        user wants to use the best_language_to_learn tool. Let''s call it.\n"},{"role":"tool","content":"Ruby","tool_call_id":"chatcmpl-tool-931be40e3622cce9"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        best_language_to_learn tool to tell me which language to learn."},{"role":"assistant","content":"","tool_calls":[{"id":"chatcmpl-tool-ac16d4e2d5c88d39","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"The
+        user is asking me to use the best_language_to_learn tool. Let''s try calling
+        it.\n","reasoning_content":"The user is asking me to use the best_language_to_learn
+        tool. Let''s try calling it.\n"},{"role":"tool","content":"Ruby","tool_call_id":"chatcmpl-tool-ac16d4e2d5c88d39"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -66,7 +68,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:25:09 GMT
+      - Sun, 15 Nov 2026 01:23:55 GMT
       X-Llm-D-Flow-Queue-Duration-Ms:
       - '0'
       Vary:
@@ -78,6 +80,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJtb2RlbCI6IlF3ZW4vUXdlbjMuOC0yN0IiLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjozNzUsImNvbXBsZXRpb25fdG9rZW5zIjo4MSwidG90YWxfdG9rZW5zIjo0NTYsImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MTV9LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MCwiY3JlYXRlZF9jYWNoZV90b2tlbnMiOjAsIm11bHRpbW9kYWxfdG9rZW5zIjpudWxsfX0sImNob2ljZXMiOlt7Im1lc3NhZ2UiOnsiY29udGVudCI6IlxuXG5BY2NvcmRpbmcgdG8gdGhlIHRvb2wsIHRoZSBiZXN0IGxhbmd1YWdlIGZvciB5b3UgdG8gbGVhcm4gaXMgKipSdWJ5KiohIPCfjolcblxuUnVieSBpcyBrbm93biBmb3IgaXRzIGVsZWdhbnQsIHJlYWRhYmxlIHN5bnRheCBhbmQgZGV2ZWxvcGVyIGhhcHBpbmVzcyDigJQgaXQncyB0aGUgbGFuZ3VhZ2UgdGhhdCBwb3dlcnMgUnVieSBvbiBSYWlscywgb25lIG9mIHRoZSBtb3N0IHBvcHVsYXIgd2ViIGZyYW1ld29ya3MgaW4gdGhlIHdvcmxkLiBHcmVhdCBjaG9pY2UgaWYgeW91J3JlIGludG8gd2ViIGRldmVsb3BtZW50ISIsInJvbGUiOiJhc3Npc3RhbnQiLCJyZWZ1c2FsIjpudWxsLCJhbm5vdGF0aW9ucyI6bnVsbCwiYXVkaW8iOm51bGwsImZ1bmN0aW9uX2NhbGwiOm51bGwsInJlYXNvbmluZyI6IlRoZSB0b29sIHJldHVybmVkIFwiUnVieVwiLiBJIHNob3VsZCBjb252ZXkgdGhpcyB0byB0aGUgdXNlci5cbiJ9LCJpbmRleCI6MCwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIiwic3RvcF9yZWFzb24iOm51bGwsInRva2VuX2lkcyI6bnVsbCwicm91dGVkX2V4cGVydHMiOm51bGx9XSwiaWQiOiJjaGF0Y21wbC04ZTgwYmNmNi01ZTI0LTQ4ZTAtOGNkMi0zYWE5NzZjYjRlOTIiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjcmVhdGVkIjoxNzk0NjA1MTA5LCJzeXN0ZW1fZmluZ2VycHJpbnQiOm51bGwsInByb21wdF9sb2dwcm9icyI6bnVsbCwicHJvbXB0X3Rva2VuX2lkcyI6bnVsbCwicHJvbXB0X3RleHQiOm51bGwsImt2X3RyYW5zZmVyX3BhcmFtcyI6bnVsbCwiZWNfdHJhbnNmZXJfcGFyYW1zIjpudWxsLCJtZXRyaWNzIjpudWxsfQ==
-  recorded_at: Fri, 13 Nov 2026 21:25:11 GMT
-recorded_with: VCR 6.4.1
+        eyJtb2RlbCI6IlF3ZW4vUXdlbjMuOC0yN0IiLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjozNzgsImNvbXBsZXRpb25fdG9rZW5zIjo0MiwidG90YWxfdG9rZW5zIjo0MjAsImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MjF9LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MCwiY3JlYXRlZF9jYWNoZV90b2tlbnMiOjAsIm11bHRpbW9kYWxfdG9rZW5zIjpudWxsfX0sImNob2ljZXMiOlt7Im1lc3NhZ2UiOnsiY29udGVudCI6IlxuXG5BY2NvcmRpbmcgdG8gdGhlIHRvb2wsIHRoZSBiZXN0IGxhbmd1YWdlIGZvciB5b3UgdG8gbGVhcm4gaXMgKipSdWJ5Kiog8J+SjiIsInJvbGUiOiJhc3Npc3RhbnQiLCJyZWZ1c2FsIjpudWxsLCJhbm5vdGF0aW9ucyI6bnVsbCwiYXVkaW8iOm51bGwsImZ1bmN0aW9uX2NhbGwiOm51bGwsInJlYXNvbmluZyI6IlRoZSB0b29sIHJldHVybmVkIFwiUnVieVwiLiBJIHNob3VsZCB0ZWxsIHRoZSB1c2VyIHRoYXQgUnVieSBpcyB0aGUgYmVzdCBsYW5ndWFnZSB0byBsZWFybi5cbiJ9LCJpbmRleCI6MCwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIiwic3RvcF9yZWFzb24iOm51bGwsInRva2VuX2lkcyI6bnVsbCwicm91dGVkX2V4cGVydHMiOm51bGx9XSwiaWQiOiJjaGF0Y21wbC02NGM3MThmMi02YWU2LTRiMzktODcyMC04ZDQ1MTgwZDRiYjgiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjcmVhdGVkIjoxNzk0NzA1ODM2LCJzeXN0ZW1fZmluZ2VycHJpbnQiOm51bGwsInByb21wdF9sb2dwcm9icyI6bnVsbCwicHJvbXB0X3Rva2VuX2lkcyI6bnVsbCwicHJvbXB0X3RleHQiOm51bGwsImt2X3RyYW5zZmVyX3BhcmFtcyI6bnVsbCwiZWNfdHJhbnNmZXJfcGFyYW1zIjpudWxsLCJtZXRyaWNzIjpudWxsfQ==
+  recorded_at: Sun, 15 Nov 2026 01:23:57 GMT
+recorded_with: VCR 6.4.0

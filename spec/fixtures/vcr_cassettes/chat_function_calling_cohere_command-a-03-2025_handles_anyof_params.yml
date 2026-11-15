@@ -12,7 +12,7 @@ http_interactions:
         description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -37,7 +37,7 @@ http_interactions:
       Num-Chars:
       - '7019'
       Num-Tokens:
-      - '131'
+      - '132'
       Pragma:
       - no-cache
       Vary:
@@ -45,24 +45,24 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 889b65f5341309bb3e9f12a23701e2ec
+      - 7d8236a1b4eb31ac14e4fe157466bda8
       Date:
-      - Fri, 13 Nov 2026 21:23:45 GMT
+      - Sun, 15 Nov 2026 01:22:30 GMT
       X-Envoy-Upstream-Service-Time:
-      - '729'
+      - '955'
       Server:
       - envoy
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      - h3=":443"; ma=2592000
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"19ca7c1a-e85f-4894-a340-87e92359d78d","message":{"role":"assistant","tool_plan":"I
-        will call the any-of params tool for task \"Review PR\" with status \"pending\"
-        and report the result.","tool_calls":[{"id":"any_of_params_edkxj9mahyx4","type":"function","function":{"name":"any_of_params","arguments":"{\"task\":\"Review
-        PR\",\"status\":\"pending\"}"}}]},"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":91,"output_tokens":40},"tokens":{"input_tokens":1508,"output_tokens":72},"cached_tokens":1008}}'
-  recorded_at: Fri, 13 Nov 2026 21:23:45 GMT
-recorded_with: VCR 6.4.1
+      string: '{"id":"92b4e345-200b-460f-813f-8d81fa15089d","message":{"role":"assistant","tool_plan":"I
+        will use the any_of_params tool to find the result for the task \"Review PR\"
+        with status \"pending\".","tool_calls":[{"id":"any_of_params_yvvr7hxjaq3x","type":"function","function":{"name":"any_of_params","arguments":"{\"task\":\"Review
+        PR\",\"status\":\"pending\"}"}}]},"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":91,"output_tokens":41},"tokens":{"input_tokens":1508,"output_tokens":73},"cached_tokens":1008}}'
+  recorded_at: Sun, 15 Nov 2026 01:22:30 GMT
+recorded_with: VCR 6.4.0

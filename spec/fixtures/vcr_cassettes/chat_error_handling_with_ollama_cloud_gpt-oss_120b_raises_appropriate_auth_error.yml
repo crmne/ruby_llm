@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"gpt-oss:120b","messages":[{"role":"user","content":"Hello"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -27,9 +27,9 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       X-Build-Commit:
-      - be2a079e0a02b03cf1b3d1cab78f88a8b6c055b8
+      - 9259ed42dedddf2a22abf15e2a28fc3662da6272
       X-Build-Time:
-      - '2026-11-13T11:19:30-08:00'
+      - '2026-11-14T15:25:41-08:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
@@ -37,13 +37,13 @@ http_interactions:
       Content-Length:
       - '81'
       Date:
-      - Fri, 13 Nov 2026 21:21:44 GMT
+      - Sun, 15 Nov 2026 01:19:46 GMT
       Server:
       - Google Frontend
-      X-Cloud-Trace-Context:
-      - 2ca67821ccebd1d44d0e4733aa5eae42/165481443514435955
       Traceparent:
-      - 00-2ca67821ccebd1d44d0e4733aa5eae42-024be87f0198c973-00
+      - 00-938834ce3e4e21e47c458948859d78d4-23a24f85842b1d25-00
+      X-Cloud-Trace-Context:
+      - 938834ce3e4e21e47c458948859d78d4/2567702172421266725
       Via:
       - 1.1 google
       Alt-Svc:
@@ -53,5 +53,5 @@ http_interactions:
       string: '{"error":{"message":"Unauthorized","type":"api_error","param":null,"code":null}}
 
         '
-  recorded_at: Fri, 13 Nov 2026 21:21:45 GMT
-recorded_with: VCR 6.4.1
+  recorded_at: Sun, 15 Nov 2026 01:19:46 GMT
+recorded_with: VCR 6.4.0

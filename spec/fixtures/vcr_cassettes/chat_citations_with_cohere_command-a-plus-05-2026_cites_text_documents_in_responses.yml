@@ -13,7 +13,7 @@ http_interactions:
         with large language models.\n"}}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -38,7 +38,7 @@ http_interactions:
       Num-Chars:
       - '2465'
       Num-Tokens:
-      - '133'
+      - '140'
       Pragma:
       - no-cache
       Vary:
@@ -46,11 +46,11 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 905f90e2b40325de104a60c3b011c6cf
+      - 413ecc6d3891c6114dcde3944a639874
       Date:
-      - Fri, 13 Nov 2026 21:22:21 GMT
+      - Sun, 15 Nov 2026 01:20:33 GMT
       X-Envoy-Upstream-Service-Time:
-      - '998'
+      - '552'
       Server:
       - envoy
       Via:
@@ -61,25 +61,25 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"d6cb519c-e84a-4cfe-a943-85523377a7f0","message":{"role":"assistant","content":[{"type":"thinking","thinking":"I
-        found the answer to the user''s question. The document clearly states that
-        Ruby was created by Yukihiro Matsumoto in 1993."},{"type":"text","text":"Based
-        on the document, Ruby was created by **Yukihiro Matsumoto** in **1993**. The
-        document states that \"The Ruby programming language was created by Yukihiro
-        Matsumoto in 1993.\""}],"citations":[{"start":45,"end":63,"text":"Yukihiro
-        Matsumoto","sources":[{"type":"document","id":"doc:0","document":{"id":"doc:0","text":"The
+      string: '{"id":"ac3674ef-f009-401f-a020-d18b53050748","message":{"role":"assistant","content":[{"type":"thinking","thinking":"The
+        document clearly states that Ruby was created by Yukihiro Matsumoto in 1993.
+        This directly answers the user''s question. I can provide this information
+        directly from the document."},{"type":"text","text":"Based on the document
+        provided, Ruby was created by Yukihiro Matsumoto in 1993. The document specifically
+        states: \"The Ruby programming language was created by Yukihiro Matsumoto
+        in 1993.\""}],"citations":[{"start":52,"end":70,"text":"Yukihiro Matsumoto","sources":[{"type":"document","id":"doc:0","document":{"id":"doc:0","text":"The
         Ruby programming language was created by Yukihiro Matsumoto in 1993. Ruby
         was designed to make programmers happy and productive. Ruby on Rails is a
         popular web framework built with Ruby. RubyLLM is a Ruby library for working
-        with large language models.\n","title":"facts.txt"}}],"type":"TEXT_CONTENT","content_index":1},{"start":71,"end":75,"text":"1993","sources":[{"type":"document","id":"doc:0","document":{"id":"doc:0","text":"The
+        with large language models.\n","title":"facts.txt"}}],"type":"TEXT_CONTENT","content_index":1},{"start":74,"end":79,"text":"1993.","sources":[{"type":"document","id":"doc:0","document":{"id":"doc:0","text":"The
         Ruby programming language was created by Yukihiro Matsumoto in 1993. Ruby
         was designed to make programmers happy and productive. Ruby on Rails is a
         popular web framework built with Ruby. RubyLLM is a Ruby library for working
-        with large language models.\n","title":"facts.txt"}}],"type":"TEXT_CONTENT","content_index":1},{"start":104,"end":178,"text":"\"The
+        with large language models.\n","title":"facts.txt"}}],"type":"TEXT_CONTENT","content_index":1},{"start":114,"end":188,"text":"\"The
         Ruby programming language was created by Yukihiro Matsumoto in 1993.\"","sources":[{"type":"document","id":"doc:0","document":{"id":"doc:0","text":"The
         Ruby programming language was created by Yukihiro Matsumoto in 1993. Ruby
         was designed to make programmers happy and productive. Ruby on Rails is a
         popular web framework built with Ruby. RubyLLM is a Ruby library for working
-        with large language models.\n","title":"facts.txt"}}],"type":"TEXT_CONTENT","content_index":1}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":67,"output_tokens":66},"tokens":{"input_tokens":510,"output_tokens":100,"reasoning_tokens":26},"cached_tokens":160}}'
-  recorded_at: Fri, 13 Nov 2026 21:22:21 GMT
-recorded_with: VCR 6.4.1
+        with large language models.\n","title":"facts.txt"}}],"type":"TEXT_CONTENT","content_index":1}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":67,"output_tokens":73},"tokens":{"input_tokens":510,"output_tokens":106,"reasoning_tokens":34},"cached_tokens":160}}'
+  recorded_at: Sun, 15 Nov 2026 01:20:33 GMT
+recorded_with: VCR 6.4.0

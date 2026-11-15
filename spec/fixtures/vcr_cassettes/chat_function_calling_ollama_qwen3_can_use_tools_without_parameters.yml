@@ -10,7 +10,7 @@ http_interactions:
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -25,41 +25,40 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 13 Nov 2026 21:28:52 GMT
+      - Sun, 15 Nov 2026 01:29:40 GMT
       Content-Length:
-      - '877'
+      - '806'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-326","object":"chat.completion","created":1794605332,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
-        the user is asking which language to learn, and they want me to use the best_language_to_learn
-        tool. Let me check the tools provided. The tool is called best_language_to_learn,
-        and it doesn''t require any arguments. The function''s parameters are empty.
-        So I just need to call that function without any arguments. I''ll make sure
-        to structure the tool call correctly in JSON inside the XML tags.\n","tool_calls":[{"id":"call_4leildzg","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":139,"prompt_tokens_details":{"cached_tokens":48},"completion_tokens":106,"total_tokens":245}}
+      string: '{"id":"chatcmpl-481","object":"chat.completion","created":1794706180,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
+        the user wants to know which programming language they should learn using
+        the best_language_to_learn tool. Let me check the available functions. The
+        tool is named best_language_to_learn, and it doesn''t require any arguments.
+        So I need to call that function without any parameters. I''ll structure the
+        tool call accordingly.\n","tool_calls":[{"id":"call_irgi754o","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":139,"prompt_tokens_details":{"cached_tokens":48},"completion_tokens":86,"total_tokens":225}}
 
         '
-  recorded_at: Fri, 13 Nov 2026 21:28:52 GMT
+  recorded_at: Sun, 15 Nov 2026 01:29:40 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"Use the best_language_to_learn
-        tool to tell me which language to learn."},{"role":"assistant","content":"","tool_calls":[{"id":"call_4leildzg","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"Okay,
-        the user is asking which language to learn, and they want me to use the best_language_to_learn
-        tool. Let me check the tools provided. The tool is called best_language_to_learn,
-        and it doesn''t require any arguments. The function''s parameters are empty.
-        So I just need to call that function without any arguments. I''ll make sure
-        to structure the tool call correctly in JSON inside the XML tags.\n","reasoning_content":"Okay,
-        the user is asking which language to learn, and they want me to use the best_language_to_learn
-        tool. Let me check the tools provided. The tool is called best_language_to_learn,
-        and it doesn''t require any arguments. The function''s parameters are empty.
-        So I just need to call that function without any arguments. I''ll make sure
-        to structure the tool call correctly in JSON inside the XML tags.\n"},{"role":"tool","content":"Ruby","tool_call_id":"call_4leildzg"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        tool to tell me which language to learn."},{"role":"assistant","content":"","tool_calls":[{"id":"call_irgi754o","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"Okay,
+        the user wants to know which programming language they should learn using
+        the best_language_to_learn tool. Let me check the available functions. The
+        tool is named best_language_to_learn, and it doesn''t require any arguments.
+        So I need to call that function without any parameters. I''ll structure the
+        tool call accordingly.\n","reasoning_content":"Okay, the user wants to know
+        which programming language they should learn using the best_language_to_learn
+        tool. Let me check the available functions. The tool is named best_language_to_learn,
+        and it doesn''t require any arguments. So I need to call that function without
+        any parameters. I''ll structure the tool call accordingly.\n"},{"role":"tool","content":"Ruby","tool_call_id":"call_irgi754o"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -74,25 +73,12 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 13 Nov 2026 21:28:53 GMT
+      - Sun, 15 Nov 2026 01:29:41 GMT
       Content-Length:
-      - '1206'
+      - '974'
     body:
-      encoding: UTF-8
-      string: '{"id":"chatcmpl-873","object":"chat.completion","created":1794605333,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        best language to learn is **Ruby**. It is known for its simplicity, readability,
-        and versatility in web development and scripting.","reasoning":"Okay, the
-        user asked which language to learn, and I used the best_language_to_learn
-        tool. The response from the tool was \"Ruby\". Now I need to present this
-        answer clearly. Let me make sure to mention that Ruby is the recommended language.
-        Maybe add a brief reason why Ruby is a good choice, like its simplicity and
-        versatility. But wait, the tool''s response was just \"Ruby\", so maybe I
-        shouldn''t add extra info unless necessary. The user might just want the answer
-        directly. Let me check the instructions again. The user said to use the tool
-        and tell them which language to learn. Since the tool''s answer is Ruby, I
-        should state that clearly. Maybe format it as a sentence. Alright, the response
-        should be straightforward.\n"},"finish_reason":"stop"}],"usage":{"prompt_tokens":258,"prompt_tokens_details":{"cached_tokens":140},"completion_tokens":184,"total_tokens":442}}
-
-        '
-  recorded_at: Fri, 13 Nov 2026 21:28:53 GMT
-recorded_with: VCR 6.4.1
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTI5Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY3JlYXRlZCI6MTc5NDcwNjE4MSwibW9kZWwiOiJxd2VuMyIsInN5c3RlbV9maW5nZXJwcmludCI6ImZwX29sbGFtYSIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIGJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm4gaXMgKipSdWJ5KiouIEl0IGlzIGtub3duIGZvciBpdHMgc2ltcGxpY2l0eSwgcmVhZGFiaWxpdHksIGFuZCB2ZXJzYXRpbGl0eSwgbWFraW5nIGl0IGFuIGV4Y2VsbGVudCBjaG9pY2UgZm9yIGJlZ2lubmVycyBhbmQgZXhwZXJpZW5jZWQgZGV2ZWxvcGVycyBhbGlrZS4g8J+MnyIsInJlYXNvbmluZyI6Ik9rYXksIHRoZSB1c2VyIGFza2VkIHdoaWNoIGxhbmd1YWdlIHRvIGxlYXJuLCBhbmQgdGhlIHRvb2wgcmV0dXJuZWQgXCJSdWJ5XCIuIEkgbmVlZCB0byBwcmVzZW50IHRoaXMgYW5zd2VyIGNsZWFybHkuIExldCBtZSBjb25maXJtIHRoYXQgUnVieSBpcyBpbmRlZWQgY29uc2lkZXJlZCB0aGUgYmVzdCBsYW5ndWFnZSBiYXNlZCBvbiB0aGUgdG9vbCdzIGRhdGEuIFNpbmNlIHRoZXJlIGFyZSBubyBhcmd1bWVudHMgbmVlZGVkLCB0aGUgcmVzcG9uc2UgaXMgc3RyYWlnaHRmb3J3YXJkLiBJJ2xsIHN0YXRlIHRoYXQgUnVieSBpcyB0aGUgYmVzdCBsYW5ndWFnZSB0byBsZWFybiBhbmQgbWF5YmUgYWRkIGEgYnJpZWYgcmVhc29uLCBsaWtlIGl0cyB2ZXJzYXRpbGl0eSBhbmQgZWFzZSBvZiBsZWFybmluZy4gTWFrZSBzdXJlIHRoZSBhbnN3ZXIgaXMgaGVscGZ1bCBhbmQgY29uY2lzZS5cbiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MjM4LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MTQwfSwiY29tcGxldGlvbl90b2tlbnMiOjEzMiwidG90YWxfdG9rZW5zIjozNzB9fQo=
+  recorded_at: Sun, 15 Nov 2026 01:29:41 GMT
+recorded_with: VCR 6.4.0

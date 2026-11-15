@@ -12,7 +12,7 @@ http_interactions:
         description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:29:46 GMT
+      - Sun, 15 Nov 2026 01:30:43 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -51,7 +51,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '752'
+      - '974'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -78,16 +78,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_03bcf12f37afaaea016af781493f4887d28ff1e3fd820224f4",
+          "id": "resp_00a255c9788939c0016af90b42dee887d2b53b764a3a034057",
           "object": "response",
-          "created_at": 1794605385,
+          "created_at": 1794706242,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794605385,
+          "completed_at": 1794706243,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
@@ -102,11 +102,11 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "fc_03bcf12f37afaaea016af78149c4a487d29015d6d5578b6b8a",
+              "id": "fc_00a255c9788939c0016af90b43728487d2ab13b8071e765097",
               "type": "function_call",
               "status": "completed",
               "arguments": "{\"task\":\"Review PR\",\"status\":\"pending\"}",
-              "call_id": "call_JpvaSgLCqhWKZ4N5okTD8wUs",
+              "call_id": "call_HgYuRaAc3nKrV6QKBg3xTm2F",
               "name": "any_of_params"
             }
           ],
@@ -195,6 +195,10 @@ http_interactions:
             "input_tokens": 86,
             "input_tokens_details": {
               "cache_write_tokens": 0,
+              "cache_write_tokens_details": {
+                "ttl_12h_tokens": 0,
+                "ttl_30m_tokens": 0
+              },
               "cached_tokens": 0
             },
             "output_tokens": 24,
@@ -206,5 +210,5 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Fri, 13 Nov 2026 21:29:46 GMT
-recorded_with: VCR 6.4.1
+  recorded_at: Sun, 15 Nov 2026 01:30:43 GMT
+recorded_with: VCR 6.4.0

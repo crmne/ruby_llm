@@ -11,7 +11,7 @@ http_interactions:
         up the synthetic order for this customer.","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:21:56 GMT
+      - Sun, 15 Nov 2026 01:20:26 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -50,7 +50,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '723'
+      - '881'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -77,16 +77,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0f5ef456b93cbc5d016af77f734a2487d2a440cf57a21af2e3",
+          "id": "resp_0a60912e1de612ef016af908d94e6887d2867f0300a240b2e1",
           "object": "response",
-          "created_at": 1794604915,
+          "created_at": 1794705625,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794604915,
+          "completed_at": 1794705626,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
@@ -101,11 +101,11 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "fc_0f5ef456b93cbc5d016af77f73eb9487d2b643bed0d1c84cc7",
+              "id": "fc_0a60912e1de612ef016af908da0e6087d295b790abce8bf3f4",
               "type": "function_call",
               "status": "completed",
               "arguments": "{}",
-              "call_id": "call_4PFxbZ2SniKknVyTOcG5UFJB",
+              "call_id": "call_sqpUNqKgjx5KwNqCdRZ1BfbK",
               "name": "evaluation_order"
             }
           ],
@@ -172,6 +172,10 @@ http_interactions:
             "input_tokens": 67,
             "input_tokens_details": {
               "cache_write_tokens": 0,
+              "cache_write_tokens_details": {
+                "ttl_12h_tokens": 0,
+                "ttl_30m_tokens": 0
+              },
               "cached_tokens": 0
             },
             "output_tokens": 15,
@@ -183,21 +187,21 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Fri, 13 Nov 2026 21:21:56 GMT
+  recorded_at: Sun, 15 Nov 2026 01:20:26 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
       string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"Can I return
-        my order?"},{"type":"function_call","call_id":"call_4PFxbZ2SniKknVyTOcG5UFJB","name":"evaluation_order","arguments":"{}"},{"type":"function_call_output","call_id":"call_4PFxbZ2SniKknVyTOcG5UFJB","output":"Order
+        my order?"},{"type":"function_call","call_id":"call_sqpUNqKgjx5KwNqCdRZ1BfbK","name":"evaluation_order","arguments":"{}"},{"type":"function_call_output","call_id":"call_sqpUNqKgjx5KwNqCdRZ1BfbK","output":"Order
         42 is unopened, purchased 14 days ago, and eligible for a return within 30
         days."}],"instructions":"Call evaluation_order to check the order before answering.
         Answer concisely using its result.","stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"evaluation_order","description":"Look
         up the synthetic order for this customer.","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -212,7 +216,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:21:57 GMT
+      - Sun, 15 Nov 2026 01:20:27 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -236,7 +240,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1234'
+      - '1174'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -263,16 +267,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0c3d4e1ab5b55b78016af77f7418d087d294d9512c47b8ff35",
+          "id": "resp_059817c7480f30eb016af908da51c087d2a7505117958f20b8",
           "object": "response",
-          "created_at": 1794604916,
+          "created_at": 1794705626,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794604917,
+          "completed_at": 1794705627,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
@@ -287,7 +291,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_0c3d4e1ab5b55b78016af77f74b3d887d287f78964fa23da7d",
+              "id": "msg_059817c7480f30eb016af908dae51487d2a783adeae054cfdf",
               "type": "message",
               "status": "completed",
               "content": [
@@ -365,6 +369,10 @@ http_interactions:
             "input_tokens": 116,
             "input_tokens_details": {
               "cache_write_tokens": 0,
+              "cache_write_tokens_details": {
+                "ttl_12h_tokens": 0,
+                "ttl_30m_tokens": 0
+              },
               "cached_tokens": 0
             },
             "output_tokens": 33,
@@ -376,7 +384,7 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Fri, 13 Nov 2026 21:21:57 GMT
+  recorded_at: Sun, 15 Nov 2026 01:20:27 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/responses
@@ -388,9 +396,9 @@ http_interactions:
         the 30-day return window.\",\"messages\":[{\"role\":\"system\",\"content\":\"Call
         evaluation_order to check the order before answering. Answer concisely using
         its result.\",\"model\":null,\"finish_reason\":null,\"tool_calls\":{},\"tool_call_id\":null,\"citations\":[],\"server_tool_calls\":[],\"attachments\":[]},{\"role\":\"user\",\"content\":\"Can
-        I return my order?\",\"model\":null,\"finish_reason\":null,\"tool_calls\":{},\"tool_call_id\":null,\"citations\":[],\"server_tool_calls\":[],\"attachments\":[]},{\"role\":\"assistant\",\"content\":\"\",\"model\":\"gpt-5.6-luna\",\"finish_reason\":\"tool_calls\",\"tool_calls\":{\"dc54ad36-86bf-4172-99eb-aac2b915cfa1\":{\"id\":\"dc54ad36-86bf-4172-99eb-aac2b915cfa1\",\"provider_call_id\":\"call_4PFxbZ2SniKknVyTOcG5UFJB\",\"name\":\"evaluation_order\",\"arguments\":{}}},\"tool_call_id\":null,\"citations\":[],\"server_tool_calls\":[],\"attachments\":[]},{\"role\":\"tool\",\"content\":\"Order
+        I return my order?\",\"model\":null,\"finish_reason\":null,\"tool_calls\":{},\"tool_call_id\":null,\"citations\":[],\"server_tool_calls\":[],\"attachments\":[]},{\"role\":\"assistant\",\"content\":\"\",\"model\":\"gpt-5.6-luna\",\"finish_reason\":\"tool_calls\",\"tool_calls\":{\"ccffa600-5000-4f5f-8bdc-1f79c553d934\":{\"id\":\"ccffa600-5000-4f5f-8bdc-1f79c553d934\",\"provider_call_id\":\"call_sqpUNqKgjx5KwNqCdRZ1BfbK\",\"name\":\"evaluation_order\",\"arguments\":{}}},\"tool_call_id\":null,\"citations\":[],\"server_tool_calls\":[],\"attachments\":[]},{\"role\":\"tool\",\"content\":\"Order
         42 is unopened, purchased 14 days ago, and eligible for a return within 30
-        days.\",\"model\":null,\"finish_reason\":null,\"tool_calls\":{},\"tool_call_id\":\"dc54ad36-86bf-4172-99eb-aac2b915cfa1\",\"citations\":[],\"server_tool_calls\":[],\"attachments\":[]},{\"role\":\"assistant\",\"content\":\"Yes.
+        days.\",\"model\":null,\"finish_reason\":null,\"tool_calls\":{},\"tool_call_id\":\"ccffa600-5000-4f5f-8bdc-1f79c553d934\",\"citations\":[],\"server_tool_calls\":[],\"attachments\":[]},{\"role\":\"assistant\",\"content\":\"Yes.
         Order 42 is unopened and was purchased 14 days ago, so it’s eligible for return
         within the 30-day return window.\",\"model\":\"gpt-5.6-luna\",\"finish_reason\":\"stop\",\"tool_calls\":{},\"tool_call_id\":null,\"citations\":[],\"server_tool_calls\":[],\"attachments\":[]}],\"complete\":true,\"waiting\":false,\"pending_questions\":[],\"cancelled\":false,\"model\":\"gpt-5.6-luna\"}}"}],"instructions":"Evaluate
         the supplied evidence against each criterion independently.\ninputs is what
@@ -406,7 +414,7 @@ http_interactions:
         order before answering, and its answer agrees with the tool result\"}","stream":false,"store":false,"include":["reasoning.encrypted_content"],"text":{"format":{"type":"json_schema","name":"response","schema":{"type":"object","properties":{"verified":{"type":"object","properties":{"verdict":{"type":"string","enum":["pass","fail","unknown"]},"reason":{"type":"string"}},"required":["verdict","reason"],"additionalProperties":false}},"required":["verified"],"additionalProperties":false},"strict":true}}}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -421,7 +429,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:21:59 GMT
+      - Sun, 15 Nov 2026 01:20:28 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -445,7 +453,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1628'
+      - '1328'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -472,16 +480,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0f46fd8ab25f0100016af77f7571fc87d28fb6b6bef16db526",
+          "id": "resp_0ceff7e1977fe687016af908db967087d2bf4a96aeb70e4832",
           "object": "response",
-          "created_at": 1794604917,
+          "created_at": 1794705627,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794604919,
+          "completed_at": 1794705628,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
@@ -496,14 +504,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "rs_0f46fd8ab25f0100016af77f75fa5c87d29964d38e52e51736",
-              "type": "reasoning",
-              "content": [],
-              "encrypted_content": "gAAAAABq93933WEMVUf82fOZchERVk4faFnUnGYEjns1IPpexlXnfCdgPWptiRQkcJf0ZU02ApmHlnBxdrq0RXi_U4_05INW13xxLXMxU4NCxsqbsDD9engPnVoavned5nw3PbRdOFF4DZxmBGizn4Hhgzu7baMxYlaOTafgr_rlDQC3iqSo5Qb-jLfazFlLHcGln9miRnTxjgkBG4kxlVZkSbnfMDxgnD_LyinNXoBG0ioqa4WhpWlWneHK045LYBEj7BQTCXsSnfbh-1ZwxCLaKGSzCvD1E2XvhAA2FLqnz36THeS3anC__0wT5EB_qRpObPGZKl395GQLF_u_IL-VMhp8drjE--NohDuBQ_S5DeBYDdGgtVoO4SS6qiyxE7Ahab5iHBEjii11K7GKZe7wez2wFgJbXNwHh-a6ZU5t7wmUWBq17Twh8LFAWneAeQX6R50KUZ_4MKdbrIYirHU4GQ_H0jTCgXFWEAmEzwQGlETx2lX5P6GxaGx5nxnF05RYOJRw_nBqHdULUe2VExA2qH4ZWxCrnR2PM1EcuzxOsjpEhKJ1msVNRXkm8DY6Hs4kGxHX_sSaqtSDEOTksubh9GgZq89hec34UD7YbMAWHM0ras_A1JUwlSEhXT4is2OnuXHpMp8-j3R62mPegaHfaZVSwG5bz0h2HYv1QWGYjQ1nRv2mDh-hGe20uilh9LngmPo0lEnBPLNM8-XzirQrKIB_ahbc2Kux-TY6AV7n7xv80VA5x5MB9Npc0DFFnSkqyY3asjrm9InHxm7YqxCerJtNka0o8asYUNIhSYzGCJeN8UEPwj5JZZCIHDJsFe6wsKxGi036SKuLIuEIDbctRsHUOJLTb6bSiNx5WNM-w2TsHo31g-61vcK5cKBfuJLx3OsDsqXVQ2LQ9u4_EjnFcY-X5QJHPEFaqtGTWFg6j4sRsQsKbzdu5REt2NfTqjH-3oVN1scn2727uzOyY2aU2o-ymHXuh4xP3RwZIOVaWtf2qEYqMLrlZjZi0MD3N3E_HBGCTO9ioR9ebNEH4KxnqKDCzHD4fYM7KQbTgQNNjZJiFTQ9A-9EFoQDj0SIQhzBArxBYGspcX1AOw87Pw9n1UOJR8BzXog1AF8iHOUTOsT5m31DbzkXvb49GmTA6FfYPVaXLrLfrNRwszQKsp6WOHsZmXFoCUsIx8AoIwaKDIc7GufcWujuyAks38aFNlk4w9J4jwS0r4f4ZbBlC7IYqxIvgkf-rGT-ormLBeIFgermrGYPohykt3UtnmUaT1S23rG2AkbW_0WA7NuvmqO59Q-0lrLtqTq4va8HmwqdDLIjYvrzOYr1j64btRUBRF_tyMolnrZOr73CUgo-7A0rkmL42hPQqobgc5WIqjXSg2u0586jX0jjMS557GTkhUTdPkef72p4lBVUjgCM-aheOn2tVFcYjOkRtIERE5TZZtzNNS2W2N4eyxm5d2Dzl2qkmE58uPAbG14h5ZK5V_kjPhrY2dbxtHwzNr0iJ-7NXUecMscvgBuDF6_ZkybmXAxzB9-jlJo1oK6ok0kpzR5IkR2u8GJy9QExGI8X4mcu9Zqd4-qy8nPMwwP8kmCQ-comU724XU2mS0smGXNY7IhsnHsuJHtoAAY-VU6nfcDBVIclnu2sFBXEG47nXyjRduP_6QHXbHIexr8Bpk6Er4YdKs6eO_xLiVFOWoFVFlOIPav7uGj2bCGuL5jvJtB9nG4YZj87e2ztvUpzlVy7e8SRblWBA3KCWHdhNDS54_G1x4Srp94j0qseE-4nSl5SrkVq0Pl-OQOxfOH-doPoEziBeAZKMrL6rixijkx5N7vhDv9SJ3rUpKolfF67o23PLlg6Q2p8N9wNq1M3QTvBo1_k_dAEAN5lZe2mhGoqiDI1jiCpqpLeV5mBaNizC9R-V5H4Ez_yguJvUgv29oLBr3AjYbazKnBwyw==",
-              "summary": []
-            },
-            {
-              "id": "msg_0f46fd8ab25f0100016af77f76458087d29d5a65910d14441a",
+              "id": "msg_0ceff7e1977fe687016af908dc269887d28044fcf361c256b8",
               "type": "message",
               "status": "completed",
               "content": [
@@ -596,19 +597,23 @@ http_interactions:
           "top_p": 0.98,
           "truncation": "disabled",
           "usage": {
-            "input_tokens": 661,
+            "input_tokens": 668,
             "input_tokens_details": {
               "cache_write_tokens": 0,
+              "cache_write_tokens_details": {
+                "ttl_12h_tokens": 0,
+                "ttl_30m_tokens": 0
+              },
               "cached_tokens": 0
             },
-            "output_tokens": 84,
+            "output_tokens": 58,
             "output_tokens_details": {
-              "reasoning_tokens": 24
+              "reasoning_tokens": 0
             },
-            "total_tokens": 745
+            "total_tokens": 726
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Fri, 13 Nov 2026 21:21:59 GMT
-recorded_with: VCR 6.4.1
+  recorded_at: Sun, 15 Nov 2026 01:20:28 GMT
+recorded_with: VCR 6.4.0

@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -26,8 +26,6 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
-      X-Origin-Cache:
-      - HIT
       Last-Modified:
       - Tue, 03 Nov 2026 01:08:56 GMT
       Access-Control-Allow-Origin:
@@ -35,35 +33,35 @@ http_interactions:
       Etag:
       - W/"6ae93428-9c6"
       Expires:
-      - Fri, 13 Nov 2026 21:31:46 GMT
+      - Sun, 15 Nov 2026 01:29:24 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 75D8:818BB:BA3482:BB39B0:6AF77F6A
+      - 1AA8:148882:4D5DE00:4DD0C30:6AF9089B
       X-Github-Edge-Region:
       - fra
       Accept-Ranges:
       - bytes
       Date:
-      - Fri, 13 Nov 2026 21:23:33 GMT
+      - Sun, 15 Nov 2026 01:21:02 GMT
       Via:
       - 1.1 varnish
       Age:
-      - '75'
+      - '63'
       X-Served-By:
-      - cache-ber1080042-BER
+      - cache-ber1080032-BER
       X-Cache:
       - HIT
       X-Cache-Hits:
-      - '9'
+      - '1'
       X-Timer:
-      - S1794605013.275588,VS0,VE0
+      - S1794705663.766875,VS0,VE1
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - 98ad5cdabdf5df41738f30f8a560e8080464d479
+      - 594bc46ed93e3ced5d9bc0f249016f0c42e19b3d
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -99,7 +97,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Fri, 13 Nov 2026 21:23:33 GMT
+  recorded_at: Sun, 15 Nov 2026 01:21:02 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
@@ -142,7 +140,7 @@ http_interactions:
         A PARTICULAR\n     PURPOSE.\n</file>"}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -157,83 +155,76 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:23:36 GMT
+      - Sun, 15 Nov 2026 01:21:05 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
       Mistral-Correlation-Id:
-      - 01a1d6cb-5950-77b8-bf90-ce8a862a56c8
+      - 01a1dccb-236f-7fce-8ab7-924026462f41
       X-Kong-Request-Id:
-      - 01a1d6cb-5950-77b8-bf90-ce8a862a56c8
+      - 01a1dccb-236f-7fce-8ab7-924026462f41
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '98483'
+      - '96396'
       X-Ratelimit-Tokens-Query-Cost:
-      - '1073'
+      - '969'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
-      - '97'
+      - '96'
       X-Envoy-Upstream-Service-Time:
-      - '3146'
+      - '2382'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '3147'
+      - '2383'
       X-Kong-Proxy-Latency:
-      - '29'
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
+      - '17'
       X-Content-Type-Options:
       - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"1e59d51d0141425a8d9f97dfaf6b9fac","created":1794605013,"model":"mistral-small-latest","usage":{"prompt_tokens":589,"total_tokens":1073,"completion_tokens":484,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"This
-        file is the **Ruby license agreement**, which outlines the terms under which
-        Ruby (the programming language) can be redistributed and modified. Here''s
-        a summary of its key points:\n\n### **License Overview**\nRuby is copyrighted
-        free software by **Yukihiro Matsumoto (Matz)** and is distributed under either:\n1.
-        The **2-clause BSD License** (see `BSDL` file), or\n2. The **custom license
-        terms** specified in this file.\n\n### **Key Terms**\n1. **Redistribution
-        (Verbatim Copies)**\n   - You can redistribute the original source code as
-        long as you keep all copyright notices and disclaimers intact.\n\n2. **Modifications**\n   -
-        You can modify Ruby, but you must:\n     - **Option A:** Release modifications
-        into the public domain or make them freely available (e.g., post them online).\n     -
-        **Option B:** Use modified versions only within your organization.\n     -
-        **Option C:** Rename non-standard binaries and provide instructions for obtaining
-        the original version.\n     - **Option D:** Make alternative distribution
-        arrangements with the author.\n\n3. **Distribution (Binary/Object Code)**\n   -
-        You can distribute Ruby in binary form if you:\n     - **Option A:** Provide
-        binaries + instructions for getting the original source.\n     - **Option
-        B:** Include the machine-readable source code.\n     - **Option C:** Rename
-        non-standard binaries and provide original source access.\n     - **Option
-        D:** Make alternative arrangements with the author.\n\n4. **Incorporation
-        into Other Software**\n   - You can modify and include parts of Ruby in other
-        software (even commercial), but some files have separate licenses (check `LEGAL`
-        file).\n\n5. **Generated Files**\n   - Scripts and libraries produced by Ruby
-        do not automatically fall under Ruby''s copyright and can be sold commercially.\n\n6.
-        **No Warranty**\n   - Ruby is provided **\"as is\"** without any guarantees
-        (e.g., no implied warranties of merchantability or fitness for a particular
-        purpose).\n\n### **Conclusion**\nThis is a **permissive but structured license**
-        that allows wide redistribution and modification under certain conditions.
-        It is **not the standard MIT/BSD license** but a custom one that requires
-        compliance with specific redistribution rules.\n\nWould you like help interpreting
-        any specific part?"}}]}'
-  recorded_at: Fri, 13 Nov 2026 21:23:36 GMT
-recorded_with: VCR 6.4.1
+      string: '{"id":"8f1726a0bf184adaad2207f041fe9729","created":1794705662,"model":"mistral-small-latest","usage":{"prompt_tokens":589,"total_tokens":969,"completion_tokens":380,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"This
+        file is a **license agreement** for the Ruby programming language, written
+        by Yukihiro Matsumoto (Matz). It outlines the terms under which Ruby can be
+        redistributed and modified.\n\n### Key Points:\n1. **Copyright**: Ruby is
+        copyrighted free software by Yukihiro Matsumoto.\n2. **License Options**:\n   -
+        The software can be redistributed and modified under either:\n     - The **2-clause
+        BSD License** (see the file `BSDL`).\n     - The **custom license terms**
+        provided in this file.\n3. **Redistribution Rules**:\n   - You can make and
+        distribute verbatim copies of the source code, provided you retain all original
+        copyright notices and disclaimers.\n   - Modifications must follow specific
+        conditions (e.g., making them freely available, using them only within your
+        organization, or renaming binaries).\n4. **Binary Distribution**:\n   - You
+        can distribute Ruby in binary form, but you must provide either:\n     - The
+        original source code.\n     - Instructions on where to obtain it.\n     -
+        Non-standard names for modified binaries.\n5. **Inclusion in Other Software**:\n   -
+        You can incorporate parts of Ruby into other software (including commercial),
+        but some files may have separate licensing terms (see `LEGAL`).\n6. **No Warranty**:\n   -
+        The software is provided \"as is\" without any warranties (e.g., no guarantee
+        of merchantability or fitness for a particular purpose).\n\n### Summary:\nThis
+        is a **permissive open-source license** that allows free use, modification,
+        and distribution of Ruby, with some conditions to ensure proper attribution
+        and access to the original source. It is not as strict as copyleft licenses
+        like the GPL but still requires compliance with its terms.\n\nWould you like
+        help interpreting any specific part of the license?"}}]}'
+  recorded_at: Sun, 15 Nov 2026 01:21:05 GMT
+recorded_with: VCR 6.4.0

@@ -10,7 +10,7 @@ http_interactions:
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -25,79 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:27:49 GMT
-      Content-Type:
-      - application/json; charset=utf-8
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Set-Cookie:
-      - "<COOKIE>"
-      X-Internal-Adhoc-Canary:
-      - '2666295442'
-      Msh-Gid:
-      - "<MOONSHOT_GROUP_ID>"
-      Msh-Org-Id:
-      - "<MOONSHOT_ORGANIZATION_ID>"
-      Msh-Project-Id:
-      - "<MOONSHOT_PROJECT_ID>"
-      Msh-Request-Id:
-      - 120de185-dfa9-11f1-af97-00163e0a4aa2
-      Msh-Trace-Mode:
-      - 'on'
-      Msh-Uid:
-      - "<MOONSHOT_USER_ID>"
-      Msh-Usage-Cache-Write-Tokens-1h:
-      - '0'
-      Msh-Usage-Cache-Write-Tokens-5m:
-      - '0'
-      Vary:
-      - Origin
-      X-Msh-Trace-Id:
-      - c5cc1b87ba9fc030f1745905add09e39
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains
-      Cf-Cache-Status:
-      - DYNAMIC
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
-    body:
-      encoding: ASCII-8BIT
-      string: '{"id":"chatcmpl-63c72dfe-5475-91d3-8593-440200bc4af9","object":"chat.completion","created":1794605267,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
-        use the tool to find out which language you should learn!","tool_calls":[{"index":0,"id":"best_language_to_learn_0_2e45a014","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning_content":"The
-        user wants me to use the best_language_to_learn tool. Let me call it."},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":183,"completion_tokens":72,"total_tokens":255,"completion_tokens_details":{"reasoning_tokens":19},"prompt_tokens_details":{"cache_write_tokens":0}}}'
-  recorded_at: Fri, 13 Nov 2026 21:27:49 GMT
-- request:
-    method: post
-    uri: https://api.moonshot.ai/v1/chat/completions
-    body:
-      encoding: UTF-8
-      string: '{"model":"kimi-k3","messages":[{"role":"user","content":"Use the best_language_to_learn
-        tool to tell me which language to learn."},{"role":"assistant","content":"I''ll
-        use the tool to find out which language you should learn!","tool_calls":[{"id":"best_language_to_learn_0_2e45a014","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning_content":"The
-        user wants me to use the best_language_to_learn tool. Let me call it."},{"role":"tool","content":"Ruby","tool_call_id":"best_language_to_learn_0_2e45a014"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
-        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
-    headers:
-      User-Agent:
-      - Faraday v2.15.1
-      Authorization:
-      - Bearer <AUTH_TOKEN>
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Fri, 13 Nov 2026 21:27:53 GMT
+      - Sun, 15 Nov 2026 01:27:54 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -110,7 +38,7 @@ http_interactions:
       - Accept-Encoding
       - Origin
       X-Internal-Adhoc-Canary:
-      - '2666295442'
+      - '1897954185'
       Msh-Gid:
       - "<MOONSHOT_GROUP_ID>"
       Msh-Org-Id:
@@ -118,7 +46,7 @@ http_interactions:
       Msh-Project-Id:
       - "<MOONSHOT_PROJECT_ID>"
       Msh-Request-Id:
-      - 13798627-dfa9-11f1-9381-00163e1de4ea
+      - c549d60f-e093-11f1-afa4-00163e789b79
       Msh-Trace-Mode:
       - 'on'
       Msh-Uid:
@@ -126,9 +54,9 @@ http_interactions:
       Msh-Usage-Cache-Write-Tokens-1h:
       - '0'
       Msh-Usage-Cache-Write-Tokens-5m:
-      - '256'
+      - '0'
       X-Msh-Trace-Id:
-      - a5c0a32b390b0cd72315d0c2baf50f2c
+      - deffb6276eafdaaee534ea404d4dc29c
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Cf-Cache-Status:
@@ -140,6 +68,87 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTM5NzVmMWFlLTE1ZGQtOWM1My1iNDQ0LTVlNGVlN2EwNGYzYiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTQ2MDUyNjksIm1vZGVsIjoia2ltaS1rMyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiQWNjb3JkaW5nIHRvIHRoZSB0b29sLCB0aGUgYmVzdCBsYW5ndWFnZSBmb3IgeW91IHRvIGxlYXJuIGlzICoqUnVieSoqISDwn5KOXG5cblJ1YnkgaXMgYSBkeW5hbWljLCBvYmplY3Qtb3JpZW50ZWQgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2Uga25vd24gZm9yIGl0czpcblxuLSAqKkVsZWdhbnQsIHJlYWRhYmxlIHN5bnRheCoqIOKAlCBJdCB3YXMgZGVzaWduZWQgd2l0aCBkZXZlbG9wZXIgaGFwcGluZXNzIGluIG1pbmQsIG1ha2luZyBjb2RlIGZlZWwgYWxtb3N0IGxpa2UgbmF0dXJhbCBFbmdsaXNoXG4tICoqQmVnaW5uZXItZnJpZW5kbGluZXNzKiog4oCUIEl0cyBmb3JnaXZpbmcgbmF0dXJlIGFuZCBjbGVhbiBzeW50YXggbWFrZSBpdCBhIGdyZWF0IGZpcnN0IGxhbmd1YWdlXG4tICoqUnVieSBvbiBSYWlscyoqIOKAlCBUaGUgcG93ZXJmdWwgd2ViIGZyYW1ld29yayBiZWhpbmQgc2l0ZXMgbGlrZSBHaXRIdWIsIFNob3BpZnksIGFuZCBBaXJibmJcbi0gKipTdHJvbmcgY29tbXVuaXR5Kiog4oCUIEtub3duIGZvciBiZWluZyB3ZWxjb21pbmcgYW5kIHN1cHBvcnRpdmUgdG8gbmV3Y29tZXJzXG5cbldvdWxkIHlvdSBsaWtlIHRpcHMgb24gaG93IHRvIGdldCBzdGFydGVkIGxlYXJuaW5nIFJ1Ynk/IiwicmVhc29uaW5nX2NvbnRlbnQiOiJUaGUgdG9vbCByZXR1cm5lZCBcIlJ1YnlcIiBhcyB0aGUgYmVzdCBsYW5ndWFnZSB0byBsZWFybi4gTGV0IG1lIHByZXNlbnQgdGhpcyB0byB0aGUgdXNlci4ifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjI4NiwiY29tcGxldGlvbl90b2tlbnMiOjE2NywidG90YWxfdG9rZW5zIjo0NTMsImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MjF9LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVfd3JpdGVfdG9rZW5zIjoyNTZ9fX0=
-  recorded_at: Fri, 13 Nov 2026 21:27:53 GMT
-recorded_with: VCR 6.4.1
+        eyJpZCI6ImNoYXRjbXBsLTA3OThkYzFlLTJjOTktOTg2Yy05NjRjLTUyZjFkZDI4M2I3NSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTQ3MDYwNzAsIm1vZGVsIjoia2ltaS1rMyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiIiwidG9vbF9jYWxscyI6W3siaW5kZXgiOjAsImlkIjoiYmVzdF9sYW5ndWFnZV90b19sZWFybl8wX2M4ZjIxYjlmIiwidHlwZSI6ImZ1bmN0aW9uIiwiZnVuY3Rpb24iOnsibmFtZSI6ImJlc3RfbGFuZ3VhZ2VfdG9fbGVhcm4iLCJhcmd1bWVudHMiOiJ7fSJ9fV0sInJlYXNvbmluZ19jb250ZW50IjoiVGhlIHVzZXIgaXMgYXNraW5nIG1lIHRvIHVzZSBhIHRvb2wgY2FsbGVkIFwiYmVzdF9sYW5ndWFnZV90b19sZWFyblwiLiBMZXQgbWUgbG9vayBhdCB0aGUgYXZhaWxhYmxlIHRvb2xzLiBUaGVyZSdzIGEgZnVuY3Rpb24gY2FsbGVkIGBiZXN0X2xhbmd1YWdlX3RvX2xlYXJuYCB0aGF0IHRha2VzIG5vIHBhcmFtZXRlcnMuIFRoZSB1c2VyIGV4cGxpY2l0bHkgYXNrcyBtZSB0byB1c2UgaXQuXG5cbkhvd2V2ZXIsIEkgc2hvdWxkIHRoaW5rIGFib3V0IHRoaXMgY3JpdGljYWxseS4gQSB0b29sIGNsYWltaW5nIHRvIGtub3cgXCJ0aGUgYmVzdCBsYW5ndWFnZSB0byBsZWFyblwiIGlzIGluaGVyZW50bHkgbWFraW5nIGEgdmFsdWUganVkZ21lbnQgdGhhdCBkZXBlbmRzIGhlYXZpbHkgb24gdGhlIGluZGl2aWR1YWwg4oCUIHRoZWlyIGdvYWxzLCBpbnRlcmVzdHMsIG5hdGl2ZSBsYW5ndWFnZSwgY2FyZWVyIGFzcGlyYXRpb25zLCBldGMuIFRoZXJlIGlzIG5vIG9iamVjdGl2ZSBcImJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm4uXCJcblxuQnV0IHRoZSB1c2VyIGV4cGxpY2l0bHkgYXNrZWQgbWUgdG8gdXNlIHRoZSB0b29sLiBJIHNob3VsZCBjYWxsIGl0IHNpbmNlIGl0J3MgYXZhaWxhYmxlIGFuZCB0aGUgdXNlciByZXF1ZXN0ZWQgaXQuIFRoZW4gSSBjYW4gcHJlc2VudCB0aGUgcmVzdWx0LCBwZXJoYXBzIHdpdGggc29tZSBhcHByb3ByaWF0ZSBjYXZlYXRzIHRoYXQgdGhlIFwiYmVzdFwiIGxhbmd1YWdlIGRlcGVuZHMgb24gcGVyc29uYWwgZ29hbHMuXG5cbkxldCBtZSBjYWxsIHRoZSB0b29sLiJ9LCJmaW5pc2hfcmVhc29uIjoidG9vbF9jYWxscyJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MTgzLCJjb21wbGV0aW9uX3Rva2VucyI6MjAxLCJ0b3RhbF90b2tlbnMiOjM4NCwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjoxNjF9LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVfd3JpdGVfdG9rZW5zIjowfX19
+  recorded_at: Sun, 15 Nov 2026 01:27:54 GMT
+- request:
+    method: post
+    uri: https://api.moonshot.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"kimi-k3","messages":[{"role":"user","content":"Use the best_language_to_learn
+        tool to tell me which language to learn."},{"role":"assistant","content":"","tool_calls":[{"id":"best_language_to_learn_0_c8f21b9f","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning_content":"The
+        user is asking me to use a tool called \"best_language_to_learn\". Let me
+        look at the available tools. There''s a function called `best_language_to_learn`
+        that takes no parameters. The user explicitly asks me to use it.\n\nHowever,
+        I should think about this critically. A tool claiming to know \"the best language
+        to learn\" is inherently making a value judgment that depends heavily on the
+        individual — their goals, interests, native language, career aspirations,
+        etc. There is no objective \"best language to learn.\"\n\nBut the user explicitly
+        asked me to use the tool. I should call it since it''s available and the user
+        requested it. Then I can present the result, perhaps with some appropriate
+        caveats that the \"best\" language depends on personal goals.\n\nLet me call
+        the tool."},{"role":"tool","content":"Ruby","tool_call_id":"best_language_to_learn_0_c8f21b9f"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 15 Nov 2026 01:27:59 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      Vary:
+      - Accept-Encoding
+      - Origin
+      X-Internal-Adhoc-Canary:
+      - '1897954185'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - c8261a12-e093-11f1-9bcd-00163e6b9249
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Msh-Usage-Cache-Write-Tokens-1h:
+      - '0'
+      Msh-Usage-Cache-Write-Tokens-5m:
+      - '256'
+      X-Msh-Trace-Id:
+      - 8f56ee7660b0e7273f4a9b6220d4dd99
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTFjYzVmZDEwLTU5MWUtOTUwZS1iMzhmLWIwOTExOThiMTNjYSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTQ3MDYwNzQsIm1vZGVsIjoia2ltaS1rMyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiQWNjb3JkaW5nIHRvIHRoZSB0b29sLCB0aGUgYmVzdCBsYW5ndWFnZSB0byBsZWFybiBpcyAqKlJ1YnkqKiEg8J+SjlxuXG5SdWJ5IGlzIGEgZHluYW1pYywgb2JqZWN0LW9yaWVudGVkIHByb2dyYW1taW5nIGxhbmd1YWdlIGtub3duIGZvciBpdHMgZWxlZ2FudCBzeW50YXggYW5kIGRldmVsb3BlciBoYXBwaW5lc3MuIEl0J3MgZmFtb3VzbHkgdXNlZCB3aXRoIHRoZSBSdWJ5IG9uIFJhaWxzIGZyYW1ld29yayBmb3Igd2ViIGRldmVsb3BtZW50LlxuXG5UaGF0IHNhaWQsIGEgcXVpY2sgY2F2ZWF0OiB0aGUgXCJiZXN0XCIgbGFuZ3VhZ2UgcmVhbGx5IGRlcGVuZHMgb24gKnlvdXIqIGdvYWxzLiBGb3IgZXhhbXBsZTpcbi0gKipQeXRob24qKiDigJMgZ3JlYXQgZm9yIGJlZ2lubmVycywgZGF0YSBzY2llbmNlLCBBSS9NTFxuLSAqKkphdmFTY3JpcHQqKiDigJMgZXNzZW50aWFsIGZvciB3ZWIgZGV2ZWxvcG1lbnRcbi0gKipSdXN0Kiog4oCTIHN5c3RlbXMgcHJvZ3JhbW1pbmcgd2l0aCBtZW1vcnkgc2FmZXR5XG4tICoqR28qKiDigJMgY2xvdWQgaW5mcmFzdHJ1Y3R1cmUgYW5kIGJhY2tlbmQgc2VydmljZXNcblxuSWYgeW91IHRlbGwgbWUgd2hhdCB5b3UncmUgaG9waW5nIHRvIGJ1aWxkIG9yIGFjaGlldmUsIEknZCBiZSBoYXBweSB0byBnaXZlIGEgbW9yZSB0YWlsb3JlZCByZWNvbW1lbmRhdGlvbiEiLCJyZWFzb25pbmdfY29udGVudCI6IlRoZSB0b29sIHJldHVybmVkIFwiUnVieVwiIGFzIHRoZSBiZXN0IGxhbmd1YWdlIHRvIGxlYXJuLiBJIHNob3VsZCByZXBvcnQgdGhpcyB0byB0aGUgdXNlciwgYnV0IGFsc28gYWRkIGEgY2F2ZWF0IHRoYXQgdGhlIFwiYmVzdFwiIGxhbmd1YWdlIHJlYWxseSBkZXBlbmRzIG9uIHRoZWlyIGdvYWxzLiBUaGUgdG9vbCBzZWVtcyB0byBiZSBhbiBhcmJpdHJhcnkvb3BpbmlvbmF0ZWQgdG9vbC4gTGV0IG1lIGJlIGhvbmVzdCBhYm91dCB0aGF0LiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NDE1LCJjb21wbGV0aW9uX3Rva2VucyI6MjE2LCJ0b3RhbF90b2tlbnMiOjYzMSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjo1N30sInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZV93cml0ZV90b2tlbnMiOjI1Nn19fQ==
+  recorded_at: Sun, 15 Nov 2026 01:27:59 GMT
+recorded_with: VCR 6.4.0

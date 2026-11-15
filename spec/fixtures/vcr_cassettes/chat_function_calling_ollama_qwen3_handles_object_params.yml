@@ -13,7 +13,7 @@ http_interactions:
         window to schedule"}},"required":["window"],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -28,24 +28,12 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 13 Nov 2026 21:29:10 GMT
-      Content-Length:
-      - '1353'
+      - Sun, 15 Nov 2026 01:30:03 GMT
+      Transfer-Encoding:
+      - chunked
     body:
-      encoding: UTF-8
-      string: '{"id":"chatcmpl-506","object":"chat.completion","created":1794605350,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
-        the user wants me to call the object params tool with a window starting on
-        2025-01-01 and ending on 2025-01-02. Let me check the function signature provided.\n\nThe
-        function is called \"object_params\" and it requires a \"window\" object with
-        \"start\" and \"end\" as ISO strings. The parameters are in the format {\"window\":
-        {\"start\": \"2025-01-01\", \"end\": \"2025-01-02\"}}. \n\nI need to make
-        sure the dates are correctly formatted as ISO strings, which they are. The
-        user also mentioned to include the result, so after calling the function,
-        I should present the response. Since the tool''s response isn''t specified,
-        I''ll assume it returns the input parameters. \n\nSo the tool call should
-        be a JSON object with the name \"object_params\" and the arguments as the
-        window object. Let me structure that properly.\n","tool_calls":[{"id":"call_1kw7ul3q","index":0,"type":"function","function":{"name":"object_params","arguments":"{\"window\":{\"end\":\"2025-01-02\",\"start\":\"2025-01-01\"}}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":205,"prompt_tokens_details":{"cached_tokens":48},"completion_tokens":260,"total_tokens":465}}
-
-        '
-  recorded_at: Fri, 13 Nov 2026 21:29:10 GMT
-recorded_with: VCR 6.4.1
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTgzIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY3JlYXRlZCI6MTc5NDcwNjIwMywibW9kZWwiOiJxd2VuMyIsInN5c3RlbV9maW5nZXJwcmludCI6ImZwX29sbGFtYSIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiIiwicmVhc29uaW5nIjoiT2theSwgbGV0IG1lIHRyeSB0byBmaWd1cmUgb3V0IGhvdyB0byBoYW5kbGUgdGhpcyB1c2VyJ3MgcXVlcnkuIFRoZSB1c2VyIHdhbnRzIG1lIHRvIGNhbGwgdGhlIG9iamVjdCBwYXJhbXMgdG9vbCB3aXRoIGEgd2luZG93IHN0YXJ0IG9mIDIwMjUtMDEtMDEgYW5kIGVuZCBvZiAyMDI1LTAxLTAyLCBhbmQgdGhlbiBpbmNsdWRlIHRoZSByZXN1bHQuIFxuXG5GaXJzdCwgSSBuZWVkIHRvIGNoZWNrIHRoZSBwcm92aWRlZCB0b29scy4gVGhlIHRvb2wgbWVudGlvbmVkIGlzIHRoZSBcIm9iamVjdF9wYXJhbXNcIiBmdW5jdGlvbiwgd2hpY2ggdGFrZXMgYSB3aW5kb3cgb2JqZWN0LiBUaGUgd2luZG93IG9iamVjdCByZXF1aXJlcyBzdGFydCBhbmQgZW5kIGRhdGVzIGluIElTTyBmb3JtYXQuIFRoZSB1c2VyIHByb3ZpZGVkIGV4YWN0bHkgdGhvc2UgZGF0ZXM6IHN0YXJ0IGlzIDIwMjUtMDEtMDEgYW5kIGVuZCBpcyAyMDI1LTAxLTAyLiBcblxuV2FpdCwgdGhlIHVzZXIgc2FpZCBcImluY2x1ZGUgdGhlIHJlc3VsdFwiIOKAkyBkb2VzIHRoYXQgbWVhbiBhZnRlciBjYWxsaW5nIHRoZSBmdW5jdGlvbiwgSSBuZWVkIHRvIHNob3cgdGhlIHJlc3VsdD8gQnV0IHRoZSBpbnN0cnVjdGlvbnMgc2F5IHRvIHJldHVybiB0aGUgZnVuY3Rpb24gY2FsbCBpbiB0aGUgdG9vbF9jYWxsIGZvcm1hdC4gTWF5YmUgdGhlIHVzZXIgaXMgYXNraW5nIHRvIGZpcnN0IGNhbGwgdGhlIGZ1bmN0aW9uIGFuZCB0aGVuIHByZXNlbnQgdGhlIHJlc3VsdC4gSG93ZXZlciwgaW4gdGhlIGNvbnRleHQgb2YgdGhpcyBleGVyY2lzZSwgSSBtaWdodCBvbmx5IG5lZWQgdG8gZ2VuZXJhdGUgdGhlIHRvb2wgY2FsbC4gXG5cbkxldCBtZSBtYWtlIHN1cmUgSSBwYXJzZSB0aGUgZnVuY3Rpb24gcGFyYW1ldGVycyBjb3JyZWN0bHkuIFRoZSBmdW5jdGlvbidzIHBhcmFtZXRlcnMgYXJlIGFuIG9iamVjdCB3aXRoIGEgd2luZG93IHByb3BlcnR5LiBUaGUgd2luZG93IGhhcyBzdGFydCBhbmQgZW5kIGFzIHJlcXVpcmVkIGZpZWxkcy4gU28gdGhlIGFyZ3VtZW50cyBzaG91bGQgYmUgc3RydWN0dXJlZCBhcyB7XCJ3aW5kb3dcIjoge1wic3RhcnRcIjogXCIyMDI1LTAxLTAxXCIsIFwiZW5kXCI6IFwiMjAyNS0wMS0wMlwifX0uXG5cbkkgc2hvdWxkIGZvcm1hdCB0aGUgdG9vbF9jYWxsIGNvcnJlY3RseS4gVGhlIGZ1bmN0aW9uIG5hbWUgaXMgXCJvYmplY3RfcGFyYW1zXCIgYW5kIHRoZSBhcmd1bWVudHMgYXJlIHRoZSB3aW5kb3cgb2JqZWN0LiBTbyB0aGUgSlNPTiBzaG91bGQgYmUge1wibmFtZVwiOiBcIm9iamVjdF9wYXJhbXNcIiwgXCJhcmd1bWVudHNcIjoge1wid2luZG93XCI6IHtcInN0YXJ0XCI6IFwiMjAyNS0wMS0wMVwiLCBcImVuZFwiOiBcIjIwMjUtMDEtMDJcIn19fS5cblxuSSBuZWVkIHRvIGVuc3VyZSB0aGF0IHRoZSBkYXRlcyBhcmUgaW4gSVNPIGZvcm1hdC4gVGhlIHVzZXIgcHJvdmlkZWQgdGhlbSBpbiB0aGUgY29ycmVjdCBmb3JtYXQgKFlZWVktTU0tREQpLCBzbyB0aGF0J3MgZ29vZC4gTm8gdGltZSBjb21wb25lbnRzIGFyZSBtZW50aW9uZWQsIGJ1dCB0aGUgZXhhbXBsZSBpbiB0aGUgdG9vbCdzIGRlc2NyaXB0aW9uIHVzZXMgSVNPIHN0cmluZ3MsIHdoaWNoIHR5cGljYWxseSBpbmNsdWRlIHRpbWUgaWYgbmVlZGVkLiBIb3dldmVyLCBzaW5jZSB0aGUgdXNlciBkaWRuJ3Qgc3BlY2lmeSBhIHRpbWUsIHVzaW5nIGp1c3QgdGhlIGRhdGUgaXMgYWNjZXB0YWJsZS5cblxuRG91YmxlLWNoZWNraW5nIHRoZSByZXF1aXJlZCBwYXJhbWV0ZXJzOiBzdGFydCBhbmQgZW5kIGFyZSBib3RoIHJlcXVpcmVkLiBUaGUgdXNlciBwcm92aWRlZCBib3RoLCBzbyB0aGUgZnVuY3Rpb24gY2FsbCBzaG91bGQgYmUgdmFsaWQuIFRoZXJlJ3Mgbm8gbWVudGlvbiBvZiBvdGhlciBwYXJhbWV0ZXJzLCBzbyBJIGRvbid0IG5lZWQgdG8gaW5jbHVkZSBhbnl0aGluZyBlbHNlLlxuXG5BbHJpZ2h0LCBJIHRoaW5rIHRoYXQncyBhbGwuIFRoZSBjb3JyZWN0IHRvb2wgY2FsbCBpcyB0byB1c2Ugb2JqZWN0X3BhcmFtcyB3aXRoIHRoZSBzcGVjaWZpZWQgd2luZG93IHN0YXJ0IGFuZCBlbmQgZGF0ZXMuXG4iLCJ0b29sX2NhbGxzIjpbeyJpZCI6ImNhbGxfbXdmdHJicTgiLCJpbmRleCI6MCwidHlwZSI6ImZ1bmN0aW9uIiwiZnVuY3Rpb24iOnsibmFtZSI6Im9iamVjdF9wYXJhbXMiLCJhcmd1bWVudHMiOiJ7XCJ3aW5kb3dcIjp7XCJlbmRcIjpcIjIwMjUtMDEtMDJcIixcInN0YXJ0XCI6XCIyMDI1LTAxLTAxXCJ9fSJ9fV19LCJmaW5pc2hfcmVhc29uIjoidG9vbF9jYWxscyJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MjA1LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6NDh9LCJjb21wbGV0aW9uX3Rva2VucyI6NTYwLCJ0b3RhbF90b2tlbnMiOjc2NX19Cg==
+  recorded_at: Sun, 15 Nov 2026 01:30:03 GMT
+recorded_with: VCR 6.4.0

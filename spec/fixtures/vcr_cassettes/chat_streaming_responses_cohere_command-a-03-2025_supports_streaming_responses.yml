@@ -9,7 +9,7 @@ http_interactions:
         from 1 to 3"}]}],"stream":true}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -38,11 +38,11 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 442dc40facc7ae1d886b3f8301675be9
+      - 3ee7cf52752b0817028dd92c5f263aa8
       Date:
-      - Fri, 13 Nov 2026 21:21:32 GMT
+      - Sun, 15 Nov 2026 01:19:46 GMT
       X-Envoy-Upstream-Service-Time:
-      - '113'
+      - '142'
       Server:
       - envoy
       Via:
@@ -55,7 +55,7 @@ http_interactions:
       encoding: UTF-8
       string: |+
         event: message-start
-        data: {"id":"215ab11c-4d97-432c-b151-2626c4a22956","type":"message-start","delta":{"message":{"role":"assistant","content":[],"tool_plan":"","tool_calls":[],"citations":[]}}}
+        data: {"id":"046a81d3-785d-4149-95c9-01ab11cb789c","type":"message-start","delta":{"message":{"role":"assistant","content":[],"tool_plan":"","tool_calls":[],"citations":[]}}}
 
         event: content-start
         data: {"type":"content-start","index":0,"delta":{"message":{"content":{"type":"text","text":""}}}}
@@ -73,7 +73,10 @@ http_interactions:
         data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"'s"}}}}
 
         event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" counting"}}}}
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" the"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" count"}}}}
 
         event: content-delta
         data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" from"}}}}
@@ -94,49 +97,28 @@ http_interactions:
         data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"\n\n1"}}}}
 
         event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"  \n2"}}}}
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":","}}}}
 
         event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"  \n3"}}}}
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" 2"}}}}
 
         event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"  \n\nIs"}}}}
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":","}}}}
 
         event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" there"}}}}
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" 3"}}}}
 
         event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" anything"}}}}
-
-        event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" else"}}}}
-
-        event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" I"}}}}
-
-        event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" can"}}}}
-
-        event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" help"}}}}
-
-        event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" you"}}}}
-
-        event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" with"}}}}
-
-        event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"?"}}}}
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"."}}}}
 
         event: content-end
         data: {"type":"content-end","index":0}
 
         event: message-end
-        data: {"type":"message-end","delta":{"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":7,"output_tokens":30},"tokens":{"input_tokens":502,"output_tokens":33},"cached_tokens":464}}}
+        data: {"type":"message-end","delta":{"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":7,"output_tokens":22},"tokens":{"input_tokens":502,"output_tokens":25},"cached_tokens":464}}}
 
         data: [DONE]
 
-  recorded_at: Fri, 13 Nov 2026 21:21:32 GMT
-recorded_with: VCR 6.4.1
+  recorded_at: Sun, 15 Nov 2026 01:19:47 GMT
+recorded_with: VCR 6.4.0
 ...

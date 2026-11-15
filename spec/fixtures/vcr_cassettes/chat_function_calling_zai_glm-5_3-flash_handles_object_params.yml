@@ -13,7 +13,7 @@ http_interactions:
         window to schedule"}},"required":["window"],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -28,7 +28,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:34:14 GMT
+      - Sun, 15 Nov 2026 01:35:18 GMT
       Content-Type:
       - application/json; charset=UTF-8
       Transfer-Encoding:
@@ -40,7 +40,7 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       Ga-Traceid:
-      - 1fef12220eb515e27212229888110ce4
+      - 2c15166131e230b083acc18a3508fd30
       Vary:
       - Accept-Encoding
       - Access-Control-Request-Headers
@@ -51,17 +51,14 @@ http_interactions:
       - Origin
       - Origin
       X-Log-Id:
-      - 20261114053408da9d7fe90fc341d3
+      - 20261115093513f1f69c4e579b4f98
       X-Request-Id:
       - "<X_REQUEST_ID>"
     body:
       encoding: ASCII-8BIT
       string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":"","reasoning_content":"The
-        user wants me to call the object_params tool with a window start of 2025-01-01
-        and end of 2025-01-02, and include the result. The window requires ISO strings
-        - I''ll use \"2025-01-01\" and \"2025-01-02\" as given, though technically
-        full ISO might include time. The user specified dates, so I''ll pass them
-        as given.","role":"assistant","tool_calls":[{"function":{"arguments":"{\"window\":{\"end\":
-        \"2025-01-02\", \"start\": \"2025-01-01\"}}","name":"object_params"},"id":"call_-7080015233950938964","index":0,"type":"function"}]}}],"created":1794605654,"id":"20261114053408da9d7fe90fc341d3","model":"glm-5.3-flash","object":"chat.completion","request_id":"20261114053408da9d7fe90fc341d3","usage":{"completion_tokens":121,"completion_tokens_details":{"reasoning_tokens":88},"prompt_tokens":248,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":369}}'
-  recorded_at: Fri, 13 Nov 2026 21:34:14 GMT
-recorded_with: VCR 6.4.1
+        user wants me to call the object_params tool with window start \"2025-01-01\"
+        and end \"2025-01-02\". Let me make that call.","role":"assistant","tool_calls":[{"function":{"arguments":"{\"window\":{\"end\":
+        \"2025-01-02\", \"start\": \"2025-01-01\"}}","name":"object_params"},"id":"call_-7080002245969836161","index":0,"type":"function"}]}}],"created":1794706518,"id":"20261115093513f1f69c4e579b4f98","model":"glm-5.3-flash","object":"chat.completion","request_id":"20261115093513f1f69c4e579b4f98","usage":{"completion_tokens":70,"completion_tokens_details":{"reasoning_tokens":37},"prompt_tokens":248,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":318}}'
+  recorded_at: Sun, 15 Nov 2026 01:35:18 GMT
+recorded_with: VCR 6.4.0

@@ -9,7 +9,7 @@ http_interactions:
         a person named Alice who is 28 years old"}],"stream":false,"response_format":{"type":"json_schema","json_schema":{"name":"PersonSchemaClass","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"number"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,54 +24,54 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:22:27 GMT
+      - Sun, 15 Nov 2026 01:20:54 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
       Mistral-Correlation-Id:
-      - 01a1d6ca-5753-7e9e-84ca-872a2b284d40
+      - 01a1dcca-fe3a-7c45-bbdd-590b28e0b250
       X-Kong-Request-Id:
-      - 01a1d6ca-5753-7e9e-84ca-872a2b284d40
+      - 01a1dcca-fe3a-7c45-bbdd-590b28e0b250
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '93500'
+      - '97729'
       X-Ratelimit-Tokens-Query-Cost:
       - '41'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
-      - '93'
+      - '92'
       X-Envoy-Upstream-Service-Time:
-      - '256'
+      - '817'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '258'
+      - '818'
       X-Kong-Proxy-Latency:
-      - '15'
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
+      - '13'
       X-Content-Type-Options:
       - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"16a6d52b92f84e659613fca92a0f66e2","created":1794604947,"model":"mistral-small-latest","usage":{"prompt_tokens":27,"total_tokens":41,"completion_tokens":14,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"{\"name\":
+      string: '{"id":"a922c882b80b455786c37c4360e9a341","created":1794705653,"model":"mistral-small-latest","usage":{"prompt_tokens":27,"total_tokens":41,"completion_tokens":14,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"{\"name\":
         \"Alice\", \"age\": 28}"}}]}'
-  recorded_at: Fri, 13 Nov 2026 21:22:27 GMT
-recorded_with: VCR 6.4.1
+  recorded_at: Sun, 15 Nov 2026 01:20:54 GMT
+recorded_with: VCR 6.4.0

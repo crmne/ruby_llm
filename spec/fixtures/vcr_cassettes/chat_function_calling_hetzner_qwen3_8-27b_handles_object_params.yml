@@ -13,7 +13,7 @@ http_interactions:
         window to schedule"}},"required":["window"],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -28,7 +28,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:25:29 GMT
+      - Sun, 15 Nov 2026 01:25:08 GMT
       X-Llm-D-Flow-Queue-Duration-Ms:
       - '0'
       Vary:
@@ -38,15 +38,8 @@ http_interactions:
       Transfer-Encoding:
       - chunked
     body:
-      encoding: UTF-8
-      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":407,"completion_tokens":231,"total_tokens":638,"completion_tokens_details":{"reasoning_tokens":173},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"tool_calls":[{"id":"chatcmpl-tool-ad748c1ec96bfb0a","type":"function","function":{"name":"object_params","arguments":"{\"window\":
-        {\"start\": \"2025-01-01\", \"end\": \"2025-01-02\"}}"}}],"reasoning":"The
-        user is asking to call the object_params tool with a window whose start is
-        2025-01-01 and end is 2025-01-02, and to include the result.\n\nThe schema
-        requires window.start and window.end as ISO strings. The user provided dates
-        without a time, so I''ll use \"2025-01-01\" and \"2025-01-02\" as-is, or possibly
-        ISO format with a time like \"2025-01-01T00:00:00Z\". The description says
-        \"ISO start\" and \"ISO end\". Plain dates are valid ISO 8601, so I''ll use
-        the given values as they are.\n\nI''ll make the call.\n"},"index":0,"logprobs":null,"finish_reason":"tool_calls","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-e8f7e0ec-ccbb-4b42-b3a9-eb6b607a03dc","object":"chat.completion","created":1794605130,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
-  recorded_at: Fri, 13 Nov 2026 21:25:32 GMT
-recorded_with: VCR 6.4.1
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJtb2RlbCI6IlF3ZW4vUXdlbjMuOC0yN0IiLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo0MDcsImNvbXBsZXRpb25fdG9rZW5zIjoyNTcsInRvdGFsX3Rva2VucyI6NjY0LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjE3OX0sInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowLCJjcmVhdGVkX2NhY2hlX3Rva2VucyI6MCwibXVsdGltb2RhbF90b2tlbnMiOm51bGx9fSwiY2hvaWNlcyI6W3sibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwicmVmdXNhbCI6bnVsbCwiYW5ub3RhdGlvbnMiOm51bGwsImF1ZGlvIjpudWxsLCJmdW5jdGlvbl9jYWxsIjpudWxsLCJ0b29sX2NhbGxzIjpbeyJpZCI6ImNoYXRjbXBsLXRvb2wtOTQzMjA4NmY4NTBkMTI5YiIsInR5cGUiOiJmdW5jdGlvbiIsImZ1bmN0aW9uIjp7Im5hbWUiOiJvYmplY3RfcGFyYW1zIiwiYXJndW1lbnRzIjoie1wid2luZG93XCI6IHtcInN0YXJ0XCI6IFwiMjAyNS0wMS0wMVQwMDowMDowMFpcIiwgXCJlbmRcIjogXCIyMDI1LTAxLTAyVDAwOjAwOjAwWlwifX0ifX1dLCJyZWFzb25pbmciOiJUaGUgdXNlciBpcyBhc2tpbmcgdG8gY2FsbCB0aGUgb2JqZWN0X3BhcmFtcyB0b29sIHdpdGggYSB0aW1lIHdpbmRvdyBmcm9tIDIwMjUtMDEtMDEgdG8gMjAyNS0wMS0wMiwgYW5kIHRvIGluY2x1ZGUgdGhlIHJlc3VsdC4gVGhlIHRvb2wgcmVxdWlyZXMgYW4gb2JqZWN0IHdpdGggYW4gSVNPLWZvcm1hdCBzdGFydCBhbmQgZW5kIGluIHRoZSBcIndpbmRvd1wiIHBhcmFtZXRlci5cblxuTGV0J3MgdHJ5IGNhbGxpbmcgaXQ6IHdpbmRvdyBzdGFydCBpcyAyMDI1LTAxLTAxLCBlbmQgaXMgMjAyNS0wMS0wMi4gSVNPIGZvcm1hdCB3b3VsZCBiZSAyMDI1LTAxLTAxVDAwOjAwOjAwWiBhbmQgMjAyNS0wMS0wMlQwMDowMDowMFosIG9yIGp1c3QgZGF0ZXMgYWxvbmUgbWlnaHQgYmUgZmluZSB0b28uIFwiSVNPIHN0YXJ0XCIg4oCUIGZvciBkYXRlLW9ubHksIEknbGwgZ28gd2l0aCBhIGZ1bGwgSVNPIHRpbWVzdGFtcCBpbmNsdWRpbmcgdGhlIHRpbWUuXG4ifSwiaW5kZXgiOjAsImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoidG9vbF9jYWxscyIsInN0b3BfcmVhc29uIjpudWxsLCJ0b2tlbl9pZHMiOm51bGwsInJvdXRlZF9leHBlcnRzIjpudWxsfV0sImlkIjoiY2hhdGNtcGwtOTA4MmNmZGEtMjhhOS00NjFiLWIwMDUtNDcxNzdhZDQ2YzkyIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY3JlYXRlZCI6MTc5NDcwNTkwOCwic3lzdGVtX2ZpbmdlcnByaW50IjpudWxsLCJwcm9tcHRfbG9ncHJvYnMiOm51bGwsInByb21wdF90b2tlbl9pZHMiOm51bGwsInByb21wdF90ZXh0IjpudWxsLCJrdl90cmFuc2Zlcl9wYXJhbXMiOm51bGwsImVjX3RyYW5zZmVyX3BhcmFtcyI6bnVsbCwibWV0cmljcyI6bnVsbH0=
+  recorded_at: Sun, 15 Nov 2026 01:25:14 GMT
+recorded_with: VCR 6.4.0

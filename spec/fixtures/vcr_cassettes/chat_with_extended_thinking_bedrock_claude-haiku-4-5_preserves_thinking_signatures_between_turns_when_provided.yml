@@ -9,11 +9,11 @@ http_interactions:
         is 5 + 3?"}]}],"max_tokens":64000,"thinking":{"type":"enabled","budget_tokens":1024},"anthropic_version":"bedrock-2023-05-31"}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261113T212245Z
+      - 20261115T012040Z
       X-Amz-Content-Sha256:
       - 4c48e49b5192fb66ceab1ceeb59ee792df68b1a91fd05f84cd03612e75ee4a4a
       Authorization:
@@ -29,31 +29,31 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:22:46 GMT
+      - Sun, 15 Nov 2026 01:20:41 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '1023'
+      - '1027'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 40d06cc3-768f-446e-9726-f26c8f1122aa
+      - '08643554-c201-4d79-b3ac-0f44742c8471'
       X-Amzn-Bedrock-Invocation-Latency:
-      - '529'
+      - '504'
       X-Amzn-Bedrock-Cache-Write-Input-Token-Count:
       - '0'
       X-Amzn-Bedrock-Cache-Read-Input-Token-Count:
       - '0'
       X-Amzn-Bedrock-Output-Token-Count:
-      - '38'
+      - '39'
       X-Amzn-Bedrock-Input-Token-Count:
       - '45'
     body:
       encoding: UTF-8
-      string: '{"model":"anthropic.claude-haiku-4-5-20251001-v1:0","id":"msg_bdrk_x6cwks2yz2n77n3qcr5m6ihya55nlfnfwoztoxkcomcwry2op6yq","type":"message","role":"assistant","content":[{"type":"thinking","thinking":"This
-        is a simple arithmetic question. 5 + 3 = 8.","signature":"EpcCCoQBCBMQARgCKkCyqtg4YSovHjJWjT5xWNBV0HDNY0NkeiSISwchPehu+JHqF14GKTlprSnmlk1ohL26KlGnQRhwg33jqkxTjsJiMhljbGF1ZGUtaGFpa3UtNC01LTIwMjUxMDAxOABCCHRoaW5raW5nWgw4MTYyNzA0NTgwNjaoAab/3dcGEgzfKYKV0EQm15btIuIaDHwFkNlMyavOHJJ52SIwKW4VBtTb5NT8iefYNbb5/v/zac4b1APX/w2RhPCLH6Da2d80VArbSFCmf6p9xp6KKkCzMN8vtvnU+6xpVqi+PNzNnp82hjvYeSrabJfujwaDKbL3OPcoLH76LafyjEBv9TsSmaY+ZqYQCU+FmluwevdBGAE="},{"type":"text","text":"5
-        + 3 = 8"}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":45,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":38,"output_tokens_details":{"thinking_tokens":23},"service_tier":"standard"}}'
-  recorded_at: Fri, 13 Nov 2026 21:22:46 GMT
+      string: '{"model":"anthropic.claude-haiku-4-5-20251001-v1:0","id":"msg_bdrk_lrp2xjrsdqmepcviqbuhck6jgvjy2llimi5w5ao7lahschghzwla","type":"message","role":"assistant","content":[{"type":"thinking","thinking":"This
+        is a simple arithmetic question. 5 + 3 = 8.","signature":"EpcCCoQBCBMQARgCKkCyqtg4YSovHjJWjT5xWNBV0HDNY0NkeiSISwchPehu+JHqF14GKTlprSnmlk1ohL26KlGnQRhwg33jqkxTjsJiMhljbGF1ZGUtaGFpa3UtNC01LTIwMjUxMDAxOABCCHRoaW5raW5nWgw4MTYyNzA0NTgwNjaoAemR5NcGEgwTdeFu+seh1BVnXCYaDN3KBXpRuNSh4z25RiIwpg4eFoc3p7RTll/6GYtkbxW3Vsa0FKXG/xNosrZxh1JKdjVDkkjdh+kCDXuD0NA5KkDt46A7FY5TMxqiUkryEALm5YM/eJ5YdVnV7IhuwlnZ+13crQoOBw92oTOwB8xRTeXrUMURJrzEHVUGGydujbhHGAE="},{"type":"text","text":"5
+        + 3 = **8**"}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":45,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":39,"output_tokens_details":{"thinking_tokens":23},"service_tier":"standard"}}'
+  recorded_at: Sun, 15 Nov 2026 01:20:41 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/invoke
@@ -61,18 +61,18 @@ http_interactions:
       encoding: UTF-8
       string: '{"messages":[{"role":"user","content":[{"type":"text","text":"What
         is 5 + 3?"}]},{"role":"assistant","content":[{"type":"thinking","thinking":"This
-        is a simple arithmetic question. 5 + 3 = 8.","signature":"EpcCCoQBCBMQARgCKkCyqtg4YSovHjJWjT5xWNBV0HDNY0NkeiSISwchPehu+JHqF14GKTlprSnmlk1ohL26KlGnQRhwg33jqkxTjsJiMhljbGF1ZGUtaGFpa3UtNC01LTIwMjUxMDAxOABCCHRoaW5raW5nWgw4MTYyNzA0NTgwNjaoAab/3dcGEgzfKYKV0EQm15btIuIaDHwFkNlMyavOHJJ52SIwKW4VBtTb5NT8iefYNbb5/v/zac4b1APX/w2RhPCLH6Da2d80VArbSFCmf6p9xp6KKkCzMN8vtvnU+6xpVqi+PNzNnp82hjvYeSrabJfujwaDKbL3OPcoLH76LafyjEBv9TsSmaY+ZqYQCU+FmluwevdBGAE="},{"type":"text","text":"5
-        + 3 = 8"}]},{"role":"user","content":[{"type":"text","text":"Now multiply
+        is a simple arithmetic question. 5 + 3 = 8.","signature":"EpcCCoQBCBMQARgCKkCyqtg4YSovHjJWjT5xWNBV0HDNY0NkeiSISwchPehu+JHqF14GKTlprSnmlk1ohL26KlGnQRhwg33jqkxTjsJiMhljbGF1ZGUtaGFpa3UtNC01LTIwMjUxMDAxOABCCHRoaW5raW5nWgw4MTYyNzA0NTgwNjaoAemR5NcGEgwTdeFu+seh1BVnXCYaDN3KBXpRuNSh4z25RiIwpg4eFoc3p7RTll/6GYtkbxW3Vsa0FKXG/xNosrZxh1JKdjVDkkjdh+kCDXuD0NA5KkDt46A7FY5TMxqiUkryEALm5YM/eJ5YdVnV7IhuwlnZ+13crQoOBw92oTOwB8xRTeXrUMURJrzEHVUGGydujbhHGAE="},{"type":"text","text":"5
+        + 3 = **8**"}]},{"role":"user","content":[{"type":"text","text":"Now multiply
         that by 2"}]}],"max_tokens":64000,"thinking":{"type":"enabled","budget_tokens":1024},"anthropic_version":"bedrock-2023-05-31"}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261113T212246Z
+      - 20261115T012041Z
       X-Amz-Content-Sha256:
-      - 9ee4423b253bd391a1ae71c1bf38fd6ade9afbe050b9e08ee0ebdd667447cf44
+      - adbf62df6ff7452b4ba20aaa0439c39d1932a0fd7aaff9803e204147450b7f7a
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
@@ -86,28 +86,28 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:22:47 GMT
+      - Sun, 15 Nov 2026 01:20:42 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '1091'
+      - '1095'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - e1e33067-0182-41d5-9058-69590423ff64
+      - dd5a7782-0ec6-4e55-a92c-e5c27a0dec41
       X-Amzn-Bedrock-Invocation-Latency:
-      - '508'
+      - '543'
       X-Amzn-Bedrock-Cache-Write-Input-Token-Count:
       - '0'
       X-Amzn-Bedrock-Cache-Read-Input-Token-Count:
       - '0'
       X-Amzn-Bedrock-Output-Token-Count:
-      - '47'
+      - '48'
       X-Amzn-Bedrock-Input-Token-Count:
-      - '67'
+      - '68'
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJtb2RlbCI6ImFudGhyb3BpYy5jbGF1ZGUtaGFpa3UtNC01LTIwMjUxMDAxLXYxOjAiLCJpZCI6Im1zZ19iZHJrXzNuY2dtYmJuZndtYmtlbHJhb2FhNHJqYjdjZ2g0MnRmYXkyeWEyYmV2NDdzdDJvc3lkZXEiLCJ0eXBlIjoibWVzc2FnZSIsInJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjpbeyJ0eXBlIjoidGhpbmtpbmciLCJ0aGlua2luZyI6IlRoZSB1c2VyIGlzIGFza2luZyBtZSB0byBtdWx0aXBseSB0aGUgcHJldmlvdXMgcmVzdWx0ICg4KSBieSAyLlxuXG44IMOXIDIgPSAxNiIsInNpZ25hdHVyZSI6IkVyTUNDb1FCQ0JNUUFSZ0NLa0RwdUhjQnJPTkltVTN3aUNJOUlrbVkrZDc3VlFob3NSbWo0WkN1QmVPejZ3eWVDQ29OUnd1T1VRS0g5d05PdXdmUE9FQUgxakVIbjdRV0Q4RkMvZE92TWhsamJHRjFaR1V0YUdGcGEzVXROQzAxTFRJd01qVXhNREF4T0FCQ0NIUm9hVzVyYVc1bldndzRNVFl5TnpBME5UZ3dOamFvQWFmLzNkY0dFZ3dPdWdvWU5RM0R1Z1ZISTZFYUROTUlzZHdVcXk3Q2o1SW9JQ0l3MFNWT0tObkRoNG1VNnBhV2hzaGp3M2svdDNZNklDUkNTNUc1ODVoeStWWlVRR0VabWF5OC91cW1tNWFCTHBLdEtseHZNV29rTUVvOUFvY3ZjNWZhRXhEN2w3UVdQZFd3UGlCdDUzOUwwOXR2bnlUMmJNWlkyV2YySllRaHNTL2xidnNMZmJNSWxSazFxOFEwM3E5TXpVM0ZUd2FEaUZjWFIySzRkQVJQd0F6Ujg5WW96eWtIZHNmc20xQVVxaGdCIn0seyJ0eXBlIjoidGV4dCIsInRleHQiOiI4IMOXIDIgPSAxNiJ9XSwiY29udGFpbmVyIjpudWxsLCJzdG9wX3JlYXNvbiI6ImVuZF90dXJuIiwic3RvcF9zZXF1ZW5jZSI6bnVsbCwic3RvcF9kZXRhaWxzIjpudWxsLCJ1c2FnZSI6eyJpbnB1dF90b2tlbnMiOjY3LCJjYWNoZV9jcmVhdGlvbl9pbnB1dF90b2tlbnMiOjAsImNhY2hlX3JlYWRfaW5wdXRfdG9rZW5zIjowLCJjYWNoZV9jcmVhdGlvbiI6eyJlcGhlbWVyYWxfNW1faW5wdXRfdG9rZW5zIjowLCJlcGhlbWVyYWxfMWhfaW5wdXRfdG9rZW5zIjowfSwib3V0cHV0X3Rva2VucyI6NDcsIm91dHB1dF90b2tlbnNfZGV0YWlscyI6eyJ0aGlua2luZ190b2tlbnMiOjMzfSwic2VydmljZV90aWVyIjoic3RhbmRhcmQifX0=
-  recorded_at: Fri, 13 Nov 2026 21:22:47 GMT
-recorded_with: VCR 6.4.1
+        eyJtb2RlbCI6ImFudGhyb3BpYy5jbGF1ZGUtaGFpa3UtNC01LTIwMjUxMDAxLXYxOjAiLCJpZCI6Im1zZ19iZHJrX2g1Y2s1MmFkamdpNXhwcHd3d21wM3JicmtybDQ1bXc3M2g1djc2bzVoaHhxaHRieWh3NXEiLCJ0eXBlIjoibWVzc2FnZSIsInJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjpbeyJ0eXBlIjoidGhpbmtpbmciLCJ0aGlua2luZyI6IlRoZSB1c2VyIGlzIGFza2luZyBtZSB0byBtdWx0aXBseSB0aGUgcHJldmlvdXMgYW5zd2VyICg4KSBieSAyLlxuXG44IMOXIDIgPSAxNiIsInNpZ25hdHVyZSI6IkVyTUNDb1FCQ0JNUUFSZ0NLa0N3dEFHSHIwWEZXQ2lDTWV0ZithL0gzVmx5Y1M1NjN5K3Z4SGFkV2lDd1JmV0EzaUU4WityWEw1UU9pdWRVUXYva2VPSVI0N1lIR0xnZkQ3dnpydjZHTWhsamJHRjFaR1V0YUdGcGEzVXROQzAxTFRJd01qVXhNREF4T0FCQ0NIUm9hVzVyYVc1bldndzRNVFl5TnpBME5UZ3dOamFvQWVxUjVOY0dFZ3g2THdmcDdsdFo2YXI5ajBNYURDYnNiSkROeElGMWZCdnRqU0l3T2VOcktBZ1lnN3FRODQvdUtFUWdPRFNLaE1uSG5jUjlYaEpJcXJ2WDlHUGxUY0t4VW1uWWZOSHFSREFESHRUektsd2VTdEVYVk14YUMxcnpXNDVkb2lDYkpLeWgwV1dxUDN2K213bGV1TlFrbnVRaVBvM1gxUUVta01oVSsxTkpYeXBnclJwRFkzdjRoVk1ydVRLOWdGWEtEdFY1MHZLYktjN0pOTXhLVktlTXdwQjM1NysxVVhnYlZ1S2wzeGdCIn0seyJ0eXBlIjoidGV4dCIsInRleHQiOiI4IMOXIDIgPSAqKjE2KioifV0sImNvbnRhaW5lciI6bnVsbCwic3RvcF9yZWFzb24iOiJlbmRfdHVybiIsInN0b3Bfc2VxdWVuY2UiOm51bGwsInN0b3BfZGV0YWlscyI6bnVsbCwidXNhZ2UiOnsiaW5wdXRfdG9rZW5zIjo2OCwiY2FjaGVfY3JlYXRpb25faW5wdXRfdG9rZW5zIjowLCJjYWNoZV9yZWFkX2lucHV0X3Rva2VucyI6MCwiY2FjaGVfY3JlYXRpb24iOnsiZXBoZW1lcmFsXzVtX2lucHV0X3Rva2VucyI6MCwiZXBoZW1lcmFsXzFoX2lucHV0X3Rva2VucyI6MH0sIm91dHB1dF90b2tlbnMiOjQ4LCJvdXRwdXRfdG9rZW5zX2RldGFpbHMiOnsidGhpbmtpbmdfdG9rZW5zIjozM30sInNlcnZpY2VfdGllciI6InN0YW5kYXJkIn19
+  recorded_at: Sun, 15 Nov 2026 01:20:42 GMT
+recorded_with: VCR 6.4.0

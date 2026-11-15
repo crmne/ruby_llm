@@ -13,7 +13,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true},"strict":false}],"tool_choice":"required"}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -28,7 +28,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:40:58 GMT
+      - Sun, 15 Nov 2026 01:43:07 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -49,6 +49,8 @@ http_interactions:
       - '1800'
       X-Ratelimit-Remaining-Requests:
       - '1800'
+      Cf-Cache-Status:
+      - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Zero-Data-Retention:
@@ -56,56 +58,44 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '520.6'
+      - '281.0'
       X-Metrics-E2e-Ms:
-      - '7311.0'
+      - '5079.9'
       Traceparent:
-      - 00-a5c26e533271d6e00b53c5478e8ee316-4e38535a00014b7f-01
+      - 00-6ee40f2336a81c297d46caf5d92ed6c3-702e727a00136a6a-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
-      Cf-Cache-Status:
-      - DYNAMIC
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1794606051,"completed_at":1794606058,"id":"6039674d-981a-92f4-8645-2a9138c4097f","max_output_tokens":4096,"model":"grok-4.3","object":"response","output":[{"id":"rs_6039674d-981a-92f4-8645-2a9138c4097f","summary":[{"text":"The
-        question concerns the fall of Rome.\n\nThe Western Roman Empire fell in 476
-        AD when Romulus Augustulus was deposed by Odoacer. The Eastern Roman Empire,
-        later known as the Byzantine Empire, lasted until 1453 AD with the fall of
-        Constantinople.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"52cvG+K/ils6rKZiiJ7Fme6MDiiK2VsaY5dRCEhu0reDIkbpg/5pr4KK+dfZc510zc/iP9fwgx9mYjI3UWEhgPzQIgFhsr1eJS7BtGtiXKJqQYsWbT40PGL+qqtv6sudOQyuGIO1i0zO9FncWk7paI9KDv+r49TWJEutkI6MV0UTeSgYSIkn4gg0Z74UTNirtoRUw3RWwhsr69v+13dl811P6thGOGCIB3ZFZfMgdHSqMxdTBk+OwA2GOnBdHufoPSqM8gtsf+8pxEn8Vxf6MO7vvEPvKiLOKYjCoRQpYrTkHTkId/3e+3zDQq2qrkBbkNnrOWjv8AymxtvtdVKF0dVwCfgKQ2kIIs/EIBnpA2e9uclIOCOkQzhqT0rM3F4lTyKBZWF3GO/c/aOJFuy+GdQ5QZCoIUkjDElknUdpUE2g81STTAzFIu2evAIM2Sp1qCwJ7TicjyJAL26+ZyIMai/x+tYPL4LKPD1LIQ+Gux14E0Ak1K+ho3WGSxRVSEiJSYYI37uXsSmby5fffP15+vFX+f7quGHIpn11WD66ojvwhX27DtFRZI+f1HS7K33ylbfB3qPqfX3hk8p0bFO9LfnHCX3ygnPYIWXRXt9mVT9mahIQnwQhA10lBs2aBY4dhVd7q+fChjbKyfzDylvLJiKBYGzB5To1k+hodoKiQolfSEmHEzZhZYZyuwnXg4UErTA5zKUbe8xtbR5lEcG/GLnBTYBCxbQzkhZKOmWIA4HkHGL1VtGH1FMhioBQBVREX1iFocXZYMvy74f/+uSZ4Xv0fxhlbhQ8xXw4aQ/A1nmfknKMTGrJzduuadPTa0+DGwTbuetpD2m0y6Dbp2XQvjA2dkVKNBDnIrpRw7aYuRmJXhxQau7iy/5P3R5LN+/C916OEpsHLpb1hCrHEvHxLjsm1V8wNrg6wtYptpbstDPn5QkqMca0CpyYnIO6XKrQiRC3ePShksobepo086vKr9IRqvhgRXE4PeUINVy24G1cx5NXka5pa9CDPG4qglTNEjFTSRpJqq7lDIg2luoFzWmxpGOTVmYZmICRZTd1jpYKSlG1eB9FSOsTF7clsxnVm1Dhww+yLwdQRGdO2vEiQQWLST46F+T7h0cia6HWVYCea08dps2CjrYF3eJ6IzcLnhQca8TqsqZMXD6yMZ8LDueCnhsi54IhVjufBYN0Gq8SJ5HhNenKuSDkAqw7csiWCqPwPu87+Y+2XZHSCYzItJzzyqZXE3WgnSejYnIndu1eu9q0y0juCsGMLu0CTGsvQ7bnRcM1je3pdqMwOS1d/0otX2j7IJjTO5sKxICHRkN0LsCwo7sqGM10ZQ1wppk/qWW9FcjdZ+iFy94Jdy9IMWZWJ2gMiolYw6BQRd+IUdCjAP7TU2/IUIk/QM7BdE8xCE57lyUUP1MNbA"},{"content":[{"type":"output_text","text":"476
-        AD (specifically, September 4, when the last Western Roman emperor, Romulus
-        Augustulus, was deposed). \n\nNote that the Eastern Roman (Byzantine) Empire
-        continued until 1453.476 AD (Western Roman Empire; conventional date when
-        Romulus Augustulus was deposed). The Eastern Roman Empire lasted until 1453.
-        \n\n(Note: the weather tool is irrelevant here.)","logprobs":[],"annotations":[]}],"id":"msg_6039674d-981a-92f4-8645-2a9138c4097f","role":"assistant","type":"message","status":"completed"},{"arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}","call_id":"call-0c19a8ee-4a82-483e-908c-50864e5d5cef-0","name":"weather","type":"function_call","id":"fc_6039674d-981a-92f4-8645-2a9138c4097f_0","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"required","tools":[{"type":"function","description":"Gets
+      string: '{"created_at":1794706982,"completed_at":1794706987,"id":"3e55b03c-2cac-9ddb-a2af-c194a4fae6d9","max_output_tokens":4096,"model":"grok-4.3","object":"response","output":[{"id":"rs_3e55b03c-2cac-9ddb-a2af-c194a4fae6d9","summary":[{"text":"Determining
+        the date of the fall of Rome.\n\nThe fall of the Western Roman Empire is generally
+        dated to 476 AD. The Eastern Roman Empire, or Byzantine Empire, continued
+        until 1453.\n\nThe strict tool requirement conflicts with the historical question.
+        I will answer directly.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"3HYQXuhCN9axFKBs4KQiTCDWtd3MWZB2/GCUtb1tZW3uCyuDfiNyaIh1MzGcyTmjLg89W3JwAy/Z1RVNvYkbQVgx+c9KTFOKFROfOiElrH7ffgBAeNoo63SitynONy7rZdr9qe2BO4X1DxVpyerD2rHBzBXvFylk8P7DARYUJdrJF0Vn8BPDatflF8G7KKD8w9ZKhOUE2KK4e0PH/OsldaYk0JYk/dhRklvzkL+qLcL2l5qsdMfLmslqcOPZhu/pLg2N1dubfvc0tQm7NpzCl2iIvGnq8IqXaKUCUKNUCGf2TY8/If/q/7J0kbXMuPxUSJ3Utv5IJp185sjFR0Nt00OoSiuaZlHSFYuSH7NQRZX+8jhOkU1mRy3a3KVDRF1Ehjj3RI3nsO8PnsmPv9/46lripgURn1N5r1LXG+Gk2QgZzA7x939D776Ms50d6hiGbFThwAPJbZ9MLrOmeBsIAyAQyVM1IfCJttulNe4EiahA+4e7JWo3hbK4uvcyxozKeqYK7lSsbiZTv4xpjpuUfvnIydzp54P6yMcy3JiMZ077EEMdkBLfQ8JgxRaPgg5kqnFkXL2f0dOf0kmuwLcNoq2xq54H8vibY7qunhdwRn6oxP6jivJuohglhAnxYh5ZknH2B2FfjpzlsWvyMUh31Ttjn9sHqi29rHbWSbPFuVEKZfwkgPu6BBPDk1xWQAZMbI9E4w0PWgs84gmMakhDqO1XBwpMOPXEHcGvQ1qADB4zGUmXS8jT9gpk2AXKWXFk26C4dCj3AIkRkhMHpfRWdSuj9lkJGZnP3AA36wdBwOi2CYO36/k1rBiLmv/kvamTEuZeB2r+4/ToZJ9jL5yKYyFoFgYZoj8VrbhoFN6L+rGWh6eLrLphZmSLEhstC3WEzRC+wpyy1/cm0UCK86UKUxKHwi65fPzQMM7IFyqo7SO7WxwpPwzKuSydK5rn5sayynXCeeVZsictJM/Jy6jbrbBqK7avhM8S7TCmCCx6g5fpn9SJh5ZTJxSxUbu8Z+DgDBHfdvszkGm1sh4s/DrWw4XDnNySc8v52zF/fSfmRW7Es5fKPWkQNuW+84cANlA2SVK+AsmuMB74rpYZNzioygWD0cGuj20IyD/kRvdaWOXy+hCKSyPZS2nGvVX+2FWtE/OC09VDCjpK2M79QdpzBA5+AapZbFq/8D/rikTZFIOBxT66gUzB6z3hFYCOD3yemDXBW7j+Ml72UFa4qdjovjPACYPacOXLMQgk/PRwKqAvmeqcKVANZXwh+wiWQVBY3/mDuugVciQo1yTlgKHGhNlPgRKYVf0M1nYlE2tCyujE/qlvZyLjnIP5oRPHxzgBGBdwwWbrsCXDDj+YrVO6tH5aN9DHrItdCm7l9VArurP9LaMkgfx8L6/9nA"},{"arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}","call_id":"call-ae963a84-8839-402e-8be9-f4fabc8d1633-0","name":"weather","type":"function_call","id":"fc_3e55b03c-2cac-9ddb-a2af-c194a4fae6d9_0","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"required","tools":[{"type":"function","description":"Gets
         current weather for a location","name":"weather","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true},"strict":false}],"top_p":0.95,"usage":{"input_tokens":361,"input_tokens_details":{"cached_tokens":128},"output_tokens":640,"output_tokens_details":{"reasoning_tokens":542},"total_tokens":1001,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":19168500,"context_details":{"input_tokens":361,"output_tokens":650}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":"Your
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true},"strict":false}],"top_p":0.95,"usage":{"input_tokens":361,"input_tokens_details":{"cached_tokens":128},"output_tokens":584,"output_tokens_details":{"reasoning_tokens":565},"total_tokens":945,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":17768500,"context_details":{"input_tokens":361,"output_tokens":588}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":"Your
         location is Berlin, at latitude 52.5200 and longitude 13.4050."}'
-  recorded_at: Fri, 13 Nov 2026 21:40:58 GMT
+  recorded_at: Sun, 15 Nov 2026 01:43:07 GMT
 - request:
     method: post
     uri: https://api.x.ai/v1/responses
     body:
       encoding: UTF-8
       string: '{"model":"grok-4.3","input":[{"role":"user","content":"When was the
-        fall of Rome?"},{"type":"reasoning","summary":[{"type":"summary_text","text":"The
-        question concerns the fall of Rome.\n\nThe Western Roman Empire fell in 476
-        AD when Romulus Augustulus was deposed by Odoacer. The Eastern Roman Empire,
-        later known as the Byzantine Empire, lasted until 1453 AD with the fall of
-        Constantinople."}],"encrypted_content":"52cvG+K/ils6rKZiiJ7Fme6MDiiK2VsaY5dRCEhu0reDIkbpg/5pr4KK+dfZc510zc/iP9fwgx9mYjI3UWEhgPzQIgFhsr1eJS7BtGtiXKJqQYsWbT40PGL+qqtv6sudOQyuGIO1i0zO9FncWk7paI9KDv+r49TWJEutkI6MV0UTeSgYSIkn4gg0Z74UTNirtoRUw3RWwhsr69v+13dl811P6thGOGCIB3ZFZfMgdHSqMxdTBk+OwA2GOnBdHufoPSqM8gtsf+8pxEn8Vxf6MO7vvEPvKiLOKYjCoRQpYrTkHTkId/3e+3zDQq2qrkBbkNnrOWjv8AymxtvtdVKF0dVwCfgKQ2kIIs/EIBnpA2e9uclIOCOkQzhqT0rM3F4lTyKBZWF3GO/c/aOJFuy+GdQ5QZCoIUkjDElknUdpUE2g81STTAzFIu2evAIM2Sp1qCwJ7TicjyJAL26+ZyIMai/x+tYPL4LKPD1LIQ+Gux14E0Ak1K+ho3WGSxRVSEiJSYYI37uXsSmby5fffP15+vFX+f7quGHIpn11WD66ojvwhX27DtFRZI+f1HS7K33ylbfB3qPqfX3hk8p0bFO9LfnHCX3ygnPYIWXRXt9mVT9mahIQnwQhA10lBs2aBY4dhVd7q+fChjbKyfzDylvLJiKBYGzB5To1k+hodoKiQolfSEmHEzZhZYZyuwnXg4UErTA5zKUbe8xtbR5lEcG/GLnBTYBCxbQzkhZKOmWIA4HkHGL1VtGH1FMhioBQBVREX1iFocXZYMvy74f/+uSZ4Xv0fxhlbhQ8xXw4aQ/A1nmfknKMTGrJzduuadPTa0+DGwTbuetpD2m0y6Dbp2XQvjA2dkVKNBDnIrpRw7aYuRmJXhxQau7iy/5P3R5LN+/C916OEpsHLpb1hCrHEvHxLjsm1V8wNrg6wtYptpbstDPn5QkqMca0CpyYnIO6XKrQiRC3ePShksobepo086vKr9IRqvhgRXE4PeUINVy24G1cx5NXka5pa9CDPG4qglTNEjFTSRpJqq7lDIg2luoFzWmxpGOTVmYZmICRZTd1jpYKSlG1eB9FSOsTF7clsxnVm1Dhww+yLwdQRGdO2vEiQQWLST46F+T7h0cia6HWVYCea08dps2CjrYF3eJ6IzcLnhQca8TqsqZMXD6yMZ8LDueCnhsi54IhVjufBYN0Gq8SJ5HhNenKuSDkAqw7csiWCqPwPu87+Y+2XZHSCYzItJzzyqZXE3WgnSejYnIndu1eu9q0y0juCsGMLu0CTGsvQ7bnRcM1je3pdqMwOS1d/0otX2j7IJjTO5sKxICHRkN0LsCwo7sqGM10ZQ1wppk/qWW9FcjdZ+iFy94Jdy9IMWZWJ2gMiolYw6BQRd+IUdCjAP7TU2/IUIk/QM7BdE8xCE57lyUUP1MNbA"},{"role":"assistant","content":[{"type":"output_text","text":"476
-        AD (specifically, September 4, when the last Western Roman emperor, Romulus
-        Augustulus, was deposed). \n\nNote that the Eastern Roman (Byzantine) Empire
-        continued until 1453.476 AD (Western Roman Empire; conventional date when
-        Romulus Augustulus was deposed). The Eastern Roman Empire lasted until 1453.
-        \n\n(Note: the weather tool is irrelevant here.)"}]},{"type":"function_call","call_id":"call-0c19a8ee-4a82-483e-908c-50864e5d5cef-0","name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"},{"type":"function_call_output","call_id":"call-0c19a8ee-4a82-483e-908c-50864e5d5cef-0","output":"Current
+        fall of Rome?"},{"type":"reasoning","summary":[{"type":"summary_text","text":"Determining
+        the date of the fall of Rome.\n\nThe fall of the Western Roman Empire is generally
+        dated to 476 AD. The Eastern Roman Empire, or Byzantine Empire, continued
+        until 1453.\n\nThe strict tool requirement conflicts with the historical question.
+        I will answer directly."}],"encrypted_content":"3HYQXuhCN9axFKBs4KQiTCDWtd3MWZB2/GCUtb1tZW3uCyuDfiNyaIh1MzGcyTmjLg89W3JwAy/Z1RVNvYkbQVgx+c9KTFOKFROfOiElrH7ffgBAeNoo63SitynONy7rZdr9qe2BO4X1DxVpyerD2rHBzBXvFylk8P7DARYUJdrJF0Vn8BPDatflF8G7KKD8w9ZKhOUE2KK4e0PH/OsldaYk0JYk/dhRklvzkL+qLcL2l5qsdMfLmslqcOPZhu/pLg2N1dubfvc0tQm7NpzCl2iIvGnq8IqXaKUCUKNUCGf2TY8/If/q/7J0kbXMuPxUSJ3Utv5IJp185sjFR0Nt00OoSiuaZlHSFYuSH7NQRZX+8jhOkU1mRy3a3KVDRF1Ehjj3RI3nsO8PnsmPv9/46lripgURn1N5r1LXG+Gk2QgZzA7x939D776Ms50d6hiGbFThwAPJbZ9MLrOmeBsIAyAQyVM1IfCJttulNe4EiahA+4e7JWo3hbK4uvcyxozKeqYK7lSsbiZTv4xpjpuUfvnIydzp54P6yMcy3JiMZ077EEMdkBLfQ8JgxRaPgg5kqnFkXL2f0dOf0kmuwLcNoq2xq54H8vibY7qunhdwRn6oxP6jivJuohglhAnxYh5ZknH2B2FfjpzlsWvyMUh31Ttjn9sHqi29rHbWSbPFuVEKZfwkgPu6BBPDk1xWQAZMbI9E4w0PWgs84gmMakhDqO1XBwpMOPXEHcGvQ1qADB4zGUmXS8jT9gpk2AXKWXFk26C4dCj3AIkRkhMHpfRWdSuj9lkJGZnP3AA36wdBwOi2CYO36/k1rBiLmv/kvamTEuZeB2r+4/ToZJ9jL5yKYyFoFgYZoj8VrbhoFN6L+rGWh6eLrLphZmSLEhstC3WEzRC+wpyy1/cm0UCK86UKUxKHwi65fPzQMM7IFyqo7SO7WxwpPwzKuSydK5rn5sayynXCeeVZsictJM/Jy6jbrbBqK7avhM8S7TCmCCx6g5fpn9SJh5ZTJxSxUbu8Z+DgDBHfdvszkGm1sh4s/DrWw4XDnNySc8v52zF/fSfmRW7Es5fKPWkQNuW+84cANlA2SVK+AsmuMB74rpYZNzioygWD0cGuj20IyD/kRvdaWOXy+hCKSyPZS2nGvVX+2FWtE/OC09VDCjpK2M79QdpzBA5+AapZbFq/8D/rikTZFIOBxT66gUzB6z3hFYCOD3yemDXBW7j+Ml72UFa4qdjovjPACYPacOXLMQgk/PRwKqAvmeqcKVANZXwh+wiWQVBY3/mDuugVciQo1yTlgKHGhNlPgRKYVf0M1nYlE2tCyujE/qlvZyLjnIP5oRPHxzgBGBdwwWbrsCXDDj+YrVO6tH5aN9DHrItdCm7l9VArurP9LaMkgfx8L6/9nA"},{"type":"function_call","call_id":"call-ae963a84-8839-402e-8be9-f4fabc8d1633-0","name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"},{"type":"function_call_output","call_id":"call-ae963a84-8839-402e-8be9-f4fabc8d1633-0","output":"Current
         weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}],"instructions":"Your location
         is Berlin, at latitude 52.5200 and longitude 13.4050.","stream":false,"store":false,"include":["reasoning.encrypted_content"],"max_output_tokens":4096,"tools":[{"type":"function","name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
@@ -113,7 +103,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -128,7 +118,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:40:59 GMT
+      - Sun, 15 Nov 2026 01:43:09 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -149,6 +139,8 @@ http_interactions:
       - '1800'
       X-Ratelimit-Remaining-Requests:
       - '1800'
+      Cf-Cache-Status:
+      - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Zero-Data-Retention:
@@ -156,31 +148,31 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '328.1'
+      - '390.3'
       X-Metrics-E2e-Ms:
-      - '916.1'
+      - '1566.8'
       Traceparent:
-      - 00-ec76f80ca1146aac0db9122f6bb35aa8-93d5cf8c00010a0d-01
+      - 00-bf0d576c9b6274d105fd44165db8da62-ece3ad520013aee9-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
-      Cf-Cache-Status:
-      - DYNAMIC
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1794606058,"completed_at":1794606059,"id":"f82766e5-8bfa-9970-a6ff-4da222ab207c","max_output_tokens":4096,"model":"grok-4.3","object":"response","output":[{"id":"rs_f82766e5-8bfa-9970-a6ff-4da222ab207c","summary":[],"type":"reasoning","status":"completed","encrypted_content":"FJcgem6qICrWAdB5kWVDdFGaMw6wgZ2XSKQ2y2Jra3p78arjVEEIK24VCXHl1M1HPVLldO2s1/PsrM9o5YUO7LlACKtaayGGFkeASdEpE5fd3Sm6FQFfniRkteyj1pcZK7mWvMa/2D8rLJ2DdEZ6c5WgsWkqz5apu5nyXYdGom8eHJlAM3BivpDh28qSyVWym15uFQyJ00uGNPjLQmgGXrR7SgUqUZbKonl9oxI"},{"content":[{"type":"output_text","text":"476
-        AD (Western Roman Empire, when Romulus Augustulus was deposed). The Eastern
-        Roman Empire continued until 1453.","logprobs":[],"annotations":[]}],"id":"msg_f82766e5-8bfa-9970-a6ff-4da222ab207c","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Gets
+      string: '{"created_at":1794706987,"completed_at":1794706989,"id":"f6920ced-ff61-9eb5-841f-5e4316da0f84","max_output_tokens":4096,"model":"grok-4.3","object":"response","output":[{"id":"rs_f6920ced-ff61-9eb5-841f-5e4316da0f84","summary":[{"text":"The
+        tool returned current weather data instead of the requested historical date.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"APZO89UakKezFmbGUN6zqvd4EG+hnpjDuw/MdNj0FT+L8jfaAGOtcBw4ODc5CLDUZb+0w3ZKKTiypcOwmwab7yVROQIaQ3Uwj/A7TuBT7Tw019oM/etEQrDZh9MPujWSYbpmWHnE5GDf+LyvTLm0/pWmFN6LxTnxthi2sm5ViFA5iUgMjJ1vikb8mnaE3zQj/7/6lUUb1pueiB21XkGU06/O6QojV5Ye9lk+9DWmZXcJJHUG+dcQCGpHbNOsKZbH4YaOqt7DjmaWm6dKeMw6Qk9ZMo8+3WlpImtKzAV8y6aXfSoXjuPiVBwEKmcoi2rRWewwKG7O3iAYWcIgsQM1SF3fdll4m0JnkO6CmRhjPtpIwK5Q+IM/lsHw2xXeJRWLO8TwEbTw"},{"content":[{"type":"output_text","text":"The
+        fall of the Western Roman Empire is traditionally dated to 476 AD, when the
+        last Western Roman emperor, Romulus Augustulus, was deposed. (The Eastern
+        Roman/Byzantine Empire continued until 1453.)","logprobs":[],"annotations":[]}],"id":"msg_f6920ced-ff61-9eb5-841f-5e4316da0f84","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Gets
         current weather for a location","name":"weather","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true},"strict":false}],"top_p":0.95,"usage":{"input_tokens":1026,"input_tokens_details":{"cached_tokens":256},"output_tokens":57,"output_tokens_details":{"reasoning_tokens":32},"total_tokens":1083,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":11562000,"context_details":{"input_tokens":1026,"output_tokens":65}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":"Your
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true},"strict":false}],"top_p":0.95,"usage":{"input_tokens":967,"input_tokens_details":{"cached_tokens":256},"output_tokens":138,"output_tokens_details":{"reasoning_tokens":93},"total_tokens":1105,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":12849500,"context_details":{"input_tokens":967,"output_tokens":146}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":"Your
         location is Berlin, at latitude 52.5200 and longitude 13.4050."}'
-  recorded_at: Fri, 13 Nov 2026 21:40:59 GMT
-recorded_with: VCR 6.4.1
+  recorded_at: Sun, 15 Nov 2026 01:43:09 GMT
+recorded_with: VCR 6.4.0

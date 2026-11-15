@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"Say hi"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -23,7 +23,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:22:26 GMT
+      - Sun, 15 Nov 2026 01:20:37 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -47,7 +47,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '755'
+      - '861'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -74,16 +74,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_078f610dcd054673016af77f91bc4c87d29e6099057148304c",
+          "id": "resp_06af06fa0e2f9fd6016af908e4f74087d2b05dce2f8eb3bf55",
           "object": "response",
-          "created_at": 1794604945,
+          "created_at": 1794705637,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794604946,
+          "completed_at": 1794705637,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
@@ -98,7 +98,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_078f610dcd054673016af77f924ce487d2b02ada5e129d533f",
+              "id": "msg_06af06fa0e2f9fd6016af908e5a14087d2b25e0e7a936c9b29",
               "type": "message",
               "status": "completed",
               "content": [
@@ -106,7 +106,7 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "Hi!"
+                  "text": "Hi! \ud83d\udc4b"
                 }
               ],
               "phase": "final_answer",
@@ -161,16 +161,20 @@ http_interactions:
             "input_tokens": 8,
             "input_tokens_details": {
               "cache_write_tokens": 0,
+              "cache_write_tokens_details": {
+                "ttl_12h_tokens": 0,
+                "ttl_30m_tokens": 0
+              },
               "cached_tokens": 0
             },
-            "output_tokens": 6,
+            "output_tokens": 8,
             "output_tokens_details": {
               "reasoning_tokens": 0
             },
-            "total_tokens": 14
+            "total_tokens": 16
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Fri, 13 Nov 2026 21:22:26 GMT
-recorded_with: VCR 6.4.1
+  recorded_at: Sun, 15 Nov 2026 01:20:37 GMT
+recorded_with: VCR 6.4.0

@@ -9,7 +9,7 @@ http_interactions:
         the square root of 64? Answer with a JSON object with the key `result`."}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"text":{"format":{"type":"json_object"}}}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:21:36 GMT
+      - Sun, 15 Nov 2026 01:20:24 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -48,7 +48,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1317'
+      - '895'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -75,16 +75,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0f7b78ac9e6d96fa016af77f5f408487d29615f562ab2ab459",
+          "id": "resp_0a2328448e4b8925016af908d80afc87d2a553dd1a931c440f",
           "object": "response",
-          "created_at": 1794604895,
+          "created_at": 1794705624,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794604896,
+          "completed_at": 1794705624,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
@@ -99,7 +99,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_0f7b78ac9e6d96fa016af77f6008f087d297aa6a86b907992c",
+              "id": "msg_0a2328448e4b8925016af908d8983487d2b9f562d1eaed342e",
               "type": "message",
               "status": "completed",
               "content": [
@@ -162,6 +162,10 @@ http_interactions:
             "input_tokens": 26,
             "input_tokens_details": {
               "cache_write_tokens": 0,
+              "cache_write_tokens_details": {
+                "ttl_12h_tokens": 0,
+                "ttl_30m_tokens": 0
+              },
               "cached_tokens": 0
             },
             "output_tokens": 12,
@@ -173,5 +177,5 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Fri, 13 Nov 2026 21:21:36 GMT
-recorded_with: VCR 6.4.1
+  recorded_at: Sun, 15 Nov 2026 01:20:24 GMT
+recorded_with: VCR 6.4.0

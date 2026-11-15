@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -22,12 +22,12 @@ http_interactions:
     headers:
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
-      Pragma:
-      - no-cache
       Date:
-      - Fri, 13 Nov 2026 21:26:42 GMT
+      - Sun, 15 Nov 2026 01:24:50 GMT
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
+      Pragma:
+      - no-cache
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/cloud-platform",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Fri, 13 Nov 2026 21:26:42 GMT
+  recorded_at: Sun, 15 Nov 2026 01:24:50 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -65,7 +65,7 @@ http_interactions:
       string: '{"contents":[{"role":"user","parts":[{"text":"What''s 2 + 2?"}]}],"generationConfig":{}}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -80,7 +80,7 @@ http_interactions:
       message: OK
     headers:
       X-Goog-Request-Id:
-      - koD3as2GHOvltfAP0quAiQE
+      - 4gn5atK_OtjAxdQPtfLv4AQ
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -88,7 +88,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Fri, 13 Nov 2026 21:26:43 GMT
+      - Sun, 15 Nov 2026 01:24:51 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -111,7 +111,7 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "2 + 2 = **4**"
+                    "text": "2 + 2 = 4"
                   }
                 ]
               },
@@ -120,7 +120,7 @@ http_interactions:
           ],
           "usageMetadata": {
             "promptTokenCount": 9,
-            "candidatesTokenCount": 8,
+            "candidatesTokenCount": 7,
             "totalTokenCount": 37,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
@@ -132,14 +132,14 @@ http_interactions:
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 8
+                "tokenCount": 7
               }
             ],
-            "thoughtsTokenCount": 20
+            "thoughtsTokenCount": 21
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-11-13T21:26:42.459597Z",
-          "responseId": "koD3as2GHOvltfAP0quAiQE"
+          "createTime": "2026-11-15T01:24:50.958418Z",
+          "responseId": "4gn5atK_OtjAxdQPtfLv4AQ"
         }
-  recorded_at: Fri, 13 Nov 2026 21:26:43 GMT
-recorded_with: VCR 6.4.1
+  recorded_at: Sun, 15 Nov 2026 01:24:51 GMT
+recorded_with: VCR 6.4.0

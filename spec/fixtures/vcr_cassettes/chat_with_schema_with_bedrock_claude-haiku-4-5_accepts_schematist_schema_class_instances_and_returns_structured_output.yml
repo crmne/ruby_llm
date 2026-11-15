@@ -9,11 +9,11 @@ http_interactions:
         a person named Alice who is 28 years old"}]}],"max_tokens":64000,"output_config":{"format":{"type":"json_schema","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"number"}},"required":["name","age"],"additionalProperties":false}}},"anthropic_version":"bedrock-2023-05-31"}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261113T212139Z
+      - 20261115T011957Z
       X-Amz-Content-Sha256:
       - d951ad9432945a0734f96767130457e80e65cac7c0033cc63cdff623e5e32bc1
       Authorization:
@@ -29,7 +29,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:21:40 GMT
+      - Sun, 15 Nov 2026 01:20:00 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -37,9 +37,9 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - d6c5272b-a21c-4605-bed3-0baefac7444c
+      - 8fa214f7-8a2b-425d-9002-9408d68ec6fd
       X-Amzn-Bedrock-Invocation-Latency:
-      - '545'
+      - '1195'
       X-Amzn-Bedrock-Cache-Write-Input-Token-Count:
       - '0'
       X-Amzn-Bedrock-Cache-Read-Input-Token-Count:
@@ -50,6 +50,6 @@ http_interactions:
       - '181'
     body:
       encoding: UTF-8
-      string: '{"model":"anthropic.claude-haiku-4-5-20251001-v1:0","id":"msg_bdrk_rffy2buc5lh3a4zcof6mmzdgzjhgwrm6hpr37ymlulporw3sa27a","type":"message","role":"assistant","content":[{"type":"text","text":"{\"name\":\"Alice\",\"age\":28}"}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":181,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":12,"service_tier":"standard"}}'
-  recorded_at: Fri, 13 Nov 2026 21:21:40 GMT
-recorded_with: VCR 6.4.1
+      string: '{"model":"anthropic.claude-haiku-4-5-20251001-v1:0","id":"msg_bdrk_7kw5liu7mbyiwgeyedembsbzthjqm2xsebl52jayw7jj3jft5eyq","type":"message","role":"assistant","content":[{"type":"text","text":"{\"name\":\"Alice\",\"age\":28}"}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":181,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":12,"service_tier":"standard"}}'
+  recorded_at: Sun, 15 Nov 2026 01:20:00 GMT
+recorded_with: VCR 6.4.0

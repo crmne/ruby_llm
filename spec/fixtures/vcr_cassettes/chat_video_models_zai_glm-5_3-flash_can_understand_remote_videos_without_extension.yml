@@ -9,7 +9,7 @@ http_interactions:
         do you see in this video?"},{"type":"video_url","video_url":{"url":"https://filesamples.com/samples/video/mp4/sample_640x360.mp4"}}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:30:44 GMT
+      - Sun, 15 Nov 2026 01:28:51 GMT
       Content-Type:
       - application/json; charset=UTF-8
       Transfer-Encoding:
@@ -36,7 +36,7 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       Ga-Traceid:
-      - 47287834efff6cc5ef858cb28c64fcd9
+      - b8995183f54ff9e49c249be149072e48
       Vary:
       - Accept-Encoding
       - Access-Control-Request-Headers
@@ -47,29 +47,48 @@ http_interactions:
       - Origin
       - Origin
       X-Log-Id:
-      - 202611140530332675e82edc82488f
+      - 2026111509283279a94e14122c4f1d
       X-Request-Id:
       - "<X_REQUEST_ID>"
     body:
       encoding: ASCII-8BIT
-      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"A
-        woman with long brown hair, wearing a pink top, is sitting on a sandy beach
-        facing the ocean. She appears to be looking out at the water. Her hair is
-        blowing gently in the wind. The ocean is calm with small waves breaking near
-        the shore, and the sky above is blue with some scattered clouds.","reasoning_content":"The
-        user wants to know what is happening in the video.\nI need to describe the
-        scene, including the subject, her actions, and the setting.\nThe video is
-        a static shot of a beach.\nA woman is sitting on the sand, facing the ocean.
-        She is wearing a pink dress/top.\nShe is looking out towards the ocean.\nHer
-        long brown hair is blowing gently in the wind.\nThe setting is a calm beach
-        with a sandy shore, a wide expanse of ocean, and a blue sky with some clouds.
-        The ocean looks relatively calm, with small waves breaking near the shore.\nThe
-        woman is sitting quietly, looking at the ocean.\nI will construct a detailed
-        description based on these observations.\n- Subject: A woman with long brown
-        hair wearing a pink top.\n- Action: Sitting on the sandy beach, looking out
-        at the ocean, her hair blowing in the wind.\n- Environment: Sandy beach, calm
-        ocean with waves breaking near the shore, blue sky with some clouds.\nThe
-        prompt asks for a description, so I''ll provide a comprehensive summary of
-        the visuals.","role":"assistant"}}],"created":1794605444,"id":"202611140530332675e82edc82488f","model":"glm-5.3-flash","object":"chat.completion","request_id":"202611140530332675e82edc82488f","usage":{"completion_tokens":282,"completion_tokens_details":{"reasoning_tokens":216},"prompt_tokens":3987,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":4269}}'
-  recorded_at: Fri, 13 Nov 2026 21:30:44 GMT
-recorded_with: VCR 6.4.1
+      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"The
+        video shows a woman with long dark hair sitting on a sandy beach facing the
+        ocean. From 00:00 to 00:05, she sits relatively still, occasionally moving
+        her arms slightly. At 00:08, she raises her hand to brush her windblown hair
+        away from her face. For the remainder of the video, until 00:13, she continues
+        to sit and look out at the calm sea under a partly cloudy sky.","reasoning_content":"The
+        user wants to know what is happening in the video.\nI will watch the video
+        and describe the events sequentially. 1. **Analyze the scene:** - The video
+        shows a woman sitting on a sandy beach, facing the ocean. - She has long dark
+        hair and is wearing a pink sleeveless top/dress. - The sky is blue with scattered
+        white clouds. - The ocean water is calm, with a wave line visible in the distance.
+        - There are footprints in the sand around her. 2. **Track the woman''s actions
+        over time:** - **00:00 - 00:02:** The woman is sitting still, facing the ocean.
+        Her back is to the camera. - **00:03 - 00:04:** She raises her left arm slightly,
+        maybe adjusting something, then puts it back down. - **00:04 - 00:06:** She
+        is sitting still again. - **00:06 - 00:08:** A gust of wind blows her hair,
+        and she raises her hand to brush her hair back from her face (00:08). - **00:09
+        - 00:11:** She sits still again, her hair is still being blown slightly by
+        the wind. - **00:12 - 00:13:** She remains sitting, looking out at the ocean.
+        3. **Synthesize the observations into a description:** - A woman with long
+        dark hair, wearing a pink top, is sitting on a sandy beach facing the ocean.
+        - The sky is partly cloudy. - Around 00:03, she briefly adjusts her posture
+        or clothing with her hands. - At 00:08, she uses her hand to brush her windblown
+        hair away from her face. - Throughout the video, she is looking out at the
+        calm sea. 4. **Refine the timeline:** - 00:00 - 00:05: A woman is sitting
+        on a sandy beach facing the ocean, occasionally moving her arms slightly.
+        - 00:06 - 00:08: The wind blows her hair, and she raises her hand to brush
+        it away. - 00:09 - 00:13: She returns to sitting still, watching the ocean.
+        5. **Format the output:** - Ensure all timestamps are in MM:SS format. - Ensure
+        no mention of \"frames\" or \"images\". - Keep the description grounded in
+        the visual evidence. - The user asked \"What is happening in the video?\"
+        in a very direct way. I will provide a concise chronological summary. - I
+        will prioritize brevity and high-level summary as instructed. - \"The video
+        shows a woman sitting on a beach facing the ocean. From 00:00 to 00:05, she
+        sits relatively still, occasionally moving her arms. At 00:08, she brushes
+        her hair away from her face as the wind blows it. For the remainder of the
+        video, until 00:13, she continues to sit and look out at the sea.\" - This
+        looks good, accurate, and follows all rules.","role":"assistant"}}],"created":1794706131,"id":"2026111509283279a94e14122c4f1d","model":"glm-5.3-flash","object":"chat.completion","request_id":"2026111509283279a94e14122c4f1d","usage":{"completion_tokens":722,"completion_tokens_details":{"reasoning_tokens":628},"prompt_tokens":3987,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":4709}}'
+  recorded_at: Sun, 15 Nov 2026 01:28:51 GMT
+recorded_with: VCR 6.4.0

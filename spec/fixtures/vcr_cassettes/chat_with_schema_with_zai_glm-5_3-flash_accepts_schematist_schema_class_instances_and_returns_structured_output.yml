@@ -9,7 +9,7 @@ http_interactions:
         a person named Alice who is 28 years old"}],"stream":false,"response_format":{"type":"json_schema","json_schema":{"name":"PersonSchemaClass","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"number"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:24:45 GMT
+      - Sun, 15 Nov 2026 01:23:27 GMT
       Content-Type:
       - application/json; charset=UTF-8
       Transfer-Encoding:
@@ -36,7 +36,7 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       Ga-Traceid:
-      - dc7485807f29d9a3267844c4f8ff8586
+      - 50428e22270bb77b4b2ea25099cb71ad
       Vary:
       - Accept-Encoding
       - Access-Control-Request-Headers
@@ -47,27 +47,12 @@ http_interactions:
       - Origin
       - Origin
       X-Log-Id:
-      - 20261114052439b9bac8513b684eb7
+      - 202611150923065382fe978d774278
       X-Request-Id:
       - "<X_REQUEST_ID>"
     body:
       encoding: ASCII-8BIT
-      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"{
-        \"name\": \"Alice\", \"age\": 28 }","reasoning_content":"The user wants me
-        to generate a person named Alice who is 28 years old. This is a simple creative
-        request - they likely want a character profile or fictional person details.
-        This is a common request for creative writing, game development, testing data,
-        persona creation, etc.\n\nLet me create a well-rounded fictional persona for
-        Alice, 28 years old. I should include typical character profile details like:\n-
-        Name: Alice\n- Age: 28\n- Plus other plausible details: occupation, location,
-        personality, hobbies, background, etc.\n\nSince the request is open-ended,
-        I''ll create a complete but not overly verbose character profile. A structured
-        format with headers or a list would work well here since it''s profile data.
-        Let me make it realistic and useful.\n\nI''ll include:\n- Basic info (name,
-        age, maybe birthday)\n- Occupation\n- Location\n- Physical description (brief)\n-
-        Personality traits\n- Hobbies/interests\n- Background/education\n- Maybe a
-        fun detail or quote\n\nI shouldn''t make it too long - a nice, complete profile
-        is what''s needed. Markdown formatting with headers/bold would be appropriate
-        since this is likely rendered in a chat interface.","role":"assistant"}}],"created":1794605084,"id":"20261114052439b9bac8513b684eb7","model":"glm-5.3-flash","object":"chat.completion","request_id":"20261114052439b9bac8513b684eb7","usage":{"completion_tokens":257,"completion_tokens_details":{"reasoning_tokens":242},"prompt_tokens":23,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":280}}'
-  recorded_at: Fri, 13 Nov 2026 21:24:45 GMT
-recorded_with: VCR 6.4.1
+      string: !binary |-
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJ7XCJuYW1lXCI6IFwiQWxpY2VcIiwgXCJhZ2VcIjogMjh9IiwicmVhc29uaW5nX2NvbnRlbnQiOiJUaGUgdXNlciB3YW50cyBtZSB0byBnZW5lcmF0ZSBhIHBlcnNvbiBuYW1lZCBBbGljZSB3aG8gaXMgMjggeWVhcnMgb2xkLiBUaGlzIGlzIGEgY3JlYXRpdmUvZ2VuZXJhdGl2ZSB0YXNrIOKAlCBsaWtlbHkgZm9yIGZpY3Rpb24gd3JpdGluZywgcm9sZXBsYXkgc2V0dXAsIGEgY2hhcmFjdGVyIHByb2ZpbGUsIGEgdGVzdCBkYXRhc2V0LCBvciBzaW1pbGFyIHB1cnBvc2VzLlxuXG5UaGUgcmVxdWVzdCBpcyBxdWl0ZSBzaW1wbGUgYW5kIG9wZW4tZW5kZWQuIFwiR2VuZXJhdGUgYSBwZXJzb25cIiBjb3VsZCBtZWFuOlxuMS4gQSBjaGFyYWN0ZXIgcHJvZmlsZSB3aXRoIGRldGFpbHMgKG5hbWUsIGFnZSwgYmFja2dyb3VuZCwgcGVyc29uYWxpdHksIGV0Yy4pXG4yLiBKdXN0IGNvbmZpcm1pbmcgdGhlIGJhc2ljIGZhY3RzXG4zLiBBIEpTT04vZGF0YSBzdHJ1Y3R1cmUgcmVwcmVzZW50YXRpb25cblxuU2luY2UgdGhleSBzYWlkIFwiZ2VuZXJhdGUsXCIgdGhleSBwcm9iYWJseSB3YW50IG1vcmUgdGhhbiBqdXN0IFwiQWxpY2UsIDI4LlwiIEEgcmVhc29uYWJsZSBpbnRlcnByZXRhdGlvbiBpcyB0byBjcmVhdGUgYSBjaGFyYWN0ZXIgcHJvZmlsZS4gSSBzaG91bGQgaW5jbHVkZSB0aGUgdHdvIHNwZWNpZmllZCBmYWN0cyAobmFtZTogQWxpY2UsIGFnZTogMjgpIGFuZCB0aGVuIGZsZXNoIG91dCBwbGF1c2libGUgZGV0YWlsczogb2NjdXBhdGlvbiwgbG9jYXRpb24sIHBlcnNvbmFsaXR5LCBob2JiaWVzLCBiYWNrZ3JvdW5kLCBtYXliZSBhcHBlYXJhbmNlLlxuXG5TaG91bGQgSSBhc2sgYSBjbGFyaWZ5aW5nIHF1ZXN0aW9uIGFib3V0IGZvcm1hdCAoZS5nLiwgaXMgdGhpcyBmb3IgYSBkYXRhYmFzZSwgYSBzdG9yeSwgYSBzaW11bGF0aW9uKT8gVGhlIHJlcXVlc3QgaXMgc2ltcGxlIGVub3VnaCB0aGF0IEkgY2FuIGp1c3QgcHJvZHVjZSBhIHJlYXNvbmFibGUgY2hhcmFjdGVyIHByb2ZpbGUgYW5kIG9mZmVyIHRvIGFkanVzdC4gQXNraW5nIGEgY2xhcmlmeWluZyBxdWVzdGlvbiB3b3VsZCBzbG93IHRoaW5ncyBkb3duIHVubmVjZXNzYXJpbHkgZm9yIHN1Y2ggYSBsaWdodCByZXF1ZXN0LiBCZXR0ZXIgdG8gZGVsaXZlciBzb21ldGhpbmcgdXNlZnVsIGFuZCBub3RlIEkgY2FuIHRhaWxvciBpdC5cblxuRm9ybWF0IGNvbnNpZGVyYXRpb25zOiBBIGNoYXJhY3RlciBwcm9maWxlIHdvcmtzIHdlbGwgd2l0aCBzb21lIHN0cnVjdHVyZS4gSSBjb3VsZCBkbzpcbi0gQSBicmllZiBoZWFkZXIgd2l0aCBuYW1lIGFuZCBhZ2Vcbi0gQnVsbGV0IHBvaW50cyBvciBzaG9ydCBzZWN0aW9ucyBmb3Iga2V5IGF0dHJpYnV0ZXNcblxuTGVuZ3RoOiBTaG91bGQgYmUgbW9kZXJhdGUg4oCUIGVub3VnaCBkZXRhaWwgdG8gYmUgYSB1c2FibGUgY2hhcmFjdGVyIGJ1dCBub3QgYW4gb3ZlcndoZWxtaW5nIG5vdmVsLiBNYXliZSAxNTAtMjUwIHdvcmRzLiBIZWFkZXJzIG9yIGJvbGQgbGFiZWxzIHdpdGggc2hvcnQgZW50cmllcyB3b3VsZCB3b3JrIHdlbGwuXG5cbkxldCBtZSBjcmVhdGUgQWxpY2U6XG5cbioqTmFtZToqKiBBbGljZSAobWF5YmUgZ2l2ZSBhIGxhc3QgbmFtZT8gXCJBbGljZSBDaGVuXCIgb3IgXCJBbGljZSBSaXZlcmFcIiDigJQgSSdsbCBwaWNrIHNvbWV0aGluZyBuZXV0cmFsIG9yIGxldCBpdCBzdGFuZCBhbG9uZS4gR2l2aW5nIGEgc3VybmFtZSBhZGRzIHJlYWxpc20uIExldCBtZSB1c2UgXCJBbGljZSBNb3JyaXNvblwiIG9yIGp1c3QgbGVhdmUgaXQgZmxleGlibGUuIEknbGwgYWRkIG9uZSDigJQgbWF5YmUgXCJBbGljZSBQYXJrXCIgb3IgXCJBbGljZSBCZW5uZXR0LlwiIEknbGwgZ28gd2l0aCBhIHN1cm5hbWUgdG8gbWFrZSBoZXIgZmVlbCBjb21wbGV0ZSwgZS5nLiwgQWxpY2UgQmVubmV0dC4pXG5cbioqQWdlOioqIDI4XG5cbioqT2NjdXBhdGlvbjoqKiBTb21ldGhpbmcgcmVsYXRhYmxlIOKAlCBVWCBkZXNpZ25lcj8gTnVyc2U/IERhdGEgYW5hbHlzdD8gTGV0J3Mgc2F5IHNoZSdzIGEgVVggZGVzaWduZXIgYXQgYSBtaWQtc2l6ZSB0ZWNoIGNvbXBhbnksIG9yIG1heWJlIGEgcGVkaWF0cmljIG51cnNlLiBJJ2xsIHBpY2sgVVggZGVzaWduZXIg4oCUIG1vZGVybiwgY29tbW9uIGluIGNoYXJhY3RlciBnZW5lcmF0aW9uLlxuXG4qKkxvY2F0aW9uOioqIEEgY2l0eSDigJQgUG9ydGxhbmQ/IENoaWNhZ28/IEknbGwgc2F5IFBvcnRsYW5kLCBPcmVnb24gb3IgRGVudmVyLiBMZXQgbWUgcGljayBDaGljYWdvIGZvciBhIGJpZy1jaXR5IGZlZWwuIE9yIGtlZXAgaXQgdmFndWUuIEknbGwgcGljayBzb21ldGhpbmcgc3BlY2lmaWMgZm9yIGZsYXZvcjogUG9ydGxhbmQsIE9yZWdvbi5cblxuKipQZXJzb25hbGl0eToqKiBDdXJpb3VzLCB3YXJtLCBhIGJpdCBvZiBhIHBlcmZlY3Rpb25pc3QsIGludHJvdmVydGVkIGJ1dCBsb3lhbCB0byBjbG9zZSBmcmllbmRzLlxuXG4qKkhvYmJpZXM6KiogUm9jayBjbGltYmluZyAoYm91bGRlcmluZyksIGJha2luZyBzb3VyZG91Z2gsIG15c3Rlcnkgbm92ZWxzLCBwaG90b2dyYXBoeS5cblxuKipCYWNrZ3JvdW5kOioqIEdyZXcgdXAgaW4gYSBzbWFsbGVyIHRvd24sIG1vdmVkIHRvIHRoZSBjaXR5IGFmdGVyIGNvbGxlZ2UsIGRlZ3JlZSBpbiBncmFwaGljIGRlc2lnbiBvciBwc3ljaG9sb2d5LlxuXG4qKkN1cnJlbnQgc2l0dWF0aW9uOioqIFJlY2VudGx5IHByb21vdGVkLCBhZG9wdGVkIGEgY2F0LCBuYXZpZ2F0aW5nIGEgbG9uZy10ZXJtIHJlbGF0aW9uc2hpcCBvciBzaW5nbGUuIE1heWJlIHJlY2VudGx5IHNpbmdsZSBhbmQgZW1icmFjaW5nIGl0LCBvciBpbiBhIHJlbGF0aW9uc2hpcC4gS2VlcCBpdCBzaW1wbGU6IGFkb3B0ZWQgYSBjYXQgbmFtZWQgc29tZXRoaW5nIGN1dGUgKEJpc2N1aXQ/IE1pc28/KS5cblxuKipRdWlya3MvZGV0YWlsczoqKiBBbHdheXMgaGFzIGEgaGFsZi1maW5pc2hlZCBrbml0dGluZyBwcm9qZWN0LCBrZWVwcyBhIHJ1bm5pbmcgbGlzdCBvZiBib29rcywgdGVycmlibGUgYXQgcGFyYWxsZWwgcGFya2luZywgZXRjLlxuXG5MZXQgbWUgZHJhZnQ6XG5cbi0tLVxuXG4qKkFsaWNlIEJlbm5ldHQsIDI4KipcblxuKipPY2N1cGF0aW9uOioqIFVYIGRlc2lnbmVyIGF0IGEgbWlkLXNpemUgc29mdHdhcmUgY29tcGFueSwgdGhyZWUgeWVhcnMgaW50byB0aGUgcm9sZSBhZnRlciBzdGFydGluZyBhcyBhIGp1bmlvciBkZXNpZ25lci5cblxuKipMb2NhdGlvbjoqKiBQb3J0bGFuZCwgT3JlZ29uIOKAlCBtb3ZlZCB0aGVyZSBhZnRlciBjb2xsZWdlIGFuZCBsb3ZlcyBpdCwgdGhvdWdoIHNoZSBjb21wbGFpbnMgYWJvdXQgdGhlIHJhaW4gZXZlcnkgd2ludGVyLlxuXG4qKkFwcGVhcmFuY2U6KiogU2hvdWxkZXItbGVuZ3RoIGRhcmsgYnJvd24gaGFpciBzaGUgb2Z0ZW4gdHVja3MgYmVoaW5kIG9uZSBlYXIsIGZvbmQgb2Ygb3ZlcnNpemVkIGNhcmRpZ2FucyBhbmQgYm9vdHMuXG5cbioqUGVyc29uYWxpdHk6KiogV2FybSBidXQgYSBsaXR0bGUgZ3VhcmRlZCBhdCBmaXJzdDsgYSBxdWlldCBvYnNlcnZlciB3aG8gb3BlbnMgdXAgb25jZSBjb21mb3J0YWJsZS4gRGV0YWlsLW9yaWVudGVkIHRvIGEgZmF1bHQg4oCUIHNoZSdsbCByZXdvcmsgYSBkZXNpZ24gZWxldmVuIHRpbWVzLiBEcnkgc2Vuc2Ugb2YgaHVtb3IuXG5cbioqQmFja2dyb3VuZDoqKiBHcmV3IHVwIGluIGEgc21hbGwgdG93biBpbiBPaGlvLCBzdHVkaWVkIGdyYXBoaWMgZGVzaWduIGF0IGEgc3RhdGUgdW5pdmVyc2l0eSwgYW5kIG1vdmVkIHdlc3QgYXQgMjMgd2l0aCB0d28gc3VpdGNhc2VzIGFuZCBhIGxvdCBvZiBvcHRpbWlzbS5cblxuKipIb2JiaWVzOioqIEJvdWxkZXJpbmcgYXQgdGhlIGNsaW1iaW5nIGd5bSBvbiB3ZWVrZGF5cywgYmFraW5nIChjdXJyZW50bHkgcGVyZmVjdGluZyBjcm9pc3NhbnRzKSwgYW5kIGFuIGV2ZXItZ3Jvd2luZyBzdGFjayBvZiB1bnJlYWQgbXlzdGVyeSBub3ZlbHMuXG5cbioqQ3VycmVudCBsaWZlOioqIFJlY2VudGx5IGFkb3B0ZWQgYSBvbmUtZXllZCBjYXQgbmFtZWQgTWlzby4gU2F2aW5nIHVwIGZvciBhIHRyaXAgdG8gSmFwYW4uIFNsaWdodGx5IHN0cmVzc2VkIGFib3V0IGhlciBzaXN0ZXIncyB1cGNvbWluZyB3ZWRkaW5nLCB3aGVyZSBzaGUncyB0aGUgbWFpZCBvZiBob25vci5cblxuLS0tXG5cblRoYXQncyBhIG5pY2UgY29tcGFjdCBwcm9maWxlLiBUaGVuIEkgY2FuIG9mZmVyOiBcIldhbnQgbWUgdG8gYWRqdXN0IGhlciBiYWNrZ3JvdW5kLCBnaXZlIGhlciBhIGRpZmZlcmVudCBvY2N1cGF0aW9uLCBvciB3cml0ZSBoZXIgaW4gYSBkaWZmZXJlbnQgZm9ybWF0IChlLmcuLCBKU09OKT9cIiBUaGF0J3MgYSBoZWxwZnVsIGNsb3Npbmcgd2l0aG91dCBiZWluZyBwdXNoeS5cblxuU2hvdWxkIEkgaW5jbHVkZSBhcHBlYXJhbmNlPyBTb21lIG1pZ2h0IHByZWZlciBubyBhcHBlYXJhbmNlIGlmIGl0J3MgZm9yIGEgZGF0YXNldCwgYnV0IGZvciBhIGNoYXJhY3RlciBpdCdzIGZpbmUuIEtlZXAgaXQgYnJpZWYuXG5cbkZvcm1hdCBjaGVjazogQm9sZGVkIGZpZWxkIGxhYmVscyB3aXRoIHNob3J0IHRleHQgaXMgc2Nhbm5hYmxlIGFuZCBhcHByb3ByaWF0ZS4gTm90IHRvbyBsb25nLiBBIHNob3J0IGludHJvIGxpbmUgaXNuJ3QgcmVhbGx5IG5lZWRlZCDigJQgSSBjYW4ganVtcCByaWdodCBpbiwgb3Igb25lIHNob3J0IGxlYWQtaW4gc2VudGVuY2UuIEknbGwgaW5jbHVkZSBhIG1pbmltYWwgbGVhZC1pbiBvciBqdXN0IHN0YXJ0IHdpdGggdGhlIGhlYWRlci4gU3RhcnRpbmcgZGlyZWN0bHkgd2l0aCB0aGUgcHJvZmlsZSBpcyBjbGVhbmVyLiBJJ2xsIGVuZCB3aXRoIG9uZSBicmllZiBsaW5lIG9mZmVyaW5nIGFkanVzdG1lbnRzLiIsInJvbGUiOiJhc3Npc3RhbnQifX1dLCJjcmVhdGVkIjoxNzk0NzA1ODA3LCJpZCI6IjIwMjYxMTE1MDkyMzA2NTM4MmZlOTc4ZDc3NDI3OCIsIm1vZGVsIjoiZ2xtLTUuMy1mbGFzaCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInJlcXVlc3RfaWQiOiIyMDI2MTExNTA5MjMwNjUzODJmZTk3OGQ3NzQyNzgiLCJ1c2FnZSI6eyJjb21wbGV0aW9uX3Rva2VucyI6MTA1MSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjoxMDM3fSwicHJvbXB0X3Rva2VucyI6MjMsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowfSwidG90YWxfdG9rZW5zIjoxMDc0fX0=
+  recorded_at: Sun, 15 Nov 2026 01:23:27 GMT
+recorded_with: VCR 6.4.0

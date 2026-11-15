@@ -9,7 +9,7 @@ http_interactions:
         person named John who is 30 years old"}],"stream":false,"response_format":{"type":"json_schema","json_schema":{"name":"response","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:22:30 GMT
+      - Sun, 15 Nov 2026 01:20:55 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -34,7 +34,7 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       X-Internal-Adhoc-Canary:
-      - '2666295442'
+      - '1897954185'
       Msh-Gid:
       - "<MOONSHOT_GROUP_ID>"
       Msh-Org-Id:
@@ -42,7 +42,7 @@ http_interactions:
       Msh-Project-Id:
       - "<MOONSHOT_PROJECT_ID>"
       Msh-Request-Id:
-      - 53b666bc-dfa8-11f1-a7be-00163e3fc041
+      - cd8323eb-e092-11f1-a27d-00163e0f23f2
       Msh-Trace-Mode:
       - 'on'
       Msh-Uid:
@@ -54,7 +54,7 @@ http_interactions:
       Vary:
       - Origin
       X-Msh-Trace-Id:
-      - 665b66d6c588bf9ce15acd9a924b58d2
+      - b28635bd0044b5a791f33df9a6d6f803
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Cf-Cache-Status:
@@ -65,8 +65,7 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"chatcmpl-32aa20f8-e527-917c-982f-af6a7e15ebdd","object":"chat.completion","created":1794604948,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"{\"name\":\"John\",\"age\":30}","reasoning_content":"The
-        user wants a JSON object with a person named John who is 30 years old. Simple
-        task."},"finish_reason":"stop"}],"usage":{"prompt_tokens":187,"completion_tokens":40,"total_tokens":227,"completion_tokens_details":{"reasoning_tokens":21},"prompt_tokens_details":{"cache_write_tokens":0}}}'
-  recorded_at: Fri, 13 Nov 2026 21:22:30 GMT
-recorded_with: VCR 6.4.1
+      string: '{"id":"chatcmpl-2f2e0365a43bdc86daa18bf46","object":"chat.completion","created":1794705654,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"{\"name\":\"John\",\"age\":30}","reasoning_content":"The
+        user wants a JSON object with name \"John\" and age 30, matching the schema."},"finish_reason":"stop"}],"usage":{"prompt_tokens":187,"completion_tokens":42,"total_tokens":229,"completion_tokens_details":{"reasoning_tokens":20},"prompt_tokens_details":{"cache_write_tokens":0}}}'
+  recorded_at: Sun, 15 Nov 2026 01:20:55 GMT
+recorded_with: VCR 6.4.0

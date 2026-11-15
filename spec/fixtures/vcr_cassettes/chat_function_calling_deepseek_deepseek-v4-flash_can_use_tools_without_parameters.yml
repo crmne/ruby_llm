@@ -10,7 +10,7 @@ http_interactions:
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -31,7 +31,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Fri, 13 Nov 2026 21:23:56 GMT
+      - Sun, 15 Nov 2026 01:22:38 GMT
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -41,35 +41,35 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 8f7cb43e300d80fe81d0b25b15f3cb3b
+      - 15cdd6916217de0e93be7ebcdc0aa5e5
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 b145a3dbab4717da61343f193828b5fe.cloudfront.net (CloudFront)
+      - 1.1 fb0cb77e4731cc14e3aed97e0db416a0.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
       - TXL52-P4
       X-Amz-Cf-Id:
-      - x54fHUOM05l19k-zDksno4QgBDo5OkuEA83GJuZRepfnJ9gzScWpCw==
+      - Nk3bcN8KcN8Ta19WhfCIc0ISTdKOpnRotlvl98dDnM4ef9sTaapspg==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"c646aada-6dab-4c8e-9d77-dc1bff64d0d2","object":"chat.completion","created":1794605035,"model":"deepseek-flash","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning_content":"The
-        user wants me to use the tool.","tool_calls":[{"index":0,"id":"call_00_TbAu5Kq5O4WwjqWxrquy8226","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":309,"completion_tokens":35,"total_tokens":344,"prompt_tokens_details":{"cached_tokens":128},"completion_tokens_details":{"reasoning_tokens":9},"prompt_cache_hit_tokens":128,"prompt_cache_miss_tokens":181},"system_fingerprint":"bc19ba97cbe016479903222bb1578db6"}'
-  recorded_at: Fri, 13 Nov 2026 21:23:56 GMT
+      string: '{"id":"ce0ccadf-9c1c-4383-b3d6-6a2a1b3b64d9","object":"chat.completion","created":1794705758,"model":"deepseek-flash","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning_content":"The
+        user wants me to use the best_language_to_learn tool. Let me call it.","tool_calls":[{"index":0,"id":"call_00_XAABxzlHvZjdJXZPC6Hn5611","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":309,"completion_tokens":46,"total_tokens":355,"prompt_tokens_details":{"cached_tokens":128},"completion_tokens_details":{"reasoning_tokens":20},"prompt_cache_hit_tokens":128,"prompt_cache_miss_tokens":181},"system_fingerprint":"bc19ba97cbe016479903222bb1578db6"}'
+  recorded_at: Sun, 15 Nov 2026 01:22:39 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"deepseek-v4-flash","messages":[{"role":"user","content":"Use
-        the best_language_to_learn tool to tell me which language to learn."},{"role":"assistant","content":"","tool_calls":[{"id":"call_00_TbAu5Kq5O4WwjqWxrquy8226","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning_content":"The
-        user wants me to use the tool.","reasoning":"The user wants me to use the
-        tool."},{"role":"tool","content":"Ruby","tool_call_id":"call_00_TbAu5Kq5O4WwjqWxrquy8226"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best_language_to_learn tool to tell me which language to learn."},{"role":"assistant","content":"","tool_calls":[{"id":"call_00_XAABxzlHvZjdJXZPC6Hn5611","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning_content":"The
+        user wants me to use the best_language_to_learn tool. Let me call it.","reasoning":"The
+        user wants me to use the best_language_to_learn tool. Let me call it."},{"role":"tool","content":"Ruby","tool_call_id":"call_00_XAABxzlHvZjdJXZPC6Hn5611"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -90,7 +90,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Fri, 13 Nov 2026 21:23:57 GMT
+      - Sun, 15 Nov 2026 01:22:39 GMT
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -100,20 +100,20 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - a32ae4702a838d0f96f8a54550cf19e8
+      - 461b0b2745c4892260a1e3f097dafc6c
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 aa1aad2570739ff06cb3e51c135cb4da.cloudfront.net (CloudFront)
+      - 1.1 6128684c3e0e0e1ecb2ae650a86e0632.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL50-P6
+      - TXL52-P3
       X-Amz-Cf-Id:
-      - S5lyBVB7JoH0zx2Oe8fHpS9VvkjJ5vt_nO_ppG9krZJISNlpGN-ebA==
+      - 9WZKjnaM_fe4Fm93bikIs3bSwfMMDKvHzf_xEIMbDr_MbUmpfAs4BA==
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImRjM2JkOTc1LTRiZTgtNDUxMS1iMTljLTA0YjI3MTcxN2ZmNCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTQ2MDUwMzcsIm1vZGVsIjoiZGVlcHNlZWstZmxhc2giLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IkFjY29yZGluZyB0byB0aGUgdG9vbCwgdGhlIGJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm4gaXMgKipSdWJ5KiouXG5cblJ1YnkgaXMgYSBncmVhdCBjaG9pY2Ug4oCUIGl0J3Mga25vd24gZm9yIGl0cyByZWFkYWJsZSwgZWxlZ2FudCBzeW50YXgsIGEgZnJpZW5kbHkgY29tbXVuaXR5LCBhbmQgaXQgcG93ZXJzIHBvcHVsYXIgZnJhbWV3b3JrcyBsaWtlIFJ1Ynkgb24gUmFpbHMgZm9yIHdlYiBkZXZlbG9wbWVudC4gRW5qb3kgbGVhcm5pbmcgaXQhIiwicmVhc29uaW5nX2NvbnRlbnQiOiIifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjozNTcsImNvbXBsZXRpb25fdG9rZW5zIjo1MiwidG90YWxfdG9rZW5zIjo0MDksInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoxMjh9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjB9LCJwcm9tcHRfY2FjaGVfaGl0X3Rva2VucyI6MTI4LCJwcm9tcHRfY2FjaGVfbWlzc190b2tlbnMiOjIyOX0sInN5c3RlbV9maW5nZXJwcmludCI6ImJjMTliYTk3Y2JlMDE2NDc5OTAzMjIyYmIxNTc4ZGI2In0=
-  recorded_at: Fri, 13 Nov 2026 21:23:58 GMT
-recorded_with: VCR 6.4.1
+        eyJpZCI6IjVlMzc1MDU5LTUzNDAtNDg3YS1iMzIwLWJiYjgwOGNkZGE2NCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTQ3MDU3NTksIm1vZGVsIjoiZGVlcHNlZWstZmxhc2giLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IkFjY29yZGluZyB0byB0aGUgYmVzdF9sYW5ndWFnZV90b19sZWFybiB0b29sLCB5b3Ugc2hvdWxkIGxlYXJuICoqUnVieSoqISDwn46JXG5cblJ1YnkgaXMgYSBkeW5hbWljLCBvcGVuLXNvdXJjZSBwcm9ncmFtbWluZyBsYW5ndWFnZSBrbm93biBmb3IgaXRzIGVsZWdhbnQsIHJlYWRhYmxlIHN5bnRheCBhbmQgaXRzIGZvY3VzIG9uIGRldmVsb3BlciBoYXBwaW5lc3MuIEl0J3MgcGFydGljdWxhcmx5IHBvcHVsYXIgZm9yIHdlYiBkZXZlbG9wbWVudCAodGhhbmtzIHRvIHRoZSBSdWJ5IG9uIFJhaWxzIGZyYW1ld29yayksIHNjcmlwdGluZywgYW5kIHByb3RvdHlwaW5nLiBIYXBweSBsZWFybmluZyEiLCJyZWFzb25pbmdfY29udGVudCI6IiJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjM2OCwiY29tcGxldGlvbl90b2tlbnMiOjY5LCJ0b3RhbF90b2tlbnMiOjQzNywicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjEyOH0sImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MH0sInByb21wdF9jYWNoZV9oaXRfdG9rZW5zIjoxMjgsInByb21wdF9jYWNoZV9taXNzX3Rva2VucyI6MjQwfSwic3lzdGVtX2ZpbmdlcnByaW50IjoiYmMxOWJhOTdjYmUwMTY0Nzk5MDMyMjJiYjE1NzhkYjYifQ==
+  recorded_at: Sun, 15 Nov 2026 01:22:40 GMT
+recorded_with: VCR 6.4.0

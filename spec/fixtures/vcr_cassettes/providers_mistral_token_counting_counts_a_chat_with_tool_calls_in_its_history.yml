@@ -11,7 +11,7 @@ http_interactions:
         name"}},"required":["city"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -26,23 +26,25 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:20:48 GMT
+      - Sun, 15 Nov 2026 01:19:26 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
       Mistral-Correlation-Id:
-      - 01a1d6c8-d34f-7ce4-a63c-c439a7743395
+      - 01a1dcc9-a9d6-7a44-a59e-98a5e03d182f
       X-Kong-Request-Id:
-      - 01a1d6c8-d34f-7ce4-a63c-c439a7743395
+      - 01a1dcc9-a9d6-7a44-a59e-98a5e03d182f
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '99853'
+      - '93246'
       X-Ratelimit-Tokens-Query-Cost:
       - '123'
       X-Ratelimit-Limit-Req-Minute:
@@ -50,13 +52,155 @@ http_interactions:
       X-Ratelimit-Remaining-Req-Minute:
       - '99'
       X-Envoy-Upstream-Service-Time:
-      - '260'
+      - '245'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '261'
+      - '247'
+      X-Kong-Proxy-Latency:
+      - '22'
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"351f6ed0a4d943e19aca554b986195da","created":1794705566,"model":"mistral-small-latest","usage":{"prompt_tokens":108,"total_tokens":123,"completion_tokens":15,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"Ol9jTVhGu","type":"function","function":{"name":"mistral_counting_weather","arguments":"{\"city\":
+        \"Berlin\"}"},"index":0}],"content":""}}]}'
+  recorded_at: Sun, 15 Nov 2026 01:19:26 GMT
+- request:
+    method: post
+    uri: https://api.mistral.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"What
+        is the weather in Berlin? Use the tool."},{"role":"assistant","content":"","tool_calls":[{"id":"Ol9jTVhGu","type":"function","function":{"name":"mistral_counting_weather","arguments":"{\"city\":\"Berlin\"}"}}]},{"role":"tool","content":"It''s
+        sunny in Berlin.","tool_call_id":"Ol9jTVhGu"}],"stream":false,"tools":[{"type":"function","function":{"name":"mistral_counting_weather","description":"Gets
+        current weather for a city","parameters":{"type":"object","properties":{"city":{"type":"string","description":"City
+        name"}},"required":["city"],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 15 Nov 2026 01:19:27 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      Mistral-Correlation-Id:
+      - 01a1dcc9-ac36-76ce-b1ae-edf47453af61
+      X-Kong-Request-Id:
+      - 01a1dcc9-ac36-76ce-b1ae-edf47453af61
+      X-Max-Retry-Attempts-Reached:
+      - 'false'
+      X-Ratelimit-Limit-Tokens-Minute:
+      - '100000'
+      X-Ratelimit-Remaining-Tokens-Minute:
+      - '93107'
+      X-Ratelimit-Tokens-Query-Cost:
+      - '139'
+      X-Ratelimit-Limit-Req-Minute:
+      - '100'
+      X-Ratelimit-Remaining-Req-Minute:
+      - '98'
+      X-Envoy-Upstream-Service-Time:
+      - '230'
+      Server:
+      - cloudflare
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Kong-Upstream-Latency:
+      - '231'
+      X-Kong-Proxy-Latency:
+      - '22'
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"7270e46899774d19bb1c6c60e6394878","created":1794705566,"model":"mistral-small-latest","usage":{"prompt_tokens":131,"total_tokens":139,"completion_tokens":8,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+        weather in Berlin is sunny."}}]}'
+  recorded_at: Sun, 15 Nov 2026 01:19:27 GMT
+- request:
+    method: post
+    uri: https://api.mistral.ai/v1/responses/input_tokens
+    body:
+      encoding: UTF-8
+      string: '{"model":"mistral-small-latest","input":[{"type":"message","role":"user","content":"What
+        is the weather in Berlin? Use the tool."},{"type":"function_call","call_id":"Ol9jTVhGu","name":"mistral_counting_weather","arguments":"{\"city\":\"Berlin\"}"},{"type":"function_call_output","call_id":"Ol9jTVhGu","output":"It''s
+        sunny in Berlin."},{"type":"message","role":"assistant","content":[{"type":"output_text","text":"The
+        weather in Berlin is sunny."}]},{"type":"message","role":"user","content":"And
+        in Paris?"}],"tools":[{"type":"function","name":"mistral_counting_weather","description":"Gets
+        current weather for a city","parameters":{"type":"object","properties":{"city":{"type":"string","description":"City
+        name"}},"required":["city"],"additionalProperties":false,"strict":true},"strict":false}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 15 Nov 2026 01:19:27 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Mistral-Correlation-Id:
+      - 01a1dcc9-adc7-7b6f-b12c-b6d1a7b727b2
+      X-Kong-Request-Id:
+      - 01a1dcc9-adc7-7b6f-b12c-b6d1a7b727b2
+      X-Envoy-Upstream-Service-Time:
+      - '671'
+      Server:
+      - cloudflare
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Kong-Upstream-Latency:
+      - '673'
       X-Kong-Proxy-Latency:
       - '18'
       Cf-Cache-Status:
@@ -73,150 +217,6 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"a9eefefa0a6a451c8c4b08f9b7bc8d73","created":1794604848,"model":"mistral-small-latest","usage":{"prompt_tokens":108,"total_tokens":123,"completion_tokens":15,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"WKAZAKA8x","type":"function","function":{"name":"mistral_counting_weather","arguments":"{\"city\":
-        \"Berlin\"}"},"index":0}],"content":""}}]}'
-  recorded_at: Fri, 13 Nov 2026 21:20:48 GMT
-- request:
-    method: post
-    uri: https://api.mistral.ai/v1/chat/completions
-    body:
-      encoding: UTF-8
-      string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"What
-        is the weather in Berlin? Use the tool."},{"role":"assistant","content":"","tool_calls":[{"id":"WKAZAKA8x","type":"function","function":{"name":"mistral_counting_weather","arguments":"{\"city\":\"Berlin\"}"}}]},{"role":"tool","content":"It''s
-        sunny in Berlin.","tool_call_id":"WKAZAKA8x"}],"stream":false,"tools":[{"type":"function","function":{"name":"mistral_counting_weather","description":"Gets
-        current weather for a city","parameters":{"type":"object","properties":{"city":{"type":"string","description":"City
-        name"}},"required":["city"],"additionalProperties":false,"strict":true}}}]}'
-    headers:
-      User-Agent:
-      - Faraday v2.15.1
-      Authorization:
-      - Bearer <AUTH_TOKEN>
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Fri, 13 Nov 2026 21:20:48 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Mistral-Correlation-Id:
-      - 01a1d6c8-d4a6-78f8-a122-721da7f02653
-      X-Kong-Request-Id:
-      - 01a1d6c8-d4a6-78f8-a122-721da7f02653
-      X-Max-Retry-Attempts-Reached:
-      - 'false'
-      X-Ratelimit-Limit-Tokens-Minute:
-      - '100000'
-      X-Ratelimit-Remaining-Tokens-Minute:
-      - '99714'
-      X-Ratelimit-Tokens-Query-Cost:
-      - '139'
-      X-Ratelimit-Limit-Req-Minute:
-      - '100'
-      X-Ratelimit-Remaining-Req-Minute:
-      - '98'
-      X-Envoy-Upstream-Service-Time:
-      - '339'
-      Server:
-      - cloudflare
-      Access-Control-Allow-Origin:
-      - "*"
-      X-Kong-Upstream-Latency:
-      - '340'
-      X-Kong-Proxy-Latency:
-      - '11'
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
-      X-Content-Type-Options:
-      - nosniff
-      Cf-Ray:
-      - "<CF_RAY>"
-      Alt-Svc:
-      - h3=":443"; ma=86400
-    body:
-      encoding: ASCII-8BIT
-      string: '{"id":"86d462e0086945afba20d1c116e8167b","created":1794604848,"model":"mistral-small-latest","usage":{"prompt_tokens":131,"total_tokens":139,"completion_tokens":8,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
-        weather in Berlin is sunny."}}]}'
-  recorded_at: Fri, 13 Nov 2026 21:20:48 GMT
-- request:
-    method: post
-    uri: https://api.mistral.ai/v1/responses/input_tokens
-    body:
-      encoding: UTF-8
-      string: '{"model":"mistral-small-latest","input":[{"type":"message","role":"user","content":"What
-        is the weather in Berlin? Use the tool."},{"type":"function_call","call_id":"WKAZAKA8x","name":"mistral_counting_weather","arguments":"{\"city\":\"Berlin\"}"},{"type":"function_call_output","call_id":"WKAZAKA8x","output":"It''s
-        sunny in Berlin."},{"type":"message","role":"assistant","content":[{"type":"output_text","text":"The
-        weather in Berlin is sunny."}]},{"type":"message","role":"user","content":"And
-        in Paris?"}],"tools":[{"type":"function","name":"mistral_counting_weather","description":"Gets
-        current weather for a city","parameters":{"type":"object","properties":{"city":{"type":"string","description":"City
-        name"}},"required":["city"],"additionalProperties":false,"strict":true},"strict":false}]}'
-    headers:
-      User-Agent:
-      - Faraday v2.15.1
-      Authorization:
-      - Bearer <AUTH_TOKEN>
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Fri, 13 Nov 2026 21:20:49 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Mistral-Correlation-Id:
-      - 01a1d6c8-d63f-7133-a825-5b2c7947b49a
-      X-Kong-Request-Id:
-      - 01a1d6c8-d63f-7133-a825-5b2c7947b49a
-      X-Envoy-Upstream-Service-Time:
-      - '624'
-      Server:
-      - cloudflare
-      Access-Control-Allow-Origin:
-      - "*"
-      X-Kong-Upstream-Latency:
-      - '625'
-      X-Kong-Proxy-Latency:
-      - '14'
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
-      X-Content-Type-Options:
-      - nosniff
-      Cf-Ray:
-      - "<CF_RAY>"
-      Alt-Svc:
-      - h3=":443"; ma=86400
-    body:
-      encoding: ASCII-8BIT
       string: '{"input_tokens":145,"object":"response.input_tokens"}'
-  recorded_at: Fri, 13 Nov 2026 21:20:49 GMT
-recorded_with: VCR 6.4.1
+  recorded_at: Sun, 15 Nov 2026 01:19:27 GMT
+recorded_with: VCR 6.4.0

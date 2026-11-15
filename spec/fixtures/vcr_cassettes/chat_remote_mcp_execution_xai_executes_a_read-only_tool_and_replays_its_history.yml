@@ -11,7 +11,7 @@ http_interactions:
         use only those results.","stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"mcp","allowed_tools":["microsoft_docs_search"],"server_url":"https://learn.microsoft.com/api/mcp","server_label":"docs"}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:22:31 GMT
+      - Sun, 15 Nov 2026 01:21:03 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -42,7 +42,7 @@ http_interactions:
       X-Ratelimit-Limit-Tokens:
       - '10000000'
       X-Ratelimit-Remaining-Tokens:
-      - '10000000'
+      - '9998464'
       X-Ratelimit-Limit-Requests:
       - '1800'
       X-Ratelimit-Remaining-Requests:
@@ -56,11 +56,9 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '182.6'
+      - '228.2'
       X-Metrics-E2e-Ms:
-      - '6383.7'
-      Traceparent:
-      - 00-cc0bf1180fc67e671079e0ac48adf23c-50fc719600025875-01
+      - '10651.9'
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
@@ -73,9 +71,9 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1794604946,"completed_at":1794604951,"id":"903fb6e2-dfa9-91a3-abfc-0e3a09e4c842","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_903fb6e2-dfa9-91a3-abfc-0e3a09e4c842","summary":[{"text":"I
+      string: '{"created_at":1794705655,"completed_at":1794705663,"id":"c5c46786-dbf2-4682-b789-3669e0cffc0b","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_c5c46786-dbf2-4682-b789-3669e0cffc0b","summary":[{"text":"I
         will search Microsoft documentation for Azure Blob Storage and summarize it
-        in one sentence.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"ftgGDLMH0iOEnDpjbRyUjJbJGw1nkEvU+pRjSY9nE9x60V/N4qzcNuRB+u6jeUp17vY9zv82tlspNc+m89f9bY4TkVR1Nn/arSA3SmiW//u1DVRB3JeAyWpcsw9qTpNDra37eCth8mmfGBhN+kc/DeRT5MjJtjPMwao7j20YuAL803yfOaLk4pETvB6kkLxjt6yBRHcmyyOF4/Yj+E3BFTtIVDiAoBTID+cyloEbUTDG/w+fmFB5xW/TW/ObeiK4/ADl0D6HTosjH40vmU+OnFA54IdxblIvR/eYBuJFG88kH5TXmzMirhSlAmznPlKZwZmBMGWCbHRSziIYHDL1IZdwe/jXlFZ+OJwfou+n7seK6VEbTaOREH0Mb2Ra5KgQlCGirN5EXQ0C+gJHYGFKSu8fra6/LIUHKazDgUnoEEt8jNfrDZdG49jVR+iClXN33qJfAcvIk16A5v1H6Fd/H6emwBXgecWQGGdiVBFrYKQFAS5pbFJRPqqWN5JlBQfFVoTQMX9fkG4KXBb41H6XqGCEinGPOEb+XM8BHsn9PL/SReBaUNTUvi5h/lzPbVGzZxMng/Ra36+O5mrejoOm6ya8qeeYBwf+js0uNDPtvWuTePBo8Hd/IogKJWPGB00/CiJd"},{"id":"mcp_903fb6e2-dfa9-91a3-abfc-0e3a09e4c842_call-b9f03b04-197f-42a0-b00c-9ec33cd85e7f-0","type":"mcp_call","status":"completed","name":"microsoft_docs_search","server_label":"docs","error":"","arguments":"{\"query\":\"Azure
+        in one sentence.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"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"},{"id":"mcp_c5c46786-dbf2-4682-b789-3669e0cffc0b_call-a88a5374-6b6f-4587-9db0-8557279d02f5-0","type":"mcp_call","status":"completed","name":"microsoft_docs_search","server_label":"docs","error":"","arguments":"{\"query\":\"Azure
         Blob Storage\"}","output":"{\"content\":[{\"type\":\"text\",\"text\":\"{\\\"results\\\":[{\\\"title\\\":\\\"What
         is Azure Blob storage?\\\",\\\"content\\\":\\\"# What is Azure Blob storage?\\\\nAzure
         Blob Storage is Microsoft\\\\u0027s object storage solution for the cloud.
@@ -188,7 +186,47 @@ http_interactions:
         can also securely connect to Blob Storage by using SSH File Transfer Protocol
         (SFTP) and mount Blob Storage containers by using the Network File System
         (NFS) 3.0 protocol.\\\\nFor more information about Blob Storage, see [Introduction
-        to Blob Storage](https://learn.microsoft.com/azure/storage/blobs/storage-blobs-introduction).\\\",\\\"contentUrl\\\":\\\"https://learn.microsoft.com/azure/storage/common/storage-introduction#blob-storage\\\"},{\\\"title\\\":\\\"Introduction
+        to Blob Storage](https://learn.microsoft.com/azure/storage/blobs/storage-blobs-introduction).\\\",\\\"contentUrl\\\":\\\"https://learn.microsoft.com/azure/storage/common/storage-introduction#blob-storage\\\"},{\\\"title\\\":\\\"Get
+        started with Azure Blob Storage and .NET\\\",\\\"content\\\":\\\"# Get started
+        with Azure Blob Storage and .NET\\\\n## Build your app\\\\nAs you build apps
+        to work with data resources in Azure Blob Storage, your code primarily interacts
+        with three resource types: storage accounts, containers, and blobs. To learn
+        more about these resource types, how they relate to one another, and how apps
+        interact with resources, see [Understand how apps interact with Blob Storage
+        data resources](https://learn.microsoft.com/azure/storage/blobs/storage-blob-object-model).\\\\nThe
+        following guides show you how to access data and perform specific actions
+        using the Azure Storage client library for .NET:\\\\n| Guide | Description|
+        \\\\n|  --- | ---  |\\\\n| [Append data to blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blob-append)
+        | Learn how to create an append blob and then append data to that blob. |\\\\n|
+        [Configure a retry policy](https://learn.microsoft.com/azure/storage/blobs/storage-retry-policy)
+        | Implement retry policies for client operations. |\\\\n| [Copy blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blob-copy)
+        | Copy a blob from one location to another. |\\\\n| [Create a container](https://learn.microsoft.com/azure/storage/blobs/storage-blob-container-create)
+        | Create containers. |\\\\n| [Create a user delegation SAS](https://learn.microsoft.com/azure/storage/blobs/storage-blob-user-delegation-sas-create-dotnet)
+        | Create a user delegation SAS for a container or blob. |\\\\n| [Create and
+        manage blob leases](https://learn.microsoft.com/azure/storage/blobs/storage-blob-lease)
+        | Establish and manage a lock on a blob. |\\\\n| [Create and manage container
+        leases](https://learn.microsoft.com/azure/storage/blobs/storage-blob-container-lease)
+        | Establish and manage a lock on a container. |\\\\n| [Delete and restore
+        blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blob-delete)
+        | Delete blobs, and if soft-delete is enabled, restore deleted blobs. |\\\\n|
+        [Delete and restore containers](https://learn.microsoft.com/azure/storage/blobs/storage-blob-container-delete)
+        | Delete containers, and if soft-delete is enabled, restore deleted containers.
+        |\\\\n| [Download blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blob-download)
+        | Download blobs by using strings, streams, and file paths. |\\\\n| [Find
+        blobs using tags](https://learn.microsoft.com/azure/storage/blobs/storage-blob-tags)
+        | Set and retrieve tags, and use tags to find blobs. |\\\\n| [List blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blobs-list)
+        | List blobs in different ways. |\\\\n| [List containers](https://learn.microsoft.com/azure/storage/blobs/storage-blob-containers-list)
+        | List containers in an account and the various options available to customize
+        a listing. |\\\\n| [Manage properties and metadata](https://learn.microsoft.com/azure/storage/blobs/storage-blob-properties-metadata)
+        | Get and set properties and metadata for blobs. |\\\\n| [Manage properties
+        and metadata](https://learn.microsoft.com/azure/storage/blobs/storage-blob-container-properties-metadata)
+        | Get and set properties and metadata for containers. |\\\\n| [Performance
+        tuning for data transfers](https://learn.microsoft.com/azure/storage/blobs/storage-blobs-tune-upload-download)
+        | Optimize performance for data transfer operations. |\\\\n| [Set or change
+        a blob\\\\u0027s access tier](https://learn.microsoft.com/azure/storage/blobs/storage-blob-use-access-tier-dotnet)
+        | Set or change the access tier for a block blob. |\\\\n| [Upload blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blob-upload)
+        | Learn how to upload blobs by using strings, streams, file paths, and other
+        methods. |\\\\n\\\",\\\"contentUrl\\\":\\\"https://learn.microsoft.com/azure/storage/blobs/storage-blob-dotnet-get-started#build-your-app\\\"},{\\\"title\\\":\\\"Introduction
         to Azure Blob Storage\\\",\\\"content\\\":\\\"# Introduction to Azure Blob
         Storage\\\\n## Move data to Blob Storage\\\\nA number of solutions exist for
         migrating existing data to Blob Storage:\\\\n1. **AzCopy** is an easy-to-use
@@ -323,37 +361,7 @@ http_interactions:
         Storage. This community library offers idiomatic F# functions and patterns
         that make blob operations more natural in F#.\\\\n## Prerequisites\\\\nTo
         use this guide, you must first [create an Azure storage account](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-create).
-        You also need your storage access key for this account.\\\",\\\"contentUrl\\\":\\\"https://learn.microsoft.com/dotnet/fsharp/using-fsharp-on-azure/blob-storage\\\"},{\\\"title\\\":\\\"Azure
-        Storage blob inventory\\\",\\\"content\\\":\\\"# Azure Storage blob inventory\\\\nAzure
-        Storage blob inventory lists the containers, blobs, blob versions, snapshots,
-        and associated properties in your storage account. The service generates reports
-        daily or weekly in comma-separated values (CSV) or Apache Parquet format.\\\\nUse
-        inventory reports to audit the retention, legal hold, or encryption status
-        of your storage account contents. You can also analyze the total size, age,
-        tier distribution, and other attributes of your data.\\\\nBlob inventory can
-        simplify business workflows and speed up data processing jobs. It provides
-        scheduled automation of the [List Containers](https://learn.microsoft.com/en-us/rest/api/storageservices/list-containers2)
-        and [List Blobs](https://learn.microsoft.com/en-us/rest/api/storageservices/list-blobs)
-        APIs. Inventory rules filter report contents by blob type, prefix, or selected
-        blob properties.\\\\nAzure Storage blob inventory is available for the following
-        types of storage accounts:\\\\n1. Standard general-purpose v2\\\\n2. Premium
-        block blob storage\\\\n3. Blob storage\\\\n## Inventory features\\\\nAzure
-        Storage blob inventory supports the following features and capabilities.\\\\n1.
-        **Inventory reports for blobs and containers**\\\\n  You can generate inventory
-        reports for blobs and containers. A report for blobs can contain base blobs,
-        snapshots, content length, blob versions, and their associated properties
-        such as creation time and last modified time. The report doesn\\\\u0027t list
-        empty containers. A report for containers describes containers and their associated
-        properties such as immutability policy status and legal hold status.\\\\n2.
-        **Custom schema**\\\\n  You can choose which fields appear in reports. Choose
-        from a list of supported fields. That list appears later in this article.\\\\n3.
-        **CSV and Apache Parquet output format**\\\\n  You can generate an inventory
-        report in either CSV or Apache Parquet output format.\\\\n4. **Manifest file
-        and Azure Event Grid event per inventory report**\\\\n  The service generates
-        a manifest file and an Azure Event Grid event for each inventory report. The
-        article describes these items later.\\\\n## Enabling inventory reports\\\\nEnable
-        blob inventory reports by adding a policy with one or more rules to your storage
-        account. For guidance, see [Enable Azure Storage blob inventory reports](https://learn.microsoft.com/azure/storage/blobs/blob-inventory-how-to).\\\",\\\"contentUrl\\\":\\\"https://learn.microsoft.com/azure/storage/blobs/blob-inventory\\\"}]}\"}],\"structuredContent\":{\"results\":[{\"title\":\"What
+        You also need your storage access key for this account.\\\",\\\"contentUrl\\\":\\\"https://learn.microsoft.com/dotnet/fsharp/using-fsharp-on-azure/blob-storage\\\"}]}\"}],\"structuredContent\":{\"results\":[{\"title\":\"What
         is Azure Blob storage?\",\"content\":\"# What is Azure Blob storage?\\nAzure
         Blob Storage is Microsoft''s object storage solution for the cloud. Blob Storage
         is optimized for storing massive amounts of unstructured data. Unstructured
@@ -462,7 +470,45 @@ http_interactions:
         can also securely connect to Blob Storage by using SSH File Transfer Protocol
         (SFTP) and mount Blob Storage containers by using the Network File System
         (NFS) 3.0 protocol.\\nFor more information about Blob Storage, see [Introduction
-        to Blob Storage](https://learn.microsoft.com/azure/storage/blobs/storage-blobs-introduction).\",\"contentUrl\":\"https://learn.microsoft.com/azure/storage/common/storage-introduction#blob-storage\"},{\"title\":\"Introduction
+        to Blob Storage](https://learn.microsoft.com/azure/storage/blobs/storage-blobs-introduction).\",\"contentUrl\":\"https://learn.microsoft.com/azure/storage/common/storage-introduction#blob-storage\"},{\"title\":\"Get
+        started with Azure Blob Storage and .NET\",\"content\":\"# Get started with
+        Azure Blob Storage and .NET\\n## Build your app\\nAs you build apps to work
+        with data resources in Azure Blob Storage, your code primarily interacts with
+        three resource types: storage accounts, containers, and blobs. To learn more
+        about these resource types, how they relate to one another, and how apps interact
+        with resources, see [Understand how apps interact with Blob Storage data resources](https://learn.microsoft.com/azure/storage/blobs/storage-blob-object-model).\\nThe
+        following guides show you how to access data and perform specific actions
+        using the Azure Storage client library for .NET:\\n| Guide | Description|
+        \\n|  --- | ---  |\\n| [Append data to blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blob-append)
+        | Learn how to create an append blob and then append data to that blob. |\\n|
+        [Configure a retry policy](https://learn.microsoft.com/azure/storage/blobs/storage-retry-policy)
+        | Implement retry policies for client operations. |\\n| [Copy blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blob-copy)
+        | Copy a blob from one location to another. |\\n| [Create a container](https://learn.microsoft.com/azure/storage/blobs/storage-blob-container-create)
+        | Create containers. |\\n| [Create a user delegation SAS](https://learn.microsoft.com/azure/storage/blobs/storage-blob-user-delegation-sas-create-dotnet)
+        | Create a user delegation SAS for a container or blob. |\\n| [Create and
+        manage blob leases](https://learn.microsoft.com/azure/storage/blobs/storage-blob-lease)
+        | Establish and manage a lock on a blob. |\\n| [Create and manage container
+        leases](https://learn.microsoft.com/azure/storage/blobs/storage-blob-container-lease)
+        | Establish and manage a lock on a container. |\\n| [Delete and restore blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blob-delete)
+        | Delete blobs, and if soft-delete is enabled, restore deleted blobs. |\\n|
+        [Delete and restore containers](https://learn.microsoft.com/azure/storage/blobs/storage-blob-container-delete)
+        | Delete containers, and if soft-delete is enabled, restore deleted containers.
+        |\\n| [Download blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blob-download)
+        | Download blobs by using strings, streams, and file paths. |\\n| [Find blobs
+        using tags](https://learn.microsoft.com/azure/storage/blobs/storage-blob-tags)
+        | Set and retrieve tags, and use tags to find blobs. |\\n| [List blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blobs-list)
+        | List blobs in different ways. |\\n| [List containers](https://learn.microsoft.com/azure/storage/blobs/storage-blob-containers-list)
+        | List containers in an account and the various options available to customize
+        a listing. |\\n| [Manage properties and metadata](https://learn.microsoft.com/azure/storage/blobs/storage-blob-properties-metadata)
+        | Get and set properties and metadata for blobs. |\\n| [Manage properties
+        and metadata](https://learn.microsoft.com/azure/storage/blobs/storage-blob-container-properties-metadata)
+        | Get and set properties and metadata for containers. |\\n| [Performance tuning
+        for data transfers](https://learn.microsoft.com/azure/storage/blobs/storage-blobs-tune-upload-download)
+        | Optimize performance for data transfer operations. |\\n| [Set or change
+        a blob''s access tier](https://learn.microsoft.com/azure/storage/blobs/storage-blob-use-access-tier-dotnet)
+        | Set or change the access tier for a block blob. |\\n| [Upload blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blob-upload)
+        | Learn how to upload blobs by using strings, streams, file paths, and other
+        methods. |\\n\",\"contentUrl\":\"https://learn.microsoft.com/azure/storage/blobs/storage-blob-dotnet-get-started#build-your-app\"},{\"title\":\"Introduction
         to Azure Blob Storage\",\"content\":\"# Introduction to Azure Blob Storage\\n##
         Move data to Blob Storage\\nA number of solutions exist for migrating existing
         data to Blob Storage:\\n1. **AzCopy** is an easy-to-use command-line tool
@@ -595,53 +641,22 @@ http_interactions:
         Storage. This community library offers idiomatic F# functions and patterns
         that make blob operations more natural in F#.\\n## Prerequisites\\nTo use
         this guide, you must first [create an Azure storage account](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-create).
-        You also need your storage access key for this account.\",\"contentUrl\":\"https://learn.microsoft.com/dotnet/fsharp/using-fsharp-on-azure/blob-storage\"},{\"title\":\"Azure
-        Storage blob inventory\",\"content\":\"# Azure Storage blob inventory\\nAzure
-        Storage blob inventory lists the containers, blobs, blob versions, snapshots,
-        and associated properties in your storage account. The service generates reports
-        daily or weekly in comma-separated values (CSV) or Apache Parquet format.\\nUse
-        inventory reports to audit the retention, legal hold, or encryption status
-        of your storage account contents. You can also analyze the total size, age,
-        tier distribution, and other attributes of your data.\\nBlob inventory can
-        simplify business workflows and speed up data processing jobs. It provides
-        scheduled automation of the [List Containers](https://learn.microsoft.com/en-us/rest/api/storageservices/list-containers2)
-        and [List Blobs](https://learn.microsoft.com/en-us/rest/api/storageservices/list-blobs)
-        APIs. Inventory rules filter report contents by blob type, prefix, or selected
-        blob properties.\\nAzure Storage blob inventory is available for the following
-        types of storage accounts:\\n1. Standard general-purpose v2\\n2. Premium block
-        blob storage\\n3. Blob storage\\n## Inventory features\\nAzure Storage blob
-        inventory supports the following features and capabilities.\\n1. **Inventory
-        reports for blobs and containers**\\n  You can generate inventory reports
-        for blobs and containers. A report for blobs can contain base blobs, snapshots,
-        content length, blob versions, and their associated properties such as creation
-        time and last modified time. The report doesn''t list empty containers. A
-        report for containers describes containers and their associated properties
-        such as immutability policy status and legal hold status.\\n2. **Custom schema**\\n  You
-        can choose which fields appear in reports. Choose from a list of supported
-        fields. That list appears later in this article.\\n3. **CSV and Apache Parquet
-        output format**\\n  You can generate an inventory report in either CSV or
-        Apache Parquet output format.\\n4. **Manifest file and Azure Event Grid event
-        per inventory report**\\n  The service generates a manifest file and an Azure
-        Event Grid event for each inventory report. The article describes these items
-        later.\\n## Enabling inventory reports\\nEnable blob inventory reports by
-        adding a policy with one or more rules to your storage account. For guidance,
-        see [Enable Azure Storage blob inventory reports](https://learn.microsoft.com/azure/storage/blobs/blob-inventory-how-to).\",\"contentUrl\":\"https://learn.microsoft.com/azure/storage/blobs/blob-inventory\"}]}}"},{"id":"rs_903fb6e2-dfa9-91a3-abfc-0e3a09e4c842","summary":[],"type":"reasoning","status":"completed","encrypted_content":"gvruGCMABxDEgxXUxyc6ubZUwiF/mo0UsECWLAVhWS7romg0rZXt85YpuJq6BItbzDGZWT6NOk8gWKcdbJmAXw+7F4M23GtZHftDIRSZQNTcLBAVCfc/S/6jCUT5Fk/CA0dysatsUwU2WdMcqe5QkgaQylaPiqW9EJubknTumWEiUf+65mZC1EhFiqXHM3dcMwN6/drztVj+nTd77uCT7JB/fFpsEvkLYhWZkOtBvG3ls9Gaf6gJENNM5/WcnZTTuFXFbEsK+CPLC6/jrYQDiGEr9ECtiXO1Wk0T/rIf6H8WH9VpXLgx6/ttm+ShAhwPBNEibQMTABSk7Lb1nbvSlPyg3xkCw/eRWVUYyDUSdv4riNrVZ/e1MSkYfBm5F/Fwms52ARNy2e4A2n9Gr7TqIR7faqyya2B7aGiL5oZO0lUsJmCDJIruc2BPvYz6Ett3ys4Cw47Ne3KIzCiq94y3e2KPeanZDk2qOXyoQ2IsbP037eH5FjvnYs2CMCVafSpgOfXoNzeYdGWf62RYslEDtvse2EifWIOLC83LEpKvffmkikSLRbI366ZFoYtMzh9zjZNI2xi7Yw7G6bLvaTBVUjcguHMWDifLGZi2VsqbUviac9WFRZECigJH+mUyRXkm5PHadA1ghdD3xFvsbRwBKqmAqg5MNNB7XxJqped7+6cB0d7jCYMofJwSXmoURW3jxj3xVr9iCT6dlsG4zwl6sywEFk2r3CoVR4I89eCCWuBqZ3LL6JZCLEVFp2I98fz6rlM5S73Ir6YV"},{"content":[{"type":"output_text","text":"Azure
+        You also need your storage access key for this account.\",\"contentUrl\":\"https://learn.microsoft.com/dotnet/fsharp/using-fsharp-on-azure/blob-storage\"}]}}"},{"id":"rs_c5c46786-dbf2-4682-b789-3669e0cffc0b","summary":[],"type":"reasoning","status":"completed","encrypted_content":"8sNnJspYr5vmAP8/yXxXUHgEWv/xKCH6O3wdyBZxgtog4qU2NivPeofxQmVUkzmdmgU86i9+Z0gx26pe/Ot5AD4kYjaL1250RE1Y7LSk6PvGiv4JY2Qnf2NcBgbP+1Q/fReYOuiUBz9BIwNyFrxsDxuBns2AVhLSl6txPb3ieV15izaeq2sRZQJGmDu0ms8NeInTqqlnkjoNG/p6Ft8xeNd/UslYCfQv1jsBFJ0KnOMPEQbmDIrNtEDyWtbijTUAJ4BZD9scIZBqIKaezPZCtDhIs9WNC5pqTCA2nCtDtEFELMvPlqj+NjANaYCdGuC9dVsd1ett+IARIwYi3RKM/GACmbWvGXKji8m8rlMo6oGJ6CLxv+uQD6P+/GwuDIBuNrHDK8o1N5H1dr671OyjgGcK3+U+wQJS8gl9n9rjPKNX8BfGEMIAaWXBkFvsmlo3Ws70ZVTb+dIjLp9yPWnxf9JGtI2jhw1UJ/Vzh7TxPsHtVG88fcg5vkq+jItzuGCr4Vachy+5CLMelCzFujf1CSN3gSsAmYsdmTaDB9s1OJyJSv54shZW+c0BWccjl9sosMcYcIcFAHYeS+IZejcwH99SGixly5ueTYzWOMgYNOh7jTZbSgSZvf/hKvvZv8+QAdvN2ALMQG9UNHzYTi9pRkiJqi4vx1F8RkZki0xLFfebdvuLjhaq52ZpGgdLgBr+HKCSk7F6vR82pBc/fHUisbJnA38HTu4NgnRFIQohFNl84w4GZEJWLs184s6c2UBWV6GZBcLiekj7Dqnv0sTQCDl+fLCBNRARLuD26L2KYM9vTv5hNCXQHqeConktq/l7uvgQOQe3hkLoh7e7ljIMIRwGwMYnaZMdpbx+y+CGxYawWOseDVgvVDh8KAO6cbdAMvZ1MaLOtvs0dhn7vvdtVevHYSFohrEnMinry3pelWgt681wH3nbbQFd/jwiAhaMoCgq4wtpilDyvnYcgC1DTsUBrpr0goFb0MIzMMw1YpNsnf8UtZuZuRo1GldpZhQZ/vB7UnBf55mlqYzV/Td/EUg/kbmZH9xGiZoxjPUQWRlCsc0ah/Naf4NJaAVsBymjFxYzSvSvww2FRdnXN/xVE6LOdVy3WpePOUtNFVJfEpItGuRf0Yk7jl8Z87qSJdoqAzlviRpCp0TVrEHuk+5phpcz6RNKZ/JhkfoVCyea8zRc+/coaz8E7L6HLz4yuUjWomxGpoFy2He6p2vxgwUgiBIn2d17wNgWZvK47tQsgdiuQlXHnDT2Zc+RcK8CaRJmoq3NtMOe82U"},{"content":[{"type":"output_text","text":"Azure
         Blob Storage is Microsoft''s object storage solution for the cloud, optimized
-        for storing massive amounts of unstructured data such as text or binary data
-        for uses like serving images/documents, streaming media, logging, backups,
-        and analysis.","logprobs":[],"annotations":[]}],"id":"msg_903fb6e2-dfa9-91a3-abfc-0e3a09e4c842","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"mcp","server_label":"docs","server_url":"https://learn.microsoft.com/api/mcp","allowed_tools":["microsoft_docs_search"],"headers":{},"server_description":""}],"top_p":0.95,"usage":{"input_tokens":6885,"input_tokens_details":{"cached_tokens":896},"output_tokens":465,"output_tokens_details":{"reasoning_tokens":407},"total_tokens":7350,"num_sources_used":0,"num_server_side_tools_used":1,"cost_in_usd_ticks":88279500,"server_side_tool_usage_details":{"web_search_calls":0,"x_search_calls":0,"x_posts_fetched":0,"x_users_fetched":0,"code_interpreter_calls":0,"file_search_calls":0,"mcp_calls":1,"document_search_calls":0,"image_generation_calls":0},"context_details":{"input_tokens":6094,"output_tokens":274}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":"Call
+        for storing massive amounts of unstructured data such as text or binary files
+        for uses like serving images, streaming media, backups, and analytics.","logprobs":[],"annotations":[]}],"id":"msg_c5c46786-dbf2-4682-b789-3669e0cffc0b","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"mcp","server_label":"docs","server_url":"https://learn.microsoft.com/api/mcp","allowed_tools":["microsoft_docs_search"],"headers":{},"server_description":""}],"top_p":0.95,"usage":{"input_tokens":7357,"input_tokens_details":{"cached_tokens":896},"output_tokens":560,"output_tokens_details":{"reasoning_tokens":505},"total_tokens":7917,"num_sources_used":0,"num_server_side_tools_used":1,"cost_in_usd_ticks":96554500,"server_side_tool_usage_details":{"web_search_calls":0,"x_search_calls":0,"x_posts_fetched":0,"x_users_fetched":0,"code_interpreter_calls":0,"file_search_calls":0,"mcp_calls":1,"document_search_calls":0,"image_generation_calls":0},"context_details":{"input_tokens":6566,"output_tokens":227}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":"Call
         microsoft_docs_search once to answer the first question. For later questions
         use only those results."}'
-  recorded_at: Fri, 13 Nov 2026 21:22:31 GMT
+  recorded_at: Sun, 15 Nov 2026 01:21:04 GMT
 - request:
     method: post
     uri: https://api.x.ai/v1/responses
     body:
       encoding: UTF-8
       string: '{"model":"grok-4.3","input":[{"role":"user","content":"Search Microsoft
-        documentation for Azure Blob Storage, then summarize it in one sentence."},{"id":"rs_903fb6e2-dfa9-91a3-abfc-0e3a09e4c842","summary":[{"text":"I
+        documentation for Azure Blob Storage, then summarize it in one sentence."},{"id":"rs_c5c46786-dbf2-4682-b789-3669e0cffc0b","summary":[{"text":"I
         will search Microsoft documentation for Azure Blob Storage and summarize it
-        in one sentence.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"ftgGDLMH0iOEnDpjbRyUjJbJGw1nkEvU+pRjSY9nE9x60V/N4qzcNuRB+u6jeUp17vY9zv82tlspNc+m89f9bY4TkVR1Nn/arSA3SmiW//u1DVRB3JeAyWpcsw9qTpNDra37eCth8mmfGBhN+kc/DeRT5MjJtjPMwao7j20YuAL803yfOaLk4pETvB6kkLxjt6yBRHcmyyOF4/Yj+E3BFTtIVDiAoBTID+cyloEbUTDG/w+fmFB5xW/TW/ObeiK4/ADl0D6HTosjH40vmU+OnFA54IdxblIvR/eYBuJFG88kH5TXmzMirhSlAmznPlKZwZmBMGWCbHRSziIYHDL1IZdwe/jXlFZ+OJwfou+n7seK6VEbTaOREH0Mb2Ra5KgQlCGirN5EXQ0C+gJHYGFKSu8fra6/LIUHKazDgUnoEEt8jNfrDZdG49jVR+iClXN33qJfAcvIk16A5v1H6Fd/H6emwBXgecWQGGdiVBFrYKQFAS5pbFJRPqqWN5JlBQfFVoTQMX9fkG4KXBb41H6XqGCEinGPOEb+XM8BHsn9PL/SReBaUNTUvi5h/lzPbVGzZxMng/Ra36+O5mrejoOm6ya8qeeYBwf+js0uNDPtvWuTePBo8Hd/IogKJWPGB00/CiJd"},{"id":"mcp_903fb6e2-dfa9-91a3-abfc-0e3a09e4c842_call-b9f03b04-197f-42a0-b00c-9ec33cd85e7f-0","type":"mcp_call","status":"completed","name":"microsoft_docs_search","server_label":"docs","error":"","arguments":"{\"query\":\"Azure
+        in one sentence.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"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"},{"id":"mcp_c5c46786-dbf2-4682-b789-3669e0cffc0b_call-a88a5374-6b6f-4587-9db0-8557279d02f5-0","type":"mcp_call","status":"completed","name":"microsoft_docs_search","server_label":"docs","error":"","arguments":"{\"query\":\"Azure
         Blob Storage\"}","output":"{\"content\":[{\"type\":\"text\",\"text\":\"{\\\"results\\\":[{\\\"title\\\":\\\"What
         is Azure Blob storage?\\\",\\\"content\\\":\\\"# What is Azure Blob storage?\\\\nAzure
         Blob Storage is Microsoft\\\\u0027s object storage solution for the cloud.
@@ -754,7 +769,47 @@ http_interactions:
         can also securely connect to Blob Storage by using SSH File Transfer Protocol
         (SFTP) and mount Blob Storage containers by using the Network File System
         (NFS) 3.0 protocol.\\\\nFor more information about Blob Storage, see [Introduction
-        to Blob Storage](https://learn.microsoft.com/azure/storage/blobs/storage-blobs-introduction).\\\",\\\"contentUrl\\\":\\\"https://learn.microsoft.com/azure/storage/common/storage-introduction#blob-storage\\\"},{\\\"title\\\":\\\"Introduction
+        to Blob Storage](https://learn.microsoft.com/azure/storage/blobs/storage-blobs-introduction).\\\",\\\"contentUrl\\\":\\\"https://learn.microsoft.com/azure/storage/common/storage-introduction#blob-storage\\\"},{\\\"title\\\":\\\"Get
+        started with Azure Blob Storage and .NET\\\",\\\"content\\\":\\\"# Get started
+        with Azure Blob Storage and .NET\\\\n## Build your app\\\\nAs you build apps
+        to work with data resources in Azure Blob Storage, your code primarily interacts
+        with three resource types: storage accounts, containers, and blobs. To learn
+        more about these resource types, how they relate to one another, and how apps
+        interact with resources, see [Understand how apps interact with Blob Storage
+        data resources](https://learn.microsoft.com/azure/storage/blobs/storage-blob-object-model).\\\\nThe
+        following guides show you how to access data and perform specific actions
+        using the Azure Storage client library for .NET:\\\\n| Guide | Description|
+        \\\\n|  --- | ---  |\\\\n| [Append data to blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blob-append)
+        | Learn how to create an append blob and then append data to that blob. |\\\\n|
+        [Configure a retry policy](https://learn.microsoft.com/azure/storage/blobs/storage-retry-policy)
+        | Implement retry policies for client operations. |\\\\n| [Copy blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blob-copy)
+        | Copy a blob from one location to another. |\\\\n| [Create a container](https://learn.microsoft.com/azure/storage/blobs/storage-blob-container-create)
+        | Create containers. |\\\\n| [Create a user delegation SAS](https://learn.microsoft.com/azure/storage/blobs/storage-blob-user-delegation-sas-create-dotnet)
+        | Create a user delegation SAS for a container or blob. |\\\\n| [Create and
+        manage blob leases](https://learn.microsoft.com/azure/storage/blobs/storage-blob-lease)
+        | Establish and manage a lock on a blob. |\\\\n| [Create and manage container
+        leases](https://learn.microsoft.com/azure/storage/blobs/storage-blob-container-lease)
+        | Establish and manage a lock on a container. |\\\\n| [Delete and restore
+        blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blob-delete)
+        | Delete blobs, and if soft-delete is enabled, restore deleted blobs. |\\\\n|
+        [Delete and restore containers](https://learn.microsoft.com/azure/storage/blobs/storage-blob-container-delete)
+        | Delete containers, and if soft-delete is enabled, restore deleted containers.
+        |\\\\n| [Download blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blob-download)
+        | Download blobs by using strings, streams, and file paths. |\\\\n| [Find
+        blobs using tags](https://learn.microsoft.com/azure/storage/blobs/storage-blob-tags)
+        | Set and retrieve tags, and use tags to find blobs. |\\\\n| [List blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blobs-list)
+        | List blobs in different ways. |\\\\n| [List containers](https://learn.microsoft.com/azure/storage/blobs/storage-blob-containers-list)
+        | List containers in an account and the various options available to customize
+        a listing. |\\\\n| [Manage properties and metadata](https://learn.microsoft.com/azure/storage/blobs/storage-blob-properties-metadata)
+        | Get and set properties and metadata for blobs. |\\\\n| [Manage properties
+        and metadata](https://learn.microsoft.com/azure/storage/blobs/storage-blob-container-properties-metadata)
+        | Get and set properties and metadata for containers. |\\\\n| [Performance
+        tuning for data transfers](https://learn.microsoft.com/azure/storage/blobs/storage-blobs-tune-upload-download)
+        | Optimize performance for data transfer operations. |\\\\n| [Set or change
+        a blob\\\\u0027s access tier](https://learn.microsoft.com/azure/storage/blobs/storage-blob-use-access-tier-dotnet)
+        | Set or change the access tier for a block blob. |\\\\n| [Upload blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blob-upload)
+        | Learn how to upload blobs by using strings, streams, file paths, and other
+        methods. |\\\\n\\\",\\\"contentUrl\\\":\\\"https://learn.microsoft.com/azure/storage/blobs/storage-blob-dotnet-get-started#build-your-app\\\"},{\\\"title\\\":\\\"Introduction
         to Azure Blob Storage\\\",\\\"content\\\":\\\"# Introduction to Azure Blob
         Storage\\\\n## Move data to Blob Storage\\\\nA number of solutions exist for
         migrating existing data to Blob Storage:\\\\n1. **AzCopy** is an easy-to-use
@@ -889,37 +944,7 @@ http_interactions:
         Storage. This community library offers idiomatic F# functions and patterns
         that make blob operations more natural in F#.\\\\n## Prerequisites\\\\nTo
         use this guide, you must first [create an Azure storage account](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-create).
-        You also need your storage access key for this account.\\\",\\\"contentUrl\\\":\\\"https://learn.microsoft.com/dotnet/fsharp/using-fsharp-on-azure/blob-storage\\\"},{\\\"title\\\":\\\"Azure
-        Storage blob inventory\\\",\\\"content\\\":\\\"# Azure Storage blob inventory\\\\nAzure
-        Storage blob inventory lists the containers, blobs, blob versions, snapshots,
-        and associated properties in your storage account. The service generates reports
-        daily or weekly in comma-separated values (CSV) or Apache Parquet format.\\\\nUse
-        inventory reports to audit the retention, legal hold, or encryption status
-        of your storage account contents. You can also analyze the total size, age,
-        tier distribution, and other attributes of your data.\\\\nBlob inventory can
-        simplify business workflows and speed up data processing jobs. It provides
-        scheduled automation of the [List Containers](https://learn.microsoft.com/en-us/rest/api/storageservices/list-containers2)
-        and [List Blobs](https://learn.microsoft.com/en-us/rest/api/storageservices/list-blobs)
-        APIs. Inventory rules filter report contents by blob type, prefix, or selected
-        blob properties.\\\\nAzure Storage blob inventory is available for the following
-        types of storage accounts:\\\\n1. Standard general-purpose v2\\\\n2. Premium
-        block blob storage\\\\n3. Blob storage\\\\n## Inventory features\\\\nAzure
-        Storage blob inventory supports the following features and capabilities.\\\\n1.
-        **Inventory reports for blobs and containers**\\\\n  You can generate inventory
-        reports for blobs and containers. A report for blobs can contain base blobs,
-        snapshots, content length, blob versions, and their associated properties
-        such as creation time and last modified time. The report doesn\\\\u0027t list
-        empty containers. A report for containers describes containers and their associated
-        properties such as immutability policy status and legal hold status.\\\\n2.
-        **Custom schema**\\\\n  You can choose which fields appear in reports. Choose
-        from a list of supported fields. That list appears later in this article.\\\\n3.
-        **CSV and Apache Parquet output format**\\\\n  You can generate an inventory
-        report in either CSV or Apache Parquet output format.\\\\n4. **Manifest file
-        and Azure Event Grid event per inventory report**\\\\n  The service generates
-        a manifest file and an Azure Event Grid event for each inventory report. The
-        article describes these items later.\\\\n## Enabling inventory reports\\\\nEnable
-        blob inventory reports by adding a policy with one or more rules to your storage
-        account. For guidance, see [Enable Azure Storage blob inventory reports](https://learn.microsoft.com/azure/storage/blobs/blob-inventory-how-to).\\\",\\\"contentUrl\\\":\\\"https://learn.microsoft.com/azure/storage/blobs/blob-inventory\\\"}]}\"}],\"structuredContent\":{\"results\":[{\"title\":\"What
+        You also need your storage access key for this account.\\\",\\\"contentUrl\\\":\\\"https://learn.microsoft.com/dotnet/fsharp/using-fsharp-on-azure/blob-storage\\\"}]}\"}],\"structuredContent\":{\"results\":[{\"title\":\"What
         is Azure Blob storage?\",\"content\":\"# What is Azure Blob storage?\\nAzure
         Blob Storage is Microsoft''s object storage solution for the cloud. Blob Storage
         is optimized for storing massive amounts of unstructured data. Unstructured
@@ -1028,7 +1053,45 @@ http_interactions:
         can also securely connect to Blob Storage by using SSH File Transfer Protocol
         (SFTP) and mount Blob Storage containers by using the Network File System
         (NFS) 3.0 protocol.\\nFor more information about Blob Storage, see [Introduction
-        to Blob Storage](https://learn.microsoft.com/azure/storage/blobs/storage-blobs-introduction).\",\"contentUrl\":\"https://learn.microsoft.com/azure/storage/common/storage-introduction#blob-storage\"},{\"title\":\"Introduction
+        to Blob Storage](https://learn.microsoft.com/azure/storage/blobs/storage-blobs-introduction).\",\"contentUrl\":\"https://learn.microsoft.com/azure/storage/common/storage-introduction#blob-storage\"},{\"title\":\"Get
+        started with Azure Blob Storage and .NET\",\"content\":\"# Get started with
+        Azure Blob Storage and .NET\\n## Build your app\\nAs you build apps to work
+        with data resources in Azure Blob Storage, your code primarily interacts with
+        three resource types: storage accounts, containers, and blobs. To learn more
+        about these resource types, how they relate to one another, and how apps interact
+        with resources, see [Understand how apps interact with Blob Storage data resources](https://learn.microsoft.com/azure/storage/blobs/storage-blob-object-model).\\nThe
+        following guides show you how to access data and perform specific actions
+        using the Azure Storage client library for .NET:\\n| Guide | Description|
+        \\n|  --- | ---  |\\n| [Append data to blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blob-append)
+        | Learn how to create an append blob and then append data to that blob. |\\n|
+        [Configure a retry policy](https://learn.microsoft.com/azure/storage/blobs/storage-retry-policy)
+        | Implement retry policies for client operations. |\\n| [Copy blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blob-copy)
+        | Copy a blob from one location to another. |\\n| [Create a container](https://learn.microsoft.com/azure/storage/blobs/storage-blob-container-create)
+        | Create containers. |\\n| [Create a user delegation SAS](https://learn.microsoft.com/azure/storage/blobs/storage-blob-user-delegation-sas-create-dotnet)
+        | Create a user delegation SAS for a container or blob. |\\n| [Create and
+        manage blob leases](https://learn.microsoft.com/azure/storage/blobs/storage-blob-lease)
+        | Establish and manage a lock on a blob. |\\n| [Create and manage container
+        leases](https://learn.microsoft.com/azure/storage/blobs/storage-blob-container-lease)
+        | Establish and manage a lock on a container. |\\n| [Delete and restore blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blob-delete)
+        | Delete blobs, and if soft-delete is enabled, restore deleted blobs. |\\n|
+        [Delete and restore containers](https://learn.microsoft.com/azure/storage/blobs/storage-blob-container-delete)
+        | Delete containers, and if soft-delete is enabled, restore deleted containers.
+        |\\n| [Download blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blob-download)
+        | Download blobs by using strings, streams, and file paths. |\\n| [Find blobs
+        using tags](https://learn.microsoft.com/azure/storage/blobs/storage-blob-tags)
+        | Set and retrieve tags, and use tags to find blobs. |\\n| [List blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blobs-list)
+        | List blobs in different ways. |\\n| [List containers](https://learn.microsoft.com/azure/storage/blobs/storage-blob-containers-list)
+        | List containers in an account and the various options available to customize
+        a listing. |\\n| [Manage properties and metadata](https://learn.microsoft.com/azure/storage/blobs/storage-blob-properties-metadata)
+        | Get and set properties and metadata for blobs. |\\n| [Manage properties
+        and metadata](https://learn.microsoft.com/azure/storage/blobs/storage-blob-container-properties-metadata)
+        | Get and set properties and metadata for containers. |\\n| [Performance tuning
+        for data transfers](https://learn.microsoft.com/azure/storage/blobs/storage-blobs-tune-upload-download)
+        | Optimize performance for data transfer operations. |\\n| [Set or change
+        a blob''s access tier](https://learn.microsoft.com/azure/storage/blobs/storage-blob-use-access-tier-dotnet)
+        | Set or change the access tier for a block blob. |\\n| [Upload blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blob-upload)
+        | Learn how to upload blobs by using strings, streams, file paths, and other
+        methods. |\\n\",\"contentUrl\":\"https://learn.microsoft.com/azure/storage/blobs/storage-blob-dotnet-get-started#build-your-app\"},{\"title\":\"Introduction
         to Azure Blob Storage\",\"content\":\"# Introduction to Azure Blob Storage\\n##
         Move data to Blob Storage\\nA number of solutions exist for migrating existing
         data to Blob Storage:\\n1. **AzCopy** is an easy-to-use command-line tool
@@ -1161,46 +1224,15 @@ http_interactions:
         Storage. This community library offers idiomatic F# functions and patterns
         that make blob operations more natural in F#.\\n## Prerequisites\\nTo use
         this guide, you must first [create an Azure storage account](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-create).
-        You also need your storage access key for this account.\",\"contentUrl\":\"https://learn.microsoft.com/dotnet/fsharp/using-fsharp-on-azure/blob-storage\"},{\"title\":\"Azure
-        Storage blob inventory\",\"content\":\"# Azure Storage blob inventory\\nAzure
-        Storage blob inventory lists the containers, blobs, blob versions, snapshots,
-        and associated properties in your storage account. The service generates reports
-        daily or weekly in comma-separated values (CSV) or Apache Parquet format.\\nUse
-        inventory reports to audit the retention, legal hold, or encryption status
-        of your storage account contents. You can also analyze the total size, age,
-        tier distribution, and other attributes of your data.\\nBlob inventory can
-        simplify business workflows and speed up data processing jobs. It provides
-        scheduled automation of the [List Containers](https://learn.microsoft.com/en-us/rest/api/storageservices/list-containers2)
-        and [List Blobs](https://learn.microsoft.com/en-us/rest/api/storageservices/list-blobs)
-        APIs. Inventory rules filter report contents by blob type, prefix, or selected
-        blob properties.\\nAzure Storage blob inventory is available for the following
-        types of storage accounts:\\n1. Standard general-purpose v2\\n2. Premium block
-        blob storage\\n3. Blob storage\\n## Inventory features\\nAzure Storage blob
-        inventory supports the following features and capabilities.\\n1. **Inventory
-        reports for blobs and containers**\\n  You can generate inventory reports
-        for blobs and containers. A report for blobs can contain base blobs, snapshots,
-        content length, blob versions, and their associated properties such as creation
-        time and last modified time. The report doesn''t list empty containers. A
-        report for containers describes containers and their associated properties
-        such as immutability policy status and legal hold status.\\n2. **Custom schema**\\n  You
-        can choose which fields appear in reports. Choose from a list of supported
-        fields. That list appears later in this article.\\n3. **CSV and Apache Parquet
-        output format**\\n  You can generate an inventory report in either CSV or
-        Apache Parquet output format.\\n4. **Manifest file and Azure Event Grid event
-        per inventory report**\\n  The service generates a manifest file and an Azure
-        Event Grid event for each inventory report. The article describes these items
-        later.\\n## Enabling inventory reports\\nEnable blob inventory reports by
-        adding a policy with one or more rules to your storage account. For guidance,
-        see [Enable Azure Storage blob inventory reports](https://learn.microsoft.com/azure/storage/blobs/blob-inventory-how-to).\",\"contentUrl\":\"https://learn.microsoft.com/azure/storage/blobs/blob-inventory\"}]}}"},{"id":"rs_903fb6e2-dfa9-91a3-abfc-0e3a09e4c842","summary":[],"type":"reasoning","status":"completed","encrypted_content":"gvruGCMABxDEgxXUxyc6ubZUwiF/mo0UsECWLAVhWS7romg0rZXt85YpuJq6BItbzDGZWT6NOk8gWKcdbJmAXw+7F4M23GtZHftDIRSZQNTcLBAVCfc/S/6jCUT5Fk/CA0dysatsUwU2WdMcqe5QkgaQylaPiqW9EJubknTumWEiUf+65mZC1EhFiqXHM3dcMwN6/drztVj+nTd77uCT7JB/fFpsEvkLYhWZkOtBvG3ls9Gaf6gJENNM5/WcnZTTuFXFbEsK+CPLC6/jrYQDiGEr9ECtiXO1Wk0T/rIf6H8WH9VpXLgx6/ttm+ShAhwPBNEibQMTABSk7Lb1nbvSlPyg3xkCw/eRWVUYyDUSdv4riNrVZ/e1MSkYfBm5F/Fwms52ARNy2e4A2n9Gr7TqIR7faqyya2B7aGiL5oZO0lUsJmCDJIruc2BPvYz6Ett3ys4Cw47Ne3KIzCiq94y3e2KPeanZDk2qOXyoQ2IsbP037eH5FjvnYs2CMCVafSpgOfXoNzeYdGWf62RYslEDtvse2EifWIOLC83LEpKvffmkikSLRbI366ZFoYtMzh9zjZNI2xi7Yw7G6bLvaTBVUjcguHMWDifLGZi2VsqbUviac9WFRZECigJH+mUyRXkm5PHadA1ghdD3xFvsbRwBKqmAqg5MNNB7XxJqped7+6cB0d7jCYMofJwSXmoURW3jxj3xVr9iCT6dlsG4zwl6sywEFk2r3CoVR4I89eCCWuBqZ3LL6JZCLEVFp2I98fz6rlM5S73Ir6YV"},{"content":[{"type":"output_text","text":"Azure
+        You also need your storage access key for this account.\",\"contentUrl\":\"https://learn.microsoft.com/dotnet/fsharp/using-fsharp-on-azure/blob-storage\"}]}}"},{"id":"rs_c5c46786-dbf2-4682-b789-3669e0cffc0b","summary":[],"type":"reasoning","status":"completed","encrypted_content":"8sNnJspYr5vmAP8/yXxXUHgEWv/xKCH6O3wdyBZxgtog4qU2NivPeofxQmVUkzmdmgU86i9+Z0gx26pe/Ot5AD4kYjaL1250RE1Y7LSk6PvGiv4JY2Qnf2NcBgbP+1Q/fReYOuiUBz9BIwNyFrxsDxuBns2AVhLSl6txPb3ieV15izaeq2sRZQJGmDu0ms8NeInTqqlnkjoNG/p6Ft8xeNd/UslYCfQv1jsBFJ0KnOMPEQbmDIrNtEDyWtbijTUAJ4BZD9scIZBqIKaezPZCtDhIs9WNC5pqTCA2nCtDtEFELMvPlqj+NjANaYCdGuC9dVsd1ett+IARIwYi3RKM/GACmbWvGXKji8m8rlMo6oGJ6CLxv+uQD6P+/GwuDIBuNrHDK8o1N5H1dr671OyjgGcK3+U+wQJS8gl9n9rjPKNX8BfGEMIAaWXBkFvsmlo3Ws70ZVTb+dIjLp9yPWnxf9JGtI2jhw1UJ/Vzh7TxPsHtVG88fcg5vkq+jItzuGCr4Vachy+5CLMelCzFujf1CSN3gSsAmYsdmTaDB9s1OJyJSv54shZW+c0BWccjl9sosMcYcIcFAHYeS+IZejcwH99SGixly5ueTYzWOMgYNOh7jTZbSgSZvf/hKvvZv8+QAdvN2ALMQG9UNHzYTi9pRkiJqi4vx1F8RkZki0xLFfebdvuLjhaq52ZpGgdLgBr+HKCSk7F6vR82pBc/fHUisbJnA38HTu4NgnRFIQohFNl84w4GZEJWLs184s6c2UBWV6GZBcLiekj7Dqnv0sTQCDl+fLCBNRARLuD26L2KYM9vTv5hNCXQHqeConktq/l7uvgQOQe3hkLoh7e7ljIMIRwGwMYnaZMdpbx+y+CGxYawWOseDVgvVDh8KAO6cbdAMvZ1MaLOtvs0dhn7vvdtVevHYSFohrEnMinry3pelWgt681wH3nbbQFd/jwiAhaMoCgq4wtpilDyvnYcgC1DTsUBrpr0goFb0MIzMMw1YpNsnf8UtZuZuRo1GldpZhQZ/vB7UnBf55mlqYzV/Td/EUg/kbmZH9xGiZoxjPUQWRlCsc0ah/Naf4NJaAVsBymjFxYzSvSvww2FRdnXN/xVE6LOdVy3WpePOUtNFVJfEpItGuRf0Yk7jl8Z87qSJdoqAzlviRpCp0TVrEHuk+5phpcz6RNKZ/JhkfoVCyea8zRc+/coaz8E7L6HLz4yuUjWomxGpoFy2He6p2vxgwUgiBIn2d17wNgWZvK47tQsgdiuQlXHnDT2Zc+RcK8CaRJmoq3NtMOe82U"},{"content":[{"type":"output_text","text":"Azure
         Blob Storage is Microsoft''s object storage solution for the cloud, optimized
-        for storing massive amounts of unstructured data such as text or binary data
-        for uses like serving images/documents, streaming media, logging, backups,
-        and analysis.","logprobs":[],"annotations":[]}],"id":"msg_903fb6e2-dfa9-91a3-abfc-0e3a09e4c842","role":"assistant","type":"message","status":"completed"},{"role":"user","content":"Which
+        for storing massive amounts of unstructured data such as text or binary files
+        for uses like serving images, streaming media, backups, and analytics.","logprobs":[],"annotations":[]}],"id":"msg_c5c46786-dbf2-4682-b789-3669e0cffc0b","role":"assistant","type":"message","status":"completed"},{"role":"user","content":"Which
         cloud service did you just look up?"}],"instructions":"Call microsoft_docs_search
         once to answer the first question. For later questions use only those results.","stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"mcp","allowed_tools":["microsoft_docs_search"],"server_url":"https://learn.microsoft.com/api/mcp","server_label":"docs"}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -1215,7 +1247,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:22:34 GMT
+      - Sun, 15 Nov 2026 01:21:06 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -1235,7 +1267,7 @@ http_interactions:
       X-Ratelimit-Limit-Requests:
       - '1800'
       X-Ratelimit-Remaining-Requests:
-      - '1800'
+      - '1797'
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Zero-Data-Retention:
@@ -1243,11 +1275,11 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '294.3'
+      - '359.4'
       X-Metrics-E2e-Ms:
-      - '2158.8'
+      - '1850.7'
       Traceparent:
-      - 00-f7fe9f6d28f8593bdbae06303c753b5d-8d10d0320000d90b-01
+      - 00-a97ddcf21a78e79e842546716ce09b26-5899dde1000a2f11-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
@@ -1262,10 +1294,10 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1794604952,"completed_at":1794604954,"id":"2941d074-aa3b-9c75-852a-11da1065411e","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_2941d074-aa3b-9c75-852a-11da1065411e","summary":[{"text":"I
-        looked up Microsoft documentation.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"r7G4lrYUWlD6Cx/GKDVoxI0nQXAyi8Kb8eAT14CtElg6UvL+rpUmacW//pXI/HhkC6NLoxRBnWqxU6QevOkMf/3a7ax49jQYS3aF41atrf4eif28jaYM2JWEZm7Ikl8O9XGvXh7G/p/V3Y2v7ncTw+18oYfdV7hfjzyC68n7x2iPkqJ4FZOBTiWSQdgaDUazmKpox3ULEItoaKRF8WQMLrH2VJVWFSaDzeHz0H1KbQtwZ44KA/w1D9vsRifEh80yOJGGRDoA3rs1zuc60vHUlA7pFZprMcwM9JpdPfI6AyVZZhmCPC97QauM7ev5maCIu5hbskHwDpzYNJza68sGbGe887E5MR6mppBCP+w89RmL7sFp1QiGn4RKVFQSPGDQQdH8/ghs0ov31U4iZjZW89FfrsXheguLGsfUvgSMMCTufvBVi8U1jrTL0oePjftag2f1+m8YvflAKI5blmKiGvp+NS/lFnZL"},{"content":[{"type":"output_text","text":"Azure
-        Blob Storage.","logprobs":[],"annotations":[]}],"id":"msg_2941d074-aa3b-9c75-852a-11da1065411e","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"mcp","server_label":"docs","server_url":"https://learn.microsoft.com/api/mcp","allowed_tools":["microsoft_docs_search"],"headers":{},"server_description":""}],"top_p":0.95,"usage":{"input_tokens":11520,"input_tokens_details":{"cached_tokens":128},"output_tokens":128,"output_tokens_details":{"reasoning_tokens":124},"total_tokens":11648,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":145856000,"context_details":{"input_tokens":11520,"output_tokens":136}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":"Call
+      string: '{"created_at":1794705664,"completed_at":1794705666,"id":"2f5fdd9f-17e8-9f9d-aefa-029289c695ff","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_2f5fdd9f-17e8-9f9d-aefa-029289c695ff","summary":[{"text":"The
+        user asks which cloud service was just looked up.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"8vi+ViF8umE9u3FQ5oTW5DqMQtRQmRd+ZsjUzWAA3+NoAa98IdRtxzXR1YGPEL5VyFGK7tcIZp1DjwaHlV5s9aFBWszUvycAqKZ6NDIkVPYJFSYmTKODW0XS9E2jkfULyC+ASgD9382Rq/D9Ut1huUBODluIULLZ6Da8Fomq+h4Su2mrCMhAEB5+Zd0Vqqjlv28uBGWoqPOWywWaIWT8asM6FlB/dcz7wb48eniaajuEICdcBV6DzqnwiGrxYYqizgF/FAMXoi/7W5vbX5XVXDtBR2JToq85iHTwPWmNTlQ1gSNnlRsO8DWxEy2aNg0V/ra/3SwkS4QhoqrsEHG2+s3gFNv82ktx7PlYCMM+DRXfdU7KlrosaWvNHRQVhvxoXPRTHzRSpA6qnGLYgYCd7gyiLQ/EhDbu0gwK85Kvyri6p28gado1kpLpifPsThWFoBK9IjYQkr5b"},{"content":[{"type":"output_text","text":"Azure
+        Blob Storage.","logprobs":[],"annotations":[]}],"id":"msg_2f5fdd9f-17e8-9f9d-aefa-029289c695ff","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"mcp","server_label":"docs","server_url":"https://learn.microsoft.com/api/mcp","allowed_tools":["microsoft_docs_search"],"headers":{},"server_description":""}],"top_p":0.95,"usage":{"input_tokens":12286,"input_tokens_details":{"cached_tokens":128},"output_tokens":119,"output_tokens_details":{"reasoning_tokens":115},"total_tokens":12405,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":155206000,"context_details":{"input_tokens":12286,"output_tokens":127}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":"Call
         microsoft_docs_search once to answer the first question. For later questions
         use only those results."}'
-  recorded_at: Fri, 13 Nov 2026 21:22:34 GMT
-recorded_with: VCR 6.4.1
+  recorded_at: Sun, 15 Nov 2026 01:21:06 GMT
+recorded_with: VCR 6.4.0

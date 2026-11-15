@@ -11,7 +11,7 @@ http_interactions:
         numbered sources about a topic.","parameters":{"type":"object","properties":{"topic":{"type":"string"}},"required":["topic"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -26,23 +26,25 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 22:32:39 GMT
+      - Sun, 15 Nov 2026 01:19:25 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
       Mistral-Correlation-Id:
-      - 01a1d70a-9b60-7797-882f-a07654328017
+      - 01a1dcc9-a6e4-782d-9cd7-533ee3305e8e
       X-Kong-Request-Id:
-      - 01a1d70a-9b60-7797-882f-a07654328017
+      - 01a1dcc9-a6e4-782d-9cd7-533ee3305e8e
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '400000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '399584'
+      - '399870'
       X-Ratelimit-Tokens-Query-Cost:
       - '130'
       X-Ratelimit-Limit-Req-Minute:
@@ -50,32 +52,30 @@ http_interactions:
       X-Ratelimit-Remaining-Req-Minute:
       - '14'
       X-Envoy-Upstream-Service-Time:
-      - '636'
+      - '412'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '637'
+      - '413'
       X-Kong-Proxy-Latency:
-      - '17'
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
+      - '11'
       X-Content-Type-Options:
       - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"5db18892161141a9bff058255466f02a","created":1794609159,"model":"mistral-large-2512","usage":{"prompt_tokens":109,"total_tokens":130,"completion_tokens":21,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"62yrDSHvU","type":"function","function":{"name":"lookup","arguments":"{\"topic\":
+      string: '{"id":"621a5a32108b433c8fa99a562dc7b554","created":1794705565,"model":"mistral-large-2512","usage":{"prompt_tokens":109,"total_tokens":130,"completion_tokens":21,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"pn6DB2psw","type":"function","function":{"name":"lookup","arguments":"{\"topic\":
         \"Ruby 3.4.0 release date and default parser\"}"},"index":0}],"content":""}}]}'
-  recorded_at: Fri, 13 Nov 2026 22:32:39 GMT
+  recorded_at: Sun, 15 Nov 2026 01:19:25 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
@@ -83,16 +83,16 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"mistral-large-2512","messages":[{"role":"system","content":"Use
         the lookup tool, then answer and cite the sources you use with reference chunks."},{"role":"user","content":"When
-        was Ruby 3.4.0 released, and what parser became the default?"},{"role":"assistant","content":"","tool_calls":[{"id":"62yrDSHvU","type":"function","function":{"name":"lookup","arguments":"{\"topic\":\"Ruby
+        was Ruby 3.4.0 released, and what parser became the default?"},{"role":"assistant","content":"","tool_calls":[{"id":"pn6DB2psw","type":"function","function":{"name":"lookup","arguments":"{\"topic\":\"Ruby
         3.4.0 release date and default parser\"}"}}]},{"role":"tool","content":"{\"0\":{\"url\":\"https://example.test/a\",\"title\":\"Ruby
         releases\",\"source\":\"example\",\"snippets\":[[\"Ruby 3.4.0 was released
         on 25 December 2024.\"]],\"description\":null,\"date\":null},\"1\":{\"url\":\"https://example.test/b\",\"title\":\"Ruby
         3.4 notes\",\"source\":\"example\",\"snippets\":[[\"Prism became the default
-        parser in Ruby 3.4.\"]],\"description\":null,\"date\":null}}","tool_call_id":"62yrDSHvU"}],"stream":false,"tools":[{"type":"function","function":{"name":"lookup","description":"Find
+        parser in Ruby 3.4.\"]],\"description\":null,\"date\":null}}","tool_call_id":"pn6DB2psw"}],"stream":false,"tools":[{"type":"function","function":{"name":"lookup","description":"Find
         numbered sources about a topic.","parameters":{"type":"object","properties":{"topic":{"type":"string"}},"required":["topic"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -107,23 +107,25 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 22:32:41 GMT
+      - Sun, 15 Nov 2026 01:19:26 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
       Mistral-Correlation-Id:
-      - 01a1d70a-9e2a-7aeb-a324-1bf5de6a3c73
+      - 01a1dcc9-aa1a-7e85-9a9e-33117a2d3330
       X-Kong-Request-Id:
-      - 01a1d70a-9e2a-7aeb-a324-1bf5de6a3c73
+      - 01a1dcc9-aa1a-7e85-9a9e-33117a2d3330
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '400000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '399314'
+      - '399590'
       X-Ratelimit-Tokens-Query-Cost:
       - '280'
       X-Ratelimit-Limit-Req-Minute:
@@ -131,31 +133,29 @@ http_interactions:
       X-Ratelimit-Remaining-Req-Minute:
       - '13'
       X-Envoy-Upstream-Service-Time:
-      - '1743'
+      - '700'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '1744'
+      - '701'
       X-Kong-Proxy-Latency:
-      - '17'
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
+      - '14'
       X-Content-Type-Options:
       - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"4a857a4a729d455399e2785ca04c8a58","created":1794609159,"model":"mistral-large-2512","usage":{"prompt_tokens":237,"total_tokens":280,"completion_tokens":43,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":[{"type":"text","text":"Ruby
+      string: '{"id":"e1e6717867ce4245a6b6a3c1fdafd02c","created":1794705566,"model":"mistral-large-2512","usage":{"prompt_tokens":237,"total_tokens":280,"completion_tokens":43,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":[{"type":"text","text":"Ruby
         **3.4.0** was released on **25 December 2024**. Additionally, the **Prism
-        parser became the default parser** in this release"},{"type":"reference","reference_ids":[0,1]},{"type":"text","text":"."}]}}]}'
-  recorded_at: Fri, 13 Nov 2026 22:32:41 GMT
-recorded_with: VCR 6.4.1
+        parser became the default parser** in this version"},{"type":"reference","reference_ids":[0,1]},{"type":"text","text":"."}]}}]}'
+  recorded_at: Sun, 15 Nov 2026 01:19:26 GMT
+recorded_with: VCR 6.4.0

@@ -9,7 +9,7 @@ http_interactions:
         2 + 2?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,23 +24,25 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:24:12 GMT
+      - Sun, 15 Nov 2026 01:22:35 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
       Mistral-Correlation-Id:
-      - 01a1d6cb-efd1-7881-9051-3fa22961f485
+      - 01a1dccc-8a75-71ef-acd8-601c188dc2df
       X-Kong-Request-Id:
-      - 01a1d6cb-efd1-7881-9051-3fa22961f485
+      - 01a1dccc-8a75-71ef-acd8-601c188dc2df
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '98960'
+      - '98427'
       X-Ratelimit-Tokens-Query-Cost:
       - '32'
       X-Ratelimit-Limit-Req-Minute:
@@ -48,30 +50,28 @@ http_interactions:
       X-Ratelimit-Remaining-Req-Minute:
       - '99'
       X-Envoy-Upstream-Service-Time:
-      - '527'
+      - '303'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '529'
+      - '304'
       X-Kong-Proxy-Latency:
-      - '16'
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
+      - '23'
       X-Content-Type-Options:
       - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"d58443c778f3481b9f8ada831a50cd0e","created":1794605052,"model":"mistral-small-latest","usage":{"prompt_tokens":23,"total_tokens":32,"completion_tokens":9,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"2
+      string: '{"id":"f13b1fc746234f899348c305d12151d6","created":1794705754,"model":"mistral-small-latest","usage":{"prompt_tokens":23,"total_tokens":32,"completion_tokens":9,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"2
         + 2 equals **4**."}}]}'
-  recorded_at: Fri, 13 Nov 2026 21:24:12 GMT
-recorded_with: VCR 6.4.1
+  recorded_at: Sun, 15 Nov 2026 01:22:35 GMT
+recorded_with: VCR 6.4.0

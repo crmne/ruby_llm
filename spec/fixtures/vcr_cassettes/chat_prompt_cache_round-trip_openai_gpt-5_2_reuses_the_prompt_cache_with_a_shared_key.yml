@@ -429,7 +429,7 @@ http_interactions:
         it for release.\n","stream":false,"store":false,"include":["reasoning.encrypted_content"],"prompt_cache_key":"rubyllm-test"}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -444,7 +444,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:21:59 GMT
+      - Sun, 15 Nov 2026 01:20:42 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -468,7 +468,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '719'
+      - '842'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -480,11 +480,11 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '4999'
       X-Ratelimit-Remaining-Tokens:
-      - '1000000'
+      - '994134'
       X-Ratelimit-Reset-Requests:
       - 12ms
       X-Ratelimit-Reset-Tokens:
-      - 0s
+      - 351ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Set-Cookie:
@@ -495,16 +495,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_038d6c7ad552f298016af77f767b2087d2b3b196a313ae74c1",
+          "id": "resp_0e44879e7edc778e016af908e9563087d2835f5349730fbd64",
           "object": "response",
-          "created_at": 1794604918,
+          "created_at": 1794705641,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794604919,
+          "completed_at": 1794705642,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
@@ -519,7 +519,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_038d6c7ad552f298016af77f7709f887d2900d7e87de5dcbc9",
+              "id": "msg_0e44879e7edc778e016af908e9de5087d29f3b675b8ddb0890",
               "type": "message",
               "status": "completed",
               "content": [
@@ -581,6 +581,10 @@ http_interactions:
             "input_tokens": 6165,
             "input_tokens_details": {
               "cache_write_tokens": 0,
+              "cache_write_tokens_details": {
+                "ttl_12h_tokens": 0,
+                "ttl_30m_tokens": 0
+              },
               "cached_tokens": 0
             },
             "output_tokens": 5,
@@ -592,7 +596,7 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Fri, 13 Nov 2026 21:21:59 GMT
+  recorded_at: Sun, 15 Nov 2026 01:20:42 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/responses
@@ -1022,7 +1026,7 @@ http_interactions:
         it for release.\n","stream":false,"store":false,"include":["reasoning.encrypted_content"],"prompt_cache_key":"rubyllm-test"}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -1037,7 +1041,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:22:00 GMT
+      - Sun, 15 Nov 2026 01:20:43 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -1061,7 +1065,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '685'
+      - '718'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -1088,16 +1092,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_00c1cac98dfa83e9016af77f7751fc87d2917f7befce17fda7",
+          "id": "resp_07c0faf9c5f66565016af908ea504c87d28c98e0845c1ae85a",
           "object": "response",
-          "created_at": 1794604919,
+          "created_at": 1794705642,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794604919,
+          "completed_at": 1794705642,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
@@ -1112,7 +1116,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_00c1cac98dfa83e9016af77f77da0887d2adae4a4a981cc857",
+              "id": "msg_07c0faf9c5f66565016af908eae30487d29f647fa9f034c57d",
               "type": "message",
               "status": "completed",
               "content": [
@@ -1174,6 +1178,10 @@ http_interactions:
             "input_tokens": 6165,
             "input_tokens_details": {
               "cache_write_tokens": 0,
+              "cache_write_tokens_details": {
+                "ttl_12h_tokens": 0,
+                "ttl_30m_tokens": 0
+              },
               "cached_tokens": 5760
             },
             "output_tokens": 5,
@@ -1185,5 +1193,5 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Fri, 13 Nov 2026 21:22:00 GMT
-recorded_with: VCR 6.4.1
+  recorded_at: Sun, 15 Nov 2026 01:20:43 GMT
+recorded_with: VCR 6.4.0

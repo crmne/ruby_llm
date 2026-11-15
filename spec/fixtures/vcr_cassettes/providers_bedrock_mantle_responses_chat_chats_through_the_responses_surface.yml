@@ -9,11 +9,11 @@ http_interactions:
         OK and nothing else."}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261113T212051Z
+      - 20261115T012050Z
       X-Amz-Content-Sha256:
       - 0ec0f7ea930f1c52df60039a174fc23067e9d1df302db82f99dfd56849f38b6c
       Authorization:
@@ -29,15 +29,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:20:52 GMT
+      - Sun, 15 Nov 2026 01:20:51 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '974'
+      - '1032'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - req_lbsw3exskdi4i4xqscii3vh7fl3fyra3jcglscn4duz444yzztyq
+      - req_ubwcbozkjkuwxgf3ltigqrvimkgynqezvqklrtyijx4rix2xptyq
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Vary:
@@ -48,7 +48,8 @@ http_interactions:
       - x-amzn-requestid,x-request-id,date,x-amzn-usage-reservation-quota,x-amzn-usage-reservation-remaining-quota,x-amzn-usage-reservation-spillover,x-amzn-gateway-arn,x-amzn-gateway-limit-name,x-amzn-gateway-limit-unit,x-amzn-gateway-limit,x-amzn-gateway-limit-remaining,x-amzn-gateway-limit-used-percent,x-amzn-gateway-limit-refill,x-amzn-gateway-limit-reset-at,retry-after,x-codex-primary-used-percent,x-codex-primary-window-minutes,x-codex-primary-reset-at,anthropic-ratelimit-unified-status,anthropic-ratelimit-unified-reset,anthropic-ratelimit-unified-representative-claim,anthropic-ratelimit-unified-overage-status,anthropic-ratelimit-unified-overage-reset,anthropic-ratelimit-unified-overage-utilization,anthropic-ratelimit-unified-overage-surpassed-threshold
     body:
       encoding: UTF-8
-      string: '{"background":false,"created_at":1794604852.0,"error":null,"id":"resp_tdfbgdlwhudh4g3op4lmxv73e45a7mkx35mnr66vy7eg3zv6vgdq","incomplete_details":null,"instructions":null,"metadata":{},"model":"openai.gpt-oss-20b","object":"response","output":[{"content":[{"text":"The
-        user wants just \"OK\" and nothing else, no explanation. Just output: OK.","type":"reasoning_text"}],"id":"msg_90ca2f7cb85bf88d","status":"completed","summary":[],"type":"reasoning"},{"content":[{"annotations":[],"text":"OK","type":"output_text"}],"id":"msg_bd94140b7491f277","role":"assistant","status":"completed","type":"message"}],"parallel_tool_calls":true,"service_tier":"default","status":"completed","temperature":1.0,"text":{"format":{"type":"text"},"verbosity":"medium"},"tool_choice":"auto","tools":[],"top_p":1.0,"truncation":"disabled","usage":{"input_tokens":73,"input_tokens_details":{"cached_tokens":0},"output_tokens":30,"output_tokens_details":{"reasoning_tokens":20},"total_tokens":103}}'
-  recorded_at: Fri, 13 Nov 2026 21:20:52 GMT
-recorded_with: VCR 6.4.1
+      string: '{"background":false,"created_at":1794705651.0,"error":null,"id":"resp_xyfsipd4pdueuaxeitqlfpx2f6oo46fff2no7fpjviefuhz74fqq","incomplete_details":null,"instructions":null,"metadata":{},"model":"openai.gpt-oss-20b","object":"response","output":[{"content":[{"text":"The
+        user says: \"Say OK and nothing else.\" They want the assistant to reply with
+        just \"OK\". We must obey. Let''s respond with \"OK\".","type":"reasoning_text"}],"id":"msg_a09e53ff908a04b5","status":"completed","summary":[],"type":"reasoning"},{"content":[{"annotations":[],"text":"OK","type":"output_text"}],"id":"msg_88a912d8fc777911","role":"assistant","status":"completed","type":"message"}],"parallel_tool_calls":true,"service_tier":"default","status":"completed","temperature":1.0,"text":{"format":{"type":"text"},"verbosity":"medium"},"tool_choice":"auto","tools":[],"top_p":1.0,"truncation":"disabled","usage":{"input_tokens":73,"input_tokens_details":{"cached_tokens":0},"output_tokens":43,"output_tokens_details":{"reasoning_tokens":33},"total_tokens":116}}'
+  recorded_at: Sun, 15 Nov 2026 01:20:52 GMT
+recorded_with: VCR 6.4.0

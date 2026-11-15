@@ -9,7 +9,7 @@ http_interactions:
         2?"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:27:18 GMT
+      - Sun, 15 Nov 2026 01:25:22 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -52,11 +52,11 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '249.7'
+      - '192.3'
       X-Metrics-E2e-Ms:
-      - '5499.4'
+      - '2354.6'
       Traceparent:
-      - 00-28e476c21ac79db125a683037f7595a5-bf38951d0000f85f-01
+      - 00-40a75ef93c2478f335695d31c4dddb67-4c2fba19000a505b-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
@@ -65,13 +65,20 @@ http_interactions:
       - "*"
       Cf-Cache-Status:
       - DYNAMIC
+      Report-To:
+      - '{"group":"cf-csp-endpoint","max_age":86400,"endpoints":[{"url":"https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=VJkHFxealnp3iZPM0tvE_HuM9ryCcHdwTeb45J6XUtY-1794705919.7075453-1.0.1.1-ODfU3vgxeuxo9aGhFIHOepzZ4NDuZD640afO4OCGAP1cEeu58sVo1WETSbuo6iXpVwJ_owbopmL3ZGQrnTbG3uabHM2uIEY7rv3LOWAXqi46WCNeaoZYhJY6WWKSVU8vB6k6WFcCKwJ7sJPzU4lM4tufEhOht.yQXs5ruIkyTEo"}]}'
+      Reporting-Endpoints:
+      - cf-csp-endpoint="https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=VJkHFxealnp3iZPM0tvE_HuM9ryCcHdwTeb45J6XUtY-1794705919.7075453-1.0.1.1-ODfU3vgxeuxo9aGhFIHOepzZ4NDuZD640afO4OCGAP1cEeu58sVo1WETSbuo6iXpVwJ_owbopmL3ZGQrnTbG3uabHM2uIEY7rv3LOWAXqi46WCNeaoZYhJY6WWKSVU8vB6k6WFcCKwJ7sJPzU4lM4tufEhOht.yQXs5ruIkyTEo"
+      Content-Security-Policy-Report-Only:
+      - script-src 'unsafe-inline' 'unsafe-eval'; report-uri https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=VJkHFxealnp3iZPM0tvE_HuM9ryCcHdwTeb45J6XUtY-1794705919.7075453-1.0.1.1-ODfU3vgxeuxo9aGhFIHOepzZ4NDuZD640afO4OCGAP1cEeu58sVo1WETSbuo6iXpVwJ_owbopmL3ZGQrnTbG3uabHM2uIEY7rv3LOWAXqi46WCNeaoZYhJY6WWKSVU8vB6k6WFcCKwJ7sJPzU4lM4tufEhOht.yQXs5ruIkyTEo;
+        report-to cf-csp-endpoint
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1794605233,"completed_at":1794605238,"id":"7d17984b-9b02-97f8-8283-61aa6aefaf70","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_7d17984b-9b02-97f8-8283-61aa6aefaf70","summary":[{"text":"This
-        is a simple arithmetic question.\n\nThe answer is 4.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"luRpmhU0a+Gt6MQ9AG0LqKb7xyW3eNbDMklDciNLQYZ4yHf/rNXHLCJ/66W9xjkuyDn+ZnQ/+mgvCnuZjW7yOGBxzaJMVgXHHtQhcYjf9Lf5i/OU3XxODiXViwezd419ym0RqDPL41Sr/8Cb57bTpl8hYArzZ2dJ5ffMbMtgy2g5rt6/PGK3DWIL/fwHLWCz3UPC+MTecZzRjEz7GcOj2x+HUFudQS38iDGhiZgtOikGdLj7UdjkY5LCB+eo2PiXRlKlf8VoTWTHvNouFS+3Cuthzf1QXiHGKCI2r7rCw86lsCh5mJ3GBDoWwDCHUGqv3LIlKScN0YGP7VT53Pk7Um9MvC+vo7fx6F2Ww3GkPHdslt+mCFCN+1c3KbpKqjNsOs3Z7TNsEYytYHJw5DTS+DbX+S+j6F8dP6wExDI288krFFKvhaOqCZEpWFc8mA2G+mVZwDJZkKg0iq6creaBYePg3oMIRUk02UGnLgr9CdAVsHcUNPKWQ9mG92y1NvktrBvv0wFLY5RRAKag5aTptwLUbjlkQhFDUCEV93LNGSjr6ovL9rkFHKehh3ZpRB4vDu25NZbm8d06H/qpqAPkPovmUfXAazunOvm1eBks587r+G5fDiUvQspTykUAgOr0IFESGHC8LAMI8Su9130lKVDo2QDYHuv8BFWivlQMDI/LAnDg32cjqa2aZGOuLFWx+rXnOI/L7bZMrWkodR1kUH3l1dNUIKqWJgI+MNFW9DxzoKfFieu1dsHnPGzEhQLlihj+gQWWhIo+wwIJITcvSp2etEh6YbmrmUTdsbWUoJ4TrQ2BP33SewWd5bAHuAcErKP7/fZsYKHJ76IDgD9u4HPr2PHu6R2w9Pj5oBICAruooR49XWSh6tpDQ+6/sMO5+ChcdU3cdLpZ7V9xL4v6r4HtC2lX6XvFyLFggaVHZqH4NdQjuD/BBpc+dFo3nH8/mBOp+jzKniGSRrH/ov/t1BwCfobOuli9kPi4Lc9kACmrzWiscG3W+7+0ampg8SSZk87lI9bhhe+g4VhaodIOHYZm+b7UR/vMqiPoSRZm9+j/mtifCTx3XR87Cv6RKVRzENSB6MC4XCQZrQAz2MM3Xu2+1AFpdgkeqbgd3puywdFEpeBLvSGbWluLGBoSZ+RMxOtwv79q5O6yyqOaEnsFQw20EuyxODxGyx8+kF5o7LpPCXqtnNQqjQMluYYnLhvkvjyAxM+yYUDZJbezYIhER68zPiriVtzDzXk/Kw3rKaWBB/09ca3VAWz49mqfTfBghwaFRKSVQEixi9CnnfzXvgw6I5ST0+BMp5+k/WPiGxVtYrqHk/PZFVhKOHBHfqJVFNBxBKZhHANrquRr3Lz71vDyaPFzP+GWANAzZHiRgIxTpZ1N824W4wy+n7yd"},{"content":[{"type":"output_text","text":"4","logprobs":[],"annotations":[]}],"id":"msg_7d17984b-9b02-97f8-8283-61aa6aefaf70","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":199,"input_tokens_details":{"cached_tokens":128},"output_tokens":496,"output_tokens_details":{"reasoning_tokens":495},"total_tokens":695,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":13543500,"context_details":{"input_tokens":199,"output_tokens":504}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
-  recorded_at: Fri, 13 Nov 2026 21:27:18 GMT
-recorded_with: VCR 6.4.1
+      string: '{"created_at":1794705919,"completed_at":1794705922,"id":"df8be948-814e-93f9-9c8b-1ed89bdef1c6","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_df8be948-814e-93f9-9c8b-1ed89bdef1c6","summary":[{"text":"This
+        is a simple arithmetic question.\n\nThe answer is 4.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"nqaYtzC0U6aerCKtUD0ZXjeKVnq4CxL+1d0ziOC4Yzzn7GkZ9S4YVs5tydn/8+I+sxqkz57nm90VE1uiKMPQpKAC82TkutPvyVxJlPSKW8kIM0VlUjgk89qo8RZy/0RLLb6A+NZ9vGKVWIUB8ZbN8+zDgOkWfBqc/XH5VrPlMN8aeIY0SOYnbrDWn1AfcDd6i7PxMFxJb35WxRNHqZIQ9N09YfM6f5NE+7Nk1D5fYBlrZxZlP0PP4yvEo4DOOnEZUId8vFKlBIn2gER2ZTY3i2xQhv2mMQUIVgP140iv3d/AFMb9fKP8QDldZ69u5YQ+PRW9ZnjEr/71zzZoY958rkMVMLdon3v8WOgf+r9z6GkfAqP3Hv0jAw8iagDCHOfTVI+F7YGXT115yHOK0AfoZtMsOjG8oP2rMvVQMDLdakxjsHjhvExyrKPk6jsV7WHFQoP5yTX771WNNQnHWA/GIM5Z3wbCoujCs9cJk8bcCx5DZJBo/66/qt3RjHJxw5M/bg5Qa5Q7NtCHsEoh4yQl5CQfszhFz3uzXYRoOEfYLefge61ilCOwGwRN9QhPE8HPAonqThm/EKkoqiQz1Pb6jBEcAwbCvWwOgVq8wVVJDlKOkBNGxyDVH2gATC1XteQF8IeAkJC0HCyG/OTmAY/V2Uza1H4jHncUqIRFkUCzJbba7B+qm9jxc/onaX9Jxyk6tXMC7aEVRg"},{"content":[{"type":"output_text","text":"**4**","logprobs":[],"annotations":[]}],"id":"msg_df8be948-814e-93f9-9c8b-1ed89bdef1c6","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":199,"input_tokens_details":{"cached_tokens":128},"output_tokens":200,"output_tokens_details":{"reasoning_tokens":197},"total_tokens":399,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":6143500,"context_details":{"input_tokens":199,"output_tokens":208}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Sun, 15 Nov 2026 01:25:22 GMT
+recorded_with: VCR 6.4.0

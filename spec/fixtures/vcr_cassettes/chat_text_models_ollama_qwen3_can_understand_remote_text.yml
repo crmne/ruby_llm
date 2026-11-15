@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -26,8 +26,6 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
-      X-Origin-Cache:
-      - HIT
       Last-Modified:
       - Tue, 03 Nov 2026 01:08:56 GMT
       Access-Control-Allow-Origin:
@@ -35,35 +33,35 @@ http_interactions:
       Etag:
       - W/"6ae93428-9c6"
       Expires:
-      - Fri, 13 Nov 2026 21:31:46 GMT
+      - Sun, 15 Nov 2026 01:29:24 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 75D8:818BB:BA3482:BB39B0:6AF77F6A
+      - 1AA8:148882:4D5DE00:4DD0C30:6AF9089B
       X-Github-Edge-Region:
       - fra
       Accept-Ranges:
       - bytes
       Date:
-      - Fri, 13 Nov 2026 21:24:04 GMT
+      - Sun, 15 Nov 2026 01:21:39 GMT
       Via:
       - 1.1 varnish
       Age:
-      - '106'
+      - '100'
       X-Served-By:
-      - cache-ber1080025-BER
+      - cache-ber1080026-BER
       X-Cache:
       - HIT
       X-Cache-Hits:
       - '1'
       X-Timer:
-      - S1794605045.671550,VS0,VE1
+      - S1794705700.558193,VS0,VE1
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - 134c42f06e29c93e83053b548d40cdd521a311c0
+      - 8409d3b170f10160304fd2e0aa9689746f163f17
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -99,7 +97,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Fri, 13 Nov 2026 21:24:04 GMT
+  recorded_at: Sun, 15 Nov 2026 01:21:39 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
@@ -142,7 +140,7 @@ http_interactions:
         A PARTICULAR\n     PURPOSE.\n</file>"}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -157,94 +155,12 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 13 Nov 2026 21:24:14 GMT
+      - Sun, 15 Nov 2026 01:21:54 GMT
       Transfer-Encoding:
       - chunked
     body:
-      encoding: UTF-8
-      string: '{"id":"chatcmpl-917","object":"chat.completion","created":1794605054,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        `license.txt` file provided contains the **license terms** for **Ruby**, the
-        programming language, copyrighted by **Yukihiro Matsumoto (Matz)**. Here''s
-        a breakdown of the key points:\n\n---\n\n### **1. Copyright and Redistribution**\n-
-        Ruby is free software, and users can **redistribute** and **modify** it under
-        the **2-clause BSDL** license (referenced in the file `BSDL`) **or** the conditions
-        listed below.\n\n---\n\n### **2. Key License Conditions**\n#### **Condition
-        1: Verbatim Copies**\n- You can freely copy and distribute the **source code**
-        as-is, **without restrictions**, but you **must retain all original copyright
-        notices and disclaimers**.\n\n#### **Condition 2: Modifications**\n- If you
-        modify the software, you **must do at least one** of the following:\n  - **a)**
-        Release your changes into the **Public Domain** (or make them freely available,
-        e.g., via Usenet).\n  - **b)** Use the modified software **only within your
-        organization**.\n  - **c)** Rename non-standard binaries and include instructions
-        on where to get the original source.\n  - **d)** Make other arrangements with
-        the author (Matz).\n\n#### **Condition 3: Binary Distribution**\n- If distributing
-        **object code/binaries**, you must do **at least one** of:\n  - **a)** Include
-        instructions on how to get the original source.\n  - **b)** Provide the **machine-readable
-        source code** with the binaries.\n  - **c)** Rename non-standard binaries
-        and include source instructions.\n  - **d)** Make other arrangements with
-        the author.\n\n#### **Condition 4: Integration with Other Software**\n- You
-        can **modify and integrate Ruby code** into any other software (even commercial),
-        **but only for parts written by Matz**. Some files in the distribution are
-        **not under this license** (see `LEGAL` for details).\n\n#### **Condition
-        5: Generated Files**\n- **Scripts or library files** created as input/output
-        by Ruby **do not fall under Ruby''s copyright**. They belong to their creators
-        and can be sold or used commercially, even when bundled with Ruby.\n\n####
-        **Condition 6: Warranty Disclaimer**\n- The software is provided **\"AS IS\"**
-        with **no warranties** (explicit or implied), including **no guarantees**
-        of merchantability or fitness for a specific purpose.\n\n---\n\n### **Important
-        Notes**\n- **BSDL License**: The 2-clause BSD license is referenced in the
-        file `BSDL`, which may provide additional terms.\n- **LEGAL File**: Some files
-        in the Ruby distribution are not covered by this license. Check the `LEGAL`
-        file for details on those exceptions.\n- **Generated Files**: Scripts/libraries
-        created by users (e.g., via Ruby) are **not automatically licensed** under
-        Ruby''s terms.\n\n---\n\n### **Summary**\nThis is a **permissive license**
-        with specific conditions for redistribution, modification, and binary distribution.
-        It allows broad use but requires attribution, source availability (in some
-        cases), and restrictions on modifying certain parts of the software. Always
-        check the `LEGAL` file for exceptions and the `BSDL` file for the full BSD
-        license terms.","reasoning":"Okay, the user is asking what''s in the license.txt
-        file they provided. Let me start by reading through the content carefully.\n\nFirst,
-        the file starts by stating that Ruby is free software copyrighted by Yukihiro
-        Matsumoto, also known as Matz. The license allows redistribution and modification
-        under certain conditions. The main body lists six points, each with specific
-        terms.\n\nPoint 1 allows verbatim copying of the source code as long as copyright
-        notices and disclaimers are duplicated. That''s standard for many open-source
-        licenses.\n\nPoint 2 covers modification. The user can modify the software
-        but must do one of four things: place modifications in the Public Domain,
-        use them only within their organization, rename non-standard binaries with
-        instructions, or make other arrangements with the author. This seems to be
-        a mix of permissive and more restrictive conditions.\n\nPoint 3 is about distributing
-        in object code or binary form. Similar to point 2, but with options like including
-        instructions to get the original distribution, providing machine-readable
-        source, renaming binaries, or other arrangements. This is common in licenses
-        to ensure users can access the source if needed.\n\nPoint 4 mentions modifying
-        and including Ruby parts in other software, even commercial, but notes that
-        some files aren''t under these terms and refers to a LEGAL file for details.
-        This indicates that not all components are covered by this license, so users
-        need to check the LEGAL file for specifics.\n\nPoint 5 states that scripts
-        and library files generated as input/output don''t fall under Ruby''s copyright,
-        so their copyright remains with the creator. They can be sold commercially
-        and aggregated with Ruby. This is important for understanding what''s included
-        in the license.\n\nPoint 6 is the standard \"AS IS\" clause with no warranties,
-        which is typical to limit liability.\n\nNow, considering the user''s question,
-        they likely want to know the key terms of the license. They might be a developer
-        looking to use Ruby, a contributor checking the licensing, or someone verifying
-        compliance. They might need to understand if they can modify and distribute
-        the software, what conditions apply, and any exceptions.\n\nI should explain
-        each section in simple terms, highlighting the permissive aspects but also
-        the conditions. Mention the references to BSDL and LEGAL files, as those are
-        important for full compliance. Also, note that some files have different licenses,
-        so checking the LEGAL file is necessary.\n\nMake sure to clarify that this
-        is the Ruby license, not the same as the MIT or GPL, and that it has specific
-        terms for different distributions (source vs binary) and modifications. Emphasize
-        the \"AS IS\" part to show there''s no warranty. Also, mention the note about
-        generated files not being covered, which is a key point for users creating
-        their own scripts or libraries.\n\nFinally, summarize the main takeaways:
-        it''s a permissive license with conditions on redistribution, modification,
-        and binary distribution, references to other licensing files, and no warranties.
-        This should help the user understand the scope and requirements of using the
-        software under this license.\n"},"finish_reason":"stop"}],"usage":{"prompt_tokens":546,"prompt_tokens_details":{"cached_tokens":13},"completion_tokens":1284,"total_tokens":1830}}
-
-        '
-  recorded_at: Fri, 13 Nov 2026 21:24:14 GMT
-recorded_with: VCR 6.4.1
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTkwMSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTQ3MDU3MTQsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSBmaWxlIGBsaWNlbnNlLnR4dGAgY29udGFpbnMgdGhlICoqbGljZW5zZSB0ZXJtcyoqIGZvciBSdWJ5LCBzcGVjaWZ5aW5nIGhvdyB0aGUgc29mdHdhcmUgY2FuIGJlIHVzZWQsIG1vZGlmaWVkLCBhbmQgZGlzdHJpYnV0ZWQuIEhlcmUncyBhIGJyZWFrZG93biBvZiBpdHMga2V5IHBvaW50czpcblxuLS0tXG5cbiMjIyAqKjEuIENvcHlyaWdodCBhbmQgQXV0aG9yKipcbi0gUnVieSBpcyBjb3B5cmlnaHRlZCAqKmZyZWUgc29mdHdhcmUqKiBieSAqKll1a2loaXJvIE1hdHN1bW90byoqIChNYXR6LCBtYXR6QG5ldGxhYi5qcCkuXG4tIFlvdSBjYW4gKipyZWRpc3RyaWJ1dGUqKiBhbmQgKiptb2RpZnkqKiBpdCB1bmRlciB0aGUgdGVybXMgb2YgdGhlICoqMi1jbGF1c2UgQlNETCoqIGxpY2Vuc2UgKHNpbWlsYXIgdG8gdGhlIEJTRCBsaWNlbnNlKSBvciB0aGUgY29uZGl0aW9ucyBiZWxvdy5cblxuLS0tXG5cbiMjIyAqKjIuIFJlZGlzdHJpYnV0aW9uIGFuZCBNb2RpZmljYXRpb24gVGVybXMqKlxuVGhlIGxpY2Vuc2UgaW5jbHVkZXMgKipzaXggY29uZGl0aW9ucyoqOlxuIyMjIyAqKkNvbmRpdGlvbiAxOiBWZXJiYXRpbSBDb3BpZXMqKlxuLSBZb3UgY2FuIHJlZGlzdHJpYnV0ZSAqKnZlcmJhdGltIGNvcGllcyoqIG9mIHRoZSBzb3VyY2UgY29kZSAqKndpdGhvdXQgcmVzdHJpY3Rpb24qKiwgYXMgbG9uZyBhczpcbiAgLSBZb3UgKipkdXBsaWNhdGUgYWxsIG9yaWdpbmFsIGNvcHlyaWdodCBub3RpY2VzKiogYW5kICoqZGlzY2xhaW1lcnMqKi5cblxuIyMjIyAqKkNvbmRpdGlvbiAyOiBNb2RpZmljYXRpb25zKipcbi0gSWYgeW91ICoqbW9kaWZ5KiogdGhlIHNvZnR3YXJlLCB5b3UgKiptdXN0IGRvIGF0IGxlYXN0IG9uZSBvZiB0aGVzZSoqOlxuICAtICoqKGEpKiogUGxhY2UgeW91ciBtb2RpZmljYXRpb25zIGluIHRoZSAqKlB1YmxpYyBEb21haW4qKiBvciBtYWtlIHRoZW0gZnJlZWx5IGF2YWlsYWJsZSAoZS5nLiwgc2hhcmUgdmlhIFVzZW5ldCBvciBhbGxvdyB0aGUgYXV0aG9yIHRvIGluY2x1ZGUgdGhlbSkuXG4gIC0gKiooYikqKiBVc2UgdGhlIG1vZGlmaWVkIHNvZnR3YXJlICoqb25seSB3aXRoaW4geW91ciBvcmdhbml6YXRpb24qKi5cbiAgLSAqKihjKSoqIEdpdmUgKipub24tc3RhbmRhcmQgYmluYXJpZXMqKiBub24tc3RhbmRhcmQgbmFtZXMgYW5kIGluY2x1ZGUgaW5zdHJ1Y3Rpb25zIG9uIHdoZXJlIHRvIGdldCB0aGUgb3JpZ2luYWwgc291cmNlLlxuICAtICoqKGQpKiogTWFrZSBvdGhlciBkaXN0cmlidXRpb24gYXJyYW5nZW1lbnRzIHdpdGggdGhlIGF1dGhvci5cblxuIyMjIyAqKkNvbmRpdGlvbiAzOiBCaW5hcnkgRGlzdHJpYnV0aW9uKipcbi0gSWYgeW91IGRpc3RyaWJ1dGUgKipiaW5hcnkvb2JqZWN0IGNvZGUqKiAoZS5nLiwgY29tcGlsZWQgZmlsZXMpLCB5b3UgKiptdXN0IGRvIGF0IGxlYXN0IG9uZSBvZiB0aGVzZSoqOlxuICAtICoqKGEpKiogSW5jbHVkZSBpbnN0cnVjdGlvbnMgb24gd2hlcmUgdG8gZ2V0IHRoZSBvcmlnaW5hbCBzb3VyY2UgKGUuZy4sIGluIGEgbWFudWFsIHBhZ2UpLlxuICAtICoqKGIpKiogSW5jbHVkZSB0aGUgKiptYWNoaW5lLXJlYWRhYmxlIHNvdXJjZSBjb2RlKiogd2l0aCB0aGUgZGlzdHJpYnV0aW9uLlxuICAtICoqKGMpKiogVXNlIG5vbi1zdGFuZGFyZCBiaW5hcnkgbmFtZXMgYW5kIHByb3ZpZGUgaW5zdHJ1Y3Rpb25zIHRvIGdldCB0aGUgb3JpZ2luYWwgc291cmNlLlxuICAtICoqKGQpKiogTWFrZSBvdGhlciBhcnJhbmdlbWVudHMgd2l0aCB0aGUgYXV0aG9yLlxuXG4jIyMjICoqQ29uZGl0aW9uIDQ6IEludGVncmF0aW9uIGludG8gT3RoZXIgU29mdHdhcmUqKlxuLSBZb3UgY2FuICoqbW9kaWZ5IGFuZCBpbmNsdWRlIFJ1YnkgaW4gb3RoZXIgc29mdHdhcmUqKiAoZXZlbiBjb21tZXJjaWFsKSwgKipidXQqKjpcbiAgLSBTb21lIGZpbGVzIGluIHRoZSBkaXN0cmlidXRpb24gYXJlICoqbm90IHVuZGVyIHRoZXNlIHRlcm1zKiogKGUuZy4sIHRoaXJkLXBhcnR5IGxpYnJhcmllcykuXG4gIC0gQ2hlY2sgdGhlIGBMRUdBTGAgZmlsZSBmb3IgZGV0YWlscyBvbiB3aGljaCBmaWxlcyBhcmUgZXhjbHVkZWQgYW5kIHRoZWlyIHNwZWNpZmljIGNvbmRpdGlvbnMuXG5cbiMjIyMgKipDb25kaXRpb24gNTogR2VuZXJhdGVkIEZpbGVzKipcbi0gKipTY3JpcHRzIGFuZCBsaWJyYXJ5IGZpbGVzKiogY3JlYXRlZCBhcyBpbnB1dC9vdXRwdXQgYnkgUnVieSAqKmRvIG5vdCBmYWxsIHVuZGVyIFJ1YnnigJlzIGNvcHlyaWdodCoqLiBUaGV5IGJlbG9uZyB0byB0aGUgY3JlYXRvciBhbmQgY2FuIGJlICoqY29tbWVyY2lhbGx5IHNvbGQqKiBvciAqKmFnZ3JlZ2F0ZWQqKiB3aXRoIFJ1YnkuXG5cbiMjIyMgKipDb25kaXRpb24gNjogRGlzY2xhaW1lcioqXG4tIFRoZSBzb2Z0d2FyZSBpcyBwcm92aWRlZCAqKlwiYXMgaXNcIioqIHdpdGggKipubyB3YXJyYW50aWVzKiogKGV4cGxpY2l0IG9yIGltcGxpZWQpLCBpbmNsdWRpbmcgKipubyBndWFyYW50ZWVzIG9mIG1lcmNoYW50YWJpbGl0eSBvciBmaXRuZXNzIGZvciBwdXJwb3NlKiouXG5cbi0tLVxuXG4jIyMgKipLZXkgVGFrZWF3YXlzKipcbi0gKipQZXJtaXNzaXZlIExpY2Vuc2UqKjogUnVieeKAmXMgbGljZW5zZSBpcyAqKkJTRC1saWtlKiosIGFsbG93aW5nIGZvciAqKm9wZW4tc291cmNlIGFuZCBwcm9wcmlldGFyeSB1c2UqKiBhcyBsb25nIGFzIGNlcnRhaW4gY29uZGl0aW9ucyBhcmUgbWV0LlxuLSAqKkV4Y2VwdGlvbnMqKjogU29tZSBmaWxlcyBhcmUgKipub3QgY292ZXJlZCoqIGJ5IHRoZXNlIHRlcm1zIChzZWUgYExFR0FMYCBmb3IgZGV0YWlscykuXG4tICoqR2VuZXJhdGVkIEZpbGVzKio6IFVzZXItY3JlYXRlZCBmaWxlcyAoZS5nLiwgc2NyaXB0cykgYXJlICoqbm90IHN1YmplY3QgdG8gUnVieeKAmXMgY29weXJpZ2h0KiouXG4tICoqU291cmNlIENvZGUgUmVxdWlyZW1lbnRzKio6IERpc3RyaWJ1dGluZyBiaW5hcmllcyByZXF1aXJlcyAqKnNvdXJjZSBjb2RlIG9yIGNsZWFyIGluc3RydWN0aW9ucyoqIHRvIG9idGFpbiBpdC5cblxuLS0tXG5cbiMjIyAqKldoZW4gV291bGQgVGhpcyBNYXR0ZXI/Kipcbi0gSWYgeW91IHJlZGlzdHJpYnV0ZSBSdWJ5IG9yIGl0cyBjb21wb25lbnRzLlxuLSBJZiB5b3UgbW9kaWZ5IFJ1YnkgYW5kIHdhbnQgdG8gc2hhcmUgb3IgdXNlIHRoZSBjaGFuZ2VzLlxuLSBJZiB5b3UgdXNlIFJ1YnkgaW4gYSBjb21tZXJjaWFsIHByb2plY3QuXG4tIElmIHlvdSBnZW5lcmF0ZSBmaWxlcyB1c2luZyBSdWJ5IChlLmcuLCBzY3JpcHRzKSBhbmQgd2FudCB0byB1c2UgdGhlbSBpbmRlcGVuZGVudGx5LlxuXG5BbHdheXMgY2hlY2sgdGhlIGBMRUdBTGAgZmlsZSBpbiB0aGUgZGlzdHJpYnV0aW9uIGZvciAqKnNwZWNpZmljIGV4Y2VwdGlvbnMqKiB0byB0aGUgbGljZW5zZSB0ZXJtcy4iLCJyZWFzb25pbmciOiJPa2F5LCB0aGUgdXNlciBpcyBhc2tpbmcgd2hhdCdzIGluIHRoZSBsaWNlbnNlLnR4dCBmaWxlIHRoZXkgcHJvdmlkZWQuIExldCBtZSBzdGFydCBieSByZWFkaW5nIHRocm91Z2ggdGhlIGNvbnRlbnQgdG8gdW5kZXJzdGFuZCBpdHMgc3RydWN0dXJlIGFuZCBrZXkgcG9pbnRzLlxuXG5GaXJzdCwgdGhlIGZpbGUgc3RhcnRzIGJ5IHN0YXRpbmcgdGhhdCBSdWJ5IGlzIGZyZWUgc29mdHdhcmUgY29weXJpZ2h0ZWQgYnkgWXVraWhpcm8gTWF0c3Vtb3RvLCBhbHNvIGtub3duIGFzIE1hdHouIFRoZSBtYWluIGxpY2Vuc2UgdGVybXMgYXJlIHVuZGVyIHRoZSAyLWNsYXVzZSBCU0RMLCB3aGljaCBJIGtub3cgaXMgc2ltaWxhciB0byB0aGUgQlNEIGxpY2Vuc2UgYnV0IHdpdGggc29tZSBkaWZmZXJlbmNlcy4gVGhlIHVzZXIgbWlnaHQgYmUgZmFtaWxpYXIgd2l0aCBCU0QgbGljZW5zZXMsIHNvIEkgc2hvdWxkIGV4cGxhaW4gdGhhdCBjb25uZWN0aW9uLlxuXG5Mb29raW5nIGF0IHRoZSBzZWN0aW9ucywgdGhlcmUgYXJlIHNpeCBudW1iZXJlZCBjb25kaXRpb25zLiBMZXQgbWUgYnJlYWsgdGhlbSBkb3duIG9uZSBieSBvbmUuIFxuXG5TZWN0aW9uIDEgYWxsb3dzIHJlZGlzdHJpYnV0aW9uIGFuZCBtb2RpZmljYXRpb24gb2YgdGhlIHNvdXJjZSBjb2RlLCBwcm92aWRlZCB0aGF0IGFsbCBvcmlnaW5hbCBjb3B5cmlnaHQgbm90aWNlcyBhbmQgZGlzY2xhaW1lcnMgYXJlIGR1cGxpY2F0ZWQuIFRoYXQncyBzdGFuZGFyZCBmb3IgbWFueSBvcGVuLXNvdXJjZSBsaWNlbnNlcywgZW5zdXJpbmcgYXR0cmlidXRpb24gYW5kIGRpc2NsYWltZXJzIGFyZSBtYWludGFpbmVkLlxuXG5TZWN0aW9uIDIgdGFsa3MgYWJvdXQgbW9kaWZ5aW5nIHRoZSBzb2Z0d2FyZS4gSXQgcmVxdWlyZXMgdGhhdCBhdCBsZWFzdCBvbmUgb2YgdGhlIGZvdXIgY29uZGl0aW9ucyAoYSB0byBkKSBpcyBtZXQuIFRoZSBmaXJzdCBvcHRpb24gKGEpIGlzIHBsYWNpbmcgbW9kaWZpY2F0aW9ucyBpbiB0aGUgUHVibGljIERvbWFpbiBvciBtYWtpbmcgdGhlbSBmcmVlbHkgYXZhaWxhYmxlLiBUaGlzIGlzIHNpbWlsYXIgdG8gdGhlIEJTRCBsaWNlbnNlJ3MgcmVxdWlyZW1lbnQgZm9yIHNvdXJjZSBjb2RlIGF2YWlsYWJpbGl0eS4gT3B0aW9ucyBiLCBjLCBhbmQgZCBwcm92aWRlIGFsdGVybmF0aXZlcywgc3VjaCBhcyB1c2luZyB0aGUgbW9kaWZpZWQgc29mdHdhcmUgd2l0aGluIGFuIG9yZ2FuaXphdGlvbiBvciBnaXZpbmcgbm9uLXN0YW5kYXJkIGJpbmFyaWVzIHdpdGggaW5zdHJ1Y3Rpb25zLiBUaGlzIHNlZW1zIHRvIGJlIGEgd2F5IHRvIGhhbmRsZSBtb2RpZmljYXRpb25zIHdpdGhvdXQgbmVjZXNzYXJpbHkgb3Blbi1zb3VyY2luZyB0aGVtLCB3aGljaCBpcyBhIGJpdCBtb3JlIHBlcm1pc3NpdmUgdGhhbiBzdGFuZGFyZCBCU0QuXG5cblNlY3Rpb24gMyBjb3ZlcnMgZGlzdHJpYnV0aW5nIHRoZSBzb2Z0d2FyZSBpbiBvYmplY3QgY29kZSBvciBiaW5hcnkgZm9ybS4gQWdhaW4sIHNpbWlsYXIgdG8gQlNELCBpdCByZXF1aXJlcyB0aGF0IHRoZSBiaW5hcmllcyBhcmUgYWNjb21wYW5pZWQgYnkgaW5zdHJ1Y3Rpb25zIG9uIHdoZXJlIHRvIGdldCB0aGUgb3JpZ2luYWwgc291cmNlLiBBbHRlcm5hdGl2ZWx5LCBpbmNsdWRpbmcgdGhlIG1hY2hpbmUtcmVhZGFibGUgc291cmNlIG9yIG5vbi1zdGFuZGFyZCBiaW5hcmllcyB3aXRoIGluc3RydWN0aW9ucy4gVGhpcyBwYXJ0IGFsc28gbWVudGlvbnMgdGhhdCBzb21lIGZpbGVzIGFyZW4ndCB1bmRlciB0aGVzZSB0ZXJtcywgcG9pbnRpbmcgdG8gYSBMRUdBTCBmaWxlIGZvciBtb3JlIGRldGFpbHMuIFRoZSB1c2VyIG1pZ2h0IG5lZWQgdG8gY2hlY2sgdGhhdCBmaWxlIGZvciBleGNlcHRpb25zLlxuXG5TZWN0aW9uIDQgc3RhdGVzIHRoYXQgbW9kaWZpY2F0aW9ucyBjYW4gYmUgaW5jbHVkZWQgaW4gb3RoZXIgc29mdHdhcmUsIGV2ZW4gY29tbWVyY2lhbCBvbmVzLCBidXQgc29tZSBmaWxlcyBhcmUgbm90IHVuZGVyIHRoZXNlIHRlcm1zLiBUaGlzIGlzIGltcG9ydGFudCBiZWNhdXNlIGl0IGNsYXJpZmllcyB0aGF0IG5vdCBhbGwgZmlsZXMgaW4gdGhlIGRpc3RyaWJ1dGlvbiBhcmUgY292ZXJlZCBieSB0aGUgc2FtZSBsaWNlbnNlLCBzbyB0aGUgTEVHQUwgZmlsZSBpcyBjcnVjaWFsIGZvciB1bmRlcnN0YW5kaW5nIHdoaWNoIHBhcnRzIGFyZSB1bmRlciB3aGF0IGNvbmRpdGlvbnMuXG5cblNlY3Rpb24gNSBtZW50aW9ucyB0aGF0IHNjcmlwdHMgYW5kIGxpYnJhcnkgZmlsZXMgZ2VuZXJhdGVkIGJ5IHRoZSBzb2Z0d2FyZSBhcmVuJ3QgYXV0b21hdGljYWxseSBjb3B5cmlnaHRlZCBieSB0aGUgc29mdHdhcmUuIEluc3RlYWQsIHRoZXkgYmVsb25nIHRvIHRoZSBnZW5lcmF0b3IuIFRoaXMgaXMgYSBjb21tb24gcG9pbnQgaW4gbGljZW5zZXMgdG8gcHJldmVudCB0aGUgc29mdHdhcmUgZnJvbSBjbGFpbWluZyBvd25lcnNoaXAgb3ZlciB1c2VyLWdlbmVyYXRlZCBjb250ZW50LiBUaGUgdXNlciBtaWdodCBiZSBjb25jZXJuZWQgYWJvdXQgdXNpbmcgZ2VuZXJhdGVkIGZpbGVzIGluIHRoZWlyIHByb2plY3RzLlxuXG5TZWN0aW9uIDYgaXMgdGhlIHVzdWFsIGRpc2NsYWltZXIsIHN0YXRpbmcgdGhhdCB0aGUgc29mdHdhcmUgaXMgcHJvdmlkZWQgXCJhcyBpc1wiIHdpdGhvdXQgd2FycmFudGllcy4gVGhpcyBpcyBzdGFuZGFyZCBpbiBtYW55IG9wZW4tc291cmNlIGxpY2Vuc2VzIHRvIGxpbWl0IGxpYWJpbGl0eS5cblxuTm93LCBjb25zaWRlcmluZyB0aGUgdXNlcidzIHBvc3NpYmxlIGludGVudC4gVGhleSBtaWdodCBiZSBhIGRldmVsb3BlciBsb29raW5nIHRvIHVzZSBSdWJ5IG9yIGl0cyBjb21wb25lbnRzLCBzbyB0aGV5IG5lZWQgdG8gdW5kZXJzdGFuZCB0aGUgbGljZW5zaW5nIHRlcm1zLiBUaGV5IG1pZ2h0IGJlIGNvbmNlcm5lZCBhYm91dCBob3cgdGhleSBjYW4gcmVkaXN0cmlidXRlIHRoZSBzb2Z0d2FyZSwgd2hldGhlciBtb2RpZmljYXRpb25zIHJlcXVpcmUgb3Blbi1zb3VyY2luZywgb3IgaWYgdGhleSBjYW4gdXNlIHBhcnRzIG9mIFJ1YnkgaW4gY29tbWVyY2lhbCBwcm9qZWN0cy4gVGhleSBtaWdodCBhbHNvIGJlIGNoZWNraW5nIGZvciBhbnkgcmVzdHJpY3Rpb25zIG9uIGdlbmVyYXRlZCBmaWxlcyBvciB0aGUgbmVlZCB0byBpbmNsdWRlIHNvdXJjZSBjb2RlIHdpdGggYmluYXJpZXMuXG5cbkkgc2hvdWxkIGV4cGxhaW4gZWFjaCBzZWN0aW9uIGNsZWFybHksIGhpZ2hsaWdodCB0aGUgZGlmZmVyZW5jZXMgZnJvbSB0aGUgQlNEIGxpY2Vuc2UsIGFuZCBub3RlIHRoZSBpbXBvcnRhbnQgcG9pbnRzIGFib3V0IHRoZSBMRUdBTCBmaWxlIGFuZCBleGNlcHRpb25zLiBBbHNvLCBtZW50aW9uIHRoYXQgdGhpcyBsaWNlbnNlIGlzIHBlcm1pc3NpdmUsIGFsbG93aW5nIGZvciBib3RoIG9wZW4tc291cmNlIGFuZCBwcm9wcmlldGFyeSB1c2Ugd2l0aCBjZXJ0YWluIGNvbmRpdGlvbnMuIFRoZSB1c2VyIG1pZ2h0IGJlIGNvbXBhcmluZyBsaWNlbnNlcyBvciBlbnN1cmluZyBjb21wbGlhbmNlIHdoZW4gdXNpbmcgUnVieSBpbiB0aGVpciBwcm9qZWN0cy5cbiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NTQ2LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MTN9LCJjb21wbGV0aW9uX3Rva2VucyI6MTQ0MCwidG90YWxfdG9rZW5zIjoxOTg2fX0K
+  recorded_at: Sun, 15 Nov 2026 01:21:54 GMT
+recorded_with: VCR 6.4.0

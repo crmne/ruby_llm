@@ -12,7 +12,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true},"strict":false}],"tool_choice":{"type":"function","name":"weather"}}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:40:07 GMT
+      - Sun, 15 Nov 2026 01:42:28 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -51,7 +51,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '789'
+      - '814'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -78,16 +78,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_06291ecdea3e7982016af783b6cd7887d2b000065a0a37fa11",
+          "id": "resp_05a0a29baee1f151016af90e04173c87d29c1ffd8af81a40c0",
           "object": "response",
-          "created_at": 1794606006,
+          "created_at": 1794706948,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794606007,
+          "completed_at": 1794706948,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
@@ -102,11 +102,11 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "fc_06291ecdea3e7982016af783b74d8087d2ab49f20b334a6a9a",
+              "id": "fc_05a0a29baee1f151016af90e04aee487d2bc422a11717cf7b0",
               "type": "function_call",
               "status": "completed",
               "arguments": "{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}",
-              "call_id": "call_PjwhXqfPgQkxUO4vYmulOcIl",
+              "call_id": "call_KW7mdo4OOehu7V9IiniBaNPn",
               "name": "weather"
             }
           ],
@@ -188,6 +188,10 @@ http_interactions:
             "input_tokens": 75,
             "input_tokens_details": {
               "cache_write_tokens": 0,
+              "cache_write_tokens_details": {
+                "ttl_12h_tokens": 0,
+                "ttl_30m_tokens": 0
+              },
               "cached_tokens": 0
             },
             "output_tokens": 27,
@@ -199,21 +203,21 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Fri, 13 Nov 2026 21:40:07 GMT
+  recorded_at: Sun, 15 Nov 2026 01:42:28 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
       string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"What''s
-        the fall of Rome?"},{"type":"function_call","call_id":"call_PjwhXqfPgQkxUO4vYmulOcIl","name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"},{"type":"function_call_output","call_id":"call_PjwhXqfPgQkxUO4vYmulOcIl","output":"Current
+        the fall of Rome?"},{"type":"function_call","call_id":"call_KW7mdo4OOehu7V9IiniBaNPn","name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"},{"type":"function_call_output","call_id":"call_KW7mdo4OOehu7V9IiniBaNPn","output":"Current
         weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -228,7 +232,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:40:10 GMT
+      - Sun, 15 Nov 2026 01:42:31 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -252,7 +256,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '2754'
+      - '2568'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -279,16 +283,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0e4b57039cf88e14016af783b7aa7487d283e6475b0e92eb47",
+          "id": "resp_0dba4a02fb7d2915016af90e04ff8487d2bcc6638b387b1d41",
           "object": "response",
-          "created_at": 1794606007,
+          "created_at": 1794706949,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794606010,
+          "completed_at": 1794706951,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
@@ -303,14 +307,14 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "rs_0e4b57039cf88e14016af783b816bc87d28a02926137dbc55b",
+              "id": "rs_0dba4a02fb7d2915016af90e0591a887d2a84ce1e3a25f7b2a",
               "type": "reasoning",
               "content": [],
-              "encrypted_content": "gAAAAABq94O6AboyF_Qca3VmbGltfIlX9rfnnEk1n-rZnDj9oPeApKy117L5fHwp1JSPu3n0HPWBbHUr5TwsJVs5jJMH5k0R7Kxc-bbD3IGDMxPOpnWXEYLiEFvlgCHWO8iQ5hGt1zlJkBU1BobKU29sjPYE0R1xoV6P_HjVKzSUU3D7kZ9Ml5WU7PKRsBX0AmN-P85JWFiEGDgIB7GhO6Agt1ynlkX7yPNCMFyRTQIPMIfHW_hUNLFfWtzBf5ccXnemdKfFRsLa3XE-L9vLaXWA9gIDK81psme6lAzfieDRAYvDv5F_eur0L-W6TkiMSudc34VwjdS1A_aZRI5I5MLB3vDEtn8gvb2oYsMm8MxWwbkwleTM-8ptanN0J_USYDlfqejseT_Ob1iL3x3GfrjgDTnGI-7WSG_HvwclmnhAiYLFxc_XdVbAjRXfsZV0Bs31TEiHIS061hx9twPex4XglLvqYao77uQQvi8ej3LP3f_2FUySF072ZzqGPFqKdLpWWc9wHbQnP-n5rDmdMG9WpmA3G99e3CPaScTPBfjzS8Fu6xbC5O8OBiULILkfRoWmY5CcWXMWABE6QvrPCPuiFi_nhcZ58r_6mqmpQe4XGIj7R0shQ4oe_l8oNE_s6YiLtlrdlovOJah8CoiesL9QsayR2kjjfY73guMCtIBOv1eW5JTZDG0R4LGpaezuM1MzK55G8VDq7qmsh5CjEcbws5HqKEj6JNAYnoC4hlBpfBXcvzVwXMqVmjGWv1HvEVzMFTdA1JV0BWL-Bt45H7Ul18_SYYWm7bz12LBQ88BYVPhCTP8zVPFtNsTn3XvIIDKNK4O7wSgnp8ZeuZD0lU-9iERQV6ljOMLe5fxhGWNT0ueEhuZhf0U_a-qU_5li0ifqQ0VhByy1zGPOIeqReeUnzNJFeqVpifa-E7zPp2TdaWSm144pDKkeBr1ijE9kJr5BHDMm28hSa2exXECYH5wf85-3eJKIa4u0A-9ein-E5Pv84FOCKuwIUUVFRAHJpAaOk429ZmX6yLVGnJ8wLr4ApU-REqKlzUET2t3QVS_X3NBXm0L7jyi-zLz5ReO99ZRii36RxUa_yw725OSPrFJmMxFyEc0z3KWTIWtAiowVUosYrSymVcdhEVEO-ERoiMbhMOHsCABf87CzPnkg4aoAH2Y39lWxOCIqNQyW4cTklmDyDTRvqiz3a4vUkyHBFg87VLG8LI7ymR1vafR4xg6G8XHVdoHDqgpUw9D4kGrf3hhqrkhmblDXepCW9oa4s_Ar95zyFZCA14kjSD3G4CuwHkzLO2acC0l_OBw1mW9zfOH6Kd_zbkSgcoetej6XnqWDEAVujzabWbGrhURRl53uX6DVozwbXZqUIp1wH-zrryrjHXr06IZOM3qZrIYCUp5YNsb4W9Yb4SBzhWPTiWKGNH3CztFeAXKDsElQaZxgg8VBGhQqygIi6r-UagjPGEkYri88f651HTFJANyZaJfdRdQitbFLFzu4ULV1qcgC20F3Gq0E991sEZcvrxxmkRVv-pCt-VWb_QY7JnJEsbeblzs1Sjl79PzaUdcTVPWYm7iCsIapa0vFwc8pMadyNKxQqYjo3IWRzBqHY8s5ir4Is5_HnkkAWOubpkVZjxxu2dndFVFYZpPor4ci20EYArUsG2gVqJIZ7JRxynlSTR-BvyiRNhLreGpkhQrMSVDexkR5wSe9K8uz1l1ecHRvMcCB-CBf11sCsr5PTd9WSvLeHmExthlycte9KY7JMMcs4NCuxYdHd9Id_7ASkSloTmS-Qoi5Attb1PAmx52huMxeBbEzkwprlzM7db4-3q3c84W018Bxn7wnLWPeq7_J3en187vhI-7B0W9kkhGeKWsq4QfxmAhf85pRlqNZzXuN5VLU8JYEXRT7ywN6PAvtA_PhuRwS-ZMw2db4wIWF8inJS5Dty4LEXnCg3zOq9H79CJqv-FX-YXjYBANts8BUvolI-2E1PREOd-neBhALFA6Mq-35-KUGHItUC20w3nkkH3lb1PIukYzXONATnE7lgi00Gk70gcuxyRT6HPk57Ta9FcrFlx05nNrx-0zTaFEXf-9D3E_RlspCPZPFIHrn3qXmWboo7Tqf2E2unyaHmcp_UzAqqVVrplcTY0AYARoC70qnw9HxhiYLYuz0xnTnOz6qdjw29VIq",
+              "encrypted_content": "gAAAAABq-Q4Ho-IvSCHemFKL-buJGDR_slvSMFFZEFJ1zeUormCzRUqdYLiqc4lfv0WqwlSAybqzzbHXIKseVFSH1Tzl1INmr9FSyT6Kzr-2U003DewB0wPjMmnkVWmimIN_kVlhf96TQlvFBKqepJCQyPSLk7oMH4WjYw6tGSNRxTDOMItZW561UcHL3K4ha_6iO_VPgdtQaQpNummbmVkhDRUtfvna0unv9v5yNmk-WGuShyqaaqfTB5rZnySOsFvYYAgT3Of9gL34LX1M7sLJ_dJxUnHHoSw62_tfWdNdDBxFDhW_As5d_ZUDcLwfzekpytLkX7hWIpPXmAnLMx9T13B2hWPC9XXl-zBSIZT2gNaPHPPkO27HlpP2IeY84_fIbtf4fKPaa1OAI0kbhw6QfUvOsZGVb7eaJMR8vNspeis2Xyq6KD28cfM8Md3Vo6uD009llUMcy9c2B4CoZJRpa4z9uaQ8Yg5d9flyO3RVDrSpw3VT4DhqJSORMUAg-S_xJDkOgAldRQRnpN4mleHxGtxlbshFb1xA-v-mVWTSymGBuKho0CAmMesgKzYZkrOpjE9D9joxzP6Z_iVnDPsgGbswFGP7UB7D9pdRq0Q70uoLnRs0nR966_rAglEmugNr5ZraAUClnuWF9UmcbrIaS_knY0ov5iJ0Z7C7ZEQpdIRFWKChQM6YMGcM-aE0K1kzaqssxUzEwRq-Goq7IYZnurQuHiyjLt2Y9N987krEVmvE3P8tAIzisXs9zvuMBe_rjuRjQBt2qjWW1EijKDIhBlcu4wUC7LZQYSVgFZpB8Gv0EpjGRXkwXSuVLlfVHeOUW83qhPpDJ_aK_Xxxp9q-a4-n8fMqXpoCgYF2zV21ZYe_IZOuEFyZXHvWRsRhjORcgPJPf3eGWUKefbHkCusrvzIHXkXXGxCJU8yUtbvflSSMuJdaxLfX7vW9ntqPsScd5ZDPcpNfL3SRQK3DWh4umBVMg7gaGDX-lx9pHoOKmftPSbCaA2K5BiH0YtTvqXRVW-fphpr19bTBPnPOuEKsvMyzTDm-b-i42c-ybbux4iqlnkpjLpSmxrngw2ELo5PD4TZkH-zTnplBGic4dibyaEcCctwx-FpmIBK27oeEp5bbXqP066qhRYIG6BRCTGdI-S73ZrxcgjKcKTfYI6eZyLdfTDJUQAwB0W_TmGelofkKxCWa_ZVe9i1cH5fTctZ-z5P6A3tHT3pvczKzvjxQnILcVK7NTaqnEKLEodbg30S2BQnBgdobHc8qFPUy47ikVFWHK-SuByU5txUYH_rIk6ups9e0XgRkn-6dDg-2yfOqpi0jAspptm7T8A8xc6TEoVZyEjqfcbpk2v6pXwO11XVuPUZFYnzCHq7dd9i4ucRQHAeLM2_DuQXpSnWIH6avuBoTIOqQQf-4a5mE28Wndl1PvXQ3cGwJU4j_aq455qD2Ypp3uIvnJBsXJ-MJxAxsN0MSdtbK9V13H615GbeT1H72HVemyFct1q97LX0Nbflbbh2gMb-CK8cJnOY6DPV2K4HuFNVa4Acye_MESefHmKa33L5j3NFuftrnZSD7adKhrQ16g6Sfsvw3IYdijRMNYgggW2Z4D1pV-d6Wc0yPw1B0xiebPXh82BEjZ6P_eMXV_q0jWNrHrEIUEL-KYEA0hYd3GOxb8ZoBkJhau_3sUepT7VPawxAAnbq3uB2iZwsw1KStAUiFY6gHF8LHpHF8wbebm7GzqLl18YFaLsVFcdfOSrtUc6FqWriahAWF4de-eJ3_rkNBou7-eLEWyQnFTSQwGeezUfyQz1rydLLMKqktUwM0Ou3TbIgdzIR-HNYMcwKkdAkghVSo8VDr7TD0Mpo0GorpNVvwxV0mcSHneKhyj_xuQ2fdgirX5CJF0DFLaLT3hYyEXL7NzFtzPzStIa1igel-0qzXOUb8_QivS-9ajZO94990JvnXvYI--z0KPTnkLKPbm2nXQY16jkCEEyRkchLpG3jWKypU2N4DKyoLxsdpL5_gGAkyLo7Q8az7oi9p25kio2N6tb6Yaw_daqa6HFO724LdwKrMv3u3Ha79EeBdGpTEs369HiQTguxwNdwcVeCgAVToiAvPWvt5L5PX624y51oTebmHwZSJ7Lia33bZf4tBOsyhMEItPK4YieM2MAfbftcEmY3vPE2rfWJRJKe2SqQEzVYvehkMsWkYTU5LBHexprRDRGcktuSppgXywbWGRgviLW_kIq1tucRL27RwLcYyouxuVpeiibafItqtgw==",
               "summary": []
             },
             {
-              "id": "msg_0e4b57039cf88e14016af783b88c7487d284d3d21cc2d2d19b",
+              "id": "msg_0dba4a02fb7d2915016af90e05f1c087d2a656bcc0bbcda57a",
               "type": "message",
               "status": "completed",
               "content": [
@@ -318,7 +322,7 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "The **fall of Rome** usually refers to the collapse of the **Western Roman Empire**, traditionally dated to **476 CE**, when the Germanic leader **Odoacer deposed Emperor Romulus Augustulus**.\n\nIt was not a single sudden event but a long decline, especially from the 3rd to 5th centuries. Major contributing factors included:\n\n- Political instability and civil wars  \n- Economic problems, heavy taxation, and inflation  \n- Military pressures from Germanic tribes and the Huns  \n- Dependence on non-Roman soldiers  \n- Difficulty governing and defending a huge empire  \n- Epidemics and population decline  \n- The division of the empire into eastern and western halves  \n\nThe **Eastern Roman Empire**, later called the Byzantine Empire, survived until **1453**, when Constantinople fell to the Ottoman Turks."
+                  "text": "The **fall of Rome** usually refers to the collapse of the **Western Roman Empire**, traditionally dated to **476 CE**, when the Germanic leader **Odoacer** deposed the last western emperor, **Romulus Augustulus**.\n\nIt was not a single event but a long decline caused by factors including:\n\n- Political instability and civil wars  \n- Economic problems, heavy taxation, and inflation  \n- Military pressures from Germanic peoples and the Huns  \n- Reliance on foreign mercenaries  \n- Administrative division between the eastern and western empires  \n- The weakening of cities, trade, and central authority  \n\nThe **Eastern Roman Empire**, or Byzantine Empire, continued for nearly another thousand years until the fall of Constantinople in **1453**."
                 }
               ],
               "phase": "final_answer",
@@ -400,16 +404,20 @@ http_interactions:
             "input_tokens": 137,
             "input_tokens_details": {
               "cache_write_tokens": 0,
+              "cache_write_tokens_details": {
+                "ttl_12h_tokens": 0,
+                "ttl_30m_tokens": 0
+              },
               "cached_tokens": 0
             },
-            "output_tokens": 212,
+            "output_tokens": 206,
             "output_tokens_details": {
-              "reasoning_tokens": 40
+              "reasoning_tokens": 47
             },
-            "total_tokens": 349
+            "total_tokens": 343
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Fri, 13 Nov 2026 21:40:10 GMT
-recorded_with: VCR 6.4.1
+  recorded_at: Sun, 15 Nov 2026 01:42:31 GMT
+recorded_with: VCR 6.4.0

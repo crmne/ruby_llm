@@ -10,7 +10,7 @@ http_interactions:
         is the best.</file>"}]}],"stream":false,"max_tokens":524288}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -27,27 +27,27 @@ http_interactions:
       Content-Type:
       - application/json; charset=utf-8
       Content-Length:
-      - '680'
+      - '670'
       Trace-Id:
-      - 0746b2c841398192509909a2cbe581b9
+      - '07483bf7218ca814cb9c7531b55bbc18'
       X-Session-Id:
       - 343b5c1465bbfd9851d68cdc366ac592
       X-Mm-Request-Id:
-      - 2092934004998157135_1794605000s8khhm
+      - 2092934004998157135_1794705655xpjkdu
       Minimax-Request-Id:
-      - 7533bb16a4817977e1fbd4cd45e85909
+      - 1ca7d52dcfc16b751229fca020313000
       Alb-Receive-Time:
-      - '1794605000.901'
+      - '1794705655.95'
       Alb-Request-Id:
-      - a7ab5a69a12ebcce5c4ab039b87917c5abb364a9
+      - 43e9f733cffe0422c85e61d64a784ad4348634cd
       Expires:
-      - Fri, 13 Nov 2026 21:23:24 GMT
+      - Sun, 15 Nov 2026 01:20:57 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Fri, 13 Nov 2026 21:23:24 GMT
+      - Sun, 15 Nov 2026 01:20:57 GMT
       Connection:
       - keep-alive
       Access-Control-Allow-Origin:
@@ -55,12 +55,10 @@ http_interactions:
       X-From:
       - ak
     body:
-      encoding: UTF-8
-      string: '{"id":"0746b2c841398192509909a2cbe581b9","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"thinking":"We
-        need answer content. File says \"Ruby is the best.\" Maybe explain plain text.
-        Need concise. User asks what''s in file. State exact content.","signature":"f22daecc9c0e03e8a0ad3fabe08fc18b0e07ae401c0b073974c49c1826c08cb0","type":"thinking"},{"text":"The
-        file contains the text:\n\n\u003e Ruby is the best.","type":"text"}],"usage":{"input_tokens":228,"output_tokens":46,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens_details":{"thinking_tokens":31}},"stop_reason":"end_turn","base_resp":{"status_code":0,"status_msg":""}}'
-  recorded_at: Fri, 13 Nov 2026 21:23:24 GMT
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjA3NDgzYmY3MjE4Y2E4MTRjYjljNzUzMWI1NWJiYzE4IiwidHlwZSI6Im1lc3NhZ2UiLCJyb2xlIjoiYXNzaXN0YW50IiwibW9kZWwiOiJNaW5pTWF4LU0zLjEtRmxhc2giLCJjb250ZW50IjpbeyJ0aGlua2luZyI6IldlIG5lZWQgYW5zd2VyIHdoYXQncyBpbiBmaWxlLiBOZWVkIHN0YXRlIGNvbnRlbnQuIEl0IHNheXMgUnVieSBpcyB0aGUgYmVzdC4gUHJvYmFibHkgY29uY2lzZS4gQ291bGQgbWVudGlvbiBwbGFpbiB0ZXh0LiBOZWVkIHBlcmhhcHMgZXhhY3QuIiwic2lnbmF0dXJlIjoiNzIzZDY4YjhiNGIzYmM3MGMzYjRkMTRkMGEwOTY5YTZiNDRmOTE2NWNiMDAxNzE1ZjNmNmU2MmFkZTJiZWUxOCIsInR5cGUiOiJ0aGlua2luZyJ9LHsidGV4dCI6IlRoZSBmaWxlIGNvbnRhaW5zOiAqKuKAnFJ1YnkgaXMgdGhlIGJlc3Qu4oCdKioiLCJ0eXBlIjoidGV4dCJ9XSwidXNhZ2UiOnsiaW5wdXRfdG9rZW5zIjo5OCwib3V0cHV0X3Rva2VucyI6NDUsImNhY2hlX2NyZWF0aW9uX2lucHV0X3Rva2VucyI6MCwiY2FjaGVfcmVhZF9pbnB1dF90b2tlbnMiOjEyOCwib3V0cHV0X3Rva2Vuc19kZXRhaWxzIjp7InRoaW5raW5nX3Rva2VucyI6MzB9fSwic3RvcF9yZWFzb24iOiJlbmRfdHVybiIsImJhc2VfcmVzcCI6eyJzdGF0dXNfY29kZSI6MCwic3RhdHVzX21zZyI6IiJ9fQ==
+  recorded_at: Sun, 15 Nov 2026 01:20:57 GMT
 - request:
     method: post
     uri: https://api.minimax.io/anthropic/v1/messages
@@ -69,14 +67,14 @@ http_interactions:
       string: '{"model":"MiniMax-M3.1-Flash","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
         is the best.</file>"}]},{"role":"assistant","content":[{"thinking":"We need
-        answer content. File says \"Ruby is the best.\" Maybe explain plain text.
-        Need concise. User asks what''s in file. State exact content.","signature":"f22daecc9c0e03e8a0ad3fabe08fc18b0e07ae401c0b073974c49c1826c08cb0","type":"thinking"},{"type":"text","text":"The
-        file contains the text:\n\n> Ruby is the best."}]},{"role":"user","content":[{"type":"text","text":"and
+        answer what''s in file. Need state content. It says Ruby is the best. Probably
+        concise. Could mention plain text. Need perhaps exact.","signature":"723d68b8b4b3bc70c3b4d14d0a0969a6b44f9165cb001715f3f6e62ade2bee18","type":"thinking"},{"type":"text","text":"The
+        file contains: **“Ruby is the best.”**"}]},{"role":"user","content":[{"type":"text","text":"and
         in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
         is the best</truism></file>"}]}],"stream":false,"max_tokens":524288}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -93,27 +91,27 @@ http_interactions:
       Content-Type:
       - application/json; charset=utf-8
       Content-Length:
-      - '802'
+      - '488'
       Trace-Id:
-      - 0746b2cc2b4e03d315e4cfc61f5ce2f8
+      - '07483bf94bbbf9892c838667c4bcc68f'
       X-Session-Id:
       - 343b5c1465bbfd9851d68cdc366ac592
       X-Mm-Request-Id:
-      - 2092934004998157135_1794605004qx7xl9
+      - 2092934004998157135_1794705657idgd84
       Minimax-Request-Id:
-      - 07cbcd529a6efedd0bf4b2f99af181a8
+      - 4078c94c27fd6e744d43a22b234250dc
       Alb-Receive-Time:
-      - '1794605004.364'
+      - '1794705657.338'
       Alb-Request-Id:
-      - 22c17d85f9df3774e584da06579d052c3d4f9ce1
+      - d407348999a91b1e53aa9ae9bfb9adb7ced06340
       Expires:
-      - Fri, 13 Nov 2026 21:23:27 GMT
+      - Sun, 15 Nov 2026 01:20:58 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Fri, 13 Nov 2026 21:23:27 GMT
+      - Sun, 15 Nov 2026 01:20:58 GMT
       Connection:
       - keep-alive
       Access-Control-Allow-Origin:
@@ -121,12 +119,8 @@ http_interactions:
       X-From:
       - ak
     body:
-      encoding: UTF-8
-      string: '{"id":"0746b2cc2b4e03d315e4cfc61f5ce2f8","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"thinking":"We
-        need answer content. Need maybe describe XML root truism text. Exact. Could
-        say XML document with single root element \u003ctruism\u003e containing text
-        \"Ruby is the best\". Note no period within XML. Need concise.","signature":"d2bad06d029d68f70cb9cfa02039bc19116bacb319533c3f6000be7b7326bd76","type":"thinking"},{"text":"The
-        XML file contains a single `\u003ctruism\u003e` element with the text:\n\n\u003e
-        Ruby is the best","type":"text"}],"usage":{"input_tokens":311,"output_tokens":68,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens_details":{"thinking_tokens":45}},"stop_reason":"end_turn","base_resp":{"status_code":0,"status_msg":""}}'
-  recorded_at: Fri, 13 Nov 2026 21:23:27 GMT
-recorded_with: VCR 6.4.1
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjA3NDgzYmY5NGJiYmY5ODkyYzgzODY2N2M0YmNjNjhmIiwidHlwZSI6Im1lc3NhZ2UiLCJyb2xlIjoiYXNzaXN0YW50IiwibW9kZWwiOiJNaW5pTWF4LU0zLjEtRmxhc2giLCJjb250ZW50IjpbeyJ0ZXh0IjoiVGhlIFhNTCBmaWxlIGNvbnRhaW5zIGEgYFx1MDAzY3RydWlzbVx1MDAzZWAgZWxlbWVudCB3aXRoIHRoZSB0ZXh0ICoq4oCcUnVieSBpcyB0aGUgYmVzdOKAnSoqOlxuXG5gYGB4bWxcblx1MDAzY3RydWlzbVx1MDAzZVJ1YnkgaXMgdGhlIGJlc3RcdTAwM2MvdHJ1aXNtXHUwMDNlXG5gYGAiLCJ0eXBlIjoidGV4dCJ9XSwidXNhZ2UiOnsiaW5wdXRfdG9rZW5zIjo1NCwib3V0cHV0X3Rva2VucyI6MzksImNhY2hlX2NyZWF0aW9uX2lucHV0X3Rva2VucyI6MCwiY2FjaGVfcmVhZF9pbnB1dF90b2tlbnMiOjI1Nn0sInN0b3BfcmVhc29uIjoiZW5kX3R1cm4iLCJiYXNlX3Jlc3AiOnsic3RhdHVzX2NvZGUiOjAsInN0YXR1c19tc2ciOiIifX0=
+  recorded_at: Sun, 15 Nov 2026 01:20:58 GMT
+recorded_with: VCR 6.4.0

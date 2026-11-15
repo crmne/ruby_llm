@@ -9,7 +9,7 @@ http_interactions:
         this document in one sentence."},{"type":"input_file","file_url":"https://pdfobject.com/pdf/sample.pdf"}]}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:34:18 GMT
+      - Sun, 15 Nov 2026 01:39:17 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -48,7 +48,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1836'
+      - '1449'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -75,16 +75,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0734b67bd6c90445016af78259293087d2be94d9a90d2d30bd",
+          "id": "resp_0a992d5d2178f9cc016af90d44175887d2b3b5453a2fb0d2cc",
           "object": "response",
-          "created_at": 1794605658,
+          "created_at": 1794706756,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794605658,
+          "completed_at": 1794706757,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
@@ -99,7 +99,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_0734b67bd6c90445016af7825a731887d2b911203b924754d0",
+              "id": "msg_0a992d5d2178f9cc016af90d452cf487d2b1218cbbd9ddc6c1",
               "type": "message",
               "status": "completed",
               "content": [
@@ -107,7 +107,7 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "The document is a sample PDF containing the phrase \u201cFun fun fun\u201d followed by several paragraphs of Lorem ipsum placeholder text."
+                  "text": "The document is a sample PDF containing a brief introductory line followed by several paragraphs of Latin placeholder text."
                 }
               ],
               "phase": "final_answer",
@@ -162,16 +162,20 @@ http_interactions:
             "input_tokens": 762,
             "input_tokens_details": {
               "cache_write_tokens": 0,
+              "cache_write_tokens_details": {
+                "ttl_12h_tokens": 0,
+                "ttl_30m_tokens": 0
+              },
               "cached_tokens": 0
             },
-            "output_tokens": 28,
+            "output_tokens": 24,
             "output_tokens_details": {
               "reasoning_tokens": 0
             },
-            "total_tokens": 790
+            "total_tokens": 786
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Fri, 13 Nov 2026 21:34:19 GMT
-recorded_with: VCR 6.4.1
+  recorded_at: Sun, 15 Nov 2026 01:39:17 GMT
+recorded_with: VCR 6.4.0

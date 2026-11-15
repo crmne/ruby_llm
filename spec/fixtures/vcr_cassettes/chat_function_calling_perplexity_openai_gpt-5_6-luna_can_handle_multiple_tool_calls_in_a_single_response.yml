@@ -11,7 +11,7 @@ http_interactions:
         a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -26,13 +26,16 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:30:43 GMT
+      - Sun, 15 Nov 2026 01:31:42 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
       Server:
       - cloudflare
       X-Ratelimit-Limit:
@@ -40,44 +43,41 @@ http_interactions:
       X-Ratelimit-Remaining:
       - '0'
       X-Ratelimit-Reset:
-      - '1794605444'
+      - '1794706303'
       X-Ratelimit-Used:
       - '1'
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Access-Control-Allow-Origin:
       - "*"
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"background":false,"completed_at":1794605441,"created_at":1794605441,"error":null,"frequency_penalty":0,"id":"resp_d98918ff-d767-4786-b400-c016b7acd4a3","incomplete_details":null,"instructions":"You
-        must call the dice_roll tool exactly 3 times when asked to roll dice 3 times.","max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5.6-luna","object":"response","output":[{"arguments":"{}","call_id":"call_pWgPuwnRGLtevFZMpoGhLFvj","id":"fc_ddab3cd8-343b-4e94-a859-c09ff98fe0bd","name":"dice_roll","status":"completed","type":"function_call"},{"arguments":"{}","call_id":"call_MlTiukK8zFXbggvuHUy0rUQN","id":"fc_7df905d7-cceb-4491-a319-6335a11239a3","name":"dice_roll","status":"completed","type":"function_call"},{"arguments":"{}","call_id":"call_ENxrPGNc7IHHUHha6j8l8PPW","id":"fc_62ab25d2-b452-4555-bc3b-eb3eb63da465","name":"dice_roll","status":"completed","type":"function_call"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"dice_roll","description":"Rolls
+      string: '{"background":false,"completed_at":1794706300,"created_at":1794706300,"error":null,"frequency_penalty":0,"id":"resp_9e82ff7c-dc29-4d11-a02d-eb91663e7837","incomplete_details":null,"instructions":"You
+        must call the dice_roll tool exactly 3 times when asked to roll dice 3 times.","max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5.6-luna","object":"response","output":[{"arguments":"{}","call_id":"call_lzyv1iZMbsmcnZefFSxAt2HM","id":"fc_414c9211-6cc2-4e11-a1b0-57e56554423e","name":"dice_roll","status":"completed","type":"function_call"},{"arguments":"{}","call_id":"call_qAE854mMOGhcEx2uQZELgxmr","id":"fc_31636876-55a3-4c48-aaa4-b6ce795075c2","name":"dice_roll","status":"completed","type":"function_call"},{"arguments":"{}","call_id":"call_mrZqAhhqym3G2La9qlSgN4vm","id":"fc_2de1cdad-acb4-4408-b3e4-c5e4fe9fc343","name":"dice_roll","status":"completed","type":"function_call"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result","parameters":{"additionalProperties":false,"properties":{},"required":[],"strict":true,"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0.00002,"output_cost":0.0001,"total_cost":0.00012},"input_tokens":91,"input_tokens_details":{"cached_tokens":0},"output_tokens":83,"output_tokens_details":{"reasoning_tokens":24},"total_tokens":174},"user":null}
 
         '
-  recorded_at: Fri, 13 Nov 2026 21:30:43 GMT
+  recorded_at: Sun, 15 Nov 2026 01:31:42 GMT
 - request:
     method: post
     uri: https://api.perplexity.ai/v1/agent
     body:
       encoding: UTF-8
       string: '{"model":"openai/gpt-5.6-luna","input":[{"role":"user","content":"Roll
-        the dice 3 times"},{"type":"function_call","call_id":"call_pWgPuwnRGLtevFZMpoGhLFvj","name":"dice_roll","arguments":"{}"},{"type":"function_call","call_id":"call_MlTiukK8zFXbggvuHUy0rUQN","name":"dice_roll","arguments":"{}"},{"type":"function_call","call_id":"call_ENxrPGNc7IHHUHha6j8l8PPW","name":"dice_roll","arguments":"{}"},{"type":"function_call_output","call_id":"call_pWgPuwnRGLtevFZMpoGhLFvj","output":"{\"roll\":1}"},{"type":"function_call_output","call_id":"call_MlTiukK8zFXbggvuHUy0rUQN","output":"{\"roll\":2}"},{"type":"function_call_output","call_id":"call_ENxrPGNc7IHHUHha6j8l8PPW","output":"{\"roll\":3}"}],"instructions":"You
+        the dice 3 times"},{"type":"function_call","call_id":"call_lzyv1iZMbsmcnZefFSxAt2HM","name":"dice_roll","arguments":"{}"},{"type":"function_call","call_id":"call_qAE854mMOGhcEx2uQZELgxmr","name":"dice_roll","arguments":"{}"},{"type":"function_call","call_id":"call_mrZqAhhqym3G2La9qlSgN4vm","name":"dice_roll","arguments":"{}"},{"type":"function_call_output","call_id":"call_lzyv1iZMbsmcnZefFSxAt2HM","output":"{\"roll\":1}"},{"type":"function_call_output","call_id":"call_qAE854mMOGhcEx2uQZELgxmr","output":"{\"roll\":2}"},{"type":"function_call_output","call_id":"call_mrZqAhhqym3G2La9qlSgN4vm","output":"{\"roll\":3}"}],"instructions":"You
         must call the dice_roll tool exactly 3 times when asked to roll dice 3 times.","stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -92,13 +92,16 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:30:45 GMT
+      - Sun, 15 Nov 2026 01:31:44 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
       Server:
       - cloudflare
       X-Ratelimit-Limit:
@@ -106,31 +109,28 @@ http_interactions:
       X-Ratelimit-Remaining:
       - '0'
       X-Ratelimit-Reset:
-      - '1794605446'
+      - '1794706304'
       X-Ratelimit-Used:
       - '1'
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Access-Control-Allow-Origin:
       - "*"
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"background":false,"completed_at":1794605443,"created_at":1794605443,"error":null,"frequency_penalty":0,"id":"resp_e2279fb7-c9b7-4c66-bd20-705830d3acaf","incomplete_details":null,"instructions":"You
+      string: '{"background":false,"completed_at":1794706302,"created_at":1794706302,"error":null,"frequency_penalty":0,"id":"resp_406f8e67-b9a6-498d-9d22-98d619b8814e","incomplete_details":null,"instructions":"You
         must call the dice_roll tool exactly 3 times when asked to roll dice 3 times.","max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5.6-luna","object":"response","output":[{"content":[{"annotations":[],"text":"Rolls:
-        **1, 2, 3**","type":"output_text"}],"id":"msg_3ffb6f62-08cf-4eae-a682-65da19f529a3","role":"assistant","status":"completed","type":"message"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"dice_roll","description":"Rolls
+        **1, 2, 3**","type":"output_text"}],"id":"msg_124b9b1e-2593-4a83-8014-ba0fadc8647e","role":"assistant","status":"completed","type":"message"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result","parameters":{"additionalProperties":false,"properties":{},"required":[],"strict":true,"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0.00004,"output_cost":0.00002,"total_cost":0.00006},"input_tokens":195,"input_tokens_details":{"cached_tokens":0},"output_tokens":16,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":211},"user":null}
 
         '
-  recorded_at: Fri, 13 Nov 2026 21:30:45 GMT
-recorded_with: VCR 6.4.1
+  recorded_at: Sun, 15 Nov 2026 01:31:44 GMT
+recorded_with: VCR 6.4.0

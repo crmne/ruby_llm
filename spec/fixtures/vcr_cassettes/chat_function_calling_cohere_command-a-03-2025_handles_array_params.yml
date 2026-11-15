@@ -12,7 +12,7 @@ http_interactions:
         of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -45,11 +45,11 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 414bb36017162ddad63db5f913ae2db1
+      - cae12f875d538ce5d50bf54737c59961
       Date:
-      - Fri, 13 Nov 2026 21:23:44 GMT
+      - Sun, 15 Nov 2026 01:22:28 GMT
       X-Envoy-Upstream-Service-Time:
-      - '664'
+      - '883'
       Server:
       - envoy
       Via:
@@ -60,8 +60,8 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"eaed2cc5-fb3e-40e0-959f-377da8a757f6","message":{"role":"assistant","tool_plan":"I
-        will call the array_params tool with the tags \"red\" and \"blue\" and relay
-        the combined tags to the user.","tool_calls":[{"id":"array_params_d88qyzkrh7d4","type":"function","function":{"name":"array_params","arguments":"{\"tags\":[\"red\",\"blue\"]}"}}]},"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":64,"output_tokens":37},"tokens":{"input_tokens":1470,"output_tokens":69},"cached_tokens":1008}}'
-  recorded_at: Fri, 13 Nov 2026 21:23:44 GMT
-recorded_with: VCR 6.4.1
+      string: '{"id":"45cf1a28-6b86-481a-a220-5dfd5d422541","message":{"role":"assistant","tool_plan":"I
+        will use the array_params tool with the tags \"red\" and \"blue\" and relay
+        the combined tags to the user.","tool_calls":[{"id":"array_params_t52bpcx73gx5","type":"function","function":{"name":"array_params","arguments":"{\"tags\":[\"red\",\"blue\"]}"}}]},"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":64,"output_tokens":37},"tokens":{"input_tokens":1470,"output_tokens":69},"cached_tokens":1008}}'
+  recorded_at: Sun, 15 Nov 2026 01:22:28 GMT
+recorded_with: VCR 6.4.0

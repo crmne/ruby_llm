@@ -9,7 +9,7 @@ http_interactions:
         3?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -23,22 +23,22 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Req-Arrive-Time:
-      - '1794605030856'
-      Resp-Start-Time:
-      - '1794605037136'
-      X-Envoy-Upstream-Service-Time:
-      - '6276'
       Date:
-      - Fri, 13 Nov 2026 21:23:50 GMT
-      Access-Control-Allow-Origin:
-      - ''
-      Req-Cost-Time:
-      - '6280'
-      Server:
-      - istio-envoy
+      - Sun, 15 Nov 2026 01:21:54 GMT
       Content-Type:
       - application/json; charset=utf-8
+      Req-Cost-Time:
+      - '3908'
+      Resp-Start-Time:
+      - '1794705718507'
+      Server:
+      - istio-envoy
+      Access-Control-Allow-Origin:
+      - ''
+      Req-Arrive-Time:
+      - '1794705714599'
+      X-Envoy-Upstream-Service-Time:
+      - '3905'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
@@ -46,105 +46,82 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"role":"assistant","content":"The
-        sum of 5 and 3 is calculated by combining their quantities. Here''s a step-by-step
-        breakdown:\n\n1. **Basic Addition**:  \n   $5 + 3 = 8$\n\n2. **Verification
-        Methods**:  \n   - **Number Line**: Starting at 5, move 3 steps to the right:
-        $5 \\rightarrow 6 \\rightarrow 7 \\rightarrow 8$.  \n   - **Decomposition**:
-        Break 3 into 2 + 1. $5 + 2 = 7$, then $7 + 1 = 8$.  \n   - **Fingers**: Count
-        5 fingers, add 3 more, resulting in 8 total.  \n\nAll methods consistently
-        yield the result **8**.  \n\n**Answer:** $\\boxed{8}$","reasoning_content":"Okay,
-        let''s see. The user is asking what 5 plus 3 is. Hmm, that seems straightforward,
-        but maybe I should break it down to make sure I''m not missing anything. Let
-        me start by recalling basic addition principles. So, when you add two numbers,
-        you''re combining their quantities. \n\nFirst, I''ll visualize 5 objects and
-        then add 3 more. If I have 5 apples and then get 3 more, how many apples do
-        I have in total? Let me count: 1, 2, 3, 4, 5, and then 6, 7, 8. Wait, that''s
-        8. So, 5 plus 3 equals 8. \n\nBut wait, maybe I should check using another
-        method to confirm. Let''s use the number line. Starting at 5, if I move 3
-        steps to the right, I should land on 8. 5 to 6 is one, 6 to 7 is two, 7 to
-        8 is three. Yep, that''s 8. \n\nAlternatively, I can think about decomposition.
-        Breaking down the numbers: 5 + 3 can be thought of as 5 + 2 + 1. Adding 5
-        + 2 gives 7, then adding 1 more makes 8. That still checks out. \n\nAnother
-        way is to use the concept of fact families. For example, 5 + 3 is part of
-        the family with 3 + 5, and since addition is commutative, the result should
-        be the same. So, 3 + 5 is also 8. \n\nWait, maybe I should consider if there''s
-        any alternative interpretation here. Like, is the question trying to trick
-        me? For instance, if it''s in a different base or something? But the question
-        doesn''t specify that, so I should assume it''s base 10. \n\nAlso, maybe the
-        user is testing my knowledge of basic arithmetic. But since 5 + 3 is a fundamental
-        problem, the answer should be 8. I can''t think of any other way to approach
-        this. Let me just verify once more by using fingers. If I hold up 5 fingers
-        and then add 3 more, I have 8 fingers raised. \n\nYeah, I think that''s solid.
-        All methods point to the answer being 8. No need to overcomplicate it. The
-        user probably just wants to confirm the basic addition. So, I''ll go with
-        8 as the answer.\n"}}],"created":1794605037,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":688,"prompt_tokens":16,"total_tokens":704,"prompt_tokens_details":{"cached_tokens":11}},"id":"chatcmpl-DWbbTbxYU5rVHN3WkPIhcrldn3wk7iDD","timings":{"cache_n":11,"prompt_n":5,"prompt_ms":13.055,"prompt_per_token_ms":2.6109999999999998,"prompt_per_second":382.9950210647262,"predicted_n":688,"predicted_ms":6250.341,"predicted_per_token_ms":9.098021834061136,"predicted_per_second":109.91400309199129}}'
-  recorded_at: Fri, 13 Nov 2026 21:23:57 GMT
+        result of adding 5 and 3 is **8**. \n\n**Step-by-Step Explanation:**\n1. Start
+        with the number 5.\n2. Add 3 to it:  \n   - 5 + 1 = 6  \n   - 6 + 1 = 7  \n   -
+        7 + 1 = 8  \n3. Total: **8**\n\n**Answer:** 8","reasoning_content":"Okay,
+        so the user is asking \"What is 5 + 3?\" Let me think about how to approach
+        this. First, I know that addition is one of the basic arithmetic operations.
+        When adding two numbers, you combine their values.\n\nStarting with 5 and
+        3. Let me visualize it. If I have 5 objects and add 3 more, how many do I
+        have in total? Let''s count: 1, 2, 3, 4, 5, and then adding 1, 2, 3. That
+        makes 8. Wait, is that right? Let me check again. 5 + 1 is 6, 6 + 1 is 7,
+        7 + 1 is 8. Yes, that seems correct.\n\nAlternatively, I can use the number
+        line. Starting at 5, moving 3 steps to the right: 5 to 6 (1), 6 to 7 (2),
+        7 to 8 (3). So, 5 + 3 equals 8. \n\nAnother way is to break down the numbers.
+        3 can be thought of as 2 + 1. So, 5 + 2 is 7, and then add 1 more to get 8.
+        That also works.\n\nI should also consider if there''s any alternative interpretation,
+        but in basic arithmetic, 5 + 3 is straightforward. There''s no negative numbers
+        or other operations involved here. So, the answer should be 8. \n\nWait, maybe
+        the user is testing if I can recognize the question or if there''s a trick.
+        But \"5 + 3\" is a simple addition. I don''t see any hidden meaning here.
+        \n\nLet me verify once more. If you have 5 apples and add 3 more apples, you
+        have 8 apples. That''s a real-world example. Another example: 5 dollars plus
+        3 dollars equals 8 dollars. All these examples confirm that the sum is 8.
+        \n\nI think that''s solid. There''s no need to complicate it further. The
+        answer is definitely 8.\n"}}],"created":1794705718,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":528,"prompt_tokens":16,"total_tokens":544,"prompt_tokens_details":{"cached_tokens":11}},"id":"chatcmpl-xlH45v8ydNgqRwAwfk3Mu8aa9SyaAYzg","timings":{"cache_n":11,"prompt_n":5,"prompt_ms":22.431,"prompt_per_token_ms":4.4862,"prompt_per_second":222.90580000891623,"predicted_n":528,"predicted_ms":3867.378,"predicted_per_token_ms":7.338478178368121,"predicted_per_second":136.26803482876514}}'
+  recorded_at: Sun, 15 Nov 2026 01:21:58 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"What is 5 +
-        3?"},{"role":"assistant","content":"The sum of 5 and 3 is calculated by combining
-        their quantities. Here''s a step-by-step breakdown:\n\n1. **Basic Addition**:  \n   $5
-        + 3 = 8$\n\n2. **Verification Methods**:  \n   - **Number Line**: Starting
-        at 5, move 3 steps to the right: $5 \\rightarrow 6 \\rightarrow 7 \\rightarrow
-        8$.  \n   - **Decomposition**: Break 3 into 2 + 1. $5 + 2 = 7$, then $7 +
-        1 = 8$.  \n   - **Fingers**: Count 5 fingers, add 3 more, resulting in 8 total.  \n\nAll
-        methods consistently yield the result **8**.  \n\n**Answer:** $\\boxed{8}$","reasoning":"Okay,
-        let''s see. The user is asking what 5 plus 3 is. Hmm, that seems straightforward,
-        but maybe I should break it down to make sure I''m not missing anything. Let
-        me start by recalling basic addition principles. So, when you add two numbers,
-        you''re combining their quantities. \n\nFirst, I''ll visualize 5 objects and
-        then add 3 more. If I have 5 apples and then get 3 more, how many apples do
-        I have in total? Let me count: 1, 2, 3, 4, 5, and then 6, 7, 8. Wait, that''s
-        8. So, 5 plus 3 equals 8. \n\nBut wait, maybe I should check using another
-        method to confirm. Let''s use the number line. Starting at 5, if I move 3
-        steps to the right, I should land on 8. 5 to 6 is one, 6 to 7 is two, 7 to
-        8 is three. Yep, that''s 8. \n\nAlternatively, I can think about decomposition.
-        Breaking down the numbers: 5 + 3 can be thought of as 5 + 2 + 1. Adding 5
-        + 2 gives 7, then adding 1 more makes 8. That still checks out. \n\nAnother
-        way is to use the concept of fact families. For example, 5 + 3 is part of
-        the family with 3 + 5, and since addition is commutative, the result should
-        be the same. So, 3 + 5 is also 8. \n\nWait, maybe I should consider if there''s
-        any alternative interpretation here. Like, is the question trying to trick
-        me? For instance, if it''s in a different base or something? But the question
-        doesn''t specify that, so I should assume it''s base 10. \n\nAlso, maybe the
-        user is testing my knowledge of basic arithmetic. But since 5 + 3 is a fundamental
-        problem, the answer should be 8. I can''t think of any other way to approach
-        this. Let me just verify once more by using fingers. If I hold up 5 fingers
-        and then add 3 more, I have 8 fingers raised. \n\nYeah, I think that''s solid.
-        All methods point to the answer being 8. No need to overcomplicate it. The
-        user probably just wants to confirm the basic addition. So, I''ll go with
-        8 as the answer.\n","reasoning_content":"Okay, let''s see. The user is asking
-        what 5 plus 3 is. Hmm, that seems straightforward, but maybe I should break
-        it down to make sure I''m not missing anything. Let me start by recalling
-        basic addition principles. So, when you add two numbers, you''re combining
-        their quantities. \n\nFirst, I''ll visualize 5 objects and then add 3 more.
-        If I have 5 apples and then get 3 more, how many apples do I have in total?
-        Let me count: 1, 2, 3, 4, 5, and then 6, 7, 8. Wait, that''s 8. So, 5 plus
-        3 equals 8. \n\nBut wait, maybe I should check using another method to confirm.
-        Let''s use the number line. Starting at 5, if I move 3 steps to the right,
-        I should land on 8. 5 to 6 is one, 6 to 7 is two, 7 to 8 is three. Yep, that''s
-        8. \n\nAlternatively, I can think about decomposition. Breaking down the numbers:
-        5 + 3 can be thought of as 5 + 2 + 1. Adding 5 + 2 gives 7, then adding 1
-        more makes 8. That still checks out. \n\nAnother way is to use the concept
-        of fact families. For example, 5 + 3 is part of the family with 3 + 5, and
-        since addition is commutative, the result should be the same. So, 3 + 5 is
-        also 8. \n\nWait, maybe I should consider if there''s any alternative interpretation
-        here. Like, is the question trying to trick me? For instance, if it''s in
-        a different base or something? But the question doesn''t specify that, so
-        I should assume it''s base 10. \n\nAlso, maybe the user is testing my knowledge
-        of basic arithmetic. But since 5 + 3 is a fundamental problem, the answer
-        should be 8. I can''t think of any other way to approach this. Let me just
-        verify once more by using fingers. If I hold up 5 fingers and then add 3 more,
-        I have 8 fingers raised. \n\nYeah, I think that''s solid. All methods point
-        to the answer being 8. No need to overcomplicate it. The user probably just
-        wants to confirm the basic addition. So, I''ll go with 8 as the answer.\n"},{"role":"user","content":"Now
-        multiply that by 2"}],"stream":false}'
+        3?"},{"role":"assistant","content":"The result of adding 5 and 3 is **8**.
+        \n\n**Step-by-Step Explanation:**\n1. Start with the number 5.\n2. Add 3 to
+        it:  \n   - 5 + 1 = 6  \n   - 6 + 1 = 7  \n   - 7 + 1 = 8  \n3. Total: **8**\n\n**Answer:**
+        8","reasoning":"Okay, so the user is asking \"What is 5 + 3?\" Let me think
+        about how to approach this. First, I know that addition is one of the basic
+        arithmetic operations. When adding two numbers, you combine their values.\n\nStarting
+        with 5 and 3. Let me visualize it. If I have 5 objects and add 3 more, how
+        many do I have in total? Let''s count: 1, 2, 3, 4, 5, and then adding 1, 2,
+        3. That makes 8. Wait, is that right? Let me check again. 5 + 1 is 6, 6 +
+        1 is 7, 7 + 1 is 8. Yes, that seems correct.\n\nAlternatively, I can use the
+        number line. Starting at 5, moving 3 steps to the right: 5 to 6 (1), 6 to
+        7 (2), 7 to 8 (3). So, 5 + 3 equals 8. \n\nAnother way is to break down the
+        numbers. 3 can be thought of as 2 + 1. So, 5 + 2 is 7, and then add 1 more
+        to get 8. That also works.\n\nI should also consider if there''s any alternative
+        interpretation, but in basic arithmetic, 5 + 3 is straightforward. There''s
+        no negative numbers or other operations involved here. So, the answer should
+        be 8. \n\nWait, maybe the user is testing if I can recognize the question
+        or if there''s a trick. But \"5 + 3\" is a simple addition. I don''t see any
+        hidden meaning here. \n\nLet me verify once more. If you have 5 apples and
+        add 3 more apples, you have 8 apples. That''s a real-world example. Another
+        example: 5 dollars plus 3 dollars equals 8 dollars. All these examples confirm
+        that the sum is 8. \n\nI think that''s solid. There''s no need to complicate
+        it further. The answer is definitely 8.\n","reasoning_content":"Okay, so the
+        user is asking \"What is 5 + 3?\" Let me think about how to approach this.
+        First, I know that addition is one of the basic arithmetic operations. When
+        adding two numbers, you combine their values.\n\nStarting with 5 and 3. Let
+        me visualize it. If I have 5 objects and add 3 more, how many do I have in
+        total? Let''s count: 1, 2, 3, 4, 5, and then adding 1, 2, 3. That makes 8.
+        Wait, is that right? Let me check again. 5 + 1 is 6, 6 + 1 is 7, 7 + 1 is
+        8. Yes, that seems correct.\n\nAlternatively, I can use the number line. Starting
+        at 5, moving 3 steps to the right: 5 to 6 (1), 6 to 7 (2), 7 to 8 (3). So,
+        5 + 3 equals 8. \n\nAnother way is to break down the numbers. 3 can be thought
+        of as 2 + 1. So, 5 + 2 is 7, and then add 1 more to get 8. That also works.\n\nI
+        should also consider if there''s any alternative interpretation, but in basic
+        arithmetic, 5 + 3 is straightforward. There''s no negative numbers or other
+        operations involved here. So, the answer should be 8. \n\nWait, maybe the
+        user is testing if I can recognize the question or if there''s a trick. But
+        \"5 + 3\" is a simple addition. I don''t see any hidden meaning here. \n\nLet
+        me verify once more. If you have 5 apples and add 3 more apples, you have
+        8 apples. That''s a real-world example. Another example: 5 dollars plus 3
+        dollars equals 8 dollars. All these examples confirm that the sum is 8. \n\nI
+        think that''s solid. There''s no need to complicate it further. The answer
+        is definitely 8.\n"},{"role":"user","content":"Now multiply that by 2"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -158,46 +135,29 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Resp-Start-Time:
-      - '1794605043254'
       Date:
-      - Fri, 13 Nov 2026 21:23:56 GMT
+      - Sun, 15 Nov 2026 01:21:58 GMT
+      Access-Control-Allow-Origin:
+      - ''
+      Req-Arrive-Time:
+      - '1794705718512'
+      Resp-Start-Time:
+      - '1794705720662'
+      X-Envoy-Upstream-Service-Time:
+      - '2146'
       Server:
       - istio-envoy
       Content-Type:
       - application/json; charset=utf-8
-      X-Envoy-Upstream-Service-Time:
-      - '6109'
-      Access-Control-Allow-Origin:
-      - ''
       Req-Cost-Time:
-      - '6112'
-      Req-Arrive-Time:
-      - '1794605037141'
+      - '2149'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"role":"assistant","content":"The
-        previous result was $5 + 3 = 8$. Now, multiplying that by 2:\n\n$$\n8 \\times
-        2 = 16\n$$\n\n**Answer:** $\\boxed{16}$","reasoning_content":"Okay, let''s
-        see. The user first asked what 5 plus 3 is, and I answered 8. Now they want
-        to multiply that result by 2. So, the next step is to take the previous answer,
-        which was 8, and multiply it by 2.\n\nLet me make sure I''m following the
-        correct order. The original question was 5 + 3, which is 8. Then, multiplying
-        that by 2. So, 8 times 2. Let me calculate that. 8 multiplied by 2 is 16.
-        \n\nWait, is there any chance I might have misread the question? Let me double-check.
-        The user said, \"Now multiply that by 2.\" The \"that\" refers to the previous
-        result, which was 8. So yes, 8 times 2. \n\nHmm, maybe I should break it down
-        again. 8 times 2 can be thought of as adding 8 two times: 8 + 8. That''s 16.
-        Alternatively, using multiplication facts, 8*2 is definitely 16. \n\nI don''t
-        think there''s any ambiguity here. The user is likely testing if I can follow
-        the sequence of operations. So first addition, then multiplication. The answer
-        should be 16. \n\nI should present it clearly, maybe showing the steps again
-        for clarity. First, confirm the previous result was 8, then multiply by 2
-        to get 16. \n\nYes, that''s straightforward. No need for complicated methods
-        here. Just basic arithmetic. The answer is 16.\n"}}],"created":1794605043,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":378,"prompt_tokens":193,"total_tokens":571,"prompt_tokens_details":{"cached_tokens":16}},"id":"chatcmpl-SGTvhhmnhq2i7Jf3N6qWzywiR3EpZh5W","timings":{"cache_n":16,"prompt_n":177,"prompt_ms":53.965,"prompt_per_token_ms":0.30488700564971755,"prompt_per_second":3279.9036412489572,"predicted_n":378,"predicted_ms":6022.464,"predicted_per_token_ms":15.974705570291777,"predicted_per_second":62.59896281654818}}'
-  recorded_at: Fri, 13 Nov 2026 21:24:03 GMT
-recorded_with: VCR 6.4.1
+      string: !binary |-
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIHJlc3VsdCBvZiBtdWx0aXBseWluZyA4IGJ5IDIgaXMgKioxNioqLiBcblxuKipTdGVwLWJ5LVN0ZXAgRXhwbGFuYXRpb246KipcbjEuIFN0YXJ0IHdpdGggdGhlIG51bWJlciA4LlxuMi4gTXVsdGlwbHkgYnkgMjogIFxuICAgLSA4IMOXIDIgPSAxNiAgXG4zLiBUb3RhbDogKioxNioqXG5cbioqQW5zd2VyOioqIDE2IiwicmVhc29uaW5nX2NvbnRlbnQiOiJPa2F5LCB0aGUgdXNlciBqdXN0IGFza2VkIHRvIG11bHRpcGx5IHRoZSBwcmV2aW91cyByZXN1bHQgYnkgMi4gTGV0IG1lIGNoZWNrIHRoZSBoaXN0b3J5LiBUaGUgZmlyc3QgcXVlc3Rpb24gd2FzIDUgKyAzLCB3aGljaCBJIGFuc3dlcmVkIGFzIDguIE5vdyB0aGV5IHdhbnQgdG8gbXVsdGlwbHkgdGhhdCBieSAyLlxuXG5TbywgOCB0aW1lcyAyLiBMZXQgbWUgZG8gdGhhdCBzdGVwIGJ5IHN0ZXAuIDggbXVsdGlwbGllZCBieSAyIGlzIDE2LiBXYWl0LCBpcyB0aGVyZSBhIG5lZWQgdG8gYnJlYWsgaXQgZG93biBmdXJ0aGVyPyBNYXliZSB0aGUgdXNlciB3YW50cyB0byBzZWUgdGhlIHByb2Nlc3MgYWdhaW4uIExldCBtZSB0aGluay4gVGhlIHByZXZpb3VzIGFuc3dlciBoYWQgYSBzdGVwLWJ5LXN0ZXAgYnJlYWtkb3duLCBzbyBtYXliZSBJIHNob3VsZCBkbyB0aGUgc2FtZSBoZXJlIGZvciBjb25zaXN0ZW5jeS5cblxuU3RhcnRpbmcgd2l0aCA4LCB0aGVuIGFkZGluZyA4IGFnYWluLiA4ICsgOCBlcXVhbHMgMTYuIEFsdGVybmF0aXZlbHksIGJyZWFraW5nIGl0IGludG8gMiB0aW1lcyA4LCB3aGljaCBpcyAxNi4gRWl0aGVyIHdheSwgdGhlIHJlc3VsdCBpcyAxNi4gSSBzaG91bGQgcHJlc2VudCB0aGF0IGNsZWFybHkuIEFsc28sIHRoZSB1c2VyIG1pZ2h0IGJlIHRlc3RpbmcgaWYgSSBmb2xsb3cgdGhyb3VnaCB3aXRoIHRoZSBjYWxjdWxhdGlvbiwgc28gbWFraW5nIHN1cmUgdGhlIGFuc3dlciBpcyBjb3JyZWN0IGlzIGltcG9ydGFudC4gTm8gbWlzdGFrZXMgaGVyZS4gSnVzdCBuZWVkIHRvIHN0YXRlIHRoZSBhbnN3ZXIgY2xlYXJseS5cbiJ9fV0sImNyZWF0ZWQiOjE3OTQ3MDU3MjAsIm1vZGVsIjoicXdlbjMtbmF0aXZlIiwic3lzdGVtX2ZpbmdlcnByaW50IjoiYjEwODMwLTQ2NWU0OWI5YyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInVzYWdlIjp7ImNvbXBsZXRpb25fdG9rZW5zIjoyODUsInByb21wdF90b2tlbnMiOjExOCwidG90YWxfdG9rZW5zIjo0MDMsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoxNn19LCJpZCI6ImNoYXRjbXBsLVhDeHc0NUppSzE1ejN0a1dmYjVIVU9OR0xBZ0lTVUZYIiwidGltaW5ncyI6eyJjYWNoZV9uIjoxNiwicHJvbXB0X24iOjEwMiwicHJvbXB0X21zIjoyOC4wMjcsInByb21wdF9wZXJfdG9rZW5fbXMiOjAuMjc0Nzc0NTA5ODAzOTIxNiwicHJvbXB0X3Blcl9zZWNvbmQiOjM2MzkuMzQ3NzcxNzkxNDg3LCJwcmVkaWN0ZWRfbiI6Mjg1LCJwcmVkaWN0ZWRfbXMiOjIwOTQuMzEsInByZWRpY3RlZF9wZXJfdG9rZW5fbXMiOjcuMzc0MzMwOTg1OTE1NDkzLCJwcmVkaWN0ZWRfcGVyX3NlY29uZCI6MTM1LjYwNTUyMTYyNzY0ODI0fX0=
+  recorded_at: Sun, 15 Nov 2026 01:22:00 GMT
+recorded_with: VCR 6.4.0

@@ -12,7 +12,7 @@ http_interactions:
         description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -27,28 +27,28 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 13 Nov 2026 21:29:08 GMT
+      - Sun, 15 Nov 2026 01:29:59 GMT
       Content-Length:
-      - '1524'
+      - '1560'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-33","object":"chat.completion","created":1794605348,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
-        let me see. The user wants me to call the any-of params tool for the task
-        \"Review PR\" with status \"pending\" and report the result.\n\nFirst, I need
-        to understand the tool''s structure. The function provided has parameters
-        where status uses anyOf, which includes a string enum with \"pending\" and
-        \"done\", or null. The task is a string. Since the user specified status as
-        \"pending\", that''s valid. \n\nSo, I should construct the arguments as a
-        JSON object with \"task\" set to \"Review PR\" and \"status\" set to \"pending\".
-        The function name is \"any_of_params\". \n\nWait, the function''s parameters
-        are part of the anyOf DSL. The user mentioned using the any-of params tool,
-        so the function name is correct. I just need to make sure the arguments match
-        the required structure. \n\nNo other parameters are needed. The task is required,
-        and status is optional but provided here. So the tool call should include
-        both. \n\nI think that''s all. Just format the JSON correctly within the tool_call
-        tags.\n","tool_calls":[{"id":"call_xvx72g4d","index":0,"type":"function","function":{"name":"any_of_params","arguments":"{\"task\":\"Review
-        PR\",\"status\":\"pending\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":186,"prompt_tokens_details":{"cached_tokens":48},"completion_tokens":254,"total_tokens":440}}
+      string: '{"id":"chatcmpl-913","object":"chat.completion","created":1794706199,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
+        the user wants me to call the any-of params tool for the task \"Review PR\"
+        with status \"pending\" and report the result. Let me check the tools provided.\n\nThe
+        available tool has a function that takes a task and a status. The status uses
+        anyOf, which allows either a string from the enum [\"pending\", \"done\"]
+        or null. Since the user specified \"pending\", that''s valid. The task is
+        \"Review PR\". \n\nSo I need to structure the tool call with the name of the
+        function, which is \"any_of_params\", and the arguments as a JSON object with
+        \"task\" and \"status\". The task is a string, and the status is \"pending\".
+        \n\nWait, the function''s parameters are described as any_of_params with parameters
+        task and status. The status is optional, but in this case, the user provided
+        it. So the arguments should include both. \n\nLet me make sure the JSON is
+        correctly formatted. The name is \"any_of_params\", and the arguments are
+        {\"task\": \"Review PR\", \"status\": \"pending\"}. That should work. I''ll
+        return that in the tool_call tags.\n","tool_calls":[{"id":"call_kw4gap6u","index":0,"type":"function","function":{"name":"any_of_params","arguments":"{\"status\":\"pending\",\"task\":\"Review
+        PR\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":186,"prompt_tokens_details":{"cached_tokens":48},"completion_tokens":267,"total_tokens":453}}
 
         '
-  recorded_at: Fri, 13 Nov 2026 21:29:08 GMT
-recorded_with: VCR 6.4.1
+  recorded_at: Sun, 15 Nov 2026 01:29:59 GMT
+recorded_with: VCR 6.4.0

@@ -9,7 +9,7 @@ http_interactions:
         this document in one sentence."},{"type":"input_file","file_url":"https://pdfobject.com/pdf/sample.pdf"}]}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:34:26 GMT
+      - Sun, 15 Nov 2026 01:39:24 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -44,9 +44,7 @@ http_interactions:
       X-Ratelimit-Limit-Requests:
       - '1800'
       X-Ratelimit-Remaining-Requests:
-      - '1800'
-      Cf-Cache-Status:
-      - DYNAMIC
+      - '1798'
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Zero-Data-Retention:
@@ -54,27 +52,30 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '336.1'
+      - '271.6'
       X-Metrics-E2e-Ms:
-      - '3822.9'
+      - '3105.9'
       Traceparent:
-      - 00-c4d90d4cb3e8ec1d3aa6e4f0a9dd0ab9-f51a89f800028ac5-01
+      - 00-27ce0c68607358b61e6a808b30c922b9-0883c404000a34ff-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1794605662,"completed_at":1794605666,"id":"6a255c2b-df16-9efc-89b8-4ef65fca8df9","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_6a255c2b-df16-9efc-89b8-4ef65fca8df9","summary":[{"text":"I
-        need to summarize the document in one sentence.\n\nThe document is a sample
-        PDF containing placeholder Lorem ipsum text.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"AvykmpyEqVpAjB6jcvqMqNdh+b0tglZGQGMJ2EwMp9k+Osz2+MvR6QwcKk/65snQNZ1rUEAU4lylKwOQYhf+nF3DA7Qri3vOtJR/p7MzOqCXH8o0bDekRu1Pcw4qkKmqTWo2a+wj2hrqWnXOjKAa2MUWAjP0FytPqzhXudJXCLi//Vx9WayJvwGFV3j3A6r4P649goL4B94ptoGsZrGyj4FaF5ZvSFRwoJk9rODWyC72JpgMDEWPj8okzKsQdOoNtJP0ZGHoLLBQWFdPa2J5AD8jMy3flPa8xwggqvnriMpea1CgM0qMzNI26KYfDkx+aqkfGud2/GhS7Mq1E5ZEvDoay1/k+5SwGQC0D4EmNPRaz9OlMiz9moh8lpjvVdhfEntRmkPv9SwrrGkXC+bnZkcr8aQ53IZqbVhNG4NYZb9rXSd4/Ra8rc/4NUtVu4cKwSNrbxRt6pd1g9BRV/Vw5QAst+QWOJLKlU0r001q/I7/qDAY2MftbtB0JikElGuKYq/i/O/Q+JSKK4o8euBxt7pd5gz67SLGRyA8gcocjlQXSQ3E10Pk67yf0eev3styuhdA7No8ke2IQD4jM+ItLETR7qfYOH52jNJkFBVj7VCciixSQ4LK6lXCdEpujRqYsvsBmF1nYgnMXbPwPFHlK4UX1dhlovsYEpuYIGbG/MLkOifVSA"},{"content":[{"type":"output_text","text":"This
-        is a sample PDF containing the title \"Sample PDF,\" a short intro sentence,
-        and several paragraphs of standard Lorem ipsum placeholder text.","logprobs":[],"annotations":[]}],"id":"msg_6a255c2b-df16-9efc-89b8-4ef65fca8df9","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":1931,"input_tokens_details":{"cached_tokens":128},"output_tokens":220,"output_tokens_details":{"reasoning_tokens":193},"total_tokens":2151,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":28293500,"context_details":{"input_tokens":1931,"output_tokens":227}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
-  recorded_at: Fri, 13 Nov 2026 21:34:26 GMT
-recorded_with: VCR 6.4.1
+      string: '{"created_at":1794706761,"completed_at":1794706764,"id":"6de57869-1725-93c2-a37e-c69bf7a9b8e7","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_6de57869-1725-93c2-a37e-c69bf7a9b8e7","summary":[{"text":"The
+        user wants a one-sentence summary of a document, but no document content has
+        been provided yet.\n\nThe document is a sample PDF containing only placeholder
+        text and a rendered page image.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"SKi57vD4edirEMsrDdS5jF81Spg/sjzjlHBg8pcScp6b9zjBO2oLfDj7D4adhJjvuC8OdCWi0J65JrFm6fnc7qfsSSP94sDkZW38Sj+vHkDItUWtJPpP9OX8SpH+vYRI26afZbZ1tWyNz6fEj+/4cJEh+AqGuLQEvbXvQaTCPCoDxoD/BfDGd3pn8rl6N2lhR/o56spkgM5WJawzxfGWYX3z6uet++uCmE23jURRLKFPeGGq/LEgtWDDR8v/UwSN6b60ZvXKAwMsBfig0kkAj9fjzHl+u4XjbAbADCgn6DFub9c/6P7Ak9nPeJdHLE4fF+s37K3luQ67/SZPaAK6F8UeiJlDTAlGVvcG9BUJGz4GIBIG6IyLzYkdsA+k4t9waEpEpb5VH7nqe3CVzaHb54o0nfDC/JgSyVLMOyyntez3Yre5XyDVKfxbeHKj3mte234EBdUShqp2VLc4G+/5rKrJbYZu8QGjJijAv372J1GZqN+gZM23wKu2d+Mgn7HD7uhDMYGxGZG6kl43UbuU939TNE02Fh2NCjrQMXAk4o25hvd4mNQlB57f4/svyjlRS4jCz9P7sURMZwvTA6PHnLXHIbCqg/Y640BRcQn8DqMML7+qJUk9J/Wcndyc4HgPZ661WaJB4mysablu4MOZWJ0C0GOPZFEAWwCabB5a8CbzxNvUxi+TEQ1nc2lSWUv8ASmY38Xd9aS/Z2g2WeRVGj8oM3oc0jwceg"},{"content":[{"type":"output_text","text":"This
+        is a sample PDF consisting of placeholder \"Lorem ipsum\" text under the heading
+        \"Sample PDF\" and subtitle \"This is a simple PDF file. Fun fun fun.\"","logprobs":[],"annotations":[]}],"id":"msg_6de57869-1725-93c2-a37e-c69bf7a9b8e7","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":1931,"input_tokens_details":{"cached_tokens":512},"output_tokens":260,"output_tokens_details":{"reasoning_tokens":226},"total_tokens":2191,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":25261500,"context_details":{"input_tokens":1931,"output_tokens":268}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Sun, 15 Nov 2026 01:39:24 GMT
+recorded_with: VCR 6.4.0

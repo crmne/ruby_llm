@@ -9,7 +9,7 @@ http_interactions:
         is the creator of the programming language Ruby?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -26,7 +26,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 13 Nov 2026 21:21:39 GMT
+      - Sun, 15 Nov 2026 01:19:45 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
@@ -46,13 +46,13 @@ http_interactions:
       X-Watermark:
       - 'false'
       Traceparent:
-      - 00-403d6a6e18a5c14bace5b674f5a688f2-fcb3323e000b9319-00
+      - 00-ae34d4cdf93a6653fa9272c88baeb7fe-635fa640001096d9-00
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Ms-Client-Request-Id:
-      - dfd556f7-9271-4bbd-9ffd-df590b6d6096
+      - 2e9d2405-7d02-479a-ae41-90460448f087
       Azureml-Model-Session:
-      - d20261110015917-e7d4cb48
+      - d20261110012600-4baac0fe
       X-Ms-Inference-Retry-History:
       - '{"v":1,"entries":[{"service_id":"mir.frontdoor","layer":"regional","role":"direct","retries":0}]}'
       Azureai-Requested-Tier:
@@ -64,9 +64,9 @@ http_interactions:
       X-Ratelimit-Key:
       - grok-4-1-fast-non-reasoning
       X-Ratelimit-Remaining-Requests:
-      - '49'
+      - '47'
       X-Ratelimit-Reset-Requests:
-      - '1'
+      - '3'
       X-Ratelimit-Limit-Requests:
       - '50'
       X-Ratelimit-Renewalperiod-Requests:
@@ -86,9 +86,9 @@ http_interactions:
       Azureai-Fe-Offer-Type:
       - paygo
       Apim-Request-Id:
-      - dfd556f7-9271-4bbd-9ffd-df590b6d6096
+      - 2e9d2405-7d02-479a-ae41-90460448f087
       X-Http2-Stream-Id:
-      - '509'
+      - '35'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -97,35 +97,34 @@ http_interactions:
       - West Europe
     body:
       encoding: UTF-8
-      string: '{"id":"ade11bf5-5776-4ac0-bb95-ce2ebb4c7b05","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"**Matzuku
+      string: '{"id":"16e62107-779f-47e7-b5a9-ad65fea92609","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"**Matzuda
         Yukihiro** (commonly known as **Matz**) is the creator of the Ruby programming
-        language. \n\nHe designed and developed it in the mid-1990s in Japan, first
-        releasing it in 1995. Matz aimed to create a language that was both powerful
-        and enjoyable to use, prioritizing programmer happiness with its elegant syntax
-        inspired by Perl, Smalltalk, Eiffel, and Lisp. Ruby''s popularity exploded
-        with Ruby on Rails in 2004, and Matz remains actively involved as its lead
-        maintainer. This is well-documented in official Ruby history (ruby-lang.org)
-        and Matz''s own writings."},"finish_reason":"stop"}],"usage":{"prompt_tokens":178,"completion_tokens":127,"total_tokens":305,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":161,"audio_tokens":0,"text_tokens":178,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1794604900,"object":"chat.completion","prompt_filter_results":null}'
-  recorded_at: Fri, 13 Nov 2026 21:21:41 GMT
+        language.\n\nHe designed and developed Ruby in the mid-1990s in Japan, first
+        releasing it in 1995. Matz aimed to create a language that was fun, expressive,
+        and developer-friendly, prioritizing human happiness (\"Happy Ruby, Happy
+        Programmer\"). This is confirmed by official Ruby documentation (ruby-lang.org),
+        Matz''s own writings, and historical records from the language''s development.
+        Ruby has since become popular for web development (e.g., via Ruby on Rails)
+        and scripting."},"finish_reason":"stop"}],"usage":{"prompt_tokens":178,"completion_tokens":121,"total_tokens":299,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":161,"audio_tokens":0,"text_tokens":178,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1794705586,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Sun, 15 Nov 2026 01:19:47 GMT
 - request:
     method: post
     uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
     body:
       encoding: UTF-8
       string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":"Who
-        is the creator of the programming language Ruby?"},{"role":"assistant","content":"**Matzuku
+        is the creator of the programming language Ruby?"},{"role":"assistant","content":"**Matzuda
         Yukihiro** (commonly known as **Matz**) is the creator of the Ruby programming
-        language. \n\nHe designed and developed it in the mid-1990s in Japan, first
-        releasing it in 1995. Matz aimed to create a language that was both powerful
-        and enjoyable to use, prioritizing programmer happiness with its elegant syntax
-        inspired by Perl, Smalltalk, Eiffel, and Lisp. Ruby''s popularity exploded
-        with Ruby on Rails in 2004, and Matz remains actively involved as its lead
-        maintainer. This is well-documented in official Ruby history (ruby-lang.org)
-        and Matz''s own writings."},{"role":"user","content":"What year did he create
-        Ruby?"}],"stream":false}'
+        language.\n\nHe designed and developed Ruby in the mid-1990s in Japan, first
+        releasing it in 1995. Matz aimed to create a language that was fun, expressive,
+        and developer-friendly, prioritizing human happiness (\"Happy Ruby, Happy
+        Programmer\"). This is confirmed by official Ruby documentation (ruby-lang.org),
+        Matz''s own writings, and historical records from the language''s development.
+        Ruby has since become popular for web development (e.g., via Ruby on Rails)
+        and scripting."},{"role":"user","content":"What year did he create Ruby?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -142,7 +141,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 13 Nov 2026 21:21:41 GMT
+      - Sun, 15 Nov 2026 01:19:47 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
@@ -162,13 +161,13 @@ http_interactions:
       X-Watermark:
       - 'false'
       Traceparent:
-      - 00-b879e92d863df91c1bc9d9afcfb86eca-989605ba0009cb50-00
+      - 00-59038d540ded81e2ef082cd537ad75fe-30b59498000c26ec-00
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Ms-Client-Request-Id:
-      - 04747367-4364-4961-be13-4fd25234926c
+      - 62911722-1e7d-4833-afd9-aaf440e9a795
       Azureml-Model-Session:
-      - d20261110015917-e7d4cb48
+      - d20261110012600-4baac0fe
       X-Ms-Inference-Retry-History:
       - '{"v":1,"entries":[{"service_id":"mir.frontdoor","layer":"regional","role":"direct","retries":0}]}'
       Azureai-Requested-Tier:
@@ -180,9 +179,9 @@ http_interactions:
       X-Ratelimit-Key:
       - grok-4-1-fast-non-reasoning
       X-Ratelimit-Remaining-Requests:
-      - '49'
+      - '48'
       X-Ratelimit-Reset-Requests:
-      - '1'
+      - '2'
       X-Ratelimit-Limit-Requests:
       - '50'
       X-Ratelimit-Renewalperiod-Requests:
@@ -190,7 +189,7 @@ http_interactions:
       X-Ratelimit-Abusepenalty-Active:
       - 'False'
       X-Ratelimit-Remaining-Tokens:
-      - '49797'
+      - '49798'
       X-Ratelimit-Reset-Tokens:
       - '0'
       X-Ratelimit-Limit-Tokens:
@@ -202,9 +201,9 @@ http_interactions:
       Azureai-Fe-Offer-Type:
       - paygo
       Apim-Request-Id:
-      - 04747367-4364-4961-be13-4fd25234926c
+      - 62911722-1e7d-4833-afd9-aaf440e9a795
       X-Http2-Stream-Id:
-      - '755'
+      - '493'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -213,12 +212,12 @@ http_interactions:
       - West Europe
     body:
       encoding: UTF-8
-      string: '{"id":"9f130385-17fa-45b2-81cc-b86b857592d6","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"**Ruby
+      string: '{"id":"6c2838d2-4701-4c4a-b6d0-f2b08267776e","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"**Ruby
         was first released in 1995.**\n\nMatz (Yukihiro Matsumoto) began developing
-        Ruby in 1993 while working at a Japanese software company, but the initial
-        public release (version 0.95) occurred on December 21, 1995. This is confirmed
-        in the official Ruby timeline on ruby-lang.org/en/about/ and Matz''s interviews,
-        such as those in \"The Philosophy of Ruby\" (2002). Version 1.0 followed in
-        1999, marking its stability milestone."},"finish_reason":"stop"}],"usage":{"prompt_tokens":323,"completion_tokens":106,"total_tokens":429,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":178,"audio_tokens":0,"text_tokens":323,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1794604901,"object":"chat.completion","prompt_filter_results":null}'
-  recorded_at: Fri, 13 Nov 2026 21:21:42 GMT
-recorded_with: VCR 6.4.1
+        Ruby in 1993, but the initial public release (version 0.95) occurred on December
+        21, 1995. This is documented in the official Ruby history on ruby-lang.org,
+        the language''s release announcements, and Matz''s interviews (e.g., in \"The
+        Ruby Way\" and IEEE Spectrum). Version 1.0 followed in 1999, solidifying its
+        foundation."},"finish_reason":"stop"}],"usage":{"prompt_tokens":317,"completion_tokens":102,"total_tokens":419,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":178,"audio_tokens":0,"text_tokens":317,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1794705587,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Sun, 15 Nov 2026 01:19:48 GMT
+recorded_with: VCR 6.4.0

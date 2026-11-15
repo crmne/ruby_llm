@@ -8,11 +8,11 @@ http_interactions:
       string: '{"messages":[{"role":"user","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"text":"Hi"}]}],"inferenceConfig":{"maxTokens":65535}}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261113T212151Z
+      - 20261115T011959Z
       X-Amz-Content-Sha256:
       - 21ce48cd3ea5255d4f97ed7d743671c3c797b97016338a580cb6b1328afc383c
       Authorization:
@@ -28,7 +28,7 @@ http_interactions:
       message: Bad Request
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:22:05 GMT
+      - Sun, 15 Nov 2026 01:20:13 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -36,7 +36,7 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - bec70ad6-bc6c-4117-a28a-0d2117eae356
+      - bcceb30a-1609-490b-a10c-1c2ce585af59
       X-Amzn-Errortype:
       - ValidationException:http://internal.amazon.com/coral/com.amazon.bedrock/
     body:
@@ -44,5 +44,5 @@ http_interactions:
       string: '{"message":"The model returned the following errors: Input Tokens Exceeded:
         Number of input tokens exceeds maximum length. Please update the input to
         try again."}'
-  recorded_at: Fri, 13 Nov 2026 21:22:05 GMT
-recorded_with: VCR 6.4.1
+  recorded_at: Sun, 15 Nov 2026 01:20:13 GMT
+recorded_with: VCR 6.4.0

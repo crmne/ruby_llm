@@ -11,7 +11,7 @@ http_interactions:
         to process"}},"required":["query"],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -26,13 +26,16 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:38:01 GMT
+      - Sun, 15 Nov 2026 01:40:01 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
       Server:
       - cloudflare
       X-Ratelimit-Limit:
@@ -40,47 +43,44 @@ http_interactions:
       X-Ratelimit-Remaining:
       - '0'
       X-Ratelimit-Reset:
-      - '1794605882'
+      - '1794706802'
       X-Ratelimit-Used:
       - '1'
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Access-Control-Allow-Origin:
       - "*"
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"background":false,"completed_at":1794605880,"created_at":1794605880,"error":null,"frequency_penalty":0,"id":"resp_2a83a34a-1bed-4b47-99d8-922634692786","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5.6-luna","object":"response","output":[{"arguments":"{\"query\":\"test
-        data\"}","call_id":"call_HFdyaD3HB62zARbIyHCRDnT8","id":"fc_de2294b5-f332-4180-9683-4fbeea6118b8","name":"content_returning","status":"completed","type":"function_call"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"content_returning","description":"Returns
+      string: '{"background":false,"completed_at":1794706800,"created_at":1794706800,"error":null,"frequency_penalty":0,"id":"resp_f3ce004e-51fb-4973-b431-31e2393bc3bf","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5.6-luna","object":"response","output":[{"arguments":"{\"query\":\"test
+        data\"}","call_id":"call_Z371pWH575MgrTMjcthtJaKK","id":"fc_82c7039e-9200-46ba-a07a-d54910b21503","name":"content_returning","status":"completed","type":"function_call"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"content_returning","description":"Returns
         a processed string result","parameters":{"additionalProperties":false,"properties":{"query":{"description":"Query
-        to process","type":"string"}},"required":["query"],"strict":true,"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0.00001,"output_cost":0.00004,"total_cost":0.00005},"input_tokens":74,"input_tokens_details":{"cached_tokens":0},"output_tokens":35,"output_tokens_details":{"reasoning_tokens":13},"total_tokens":109},"user":null}
+        to process","type":"string"}},"required":["query"],"strict":true,"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0.00001,"output_cost":0.00004,"total_cost":0.00005},"input_tokens":74,"input_tokens_details":{"cached_tokens":0},"output_tokens":34,"output_tokens_details":{"reasoning_tokens":12},"total_tokens":108},"user":null}
 
         '
-  recorded_at: Fri, 13 Nov 2026 21:38:01 GMT
+  recorded_at: Sun, 15 Nov 2026 01:40:01 GMT
 - request:
     method: post
     uri: https://api.perplexity.ai/v1/agent
     body:
       encoding: UTF-8
       string: '{"model":"openai/gpt-5.6-luna","input":[{"role":"user","content":"Process
-        this query: test data"},{"type":"function_call","call_id":"call_HFdyaD3HB62zARbIyHCRDnT8","name":"content_returning","arguments":"{\"query\":\"test
-        data\"}"},{"type":"function_call_output","call_id":"call_HFdyaD3HB62zARbIyHCRDnT8","output":"Processed:
+        this query: test data"},{"type":"function_call","call_id":"call_Z371pWH575MgrTMjcthtJaKK","name":"content_returning","arguments":"{\"query\":\"test
+        data\"}"},{"type":"function_call_output","call_id":"call_Z371pWH575MgrTMjcthtJaKK","output":"Processed:
         test data"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"content_returning","description":"Returns
         a processed string result","parameters":{"type":"object","properties":{"query":{"type":"string","description":"Query
         to process"}},"required":["query"],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -95,13 +95,16 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:38:03 GMT
+      - Sun, 15 Nov 2026 01:40:03 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
       Server:
       - cloudflare
       X-Ratelimit-Limit:
@@ -109,31 +112,28 @@ http_interactions:
       X-Ratelimit-Remaining:
       - '0'
       X-Ratelimit-Reset:
-      - '1794605884'
+      - '1794706804'
       X-Ratelimit-Used:
       - '1'
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Access-Control-Allow-Origin:
       - "*"
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"background":false,"completed_at":1794605881,"created_at":1794605881,"error":null,"frequency_penalty":0,"id":"resp_396a4eb9-7eb4-405e-9490-88cd904083a7","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5.6-luna","object":"response","output":[{"content":[{"annotations":[],"text":"Processed:
-        test data","type":"output_text"}],"id":"msg_2340d2f8-1a6d-4097-b230-e4562a918a3b","role":"assistant","status":"completed","type":"message"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"content_returning","description":"Returns
+      string: '{"background":false,"completed_at":1794706801,"created_at":1794706801,"error":null,"frequency_penalty":0,"id":"resp_ac88a4c6-8d58-44b8-a4f2-47416bf32a26","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5.6-luna","object":"response","output":[{"content":[{"annotations":[],"text":"Processed:
+        test data","type":"output_text"}],"id":"msg_3c56bdab-fa7b-49ef-bbe9-52a5b20ce2d1","role":"assistant","status":"completed","type":"message"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"content_returning","description":"Returns
         a processed string result","parameters":{"additionalProperties":false,"properties":{"query":{"description":"Query
         to process","type":"string"}},"required":["query"],"strict":true,"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0.00002,"output_cost":0.00001,"total_cost":0.00003},"input_tokens":110,"input_tokens_details":{"cached_tokens":0},"output_tokens":8,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":118},"user":null}
 
         '
-  recorded_at: Fri, 13 Nov 2026 21:38:03 GMT
-recorded_with: VCR 6.4.1
+  recorded_at: Sun, 15 Nov 2026 01:40:03 GMT
+recorded_with: VCR 6.4.0

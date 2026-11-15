@@ -9,7 +9,7 @@ http_interactions:
         2 + 2?"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:21:54 GMT
+      - Sun, 15 Nov 2026 01:19:43 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -48,7 +48,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '617'
+      - '2288'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -75,16 +75,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_058cf96ac8662655016af77f71a85087d2865dea95e3afee86",
+          "id": "resp_09ce0bbce0ff19e9016af908ad686487d2894414394019e961",
           "object": "response",
-          "created_at": 1794604913,
+          "created_at": 1794705581,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794604914,
+          "completed_at": 1794705583,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
@@ -99,7 +99,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_058cf96ac8662655016af77f72164087d2b6a26481df0efdfe",
+              "id": "msg_09ce0bbce0ff19e9016af908af4b4c87d28f36627d4a197898",
               "type": "message",
               "status": "completed",
               "content": [
@@ -162,6 +162,10 @@ http_interactions:
             "input_tokens": 14,
             "input_tokens_details": {
               "cache_write_tokens": 0,
+              "cache_write_tokens_details": {
+                "ttl_12h_tokens": 0,
+                "ttl_30m_tokens": 0
+              },
               "cached_tokens": 0
             },
             "output_tokens": 13,
@@ -173,5 +177,5 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Fri, 13 Nov 2026 21:21:54 GMT
-recorded_with: VCR 6.4.1
+  recorded_at: Sun, 15 Nov 2026 01:19:43 GMT
+recorded_with: VCR 6.4.0

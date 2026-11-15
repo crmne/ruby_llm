@@ -11,7 +11,7 @@ http_interactions:
         a denied call.","stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"mcp","allowed_tools":["microsoft_docs_search"],"require_approval":"always","server_url":"https://learn.microsoft.com/api/mcp","server_label":"docs"}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:21:55 GMT
+      - Sun, 15 Nov 2026 01:20:22 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -50,7 +50,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1891'
+      - '2164'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -77,16 +77,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0d1c9f0d2c5f7dcc016af77f716f8c87d29a62572f07959470",
+          "id": "resp_07c5265a3f04cace016af908d41ee487d28477ab9820368b19",
           "object": "response",
-          "created_at": 1794604913,
+          "created_at": 1794705620,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794604915,
+          "completed_at": 1794705622,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
@@ -101,7 +101,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "mcpl_0d1c9f0d2c5f7dcc016af77f71909487d2a63c69530b509d26",
+              "id": "mcpl_07c5265a3f04cace016af908d4325087d28896c89085491aa3",
               "type": "mcp_list_tools",
               "server_label": "docs",
               "tools": [
@@ -125,7 +125,7 @@ http_interactions:
               ]
             },
             {
-              "id": "mcpr_0d1c9f0d2c5f7dcc016af77f732cc087d28c26678dc8f1b119",
+              "id": "mcpr_07c5265a3f04cace016af908d626d887d28f98ec54e5b78fa4",
               "type": "mcp_approval_request",
               "arguments": "{\"query\":\"Azure Blob Storage Microsoft documentation\"}",
               "name": "microsoft_docs_search",
@@ -192,6 +192,10 @@ http_interactions:
             "input_tokens": 313,
             "input_tokens_details": {
               "cache_write_tokens": 0,
+              "cache_write_tokens_details": {
+                "ttl_12h_tokens": 0,
+                "ttl_30m_tokens": 0
+              },
               "cached_tokens": 0
             },
             "output_tokens": 24,
@@ -203,14 +207,14 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Fri, 13 Nov 2026 21:21:55 GMT
+  recorded_at: Sun, 15 Nov 2026 01:20:22 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
       string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"Search Microsoft
-        documentation for Azure Blob Storage, then give one short sentence about it."},{"id":"mcpl_0d1c9f0d2c5f7dcc016af77f71909487d2a63c69530b509d26","type":"mcp_list_tools","server_label":"docs","tools":[{"annotations":{"read_only":true},"description":"Search
+        documentation for Azure Blob Storage, then give one short sentence about it."},{"id":"mcpl_07c5265a3f04cace016af908d4325087d28896c89085491aa3","type":"mcp_list_tools","server_label":"docs","tools":[{"annotations":{"read_only":true},"description":"Search
         official Microsoft/Azure documentation to find the most relevant and trustworthy
         content for a user''s query. This tool returns up to 10 high-quality content
         chunks (each max 500 tokens), extracted from Microsoft Learn and other official
@@ -222,13 +226,13 @@ http_interactions:
         search by providing the full detail. This is a required step for comprehensive
         results.","input_schema":{"type":"object","properties":{"query":{"description":"a
         query or topic about Microsoft/Azure products, services, platforms, developer
-        tools, frameworks, or APIs","type":"string","default":null}}},"name":"microsoft_docs_search"}]},{"id":"mcpr_0d1c9f0d2c5f7dcc016af77f732cc087d28c26678dc8f1b119","type":"mcp_approval_request","arguments":"{\"query\":\"Azure
-        Blob Storage Microsoft documentation\"}","name":"microsoft_docs_search","server_label":"docs"},{"type":"mcp_approval_response","approval_request_id":"mcpr_0d1c9f0d2c5f7dcc016af77f732cc087d28c26678dc8f1b119","approve":true}],"instructions":"Use
+        tools, frameworks, or APIs","type":"string","default":null}}},"name":"microsoft_docs_search"}]},{"id":"mcpr_07c5265a3f04cace016af908d626d887d28f98ec54e5b78fa4","type":"mcp_approval_request","arguments":"{\"query\":\"Azure
+        Blob Storage Microsoft documentation\"}","name":"microsoft_docs_search","server_label":"docs"},{"type":"mcp_approval_response","approval_request_id":"mcpr_07c5265a3f04cace016af908d626d887d28f98ec54e5b78fa4","approve":true}],"instructions":"Use
         microsoft_docs_search exactly once when asked for documentation. Do not retry
         a denied call.","stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"mcp","allowed_tools":["microsoft_docs_search"],"require_approval":"always","server_url":"https://learn.microsoft.com/api/mcp","server_label":"docs"}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -243,7 +247,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:21:57 GMT
+      - Sun, 15 Nov 2026 01:20:24 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -267,7 +271,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1989'
+      - '1855'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -294,16 +298,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0d1c9f0d2c5f7dcc016af77f736de887d2a7823df878ed3d1e",
+          "id": "resp_07c5265a3f04cace016af908d661ac87d2996ce3cba1770ecd",
           "object": "response",
-          "created_at": 1794604915,
+          "created_at": 1794705622,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794604917,
+          "completed_at": 1794705624,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
@@ -318,10 +322,10 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "mcp_0d1c9f0d2c5f7dcc016af77f73d5d087d2b1d2c6de02172741",
+              "id": "mcp_07c5265a3f04cace016af908d6966c87d281bd1d227df510ae",
               "type": "mcp_call",
               "status": "completed",
-              "approval_request_id": "mcpr_0d1c9f0d2c5f7dcc016af77f732cc087d28c26678dc8f1b119",
+              "approval_request_id": "mcpr_07c5265a3f04cace016af908d626d887d28f98ec54e5b78fa4",
               "arguments": "{\"query\":\"Azure Blob Storage Microsoft documentation\"}",
               "error": null,
               "name": "microsoft_docs_search",
@@ -329,7 +333,7 @@ http_interactions:
               "server_label": "docs"
             },
             {
-              "id": "msg_0d1c9f0d2c5f7dcc016af77f74fa2487d28de8405760019b00",
+              "id": "msg_07c5265a3f04cace016af908d7d26087d2b367d4acc1f57161",
               "type": "message",
               "status": "completed",
               "content": [
@@ -337,7 +341,7 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "Azure Blob Storage is Microsoft\u2019s cloud object storage service for massive amounts of unstructured data such as text, files, and media."
+                  "text": "Azure Blob Storage is Microsoft\u2019s cloud object-storage service for massive amounts of unstructured data such as text, binary files, media, and backups."
                 }
               ],
               "phase": "final_answer",
@@ -404,16 +408,20 @@ http_interactions:
             "input_tokens": 5996,
             "input_tokens_details": {
               "cache_write_tokens": 5993,
+              "cache_write_tokens_details": {
+                "ttl_12h_tokens": 0,
+                "ttl_30m_tokens": 5993
+              },
               "cached_tokens": 0
             },
-            "output_tokens": 30,
+            "output_tokens": 33,
             "output_tokens_details": {
               "reasoning_tokens": 0
             },
-            "total_tokens": 6026
+            "total_tokens": 6029
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Fri, 13 Nov 2026 21:21:57 GMT
-recorded_with: VCR 6.4.1
+  recorded_at: Sun, 15 Nov 2026 01:20:24 GMT
+recorded_with: VCR 6.4.0
