@@ -1,6 +1,8 @@
 ---
 layout: default
 title: Testing
+seo:
+  title: LLM Testing in Ruby and Rails Without API Keys
 nav_order: 17
 description: Script what the model replies, so tests run your real chats, agents, and pages with no provider and no API key.
 ---

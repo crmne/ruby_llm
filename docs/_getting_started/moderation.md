@@ -1,6 +1,8 @@
 ---
 layout: default
 title: Moderation
+seo:
+  title: AI Moderation in Ruby for Text and Images
 nav_order: 11
 description: Screen text and images for harmful content before it reaches your models
 redirect_from:

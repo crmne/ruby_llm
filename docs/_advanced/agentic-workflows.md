@@ -1,6 +1,8 @@
 ---
 layout: default
 title: Agentic Workflows
+seo:
+  title: Agentic Workflows in Ruby
 nav_order: 1
 description: Compose agents and AI operations with ordinary Ruby methods, from routing and handoffs to parallel work, and drive the agentic loop yourself.
 redirect_from:

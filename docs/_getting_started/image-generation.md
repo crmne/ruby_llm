@@ -1,6 +1,8 @@
 ---
 layout: default
 title: Image Generation
+seo:
+  title: AI Image Generation in Ruby
 nav_order: 7
 description: Generate and edit images from text prompts, reference images, and masks
 redirect_from:

@@ -2,7 +2,7 @@
 layout: default
 title: LlamaIndex
 seo:
-  title: RubyLLM and LlamaIndex
+  title: "RubyLLM vs LlamaIndex: a Ruby LlamaIndex Alternative"
 nav_order: 6
 description: Compare RubyLLM with LlamaIndex in Python on querying documents, stored vectors, reranking, OCR, citations, agents, workflows, and cost, with code from both projects.
 permalink: /compare/llamaindex/

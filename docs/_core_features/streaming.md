@@ -1,6 +1,8 @@
 ---
 layout: default
 title: Stream Responses
+seo:
+  title: Stream LLM Responses in Ruby
 nav_order: 1
 description: Learn how to display AI responses in real-time as they're generated
 redirect_from:

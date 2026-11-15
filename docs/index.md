@@ -3,7 +3,7 @@ layout: home
 title: RubyLLM
 nav_order: 1
 seo:
-  title: "The Ruby AI framework for agents, chat and Rails"
+  title: Ruby AI Framework for LLMs, Agents, Chat and Rails
 description: 'RubyLLM is the Ruby AI framework for LLMs: models, tools, agents, sandboxed code, evaluations, and Rails conventions across {{ site.provider_count }} providers.'
 permalink: /
 redirect_from:

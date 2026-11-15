@@ -2,7 +2,7 @@
 layout: default
 title: Vercel AI SDK
 seo:
-  title: RubyLLM and the Vercel AI SDK
+  title: "RubyLLM vs the Vercel AI SDK: a Ruby Alternative"
 nav_order: 1
 description: Compare RubyLLM with the Vercel AI SDK on the same agent, structured output, chat interface, and cost tracking, with code from both projects.
 permalink: /compare/ai-sdk/

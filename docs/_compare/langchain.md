@@ -2,7 +2,7 @@
 layout: default
 title: LangChain and LangGraph
 seo:
-  title: RubyLLM and LangChain
+  title: "RubyLLM vs LangChain: a Ruby LangChain Alternative"
 nav_order: 2
 description: Compare RubyLLM with LangChain and LangGraph in Python on agents, streaming, structured output, memory, approvals, and cost, with code from both projects.
 permalink: /compare/langchain/

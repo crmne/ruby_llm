@@ -2,7 +2,7 @@
 layout: default
 title: CrewAI
 seo:
-  title: RubyLLM and CrewAI
+  title: "RubyLLM vs CrewAI: a Ruby CrewAI Alternative"
 nav_order: 5
 description: Compare RubyLLM with CrewAI in Python on multi-agent work, delegation, flows, routing, human review, and cost, with code from both projects.
 permalink: /compare/crewai/

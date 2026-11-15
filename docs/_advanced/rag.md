@@ -1,6 +1,8 @@
 ---
 layout: default
 title: Retrieval-Augmented Generation (RAG)
+seo:
+  title: "RAG in Ruby and Rails: Retrieval-Augmented Generation"
 nav_order: 3
 description: Retrieve relevant context from your own documents, then answer with that context
 ---

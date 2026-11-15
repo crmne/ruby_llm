@@ -1,6 +1,8 @@
 ---
 layout: default
 title: Skills
+seo:
+  title: Agent Skills in Ruby
 nav_order: 6
 description: Teach the model your workflows with folders of instructions, scripts, and files in the open Agent Skills format, loaded only when a task needs them.
 ---

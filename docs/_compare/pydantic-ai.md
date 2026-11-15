@@ -2,7 +2,7 @@
 layout: default
 title: Pydantic AI
 seo:
-  title: RubyLLM and Pydantic AI
+  title: "RubyLLM vs Pydantic AI: a Ruby Alternative"
 nav_order: 4
 description: Compare RubyLLM with Pydantic AI in Python on dependencies, streaming, stored conversations, approvals, and cost, with code from both projects.
 permalink: /compare/pydantic-ai/
