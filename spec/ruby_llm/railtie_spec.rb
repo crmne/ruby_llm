@@ -67,12 +67,22 @@ RSpec.describe 'RubyLLM::Railtie' do
 
     def write_skill(name, under: root)
       folder = File.join(under, 'app/skills', name)
+      write_skill_folder(folder, File.basename(name))
+    end
+
+    def write_skill_folder(folder, name)
       FileUtils.mkdir_p(File.join(folder, 'scripts'))
       File.write(File.join(folder, 'SKILL.md'), "---\nname: #{name}\ndescription: Bills an order.\n---\n")
       File.write(File.join(folder, 'scripts/build_invoice.rb'), "File.write('invoice.txt', 'total: 42')\n")
     end
 
-    def boot(eager_load:, engine: nil)
+    def write_ruby(path, source)
+      file = File.join(root, 'app/skills', path)
+      FileUtils.mkdir_p(File.dirname(file))
+      File.write(file, source)
+    end
+
+    def boot(eager_load:, engine: nil, reloading: false, then_run: 'RubyLLM::Skill.all.map(&:name).join(",")')
       script = <<~RUBY
         require 'bundler/setup'
         require 'logger'
@@ -84,13 +94,14 @@ RSpec.describe 'RubyLLM::Railtie' do
         class SkillsApp < Rails::Application
           config.root = #{root.inspect}
           config.eager_load = #{eager_load}
+          config.enable_reloading = #{reloading}
           config.logger = Logger.new(nil)
           config.secret_key_base = 'x' * 64
           config.load_defaults Rails::VERSION::STRING.to_f
         end
         begin
           Rails.application.initialize!
-          print RubyLLM::Skill.all.map(&:name).join(',')
+          print(#{then_run})
         rescue StandardError, ScriptError => e
           print e.class
         end
@@ -129,6 +140,44 @@ RSpec.describe 'RubyLLM::Railtie' do
       expect(boot(eager_load: true, engine: engine)).to eq('refunds')
     ensure
       FileUtils.remove_entry(engine_root)
+    end
+
+    it 'autoloads the Ruby classes an app keeps in app/skills next to its skills' do
+      write_skill('invoices')
+      write_ruby('summarizer.rb', "class Summarizer; def self.call = 'summary'; end\n")
+      write_ruby('research/web_search.rb', "module Research; class WebSearch; def self.call = 'results'; end; end\n")
+
+      loaded = '[Summarizer.call, Research::WebSearch.call, RubyLLM::Skill.all.map(&:name)].join(",")'
+
+      [false, true].each do |eager_load|
+        expect(boot(eager_load: eager_load, then_run: loaded)).to eq('summary,results,invoices')
+      end
+      expect(File.exist?(File.join(root, 'invoice.txt'))).to be(false)
+    end
+
+    it 'keeps a skill folder nested inside a Ruby namespace out of the autoloader' do
+      write_ruby('billing/ledger.rb', "module Billing; class Ledger; def self.call = 'ledger'; end; end\n")
+      write_skill_folder(File.join(root, 'app/skills/billing/pdf-refunds'), 'pdf-refunds')
+
+      expect(boot(eager_load: true, then_run: 'Billing::Ledger.call')).to eq('ledger')
+      expect(File.exist?(File.join(root, 'invoice.txt'))).to be(false)
+    end
+
+    it 'keeps a skill added after boot out of the autoloader when the app reloads' do
+      write_ruby('summarizer.rb', "class Summarizer; def self.call = 'summary'; end\n")
+      File.write(File.join(root, 'after_boot.rb'), <<~RUBY)
+        folder = File.join(Rails.root, 'app/skills/pdf-processing')
+        FileUtils.mkdir_p(File.join(folder, 'scripts'))
+        File.write(File.join(folder, 'SKILL.md'), "---\\nname: pdf-processing\\ndescription: Reads PDFs.\\n---\\n")
+        File.write(File.join(folder, 'scripts/build_invoice.rb'), "File.write('invoice.txt', 'total: 42')\\n")
+        Rails.application.reloader.reload!
+        Rails.autoloaders.main.eager_load
+        [Summarizer.call, RubyLLM::Skill.all.map(&:name)].join(',')
+      RUBY
+
+      expect(boot(eager_load: false, reloading: true, then_run: "eval(File.read('after_boot.rb'))"))
+        .to eq('summary,pdf-processing')
+      expect(File.exist?(File.join(root, 'invoice.txt'))).to be(false)
     end
   end
 end

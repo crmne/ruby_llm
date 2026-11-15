@@ -16,8 +16,15 @@ if defined?(Rails::Railtie)
         RubyLLM.config.instrumenter ||= ActiveSupport::Notifications
       end
 
-      initializer 'ruby_llm.skills', before: :setup_main_autoloader do
-        Rails.autoloaders.main.ignore(*RubyLLM::Skill.roots)
+      initializer 'ruby_llm.skills', before: :setup_main_autoloader do |app|
+        ignore_skills = lambda do
+          folders = RubyLLM::Skill.roots.flat_map do |root|
+            Dir.glob("**/#{RubyLLM::Skill::FILE}", base: root.to_s).map { |file| File.join(root.to_s, File.dirname(file)) }
+          end
+          Rails.autoloaders.main.ignore(*folders)
+        end
+        ignore_skills.call
+        app.reloader.before_class_unload(&ignore_skills)
       end
 
       initializer 'ruby_llm.active_record' do
