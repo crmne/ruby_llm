@@ -8,12 +8,15 @@ module RubyLLM
     # A request that succeeded and was billed must not fail because a debug
     # log filter ran out of time on a large body.
     #
-    # The formatter is shared by every context that uses the connection, so
-    # the configuration whose credentials it filters is set in fiber storage
-    # for the duration of each request.
+    # The cached connection's formatter is shared by every context, so the
+    # configuration whose credentials it filters is set in fiber storage for
+    # the duration of each request. A Connection.basic formatter serves one
+    # configuration and is given it directly.
     class LogFormatter < Faraday::Logging::Formatter # :nodoc:
       CONFIG_KEY = :ruby_llm_log_config
       FILTERED = '[FILTERED]'
+
+      attr_writer :config
 
       def self.with_config(config)
         previous = Fiber[CONFIG_KEY]
@@ -37,7 +40,7 @@ module RubyLLM
       # apply_filters, so credentials are replaced on the way out instead.
       # Connection.setup_logging logs every line at debug.
       def debug(progname = nil)
-        config = Fiber[CONFIG_KEY]
+        config = @config || Fiber[CONFIG_KEY]
         @logger.debug(progname) { config ? self.class.redact(yield, config.secret_values) : yield }
       end
 

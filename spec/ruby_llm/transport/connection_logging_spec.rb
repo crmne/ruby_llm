@@ -111,6 +111,25 @@ RSpec.describe RubyLLM::Transport::Connection do
       expect(io.string).not_to include('sk-echoed')
     end
 
+    it 'filters credentials from the exceptions a basic connection logs' do
+      skip 'Faraday 1 does not log exceptions' if Faraday::VERSION.start_with?('1')
+
+      io = StringIO.new
+      context_config = RubyLLM::Configuration.new.tap do |real|
+        real.logger = Logger.new(io)
+        real.openai_api_key = 'sk-echoed'
+      end
+      connection = described_class.basic(context_config) do |faraday|
+        faraday.adapter :test do |stub|
+          stub.get('/token') { raise Faraday::ConnectionFailed, 'refused for sk-echoed' }
+        end
+      end
+
+      expect { connection.get('https://auth.example.test/token') }.to raise_error(Faraday::ConnectionFailed)
+      expect(io.string).to include('refused for [FILTERED]')
+      expect(io.string).not_to include('sk-echoed')
+    end
+
     it 'uses the configured Faraday adapter' do
       allow(config).to receive(:faraday_adapter).and_return(:test)
 

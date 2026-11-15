@@ -48,11 +48,14 @@ module RubyLLM
           f.proxy = config.http_proxy if config.http_proxy
           f.ssl.update(ssl_snapshot(config.ssl)) if config.ssl
           f.response :logger,
-                     RubyLLM.logger,
+                     config.logger || RubyLLM.logger,
                      bodies: false,
                      errors: true,
                      headers: false,
-                     log_level: :debug
+                     log_level: :debug,
+                     formatter: LogFormatter do |formatter|
+            formatter.config = config
+          end
           f.response :raise_error
           yield f if block_given?
         end
