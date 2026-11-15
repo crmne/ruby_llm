@@ -174,7 +174,7 @@ module RubyLLM
             outer
           end
         rescue JSON::ParserError => e
-          log_debug { "Failed to decode Bedrock stream event payload: #{e.message}" }
+          log_body_debug { "Failed to decode Bedrock stream event payload: #{e.message}" }
           nil
         end
 

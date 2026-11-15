@@ -203,6 +203,7 @@ end
 - Defaults to logging them whenever the logger is at debug level
 - Set it to `false` to keep an application at debug level without writing request and response bodies, or a streamed answer, to its log
 - Raw streaming chunks are still logged when `log_stream_debug` is on, so leave that off as well to keep payloads out
+- Error messages that quote the provider follow `redact_error_messages`, which also applies wherever the error is raised or reported
 
 `log_stream_debug` notes:
 - Shows chunk-by-chunk streaming internals (accumulator state, parsing, tool chunks)

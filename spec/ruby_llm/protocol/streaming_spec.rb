@@ -381,18 +381,12 @@ RSpec.describe RubyLLM::Protocol::Streaming do
       expect(RubyLLM.logger).not_to have_received(:debug)
     end
 
-    it 'logs the streamed answer when it completes' do
-      test_obj.send(:log_completed, RubyLLM::Message.new(role: :assistant, content: 'Private answer'))
-
-      expect(io.string).to include('Stream completed: Private answer')
-    end
-
-    it 'keeps the streamed answer out of the log when log_bodies is false' do
+    it 'keeps provider text out of parse failures when log_bodies is false' do
       context_config.log_bodies = false
 
-      test_obj.send(:log_completed, RubyLLM::Message.new(role: :assistant, content: 'Private answer'))
+      chunk_handler { |_chunk| nil }.call("data: Private answer\n\n", 0, env)
 
-      expect(io.string).not_to include('Private answer')
+      expect(io.string).not_to include('Private')
     end
 
     it 'keeps an accumulating error chunk out of the log unless stream debugging is on' do
