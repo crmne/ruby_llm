@@ -146,6 +146,36 @@ RSpec.describe RubyLLM::FileStore::Directory do
     FileUtils.rm_rf(outside)
   end
 
+  it 'never follows a link to a hidden folder inside it' do
+    FileUtils.mkdir_p(File.join(root, '.private'))
+    File.write(File.join(root, '.private', 'secret.txt'), 'secret')
+    File.symlink(File.join(root, '.private'), File.join(root, 'alias'))
+
+    expect { store.read('alias/secret.txt') }.to raise_error(ArgumentError, /not inside/)
+    expect { store['alias/secret.txt'] }.to raise_error(ArgumentError, /not inside/)
+    expect { store.delete('alias/secret.txt') }.to raise_error(ArgumentError, /not inside/)
+    expect(File.read(File.join(root, '.private', 'secret.txt'))).to eq('secret')
+  end
+
+  it 'never follows a link to another folder inside it' do
+    store.write('reports/q3.txt', 'q3')
+    File.symlink(File.join(root, 'reports'), File.join(root, 'shortcut'))
+
+    expect { store.read('shortcut/q3.txt') }.to raise_error(ArgumentError, /not inside/)
+    expect { store.write('shortcut/q4.txt', 'q4') }.to raise_error(ArgumentError, /not inside/)
+    expect(store.list.map(&:path)).to eq(['reports/q3.txt'])
+  end
+
+  it 'replaces a link to a file that stands where a folder goes when writing' do
+    store.write('target.txt', 'target')
+    File.symlink(File.join(root, 'target.txt'), File.join(root, 'notes'))
+
+    store.write('notes/plan.md', 'plan')
+
+    expect(store.read('notes/plan.md')).to eq('plan')
+    expect(store.read('target.txt')).to eq('target')
+  end
+
   it 'does not sniff a file replaced by a symbolic link before opening it' do
     outside = Tempfile.new('ruby_llm-outside')
     outside.binmode
