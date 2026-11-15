@@ -127,6 +127,15 @@ RSpec.describe RubyLLM::FileStore::Directory do
 
       expect(store.list.map(&:path)).to eq(['a.txt'])
     end
+
+    it 'leaves out a hidden folder that vanishes and comes back' do
+      store.write('a.txt', 'a')
+      FileUtils.mkdir_p(File.join(store.root, '.cache'))
+      File.write(File.join(store.root, '.cache', 'data.txt'), 'cached')
+      change_before_lstat('.cache') { raise Errno::ENOENT }
+
+      expect(store.list.map(&:path)).to eq(['a.txt'])
+    end
   end
 
   it 'identifies extensionless media put in the folder after reopening the store' do
