@@ -216,7 +216,7 @@ module RubyLLM
           proxy: @config.http_proxy,
           ssl: (self.class.ssl_snapshot(@config.ssl) if @config.ssl),
           logger: logger,
-          log_bodies: logger.debug?,
+          log_bodies: @config.log_bodies.nil? ? logger.debug? : @config.log_bodies,
           log_regexp_timeout: @config.log_regexp_timeout,
           max_retries: @config.max_retries,
           retry_interval: @config.retry_interval,
@@ -226,14 +226,15 @@ module RubyLLM
         ).freeze
       end
 
-      # Credentials, the signer, and the provider that parses errors travel
-      # with each request, because the Faraday connection is shared across
-      # contexts.
+      # Credentials, the signer, the provider that parses errors, and the
+      # configuration the log filters by travel with each request, because
+      # the Faraday connection is shared across contexts.
       def prepare(request)
         request.headers.merge!(@headers).merge!(@provider.headers)
         context = request.options.context ||= {}
         context[ErrorMiddleware::PROVIDER_KEY] = @provider
         context[SigningMiddleware::CONTEXT_KEY] = @signer if @signer
+        context[LogFormatter::CONFIG_KEY] = @config
       end
 
       # Adapters time each read of a response with +read_timeout+, so on a

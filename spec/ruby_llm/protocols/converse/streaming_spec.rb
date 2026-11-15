@@ -9,6 +9,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Streaming do
       object.extend(RubyLLM::Protocol::Streaming)
       object.extend(RubyLLM::Protocols::Converse::Chat)
       object.extend(described_class)
+      object.define_singleton_method(:config) { RubyLLM.config }
       object.instance_variable_set(:@model, instance_double(RubyLLM::Model, id: 'bedrock-test-model'))
       object.define_singleton_method(:escape_model_id) { |id| id.to_s.gsub('/', '%2F') }
       object.define_singleton_method(:parse_error) { |response| response.body['message'] }

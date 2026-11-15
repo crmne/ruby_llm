@@ -26,6 +26,7 @@ RSpec.describe RubyLLM::Transport::Connection do
         http_proxy: nil,
         ssl: nil,
         log_regexp_timeout: 1.0,
+        log_bodies: nil,
         faraday_adapter: :net_http,
         logger: nil
       )
@@ -75,6 +76,24 @@ RSpec.describe RubyLLM::Transport::Connection do
       options = middleware.instance_variable_get(:@formatter).instance_variable_get(:@options)
 
       expect(options[:bodies]).to be(true)
+    end
+
+    it 'keeps bodies out of a debug log when log_bodies is false' do
+      allow(RubyLLM).to receive(:logger).and_return(Logger.new(File::NULL, level: Logger::DEBUG))
+      allow(config).to receive(:log_bodies).and_return(false)
+
+      settings = described_class.new(provider, config).send(:settings_for, false)
+
+      expect(settings.log_bodies).to be(false)
+    end
+
+    it 'logs bodies above debug level when log_bodies is true' do
+      allow(RubyLLM).to receive(:logger).and_return(Logger.new(File::NULL, level: Logger::INFO))
+      allow(config).to receive(:log_bodies).and_return(true)
+
+      settings = described_class.new(provider, config).send(:settings_for, false)
+
+      expect(settings.log_bodies).to be(true)
     end
 
     it 'uses the configured Faraday adapter' do

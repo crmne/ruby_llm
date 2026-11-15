@@ -19,6 +19,7 @@ RSpec.describe RubyLLM::Providers::Anthropic do
       http_proxy: nil,
       ssl: nil,
       log_regexp_timeout: 1.0,
+      log_bodies: nil,
       faraday_adapter: :net_http,
       anthropic_api_key: 'test-key',
       anthropic_api_base: anthropic_api_base

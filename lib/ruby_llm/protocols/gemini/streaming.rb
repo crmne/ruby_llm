@@ -112,7 +112,7 @@ module RubyLLM
 
           [error['code'], error['message']]
         rescue JSON::ParserError => e
-          RubyLLM.logger.debug { "Failed to parse streaming error: #{e.message}" }
+          log_debug { "Failed to parse streaming error: #{e.message}" }
           [500, "Failed to parse error: #{data}"]
         end
       end

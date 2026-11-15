@@ -24,6 +24,8 @@ module RubyLLM
   # +nil+, so unset environment variables behave as if the option was
   # never set.
   class Configuration
+    SECRET_OPTION = /_(key|secret|token)\z/ # :nodoc:
+
     class << self
       def option(key, default = nil, &normalize) # :nodoc:
         key = key.to_sym
@@ -456,6 +458,14 @@ module RubyLLM
     option :log_stream_debug, -> { env_says_yes?('RUBYLLM_STREAM_DEBUG') }
 
     ##
+    # :attr_accessor: log_bodies
+    #
+    # Whether request and response bodies are logged, including the bodies
+    # of failed requests. Defaults to +nil+, which logs them when the logger
+    # is at debug level. Set it to +false+ to keep bodies out of a debug log.
+    option :log_bodies, nil
+
+    ##
     # :attr_accessor: log_regexp_timeout
     #
     # Timeout in seconds for the regular expressions that scrub logged
@@ -477,6 +487,15 @@ module RubyLLM
       super
       @file_converters = @file_converters.dup
       @ssl = @ssl.to_h.transform_values { |value| value.is_a?(String) ? value.dup : value } if @ssl
+    end
+
+    # The values of the credential options set on this configuration, which
+    # logging replaces before writing a line.
+    def secret_values # :nodoc:
+      self.class.options.grep(SECRET_OPTION).filter_map do |key|
+        value = public_send(key)
+        value if value.is_a?(String)
+      end
     end
 
     def instance_variables # :nodoc:
