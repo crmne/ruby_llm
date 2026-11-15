@@ -1,6 +1,8 @@
 ---
 layout: default
 title: Prompt Caching
+seo:
+  title: Prompt Caching in Ruby
 nav_order: 7
 description: Reuse stable prompt prefixes with automatic or explicit prompt caching
 ---

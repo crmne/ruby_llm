@@ -1,6 +1,8 @@
 ---
 layout: default
 title: Text to Speech
+seo:
+  title: Text to Speech in Ruby
 nav_order: 8
 description: Convert text into spoken audio
 redirect_from:

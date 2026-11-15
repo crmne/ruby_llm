@@ -1,6 +1,8 @@
 ---
 layout: default
 title: Document OCR
+seo:
+  title: PDF and Document OCR in Ruby
 nav_order: 10
 description: Extract text, tables, and images from PDFs and scans as clean markdown
 ---

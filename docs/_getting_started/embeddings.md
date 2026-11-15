@@ -1,6 +1,8 @@
 ---
 layout: default
 title: Embeddings
+seo:
+  title: Embeddings in Ruby
 nav_order: 12
 description: Create vectors from text, images, audio, video, and documents for search and similarity
 redirect_from:

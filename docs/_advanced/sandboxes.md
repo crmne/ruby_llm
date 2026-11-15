@@ -1,6 +1,8 @@
 ---
 layout: default
 title: Sandboxes
+seo:
+  title: LLM Sandboxes for the Code a Model Writes
 parent: "Durable Agents"
 nav_order: 3
 description: Decide what code from a model can read, write, and reach, and let the model ask for more one call at a time.

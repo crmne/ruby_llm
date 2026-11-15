@@ -1,6 +1,8 @@
 ---
 layout: default
 title: Audio Transcription
+seo:
+  title: Audio Transcription and Speech to Text in Ruby
 nav_order: 9
 description: Convert speech to text with support for multiple languages and speaker diarization
 redirect_from:

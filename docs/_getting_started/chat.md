@@ -1,6 +1,8 @@
 ---
 layout: default
 title: Chat
+seo:
+  title: Chat with Any LLM in Ruby
 nav_order: 3
 has_children: true
 description: Start a conversation, give it instructions, and switch models while keeping the same Ruby API.

@@ -1,8 +1,10 @@
 ---
 layout: default
 title: Evaluations
+seo:
+  title: "LLM Evaluation in Ruby: Evals for Your Agents"
 nav_order: 6
-description: Measure how well your agents answer, with reusable datasets, model grading, Ruby assertions, and your test suite
+description: Run LLM evals that measure how well your agents answer, with reusable datasets, model grading, Ruby assertions, and your test suite.
 redirect_from:
   - /evaluation-datasets/
   - /evaluation-conversations/

@@ -1,6 +1,8 @@
 ---
 layout: default
 title: Extended Thinking
+seo:
+  title: Extended Thinking with Reasoning Models in Ruby
 nav_order: 4
 description: Give reasoning models more time and budget to deliberate, with optional access to thinking output
 redirect_from:

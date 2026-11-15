@@ -1,9 +1,11 @@
 ---
 layout: default
 title: Tools
+seo:
+  title: Tool and Function Calling in Ruby
 nav_order: 4
 has_children: true
-description: Let the model call your Ruby code to look up records, search your content, and take actions.
+description: Use tool calling, also called function calling, to let the model run your Ruby code to look up records, search your content, and take actions.
 redirect_from:
   - /guides/tools
 ---

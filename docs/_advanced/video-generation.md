@@ -1,6 +1,8 @@
 ---
 layout: default
 title: Video Generation
+seo:
+  title: AI Video Generation in Ruby
 nav_order: 14
 description: Generate, edit, and extend videos from prompts, images, and audio
 ---

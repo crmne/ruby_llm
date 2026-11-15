@@ -1,6 +1,8 @@
 ---
 layout: default
 title: Streaming with Hotwire/Turbo
+seo:
+  title: Stream AI Responses in Rails with Turbo Streams
 nav_order: 8
 description: Broadcast AI responses token by token to the browser with Turbo Streams and background jobs.
 ---

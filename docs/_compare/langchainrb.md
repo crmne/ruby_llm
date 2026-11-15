@@ -2,7 +2,7 @@
 layout: default
 title: Langchain.rb
 seo:
-  title: RubyLLM and Langchain.rb
+  title: RubyLLM vs Langchain.rb, LangChain for Ruby
 nav_order: 9
 description: Compare RubyLLM with Langchain.rb on agents, tools, streaming, structured output, RAG, and Rails, with code from both projects.
 permalink: /compare/langchainrb/

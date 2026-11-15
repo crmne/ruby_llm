@@ -1,6 +1,8 @@
 ---
 layout: default
 title: Tokens and Costs
+seo:
+  title: "LLM Cost Tracking: Tokens and Costs in Ruby"
 nav_order: 10
 description: Read normalized token counts and costs for every response, chat, and provider attempt, including retries and cancellations.
 redirect_from:

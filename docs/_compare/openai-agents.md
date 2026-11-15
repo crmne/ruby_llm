@@ -2,7 +2,7 @@
 layout: default
 title: OpenAI Agents SDK
 seo:
-  title: RubyLLM and the OpenAI Agents SDK
+  title: "RubyLLM vs the OpenAI Agents SDK: a Ruby Alternative"
 nav_order: 3
 description: Compare RubyLLM with the OpenAI Agents SDK for Python on agents, streaming, sessions, approvals, handoffs, guardrails, tracing, and cost, with code from both projects.
 permalink: /compare/openai-agents/
