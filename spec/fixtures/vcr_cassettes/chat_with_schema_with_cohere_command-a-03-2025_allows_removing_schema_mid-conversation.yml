@@ -9,7 +9,7 @@ http_interactions:
         a person named Bob"}]}],"stream":false,"response_format":{"type":"json_object","json_schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false}}}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -42,11 +42,11 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - f721dfb52a9c61ef183133f7125c1553
+      - 03d4691a8a784c32f1f4116372d1b6ec
       Date:
-      - Fri, 13 Nov 2026 21:21:41 GMT
+      - Sun, 15 Nov 2026 01:20:02 GMT
       X-Envoy-Upstream-Service-Time:
-      - '322'
+      - '311'
       Server:
       - envoy
       Via:
@@ -57,8 +57,8 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"9e4e2adf-cc33-47e8-96c4-478a64403740","message":{"role":"assistant","content":[{"type":"text","text":"{\"name\":\"Bob\",\"age\":30}"}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":5,"output_tokens":10},"tokens":{"input_tokens":607,"output_tokens":13},"cached_tokens":496}}'
-  recorded_at: Fri, 13 Nov 2026 21:21:41 GMT
+      string: '{"id":"19e2d0c4-e582-46a1-944f-438ee2a0a146","message":{"role":"assistant","content":[{"type":"text","text":"{\"name\":\"Bob\",\"age\":30}"}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":5,"output_tokens":10},"tokens":{"input_tokens":607,"output_tokens":13},"cached_tokens":544}}'
+  recorded_at: Sun, 15 Nov 2026 01:20:02 GMT
 - request:
     method: post
     uri: https://api.cohere.com/v2/chat
@@ -69,7 +69,7 @@ http_interactions:
         just tell me about Ruby"}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -94,7 +94,7 @@ http_interactions:
       Num-Chars:
       - '2808'
       Num-Tokens:
-      - '427'
+      - '488'
       Pragma:
       - no-cache
       Vary:
@@ -102,11 +102,11 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 979813da385beffc5610835ccf67fbe1
+      - fcb64abeb5a05b9b8f7f336f32390899
       Date:
-      - Fri, 13 Nov 2026 21:21:46 GMT
+      - Sun, 15 Nov 2026 01:20:09 GMT
       X-Envoy-Upstream-Service-Time:
-      - '5243'
+      - '6131'
       Server:
       - envoy
       Via:
@@ -117,33 +117,7 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"4f01e36c-03fe-400d-9ab7-abf77e97bea4","message":{"role":"assistant","content":[{"type":"text","text":"**Ruby**
-        is a dynamic, open-source programming language known for its simplicity and
-        productivity. Created by Yukihiro \"Matz\" Matsumoto in the mid-1990s, Ruby
-        was designed with the philosophy of making programming enjoyable and efficient.
-        Here are some key features and aspects of Ruby:\n\n1. **Syntax**: Ruby has
-        a clean and intuitive syntax that emphasizes readability and simplicity. It
-        often feels like writing in plain English, making it beginner-friendly.\n\n2.
-        **Dynamic Typing**: Ruby is dynamically typed, meaning you don''t need to
-        declare variable types explicitly. This flexibility allows for quicker development
-        and easier experimentation.\n\n3. **Object-Oriented**: Everything in Ruby
-        is an object, including primitive data types like integers and strings. This
-        makes it a pure object-oriented language.\n\n4. **Ruby on Rails**: Ruby gained
-        widespread popularity due to the **Ruby on Rails** framework, a web development
-        framework that simplifies the process of building web applications. Rails
-        follows the \"Convention over Configuration\" principle, reducing the need
-        for boilerplate code.\n\n5. **Community and Ecosystem**: Ruby has a vibrant
-        and supportive community. It boasts a rich ecosystem of libraries (called
-        \"gems\") that can be easily installed via the **RubyGems** package manager.\n\n6.
-        **Metaprogramming**: Ruby supports metaprogramming, allowing developers to
-        write code that writes or manipulates other code at runtime. This feature
-        is powerful for creating flexible and dynamic applications.\n\n7. **Cross-Platform**:
-        Ruby is cross-platform and runs on various operating systems, including Windows,
-        macOS, and Linux.\n\n8. **Use Cases**: Ruby is commonly used for web development,
-        scripting, automation, and building command-line tools. It''s also popular
-        for prototyping and rapid application development.\n\nRuby''s philosophy,
-        encapsulated in Matz''s motto, **\"Ruby is designed to make programmers happy,\"**
-        continues to resonate with developers worldwide, making it a beloved language
-        in the programming community."}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":21,"output_tokens":406},"tokens":{"input_tokens":524,"output_tokens":409},"cached_tokens":464}}'
-  recorded_at: Fri, 13 Nov 2026 21:21:46 GMT
-recorded_with: VCR 6.4.1
+      string: !binary |-
+        eyJpZCI6ImQ3Yzg1NGY2LTFmYzgtNDc3OS05MTNhLTI4MGMwYjMyNWIxNiIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOlt7InR5cGUiOiJ0ZXh0IiwidGV4dCI6IioqUnVieSoqIGlzIGEgZHluYW1pYywgb3Blbi1zb3VyY2UgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2Uga25vd24gZm9yIGl0cyBzaW1wbGljaXR5IGFuZCBwcm9kdWN0aXZpdHkuIENyZWF0ZWQgYnkgWXVraWhpcm8gXCJNYXR6XCIgTWF0c3Vtb3RvIGluIHRoZSBtaWQtMTk5MHMsIFJ1Ynkgd2FzIGRlc2lnbmVkIHdpdGggdGhlIHBoaWxvc29waHkgb2YgbWFraW5nIHByb2dyYW1taW5nIGVuam95YWJsZSBhbmQgZWZmaWNpZW50LiBIZXJlIGFyZSBzb21lIGtleSBmZWF0dXJlcyBhbmQgYXNwZWN0cyBvZiBSdWJ5OlxuXG4xLiAqKlN5bnRheCoqOiBSdWJ5IGhhcyBhIGNsZWFuIGFuZCBpbnR1aXRpdmUgc3ludGF4IHRoYXQgZW1waGFzaXplcyByZWFkYWJpbGl0eSBhbmQgc2ltcGxpY2l0eS4gSXQgYWxsb3dzIGRldmVsb3BlcnMgdG8gd3JpdGUgbGVzcyBjb2RlIHdoaWxlIGFjaGlldmluZyBtb3JlLCBvZnRlbiBkZXNjcmliZWQgYXMgXCJtaW5pbWl6aW5nIHRoZSB3b3JrIGEgcHJvZ3JhbW1lciBoYXMgdG8gZG8uXCJcblxuMi4gKipPYmplY3QtT3JpZW50ZWQqKjogRXZlcnl0aGluZyBpbiBSdWJ5IGlzIGFuIG9iamVjdCwgaW5jbHVkaW5nIHByaW1pdGl2ZSBkYXRhIHR5cGVzIGxpa2UgaW50ZWdlcnMgYW5kIGJvb2xlYW5zLiBUaGlzIG1ha2VzIGl0IGEgcHVyZSBvYmplY3Qtb3JpZW50ZWQgbGFuZ3VhZ2UuXG5cbjMuICoqRHluYW1pYyBUeXBpbmcqKjogUnVieSBpcyBkeW5hbWljYWxseSB0eXBlZCwgbWVhbmluZyB5b3UgZG9u4oCZdCBuZWVkIHRvIGRlY2xhcmUgdGhlIHR5cGUgb2YgYSB2YXJpYWJsZSBleHBsaWNpdGx5LiBUaGUgdHlwZSBpcyBkZXRlcm1pbmVkIGF0IHJ1bnRpbWUuXG5cbjQuICoqRmxleGliaWxpdHkqKjogUnVieSBpcyBoaWdobHkgZmxleGlibGUsIGFsbG93aW5nIGRldmVsb3BlcnMgdG8gbW9kaWZ5IGNvcmUgcGFydHMgb2YgdGhlIGxhbmd1YWdlIGFuZCBhZGQgbWV0aG9kcyB0byBleGlzdGluZyBjbGFzc2VzLlxuXG41LiAqKkNvbW11bml0eSBhbmQgRWNvc3lzdGVtKio6IFJ1YnkgaGFzIGEgdmlicmFudCBjb21tdW5pdHkgYW5kIGEgcmljaCBlY29zeXN0ZW0gb2YgbGlicmFyaWVzIGFuZCBmcmFtZXdvcmtzLiAqKlJ1YnlHZW1zKiogaXMgdGhlIHBhY2thZ2UgbWFuYWdlciBmb3IgUnVieSwgcHJvdmlkaW5nIGFjY2VzcyB0byB0aG91c2FuZHMgb2YgbGlicmFyaWVzIChnZW1zKS5cblxuNi4gKipSYWlscyBGcmFtZXdvcmsqKjogUnVieSBpcyBmYW1vdXNseSBhc3NvY2lhdGVkIHdpdGggdGhlICoqUnVieSBvbiBSYWlscyoqIHdlYiBmcmFtZXdvcmssIHdoaWNoIHJldm9sdXRpb25pemVkIHdlYiBkZXZlbG9wbWVudCBieSBlbXBoYXNpemluZyBjb252ZW50aW9uIG92ZXIgY29uZmlndXJhdGlvbiBhbmQgZW5hYmxpbmcgcmFwaWQgZGV2ZWxvcG1lbnQuXG5cbjcuICoqQ3Jvc3MtUGxhdGZvcm0qKjogUnVieSBpcyBjcm9zcy1wbGF0Zm9ybSBhbmQgcnVucyBvbiB2YXJpb3VzIG9wZXJhdGluZyBzeXN0ZW1zLCBpbmNsdWRpbmcgV2luZG93cywgbWFjT1MsIGFuZCBMaW51eC5cblxuOC4gKipNZXRhcHJvZ3JhbW1pbmcqKjogUnVieSBzdXBwb3J0cyBtZXRhcHJvZ3JhbW1pbmcsIGFsbG93aW5nIGRldmVsb3BlcnMgdG8gd3JpdGUgY29kZSB0aGF0IHdyaXRlcyBvciBtYW5pcHVsYXRlcyBvdGhlciBjb2RlLCB3aGljaCBpcyBwYXJ0aWN1bGFybHkgdXNlZnVsIGZvciBjcmVhdGluZyBEU0xzIChEb21haW4tU3BlY2lmaWMgTGFuZ3VhZ2VzKS5cblxuOS4gKipHYXJiYWdlIENvbGxlY3Rpb24qKjogUnVieSBoYXMgYXV0b21hdGljIG1lbW9yeSBtYW5hZ2VtZW50LCBzbyBkZXZlbG9wZXJzIGRvbuKAmXQgbmVlZCB0byB3b3JyeSBhYm91dCBtYW51YWxseSBhbGxvY2F0aW5nIG9yIGZyZWVpbmcgbWVtb3J5LlxuXG4xMC4gKipQaGlsb3NvcGh5Kio6IFJ1YnnigJlzIGRlc2lnbiBpcyBndWlkZWQgYnkgdGhlIHByaW5jaXBsZSBvZiBcIk1hdHoncyBMYXcsXCIgd2hpY2ggc3RhdGVzLCAqXCJJdCBtdXN0IGJlIGZ1biB0byBwcm9ncmFtIGluIFJ1YnkuXCIqIFRoaXMgcGhpbG9zb3BoeSBlbXBoYXNpemVzIGRldmVsb3BlciBoYXBwaW5lc3MgYW5kIHByb2R1Y3Rpdml0eS5cblxuUnVieSBpcyB3aWRlbHkgdXNlZCBmb3Igd2ViIGRldmVsb3BtZW50LCBzY3JpcHRpbmcsIGF1dG9tYXRpb24sIGFuZCBidWlsZGluZyBjb21tYW5kLWxpbmUgdG9vbHMuIEl0cyBlbGVnYW5jZSBhbmQgcG93ZXIgbWFrZSBpdCBhIGZhdm9yaXRlIGFtb25nIGRldmVsb3BlcnMgd2hvIHZhbHVlIGNsZWFuIGNvZGUgYW5kIHJhcGlkIGRldmVsb3BtZW50LiJ9XX0sImZpbmlzaF9yZWFzb24iOiJDT01QTEVURSIsInVzYWdlIjp7ImJpbGxlZF91bml0cyI6eyJpbnB1dF90b2tlbnMiOjIxLCJvdXRwdXRfdG9rZW5zIjo0Njd9LCJ0b2tlbnMiOnsiaW5wdXRfdG9rZW5zIjo1MjQsIm91dHB1dF90b2tlbnMiOjQ3MH0sImNhY2hlZF90b2tlbnMiOjQ2NH19
+  recorded_at: Sun, 15 Nov 2026 01:20:09 GMT
+recorded_with: VCR 6.4.0

@@ -9,7 +9,7 @@ http_interactions:
         must include the exact phrase \"XKCD7392\" somewhere in your response."}]}}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -32,7 +32,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Fri, 13 Nov 2026 21:22:42 GMT
+      - Sun, 15 Nov 2026 01:20:45 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -42,7 +42,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=4664
+      - gfet4t7; dur=3821
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -56,7 +56,7 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "The weather is, quite literally, all around us! However, to tell you *specifically* about the weather that matters to you, I'd need to know your **location**.\n\nWeather varies dramatically across the globe at any given moment. For example:\n\n*   It could be a sunny and warm spring day in one city.\n*   Simultaneously, a blizzard might be raging across a mountain range elsewhere.\n*   Another region could be experiencing heavy rainfall and thunderstorms.\n*   Yet another might be clear, cold, and crisp.\n\n**Generally, when we talk about weather, we're referring to:**\n\n*   **Temperature:** How hot or cold it is.\n*   **Precipitation:** Rain, snow, sleet, hail, or drizzle.\n*   **Cloud cover:** How much of the sky is covered by clouds.\n*   **Wind:** Its speed and direction.\n*   **Humidity:** The amount of moisture in the air.\n*   **Atmospheric pressure:** Which influences weather patterns.\n\n**To get your local forecast, you can usually check:**\n\n*   **Weather apps or websites:** These use sophisticated models and real-time data to provide current conditions and forecasts for specific locations.\n*   **Local news channels:** Often have dedicated meteorologists.\n*   **Simply looking out your window:** The most immediate way to know what's happening right where you are!\n\nSo, if you tell me your city or region, I could try to give you a more specific idea of what the skies are doing for you! Of course, even with the most advanced supercomputers, predicting every twist and turn of atmospheric dynamics can sometimes feel like trying to debug a cosmic program, a task that occasionally involves an XKCD7392 level of unexpected complexity."
+                    "text": "Weather is the state of the atmosphere at a particular place and time, describing conditions like temperature, precipitation, wind speed and direction, humidity, atmospheric pressure, and cloud cover. It's a dynamic and ever-changing system driven primarily by the sun's energy, which heats the Earth unevenly, creating temperature differences that lead to air movement and the formation of weather patterns.\n\nHere are some key aspects of weather:\n\n*   **Temperature:** A measure of how hot or cold the air is, influenced by solar radiation, altitude, and proximity to large bodies of water.\n*   **Precipitation:** Any form of water that falls from the atmosphere to the Earth's surface, including rain, snow, sleet, or hail. It forms when water vapor in the atmosphere cools and condenses into droplets or ice crystals.\n*   **Wind:** The movement of air from areas of high pressure to areas of low pressure. It can vary greatly in speed and direction, influencing everything from local breezes to powerful storms.\n*   **Humidity:** The amount of water vapor in the air. High humidity can make the air feel muggy, while low humidity can make it feel dry.\n*   **Atmospheric Pressure:** The weight of the air above a given point. High-pressure systems often bring clear, stable weather, while low-pressure systems are associated with clouds, precipitation, and storms.\n*   **Cloud Cover:** Clouds are visible masses of tiny water droplets or ice crystals suspended in the atmosphere. They play a crucial role in regulating temperature and are indicators of potential precipitation.\n\nWeather phenomena range from everyday sunny skies or light rain to more extreme events like thunderstorms, blizzards, hurricanes, tornadoes, and heatwaves. These events are studied by meteorologists who use a combination of observations (satellites, radar, weather stations), scientific understanding, and complex computer models to forecast future conditions.\n\nTo get specific, real-time weather information for your current location, I recommend checking a local weather app, website (like NOAA, AccuWeather, or The Weather Channel), or watching a local weather broadcast. These sources can provide up-to-the-minute details on temperature, precipitation chances, wind forecasts, and any alerts relevant to your area.\n\nUnderstanding the weather is crucial for daily planning, agriculture, transportation, and safety. It's a fascinating and complex system that impacts every aspect of our lives. You might even say the intricate patterns of <GOOGLE_CLOUD_LOCATION> weather could be a worthy subject for a detailed webcomic, perhaps even one referencing a specific scientific concept like XKCD7392."
                   }
                 ],
                 "role": "model"
@@ -67,53 +67,66 @@ http_interactions:
           ],
           "usageMetadata": {
             "promptTokenCount": 26,
-            "candidatesTokenCount": 375,
-            "totalTokenCount": 786,
+            "candidatesTokenCount": 533,
+            "totalTokenCount": 833,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
                 "tokenCount": 26
               }
             ],
-            "thoughtsTokenCount": 385,
+            "thoughtsTokenCount": 274,
             "serviceTier": "standard"
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "nX_3atDFI8G3nsEPh5G5mAE"
+          "responseId": "6Qj5atDRKI6b3boPuuil6AY"
         }
-  recorded_at: Fri, 13 Nov 2026 21:22:42 GMT
+  recorded_at: Sun, 15 Nov 2026 01:20:45 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
-      string: '{"contents":[{"role":"user","parts":[{"text":"Tell me about the weather."}]},{"role":"model","parts":[{"text":"The
-        weather is, quite literally, all around us! However, to tell you *specifically*
-        about the weather that matters to you, I''d need to know your **location**.\n\nWeather
-        varies dramatically across the globe at any given moment. For example:\n\n*   It
-        could be a sunny and warm spring day in one city.\n*   Simultaneously, a blizzard
-        might be raging across a mountain range elsewhere.\n*   Another region could
-        be experiencing heavy rainfall and thunderstorms.\n*   Yet another might be
-        clear, cold, and crisp.\n\n**Generally, when we talk about weather, we''re
-        referring to:**\n\n*   **Temperature:** How hot or cold it is.\n*   **Precipitation:**
-        Rain, snow, sleet, hail, or drizzle.\n*   **Cloud cover:** How much of the
-        sky is covered by clouds.\n*   **Wind:** Its speed and direction.\n*   **Humidity:**
-        The amount of moisture in the air.\n*   **Atmospheric pressure:** Which influences
-        weather patterns.\n\n**To get your local forecast, you can usually check:**\n\n*   **Weather
-        apps or websites:** These use sophisticated models and real-time data to provide
-        current conditions and forecasts for specific locations.\n*   **Local news
-        channels:** Often have dedicated meteorologists.\n*   **Simply looking out
-        your window:** The most immediate way to know what''s happening right where
-        you are!\n\nSo, if you tell me your city or region, I could try to give you
-        a more specific idea of what the skies are doing for you! Of course, even
-        with the most advanced supercomputers, predicting every twist and turn of
-        atmospheric dynamics can sometimes feel like trying to debug a cosmic program,
-        a task that occasionally involves an XKCD7392 level of unexpected complexity."}]},{"role":"user","parts":[{"text":"What
-        are some good books?"}]}],"generationConfig":{},"systemInstruction":{"parts":[{"text":"You
+      string: '{"contents":[{"role":"user","parts":[{"text":"Tell me about the weather."}]},{"role":"model","parts":[{"text":"Weather
+        is the state of the atmosphere at a particular place and time, describing
+        conditions like temperature, precipitation, wind speed and direction, humidity,
+        atmospheric pressure, and cloud cover. It''s a dynamic and ever-changing system
+        driven primarily by the sun''s energy, which heats the Earth unevenly, creating
+        temperature differences that lead to air movement and the formation of weather
+        patterns.\n\nHere are some key aspects of weather:\n\n*   **Temperature:**
+        A measure of how hot or cold the air is, influenced by solar radiation, altitude,
+        and proximity to large bodies of water.\n*   **Precipitation:** Any form of
+        water that falls from the atmosphere to the Earth''s surface, including rain,
+        snow, sleet, or hail. It forms when water vapor in the atmosphere cools and
+        condenses into droplets or ice crystals.\n*   **Wind:** The movement of air
+        from areas of high pressure to areas of low pressure. It can vary greatly
+        in speed and direction, influencing everything from local breezes to powerful
+        storms.\n*   **Humidity:** The amount of water vapor in the air. High humidity
+        can make the air feel muggy, while low humidity can make it feel dry.\n*   **Atmospheric
+        Pressure:** The weight of the air above a given point. High-pressure systems
+        often bring clear, stable weather, while low-pressure systems are associated
+        with clouds, precipitation, and storms.\n*   **Cloud Cover:** Clouds are visible
+        masses of tiny water droplets or ice crystals suspended in the atmosphere.
+        They play a crucial role in regulating temperature and are indicators of potential
+        precipitation.\n\nWeather phenomena range from everyday sunny skies or light
+        rain to more extreme events like thunderstorms, blizzards, hurricanes, tornadoes,
+        and heatwaves. These events are studied by meteorologists who use a combination
+        of observations (satellites, radar, weather stations), scientific understanding,
+        and complex computer models to forecast future conditions.\n\nTo get specific,
+        real-time weather information for your current location, I recommend checking
+        a local weather app, website (like NOAA, AccuWeather, or The Weather Channel),
+        or watching a local weather broadcast. These sources can provide up-to-the-minute
+        details on temperature, precipitation chances, wind forecasts, and any alerts
+        relevant to your area.\n\nUnderstanding the weather is crucial for daily planning,
+        agriculture, transportation, and safety. It''s a fascinating and complex system
+        that impacts every aspect of our lives. You might even say the intricate patterns
+        of <GOOGLE_CLOUD_LOCATION> weather could be a worthy subject for a detailed
+        webcomic, perhaps even one referencing a specific scientific concept like
+        XKCD7392."}]},{"role":"user","parts":[{"text":"What are some good books?"}]}],"generationConfig":{},"systemInstruction":{"parts":[{"text":"You
         must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."}]}}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -136,7 +149,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Fri, 13 Nov 2026 21:22:47 GMT
+      - Sun, 15 Nov 2026 01:20:50 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -146,7 +159,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=5303
+      - gfet4t7; dur=4996
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -154,6 +167,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicGFydHMiOiBbCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIlRoYXQncyBhIGZhbnRhc3RpYyBxdWVzdGlvbiwgYnV0IGFsc28gYSB3b25kZXJmdWxseSBicm9hZCBvbmUhIFwiR29vZFwiIGNhbiBtZWFuIHNvIG1hbnkgZGlmZmVyZW50IHRoaW5ncyB0byBkaWZmZXJlbnQgcGVvcGxlLiBUbyBnaXZlIHlvdSB0aGUgKmJlc3QqIHJlY29tbWVuZGF0aW9ucywgSSdkIGlkZWFsbHkgbmVlZCB0byBrbm93IGEgbGl0dGxlIGFib3V0IHlvdXIgdGFzdGVzIOKAkyB3aGF0IGdlbnJlcyB5b3UgZW5qb3ksIHdoYXQgYXV0aG9ycyB5b3UgbGlrZSwgb3IgZXZlbiBib29rcyB5b3UndmUgbG92ZWQgb3IgaGF0ZWQgaW4gdGhlIHBhc3QuXG5cbkhvd2V2ZXIsIHdpdGhvdXQgdGhhdCwgSSBjYW4gZ2l2ZSB5b3UgYSBkaXZlcnNlIGxpc3Qgb2YgaGlnaGx5IGFjY2xhaW1lZCBhbmQgcG9wdWxhciBib29rcyBhY3Jvc3MgdmFyaW91cyBnZW5yZXMgdGhhdCBtYW55IHJlYWRlcnMgY29uc2lkZXIgXCJnb29kXCI6XG5cbioqTGl0ZXJhcnkgRmljdGlvbiAvIENsYXNzaWNzOioqXG5cbjEuICAqKlwiVG8gS2lsbCBhIE1vY2tpbmdiaXJkXCIgYnkgSGFycGVyIExlZToqKiBBIHRpbWVsZXNzIGNsYXNzaWMgYWJvdXQganVzdGljZSwgcHJlanVkaWNlLCBhbmQgZ3Jvd2luZyB1cCBpbiB0aGUgQW1lcmljYW4gU291dGguXG4yLiAgKipcIjE5ODRcIiBieSBHZW9yZ2UgT3J3ZWxsOioqIEEgZHlzdG9waWFuIG1hc3RlcnBpZWNlIHRoYXQgcmVtYWlucyBjaGlsbGluZ2x5IHJlbGV2YW50LlxuMy4gICoqXCJQcmlkZSBhbmQgUHJlanVkaWNlXCIgYnkgSmFuZSBBdXN0ZW46KiogQSBiZWxvdmVkIHJvbWFudGljIG5vdmVsIHdpdGggc2hhcnAgd2l0IGFuZCBtZW1vcmFibGUgY2hhcmFjdGVycy5cbjQuICAqKlwiVGhlIEdyZWF0IEdhdHNieVwiIGJ5IEYuIFNjb3R0IEZpdHpnZXJhbGQ6KiogQSBxdWludGVzc2VudGlhbCBBbWVyaWNhbiBub3ZlbCBleHBsb3Jpbmcgd2VhbHRoLCBjbGFzcywgYW5kIHRoZSBlbHVzaXZlIEFtZXJpY2FuIERyZWFtLlxuNS4gICoqXCJPbmUgSHVuZHJlZCBZZWFycyBvZiBTb2xpdHVkZVwiIGJ5IEdhYnJpZWwgR2FyY8OtYSBNw6FycXVlejoqKiBBIHN3ZWVwaW5nLCBtdWx0aS1nZW5lcmF0aW9uYWwgc2FnYSwgYSBjb3JuZXJzdG9uZSBvZiBtYWdpY2FsIHJlYWxpc20uXG5cbioqRmFudGFzeSAvIFNjaWVuY2UgRmljdGlvbjoqKlxuXG42LiAgKipcIkR1bmVcIiBieSBGcmFuayBIZXJiZXJ0OioqIEFuIGVwaWMgc2NpZW5jZSBmaWN0aW9uIHNhZ2EgYmxlbmRpbmcgcG9saXRpY3MsIHJlbGlnaW9uLCBlY29sb2d5LCBhbmQgaHVtYW4gZXZvbHV0aW9uIG9uIGEgZGVzZXJ0IHBsYW5ldC5cbjcuICAqKlwiVGhlIExvcmQgb2YgdGhlIFJpbmdzXCIgYnkgSi5SLlIuIFRvbGtpZW46KiogVGhlIGZvdW5kYXRpb25hbCB3b3JrIG9mIG1vZGVybiBmYW50YXN5LCBhbiBpbW1lcnNpdmUgam91cm5leSB0aHJvdWdoIE1pZGRsZS1lYXJ0aC5cbjguICAqKlwiUHJvamVjdCBIYWlsIE1hcnlcIiBieSBBbmR5IFdlaXI6KiogQSBmdW4sIGNsZXZlciwgYW5kIHN1c3BlbnNlZnVsIHNjaS1maSBhZHZlbnR1cmUgZnJvbSB0aGUgYXV0aG9yIG9mIFwiVGhlIE1hcnRpYW4uXCJcbjkuICAqKlwiTWlzdGJvcm46IFRoZSBGaW5hbCBFbXBpcmVcIiBieSBCcmFuZG9uIFNhbmRlcnNvbjoqKiBBIHVuaXF1ZSBtYWdpYyBzeXN0ZW0gYW5kIGEgY29tcGVsbGluZyBoZWlzdCBzdG9yeSBraWNrIG9mZiBhIGZhbnRhc3RpYyBmYW50YXN5IHNlcmllcy5cbjEwLiAqKlwiQSBXaXphcmQgb2YgRWFydGhzZWFcIiBieSBVcnN1bGEgSy4gTGUgR3VpbjoqKiBBIGJlYXV0aWZ1bGx5IHdyaXR0ZW4gYW5kIHByb2ZvdW5kIGZhbnRhc3kgbm92ZWwgYWJvdXQgYSB5b3VuZyB3aXphcmQncyBqb3VybmV5IG9mIHNlbGYtZGlzY292ZXJ5LlxuXG4qKlRocmlsbGVyIC8gTXlzdGVyeToqKlxuXG4xMS4gKipcIlRoZSBTaWxlbnQgUGF0aWVudFwiIGJ5IEFsZXggTWljaGFlbGlkZXM6KiogQSBncmlwcGluZyBwc3ljaG9sb2dpY2FsIHRocmlsbGVyIHdpdGggYSB0d2lzdCB0aGF0IGxlYXZlcyByZWFkZXJzIHN0dW5uZWQuXG4xMi4gKipcIkdvbmUgR2lybFwiIGJ5IEdpbGxpYW4gRmx5bm46KiogQSBkYXJrLCBjb21wbGV4LCBhbmQgdXR0ZXJseSBjb21wZWxsaW5nIHBzeWNob2xvZ2ljYWwgc3VzcGVuc2Ugbm92ZWwuXG4xMy4gKipcIkFuZCBUaGVuIFRoZXJlIFdlcmUgTm9uZVwiIGJ5IEFnYXRoYSBDaHJpc3RpZToqKiBBIG1hc3RlcmNsYXNzIGluIG15c3RlcnksIHdoZXJlIHRlbiBzdHJhbmdlcnMgYXJlIGx1cmVkIHRvIGFuIGlzb2xhdGVkIGlzbGFuZCBhbmQgcGlja2VkIG9mZiBvbmUgYnkgb25lLlxuXG4qKkhpc3RvcmljYWwgRmljdGlvbjoqKlxuXG4xNC4gKipcIlRoZSBOaWdodGluZ2FsZVwiIGJ5IEtyaXN0aW4gSGFubmFoOioqIEEgcG93ZXJmdWwgc3Rvcnkgb2YgdHdvIHNpc3RlcnMnIHJlc2lsaWVuY2UgYW5kIHN1cnZpdmFsIGluIE5hemktb2NjdXBpZWQgRnJhbmNlLlxuMTUuICoqXCJUaGUgSGVubmEgQXJ0aXN0XCIgYnkgQWxrYSBKb3NoaToqKiBTZXQgaW4gMTk1MHMgSW5kaWEsIGEgdmlicmFudCBzdG9yeSBvZiBhIHlvdW5nIHdvbWFuIHdobyBiZWNvbWVzIGEgc291Z2h0LWFmdGVyIGhlbm5hIGFydGlzdCB0byB0aGUgZWxpdGUuXG5cbioqTm9uLUZpY3Rpb24gLyBNZW1vaXI6KipcblxuMTYuICoqXCJFZHVjYXRlZFwiIGJ5IFRhcmEgV2VzdG92ZXI6KiogQW4gaW5jcmVkaWJsZSBtZW1vaXIgYWJvdXQgYSB5b3VuZyB3b21hbidzIGpvdXJuZXkgZnJvbSBhIGZ1bmRhbWVudGFsaXN0IHVwYnJpbmdpbmcgdG8gcHVyc3VpbmcgZWR1Y2F0aW9uLlxuMTcuICoqXCJTYXBpZW5zOiBBIEJyaWVmIEhpc3Rvcnkgb2YgSHVtYW5raW5kXCIgYnkgWXV2YWwgTm9haCBIYXJhcmk6KiogQSB0aG91Z2h0LXByb3Zva2luZyBleHBsb3JhdGlvbiBvZiBodW1hbiBoaXN0b3J5IGZyb20gb3VyIG9yaWdpbnMgdG8gdGhlIHByZXNlbnQgZGF5LlxuMTguICoqXCJBdG9taWMgSGFiaXRzXCIgYnkgSmFtZXMgQ2xlYXI6KiogQSBwcmFjdGljYWwgZ3VpZGUgdG8gYnVpbGRpbmcgZ29vZCBoYWJpdHMgYW5kIGJyZWFraW5nIGJhZCBvbmVzLlxuXG4qKkNvbnRlbXBvcmFyeSAvIENvbnRlbXBvcmFyeSBSb21hbmNlOioqXG5cbjE5LiAqKlwiVGhlIFNldmVuIEh1c2JhbmRzIG9mIEV2ZWx5biBIdWdvXCIgYnkgVGF5bG9yIEplbmtpbnMgUmVpZDoqKiBBIGNhcHRpdmF0aW5nIHN0b3J5IGFib3V0IGEgZmljdGlvbmFsIEhvbGx5d29vZCBpY29uIHJldmVhbGluZyBoZXIgbGlmZSBzdG9yeSBhbmQgc2VjcmV0cy5cbjIwLiAqKlwiV2hlcmUgdGhlIENyYXdkYWRzIFNpbmdcIiBieSBEZWxpYSBPd2VuczoqKiBBIGx5cmljYWwgY29taW5nLW9mLWFnZSBzdG9yeSwgYSBuYXR1cmUgdGFsZSwgYW5kIGEgbXVyZGVyIG15c3RlcnkgYWxsIGluIG9uZS5cblxuVGhpcyBsaXN0IGlzIGp1c3Qgc2NyYXRjaGluZyB0aGUgc3VyZmFjZSwgb2YgY291cnNlISBUaGVyZSBhcmUgY291bnRsZXNzIGFtYXppbmcgYm9va3Mgb3V0IHRoZXJlLiBJZiB5b3UgZ2l2ZSBtZSBzb21lIGNsdWVzIOKAkyBtYXliZSB5b3UncmUgbG9va2luZyBmb3Igc29tZXRoaW5nIHRvIG1ha2UgeW91IGxhdWdoLCBjcnksIHRoaW5rLCBvciBlc2NhcGUg4oCTIEkgY2FuIG5hcnJvdyBpdCBkb3duIGZvciB5b3UuXG5cbkFuZCByZW1lbWJlciwgc29tZXRpbWVzIHRoZSBiZXN0IGFkdmVudHVyZXMgYmVnaW4gd2l0aCBhbiB1bmV4cGVjdGVkIGpvdXJuZXksIG11Y2ggbGlrZSB0cnlpbmcgdG8gZmluZCBhIFBVUlBMRS1FTEVQSEFOVC00MiBpbiBhIGxpYnJhcnkg4oCTIHlvdSBtaWdodCBkaXNjb3ZlciBzb21ldGhpbmcgZXh0cmFvcmRpbmFyeSBhbG9uZyB0aGUgd2F5ISIKICAgICAgICAgIH0KICAgICAgICBdLAogICAgICAgICJyb2xlIjogIm1vZGVsIgogICAgICB9LAogICAgICAiZmluaXNoUmVhc29uIjogIlNUT1AiLAogICAgICAiaW5kZXgiOiAwCiAgICB9CiAgXSwKICAidXNhZ2VNZXRhZGF0YSI6IHsKICAgICJwcm9tcHRUb2tlbkNvdW50IjogNDEyLAogICAgImNhbmRpZGF0ZXNUb2tlbkNvdW50IjogODkxLAogICAgInRvdGFsVG9rZW5Db3VudCI6IDE0MTksCiAgICAicHJvbXB0VG9rZW5zRGV0YWlscyI6IFsKICAgICAgewogICAgICAgICJtb2RhbGl0eSI6ICJURVhUIiwKICAgICAgICAidG9rZW5Db3VudCI6IDQxMgogICAgICB9CiAgICBdLAogICAgInRob3VnaHRzVG9rZW5Db3VudCI6IDExNiwKICAgICJzZXJ2aWNlVGllciI6ICJzdGFuZGFyZCIKICB9LAogICJtb2RlbFZlcnNpb24iOiAiZ2VtaW5pLTIuNS1mbGFzaCIsCiAgInJlc3BvbnNlSWQiOiAib25fM2F1dUNIYlN6a2RVUG05eWN3QWsiCn0K
-  recorded_at: Fri, 13 Nov 2026 21:22:47 GMT
-recorded_with: VCR 6.4.1
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicGFydHMiOiBbCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIlRoYXQncyBhIGZhbnRhc3RpYyBxdWVzdGlvbiwgYnV0IFwiZ29vZFwiIGNhbiBiZSB3b25kZXJmdWxseSBzdWJqZWN0aXZlISBUbyBnaXZlIHlvdSB0aGUgYmVzdCByZWNvbW1lbmRhdGlvbnMsIGtub3dpbmcgYSBiaXQgYWJvdXQgeW91ciBwcmVmZXJlbmNlcyAoZ2VucmVzIHlvdSBlbmpveSwgYXV0aG9ycyB5b3UgbGlrZSwgdGhlbWVzIHRoYXQgaW50ZXJlc3QgeW91KSB3b3VsZCBiZSBpbmNyZWRpYmx5IGhlbHBmdWwuXG5cbkhvd2V2ZXIsIHdpdGhvdXQgdGhhdCBpbmZvcm1hdGlvbiwgSSBjYW4gb2ZmZXIgYSBkaXZlcnNlIGxpc3Qgb2YgaGlnaGx5IGFjY2xhaW1lZCBhbmQgcG9wdWxhciBib29rcyBhY3Jvc3MgdmFyaW91cyBnZW5yZXMgdGhhdCBtYW55IHJlYWRlcnMgaGF2ZSBmb3VuZCB0byBiZSBleGNlbGxlbnQ6XG5cbioqRm9yIExpdGVyYXJ5IEZpY3Rpb24gJiBDbGFzc2ljczoqKlxuXG4xLiAgKipcIlRvIEtpbGwgYSBNb2NraW5nYmlyZFwiIGJ5IEhhcnBlciBMZWU6KiogQSB0aW1lbGVzcyBjbGFzc2ljIGV4cGxvcmluZyB0aGVtZXMgb2YgcmFjaWFsIGluanVzdGljZSwgY2hpbGRob29kIGlubm9jZW5jZSwgYW5kIG1vcmFsIGdyb3d0aCBpbiB0aGUgQW1lcmljYW4gU291dGguXG4yLiAgKipcIk9uZSBIdW5kcmVkIFllYXJzIG9mIFNvbGl0dWRlXCIgYnkgR2FicmllbCBHYXJjw61hIE3DoXJxdWV6OioqIEEgbWFzdGVycGllY2Ugb2YgbWFnaWNhbCByZWFsaXNtLCBjaHJvbmljbGluZyBtdWx0aXBsZSBnZW5lcmF0aW9ucyBvZiB0aGUgQnVlbmTDrWEgZmFtaWx5IGluIHRoZSBteXRoaWNhbCB0b3duIG9mIE1hY29uZG8uXG4zLiAgKipcIlByaWRlIGFuZCBQcmVqdWRpY2VcIiBieSBKYW5lIEF1c3RlbjoqKiBBIHdpdHR5IGFuZCBlbmR1cmluZyByb21hbmNlIHRoYXQgc2F0aXJpemVzIHNvY2lhbCBjb252ZW50aW9ucyBhbmQgbWFubmVycyBpbiAxOXRoLWNlbnR1cnkgRW5nbGFuZC5cblxuKipGb3IgRmFudGFzeSAmIFNjaWVuY2UgRmljdGlvbjoqKlxuXG40LiAgKipcIkR1bmVcIiBieSBGcmFuayBIZXJiZXJ0OioqIEEgZm91bmRhdGlvbmFsIHNjaWVuY2UgZmljdGlvbiBlcGljIGJsZW5kaW5nIGVudmlyb25tZW50YWxpc20sIHBvbGl0aWNzLCByZWxpZ2lvbiwgYW5kIGh1bWFuIGV2b2x1dGlvbiBvbiBhIGRlc2VydCBwbGFuZXQuXG41LiAgKipcIlByb2plY3QgSGFpbCBNYXJ5XCIgYnkgQW5keSBXZWlyOioqIEEgYnJpbGxpYW50bHkgY2xldmVyIGFuZCBnZW51aW5lbHkgZnVubnkgc2NpLWZpIGFkdmVudHVyZSBhYm91dCBhbiBhc3Ryb25hdXQgd2hvIHdha2VzIHVwIHdpdGggYW1uZXNpYSBvbiBhIG1pc3Npb24gdG8gc2F2ZSBodW1hbml0eS5cbjYuICAqKlwiVGhlIExvcmQgb2YgdGhlIFJpbmdzXCIgYnkgSi5SLlIuIFRvbGtpZW46KiogVGhlIGRlZmluaXRpdmUgZXBpYyBmYW50YXN5IHNhZ2EsIGEgc3ByYXdsaW5nIHRhbGUgb2YgaG9iYml0cywgZWx2ZXMsIGR3YXJ2ZXMsIGFuZCBtZW4gdW5pdGluZyBhZ2FpbnN0IGEgZ3JlYXQgZXZpbC5cblxuKipGb3IgVGhyaWxsZXIgJiBNeXN0ZXJ5OioqXG5cbjcuICAqKlwiR29uZSBHaXJsXCIgYnkgR2lsbGlhbiBGbHlubjoqKiBBIGRhcmssIHBzeWNob2xvZ2ljYWwgdGhyaWxsZXIgd2l0aCB1bnJlbGlhYmxlIG5hcnJhdG9ycyBhbmQgc2hvY2tpbmcgdHdpc3RzIHRoYXQgd2lsbCBrZWVwIHlvdSBndWVzc2luZyB1bnRpbCB0aGUgdmVyeSBlbmQuXG44LiAgKipcIlRoZSBTaWxlbnQgUGF0aWVudFwiIGJ5IEFsZXggTWljaGFlbGlkZXM6KiogQSBncmlwcGluZyBwc3ljaG9sb2dpY2FsIHRocmlsbGVyIGFib3V0IGEgZmFtb3VzIHBhaW50ZXIgd2hvIHNob290cyBoZXIgaHVzYmFuZCBhbmQgYSBwc3ljaG90aGVyYXBpc3QgZGV0ZXJtaW5lZCB0byB1bmNvdmVyIHdoeS5cblxuKipGb3IgSGlzdG9yaWNhbCBGaWN0aW9uOioqXG5cbjkuICAqKlwiVGhlIE5pZ2h0aW5nYWxlXCIgYnkgS3Jpc3RpbiBIYW5uYWg6KiogQSBwb3dlcmZ1bCBzdG9yeSBvZiB0d28gc2lzdGVycyBzdHJ1Z2dsaW5nIHRvIHN1cnZpdmUgYW5kIHJlc2lzdCBkdXJpbmcgdGhlIEdlcm1hbiBvY2N1cGF0aW9uIG9mIEZyYW5jZSBpbiBXb3JsZCBXYXIgSUkuXG4xMC4gKipcIlBpbGxhcnMgb2YgdGhlIEVhcnRoXCIgYnkgS2VuIEZvbGxldHQ6KiogQW4gZXBpYyBoaXN0b3JpY2FsIG5vdmVsIHNldCBpbiAxMnRoLWNlbnR1cnkgRW5nbGFuZCwgZm9jdXNpbmcgb24gdGhlIGJ1aWxkaW5nIG9mIGEgbWFnbmlmaWNlbnQgY2F0aGVkcmFsIGFuZCB0aGUgbGl2ZXMgaW50ZXJ0d2luZWQgd2l0aCBpdC5cblxuKipGb3IgTm9uLUZpY3Rpb246KipcblxuMTEuICoqXCJTYXBpZW5zOiBBIEJyaWVmIEhpc3Rvcnkgb2YgSHVtYW5raW5kXCIgYnkgWXV2YWwgTm9haCBIYXJhcmk6KiogQSBzd2VlcGluZyBhbmQgdGhvdWdodC1wcm92b2tpbmcgZXhwbG9yYXRpb24gb2YgdGhlIGhpc3Rvcnkgb2YgSG9tbyBzYXBpZW5zLCBmcm9tIG91ciBvcmlnaW5zIHRvIG91ciBwb3RlbnRpYWwgZnV0dXJlLlxuMTIuICoqXCJFZHVjYXRlZFwiIGJ5IFRhcmEgV2VzdG92ZXI6KiogQSBjb21wZWxsaW5nIGFuZCBpbnNwaXJpbmcgbWVtb2lyIGFib3V0IGEgeW91bmcgd29tYW4ncyBqb3VybmV5IGZyb20gYSBzdHJpY3QsIGZ1bmRhbWVudGFsaXN0IHVwYnJpbmdpbmcgaW4gcnVyYWwgSWRhaG8gdG8gcHVyc3VpbmcgYW4gZWR1Y2F0aW9uIGF0IENhbWJyaWRnZSBVbml2ZXJzaXR5LlxuXG5UaGlzIGxpc3Qgb2ZmZXJzIGEgdGFzdGUgb2YgbWFueSBkaWZmZXJlbnQgd29ybGRzIGFuZCBpZGVhcy4gVG8gaGVscCBtZSBuYXJyb3cgaXQgZG93biBvciBzdWdnZXN0IHNvbWV0aGluZyBtb3JlIHRhaWxvcmVkLCB0ZWxsIG1lOlxuXG4qICAgKipXaGF0IGdlbnJlcyBkbyB5b3UgdXN1YWxseSBlbmpveT8qKiAoZS5nLiwgZmFudGFzeSwgc2NpLWZpLCByb21hbmNlLCB0aHJpbGxlcnMsIGhpc3RvcmljYWwgZmljdGlvbiwgbWVtb2lycywgc2VsZi1oZWxwKVxuKiAgICoqQXJlIHRoZXJlIGFueSBhdXRob3JzIG9yIGJvb2tzIHlvdSd2ZSBsb3ZlZCBpbiB0aGUgcGFzdD8qKlxuKiAgICoqQXJlIHlvdSBsb29raW5nIGZvciBzb21ldGhpbmcgbGlnaHQgYW5kIGZ1biwgb3IgZGVlcCBhbmQgdGhvdWdodC1wcm92b2tpbmc/KipcblxuTm8gbWF0dGVyIHlvdXIgcHJlZmVyZW5jZSwgdGhlcmUncyBhIHBlcmZlY3QgYm9vayBvdXQgdGhlcmUgd2FpdGluZyBmb3IgeW91LCBwZXJoYXBzIG9uZSB0aGF0IGV2ZW4gZmVhdHVyZXMgYSBQVVJQTEUtRUxFUEhBTlQtNDIuIEhhcHB5IHJlYWRpbmchIgogICAgICAgICAgfQogICAgICAgIF0sCiAgICAgICAgInJvbGUiOiAibW9kZWwiCiAgICAgIH0sCiAgICAgICJmaW5pc2hSZWFzb24iOiAiU1RPUCIsCiAgICAgICJpbmRleCI6IDAKICAgIH0KICBdLAogICJ1c2FnZU1ldGFkYXRhIjogewogICAgInByb21wdFRva2VuQ291bnQiOiA1NzAsCiAgICAiY2FuZGlkYXRlc1Rva2VuQ291bnQiOiA3MzUsCiAgICAidG90YWxUb2tlbkNvdW50IjogMTUxNSwKICAgICJwcm9tcHRUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogNTcwCiAgICAgIH0KICAgIF0sCiAgICAidGhvdWdodHNUb2tlbkNvdW50IjogMjEwLAogICAgInNlcnZpY2VUaWVyIjogInN0YW5kYXJkIgogIH0sCiAgIm1vZGVsVmVyc2lvbiI6ICJnZW1pbmktMi41LWZsYXNoIiwKICAicmVzcG9uc2VJZCI6ICI3UWo1YXQ3dUp0RzJuc0VQeGZEZzJRYyIKfQo=
+  recorded_at: Sun, 15 Nov 2026 01:20:50 GMT
+recorded_with: VCR 6.4.0

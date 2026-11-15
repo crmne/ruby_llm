@@ -9,7 +9,7 @@ http_interactions:
         is the title of this document?"},{"type":"file","file":{"file_url":"https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"}}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:21:05 GMT
+      - Sun, 15 Nov 2026 01:19:34 GMT
       Content-Type:
       - application/json; charset=UTF-8
       Transfer-Encoding:
@@ -36,7 +36,7 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       Ga-Traceid:
-      - 5b99b7441647c5290e66cc2cf2422b3e
+      - 46aa0d26dce91cade08b5c803dd37da5
       Vary:
       - Accept-Encoding
       - Access-Control-Request-Headers
@@ -47,19 +47,12 @@ http_interactions:
       - Origin
       - Origin
       X-Log-Id:
-      - 202611140521011b664799ccf54b3f
+      - 20261115091929f46676eeb8934155
       X-Request-Id:
       - "<X_REQUEST_ID>"
     body:
       encoding: ASCII-8BIT
-      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"The
-        title of this document is **\"Dummy PDF file\"**, which appears as a bold
-        heading at the top of the page. This is also consistent with the file name,
-        \"dummy.pdf\". The document contains only this title text and is otherwise
-        blank.","reasoning_content":"The user is asking about the title of a document.
-        The document name is \"dummy.pdf\" and the content shows \"Dummy PDF file\"
-        as the only text on the page.\n\nThe title of the document appears to be \"Dummy
-        PDF file\" based on the visible text on the page, which is formatted in bold
-        like a title/heading.","role":"assistant"}}],"created":1794604865,"id":"202611140521011b664799ccf54b3f","model":"glm-5.3-flash","object":"chat.completion","request_id":"202611140521011b664799ccf54b3f","usage":{"completion_tokens":122,"completion_tokens_details":{"reasoning_tokens":69},"prompt_tokens":1660,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":1782}}'
-  recorded_at: Fri, 13 Nov 2026 21:21:05 GMT
-recorded_with: VCR 6.4.1
+      string: !binary |-
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJUaGUgdGl0bGUgb2YgdGhpcyBkb2N1bWVudCBpcyAqKlwiRHVtbXkgUERGIGZpbGVcIioqLCBhcyBzaG93biBpbiBib2xkIGF0IHRoZSB0b3Agb2YgdGhlIHBhZ2UuIFRoZSBkb2N1bWVudCBpcyBvdGhlcndpc2UgYmxhbmsg4oCUIGl0J3MgYSBwbGFjZWhvbGRlciBQREYgY29udGFpbmluZyBvbmx5IHRoYXQgaGVhZGluZy4iLCJyZWFzb25pbmdfY29udGVudCI6IlRoZSB1c2VyIGlzIGFza2luZyBhYm91dCB0aGUgdGl0bGUgb2YgYSBkb2N1bWVudC4gTG9va2luZyBhdCB0aGUgcHJvdmlkZWQgaW1hZ2UgYW5kIHBhcnNlIHJlc3VsdCwgdGhlIGRvY3VtZW50IGlzIGEgXCJkdW1teS5wZGZcIiBmaWxlLCBhbmQgdGhlIHBhZ2UgY29udGFpbnMgdGhlIHRleHQgXCJEdW1teSBQREYgZmlsZVwiIGFzIHdoYXQgYXBwZWFycyB0byBiZSBhIHRpdGxlL2hlYWRpbmcuXG5cblRoaXMgaXMgYSB2ZXJ5IHNpbXBsZSBxdWVzdGlvbi4gVGhlIGFuc3dlciBpcyBzdHJhaWdodGZvcndhcmQ6IHRoZSB0aXRsZSBzaG93biBpbiB0aGUgZG9jdW1lbnQgaXMgXCJEdW1teSBQREYgZmlsZVwiLlxuXG5UaGlzIGlzIGEgc2hvcnQsIHNpbXBsZSBxdWVzdGlvbiBkZXNlcnZpbmcgYSBzaG9ydCwgZGlyZWN0IGFuc3dlci4gTm8gbmVlZCBmb3IgaGVhZGVycywgYnVsbGV0IHBvaW50cywgb3IgZWxhYm9yYXRlIGZvcm1hdHRpbmcuIiwicm9sZSI6ImFzc2lzdGFudCJ9fV0sImNyZWF0ZWQiOjE3OTQ3MDU1NzQsImlkIjoiMjAyNjExMTUwOTE5MjlmNDY2NzZlZWI4OTM0MTU1IiwibW9kZWwiOiJnbG0tNS4zLWZsYXNoIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwicmVxdWVzdF9pZCI6IjIwMjYxMTE1MDkxOTI5ZjQ2Njc2ZWViODkzNDE1NSIsInVzYWdlIjp7ImNvbXBsZXRpb25fdG9rZW5zIjoxNDMsImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MTAxfSwicHJvbXB0X3Rva2VucyI6MTY2MCwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9LCJ0b3RhbF90b2tlbnMiOjE4MDN9fQ==
+  recorded_at: Sun, 15 Nov 2026 01:19:35 GMT
+recorded_with: VCR 6.4.0

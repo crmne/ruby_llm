@@ -9,7 +9,7 @@ http_interactions:
         a person named John who is 30 years old"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"text":{"format":{"type":"json_schema","name":"response","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:22:57 GMT
+      - Sun, 15 Nov 2026 01:21:21 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -48,7 +48,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1156'
+      - '1222'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -75,16 +75,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_05b574cb923467b3016af77fb047e887d29d0204c9b6b61e13",
+          "id": "resp_030ed168f4f733b6016af90910470487d2abee89ff168a4e53",
           "object": "response",
-          "created_at": 1794604976,
+          "created_at": 1794705680,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794604977,
+          "completed_at": 1794705681,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
@@ -99,7 +99,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_05b574cb923467b3016af77fb0e90087d2b8946859ffa05122",
+              "id": "msg_030ed168f4f733b6016af90911067087d29e08c873c5bec55f",
               "type": "message",
               "status": "completed",
               "content": [
@@ -181,6 +181,10 @@ http_interactions:
             "input_tokens": 45,
             "input_tokens_details": {
               "cache_write_tokens": 0,
+              "cache_write_tokens_details": {
+                "ttl_12h_tokens": 0,
+                "ttl_30m_tokens": 0
+              },
               "cached_tokens": 0
             },
             "output_tokens": 16,
@@ -192,5 +196,5 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Fri, 13 Nov 2026 21:22:57 GMT
-recorded_with: VCR 6.4.1
+  recorded_at: Sun, 15 Nov 2026 01:21:21 GMT
+recorded_with: VCR 6.4.0

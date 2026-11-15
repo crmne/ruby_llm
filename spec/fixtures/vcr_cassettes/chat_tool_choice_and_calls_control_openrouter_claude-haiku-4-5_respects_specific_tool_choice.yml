@@ -12,7 +12,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}],"tool_choice":{"type":"function","function":{"name":"weather"}}}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Http-Referer:
@@ -31,7 +31,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:40:20 GMT
+      - Sun, 15 Nov 2026 01:42:40 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -41,11 +41,11 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       X-Generation-Id:
-      - gen-1794606019-y1eS7uKvXX4c12cjBeth
+      - gen-1794706959-chLdkdDCFoUjI6RdqSBM
       Access-Control-Expose-Headers:
       - WWW-Authenticate,PAYMENT-REQUIRED,Payment-Receipt,PAYMENT-RESPONSE,Location,X-Generation-Id,x-openrouter-error-origin,x-openrouter-error-tool,X-Provider-Name,request-id,cf-ray
       X-Openrouter-Release:
-      - api;5aabd7be-4cf5-42b7-8ab7-78ac788284a0
+      - api;0c306999-2731-41b9-b23f-6294b64a156e
       Set-Cookie:
       - "<COOKIE>"
       Permissions-Policy:
@@ -63,24 +63,24 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n{\"id\":\"gen-1794606019-y1eS7uKvXX4c12cjBeth\",\"object\":\"chat.completion\",\"created\":1794606019,\"model\":\"anthropic/claude-haiku-4.5\",\"provider\":\"Amazon
-        Bedrock\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_use\",\"message\":{\"role\":\"assistant\",\"content\":null,\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"type\":\"function\",\"index\":0,\"id\":\"toolu_bdrk_01Rzu1MN45X3cjxHG1gJKKhP\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":
+      string: "\n         \n{\"id\":\"gen-1794706959-chLdkdDCFoUjI6RdqSBM\",\"object\":\"chat.completion\",\"created\":1794706959,\"model\":\"anthropic/claude-haiku-4.5\",\"provider\":\"Amazon
+        Bedrock\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_use\",\"message\":{\"role\":\"assistant\",\"content\":null,\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"type\":\"function\",\"index\":0,\"id\":\"toolu_bdrk_01RMeeYysrkGYqpfSmy8EM4P\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":
         \\\"41.9028\\\", \\\"longitude\\\": \\\"12.4964\\\"}\"}}]}}],\"usage\":{\"prompt_tokens\":716,\"completion_tokens\":56,\"total_tokens\":772,\"cost\":0.000996,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.000996,\"upstream_inference_prompt_cost\":0.000716,\"upstream_inference_completions_cost\":0.00028},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
-  recorded_at: Fri, 13 Nov 2026 21:40:20 GMT
+  recorded_at: Sun, 15 Nov 2026 01:42:40 GMT
 - request:
     method: post
     uri: https://openrouter.ai/api/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"anthropic/claude-haiku-4.5","messages":[{"role":"user","content":"What''s
-        the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"toolu_bdrk_01Rzu1MN45X3cjxHG1gJKKhP","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},{"role":"tool","content":"Current
-        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h","tool_call_id":"toolu_bdrk_01Rzu1MN45X3cjxHG1gJKKhP"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"toolu_bdrk_01RMeeYysrkGYqpfSmy8EM4P","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},{"role":"tool","content":"Current
+        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h","tool_call_id":"toolu_bdrk_01RMeeYysrkGYqpfSmy8EM4P"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Http-Referer:
@@ -99,7 +99,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:40:22 GMT
+      - Sun, 15 Nov 2026 01:42:40 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -109,11 +109,11 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       X-Generation-Id:
-      - gen-1794606020-18f83pTxL6F53D8AvQID
+      - gen-1794706960-10y2Ss0e999PtfLof4m3
       Access-Control-Expose-Headers:
       - WWW-Authenticate,PAYMENT-REQUIRED,Payment-Receipt,PAYMENT-RESPONSE,Location,X-Generation-Id,x-openrouter-error-origin,x-openrouter-error-tool,X-Provider-Name,request-id,cf-ray
       X-Openrouter-Release:
-      - api;5aabd7be-4cf5-42b7-8ab7-78ac788284a0
+      - api;0c306999-2731-41b9-b23f-6294b64a156e
       Set-Cookie:
       - "<COOKIE>"
       Permissions-Policy:
@@ -131,29 +131,27 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n\n         \n{\"id\":\"gen-1794606020-18f83pTxL6F53D8AvQID\",\"object\":\"chat.completion\",\"created\":1794606020,\"model\":\"anthropic/claude-haiku-4.5\",\"provider\":\"Amazon
+      string: "\n         \n{\"id\":\"gen-1794706960-10y2Ss0e999PtfLof4m3\",\"object\":\"chat.completion\",\"created\":1794706960,\"model\":\"anthropic/claude-haiku-4.5\",\"provider\":\"Amazon
         Bedrock\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"end_turn\",\"message\":{\"role\":\"assistant\",\"content\":\"I
-        appreciate the question, but I should clarify that the weather tool I have
-        access to doesn't relate to your question! Let me answer your question directly
-        about the Fall of Rome:\\n\\n## The Fall of Rome\\n\\nThe **Fall of the Roman
-        Empire** refers to the collapse of the Western Roman Empire, generally dated
-        to **476 CE**, though it was a gradual process rather than a sudden event.
-        Here are the key aspects:\\n\\n### Timeline\\n- **Western Roman Empire fell:
-        476 CE** (traditionally marked by the deposition of the last emperor, Romulus
-        Augustulus)\\n- The Eastern Roman Empire (Byzantine Empire) continued for
-        another thousand years until 1453\\n\\n### Major Causes\\n\\n1. **Political
-        Instability** - Constant civil wars, weak emperors, and military coups destabilized
-        the government\\n\\n2. **Economic Decline** - Inflation, taxation problems,
-        debasement of currency, and trade disruption\\n\\n3. **Military Pressure**
-        - Invasions by Germanic tribes (Visigoths, Vandals, Ostrogoths, etc.) from
-        the north\\n\\n4. **Division of the Empire** - The empire split into Eastern
-        and Western halves, weakening the West\\n\\n5. **Loss of Military Discipline**
-        - The army became less effective and increasingly barbarian-led\\n\\n6. **Administrative
-        Overextension** - The empire became too large to govern effectively from Rome\\n\\n7.
-        **Rise of Christianity** - Some argue the shift from pagan civic values contributed
-        to decline\\n\\n### Consequences\\n- Collapse of centralized government in
-        Western Europe\\n- End of Roman infrastructure and administrative systems\\n-
-        Rise of Germanic kingdoms\\n- Marked the beginning of the Medieval period\\n\\nIt's
-        a complex topic with historians still debating exact causes and significance!\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":736,\"completion_tokens\":385,\"total_tokens\":1121,\"cost\":0.002661,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.002661,\"upstream_inference_prompt_cost\":0.000736,\"upstream_inference_completions_cost\":0.001925},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
-  recorded_at: Fri, 13 Nov 2026 21:40:26 GMT
-recorded_with: VCR 6.4.1
+        apologize for the confusion with that function call! You're asking about a
+        historical event, not the weather. Let me provide you with information about
+        the Fall of Rome instead:\\n\\n## The Fall of Rome\\n\\nThe **Fall of Rome**
+        refers to the collapse of the Western Roman Empire, which occurred gradually
+        over several centuries and culminated around **476 AD**, when the last Western
+        Roman Emperor (Romulus Augustulus) was deposed.\\n\\n### Key Causes:\\n\\n1.
+        **Political Instability**: Frequent power struggles, civil wars, and succession
+        crises weakened central authority\\n\\n2. **Economic Decline**: \\n   - Debasement
+        of currency leading to inflation\\n   - Disruption of trade routes\\n   -
+        Heavy taxation and military spending\\n\\n3. **Military Pressure**: \\n   -
+        Invasions by Germanic tribes (Visigoths, Vandals, Ostrogoths)\\n   - Overstretched
+        military forces defending vast borders\\n   - Recruitment of barbarian soldiers\\n\\n4.
+        **Administrative Problems**: \\n   - The empire became too large to govern
+        effectively\\n   - Corruption and bureaucratic inefficiency\\n\\n5. **Social
+        Changes**: \\n   - Rise of feudalism\\n   - Decline of urban centers\\n   -
+        Loss of Roman cultural identity\\n\\n### Important Note:\\nThe fall of the
+        Western Roman Empire didn't mean the end of Roman civilization. The **Eastern
+        Roman Empire (Byzantine Empire)** continued to flourish for another thousand
+        years until 1453.\\n\\nIs there a specific aspect of Rome's fall you'd like
+        to know more about?\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":736,\"completion_tokens\":344,\"total_tokens\":1080,\"cost\":0.002456,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.002456,\"upstream_inference_prompt_cost\":0.000736,\"upstream_inference_completions_cost\":0.00172},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
+  recorded_at: Sun, 15 Nov 2026 01:42:42 GMT
+recorded_with: VCR 6.4.0

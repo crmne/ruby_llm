@@ -12,7 +12,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:34:39 GMT
+      - Sun, 15 Nov 2026 01:35:53 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -51,7 +51,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1541'
+      - '1642'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -78,9 +78,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0d9140dddff2cca7016af7826e2fcc87d2806f2a8c05ee0ebb",
+          "id": "resp_0da2e4387fe38993016af90c77eb6487d2a39a6a4aaa72292a",
           "object": "response",
-          "created_at": 1794605678,
+          "created_at": 1794706551,
           "status": "completed",
           "access_programs": {
             "cyber": "standard"
@@ -89,7 +89,7 @@ http_interactions:
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794605679,
+          "completed_at": 1794706553,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
@@ -104,11 +104,11 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "fc_0d9140dddff2cca7016af7826f46a087d29616f14566144e94",
+              "id": "fc_0da2e4387fe38993016af90c795ca087d29905592840391b2a",
               "type": "function_call",
               "status": "completed",
               "arguments": "{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}",
-              "call_id": "call_tRE2HBeHn7qzEevnweHL0Kpm",
+              "call_id": "call_0V2HQcCw9WMkCkGCKJHAvWf0",
               "name": "weather"
             }
           ],
@@ -187,6 +187,10 @@ http_interactions:
             "input_tokens": 87,
             "input_tokens_details": {
               "cache_write_tokens": 0,
+              "cache_write_tokens_details": {
+                "ttl_12h_tokens": 0,
+                "ttl_30m_tokens": 0
+              },
               "cached_tokens": 0
             },
             "output_tokens": 27,
@@ -198,21 +202,21 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Fri, 13 Nov 2026 21:34:39 GMT
+  recorded_at: Sun, 15 Nov 2026 01:35:53 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
       string: '{"model":"gpt-6.1-sol","input":[{"role":"user","content":"What''s the
-        weather in Berlin? (52.5200, 13.4050)"},{"type":"function_call","call_id":"call_tRE2HBeHn7qzEevnweHL0Kpm","name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"},{"type":"function_call_output","call_id":"call_tRE2HBeHn7qzEevnweHL0Kpm","output":"Current
+        weather in Berlin? (52.5200, 13.4050)"},{"type":"function_call","call_id":"call_0V2HQcCw9WMkCkGCKJHAvWf0","name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"},{"type":"function_call_output","call_id":"call_0V2HQcCw9WMkCkGCKJHAvWf0","output":"Current
         weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -227,7 +231,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:34:41 GMT
+      - Sun, 15 Nov 2026 01:35:55 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -251,7 +255,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1724'
+      - '1482'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -278,9 +282,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0e30d04eece6db4b016af7826fcc2c87d2bb02b887c5728b37",
+          "id": "resp_0f8309672147de84016af90c79a73087d2abcd9a77e924e809",
           "object": "response",
-          "created_at": 1794605679,
+          "created_at": 1794706553,
           "status": "completed",
           "access_programs": {
             "cyber": "standard"
@@ -289,7 +293,7 @@ http_interactions:
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794605681,
+          "completed_at": 1794706555,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
@@ -304,7 +308,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_0e30d04eece6db4b016af7827130c887d28713e933074b2118",
+              "id": "msg_0f8309672147de84016af90c7aa67887d2a4d77db49c90defd",
               "type": "message",
               "status": "completed",
               "content": [
@@ -394,6 +398,10 @@ http_interactions:
             "input_tokens": 149,
             "input_tokens_details": {
               "cache_write_tokens": 0,
+              "cache_write_tokens_details": {
+                "ttl_12h_tokens": 0,
+                "ttl_30m_tokens": 0
+              },
               "cached_tokens": 0
             },
             "output_tokens": 22,
@@ -405,5 +413,5 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Fri, 13 Nov 2026 21:34:41 GMT
-recorded_with: VCR 6.4.1
+  recorded_at: Sun, 15 Nov 2026 01:35:55 GMT
+recorded_with: VCR 6.4.0

@@ -9,7 +9,7 @@ http_interactions:
         + 3?"}],"stream":false,"reasoning_effort":"medium"}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:27:36 GMT
+      - Sun, 15 Nov 2026 01:30:38 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -34,7 +34,7 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       X-Internal-Adhoc-Canary:
-      - '2666295442'
+      - '1897954185'
       Msh-Gid:
       - "<MOONSHOT_GROUP_ID>"
       Msh-Org-Id:
@@ -42,7 +42,7 @@ http_interactions:
       Msh-Project-Id:
       - "<MOONSHOT_PROJECT_ID>"
       Msh-Request-Id:
-      - 0ac4df22-dfa9-11f1-af97-00163e0a4aa2
+      - 281fffa9-e094-11f1-89f0-00163e05d0f4
       Msh-Trace-Mode:
       - 'on'
       Msh-Uid:
@@ -54,76 +54,7 @@ http_interactions:
       Vary:
       - Origin
       X-Msh-Trace-Id:
-      - e0ad2457f8a83a97ac50e29057ee1d61
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains
-      Cf-Cache-Status:
-      - DYNAMIC
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
-    body:
-      encoding: ASCII-8BIT
-      string: '{"id":"chatcmpl-2f2e04846c655b72478351470","object":"chat.completion","created":1794605255,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"5
-        + 3 = **8**","reasoning_content":"Simple arithmetic question."},"finish_reason":"stop"}],"usage":{"prompt_tokens":94,"completion_tokens":25,"total_tokens":119,"completion_tokens_details":{"reasoning_tokens":4},"prompt_tokens_details":{"cache_write_tokens":0}}}'
-  recorded_at: Fri, 13 Nov 2026 21:27:36 GMT
-- request:
-    method: post
-    uri: https://api.moonshot.ai/v1/chat/completions
-    body:
-      encoding: UTF-8
-      string: '{"model":"kimi-k3","messages":[{"role":"user","content":"What is 5
-        + 3?"},{"role":"assistant","content":"5 + 3 = **8**","reasoning_content":"Simple
-        arithmetic question."},{"role":"user","content":"Now multiply that by 2"}],"stream":false,"reasoning_effort":"medium"}'
-    headers:
-      User-Agent:
-      - Faraday v2.15.1
-      Authorization:
-      - Bearer <AUTH_TOKEN>
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Fri, 13 Nov 2026 21:27:38 GMT
-      Content-Type:
-      - application/json; charset=utf-8
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Set-Cookie:
-      - "<COOKIE>"
-      X-Internal-Adhoc-Canary:
-      - '2666295442'
-      Msh-Gid:
-      - "<MOONSHOT_GROUP_ID>"
-      Msh-Org-Id:
-      - "<MOONSHOT_ORGANIZATION_ID>"
-      Msh-Project-Id:
-      - "<MOONSHOT_PROJECT_ID>"
-      Msh-Request-Id:
-      - 0c1f355e-dfa9-11f1-918a-00163e2b0d23
-      Msh-Trace-Mode:
-      - 'on'
-      Msh-Uid:
-      - "<MOONSHOT_USER_ID>"
-      Msh-Usage-Cache-Write-Tokens-1h:
-      - '0'
-      Msh-Usage-Cache-Write-Tokens-5m:
-      - '0'
-      Vary:
-      - Origin
-      X-Msh-Trace-Id:
-      - 3fef65253485f14171ad15004a90f165
+      - f683e695ee4fe9a82ec84c08a451b47e
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Cf-Cache-Status:
@@ -135,6 +66,78 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTJmMmUwZjYzZGI2ZTIzZjIyZmM3MjA5NTIiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjcmVhdGVkIjoxNzk0NjA1MjU3LCJtb2RlbCI6ImtpbWktazMiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6Ijggw5cgMiA9ICoqMTYqKiIsInJlYXNvbmluZ19jb250ZW50IjoiVGhlIHByZXZpb3VzIGFuc3dlciB3YXMgOC4gTXVsdGlwbHkgYnkgMjogOCDDlyAyID0gMTYuIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoxNDYsImNvbXBsZXRpb25fdG9rZW5zIjo0MiwidG90YWxfdG9rZW5zIjoxODgsImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MjF9LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVfd3JpdGVfdG9rZW5zIjowfX19
-  recorded_at: Fri, 13 Nov 2026 21:27:38 GMT
-recorded_with: VCR 6.4.1
+        eyJpZCI6ImNoYXRjbXBsLTc4NWEwZjBhLWUyODQtOTVmOS1hOTljLWYzYzcyNzA2ZDk2NyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTQ3MDYyMzUsIm1vZGVsIjoia2ltaS1rMyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiNSArIDMgPSA4IiwicmVhc29uaW5nX2NvbnRlbnQiOiJUaGUgdXNlciBpcyBhc2tpbmcgYSBzaW1wbGUgYXJpdGhtZXRpYyBxdWVzdGlvbjogNSArIDMuIFRoZSBhbnN3ZXIgaXMgOC4gVGhpcyBpcyBhIGJhc2ljIHF1ZXN0aW9uIHRoYXQgZGVzZXJ2ZXMgYSBkaXJlY3QsIGNvbmNpc2UgYW5zd2VyLiBObyBuZWVkIGZvciBlbGFib3JhdGlvbiBvciBoZWRnaW5nIOKAlCBpdCdzIGEgZmFjdHVhbCBhcml0aG1ldGljIHF1ZXN0aW9uLiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6OTQsImNvbXBsZXRpb25fdG9rZW5zIjo3MSwidG90YWxfdG9rZW5zIjoxNjUsImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6NDl9LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVfd3JpdGVfdG9rZW5zIjowfX19
+  recorded_at: Sun, 15 Nov 2026 01:30:38 GMT
+- request:
+    method: post
+    uri: https://api.moonshot.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"kimi-k3","messages":[{"role":"user","content":"What is 5
+        + 3?"},{"role":"assistant","content":"5 + 3 = 8","reasoning_content":"The
+        user is asking a simple arithmetic question: 5 + 3. The answer is 8. This
+        is a basic question that deserves a direct, concise answer. No need for elaboration
+        or hedging — it''s a factual arithmetic question."},{"role":"user","content":"Now
+        multiply that by 2"}],"stream":false,"reasoning_effort":"medium"}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 15 Nov 2026 01:30:40 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '1897954185'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - 29c967d5-e094-11f1-8425-00163e71f1da
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Msh-Usage-Cache-Write-Tokens-1h:
+      - '0'
+      Msh-Usage-Cache-Write-Tokens-5m:
+      - '0'
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - b84198272caeb3e9a1ce6b665d70741b
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLWRhZDlmZjFkLTA4MWQtOWQ5Yy05MzdkLWU5ZWRmNzU3NzFiNCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTQ3MDYyMzgsIm1vZGVsIjoia2ltaS1rMyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiOCDDlyAyID0gMTYiLCJyZWFzb25pbmdfY29udGVudCI6IlRoZSB1c2VyIGFza2VkIHdoYXQgNSArIDMgaXMsIEkgYW5zd2VyZWQgOC4gTm93IHRoZXkgd2FudCB0byBtdWx0aXBseSB0aGF0IHJlc3VsdCBieSAyLlxuXG44IMOXIDIgPSAxNlxuXG5TaW1wbGUgYW5zd2VyLiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MTkwLCJjb21wbGV0aW9uX3Rva2VucyI6NjAsInRvdGFsX3Rva2VucyI6MjUwLCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjM4fSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlX3dyaXRlX3Rva2VucyI6MH19fQ==
+  recorded_at: Sun, 15 Nov 2026 01:30:40 GMT
+recorded_with: VCR 6.4.0

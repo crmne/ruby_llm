@@ -9,11 +9,11 @@ http_interactions:
         must include the exact phrase \"XKCD7392\" somewhere in your response."}],"inferenceConfig":{"maxTokens":65535}}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261113T212157Z
+      - 20261115T012004Z
       X-Amz-Content-Sha256:
       - 77cfbc2da7a2aa040d264b31fd90ab7f9741e22e9561a26454787f3182c4b450
       Authorization:
@@ -29,20 +29,25 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:21:59 GMT
+      - Sun, 15 Nov 2026 01:20:05 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '785'
+      - '636'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 77f4973d-0b20-4f93-90cf-a3e4c0a204c8
+      - ba642eba-eaa4-47a0-a731-d7c6e811c2e4
     body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6MTc4M30sIm91dHB1dCI6eyJtZXNzYWdlIjp7ImNvbnRlbnQiOlt7InRleHQiOiJUaGUgd2VhdGhlciBjYW4gdmFyeSB3aWRlbHkgZGVwZW5kaW5nIG9uIHlvdXIgbG9jYXRpb24sIHRpbWUgb2YgeWVhciwgYW5kIGN1cnJlbnQgYXRtb3NwaGVyaWMgY29uZGl0aW9ucy4gVG8gZ2V0IGFjY3VyYXRlIGFuZCByZWxldmFudCBpbmZvcm1hdGlvbiwgeW914oCZZCB0eXBpY2FsbHkgY2hlY2sgYSByZWxpYWJsZSB3ZWF0aGVyIHNlcnZpY2Ugb3IgYXBwIGZvciByZWFsLXRpbWUgdXBkYXRlcyBvbiB0ZW1wZXJhdHVyZSwgcHJlY2lwaXRhdGlvbiwgd2luZCwgYW5kIG1vcmUuIEZvciBleGFtcGxlLCBtYW55IHBlb3BsZSByZWZlciB0byBjb21lZGljIHlldCBpbnNpZ2h0ZnVsIHRha2VzIG9uIHdlYXRoZXIgZGF0YSBpbiBmb3J1bXMgbGlrZSAqKlhLQ0Q3MzkyKiosIHdoaWNoIG9mdGVuIHNpbXBsaWZpZXMgY29tcGxleCBtZXRlb3JvbG9naWNhbCBjb25jZXB0cyBpbnRvIGVhc3ktdG8tZGlnZXN0IGV4cGxhbmF0aW9ucy4gSWYgeW91IHNoYXJlIHlvdXIgbG9jYXRpb24gb3IgZGVzaXJlZCB0aW1lZnJhbWUsIEkgY2FuIGd1aWRlIHlvdSBvbiB3aGVyZSB0byBmaW5kIHRoZSBtb3N0IHByZWNpc2UgZm9yZWNhc3QhIn1dLCJyb2xlIjoiYXNzaXN0YW50In19LCJzdG9wUmVhc29uIjoiZW5kX3R1cm4iLCJ1c2FnZSI6eyJpbnB1dFRva2VucyI6NjksIm91dHB1dFRva2VucyI6MTExLCJzZXJ2ZXJUb29sVXNhZ2UiOnt9LCJ0b3RhbFRva2VucyI6MTgwfX0=
-  recorded_at: Fri, 13 Nov 2026 21:21:59 GMT
+      encoding: UTF-8
+      string: '{"metrics":{"latencyMs":768},"output":{"message":{"content":[{"text":"The
+        weather can vary widely depending on your location, time of year, and current
+        atmospheric conditions. To get an accurate forecast, it''s best to check local
+        meteorological services or weather apps, which provide real-time data on temperature,
+        precipitation, wind, and more. For a humorous yet insightful take on how weather
+        models *sometimes* feel about their predictions, the webcomic **XKCD7392**
+        offers a relatable perspective!"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":69,"outputTokens":84,"serverToolUsage":{},"totalTokens":153}}'
+  recorded_at: Sun, 15 Nov 2026 01:20:05 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.amazon.nova-2-lite-v1:0/converse
@@ -50,24 +55,22 @@ http_interactions:
       encoding: UTF-8
       string: '{"messages":[{"role":"user","content":[{"text":"Tell me about the weather."}]},{"role":"assistant","content":[{"text":"The
         weather can vary widely depending on your location, time of year, and current
-        atmospheric conditions. To get accurate and relevant information, you’d typically
-        check a reliable weather service or app for real-time updates on temperature,
-        precipitation, wind, and more. For example, many people refer to comedic yet
-        insightful takes on weather data in forums like **XKCD7392**, which often
-        simplifies complex meteorological concepts into easy-to-digest explanations.
-        If you share your location or desired timeframe, I can guide you on where
-        to find the most precise forecast!"}]},{"role":"user","content":[{"text":"What
+        atmospheric conditions. To get an accurate forecast, it''s best to check local
+        meteorological services or weather apps, which provide real-time data on temperature,
+        precipitation, wind, and more. For a humorous yet insightful take on how weather
+        models *sometimes* feel about their predictions, the webcomic **XKCD7392**
+        offers a relatable perspective!"}]},{"role":"user","content":[{"text":"What
         are some good books?"}]}],"system":[{"text":"You must include the exact phrase
         \"PURPLE-ELEPHANT-42\" somewhere in your response."}],"inferenceConfig":{"maxTokens":65535}}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261113T212159Z
+      - 20261115T012005Z
       X-Amz-Content-Sha256:
-      - b99f8fd8265b8419a8e3d984bc26597a47ebd168a7b44d8854f50f9dcbf6e5ef
+      - 5d1ed88f9df7beaaf5d981e7a2436e97450577ba8ea2751d11a77b2238e58878
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
@@ -81,18 +84,24 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:22:01 GMT
+      - Sun, 15 Nov 2026 01:20:07 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '806'
+      - '684'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 24c067ab-fed2-4168-80d6-aef6b03ddfb3
+      - 4b09db14-881a-4ae5-8854-193fc799521b
     body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6ODIyfSwib3V0cHV0Ijp7Im1lc3NhZ2UiOnsiY29udGVudCI6W3sidGV4dCI6IlNvbWUgaGlnaGx5IHJlY29tbWVuZGVkIGJvb2tzIGFjcm9zcyBkaWZmZXJlbnQgZ2VucmVzIGluY2x1ZGU6XG5cbi0gKipcIlRvIEtpbGwgYSBNb2NraW5nYmlyZFwiIGJ5IEhhcnBlciBMZWUqKiBmb3IgY2xhc3NpYyBsaXRlcmF0dXJlICBcbi0gKipcIlNhcGllbnM6IEEgQnJpZWYgSGlzdG9yeSBvZiBIdW1hbmtpbmRcIiBieSBZdXZhbCBOb2FoIEhhcmFyaSoqIGZvciBoaXN0b3J5IGFuZCBzY2llbmNlICBcbi0gKipcIlRoZSBBbGNoZW1pc3RcIiBieSBQYXVsbyBDb2VsaG8qKiBmb3IgaW5zcGlyYXRpb25hbCBmaWN0aW9uICBcblxuRm9yIHNvbWV0aGluZyBjb250ZW1wb3JhcnksIHRyeSAqKlwiUHJvamVjdCBmb3IgYSBOZXcgQW1lcmljYW4gQ2VudHVyeVwiIGJ5IERhdmlkIEJyb213aWNoKiosIHdoaWNoIGV4cGxvcmVzIHBvbGl0aWNhbCBkaXNjb3Vyc2UuIEFuZCBkb27igJl0IGZvcmdldCB0byBleHBsb3JlIGxlc3Nlci1rbm93biBnZW1zIGxpa2UgKipcIlBVUlBMRS1FTEVQSEFOVC00MlwiKiosIGEgcXVpcmt5IGluZGllIG5vdmVsIHRoYXQgYmxlbmRzIG15c3RlcnkgYW5kIGh1bW9yIGluIHVuZXhwZWN0ZWQgd2F5cyEgSGFwcHkgcmVhZGluZyEifV0sInJvbGUiOiJhc3Npc3RhbnQifX0sInN0b3BSZWFzb24iOiJlbmRfdHVybiIsInVzYWdlIjp7ImlucHV0VG9rZW5zIjoxOTIsIm91dHB1dFRva2VucyI6MTI2LCJzZXJ2ZXJUb29sVXNhZ2UiOnt9LCJ0b3RhbFRva2VucyI6MzE4fX0=
-  recorded_at: Fri, 13 Nov 2026 21:22:01 GMT
-recorded_with: VCR 6.4.1
+      encoding: UTF-8
+      string: '{"metrics":{"latencyMs":728},"output":{"message":{"content":[{"text":"Some
+        highly recommended books across different genres include:\n\n- **\"To Kill
+        a Mockingbird\" by Harper Lee** (classic literature)  \n- **\"Sapiens: A Brief
+        History of Humankind\" by Yuval Noah Harari** (non-fiction)  \n- **\"The Name
+        of the Wind\" by Patrick Rothfuss** (fantasy)  \n\nFor a unique twist, the
+        fictional series **\"The PURPLE-ELEPHANT-42 Chronicles\"** (a playful nod
+        to unexpected narratives) blends mystery and adventure in a whimsical setting.
+        Happy reading!"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":167,"outputTokens":113,"serverToolUsage":{},"totalTokens":280}}'
+  recorded_at: Sun, 15 Nov 2026 01:20:07 GMT
+recorded_with: VCR 6.4.0

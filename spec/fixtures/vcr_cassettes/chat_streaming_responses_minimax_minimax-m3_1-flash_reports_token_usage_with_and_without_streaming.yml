@@ -11,7 +11,7 @@ http_interactions:
       Accept-Encoding:
       - identity
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -28,25 +28,25 @@ http_interactions:
       Vary:
       - Accept-Encoding
       Trace-Id:
-      - 0746c17bff3309fb8fbab2be25773ee8
+      - '07483bcf71fdcd93c8ddadbf1123a1d3'
       X-Session-Id:
       - 6e1177fb8882217923c9bbd113dbe3d6
       X-Mm-Request-Id:
-      - 2092934004998157135_1794608763v1srbc
+      - 2092934004998157135_1794705615ui3rek
       Minimax-Request-Id:
-      - cf8d9c00bbd3bedad58c21721fcdb2af
+      - 329ee3485028781323991584bdc24dab
       Alb-Receive-Time:
-      - '1794608763.374'
+      - '1794705615.841'
       Alb-Request-Id:
-      - 53a4112ab066992ce70a42b1a0be397b2ccef091
+      - 60e75fda2a6c5ccc2fe0e68c6a53bb8bdeadb0ad
       Expires:
-      - Fri, 13 Nov 2026 22:26:04 GMT
+      - Sun, 15 Nov 2026 01:20:18 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Fri, 13 Nov 2026 22:26:04 GMT
+      - Sun, 15 Nov 2026 01:20:18 GMT
       Transfer-Encoding:
       - chunked
       Connection:
@@ -60,7 +60,7 @@ http_interactions:
       encoding: UTF-8
       string: |+
         event: message_start
-        data: {"type":"message_start","message":{"id":"0746c17bff3309fb8fbab2be25773ee8","type":"message","role":"assistant","content":[],"model":"MiniMax-M3.1-Flash","stop_reason":null,"stop_sequence":null,"usage":{"input_tokens":0,"output_tokens":0,"cache_creation_input_tokens":0,"cache_read_input_tokens":214}}}
+        data: {"type":"message_start","message":{"id":"07483bcf71fdcd93c8ddadbf1123a1d3","type":"message","role":"assistant","content":[],"model":"MiniMax-M3.1-Flash","stop_reason":null,"stop_sequence":null,"usage":{"input_tokens":0,"output_tokens":0}}}
 
         event: ping
         data: {"type":"ping"}
@@ -69,10 +69,7 @@ http_interactions:
         data: {"type":"content_block_start","index":0,"content_block":{"type":"thinking","thinking":""}}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":"We need answer"}}
-
-        event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":" exactly \"1, 2, 3\". Need comply."}}
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":"We need answer exactly \"1, 2, 3\". Need comply."}}
 
         event: content_block_delta
         data: {"type":"content_block_delta","index":0,"delta":{"type":"signature_delta","signature":"1dd5269782499dd3c031792d8e88f60c135ba4dab7d0453e7fa3f34f581dea10"}}
@@ -90,12 +87,12 @@ http_interactions:
         data: {"type":"content_block_stop","index":1}
 
         event: message_delta
-        data: {"type":"message_delta","delta":{"stop_reason":"end_turn"},"usage":{"input_tokens":15,"output_tokens":25,"cache_read_input_tokens":199,"output_tokens_details":{"thinking_tokens":18}}}
+        data: {"type":"message_delta","delta":{"stop_reason":"end_turn"},"usage":{"input_tokens":215,"output_tokens":26,"output_tokens_details":{"thinking_tokens":16}}}
 
         event: message_stop
         data: {"type":"message_stop"}
 
-  recorded_at: Fri, 13 Nov 2026 22:26:04 GMT
+  recorded_at: Sun, 15 Nov 2026 01:20:18 GMT
 - request:
     method: post
     uri: https://api.minimax.io/anthropic/v1/messages
@@ -105,7 +102,7 @@ http_interactions:
         with exactly: 1, 2, 3"}]}],"stream":false,"max_tokens":524288,"temperature":0.0}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -122,27 +119,27 @@ http_interactions:
       Content-Type:
       - application/json; charset=utf-8
       Content-Length:
-      - '539'
+      - '538'
       Trace-Id:
-      - 0746c17c6ad4d302d16474e8ea074089
+      - '07483bd2abdc7c67c6fbb53db5dd2200'
       X-Session-Id:
       - 6e1177fb8882217923c9bbd113dbe3d6
       X-Mm-Request-Id:
-      - 2092934004998157135_1794608764ozyr8b
+      - 2092934004998157135_1794705618hy84nn
       Minimax-Request-Id:
-      - 7a32b12553f438b755c64ba2fc2fb672
+      - 59a1cf01f2fddd9f8cbc80cba903ed54
       Alb-Receive-Time:
-      - '1794608764.313'
+      - '1794705618.844'
       Alb-Request-Id:
-      - c057cfec578046c68758dba326c35c125eb23499
+      - 8cc84ff76c3a9da186fe025848bd7708da567e94
       Expires:
-      - Fri, 13 Nov 2026 22:26:05 GMT
+      - Sun, 15 Nov 2026 01:20:21 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Fri, 13 Nov 2026 22:26:05 GMT
+      - Sun, 15 Nov 2026 01:20:21 GMT
       Connection:
       - keep-alive
       Access-Control-Allow-Origin:
@@ -151,9 +148,9 @@ http_interactions:
       - ak
     body:
       encoding: UTF-8
-      string: '{"id":"0746c17c6ad4d302d16474e8ea074089","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"thinking":"We
+      string: '{"id":"07483bd2abdc7c67c6fbb53db5dd2200","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"thinking":"We
         need answer exactly \"1, 2, 3\". Need comply.","signature":"1dd5269782499dd3c031792d8e88f60c135ba4dab7d0453e7fa3f34f581dea10","type":"thinking"},{"text":"1,
-        2, 3","type":"text"}],"usage":{"input_tokens":17,"output_tokens":25,"cache_creation_input_tokens":0,"cache_read_input_tokens":197,"output_tokens_details":{"thinking_tokens":18}},"stop_reason":"end_turn","base_resp":{"status_code":0,"status_msg":""}}'
-  recorded_at: Fri, 13 Nov 2026 22:26:05 GMT
-recorded_with: VCR 6.4.1
+        2, 3","type":"text"}],"usage":{"input_tokens":215,"output_tokens":26,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens_details":{"thinking_tokens":16}},"stop_reason":"end_turn","base_resp":{"status_code":0,"status_msg":""}}'
+  recorded_at: Sun, 15 Nov 2026 01:20:21 GMT
+recorded_with: VCR 6.4.0
 ...

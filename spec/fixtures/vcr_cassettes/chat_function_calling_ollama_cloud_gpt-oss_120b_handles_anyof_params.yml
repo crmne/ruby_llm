@@ -12,7 +12,7 @@ http_interactions:
         description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -29,35 +29,34 @@ http_interactions:
       Content-Type:
       - application/json
       X-Build-Commit:
-      - be2a079e0a02b03cf1b3d1cab78f88a8b6c055b8
+      - 9259ed42dedddf2a22abf15e2a28fc3662da6272
       X-Build-Time:
-      - '2026-11-13T11:19:30-08:00'
+      - '2026-11-14T15:25:41-08:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Content-Length:
-      - '699'
+      - '633'
       Date:
-      - Fri, 13 Nov 2026 21:29:26 GMT
+      - Sun, 15 Nov 2026 01:30:23 GMT
       Server:
       - Google Frontend
       Traceparent:
-      - 00-9c2bf8a1a6b136f7579cee6e00dd6050-baef015229ca0d43-00
+      - 00-c114dec81937788eca7b5b83c2f2d57e-2b334ec131ac2ec8-00
       X-Cloud-Trace-Context:
-      - 9c2bf8a1a6b136f7579cee6e00dd6050/13469986462888496451
+      - c114dec81937788eca7b5b83c2f2d57e/3112918359112167112
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-836","object":"chat.completion","created":1794605366,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"The
-        user wants to call any_of_params function with task \"Review PR\" and status
-        \"pending\". The tool is described in namespace functions with any_of_params.
-        We need to call that.","tool_calls":[{"id":"call_sokmav2s","index":0,"type":"function","function":{"name":"any_of_params","arguments":"{\"status\":\"pending\",\"task\":\"Review
-        PR\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":162,"completion_tokens":75,"total_tokens":237,"prompt_tokens_details":{"cached_tokens":64}}}
+      string: '{"id":"chatcmpl-27","object":"chat.completion","created":1794706223,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"User
+        wants to call any_of_params tool with task \"Review PR\" and status \"pending\".
+        Then report result. Use tool.","tool_calls":[{"id":"call_u4xkblrh","index":0,"type":"function","function":{"name":"any_of_params","arguments":"{\"task\":\"Review
+        PR\",\"status\":\"pending\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":162,"completion_tokens":63,"total_tokens":225,"prompt_tokens_details":{"cached_tokens":64}}}
 
         '
-  recorded_at: Fri, 13 Nov 2026 21:29:26 GMT
-recorded_with: VCR 6.4.1
+  recorded_at: Sun, 15 Nov 2026 01:30:23 GMT
+recorded_with: VCR 6.4.0

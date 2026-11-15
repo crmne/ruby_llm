@@ -16,7 +16,9 @@ RSpec.describe RubyLLM::Providers::GPUStack::Chat, :live do
     count = chat.count_tokens('Name one colour.')
     response = chat.ask('Name one colour.')
 
-    expect(count).to eq(response.tokens.input)
+    # The server's prefix cache may serve part of the prompt, which RubyLLM
+    # reports as cache_read rather than input; the count covers both.
+    expect(count).to eq(response.tokens.input + response.tokens.cache_read.to_i)
     expect(count).to be_positive
   end
 

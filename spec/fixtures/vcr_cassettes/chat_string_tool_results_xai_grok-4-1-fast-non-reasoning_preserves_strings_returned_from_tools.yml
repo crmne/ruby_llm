@@ -11,7 +11,7 @@ http_interactions:
         to process"}},"required":["query"],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:38:09 GMT
+      - Sun, 15 Nov 2026 01:40:08 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -54,11 +54,11 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '266.8'
+      - '196.4'
       X-Metrics-E2e-Ms:
-      - '3422.8'
+      - '2061.8'
       Traceparent:
-      - 00-2b42dcce78f1e43b4af7c8027828abed-aa1a79710001146f-01
+      - 00-e4c79148fde101b654817753a6870473-61d80be1000a51ed-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
@@ -73,13 +73,13 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1794605885,"completed_at":1794605888,"id":"334fde9b-ee90-9f64-99c1-eea6affea587","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_334fde9b-ee90-9f64-99c1-eea6affea587","summary":[{"text":"The
-        user provided test data for processing.\n\nI will use the content_returning
-        tool to process the query.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"YW/LKtUFzBvZxIen8MaYt0UgoZwF6RrklAEif6gx+xvCB46cJBQGwVc7As7dC/8Zr9QmOVmlGT5i9CZfVzJCUz5fQmysBk/gyceiX7oMZkWgfMWK/2W4fjvH+oNQRH0Sd+LPzcQWVrhSB+xQINFhT52fQgqRkMvgUJNOy+Pl1k3XuEG5p6z5F9N2CI0/5Y74CKqRNMHss4QiIx3sGOJ+f6/GlFwQP9Y2HlA1PyaO2LbviSGHY8tlSELYkYNO+eGBldKURHo9RDMu+ODPGKN5pAOZ+w31v2+0pjdTHoYhmKSIGMKtXiVUGFvgmbbcH2r34fSunaPoZZYw2FNTYYzwo2VXhZu3HIN5W1Xd7aZJk2MxmnXffabS5ijfC0Vq4HTM0mBLdEaYReERcfnZs9xnI5jLGUFznUBjI3ky57KX0I80VIc4x6wSBwmi5WHM1A/CZymH18EwJDlIqiZN9rdM8sMJDw2qxPACF1F63cxfOb/aSAfCH0gqB5GW1Kf8lPN6HPvU6QDrQYp+/Lxr8hDHBuQo+UPL+WL1RH4xPHUxWiVT8NLz3bb2xW7MQlj+F4YMVmo81glFKvN8kw3YnRAx1bMMQfOD6L9F/trhXmi130Di/rkSd2RrVtKg+EMJy+yKEsBJDpAglc0"},{"arguments":"{\"query\":\"test
-        data\"}","call_id":"call-9eb2facb-30de-455c-a98a-4df3a0ab3aba-0","name":"content_returning","type":"function_call","id":"fc_334fde9b-ee90-9f64-99c1-eea6affea587_0","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Returns
+      string: '{"created_at":1794706806,"completed_at":1794706808,"id":"246370d2-f1d7-966d-be89-17c3d7582f95","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_246370d2-f1d7-966d-be89-17c3d7582f95","summary":[{"text":"The
+        user provided test data to process.\n\nI will use the content_returning tool
+        with the query \"test data\".","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"tXqTscWbXiHWu9rIUiSg+msXb8QigF6Cr2QfYe1RgBC1jDRxxEZerIrCVrhljj32DG1Itcnj/R+B/PWQu0RhapSpRF2DHU0L6wVjdi3uhsTje26+QG74ifYVPB4lUrps6AJX16jcWSzBQZ+wpvlip13SlFgjPDtHlJtlsPz4fX93OR/GUrAG8prCTjB7IteR1h4NYOTalda0KwKLJDjdMWRarHPMDgE4Mc75H93GgnFL52ozz6Qn/CKQI6cv6UgYxtt7UZU2bGnAUw0RfDxveDomxrLn9JHXCkqz2Yck3yc6eL3iAbkcPQDd7R9tkECmcWvlVweE8UZSN+rbz+OtEz1PgpcT/MYb+Brh0p/MP2eR8Ir7OkWQ/wAM0etJirAkPoKoHTqWnKjN7TvXJ9R2D1LnKxm6RgXGnhiyVchVEuyBiw0USGd9BTkCmzb5EbVE9CcHzf6DfKb5dLGvM8Qr62BFk4fqKL4Cbdqp7xA3v5wc2CWDJXhQ0GzVsJgyl51hiL4DbIhKeMy4rigv5spjgWQ8MW5hGgRYHF8CVQ9NJX+SFHPrwmZ/zQqHWhTOJ9RwIVMpTGDqvMQSL4jlWk69KtucHM0thnO+3hD51RGEusEu3i5/WqPLOaVQw5HyFZFZOwa8z16Eds3UPA"},{"arguments":"{\"query\":\"test
+        data\"}","call_id":"call-08de251e-7c37-4041-a8fd-dc0d5342cde7-0","name":"content_returning","type":"function_call","id":"fc_246370d2-f1d7-966d-be89-17c3d7582f95_0","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Returns
         a processed string result","name":"content_returning","parameters":{"type":"object","properties":{"query":{"type":"string","description":"Query
-        to process"}},"required":["query"],"additionalProperties":false,"strict":true},"strict":false}],"top_p":0.95,"usage":{"input_tokens":293,"input_tokens_details":{"cached_tokens":128},"output_tokens":243,"output_tokens_details":{"reasoning_tokens":231},"total_tokens":536,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":8393500,"context_details":{"input_tokens":293,"output_tokens":247}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
-  recorded_at: Fri, 13 Nov 2026 21:38:09 GMT
+        to process"}},"required":["query"],"additionalProperties":false,"strict":true},"strict":false}],"top_p":0.95,"usage":{"input_tokens":293,"input_tokens_details":{"cached_tokens":128},"output_tokens":239,"output_tokens_details":{"reasoning_tokens":227},"total_tokens":532,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":8293500,"context_details":{"input_tokens":293,"output_tokens":243}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Sun, 15 Nov 2026 01:40:08 GMT
 - request:
     method: post
     uri: https://api.x.ai/v1/responses
@@ -87,15 +87,15 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"grok-4.3","input":[{"role":"user","content":"Process this
         query: test data"},{"type":"reasoning","summary":[{"type":"summary_text","text":"The
-        user provided test data for processing.\n\nI will use the content_returning
-        tool to process the query."}],"encrypted_content":"YW/LKtUFzBvZxIen8MaYt0UgoZwF6RrklAEif6gx+xvCB46cJBQGwVc7As7dC/8Zr9QmOVmlGT5i9CZfVzJCUz5fQmysBk/gyceiX7oMZkWgfMWK/2W4fjvH+oNQRH0Sd+LPzcQWVrhSB+xQINFhT52fQgqRkMvgUJNOy+Pl1k3XuEG5p6z5F9N2CI0/5Y74CKqRNMHss4QiIx3sGOJ+f6/GlFwQP9Y2HlA1PyaO2LbviSGHY8tlSELYkYNO+eGBldKURHo9RDMu+ODPGKN5pAOZ+w31v2+0pjdTHoYhmKSIGMKtXiVUGFvgmbbcH2r34fSunaPoZZYw2FNTYYzwo2VXhZu3HIN5W1Xd7aZJk2MxmnXffabS5ijfC0Vq4HTM0mBLdEaYReERcfnZs9xnI5jLGUFznUBjI3ky57KX0I80VIc4x6wSBwmi5WHM1A/CZymH18EwJDlIqiZN9rdM8sMJDw2qxPACF1F63cxfOb/aSAfCH0gqB5GW1Kf8lPN6HPvU6QDrQYp+/Lxr8hDHBuQo+UPL+WL1RH4xPHUxWiVT8NLz3bb2xW7MQlj+F4YMVmo81glFKvN8kw3YnRAx1bMMQfOD6L9F/trhXmi130Di/rkSd2RrVtKg+EMJy+yKEsBJDpAglc0"},{"type":"function_call","call_id":"call-9eb2facb-30de-455c-a98a-4df3a0ab3aba-0","name":"content_returning","arguments":"{\"query\":\"test
-        data\"}"},{"type":"function_call_output","call_id":"call-9eb2facb-30de-455c-a98a-4df3a0ab3aba-0","output":"Processed:
+        user provided test data to process.\n\nI will use the content_returning tool
+        with the query \"test data\"."}],"encrypted_content":"tXqTscWbXiHWu9rIUiSg+msXb8QigF6Cr2QfYe1RgBC1jDRxxEZerIrCVrhljj32DG1Itcnj/R+B/PWQu0RhapSpRF2DHU0L6wVjdi3uhsTje26+QG74ifYVPB4lUrps6AJX16jcWSzBQZ+wpvlip13SlFgjPDtHlJtlsPz4fX93OR/GUrAG8prCTjB7IteR1h4NYOTalda0KwKLJDjdMWRarHPMDgE4Mc75H93GgnFL52ozz6Qn/CKQI6cv6UgYxtt7UZU2bGnAUw0RfDxveDomxrLn9JHXCkqz2Yck3yc6eL3iAbkcPQDd7R9tkECmcWvlVweE8UZSN+rbz+OtEz1PgpcT/MYb+Brh0p/MP2eR8Ir7OkWQ/wAM0etJirAkPoKoHTqWnKjN7TvXJ9R2D1LnKxm6RgXGnhiyVchVEuyBiw0USGd9BTkCmzb5EbVE9CcHzf6DfKb5dLGvM8Qr62BFk4fqKL4Cbdqp7xA3v5wc2CWDJXhQ0GzVsJgyl51hiL4DbIhKeMy4rigv5spjgWQ8MW5hGgRYHF8CVQ9NJX+SFHPrwmZ/zQqHWhTOJ9RwIVMpTGDqvMQSL4jlWk69KtucHM0thnO+3hD51RGEusEu3i5/WqPLOaVQw5HyFZFZOwa8z16Eds3UPA"},{"type":"function_call","call_id":"call-08de251e-7c37-4041-a8fd-dc0d5342cde7-0","name":"content_returning","arguments":"{\"query\":\"test
+        data\"}"},{"type":"function_call_output","call_id":"call-08de251e-7c37-4041-a8fd-dc0d5342cde7-0","output":"Processed:
         test data"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"content_returning","description":"Returns
         a processed string result","parameters":{"type":"object","properties":{"query":{"type":"string","description":"Query
         to process"}},"required":["query"],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -110,7 +110,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:38:10 GMT
+      - Sun, 15 Nov 2026 01:40:09 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -138,11 +138,11 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '197.9'
+      - '223.8'
       X-Metrics-E2e-Ms:
-      - '1675.8'
+      - '1220.4'
       Traceparent:
-      - 00-b19ec533bb0325c98f69d55161ea0e61-3997aae30000e745-01
+      - 00-7277d528dd3961e0ef139d91519c5e31-349ff16a000a9839-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
@@ -157,10 +157,10 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1794605889,"completed_at":1794605890,"id":"b488fabd-026d-9590-bf0f-977c4587f895","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_b488fabd-026d-9590-bf0f-977c4587f895","summary":[{"text":"The
-        tool processed the test data.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"m38C1F4xvNgftzf+nfBZUO68rTmwFoVOPiyHuNOrfqZ8TQ08Am0fc4J0NEOGVrgLOS3qAsvn+uBBpjnFLAecV+ddsW7hEFFZRdok/3xtDfFwIm50WWca/5PhLCzHExm3CieUUfMHceMvRuOCgS+NSh131418Q2RUDr0JmRK82bsoK6THZFLfLIN7MsFvCnqyDF0v7bMQpD5YYK33n+aHqWGQDcf+fP+LdkI8gqBzgP/HsfkMrj42k3NpRUkmapOz8v5EnSOLRFVKp0F3WItfZ/UpSw6iaoa3jSNWXyngTAQG8s9poG9BkJqZxNzHwnty9zfpnO5d2NSfualcZ2I"},{"content":[{"type":"output_text","text":"Processed:
-        test data","logprobs":[],"annotations":[]}],"id":"msg_b488fabd-026d-9590-bf0f-977c4587f895","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Returns
+      string: '{"created_at":1794706808,"completed_at":1794706809,"id":"c99d9915-7cc2-992d-862d-82e7fbbdcc70","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_c99d9915-7cc2-992d-862d-82e7fbbdcc70","summary":[{"text":"The
+        tool processed the query \"test data\".","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"FZakEA8FrBJbnFMzZ/7zGNCHYn1gVi36pzKz7vf8m1LfIkIhWBZ+bYIQvyFEYNrquteAUcgMwANtPCAjspQOWLbc88pQbz9iSc2KznZx1mJVTpRYZhOu6dWSRjXDlJDrYwZe2Lf9W7y0RgF/+mmSMco4lRrOIX1+8QR3gAS3RrcCJLqLdRaIBXwQUp5QllczCTM6OvgV+prdRr9lpqFY57SESsTNH3ekum3gkQLYZBggm2Ovj4ZapaBj23BW2TEpCyfGpzURyqUTOBvMPtQ4vsfej6M+LzsY197UeUOoCQZRgg07X5MOwOOSqHXhLycK60OGE+ubRF4TWSIWOtr5fUGSvMqrcqOVXJcN6tE5l/lXy1RT5ukEUQ"},{"content":[{"type":"output_text","text":"Processed:
+        test data","logprobs":[],"annotations":[]}],"id":"msg_c99d9915-7cc2-992d-862d-82e7fbbdcc70","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Returns
         a processed string result","name":"content_returning","parameters":{"type":"object","properties":{"query":{"type":"string","description":"Query
-        to process"}},"required":["query"],"additionalProperties":false,"strict":true},"strict":false}],"top_p":0.95,"usage":{"input_tokens":548,"input_tokens_details":{"cached_tokens":128},"output_tokens":90,"output_tokens_details":{"reasoning_tokens":86},"total_tokens":638,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":7756000,"context_details":{"input_tokens":548,"output_tokens":98}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
-  recorded_at: Fri, 13 Nov 2026 21:38:10 GMT
-recorded_with: VCR 6.4.1
+        to process"}},"required":["query"],"additionalProperties":false,"strict":true},"strict":false}],"top_p":0.95,"usage":{"input_tokens":544,"input_tokens_details":{"cached_tokens":128},"output_tokens":91,"output_tokens_details":{"reasoning_tokens":87},"total_tokens":635,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":7731000,"context_details":{"input_tokens":544,"output_tokens":98}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Sun, 15 Nov 2026 01:40:09 GMT
+recorded_with: VCR 6.4.0

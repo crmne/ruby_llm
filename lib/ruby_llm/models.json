@@ -20394,8 +20394,7 @@
     "modalities": {
       "input": [
         "text",
-        "image",
-        "pdf"
+        "image"
       ],
       "output": [
         "text"
@@ -20491,8 +20490,7 @@
     "modalities": {
       "input": [
         "text",
-        "image",
-        "pdf"
+        "image"
       ],
       "output": [
         "text"
@@ -41972,7 +41970,7 @@
     "family": "gemini-pro",
     "created_at": "2026-06-09 00:00:00 UTC",
     "context_window": 16384,
-    "max_output_tokens": 32768,
+    "max_output_tokens": 16384,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -42024,7 +42022,7 @@
       },
       "limit": {
         "context": 16384,
-        "output": 32768
+        "output": 16384
       },
       "knowledge": "2025-01"
     }
@@ -45840,7 +45838,7 @@
     "family": "ministral",
     "created_at": "2025-12-02 00:00:00 UTC",
     "context_window": 131072,
-    "max_output_tokens": 262144,
+    "max_output_tokens": 131072,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -45892,7 +45890,7 @@
       },
       "limit": {
         "context": 131072,
-        "output": 262144
+        "output": 131072
       }
     }
   },
@@ -49510,7 +49508,7 @@
     "family": "deepseek-thinking",
     "created_at": "2026-04-24 00:00:00 UTC",
     "context_window": 1048576,
-    "max_output_tokens": 1048576,
+    "max_output_tokens": 65536,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -49563,7 +49561,7 @@
       },
       "limit": {
         "context": 1048576,
-        "output": 1048576
+        "output": 65536
       },
       "knowledge": "2025-05"
     }
@@ -49575,7 +49573,7 @@
     "family": "deepseek-thinking",
     "created_at": "2026-08-13 00:00:00 UTC",
     "context_window": 1048576,
-    "max_output_tokens": 1048576,
+    "max_output_tokens": 65536,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -49630,7 +49628,7 @@
       },
       "limit": {
         "context": 1048576,
-        "output": 1048576
+        "output": 65536
       }
     }
   },
@@ -50173,12 +50171,12 @@
   },
   {
     "id": "inkling-2-small",
-    "name": "inkling-2-small",
+    "name": "Inkling 2 Small",
     "provider": "ollama_cloud",
-    "family": "ollama",
-    "created_at": "2026-11-12 17:00:00 UTC",
-    "context_window": null,
-    "max_output_tokens": null,
+    "family": "ling",
+    "created_at": "2026-11-05 00:00:00 UTC",
+    "context_window": 1048576,
+    "max_output_tokens": 131072,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -50190,14 +50188,54 @@
       ]
     },
     "capabilities": [
-      "streaming",
       "function_calling",
+      "reasoning",
       "vision",
-      "reasoning"
+      "streaming"
     ],
-    "pricing": {},
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.3,
+          "output_per_million": 1,
+          "cache_read_input_per_million": 0.03
+        }
+      }
+    },
     "metadata": {
-      "owned_by": "ollama"
+      "owned_by": "ollama",
+      "source": "models.dev",
+      "provider_id": "ollama-cloud",
+      "open_weights": true,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2026-11-12",
+      "tool_call": true,
+      "structured_output": false,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "toggle"
+        },
+        {
+          "type": "effort",
+          "values": [
+            "low",
+            "medium",
+            "high",
+            "max"
+          ]
+        }
+      ],
+      "cost": {
+        "input": 0.3,
+        "output": 1,
+        "cache_read": 0.03
+      },
+      "limit": {
+        "context": 1048576,
+        "output": 131072
+      }
     }
   },
   {
@@ -59530,7 +59568,7 @@
       "top_provider": {
         "context_length": 1000000,
         "max_completion_tokens": 128000,
-        "is_moderated": true
+        "is_moderated": false
       },
       "per_request_limits": null,
       "supported_parameters": [
@@ -64725,7 +64763,7 @@
       },
       "top_provider": {
         "context_length": 1048576,
-        "max_completion_tokens": 943718,
+        "max_completion_tokens": 384000,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -65418,7 +65456,7 @@
     "family": "deepseek",
     "created_at": "2026-10-17 08:27:04 UTC",
     "context_window": 1048576,
-    "max_output_tokens": 384000,
+    "max_output_tokens": 943718,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -65439,9 +65477,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.049999999999999996,
-          "output_per_million": 0.15,
-          "cache_read_input_per_million": 0.004
+          "input_per_million": 0.048,
+          "output_per_million": 0.27,
+          "cache_read_input_per_million": 0.002
         }
       }
     },
@@ -65461,7 +65499,7 @@
       },
       "top_provider": {
         "context_length": 1048576,
-        "max_completion_tokens": 384000,
+        "max_completion_tokens": 943718,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -65497,7 +65535,7 @@
     "family": "deepseek",
     "created_at": "2026-09-10 06:21:25 UTC",
     "context_window": 1048576,
-    "max_output_tokens": 131072,
+    "max_output_tokens": 943718,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -65518,9 +65556,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.112,
-          "output_per_million": 0.33599999999999997,
-          "cache_read_input_per_million": 0.00336
+          "input_per_million": 0.048,
+          "output_per_million": 0.27,
+          "cache_read_input_per_million": 0.002
         }
       }
     },
@@ -65540,7 +65578,7 @@
       },
       "top_provider": {
         "context_length": 1048576,
-        "max_completion_tokens": 131072,
+        "max_completion_tokens": 943718,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -81424,9 +81462,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.7,
-          "output_per_million": 6.0,
-          "cache_read_input_per_million": 0.09999999999999999
+          "input_per_million": 0.346,
+          "output_per_million": 4.41,
+          "cache_read_input_per_million": 0.111
         }
       }
     },
@@ -81454,14 +81492,18 @@
       "supported_parameters": [
         "frequency_penalty",
         "include_reasoning",
+        "logit_bias",
         "max_tokens",
+        "min_p",
         "presence_penalty",
         "reasoning",
         "reasoning_effort",
+        "repetition_penalty",
         "seed",
         "stop",
         "temperature",
-        "top_k"
+        "top_k",
+        "top_p"
       ],
       "expiration_date": null
     }
@@ -81473,7 +81515,7 @@
     "family": "moonshotai",
     "created_at": "2026-07-16 15:30:58 UTC",
     "context_window": 1048576,
-    "max_output_tokens": 16384,
+    "max_output_tokens": 943718,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -81496,9 +81538,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 2.2800000000000002,
-          "output_per_million": 11.399999999999999,
-          "cache_read_input_per_million": 0.228
+          "input_per_million": 0.883,
+          "output_per_million": 6.0,
+          "cache_read_input_per_million": 0.218
         }
       }
     },
@@ -81519,7 +81561,7 @@
       },
       "top_provider": {
         "context_length": 1048576,
-        "max_completion_tokens": 16384,
+        "max_completion_tokens": 943718,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -81527,6 +81569,7 @@
         "frequency_penalty",
         "include_reasoning",
         "logit_bias",
+        "logprobs",
         "max_tokens",
         "min_p",
         "presence_penalty",
@@ -81541,6 +81584,7 @@
         "tool_choice",
         "tools",
         "top_k",
+        "top_logprobs",
         "top_p"
       ],
       "expiration_date": null
@@ -82663,7 +82707,7 @@
     "provider": "openrouter",
     "family": "nvidia",
     "created_at": "2026-07-16 12:01:34 UTC",
-    "context_window": 32768,
+    "context_window": 4096,
     "max_output_tokens": null,
     "knowledge_cutoff": null,
     "modalities": {
@@ -82692,7 +82736,7 @@
         "instruct_type": null
       },
       "top_provider": {
-        "context_length": 32768,
+        "context_length": 4096,
         "max_completion_tokens": null,
         "is_moderated": false
       },
@@ -87984,7 +88028,7 @@
       "top_provider": {
         "context_length": 1050000,
         "max_completion_tokens": 128000,
-        "is_moderated": true
+        "is_moderated": false
       },
       "per_request_limits": null,
       "supported_parameters": [
@@ -96797,7 +96841,7 @@
     "family": "qwen",
     "created_at": "2026-08-13 05:08:04 UTC",
     "context_window": 40960,
-    "max_output_tokens": 36864,
+    "max_output_tokens": 0,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -96825,8 +96869,8 @@
         "instruct_type": null
       },
       "top_provider": {
-        "context_length": 40960,
-        "max_completion_tokens": 36864,
+        "context_length": 32768,
+        "max_completion_tokens": 0,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -104924,10 +104968,10 @@
       "expiration_date": null,
       "source": "models.dev",
       "provider_id": "openrouter",
-      "open_weights": false,
+      "open_weights": true,
       "attachment": true,
       "temperature": true,
-      "last_updated": "2026-11-05",
+      "last_updated": "2026-11-12",
       "tool_call": true,
       "structured_output": true,
       "reasoning": true,
@@ -105020,10 +105064,10 @@
       "expiration_date": null,
       "source": "models.dev",
       "provider_id": "openrouter",
-      "open_weights": false,
+      "open_weights": true,
       "attachment": true,
       "temperature": true,
-      "last_updated": "2026-11-05",
+      "last_updated": "2026-11-12",
       "tool_call": true,
       "structured_output": false,
       "reasoning": true,
@@ -108562,7 +108606,7 @@
         "instruct_type": null
       },
       "top_provider": {
-        "context_length": 204800,
+        "context_length": 202752,
         "max_completion_tokens": 131072,
         "is_moderated": false
       },
@@ -109119,82 +109163,6 @@
         "context": 1048576,
         "output": 943718
       }
-    }
-  },
-  {
-    "id": "z-ai/glm-5.2:batch",
-    "name": "Z.ai: GLM 5.2 (batch)",
-    "provider": "openrouter",
-    "family": "z-ai",
-    "created_at": "2026-06-16 17:45:30 UTC",
-    "context_window": 1048576,
-    "max_output_tokens": 943718,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "streaming",
-      "function_calling",
-      "tool_choice",
-      "structured_output"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 0.322,
-          "output_per_million": 0.989,
-          "cache_read_input_per_million": 0.109
-        }
-      }
-    },
-    "metadata": {
-      "description": "GLM 5.2 is a large-scale reasoning model from Z.ai. It supports text input and output with a 1M-token context window, and is suited for long-horizon agent workflows, project-level software engineering,...",
-      "architecture": {
-        "modality": "text->text",
-        "input_modalities": [
-          "text"
-        ],
-        "output_modalities": [
-          "text"
-        ],
-        "tokenizer": "Other",
-        "instruct_type": null
-      },
-      "top_provider": {
-        "context_length": 1048576,
-        "max_completion_tokens": 943718,
-        "is_moderated": false
-      },
-      "per_request_limits": null,
-      "supported_parameters": [
-        "frequency_penalty",
-        "include_reasoning",
-        "logit_bias",
-        "logprobs",
-        "max_tokens",
-        "min_p",
-        "presence_penalty",
-        "reasoning",
-        "reasoning_effort",
-        "repetition_penalty",
-        "response_format",
-        "seed",
-        "stop",
-        "structured_outputs",
-        "temperature",
-        "tool_choice",
-        "tools",
-        "top_k",
-        "top_logprobs",
-        "top_p"
-      ],
-      "expiration_date": null
     }
   },
   {
@@ -109810,7 +109778,7 @@
     "family": "z-ai",
     "created_at": "2026-08-18 20:57:35 UTC",
     "context_window": 1048576,
-    "max_output_tokens": 131072,
+    "max_output_tokens": 943718,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -109829,9 +109797,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.44999999999999996,
-          "output_per_million": 2.0,
-          "cache_read_input_per_million": 0.09999999999999999
+          "input_per_million": 0.322,
+          "output_per_million": 0.989,
+          "cache_read_input_per_million": 0.109
         }
       }
     },
@@ -109850,7 +109818,7 @@
       },
       "top_provider": {
         "context_length": 1048576,
-        "max_completion_tokens": 131072,
+        "max_completion_tokens": 943718,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -120347,7 +120315,7 @@
     "family": "gemini-pro",
     "created_at": "2026-06-09 00:00:00 UTC",
     "context_window": 16384,
-    "max_output_tokens": 32768,
+    "max_output_tokens": 16384,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -120398,7 +120366,7 @@
       },
       "limit": {
         "context": 16384,
-        "output": 32768
+        "output": 16384
       },
       "knowledge": "2025-01"
     }

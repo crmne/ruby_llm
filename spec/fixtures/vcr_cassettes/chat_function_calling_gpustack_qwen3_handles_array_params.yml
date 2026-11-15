@@ -11,7 +11,7 @@ http_interactions:
         of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -26,21 +26,21 @@ http_interactions:
       message: OK
     headers:
       X-Envoy-Upstream-Service-Time:
-      - '1181'
+      - '2744'
       Date:
-      - Fri, 13 Nov 2026 21:24:52 GMT
-      Content-Type:
-      - application/json; charset=utf-8
-      Req-Cost-Time:
-      - '1184'
+      - Sun, 15 Nov 2026 01:23:29 GMT
       Server:
       - istio-envoy
+      Req-Cost-Time:
+      - '2749'
+      Req-Arrive-Time:
+      - '1794705810168'
       Access-Control-Allow-Origin:
       - ''
-      Req-Arrive-Time:
-      - '1794605092873'
+      Content-Type:
+      - application/json; charset=utf-8
       Resp-Start-Time:
-      - '1794605094058'
+      - '1794705812917'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
@@ -48,14 +48,16 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"role":"assistant","content":"","reasoning_content":"Okay,
-        the user wants me to call the array_params tool with the tags [\"red\", \"blue\"]
-        and then combine them. Let me check the function definition. The function
-        takes an array of strings called tags. So I need to structure the tool call
-        with those tags. I''ll make sure the arguments are correctly formatted as
-        a JSON object with the tags array. Then, after calling the tool, I should
-        present the combined tags as the response. Let me verify that the parameters
-        are required and there are no additional properties. Yep, the required field
-        is tags, and additionalProperties is false. So the tool call should be straightforward.\n","tool_calls":[{"type":"function","function":{"name":"array_params","arguments":"{\"tags\":
-        [\"red\", \"blue\"]}"},"id":"jzusp2dwqoBbmWbuFOOOo0gZLfHWyHr5"}]}}],"created":1794605094,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":155,"prompt_tokens":189,"total_tokens":344,"prompt_tokens_details":{"cached_tokens":188}},"id":"chatcmpl-MQRBcwkQfb2Cimuthtr50NlhGXrsggDJ","timings":{"cache_n":188,"prompt_n":1,"prompt_ms":8.095,"prompt_per_token_ms":8.095,"prompt_per_second":123.53304508956145,"predicted_n":155,"predicted_ms":1127.886,"predicted_per_token_ms":7.323935064935065,"predicted_per_second":136.53862181106956}}'
-  recorded_at: Fri, 13 Nov 2026 21:24:54 GMT
-recorded_with: VCR 6.4.1
+        the user wants me to call the array_params function with the tags [\"red\",
+        \"blue\"] and then combine them. Let me check the function''s parameters.
+        The function requires an array of strings called \"tags\". So I need to structure
+        the tool call correctly. The arguments should be a JSON object with the \"tags\"
+        key and the array as its value. I''ll make sure the syntax is right, using
+        double quotes and proper brackets. Once the function is called, it should
+        return the combined tags, which would just be the two elements joined somehow.
+        But my main task here is to generate the correct tool call JSON. Let me verify
+        that there are no typos and that the array items are strings. Yep, looks good.
+        Time to output the tool_call in the specified XML format.\n","tool_calls":[{"type":"function","function":{"name":"array_params","arguments":"{\"tags\":
+        [\"red\", \"blue\"]}"},"id":"JXQZLRGJHggrC2aG8NZF8hXXbte4v4zN"}]}}],"created":1794705812,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":190,"prompt_tokens":189,"total_tokens":379,"prompt_tokens_details":{"cached_tokens":188}},"id":"chatcmpl-R4h61LEgnbA2FL3197LnzRsPyQla60fZ","timings":{"cache_n":188,"prompt_n":1,"prompt_ms":10.263,"prompt_per_token_ms":10.263,"prompt_per_second":97.43739647276625,"predicted_n":190,"predicted_ms":2669.81,"predicted_per_token_ms":14.125978835978836,"predicted_per_second":70.79155445518595}}'
+  recorded_at: Sun, 15 Nov 2026 01:23:32 GMT
+recorded_with: VCR 6.4.0

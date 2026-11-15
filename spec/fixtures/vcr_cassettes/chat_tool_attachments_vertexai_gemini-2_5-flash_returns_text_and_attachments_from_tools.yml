@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:35:36 GMT
+      - Sun, 15 Nov 2026 01:37:06 GMT
       Pragma:
       - no-cache
       Cache-Control:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform openid https://www.googleapis.com/auth/userinfo.email",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Fri, 13 Nov 2026 21:35:36 GMT
+  recorded_at: Sun, 15 Nov 2026 01:37:06 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -67,7 +67,7 @@ http_interactions:
         a sample text file named ruby.txt","parametersJsonSchema":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}]}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -82,7 +82,7 @@ http_interactions:
       message: OK
     headers:
       X-Goog-Request-Id:
-      - qIL3as7VGdyI8uMP267e2AI
+      - wwz5aukrorjD4A-lz4bJBw
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -90,7 +90,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Fri, 13 Nov 2026 21:35:37 GMT
+      - Sun, 15 Nov 2026 01:37:07 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -117,7 +117,7 @@ http_interactions:
                       "name": "file_fetch",
                       "args": {}
                     },
-                    "thoughtSignature": "AY89a18U6w2SpVGKgIRTFtY37sOWr67gTZ+rwd+6nPK9bWc0jbYIDYeVfEPnqdb+CVhOOW83yenS/s/VQsL7CMPzr37KiZCP8ZIcTDd8TOIRxjYZ6ES6ltIkinXZdy+AB4ZggQK7/tTjLIIRJHOvm27sId0whV5TVkx46MvN2I8eL6Xh+xGTnds7w6rnUMhihkpjoQS/1w1tCQroTd9UKkQKKiA8ycjzOzhGyjTXwen4b5x9ZR5CULpcf7nvLpW1Ii+PEGXfo/nm9+n2KuA/nBu6pwFjO1EBqV43qJR45aD9Jz3E5WEAuEVFQT5paAtWYN2guK5RWYyok8kOd3FjoM9tkOAUhu9DInZmLM+OP9AaGuwSJtDc+g/g159ubqSS5reP1Yw="
+                    "thoughtSignature": "AY89a19wvMRrqUeJMqhlJzHaB7+pjSzXZOIiMpOrZCVt18j3ML0HQXyNo0BSEKw0wc+hy39ILvk+xPoZRSWKLk6kC/mGSApaHo/bLeCm1ZKng2U2SzCtUUi7VsyIuQd81LBUb6ikaJlNORZQbIywq+VjO1FJd1Ec1dvO9myZXUKMsX1Y/5/+RSQWLDAUGQkaDjAsDEP8VtxdlwlfDWXORDKpWUMbUGuvmEIlTB4oy5lygq5uZJs81olgaPC/eYlQhsZiDf5jfe82d3ZmgV1Iwxnp2rxBCeHKmNjLmYJImBR2nnKvmNsJkRRIl/pjC0WtZwQ6PdLDG4ieXlF+4/UvZHy6K53duF0jEV8="
                   }
                 ]
               },
@@ -127,7 +127,7 @@ http_interactions:
           "usageMetadata": {
             "promptTokenCount": 32,
             "candidatesTokenCount": 10,
-            "totalTokenCount": 91,
+            "totalTokenCount": 85,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -141,26 +141,26 @@ http_interactions:
                 "tokenCount": 10
               }
             ],
-            "thoughtsTokenCount": 49
+            "thoughtsTokenCount": 43
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-11-13T21:35:36.420558Z",
-          "responseId": "qIL3as7VGdyI8uMP267e2AI"
+          "createTime": "2026-11-15T01:37:07.005609Z",
+          "responseId": "wwz5aukrorjD4A-lz4bJBw"
         }
-  recorded_at: Fri, 13 Nov 2026 21:35:37 GMT
+  recorded_at: Sun, 15 Nov 2026 01:37:07 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"Call file_fetch to get
-        ruby.txt, then repeat the contents of the attached file."}]},{"role":"model","parts":[{"functionCall":{"name":"file_fetch","args":{}},"thoughtSignature":"AY89a18U6w2SpVGKgIRTFtY37sOWr67gTZ+rwd+6nPK9bWc0jbYIDYeVfEPnqdb+CVhOOW83yenS/s/VQsL7CMPzr37KiZCP8ZIcTDd8TOIRxjYZ6ES6ltIkinXZdy+AB4ZggQK7/tTjLIIRJHOvm27sId0whV5TVkx46MvN2I8eL6Xh+xGTnds7w6rnUMhihkpjoQS/1w1tCQroTd9UKkQKKiA8ycjzOzhGyjTXwen4b5x9ZR5CULpcf7nvLpW1Ii+PEGXfo/nm9+n2KuA/nBu6pwFjO1EBqV43qJR45aD9Jz3E5WEAuEVFQT5paAtWYN2guK5RWYyok8kOd3FjoM9tkOAUhu9DInZmLM+OP9AaGuwSJtDc+g/g159ubqSS5reP1Yw="}]},{"role":"user","parts":[{"functionResponse":{"name":"file_fetch","response":{"name":"file_fetch","content":[{"text":"Fetched
+        ruby.txt, then repeat the contents of the attached file."}]},{"role":"model","parts":[{"functionCall":{"name":"file_fetch","args":{}},"thoughtSignature":"AY89a19wvMRrqUeJMqhlJzHaB7+pjSzXZOIiMpOrZCVt18j3ML0HQXyNo0BSEKw0wc+hy39ILvk+xPoZRSWKLk6kC/mGSApaHo/bLeCm1ZKng2U2SzCtUUi7VsyIuQd81LBUb6ikaJlNORZQbIywq+VjO1FJd1Ec1dvO9myZXUKMsX1Y/5/+RSQWLDAUGQkaDjAsDEP8VtxdlwlfDWXORDKpWUMbUGuvmEIlTB4oy5lygq5uZJs81olgaPC/eYlQhsZiDf5jfe82d3ZmgV1Iwxnp2rxBCeHKmNjLmYJImBR2nnKvmNsJkRRIl/pjC0WtZwQ6PdLDG4ieXlF+4/UvZHy6K53duF0jEV8="}]},{"role":"user","parts":[{"functionResponse":{"name":"file_fetch","response":{"name":"file_fetch","content":[{"text":"Fetched
         the file."},{"text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
         is the best.</file>"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"file_fetch","description":"Fetches
         a sample text file named ruby.txt","parametersJsonSchema":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}]}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -175,7 +175,7 @@ http_interactions:
       message: OK
     headers:
       X-Goog-Request-Id:
-      - qYL3avjgDuTymLAP7OHsIA
+      - xAz5ao_QAvGA2fMPu5vNiA4
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -183,7 +183,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Fri, 13 Nov 2026 21:35:37 GMT
+      - Sun, 15 Nov 2026 01:37:08 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -206,7 +206,7 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "Ruby is the best.\n"
+                    "text": "Ruby is the best."
                   }
                 ]
               },
@@ -214,26 +214,26 @@ http_interactions:
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 121,
-            "candidatesTokenCount": 6,
-            "totalTokenCount": 127,
+            "promptTokenCount": 115,
+            "candidatesTokenCount": 5,
+            "totalTokenCount": 120,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 121
+                "tokenCount": 115
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 6
+                "tokenCount": 5
               }
             ]
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-11-13T21:35:37.241784Z",
-          "responseId": "qYL3avjgDuTymLAP7OHsIA"
+          "createTime": "2026-11-15T01:37:08.043023Z",
+          "responseId": "xAz5ao_QAvGA2fMPu5vNiA4"
         }
-  recorded_at: Fri, 13 Nov 2026 21:35:37 GMT
-recorded_with: VCR 6.4.1
+  recorded_at: Sun, 15 Nov 2026 01:37:08 GMT
+recorded_with: VCR 6.4.0

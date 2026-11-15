@@ -12,7 +12,7 @@ http_interactions:
         description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false}}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -29,27 +29,27 @@ http_interactions:
       Content-Type:
       - application/json; charset=utf-8
       Content-Length:
-      - '494'
+      - '502'
       Trace-Id:
-      - 0746b3ae0796a90822ca58e1067bcccd
+      - '07483d65b1c852d7707745d84fe66fc6'
       X-Session-Id:
       - b649cb0b0231d372ae130757f931b6c5
       X-Mm-Request-Id:
-      - 2092934004998157135_1794605231c7mdtn
+      - 2092934004998157135_1794706021drrd6g
       Minimax-Request-Id:
-      - 90d51efa569014fbd78897026213f7e8
+      - 95e336b593c31982972ba72cce1e8e41
       Alb-Receive-Time:
-      - '1794605230.994'
+      - '1794706021.724'
       Alb-Request-Id:
-      - 227ed84444e07227ba3a81474172966178e95ee7
+      - 9621ff3891b296b47afc2792d558920ecf4bb544
       Expires:
-      - Fri, 13 Nov 2026 21:27:11 GMT
+      - Sun, 15 Nov 2026 01:27:02 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Fri, 13 Nov 2026 21:27:11 GMT
+      - Sun, 15 Nov 2026 01:27:02 GMT
       Connection:
       - keep-alive
       Access-Control-Allow-Origin:
@@ -58,8 +58,8 @@ http_interactions:
       - ak
     body:
       encoding: UTF-8
-      string: '{"id":"0746b3ae0796a90822ca58e1067bcccd","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"text":"I''ll
-        call the tool with those parameters.","type":"text"},{"type":"tool_use","id":"call_a48673659fdefbfa702e54bb","name":"any_of_params","input":{"status":"pending","task":"Review
-        PR"}}],"usage":{"input_tokens":389,"output_tokens":47,"cache_creation_input_tokens":0,"cache_read_input_tokens":128},"stop_reason":"tool_use","base_resp":{"status_code":0,"status_msg":""}}'
-  recorded_at: Fri, 13 Nov 2026 21:27:11 GMT
-recorded_with: VCR 6.4.1
+      string: '{"id":"07483d65b1c852d7707745d84fe66fc6","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"text":"I''ll
+        call the tool with the specified parameters.","type":"text"},{"type":"tool_use","id":"call_01a1dcd09ff4703d8b1c47c6","name":"any_of_params","input":{"status":"pending","task":"Review
+        PR"}}],"usage":{"input_tokens":376,"output_tokens":48,"cache_creation_input_tokens":0,"cache_read_input_tokens":128},"stop_reason":"tool_use","base_resp":{"status_code":0,"status_msg":""}}'
+  recorded_at: Sun, 15 Nov 2026 01:27:02 GMT
+recorded_with: VCR 6.4.0

@@ -9,7 +9,7 @@ http_interactions:
         on still water","duration_secs":4,"generate_audio":false}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Xi-Api-Key:
       - "<ELEVENLABS_API_KEY>"
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: Payment Required
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:20:58 GMT
+      - Sun, 15 Nov 2026 01:20:45 GMT
       Server:
       - uvicorn
       Content-Length:
@@ -44,16 +44,16 @@ http_interactions:
       Strict-Transport-Security:
       - max-age=1800;
       X-Trace-Id:
-      - f05b2dd13207b5d8fed60502ab1ce98e
+      - 47b2e8b3de771236a04087f8f036f91e
       X-Region:
       - us-central1
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
     body:
       encoding: UTF-8
       string: '{"detail":{"type":"payment_required","code":"paid_plan_required","message":"This
-        endpoint requires a Pro plan or above.","status":"paid_plan_required","request_id":"f05b2dd13207b5d8fed60502ab1ce98e"}}'
-  recorded_at: Fri, 13 Nov 2026 21:20:58 GMT
-recorded_with: VCR 6.4.1
+        endpoint requires a Pro plan or above.","status":"paid_plan_required","request_id":"47b2e8b3de771236a04087f8f036f91e"}}'
+  recorded_at: Sun, 15 Nov 2026 01:20:45 GMT
+recorded_with: VCR 6.4.0

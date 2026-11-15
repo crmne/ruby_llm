@@ -9,7 +9,7 @@ http_interactions:
         what is the latest stable Ruby version? Cite your source."}],"stream":false,"store":false,"include":["reasoning.encrypted_content","web_search_call.action.sources"],"tools":[{"type":"web_search"}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:22:31 GMT
+      - Sun, 15 Nov 2026 01:20:43 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -48,7 +48,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '4358'
+      - '3990'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -60,11 +60,11 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '4999'
       X-Ratelimit-Remaining-Tokens:
-      - '996140'
+      - '996172'
       X-Ratelimit-Reset-Requests:
       - 12ms
       X-Ratelimit-Reset-Tokens:
-      - 231ms
+      - 229ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Set-Cookie:
@@ -75,16 +75,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0d73f333e736f52e016af77f93358c87d2b64160547f189e65",
+          "id": "resp_03291d4d92af4528016af908e778c087d284dbbe62270f8445",
           "object": "response",
-          "created_at": 1794604947,
+          "created_at": 1794705639,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794604951,
+          "completed_at": 1794705643,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
@@ -99,14 +99,15 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "ws_0d73f333e736f52e016af77f93ea8087d29eecc1033b6b1829",
+              "id": "ws_03291d4d92af4528016af908e81e0087d290e8e2c07072bb62",
               "type": "web_search_call",
               "status": "completed",
               "action": {
                 "type": "search",
                 "queries": [
                   "latest stable Ruby version",
-                  "Ruby latest stable release version ruby-lang.org downloads"
+                  "Ruby releases latest stable version ruby-lang.org",
+                  "ruby 3.4.0 stable release date"
                 ],
                 "query": "latest stable Ruby version",
                 "sources": [
@@ -124,23 +125,15 @@ http_interactions:
                   },
                   {
                     "type": "url",
-                    "url": "https://www.ruby-lang.org/"
-                  },
-                  {
-                    "type": "url",
                     "url": "https://www.ruby-lang.org/en/"
                   },
                   {
                     "type": "url",
-                    "url": "https://www.ruby-lang.org/en/news/2026/"
-                  },
-                  {
-                    "type": "url",
-                    "url": "https://versionlog.com/ruby/"
-                  },
-                  {
-                    "type": "url",
                     "url": "https://www.ruby-lang.org/en/downloads/branches/"
+                  },
+                  {
+                    "type": "url",
+                    "url": "https://www.jruby.org/news"
                   },
                   {
                     "type": "url",
@@ -156,7 +149,15 @@ http_interactions:
                   },
                   {
                     "type": "url",
-                    "url": "https://zairalabs.ai/guide/languages/ruby/"
+                    "url": "https://versionlog.com/ruby/"
+                  },
+                  {
+                    "type": "url",
+                    "url": "https://cache.ruby-lang.org/pub/ruby/3.4/"
+                  },
+                  {
+                    "type": "url",
+                    "url": "https://openstandia.jp/oss_info/ruby/version/"
                   },
                   {
                     "type": "url",
@@ -164,7 +165,7 @@ http_interactions:
                   },
                   {
                     "type": "url",
-                    "url": "https://www.cisco.com/c/dam/en_us/about/doing_business/open_source/docs/CLLAPIReporting-Production-1702306923.pdf"
+                    "url": "https://www.redmine.org/issues/41976.pdf"
                   },
                   {
                     "type": "url",
@@ -172,23 +173,11 @@ http_interactions:
                   },
                   {
                     "type": "url",
-                    "url": "https://www.reddit.com/r/ruby/comments/1xdxfcf/regexp_compilation_fixes_related_to_gitlabs/"
+                    "url": "https://www2.cs.arizona.edu/classes/cs372/fall22/ruby.pdf"
                   },
                   {
                     "type": "url",
-                    "url": "https://samples.leanpub.com/practical-web-test-automation-sample.pdf"
-                  },
-                  {
-                    "type": "url",
-                    "url": "https://www.panozzaj.com/presentations/ai-assisted-software-engineering/slides.pdf"
-                  },
-                  {
-                    "type": "url",
-                    "url": "https://bugs.ruby-lang.org/issues.pdf"
-                  },
-                  {
-                    "type": "url",
-                    "url": "https://es.wikipedia.org/wiki/Ruby"
+                    "url": "https://come2menorca.com/images/file/bojimelosa.pdf"
                   },
                   {
                     "type": "url",
@@ -196,19 +185,27 @@ http_interactions:
                   },
                   {
                     "type": "url",
-                    "url": "https://media.pragprog.com/titles/ppmetr2/intro.pdf"
+                    "url": "https://bugs.ruby-lang.org/issues.pdf"
                   },
                   {
                     "type": "url",
-                    "url": "https://zh.wikipedia.org/wiki/Ruby"
+                    "url": "https://www.reddit.com/r/ruby/comments/1xdxfcf/regexp_compilation_fixes_related_to_gitlabs/"
                   },
                   {
                     "type": "url",
-                    "url": "https://en.wikipedia.org/wiki/RubyGems"
+                    "url": "https://es.wikipedia.org/wiki/Ruby"
                   },
                   {
                     "type": "url",
-                    "url": "https://en.wikipedia.org/wiki/WEBrick"
+                    "url": "https://www.cisco.com/c/dam/en_us/about/doing_business/open_source/docs/CLLAPIReporting-Production-1702306923.pdf"
+                  },
+                  {
+                    "type": "url",
+                    "url": "https://pt.wikipedia.org/wiki/Ruby_%28linguagem_de_programa%C3%A7%C3%A3o%29"
+                  },
+                  {
+                    "type": "url",
+                    "url": "https://en.wikipedia.org/wiki/JRuby"
                   },
                   {
                     "type": "url",
@@ -216,11 +213,15 @@ http_interactions:
                   },
                   {
                     "type": "url",
+                    "url": "https://zh.wikipedia.org/wiki/Ruby"
+                  },
+                  {
+                    "type": "url",
                     "url": "https://www.reddit.com/r/ruby/comments/1wuw46z/strange_performance_regression_31_vs_40/"
                   },
                   {
                     "type": "url",
-                    "url": "https://www.reddit.com/r/ruby/comments/1n2of8d"
+                    "url": "https://www.reddit.com/r/ruby/comments/1vo19ji/performance_discrepancy_between_versions_274_and/"
                   },
                   {
                     "type": "url",
@@ -228,11 +229,15 @@ http_interactions:
                   },
                   {
                     "type": "url",
+                    "url": "https://www.reddit.com/r/ruby/comments/19czjs5"
+                  },
+                  {
+                    "type": "url",
                     "url": "https://www.reddit.com/r/rubyonrails/comments/ov71of"
                   },
                   {
                     "type": "url",
-                    "url": "https://www.reddit.com/r/ruby/comments/19czjs5"
+                    "url": "https://www.reddit.com/r/ruby/comments/14sw4px"
                   },
                   {
                     "type": "url",
@@ -240,11 +245,7 @@ http_interactions:
                   },
                   {
                     "type": "url",
-                    "url": "https://www.reddit.com/r/ruby/comments/1xhlgp1/how_fast_can_you_actually_patch_ruby/"
-                  },
-                  {
-                    "type": "url",
-                    "url": "https://www.reddit.com/r/ruby/comments/1dyrh4f"
+                    "url": "https://www.reddit.com/r/ruby/comments/1hly3s5"
                   },
                   {
                     "type": "url",
@@ -252,11 +253,7 @@ http_interactions:
                   },
                   {
                     "type": "url",
-                    "url": "https://www.reddit.com/r/ruby/comments/1hly3s5"
-                  },
-                  {
-                    "type": "url",
-                    "url": "https://arxiv.org/abs/2609.01502"
+                    "url": "https://www.reddit.com/r/ruby/comments/1dyrh4f"
                   },
                   {
                     "type": "url",
@@ -266,7 +263,7 @@ http_interactions:
               }
             },
             {
-              "id": "msg_0d73f333e736f52e016af77f9705b887d28e94790ebf55b8f9",
+              "id": "msg_03291d4d92af4528016af908eac68887d286e6bf88d914c023",
               "type": "message",
               "status": "completed",
               "content": [
@@ -275,14 +272,14 @@ http_interactions:
                   "annotations": [
                     {
                       "type": "url_citation",
-                      "end_index": 130,
-                      "start_index": 54,
+                      "end_index": 138,
+                      "start_index": 62,
                       "title": "Download Ruby | Ruby",
                       "url": "https://www.ruby-lang.org/en/downloads/?utm_source=openai"
                     }
                   ],
                   "logprobs": [],
-                  "text": "The latest **stable** Ruby version is **Ruby 4.0.9**. ([ruby-lang.org](https://www.ruby-lang.org/en/downloads/?utm_source=openai))"
+                  "text": "The latest stable Ruby (CRuby/MRI) version is **Ruby 4.0.9**. ([ruby-lang.org](https://www.ruby-lang.org/en/downloads/?utm_source=openai))"
                 }
               ],
               "role": "assistant"
@@ -349,36 +346,40 @@ http_interactions:
           "top_p": 0.98,
           "truncation": "disabled",
           "usage": {
-            "input_tokens": 8698,
+            "input_tokens": 8645,
             "input_tokens_details": {
               "cache_write_tokens": 0,
+              "cache_write_tokens_details": {
+                "ttl_12h_tokens": 0,
+                "ttl_30m_tokens": 0
+              },
               "cached_tokens": 2560
             },
-            "output_tokens": 94,
+            "output_tokens": 115,
             "output_tokens_details": {
-              "reasoning_tokens": 49
+              "reasoning_tokens": 66
             },
-            "total_tokens": 8792
+            "total_tokens": 8760
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Fri, 13 Nov 2026 21:22:31 GMT
+  recorded_at: Sun, 15 Nov 2026 01:20:43 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
       string: '{"model":"gpt-5.2","input":[{"role":"user","content":"Search the web:
-        what is the latest stable Ruby version? Cite your source."},{"id":"ws_0d73f333e736f52e016af77f93ea8087d29eecc1033b6b1829","type":"web_search_call","status":"completed","action":{"type":"search","queries":["latest
-        stable Ruby version","Ruby latest stable release version ruby-lang.org downloads"],"query":"latest
-        stable Ruby version","sources":[{"type":"url","url":"https://www.ruby-lang.org/en/downloads/releases/"},{"type":"url","url":"https://www.ruby-lang.org/en/downloads/"},{"type":"url","url":"https://www.ruby-lang.org/en/news/2026/09/15/ruby-4-0-7-released/"},{"type":"url","url":"https://www.ruby-lang.org/"},{"type":"url","url":"https://www.ruby-lang.org/en/"},{"type":"url","url":"https://www.ruby-lang.org/en/news/2026/"},{"type":"url","url":"https://versionlog.com/ruby/"},{"type":"url","url":"https://www.ruby-lang.org/en/downloads/branches/"},{"type":"url","url":"https://www.ruby-lang.org/en/news/2026/10/23/ruby-4-0-9-released/"},{"type":"url","url":"https://github.com/ruby/ruby/releases"},{"type":"url","url":"https://www.ruby-lang.org/en/news/"},{"type":"url","url":"https://zairalabs.ai/guide/languages/ruby/"},{"type":"url","url":"https://en.wikipedia.org/wiki/Ruby_%28programming_language%29"},{"type":"url","url":"https://www.cisco.com/c/dam/en_us/about/doing_business/open_source/docs/CLLAPIReporting-Production-1702306923.pdf"},{"type":"url","url":"https://tmng-al.uspto.gov/resting2/api/casedoc/cms/case/99301205/office-action/OfficeAction8131648.pdf"},{"type":"url","url":"https://www.reddit.com/r/ruby/comments/1xdxfcf/regexp_compilation_fixes_related_to_gitlabs/"},{"type":"url","url":"https://samples.leanpub.com/practical-web-test-automation-sample.pdf"},{"type":"url","url":"https://www.panozzaj.com/presentations/ai-assisted-software-engineering/slides.pdf"},{"type":"url","url":"https://bugs.ruby-lang.org/issues.pdf"},{"type":"url","url":"https://es.wikipedia.org/wiki/Ruby"},{"type":"url","url":"https://en.wikipedia.org/wiki/YARV"},{"type":"url","url":"https://media.pragprog.com/titles/ppmetr2/intro.pdf"},{"type":"url","url":"https://zh.wikipedia.org/wiki/Ruby"},{"type":"url","url":"https://en.wikipedia.org/wiki/RubyGems"},{"type":"url","url":"https://en.wikipedia.org/wiki/WEBrick"},{"type":"url","url":"https://www.reddit.com/r/ruby/comments/1u0gsty/jruby_94150_released_94x_is_now_eol/"},{"type":"url","url":"https://www.reddit.com/r/ruby/comments/1wuw46z/strange_performance_regression_31_vs_40/"},{"type":"url","url":"https://www.reddit.com/r/ruby/comments/1n2of8d"},{"type":"url","url":"https://www.reddit.com/r/ruby/comments/1f8otpa"},{"type":"url","url":"https://www.reddit.com/r/rubyonrails/comments/ov71of"},{"type":"url","url":"https://www.reddit.com/r/ruby/comments/19czjs5"},{"type":"url","url":"https://www.reddit.com/r/ruby/comments/1m6kdnu"},{"type":"url","url":"https://www.reddit.com/r/ruby/comments/1xhlgp1/how_fast_can_you_actually_patch_ruby/"},{"type":"url","url":"https://www.reddit.com/r/ruby/comments/1dyrh4f"},{"type":"url","url":"https://www.reddit.com/r/ruby/comments/1idenmz"},{"type":"url","url":"https://www.reddit.com/r/ruby/comments/1hly3s5"},{"type":"url","url":"https://arxiv.org/abs/2609.01502"},{"type":"url","url":"https://www.ruby-lang.org/en/downloads/?utm_source=openai"}]}},{"id":"msg_0d73f333e736f52e016af77f9705b887d28e94790ebf55b8f9","type":"message","status":"completed","content":[{"type":"output_text","annotations":[{"type":"url_citation","end_index":130,"start_index":54,"title":"Download
+        what is the latest stable Ruby version? Cite your source."},{"id":"ws_03291d4d92af4528016af908e81e0087d290e8e2c07072bb62","type":"web_search_call","status":"completed","action":{"type":"search","queries":["latest
+        stable Ruby version","Ruby releases latest stable version ruby-lang.org","ruby
+        3.4.0 stable release date"],"query":"latest stable Ruby version","sources":[{"type":"url","url":"https://www.ruby-lang.org/en/downloads/releases/"},{"type":"url","url":"https://www.ruby-lang.org/en/downloads/"},{"type":"url","url":"https://www.ruby-lang.org/en/news/2026/09/15/ruby-4-0-7-released/"},{"type":"url","url":"https://www.ruby-lang.org/en/"},{"type":"url","url":"https://www.ruby-lang.org/en/downloads/branches/"},{"type":"url","url":"https://www.jruby.org/news"},{"type":"url","url":"https://www.ruby-lang.org/en/news/2026/10/23/ruby-4-0-9-released/"},{"type":"url","url":"https://github.com/ruby/ruby/releases"},{"type":"url","url":"https://www.ruby-lang.org/en/news/"},{"type":"url","url":"https://versionlog.com/ruby/"},{"type":"url","url":"https://cache.ruby-lang.org/pub/ruby/3.4/"},{"type":"url","url":"https://openstandia.jp/oss_info/ruby/version/"},{"type":"url","url":"https://en.wikipedia.org/wiki/Ruby_%28programming_language%29"},{"type":"url","url":"https://www.redmine.org/issues/41976.pdf"},{"type":"url","url":"https://tmng-al.uspto.gov/resting2/api/casedoc/cms/case/99301205/office-action/OfficeAction8131648.pdf"},{"type":"url","url":"https://www2.cs.arizona.edu/classes/cs372/fall22/ruby.pdf"},{"type":"url","url":"https://come2menorca.com/images/file/bojimelosa.pdf"},{"type":"url","url":"https://en.wikipedia.org/wiki/YARV"},{"type":"url","url":"https://bugs.ruby-lang.org/issues.pdf"},{"type":"url","url":"https://www.reddit.com/r/ruby/comments/1xdxfcf/regexp_compilation_fixes_related_to_gitlabs/"},{"type":"url","url":"https://es.wikipedia.org/wiki/Ruby"},{"type":"url","url":"https://www.cisco.com/c/dam/en_us/about/doing_business/open_source/docs/CLLAPIReporting-Production-1702306923.pdf"},{"type":"url","url":"https://pt.wikipedia.org/wiki/Ruby_%28linguagem_de_programa%C3%A7%C3%A3o%29"},{"type":"url","url":"https://en.wikipedia.org/wiki/JRuby"},{"type":"url","url":"https://www.reddit.com/r/ruby/comments/1u0gsty/jruby_94150_released_94x_is_now_eol/"},{"type":"url","url":"https://zh.wikipedia.org/wiki/Ruby"},{"type":"url","url":"https://www.reddit.com/r/ruby/comments/1wuw46z/strange_performance_regression_31_vs_40/"},{"type":"url","url":"https://www.reddit.com/r/ruby/comments/1vo19ji/performance_discrepancy_between_versions_274_and/"},{"type":"url","url":"https://www.reddit.com/r/ruby/comments/1f8otpa"},{"type":"url","url":"https://www.reddit.com/r/ruby/comments/19czjs5"},{"type":"url","url":"https://www.reddit.com/r/rubyonrails/comments/ov71of"},{"type":"url","url":"https://www.reddit.com/r/ruby/comments/14sw4px"},{"type":"url","url":"https://www.reddit.com/r/ruby/comments/1m6kdnu"},{"type":"url","url":"https://www.reddit.com/r/ruby/comments/1hly3s5"},{"type":"url","url":"https://www.reddit.com/r/ruby/comments/1idenmz"},{"type":"url","url":"https://www.reddit.com/r/ruby/comments/1dyrh4f"},{"type":"url","url":"https://www.ruby-lang.org/en/downloads/?utm_source=openai"}]}},{"id":"msg_03291d4d92af4528016af908eac68887d286e6bf88d914c023","type":"message","status":"completed","content":[{"type":"output_text","annotations":[{"type":"url_citation","end_index":138,"start_index":62,"title":"Download
         Ruby | Ruby","url":"https://www.ruby-lang.org/en/downloads/?utm_source=openai"}],"logprobs":[],"text":"The
-        latest **stable** Ruby version is **Ruby 4.0.9**. ([ruby-lang.org](https://www.ruby-lang.org/en/downloads/?utm_source=openai))"}],"role":"assistant"},{"role":"user","content":"Thanks.
+        latest stable Ruby (CRuby/MRI) version is **Ruby 4.0.9**. ([ruby-lang.org](https://www.ruby-lang.org/en/downloads/?utm_source=openai))"}],"role":"assistant"},{"role":"user","content":"Thanks.
         Now just say OK."}],"stream":false,"store":false,"include":["reasoning.encrypted_content","web_search_call.action.sources"],"tools":[{"type":"web_search"}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -393,7 +394,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:22:32 GMT
+      - Sun, 15 Nov 2026 01:20:44 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -417,7 +418,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '713'
+      - '669'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -444,16 +445,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0d73f333e736f52e016af77f97ad1c87d2b5b73f3d22e2bae9",
+          "id": "resp_03291d4d92af4528016af908eb92dc87d2a1c7ea04e3d5c0c9",
           "object": "response",
-          "created_at": 1794604951,
+          "created_at": 1794705643,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794604952,
+          "completed_at": 1794705644,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
@@ -468,7 +469,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_0d73f333e736f52e016af77f98378487d2b58b4d1771aff4e4",
+              "id": "msg_03291d4d92af4528016af908ec14a887d2ae200d25ed342891",
               "type": "message",
               "status": "completed",
               "content": [
@@ -543,19 +544,23 @@ http_interactions:
           "top_p": 0.98,
           "truncation": "disabled",
           "usage": {
-            "input_tokens": 4562,
+            "input_tokens": 4578,
             "input_tokens_details": {
               "cache_write_tokens": 0,
+              "cache_write_tokens_details": {
+                "ttl_12h_tokens": 0,
+                "ttl_30m_tokens": 0
+              },
               "cached_tokens": 2560
             },
             "output_tokens": 5,
             "output_tokens_details": {
               "reasoning_tokens": 0
             },
-            "total_tokens": 4567
+            "total_tokens": 4583
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Fri, 13 Nov 2026 21:22:32 GMT
-recorded_with: VCR 6.4.1
+  recorded_at: Sun, 15 Nov 2026 01:20:44 GMT
+recorded_with: VCR 6.4.0

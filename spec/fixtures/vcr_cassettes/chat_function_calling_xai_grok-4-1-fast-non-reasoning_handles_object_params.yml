@@ -13,7 +13,7 @@ http_interactions:
         window to schedule"}},"required":["window"],"additionalProperties":false},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -28,7 +28,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:32:26 GMT
+      - Sun, 15 Nov 2026 01:33:22 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -49,6 +49,8 @@ http_interactions:
       - '1800'
       X-Ratelimit-Remaining-Requests:
       - '1800'
+      Cf-Cache-Status:
+      - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Zero-Data-Retention:
@@ -56,30 +58,28 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '480.4'
+      - '384.4'
       X-Metrics-E2e-Ms:
-      - '8228.1'
+      - '5530.8'
       Traceparent:
-      - 00-74ba795905058ea8a7ceba7df5ac9b7a-6b6df1c40001029e-01
+      - 00-e67ce7eced5f167b890fca920dc041a9-804b71a500137c02-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
-      Cf-Cache-Status:
-      - DYNAMIC
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1794605538,"completed_at":1794605546,"id":"f3445d29-ccab-994c-a4b0-6af80973a3d9","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_f3445d29-ccab-994c-a4b0-6af80973a3d9","summary":[{"text":"Calling
+      string: '{"created_at":1794706397,"completed_at":1794706402,"id":"e89ad494-0eb5-9328-ac4a-9ae2b1d191a8","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_e89ad494-0eb5-9328-ac4a-9ae2b1d191a8","summary":[{"text":"Calling
         the object params tool with window start 2025-01-01 and end 2025-01-02. The
-        result will be included.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"XqmBcwUtMWz0zthJTcx+f5aj97eUCSrxX5Tnl45EiuEsq1UkFtSaIhGt42/aJpBEeGfCrDcaDoUr+I6Q9jSDWQVpUiNU24z6Oi4lpHo4XOrnbY2CIhamZWx0bUViCUfVM/ycXf+giSH2IZwvWUa7Azy539ICruZ+55r/GKFN8eQ5RHTWKCjI6vst+h4KjBZT0z68MjCahx77DbEx5q8m2V7dNiSX5e9brYffnsbO4wxKZ/N3kPjIRmRbwfRwBxfAQDofujr6/io6CeO7lcdAPY7TRCWghmJ9kOieOE1CW+f2TAu0LeODgrQdy2u8GMiQngmABhb+SXie2VPIbnQf7M0qc6W0kHaAr4lEhYmGa5+X5i6t1o5KvWamYRjFDOZ8OXYKeqURotO+lWL/48zSnFTG85ayOLtppnAIep4Q4e51rWuAgfSG17ghs1BgbJl8CzSRc4PVMDl9mnemFMG3XB7UNSGxrpMshVVWuG81j3IGgPItHFlvT67YjWEalaOp0EssrBY+dEgzVP8XwelbX/Ip8R0sboguoDlgiGVY+8EY8Ha7sQRJwekuRtgGX2P3uo954gy1ZIqkZw8m5RcHmdZFq3SnxgTTcSLloUrzR7C/Gv6Ijy8Np/dh/l7Zi/sx8uqPHdN63/kpkJVNJHqBN4F2GoIjXAV6JpEpeF9EmxCElLdhGYTK3usPAFJX2PLsw3Qt5f4xUorMsCkW/KA64tzidsI9gL2TwY2Rer5w8unp4sDGd/I1nPJmZk+QR1i0q2GeqoiCXHFRT5I44bK/Jh6042NYB15wysa7NXVOD0sHQeZVjoc6K6zSiSy71LDzmET52N1SJA7pKXT0NduBnI6w0Z/O3MyT0Udzl8TlGycD1gMya0/RvK38pfvf/NXVfBIjn8Qgw/oT9b3PBN3xm/wh+jetfVboZ5m7JAu/g6FDO4plST3dEo87zYtRIrt3SBCwbRlWAATs3JO//xzlQqYNoTpvzUEYgSPzYxIIxu0JZMjSyhUtzQGSn+FaZuhWatUM3Zuog88YZIOiUDAqE3HDFJSSNqx2pUGfDKBLD746cESNM8dBSnoSf6uq/7fYOBSezCouoWoABBQ7E3OFlGQZgx6AycAscpJWuYS+NX/ao4qD2zKY5obKjhuuzJWcGuo3s3ucPRd+kA"},{"arguments":"{\"window\":{\"start\":\"2025-01-01\",\"end\":\"2025-01-02\"}}","call_id":"call-d280c747-7ec3-4c0d-9535-173d6f090744-0","name":"object_params","type":"function_call","id":"fc_f3445d29-ccab-994c-a4b0-6af80973a3d9_0","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Uses
+        result will be included.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"VnIDitWqMEZelp+FdLKp/rmY5q+buCaTuLiuZVO0WDFMUhx9ege9tfdl1dA/qS1VVoAe8nDcFJgFACxyOTrSH3l1I2MyNbasuvEE5PzEUMRTaTvnW8n36JK76K4mGmhyCDxt/ZjBctQIpu3VevluxcBJKmuO0PkGsyzk8mA5MK4q8Sr3Qti8AbwMeAxxm63i3sFC4r3Xn1zSlEi64W5Wjd+1q/+uDYv7ECBJpolQp4u3jgrt99R14epGgvQXdw8tekGol9/4J0vbUd8yZjbXS2TAGaM4Yk46YdwyYyGxfD3sCpO22xbmCEa9QyzmTL7+/UAbUrAW1PQCvVkY8Bz/8usvlHco6z3RvoOfEWm/i/4rrisFfy8CoDNyHWpcfNgdhQpw72+KYy7cwBNMjBkMZjQJYW8qqBQ1i0j6qb+B8hL0Zsk3B5IPmj23c131IDLJfsOnN2NfpOvKPFISD1XQV4U7tkRQZeDxm/qCl3c3Khf1a5tDbQsw7fWQssDhJsOd+gzSH2wK0zPvm5R2AYLMjn6S12n2NvAYVoRdGvqnkte6z79uLkxzgGqIvAfRo+oBoY/0S7xjR3ulIK7R9Ww/QxG+FnOI12/K7qkyfNUsBz8UpmfahJRnZqSSplLoa5+ci1ZHuRiQEqDqGzskuf1bQ+l/xngjout8uRHN6N3A9QuQfZEkSwnBSFwwtfA5iCpZNXRHb2n9XvLXOsWs56sYzgvH8o9HPOZA8JN7L+AdfEnM8TIQ82eHr59w9HE8RKle102gWm9yKDUrFX46DKOIsvecngmmm8lliOYO/ips7Hx48TDzQyFcXFa1Xpq8S2O1KFB2Ug"},{"arguments":"{\"window\":{\"start\":\"2025-01-01\",\"end\":\"2025-01-02\"}}","call_id":"call-02bc2199-13f5-4919-918b-00b31cfe3884-0","name":"object_params","type":"function_call","id":"fc_e89ad494-0eb5-9328-ac4a-9ae2b1d191a8_0","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Uses
         params DSL object support","name":"object_params","parameters":{"type":"object","properties":{"window":{"type":"object","properties":{"start":{"type":"string","description":"ISO
         start"},"end":{"type":"string","description":"ISO end"}},"required":["start","end"],"additionalProperties":false,"description":"Time
-        window to schedule"}},"required":["window"],"additionalProperties":false},"strict":false}],"top_p":0.95,"usage":{"input_tokens":361,"input_tokens_details":{"cached_tokens":128},"output_tokens":505,"output_tokens_details":{"reasoning_tokens":474},"total_tokens":866,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":15793500,"context_details":{"input_tokens":361,"output_tokens":508}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
-  recorded_at: Fri, 13 Nov 2026 21:32:26 GMT
-recorded_with: VCR 6.4.1
+        window to schedule"}},"required":["window"],"additionalProperties":false},"strict":false}],"top_p":0.95,"usage":{"input_tokens":361,"input_tokens_details":{"cached_tokens":128},"output_tokens":334,"output_tokens_details":{"reasoning_tokens":303},"total_tokens":695,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":11518500,"context_details":{"input_tokens":361,"output_tokens":338}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Sun, 15 Nov 2026 01:33:22 GMT
+recorded_with: VCR 6.4.0

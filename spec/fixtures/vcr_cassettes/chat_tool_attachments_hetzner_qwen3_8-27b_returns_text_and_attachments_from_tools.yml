@@ -10,7 +10,7 @@ http_interactions:
         a sample text file named ruby.txt","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:35:00 GMT
+      - Sun, 15 Nov 2026 01:36:15 GMT
       X-Llm-D-Flow-Queue-Duration-Ms:
       - '0'
       Vary:
@@ -36,27 +36,28 @@ http_interactions:
       - chunked
     body:
       encoding: UTF-8
-      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":325,"completion_tokens":37,"total_tokens":362,"completion_tokens_details":{"reasoning_tokens":21},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"tool_calls":[{"id":"chatcmpl-tool-9e40e9c9afe71b17","type":"function","function":{"name":"file_fetch","arguments":"{}"}}],"reasoning":"The
-        user is asking to call file_fetch to obtain ruby.txt, and then to repeat its
-        contents.\n"},"index":0,"logprobs":null,"finish_reason":"tool_calls","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-dd3bda6a-321d-41b5-a1c5-acae55f14357","object":"chat.completion","created":1794605700,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
-  recorded_at: Fri, 13 Nov 2026 21:35:01 GMT
+      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":325,"completion_tokens":49,"total_tokens":374,"completion_tokens_details":{"reasoning_tokens":33},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"tool_calls":[{"id":"chatcmpl-tool-af59bdf7081ac77c","type":"function","function":{"name":"file_fetch","arguments":"{}"}}],"reasoning":"The
+        user is asking to fetch the file using the file_fetch tool, and then repeat
+        the contents of the attached file. First, let''s make the call.\n"},"index":0,"logprobs":null,"finish_reason":"tool_calls","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-960cb9f5-276e-4ef9-bfc2-dd1f29a8a6f0","object":"chat.completion","created":1794706576,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
+  recorded_at: Sun, 15 Nov 2026 01:36:17 GMT
 - request:
     method: post
     uri: https://inference.hetzner.com/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"Qwen3.8-27B","messages":[{"role":"user","content":"Call file_fetch
-        to get ruby.txt, then repeat the contents of the attached file."},{"role":"assistant","content":"","tool_calls":[{"id":"chatcmpl-tool-9e40e9c9afe71b17","type":"function","function":{"name":"file_fetch","arguments":"{}"}}],"reasoning":"The
-        user is asking to call file_fetch to obtain ruby.txt, and then to repeat its
-        contents.\n","reasoning_content":"The user is asking to call file_fetch to
-        obtain ruby.txt, and then to repeat its contents.\n"},{"role":"tool","content":"Fetched
-        the file.","tool_call_id":"chatcmpl-tool-9e40e9c9afe71b17"},{"role":"user","content":[{"type":"text","text":"Attachments
-        from tool call chatcmpl-tool-9e40e9c9afe71b17:"},{"type":"text","text":"<file
+        to get ruby.txt, then repeat the contents of the attached file."},{"role":"assistant","content":"","tool_calls":[{"id":"chatcmpl-tool-af59bdf7081ac77c","type":"function","function":{"name":"file_fetch","arguments":"{}"}}],"reasoning":"The
+        user is asking to fetch the file using the file_fetch tool, and then repeat
+        the contents of the attached file. First, let''s make the call.\n","reasoning_content":"The
+        user is asking to fetch the file using the file_fetch tool, and then repeat
+        the contents of the attached file. First, let''s make the call.\n"},{"role":"tool","content":"Fetched
+        the file.","tool_call_id":"chatcmpl-tool-af59bdf7081ac77c"},{"role":"user","content":[{"type":"text","text":"Attachments
+        from tool call chatcmpl-tool-af59bdf7081ac77c:"},{"type":"text","text":"<file
         name=''ruby.txt'' mime_type=''text/plain''>Ruby is the best.</file>"}]}],"stream":false,"tools":[{"type":"function","function":{"name":"file_fetch","description":"Fetches
         a sample text file named ruby.txt","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -71,7 +72,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:35:01 GMT
+      - Sun, 15 Nov 2026 01:36:16 GMT
       X-Llm-D-Flow-Queue-Duration-Ms:
       - '0'
       Vary:
@@ -82,10 +83,10 @@ http_interactions:
       - chunked
     body:
       encoding: UTF-8
-      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":430,"completion_tokens":47,"total_tokens":477,"completion_tokens_details":{"reasoning_tokens":39},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"content":"\n\nRuby
+      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":441,"completion_tokens":45,"total_tokens":486,"completion_tokens_details":{"reasoning_tokens":37},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"content":"\n\nRuby
         is the best.","role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"reasoning":"The
-        file''s contents are \"Ruby is the best.\" The user is asking to repeat its
-        contents. This is a simple and harmless text file, so there''s no problem
-        with repeating it.\n"},"index":0,"logprobs":null,"finish_reason":"stop","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-3e539552-9f49-496a-b8de-0035505e9676","object":"chat.completion","created":1794605701,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
-  recorded_at: Fri, 13 Nov 2026 21:35:08 GMT
-recorded_with: VCR 6.4.1
+        file was retrieved, and its contents are \"Ruby is the best.\" The user is
+        asking to repeat the contents of the attached file. It''s a simple and harmless
+        request.\n"},"index":0,"logprobs":null,"finish_reason":"stop","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-1cb2fb2d-ea5c-4cf1-9c1b-a5aec813a381","object":"chat.completion","created":1794706577,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
+  recorded_at: Sun, 15 Nov 2026 01:36:17 GMT
+recorded_with: VCR 6.4.0

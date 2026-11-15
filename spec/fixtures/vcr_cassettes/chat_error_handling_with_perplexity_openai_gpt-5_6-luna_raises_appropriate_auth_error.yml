@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"openai/gpt-5.6-luna","input":[{"role":"user","content":"Hello"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -23,7 +23,7 @@ http_interactions:
       message: Unauthorized
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:21:45 GMT
+      - Sun, 15 Nov 2026 01:19:47 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -34,13 +34,13 @@ http_interactions:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
-      Cf-Cache-Status:
-      - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
@@ -51,5 +51,5 @@ http_interactions:
         is correct and active.","type":"invalid_api_key","code":401}}
 
         '
-  recorded_at: Fri, 13 Nov 2026 21:21:45 GMT
-recorded_with: VCR 6.4.1
+  recorded_at: Sun, 15 Nov 2026 01:19:47 GMT
+recorded_with: VCR 6.4.0

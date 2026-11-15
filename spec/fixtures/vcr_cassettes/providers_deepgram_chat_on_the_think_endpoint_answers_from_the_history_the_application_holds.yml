@@ -9,7 +9,7 @@ http_interactions:
         is Ada. Reply with just OK."}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Token <DEEPGRAM_API_KEY>
       Content-Type:
@@ -35,15 +35,15 @@ http_interactions:
       Access-Control-Expose-Headers:
       - dg-model-name,dg-model-uuid,dg-additional-model-uuids,dg-char-count,dg-request-id,dg-project-id,dg-error,dg-breaks-applied,dg-pronunciations-applied,dg-pronunciation-warnings,dg-engine-instance
       Dg-Request-Id:
-      - 01a1d705-6105-757b-b702-37a40182b55c
+      - 01a1dcca-0a35-753e-9024-eff8ead8a305
       Transfer-Encoding:
       - chunked
       Date:
-      - Fri, 13 Nov 2026 22:26:56 GMT
+      - Sun, 15 Nov 2026 01:19:50 GMT
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"chatcmpl-91052035-cfaa-4399-8dc8-fa561aca6574","choices":[{"index":0,"message":{"content":"OK","refusal":null,"role":"assistant"},"finish_reason":"stop","logprobs":null}],"created":1794608816,"model":"think-fast","object":"chat.completion","usage":{"prompt_tokens":22,"completion_tokens":2,"total_tokens":24,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0}}}'
-  recorded_at: Fri, 13 Nov 2026 22:26:56 GMT
+      string: '{"id":"chatcmpl-ff04564d-05b8-476a-9b50-26be55891096","choices":[{"index":0,"message":{"content":"OK","refusal":null,"role":"assistant"},"finish_reason":"stop","logprobs":null}],"created":1794705590,"model":"think-fast","object":"chat.completion","usage":{"prompt_tokens":22,"completion_tokens":2,"total_tokens":24,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0}}}'
+  recorded_at: Sun, 15 Nov 2026 01:19:50 GMT
 - request:
     method: post
     uri: https://agent.deepgram.com/v1/think
@@ -54,7 +54,7 @@ http_interactions:
         is my name? Reply with just the name."}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Token <DEEPGRAM_API_KEY>
       Content-Type:
@@ -80,13 +80,13 @@ http_interactions:
       Access-Control-Expose-Headers:
       - dg-model-name,dg-model-uuid,dg-additional-model-uuids,dg-char-count,dg-request-id,dg-project-id,dg-error,dg-breaks-applied,dg-pronunciations-applied,dg-pronunciation-warnings,dg-engine-instance
       Dg-Request-Id:
-      - 01a1d705-6342-76d8-b6fe-26cba8126043
+      - 01a1dcca-0f67-73a7-b656-e8d59f2a9f77
       Transfer-Encoding:
       - chunked
       Date:
-      - Fri, 13 Nov 2026 22:26:57 GMT
+      - Sun, 15 Nov 2026 01:19:52 GMT
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"chatcmpl-fba21193-340f-454c-b104-46342e4f7484","choices":[{"index":0,"message":{"content":"Ada","refusal":null,"role":"assistant"},"finish_reason":"stop","logprobs":null}],"created":1794608816,"model":"think-fast","object":"chat.completion","usage":{"prompt_tokens":44,"completion_tokens":2,"total_tokens":46,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0}}}'
-  recorded_at: Fri, 13 Nov 2026 22:26:57 GMT
-recorded_with: VCR 6.4.1
+      string: '{"id":"chatcmpl-5a647148-a66d-4d9c-90b7-ab96f0819511","choices":[{"index":0,"message":{"content":"Ada","refusal":null,"role":"assistant"},"finish_reason":"stop","logprobs":null}],"created":1794705592,"model":"think-fast","object":"chat.completion","usage":{"prompt_tokens":44,"completion_tokens":2,"total_tokens":46,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0}}}'
+  recorded_at: Sun, 15 Nov 2026 01:19:52 GMT
+recorded_with: VCR 6.4.0

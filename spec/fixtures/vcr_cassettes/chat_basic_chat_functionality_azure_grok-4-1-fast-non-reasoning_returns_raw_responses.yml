@@ -9,7 +9,7 @@ http_interactions:
         is the capital of France?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -26,7 +26,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 13 Nov 2026 21:21:38 GMT
+      - Sun, 15 Nov 2026 01:19:44 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
@@ -46,13 +46,13 @@ http_interactions:
       X-Watermark:
       - 'false'
       Traceparent:
-      - 00-45f616da5cb0d5b27abb839fa9d4190f-d5531952000b228f-00
+      - 00-26bef8910d7722684894301cd0f6f89e-a676ba98000d7734-00
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Ms-Client-Request-Id:
-      - ebadfadd-61c4-4762-9e73-1c68643cbe8d
+      - 2c1755bf-8401-4cf9-b08f-6b492dd277d7
       Azureml-Model-Session:
-      - d20261110015917-e7d4cb48
+      - d20261110012600-4baac0fe
       X-Ms-Inference-Retry-History:
       - '{"v":1,"entries":[{"service_id":"mir.frontdoor","layer":"regional","role":"direct","retries":0}]}'
       Azureai-Requested-Tier:
@@ -64,9 +64,9 @@ http_interactions:
       X-Ratelimit-Key:
       - grok-4-1-fast-non-reasoning
       X-Ratelimit-Remaining-Requests:
-      - '49'
+      - '47'
       X-Ratelimit-Reset-Requests:
-      - '1'
+      - '3'
       X-Ratelimit-Limit-Requests:
       - '50'
       X-Ratelimit-Renewalperiod-Requests:
@@ -86,9 +86,9 @@ http_interactions:
       Azureai-Fe-Offer-Type:
       - paygo
       Apim-Request-Id:
-      - ebadfadd-61c4-4762-9e73-1c68643cbe8d
+      - 2c1755bf-8401-4cf9-b08f-6b492dd277d7
       X-Http2-Stream-Id:
-      - '195'
+      - '651'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -97,12 +97,6 @@ http_interactions:
       - West Europe
     body:
       encoding: UTF-8
-      string: '{"id":"2aa72f20-074d-4ca8-9868-b0b9610342d7","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"**Paris**
-        is the capital of France. \n\nThis is a well-established fact: Paris has served
-        as the political, cultural, and economic center of France since the early
-        Middle Ages, officially recognized as the capital under the French monarchy
-        and reaffirmed through the French Revolution and subsequent republics. You
-        can verify this via official sources like the French government''s website
-        (e.g., diplomatie.gouv.fr) or encyclopedias like Britannica."},"finish_reason":"stop"}],"usage":{"prompt_tokens":175,"completion_tokens":85,"total_tokens":260,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":161,"audio_tokens":0,"text_tokens":175,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1794604898,"object":"chat.completion","prompt_filter_results":null}'
-  recorded_at: Fri, 13 Nov 2026 21:21:39 GMT
-recorded_with: VCR 6.4.1
+      string: '{"id":"e23aef2d-1ca2-4a53-b198-129e8f5ef694","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"Paris"},"finish_reason":"stop"}],"usage":{"prompt_tokens":175,"completion_tokens":1,"total_tokens":176,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":161,"audio_tokens":0,"text_tokens":175,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1794705584,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Sun, 15 Nov 2026 01:19:45 GMT
+recorded_with: VCR 6.4.0

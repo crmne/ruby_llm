@@ -12,7 +12,7 @@ http_interactions:
         description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -33,7 +33,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Fri, 13 Nov 2026 21:24:10 GMT
+      - Sun, 15 Nov 2026 01:22:52 GMT
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -43,20 +43,21 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - c1fdb2ddced3e1e1b62dee85f1a9bca1
+      - 8a04f72bb089cfceb8b39fcd6656ea89
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 4786bcd6a5ee692459814ef0ab252684.cloudfront.net (CloudFront)
+      - 1.1 d478b9a820d52f4705130f24b8ab6b94.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL50-P4
+      - TXL50-P6
       X-Amz-Cf-Id:
-      - DtiYQkk7bIztq8Pqilg3jM5BGDz9-plhXpGZRsW3ip1JJ1FfrTeJRw==
+      - "-EIw-gwUFyR2SGENQhuuOqcs4Fni5QY0Jmv_CroWBlpn8eiNt2oa6Q=="
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"fabe275c-7624-446d-af09-61ee423d50d2","object":"chat.completion","created":1794605050,"model":"deepseek-flash","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning_content":"","tool_calls":[{"index":0,"id":"call_00_ET_vVqyVv3QGWMWhFSp7QMj5334","type":"function","function":{"name":"any_of_params","arguments":"{\"task\":
-        \"Review PR\", \"status\": \"pending\"}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":366,"completion_tokens":56,"total_tokens":422,"prompt_tokens_details":{"cached_tokens":128},"completion_tokens_details":{"reasoning_tokens":0},"prompt_cache_hit_tokens":128,"prompt_cache_miss_tokens":238},"system_fingerprint":"bc19ba97cbe016479903222bb1578db6"}'
-  recorded_at: Fri, 13 Nov 2026 21:24:12 GMT
-recorded_with: VCR 6.4.1
+      string: '{"id":"983f4fc5-1df1-49fd-8c43-eaa252330fbc","object":"chat.completion","created":1794705772,"model":"deepseek-flash","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
+        call the tool with the requested arguments.","reasoning_content":"","tool_calls":[{"index":0,"id":"call_00_ET_T8M1FkmSdtiD5d9FLSKh2056","type":"function","function":{"name":"any_of_params","arguments":"{\"task\":
+        \"Review PR\", \"status\": \"pending\"}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":366,"completion_tokens":65,"total_tokens":431,"prompt_tokens_details":{"cached_tokens":128},"completion_tokens_details":{"reasoning_tokens":0},"prompt_cache_hit_tokens":128,"prompt_cache_miss_tokens":238},"system_fingerprint":"bc19ba97cbe016479903222bb1578db6"}'
+  recorded_at: Sun, 15 Nov 2026 01:22:53 GMT
+recorded_with: VCR 6.4.0

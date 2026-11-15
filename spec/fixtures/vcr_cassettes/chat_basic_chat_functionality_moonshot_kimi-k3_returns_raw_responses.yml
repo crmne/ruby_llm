@@ -9,7 +9,7 @@ http_interactions:
         capital of France?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:24:28 GMT
+      - Sun, 15 Nov 2026 01:22:46 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -33,11 +33,8 @@ http_interactions:
       - keep-alive
       Set-Cookie:
       - "<COOKIE>"
-      Vary:
-      - Accept-Encoding
-      - Origin
       X-Internal-Adhoc-Canary:
-      - '2666295442'
+      - '1897954185'
       Msh-Gid:
       - "<MOONSHOT_GROUP_ID>"
       Msh-Org-Id:
@@ -45,7 +42,7 @@ http_interactions:
       Msh-Project-Id:
       - "<MOONSHOT_PROJECT_ID>"
       Msh-Request-Id:
-      - 98669596-dfa8-11f1-bec7-00163e5443c0
+      - 0f179eea-e093-11f1-baf9-00163e7a3687
       Msh-Trace-Mode:
       - 'on'
       Msh-Uid:
@@ -54,8 +51,10 @@ http_interactions:
       - '0'
       Msh-Usage-Cache-Write-Tokens-5m:
       - '0'
+      Vary:
+      - Origin
       X-Msh-Trace-Id:
-      - a5992cc5aa6a3a2eef55a50458e61f68
+      - 196418e610516559678bf18e053d26ed
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Cf-Cache-Status:
@@ -66,17 +65,11 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"chatcmpl-0e6acf2f-0166-9c40-93ab-d441e434ad35","object":"chat.completion","created":1794605063,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        capital of France is **Paris**. It''s also the country''s largest city and
-        has been its capital for centuries, serving as a major center for art, culture,
-        fashion, and politics.","reasoning_content":"The user is asking a simple factual
-        question: \"What is the capital of France?\"\n\nThis is one of the most basic
-        geography questions. The capital of France is Paris. This is a straightforward
-        factual question with a clear, unambiguous answer.\n\nFormat considerations:
-        This deserves a very brief, direct answer. There''s no need for headers, bullet
-        points, or lengthy explanations. A single sentence is appropriate. I could
-        add a tiny bit of context if helpful, but honestly, for a question this simple,
-        just answering directly is best. Maybe I can add one small interesting detail,
-        but I shouldn''t overdo it."},"finish_reason":"stop"}],"usage":{"prompt_tokens":92,"completion_tokens":174,"total_tokens":266,"completion_tokens_details":{"reasoning_tokens":122},"prompt_tokens_details":{"cache_write_tokens":0}}}'
-  recorded_at: Fri, 13 Nov 2026 21:24:28 GMT
-recorded_with: VCR 6.4.1
+      string: '{"id":"chatcmpl-83d8a939-8383-9f5b-921c-4ce0b79e85fd","object":"chat.completion","created":1794705764,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        capital of France is **Paris**. It''s the country''s largest city and a major
+        <GOOGLE_CLOUD_LOCATION> center for art, fashion, gastronomy, and culture.","reasoning_content":"The
+        user is asking a simple factual question: the capital of France. This is Paris.
+        This is a straightforward factual question that requires a brief, direct answer.
+        No need for elaborate formatting or lengthy explanations. Just answer it simply."},"finish_reason":"stop"}],"usage":{"prompt_tokens":92,"completion_tokens":90,"total_tokens":182,"completion_tokens_details":{"reasoning_tokens":46},"prompt_tokens_details":{"cache_write_tokens":0}}}'
+  recorded_at: Sun, 15 Nov 2026 01:22:46 GMT
+recorded_with: VCR 6.4.0

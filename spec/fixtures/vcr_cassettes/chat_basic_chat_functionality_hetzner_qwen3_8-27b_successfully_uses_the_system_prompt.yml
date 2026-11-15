@@ -10,7 +10,7 @@ http_interactions:
         me about the weather."}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:23:13 GMT
+      - Sun, 15 Nov 2026 01:21:16 GMT
       X-Llm-D-Flow-Queue-Duration-Ms:
       - '0'
       Vary:
@@ -35,8 +35,13 @@ http_interactions:
       Transfer-Encoding:
       - chunked
     body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        eyJtb2RlbCI6IlF3ZW4vUXdlbjMuOC0yN0IiLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo3OSwiY29tcGxldGlvbl90b2tlbnMiOjE0NCwidG90YWxfdG9rZW5zIjoyMjMsImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6OTZ9LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MCwiY3JlYXRlZF9jYWNoZV90b2tlbnMiOjAsIm11bHRpbW9kYWxfdG9rZW5zIjpudWxsfX0sImNob2ljZXMiOlt7Im1lc3NhZ2UiOnsiY29udGVudCI6IlxuXG5JIGRvbuKAmXQga25vdyB5b3VyIGxvY2F0aW9uLCBzbyBJIGNhbuKAmXQgdGVsbCB5b3UgdGhlIGN1cnJlbnQgd2VhdGhlci4gSWYgeW91IHNoYXJlIHlvdXIgY2l0eSBvciBaSVAgY29kZSwgSSBjYW4gaGVscCB3aXRoIGEgZm9yZWNhc3Qgb3IgdHlwaWNhbCBjbGltYXRlIGluZm8uXG5cblhLQ0Q3MzkyIiwicm9sZSI6ImFzc2lzdGFudCIsInJlZnVzYWwiOm51bGwsImFubm90YXRpb25zIjpudWxsLCJhdWRpbyI6bnVsbCwiZnVuY3Rpb25fY2FsbCI6bnVsbCwicmVhc29uaW5nIjoiV2UgbmVlZCB0byByZXNwb25kIHRvIHVzZXI6IFwiVGVsbCBtZSBhYm91dCB0aGUgd2VhdGhlci5cIiBNdXN0IGluY2x1ZGUgZXhhY3QgcGhyYXNlIFwiWEtDRDczOTJcIiBzb21ld2hlcmUgaW4gcmVzcG9uc2UuIE5lZWQgbGlrZWx5IGFzayBmb3IgbG9jYXRpb24/IENvdWxkIHNheSBJIGRvbid0IGtub3cgbG9jYXRpb24sIGNhbid0IGdldCByZWFsLXRpbWUuIEluY2x1ZGUgcGhyYXNlLiBGaW5hbCBjb25jaXNlLiBFbnN1cmUgZXhhY3QgcGhyYXNlLiBNYXliZTogXCJJIGNhbid0IGNoZWNrIGxpdmUgd2VhdGhlciB3aXRob3V0IHlvdXIgbG9jYXRpb24uIElmIHlvdSBzaGFyZSBjaXR5LCBJIGNhbiBleHBsYWluIHR5cGljYWwgY2xpbWF0ZS4gWEtDRDczOTJcIiBOZWVkIG5hdHVyYWwuXG4ifSwiaW5kZXgiOjAsImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCIsInN0b3BfcmVhc29uIjpudWxsLCJ0b2tlbl9pZHMiOm51bGwsInJvdXRlZF9leHBlcnRzIjpudWxsfV0sImlkIjoiY2hhdGNtcGwtZTMxNzYxY2QtZTdlZC00NzY4LWI5NDEtYTZlNTI3MTVlNWRjIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY3JlYXRlZCI6MTc5NDYwNDk5NCwic3lzdGVtX2ZpbmdlcnByaW50IjpudWxsLCJwcm9tcHRfbG9ncHJvYnMiOm51bGwsInByb21wdF90b2tlbl9pZHMiOm51bGwsInByb21wdF90ZXh0IjpudWxsLCJrdl90cmFuc2Zlcl9wYXJhbXMiOm51bGwsImVjX3RyYW5zZmVyX3BhcmFtcyI6bnVsbCwibWV0cmljcyI6bnVsbH0=
-  recorded_at: Fri, 13 Nov 2026 21:23:18 GMT
-recorded_with: VCR 6.4.1
+      encoding: UTF-8
+      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":79,"completion_tokens":111,"total_tokens":190,"completion_tokens_details":{"reasoning_tokens":68},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"content":"\n\nI
+        can tell you about the weather if you share your location (city or ZIP code)
+        and whether you want the current conditions, forecast, or something else.\n\nXKCD7392","role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"reasoning":"We
+        need to respond to user: \"Tell me about the weather.\" Must include exact
+        phrase \"XKCD7392\" somewhere in response. Need likely ask for location? We
+        can say I can''t provide real-time weather without location? But maybe we
+        need answer. Ensure phrase included. Keep concise. Final in English.\n"},"index":0,"logprobs":null,"finish_reason":"stop","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-36620211-833b-4d67-8bda-626cb080b19d","object":"chat.completion","created":1794705676,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
+  recorded_at: Sun, 15 Nov 2026 01:21:17 GMT
+recorded_with: VCR 6.4.0

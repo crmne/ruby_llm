@@ -9,7 +9,7 @@ http_interactions:
         is the creator of the programming language Ruby?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,62 +24,62 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:24:14 GMT
+      - Sun, 15 Nov 2026 01:22:36 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
       Mistral-Correlation-Id:
-      - 01a1d6cb-f396-765b-8c34-2ac3e00b485c
+      - 01a1dccc-8d3a-7a01-a5a8-b31b853b8858
       X-Kong-Request-Id:
-      - 01a1d6cb-f396-765b-8c34-2ac3e00b485c
+      - 01a1dccc-8d3a-7a01-a5a8-b31b853b8858
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '98804'
+      - '98285'
       X-Ratelimit-Tokens-Query-Cost:
-      - '146'
+      - '153'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
       - '97'
       X-Envoy-Upstream-Service-Time:
-      - '1524'
+      - '963'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '1525'
+      - '964'
       X-Kong-Proxy-Latency:
-      - '21'
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
+      - '16'
       X-Content-Type-Options:
       - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"50bf868041ce461c8dc3306c6bdd6bc3","created":1794605052,"model":"mistral-small-latest","usage":{"prompt_tokens":25,"total_tokens":146,"completion_tokens":121,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+      string: '{"id":"24e19492d96448f48875c8a0b0e4e224","created":1794705755,"model":"mistral-small-latest","usage":{"prompt_tokens":25,"total_tokens":153,"completion_tokens":128,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
         creator of the **Ruby** programming language is **Yukihiro \"Matz\" Matsumoto**.\n\nHe
         began working on Ruby in **1993** and released the first public version (**Ruby
-        0.95**) in **1995**. Matz designed Ruby with the philosophy of making programming
-        **fun and productive**, emphasizing simplicity, flexibility, and developer
-        happiness.\n\nRuby is known for its elegant syntax, object-oriented nature,
-        and strong community support, particularly with the **Ruby on Rails** web
-        framework.\n\nWould you like more details about Ruby''s history or features?"}}]}'
-  recorded_at: Fri, 13 Nov 2026 21:24:14 GMT
+        0.95**) in **1995**. Ruby was designed with a focus on **simplicity, productivity,
+        and developer happiness**, drawing inspiration from languages like **Perl,
+        Smalltalk, Eiffel, Ada, and Lisp**.\n\nMatz continues to oversee Ruby''s development
+        as part of the **Ruby Core Team**.\n\nWould you like to know more about Ruby''s
+        design philosophy or its evolution?"}}]}'
+  recorded_at: Sun, 15 Nov 2026 01:22:36 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
@@ -89,15 +89,15 @@ http_interactions:
         is the creator of the programming language Ruby?"},{"role":"assistant","content":"The
         creator of the **Ruby** programming language is **Yukihiro \"Matz\" Matsumoto**.\n\nHe
         began working on Ruby in **1993** and released the first public version (**Ruby
-        0.95**) in **1995**. Matz designed Ruby with the philosophy of making programming
-        **fun and productive**, emphasizing simplicity, flexibility, and developer
-        happiness.\n\nRuby is known for its elegant syntax, object-oriented nature,
-        and strong community support, particularly with the **Ruby on Rails** web
-        framework.\n\nWould you like more details about Ruby''s history or features?"},{"role":"user","content":"What
-        year did he create Ruby?"}],"stream":false}'
+        0.95**) in **1995**. Ruby was designed with a focus on **simplicity, productivity,
+        and developer happiness**, drawing inspiration from languages like **Perl,
+        Smalltalk, Eiffel, Ada, and Lisp**.\n\nMatz continues to oversee Ruby''s development
+        as part of the **Ruby Core Team**.\n\nWould you like to know more about Ruby''s
+        design philosophy or its evolution?"},{"role":"user","content":"What year
+        did he create Ruby?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -112,55 +112,55 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:24:14 GMT
+      - Sun, 15 Nov 2026 01:22:36 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
       Mistral-Correlation-Id:
-      - 01a1d6cb-f9f8-72e0-bbe7-89ec9fdfacfb
+      - 01a1dccc-9146-744e-85c5-007e1cf21a60
       X-Kong-Request-Id:
-      - 01a1d6cb-f9f8-72e0-bbe7-89ec9fdfacfb
+      - 01a1dccc-9146-744e-85c5-007e1cf21a60
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '98782'
+      - '98140'
       X-Ratelimit-Tokens-Query-Cost:
-      - '201'
+      - '208'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
       - '96'
       X-Envoy-Upstream-Service-Time:
-      - '388'
+      - '413'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '390'
+      - '413'
       X-Kong-Proxy-Latency:
-      - '22'
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
+      - '10'
       X-Content-Type-Options:
       - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"468eb7fc104f42ca95a3a9629aa413f9","created":1794605054,"model":"mistral-small-latest","usage":{"prompt_tokens":155,"total_tokens":201,"completion_tokens":46,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"Yukihiro
-        \"Matz\" Matsumoto began developing Ruby in **1993**, and the first public
-        version (**Ruby 0.95**) was released in **December 1995**."}}]}'
-  recorded_at: Fri, 13 Nov 2026 21:24:14 GMT
-recorded_with: VCR 6.4.1
+      string: '{"id":"7484237038ac4bc089e9ac55ce1b08bd","created":1794705756,"model":"mistral-small-latest","usage":{"prompt_tokens":162,"total_tokens":208,"completion_tokens":46,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"Yukihiro
+        \"Matz\" Matsumoto began working on Ruby in **1993** and released the first
+        public version (**Ruby 0.95**) in **December 1995**."}}]}'
+  recorded_at: Sun, 15 Nov 2026 01:22:36 GMT
+recorded_with: VCR 6.4.0

@@ -11,7 +11,7 @@ http_interactions:
         of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -26,23 +26,37 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 13 Nov 2026 21:29:06 GMT
-      Content-Length:
-      - '1225'
+      - Sun, 15 Nov 2026 01:29:57 GMT
+      Transfer-Encoding:
+      - chunked
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-166","object":"chat.completion","created":1794605346,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
+      string: '{"id":"chatcmpl-59","object":"chat.completion","created":1794706197,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
         the user wants me to call the array params tool with the tags [\"red\", \"blue\"]
-        and get the combined tags. Let me check the function definition.\n\nThe function
-        is named \"array_params\" and it takes an argument called \"tags\" which is
-        an array of strings. The description says it''s for combining tags. So I need
-        to pass the tags array as the argument.\n\nWait, the function parameters are
-        defined as an object with an array under \"tags\". So the correct way is to
-        structure the arguments as {\"tags\": [\"red\", \"blue\"]}.\n\nI should make
-        sure there are no other parameters. The tool''s function only has the tags
-        array. So the JSON should be straightforward. Let me format the tool call
-        correctly inside the XML tags.\n","tool_calls":[{"id":"call_l5kfxm1g","index":0,"type":"function","function":{"name":"array_params","arguments":"{\"tags\":[\"red\",\"blue\"]}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":162,"prompt_tokens_details":{"cached_tokens":2},"completion_tokens":183,"total_tokens":345}}
+        and get the combined tags. Let me check the function definition.\n\nThe tool''s
+        function is described as having an array parameter called \"tags\" which is
+        an array of strings. The purpose is to combine them. So I need to structure
+        the tool call correctly.\n\nI should use the function name provided in the
+        tool definition. Wait, the function''s name isn''t explicitly given here.
+        The user mentioned \"array params tool,\" so maybe the function is named something
+        like \"combineTags\" or \"arrayParams.\" But looking back, the function''s
+        JSON shows the parameters, but the name isn''t specified. Hmm, maybe the function''s
+        name is implied by the context. Since the user refers to it as the \"array
+        params tool,\" perhaps the function is named \"arrayParams\" or \"combineTags.\"
+        Wait, the user might have provided the function''s name in the tool''s JSON.
+        Let me check again.\n\nLooking at the tools section: the function is defined
+        with the array_params key, which might be the function''s name. So the function
+        name is \"array_params.\" Then, the arguments should include the tags array.
+        So the tool call would be to \"array_params\" with the tags [\"red\", \"blue\"].
+        \n\nWait, but in the function''s JSON, the parameters are under \"array_params\"
+        with the tags array. So the function''s name is \"array_params,\" and the
+        argument is \"tags\" with the array. So the correct tool call would be to
+        call \"array_params\" with {\"tags\": [\"red\", \"blue\"]}.\n\nSo I need to
+        output the tool_call JSON inside the XML tags. Let me make sure I''m not missing
+        anything. The user wants the combined tags, so after calling the function,
+        the response would be the combined result. But the user''s instruction is
+        just to call the tool with those tags. So the correct tool call is as described.\n","tool_calls":[{"id":"call_8ay7mp2w","index":0,"type":"function","function":{"name":"array_params","arguments":"{\"tags\":[\"red\",\"blue\"]}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":162,"prompt_tokens_details":{"cached_tokens":2},"completion_tokens":431,"total_tokens":593}}
 
         '
-  recorded_at: Fri, 13 Nov 2026 21:29:06 GMT
-recorded_with: VCR 6.4.1
+  recorded_at: Sun, 15 Nov 2026 01:29:57 GMT
+recorded_with: VCR 6.4.0

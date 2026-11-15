@@ -9,7 +9,7 @@ http_interactions:
         hi in one word."}],"instructions":"","completion_args":{},"tools":[],"store":false,"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,47 +24,47 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:20:47 GMT
+      - Sun, 15 Nov 2026 01:19:24 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
       Mistral-Correlation-Id:
-      - 01a1d6c8-ce72-7ede-87e8-2199d2701d4b
+      - 01a1dcc9-a391-7a93-8d52-bd5fe577768c
       X-Kong-Request-Id:
-      - 01a1d6c8-ce72-7ede-87e8-2199d2701d4b
+      - 01a1dcc9-a391-7a93-8d52-bd5fe577768c
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
       - '99976'
       X-Envoy-Upstream-Service-Time:
-      - '377'
+      - '281'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '382'
+      - '285'
       X-Kong-Proxy-Latency:
-      - '17'
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
+      - '20'
       X-Content-Type-Options:
       - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"object":"conversation.response","conversation_id":"conv_01a1d6c8ceaa71a897ed71ca07e79bc8","outputs":[{"object":"entry","type":"message.output","created_at":"2026-11-13T21:20:47.068841Z","completed_at":"2026-11-13T21:20:47.085632Z","model":"mistral-small-latest","id":"msg_01a1d6c8cfdc73e4af522b5430e3b62e","role":"assistant","content":"Hi!"}],"usage":{"prompt_tokens":21,"completion_tokens":3,"total_tokens":24},"guardrails":null}'
-  recorded_at: Fri, 13 Nov 2026 21:20:47 GMT
+      string: '{"object":"conversation.response","conversation_id":"conv_01a1dcc9a3ba71dcb94f8290caace424","outputs":[{"object":"entry","type":"message.output","created_at":"2026-11-15T01:19:24.835724Z","completed_at":"2026-11-15T01:19:24.847768Z","model":"mistral-small-latest","id":"msg_01a1dcc9a4a37059a48b6ccbc0ea9677","role":"assistant","content":"Hi!"}],"usage":{"prompt_tokens":21,"completion_tokens":3,"total_tokens":24},"guardrails":null}'
+  recorded_at: Sun, 15 Nov 2026 01:19:24 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/responses/input_tokens
@@ -75,7 +75,7 @@ http_interactions:
         again."}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -90,35 +90,35 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:20:47 GMT
+      - Sun, 15 Nov 2026 01:19:26 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
       Mistral-Correlation-Id:
-      - 01a1d6c8-d045-78d7-8933-3dc4a870c433
+      - 01a1dcc9-a707-7bfb-b627-2add10952f70
       X-Kong-Request-Id:
-      - 01a1d6c8-d045-78d7-8933-3dc4a870c433
+      - 01a1dcc9-a707-7bfb-b627-2add10952f70
       X-Envoy-Upstream-Service-Time:
-      - '675'
+      - '590'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '677'
+      - '591'
       X-Kong-Proxy-Latency:
-      - '20'
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
+      - '14'
       X-Content-Type-Options:
       - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
@@ -126,5 +126,5 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '{"input_tokens":29,"object":"response.input_tokens"}'
-  recorded_at: Fri, 13 Nov 2026 21:20:47 GMT
-recorded_with: VCR 6.4.1
+  recorded_at: Sun, 15 Nov 2026 01:19:26 GMT
+recorded_with: VCR 6.4.0

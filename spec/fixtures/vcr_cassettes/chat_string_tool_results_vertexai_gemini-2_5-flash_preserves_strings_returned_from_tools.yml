@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Pragma:
-      - no-cache
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
+      Pragma:
+      - no-cache
       Date:
-      - Fri, 13 Nov 2026 21:38:04 GMT
+      - Sun, 15 Nov 2026 01:40:04 GMT
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -51,12 +51,12 @@ http_interactions:
       string: |-
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
-          "expires_in": 3598,
+          "expires_in": 3599,
           "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Fri, 13 Nov 2026 21:38:04 GMT
+  recorded_at: Sun, 15 Nov 2026 01:40:04 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -68,7 +68,7 @@ http_interactions:
         to process"}},"required":["query"],"additionalProperties":false,"strict":true}}]}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -83,7 +83,7 @@ http_interactions:
       message: OK
     headers:
       X-Goog-Request-Id:
-      - PIP3atKhB7fkvNkPh-i8gAQ
+      - dA35apaNFbncvNkP6bWo6Qo
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -91,7 +91,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Fri, 13 Nov 2026 21:38:04 GMT
+      - Sun, 15 Nov 2026 01:40:05 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -120,7 +120,7 @@ http_interactions:
                         "query": "test data"
                       }
                     },
-                    "thoughtSignature": "AY89a1/qCwEinaO+YvCCKvgF3gzzyWBx5iUvcR2Gvlg3YxhWe1FURD7LazIjQEoz0WRbzhZO7O6O1AoZqsI1XE8qY4IzYJZTM4dFc6JfPPbnYTvrY4Le410NXOtfPL53XweAUbpshFbtOqSOhAzEApNoVfp7NqL59eBwJHYA9V1WjXEpUL8Yqb0n2luV8RMabFpU2McNHiDqn8ew/2u+OzotAXqTAgmS+uMddbmFTuP+mLG1bQyZUmmied/wMd7yurr/gyFwi9nMa+AMWtYRK6Cmx2RYAQ8ZWNMqFFdaehP7biE0GaiBf39XY8gp5O7oF6MHHCBGQk4HlPsDFqAAUVAc2pDI6L7n+U/E6ormz4UbG4GULwkfGamvOVwE2UN6YszcVTjMAlhVEsXEmu3vU4/XpG/XdtSPrqwBBmkf4NO0GV+YKPuVujo6Ek05sMQjug3I+Jae+LL2w5YBKUIl84JkRWx0JgP4wi/LTOCvnXtRlXlbumIDumdXVdVnQ3lreOUhvqc="
+                    "thoughtSignature": "AY89a1+utKy0oBhFijEs8Vr0fwn3DO73sFZH6zdmQFPMGalJY45bkaEptsoCIqwCHc1th1/SNYX8v0ZgcpQFWsQCz2QvMCHlFx3xVtXQAakqhkENcBk5es3bigdVZrXF3BFJfmaQbBeAtbk2MejQFtllAJEWq7FYt8KawOj87Y5ZfaJlb9B/JQrYYm8HzQNEL0mT41T8w58jj87i7e3+oV86OuZx9S8H2ArnUJ0wF6Ek+tOt7VS09aHHAV1JJQUbN1z18nPHP5lR6REZU5hD/CAQF2LErHCt1ZcG359UumEb/RX8ZsysyVrAERlBOxdr580dx+Co94bu/RYhY4R14byEKyo0Xsnpd6/OVlNdbBZd5+sjLA06W0n3ycmh7Q97PHNi3EtxBjgwrZZiDP7zmAp8q0efzg52c2tfln064gDl+mSkuhCJuzFSAkrLSpZNjoPPvFL7i2QGS2XL8CV+ZL2XM/Mr0bbtxH1kblkrd0TqwTack57Qnuak0O69AjWGwF6bIUsyyrHPZlnH"
                   }
                 ]
               },
@@ -130,7 +130,7 @@ http_interactions:
           "usageMetadata": {
             "promptTokenCount": 14,
             "candidatesTokenCount": 15,
-            "totalTokenCount": 102,
+            "totalTokenCount": 100,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -144,13 +144,13 @@ http_interactions:
                 "tokenCount": 15
               }
             ],
-            "thoughtsTokenCount": 73
+            "thoughtsTokenCount": 71
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-11-13T21:38:04.118994Z",
-          "responseId": "PIP3atKhB7fkvNkPh-i8gAQ"
+          "createTime": "2026-11-15T01:40:04.345750Z",
+          "responseId": "dA35apaNFbncvNkP6bWo6Qo"
         }
-  recorded_at: Fri, 13 Nov 2026 21:38:04 GMT
+  recorded_at: Sun, 15 Nov 2026 01:40:05 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -158,13 +158,13 @@ http_interactions:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"Process this query: test
         data"}]},{"role":"model","parts":[{"functionCall":{"name":"content_returning","args":{"query":"test
-        data"}},"thoughtSignature":"AY89a1/qCwEinaO+YvCCKvgF3gzzyWBx5iUvcR2Gvlg3YxhWe1FURD7LazIjQEoz0WRbzhZO7O6O1AoZqsI1XE8qY4IzYJZTM4dFc6JfPPbnYTvrY4Le410NXOtfPL53XweAUbpshFbtOqSOhAzEApNoVfp7NqL59eBwJHYA9V1WjXEpUL8Yqb0n2luV8RMabFpU2McNHiDqn8ew/2u+OzotAXqTAgmS+uMddbmFTuP+mLG1bQyZUmmied/wMd7yurr/gyFwi9nMa+AMWtYRK6Cmx2RYAQ8ZWNMqFFdaehP7biE0GaiBf39XY8gp5O7oF6MHHCBGQk4HlPsDFqAAUVAc2pDI6L7n+U/E6ormz4UbG4GULwkfGamvOVwE2UN6YszcVTjMAlhVEsXEmu3vU4/XpG/XdtSPrqwBBmkf4NO0GV+YKPuVujo6Ek05sMQjug3I+Jae+LL2w5YBKUIl84JkRWx0JgP4wi/LTOCvnXtRlXlbumIDumdXVdVnQ3lreOUhvqc="}]},{"role":"user","parts":[{"functionResponse":{"name":"content_returning","response":{"name":"content_returning","content":[{"text":"Processed:
+        data"}},"thoughtSignature":"AY89a1+utKy0oBhFijEs8Vr0fwn3DO73sFZH6zdmQFPMGalJY45bkaEptsoCIqwCHc1th1/SNYX8v0ZgcpQFWsQCz2QvMCHlFx3xVtXQAakqhkENcBk5es3bigdVZrXF3BFJfmaQbBeAtbk2MejQFtllAJEWq7FYt8KawOj87Y5ZfaJlb9B/JQrYYm8HzQNEL0mT41T8w58jj87i7e3+oV86OuZx9S8H2ArnUJ0wF6Ek+tOt7VS09aHHAV1JJQUbN1z18nPHP5lR6REZU5hD/CAQF2LErHCt1ZcG359UumEb/RX8ZsysyVrAERlBOxdr580dx+Co94bu/RYhY4R14byEKyo0Xsnpd6/OVlNdbBZd5+sjLA06W0n3ycmh7Q97PHNi3EtxBjgwrZZiDP7zmAp8q0efzg52c2tfln064gDl+mSkuhCJuzFSAkrLSpZNjoPPvFL7i2QGS2XL8CV+ZL2XM/Mr0bbtxH1kblkrd0TqwTack57Qnuak0O69AjWGwF6bIUsyyrHPZlnH"}]},{"role":"user","parts":[{"functionResponse":{"name":"content_returning","response":{"name":"content_returning","content":[{"text":"Processed:
         test data"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"content_returning","description":"Returns
         a processed string result","parametersJsonSchema":{"type":"object","properties":{"query":{"type":"string","description":"Query
         to process"}},"required":["query"],"additionalProperties":false,"strict":true}}]}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -179,7 +179,7 @@ http_interactions:
       message: OK
     headers:
       X-Goog-Request-Id:
-      - PIP3aoHXMvfDhcIPwpHMEQ
+      - dQ35atGaFPez2fMP_6SFoQI
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -187,7 +187,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Fri, 13 Nov 2026 21:38:05 GMT
+      - Sun, 15 Nov 2026 01:40:05 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -218,14 +218,14 @@ http_interactions:
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 106,
+            "promptTokenCount": 104,
             "candidatesTokenCount": 10,
-            "totalTokenCount": 116,
+            "totalTokenCount": 114,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 106
+                "tokenCount": 104
               }
             ],
             "candidatesTokensDetails": [
@@ -236,8 +236,8 @@ http_interactions:
             ]
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-11-13T21:38:04.830337Z",
-          "responseId": "PIP3aoHXMvfDhcIPwpHMEQ"
+          "createTime": "2026-11-15T01:40:05.331089Z",
+          "responseId": "dQ35atGaFPez2fMP_6SFoQI"
         }
-  recorded_at: Fri, 13 Nov 2026 21:38:05 GMT
-recorded_with: VCR 6.4.1
+  recorded_at: Sun, 15 Nov 2026 01:40:05 GMT
+recorded_with: VCR 6.4.0

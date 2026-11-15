@@ -12,7 +12,7 @@ http_interactions:
         email"}},"required":["email"],"additionalProperties":false,"strict":true},"strict":false,"defer_loading":true}]},{"type":"tool_search"}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:21:44 GMT
+      - Sun, 15 Nov 2026 01:20:41 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -51,7 +51,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1661'
+      - '1146'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -78,16 +78,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0d2baf1147b02093016af77f66bf7087d2ab68fc3324809451",
+          "id": "resp_03b07ffa3f446da7016af908e8284887d2ae34d704633db573",
           "object": "response",
-          "created_at": 1794604902,
+          "created_at": 1794705640,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794604904,
+          "completed_at": 1794705641,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
@@ -102,7 +102,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "tsc_0d2baf1147b02093016af77f67915087d28b541188d5637d7e",
+              "id": "tsc_03b07ffa3f446da7016af908e8afe087d2a02d1aaf251afaf4",
               "type": "tool_search_call",
               "status": "completed",
               "arguments": {
@@ -114,7 +114,7 @@ http_interactions:
               "execution": "server"
             },
             {
-              "id": "tso_0d2baf1147b02093016af77f67ae9c87d2b99bb0c4bd0974c4",
+              "id": "tso_03b07ffa3f446da7016af908e8cddc87d2becc87a9584cd204",
               "type": "tool_search_output",
               "status": "completed",
               "call_id": null,
@@ -152,11 +152,11 @@ http_interactions:
               ]
             },
             {
-              "id": "fc_0d2baf1147b02093016af77f68348c87d28f3c10cf287f098c",
+              "id": "fc_03b07ffa3f446da7016af908e9191887d2a31a39193f90b1bc",
               "type": "function_call",
               "status": "completed",
               "arguments": "{\"email\":\"ada@example.com\"}",
-              "call_id": "call_Kc8wpyV6wmeccT026ZGjB1qW",
+              "call_id": "call_LcN17YUsfByzUVUOsnfqzsyY",
               "name": "customer_lookup",
               "namespace": "crm"
             }
@@ -244,6 +244,10 @@ http_interactions:
             "input_tokens": 562,
             "input_tokens_details": {
               "cache_write_tokens": 0,
+              "cache_write_tokens_details": {
+                "ttl_12h_tokens": 0,
+                "ttl_30m_tokens": 0
+              },
               "cached_tokens": 0
             },
             "output_tokens": 39,
@@ -255,24 +259,24 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Fri, 13 Nov 2026 21:21:44 GMT
+  recorded_at: Sun, 15 Nov 2026 01:20:41 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
       string: '{"model":"gpt-5.4","input":[{"role":"user","content":"Which plan is
-        the customer ada@example.com on? Use your tools."},{"id":"tsc_0d2baf1147b02093016af77f67915087d28b541188d5637d7e","type":"tool_search_call","status":"completed","arguments":{"paths":["crm"]},"call_id":null,"execution":"server"},{"id":"tso_0d2baf1147b02093016af77f67ae9c87d2b99bb0c4bd0974c4","type":"tool_search_output","status":"completed","call_id":null,"execution":"server","tools":[{"type":"namespace","description":"Customer
+        the customer ada@example.com on? Use your tools."},{"id":"tsc_03b07ffa3f446da7016af908e8afe087d2a02d1aaf251afaf4","type":"tool_search_call","status":"completed","arguments":{"paths":["crm"]},"call_id":null,"execution":"server"},{"id":"tso_03b07ffa3f446da7016af908e8cddc87d2becc87a9584cd204","type":"tool_search_output","status":"completed","call_id":null,"execution":"server","tools":[{"type":"namespace","description":"Customer
         records","name":"crm","tools":[{"type":"function","defer_loading":true,"description":"Finds
         a customer by email","name":"customer_lookup","output_schema":null,"parameters":{"type":"object","properties":{"email":{"type":"string","description":"Customer
-        email"}},"required":["email"],"additionalProperties":false,"strict":true},"strict":false}]}]},{"id":"fc_0d2baf1147b02093016af77f68348c87d28f3c10cf287f098c","type":"function_call","status":"completed","arguments":"{\"email\":\"ada@example.com\"}","call_id":"call_Kc8wpyV6wmeccT026ZGjB1qW","name":"customer_lookup","namespace":"crm"},{"type":"function_call_output","call_id":"call_Kc8wpyV6wmeccT026ZGjB1qW","output":"{\"email\":\"ada@example.com\",\"name\":\"Ada
+        email"}},"required":["email"],"additionalProperties":false,"strict":true},"strict":false}]}]},{"id":"fc_03b07ffa3f446da7016af908e9191887d2a31a39193f90b1bc","type":"function_call","status":"completed","arguments":"{\"email\":\"ada@example.com\"}","call_id":"call_LcN17YUsfByzUVUOsnfqzsyY","name":"customer_lookup","namespace":"crm"},{"type":"function_call_output","call_id":"call_LcN17YUsfByzUVUOsnfqzsyY","output":"{\"email\":\"ada@example.com\",\"name\":\"Ada
         Lovelace\",\"plan\":\"Pro\"}"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"namespace","name":"crm","description":"Customer
         records","tools":[{"type":"function","name":"customer_lookup","description":"Finds
         a customer by email","parameters":{"type":"object","properties":{"email":{"type":"string","description":"Customer
         email"}},"required":["email"],"additionalProperties":false,"strict":true},"strict":false,"defer_loading":true}]},{"type":"tool_search"}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -287,7 +291,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:21:45 GMT
+      - Sun, 15 Nov 2026 01:20:42 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -311,7 +315,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '723'
+      - '654'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -338,16 +342,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0d2baf1147b02093016af77f687b8c87d28ffeca473cfe1a39",
+          "id": "resp_03b07ffa3f446da7016af908e9631087d2a6cb02c32656d53f",
           "object": "response",
-          "created_at": 1794604904,
+          "created_at": 1794705641,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794604905,
+          "completed_at": 1794705641,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
@@ -362,7 +366,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_0d2baf1147b02093016af77f69097487d2ae304eeb1acfea8d",
+              "id": "msg_03b07ffa3f446da7016af908e9d0c487d2a1bfe28f9354e5b4",
               "type": "message",
               "status": "completed",
               "content": [
@@ -370,7 +374,7 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "ada@example.com is on the Pro plan."
+                  "text": "Ada Lovelace is on the Pro plan."
                 }
               ],
               "phase": "final_answer",
@@ -459,16 +463,20 @@ http_interactions:
             "input_tokens": 611,
             "input_tokens_details": {
               "cache_write_tokens": 0,
+              "cache_write_tokens_details": {
+                "ttl_12h_tokens": 0,
+                "ttl_30m_tokens": 0
+              },
               "cached_tokens": 0
             },
-            "output_tokens": 13,
+            "output_tokens": 14,
             "output_tokens_details": {
               "reasoning_tokens": 0
             },
-            "total_tokens": 624
+            "total_tokens": 625
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Fri, 13 Nov 2026 21:21:45 GMT
-recorded_with: VCR 6.4.1
+  recorded_at: Sun, 15 Nov 2026 01:20:42 GMT
+recorded_with: VCR 6.4.0

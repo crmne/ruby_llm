@@ -11,7 +11,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}]}],"toolConfig":{"functionCallingConfig":{"mode":"any","allowedFunctionNames":["weather"]}}}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -34,7 +34,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Fri, 13 Nov 2026 21:39:17 GMT
+      - Sun, 15 Nov 2026 01:41:15 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -44,7 +44,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=919
+      - gfet4t7; dur=840
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -65,7 +65,7 @@ http_interactions:
                         "longitude": "12.4964"
                       }
                     },
-                    "thoughtSignature": "CooDAWkUfRPmVLaZsqI1WMn3sr4Wv/xNyZpbwm629Fz9x72sn3HyPzAmiWakAOn4pc+ye1KIvWpmz0WwNugdSul/W9XRTa/h1hfLhWKqvuT79pYOTtD+/QYXtqMqPvPoTkb6PVa6YmpDxX6Zd5LRqwgch8ZYdSUhwBbjKFJA31fx8MhAClaqTI8AvoO6aAsRFISaZG4K7o/ZYYtKJoWyeH2A4OKmYAIKpeQuuY9HwDn0TO5vBjDanaf4pckHOaNfXSeHBaiqn58ENTYkdW9j1Zv/6mWZlPw4VO03VIVOUWkqsfBZfAMs40y7Wf1zMkT7iogbrA+BN+pHy/apw9lBV74t0XI8QY3LqsMZNOiCqwu7RWBp9r1v105p2WUcsY72voH2nVx6yEPhr5+9mYU4xjiGE3veMIiqCwK4FmKlJ1t+JtCaY7qav/cgHmDyhpncTnvQ9YZFW7c1PCep0gB5c6Aq+uD5K0XN7nH8zXP/jzdiO/U/Su81LwewC6vc/J7WKvNd+rALkjTWSiLtQQ=="
+                    "thoughtSignature": "Ct4CAWkUfRNYDXgYu0X4sQvqS/UBmlLJWKiatYQ4uILV74qFL9QbjuDU4Hc79v+cAZy8ddxmFIyGG+30PmzhDkaSVoB27Hswj2oNBaoXDp094wq0ZZTYVfo2sJo8NvgUWbz5I+VbLDgLi2RUsiHIXx3kvEaHm9qxeLfK09qKLXavIT3aZ0LNnD5IbGef08YMxqFlmPwZCBu20xG1UFnyyhlc4PtGV0cwFZmc0EmuSjGdX/3oyA0H+2ewl36+m8oBt1XsaI5aKdpE1PV8sCu05GagUOBK2+bmqLFzsDtJtnFqDPXcNVR0O1OIN66ROBhM7DMnVLWgPsDVgVjQ4R0yfCI/y+Wmland7gfnvn/qkRdXxd4xOZRKEqxnu42iea1J+RWyS7SnORkoH5iTbTV7J9ZDPZdS9OFDAEd4PW4hqboSUNj+iZaBP4Lil8HJn7tBhGuvh1ghti334S301NLPPpo="
                   }
                 ],
                 "role": "model"
@@ -89,22 +89,22 @@ http_interactions:
             "serviceTier": "standard"
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "hYP3arT1CsG3nsEPh5G5mAE"
+          "responseId": "ug35areiJ5XGvdIPnYGe-Qg"
         }
-  recorded_at: Fri, 13 Nov 2026 21:39:17 GMT
+  recorded_at: Sun, 15 Nov 2026 01:41:15 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
-      string: '{"contents":[{"role":"user","parts":[{"text":"What''s the fall of Rome?"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"41.9028","longitude":"12.4964"}},"thoughtSignature":"CooDAWkUfRPmVLaZsqI1WMn3sr4Wv/xNyZpbwm629Fz9x72sn3HyPzAmiWakAOn4pc+ye1KIvWpmz0WwNugdSul/W9XRTa/h1hfLhWKqvuT79pYOTtD+/QYXtqMqPvPoTkb6PVa6YmpDxX6Zd5LRqwgch8ZYdSUhwBbjKFJA31fx8MhAClaqTI8AvoO6aAsRFISaZG4K7o/ZYYtKJoWyeH2A4OKmYAIKpeQuuY9HwDn0TO5vBjDanaf4pckHOaNfXSeHBaiqn58ENTYkdW9j1Zv/6mWZlPw4VO03VIVOUWkqsfBZfAMs40y7Wf1zMkT7iogbrA+BN+pHy/apw9lBV74t0XI8QY3LqsMZNOiCqwu7RWBp9r1v105p2WUcsY72voH2nVx6yEPhr5+9mYU4xjiGE3veMIiqCwK4FmKlJ1t+JtCaY7qav/cgHmDyhpncTnvQ9YZFW7c1PCep0gB5c6Aq+uD5K0XN7nH8zXP/jzdiO/U/Su81LwewC6vc/J7WKvNd+rALkjTWSiLtQQ=="}]},{"role":"user","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
+      string: '{"contents":[{"role":"user","parts":[{"text":"What''s the fall of Rome?"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"41.9028","longitude":"12.4964"}},"thoughtSignature":"Ct4CAWkUfRNYDXgYu0X4sQvqS/UBmlLJWKiatYQ4uILV74qFL9QbjuDU4Hc79v+cAZy8ddxmFIyGG+30PmzhDkaSVoB27Hswj2oNBaoXDp094wq0ZZTYVfo2sJo8NvgUWbz5I+VbLDgLi2RUsiHIXx3kvEaHm9qxeLfK09qKLXavIT3aZ0LNnD5IbGef08YMxqFlmPwZCBu20xG1UFnyyhlc4PtGV0cwFZmc0EmuSjGdX/3oyA0H+2ewl36+m8oBt1XsaI5aKdpE1PV8sCu05GagUOBK2+bmqLFzsDtJtnFqDPXcNVR0O1OIN66ROBhM7DMnVLWgPsDVgVjQ4R0yfCI/y+Wmland7gfnvn/qkRdXxd4xOZRKEqxnu42iea1J+RWyS7SnORkoH5iTbTV7J9ZDPZdS9OFDAEd4PW4hqboSUNj+iZaBP4Lil8HJn7tBhGuvh1ghti334S301NLPPpo="}]},{"role":"user","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
         weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
         current weather for a location","parametersJsonSchema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}]}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -127,7 +127,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Fri, 13 Nov 2026 21:39:18 GMT
+      - Sun, 15 Nov 2026 01:41:17 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -137,7 +137,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=664
+      - gfet4t7; dur=1829
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -151,7 +151,7 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "I'm sorry, I cannot answer historical questions. I can provide weather information for specific locations if you'd like."
+                    "text": "The Fall of the Western Roman Empire is a complex historical event that refers to the collapse of the Roman Empire in the West. There isn't a single agreed-upon date, but 476 CE is often cited, as it marks the deposition of the last Western Roman Emperor, Romulus Augustulus, by the Germanic chieftain Odoacer.\n\nHowever, the \"fall\" was a long process rather than a sudden event, influenced by a multitude of factors, including:\n\n*   **Economic problems:** Inflation, heavy taxation, and a decline in trade.\n*   **Military overextension and barbarian invasions:** The empire became too large to defend effectively, and constant pressure from Germanic tribes and other groups strained resources.\n*   **Political instability and corruption:** Frequent changes in emperors, civil wars, and a lack of clear succession weakened the central government.\n*   **Social and cultural changes:** A decline in civic engagement, a growing gap between rich and poor, and the rise of Christianity changing traditional Roman values.\n*   **Division of the Empire:** The split into Eastern and Western Roman Empires in 395 CE further weakened the West.\n\nIt's important to remember that the Eastern Roman Empire, also known as the Byzantine Empire, continued to thrive for another thousand years after the fall of the West."
                   }
                 ],
                 "role": "model"
@@ -162,8 +162,8 @@ http_interactions:
           ],
           "usageMetadata": {
             "promptTokenCount": 172,
-            "candidatesTokenCount": 25,
-            "totalTokenCount": 197,
+            "candidatesTokenCount": 270,
+            "totalTokenCount": 442,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
@@ -173,7 +173,7 @@ http_interactions:
             "serviceTier": "standard"
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "hoP3auvTD9CjnsEP-vLDqQ0"
+          "responseId": "uw35aprpKfr8nsEPkr2csAk"
         }
-  recorded_at: Fri, 13 Nov 2026 21:39:18 GMT
-recorded_with: VCR 6.4.1
+  recorded_at: Sun, 15 Nov 2026 01:41:17 GMT
+recorded_with: VCR 6.4.0

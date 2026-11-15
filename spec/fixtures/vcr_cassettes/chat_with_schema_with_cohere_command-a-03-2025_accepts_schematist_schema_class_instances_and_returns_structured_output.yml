@@ -9,7 +9,7 @@ http_interactions:
         a person named Alice who is 28 years old"}]}],"stream":false,"response_format":{"type":"json_object","json_schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"number"}},"required":["name","age"],"additionalProperties":false}}}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -42,21 +42,21 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 5b8f01375f6d019fef38c2de80ab2d01
+      - abe62fd1ccef39f38fc21b7541b83aad
       Date:
-      - Fri, 13 Nov 2026 21:21:47 GMT
+      - Sun, 15 Nov 2026 01:20:09 GMT
       X-Envoy-Upstream-Service-Time:
-      - '302'
+      - '333'
       Server:
       - envoy
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      - h3=":443"; ma=2592000
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"fa9c5110-bbc3-4638-9a42-65b0fda3ebe7","message":{"role":"assistant","content":[{"type":"text","text":"{\"name\":\"Alice\",\"age\":28}"}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":12,"output_tokens":10},"tokens":{"input_tokens":614,"output_tokens":13},"cached_tokens":544}}'
-  recorded_at: Fri, 13 Nov 2026 21:21:47 GMT
-recorded_with: VCR 6.4.1
+      string: '{"id":"facba392-7552-42a6-87d3-a40764ec2fb5","message":{"role":"assistant","content":[{"type":"text","text":"{\"name\":\"Alice\",\"age\":28}"}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":12,"output_tokens":10},"tokens":{"input_tokens":614,"output_tokens":13},"cached_tokens":496}}'
+  recorded_at: Sun, 15 Nov 2026 01:20:09 GMT
+recorded_with: VCR 6.4.0

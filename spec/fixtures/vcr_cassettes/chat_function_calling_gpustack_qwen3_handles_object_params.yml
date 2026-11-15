@@ -13,7 +13,7 @@ http_interactions:
         window to schedule"}},"required":["window"],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -27,22 +27,22 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Content-Type:
-      - application/json; charset=utf-8
-      X-Envoy-Upstream-Service-Time:
-      - '1652'
-      Req-Cost-Time:
-      - '1656'
       Req-Arrive-Time:
-      - '1794605095525'
+      - '1794705815786'
       Resp-Start-Time:
-      - '1794605097181'
+      - '1794705820089'
+      X-Envoy-Upstream-Service-Time:
+      - '4298'
       Date:
-      - Fri, 13 Nov 2026 21:24:54 GMT
+      - Sun, 15 Nov 2026 01:23:35 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
       - ''
+      Content-Type:
+      - application/json; charset=utf-8
+      Req-Cost-Time:
+      - '4303'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
@@ -50,16 +50,20 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"role":"assistant","content":"","reasoning_content":"Okay,
-        the user wants me to call the object_params function with a window starting
-        on 2025-01-01 and ending on 2025-01-02. Let me check the function definition
-        again to make sure I get the parameters right.\n\nThe function requires a
-        \"window\" object with \"start\" and \"end\" as required fields. Both are
-        strings in ISO format. The user provided exactly those dates, so I just need
-        to structure the JSON correctly. \n\nI should format the arguments as a JSON
-        object inside the tool_call tags. Let me verify that there are no additional
-        properties allowed. The function''s window object has additionalProperties
-        set to false, so only start and end are permitted. \n\nEverything looks good.
-        I''ll construct the tool_call with the specified dates.\n","tool_calls":[{"type":"function","function":{"name":"object_params","arguments":"{\"window\":
-        {\"start\": \"2025-01-01\", \"end\": \"2025-01-02\"}}"},"id":"CcKnCQgoht7e9IdQFMcyhBd5AbhffRQl"}]}}],"created":1794605097,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":218,"prompt_tokens":248,"total_tokens":466,"prompt_tokens_details":{"cached_tokens":247}},"id":"chatcmpl-aUu4B1j7KyTx3Rnus6v0vAER1ZEFLQXS","timings":{"cache_n":247,"prompt_n":1,"prompt_ms":8.242,"prompt_per_token_ms":8.242,"prompt_per_second":121.32977432661974,"predicted_n":218,"predicted_ms":1595.975,"predicted_per_token_ms":7.354723502304147,"predicted_per_second":135.9670420902583}}'
-  recorded_at: Fri, 13 Nov 2026 21:24:57 GMT
-recorded_with: VCR 6.4.1
+        let me see. The user wants me to call the object_params tool with a window
+        start of 2025-01-01 and end of 2025-01-02. First, I need to check the function
+        definition provided.\n\nThe function object_params requires a window object
+        with start and end parameters, both in ISO format. The user provided exactly
+        those dates, so that''s good. I need to structure the arguments correctly.
+        The window should be an object with start and end as strings. \n\nWait, the
+        parameters for the function are under \"window\" as an object, and the required
+        fields are start and end. So the arguments should be {\"window\": {\"start\":
+        \"2025-01-01\", \"end\": \"2025-01-02\"}}. \n\nI should make sure there are
+        no additional properties and that the dates are in the correct format. The
+        user specified to include the result, so after calling the function, I should
+        present the result. But the main task here is to generate the tool call correctly.
+        Let me double-check the parameters. Yes, that''s right. So the JSON should
+        be properly formatted with the window object inside the arguments.\n","tool_calls":[{"type":"function","function":{"name":"object_params","arguments":"{\"window\":
+        {\"start\": \"2025-01-01\", \"end\": \"2025-01-02\"}}"},"id":"yTe63e3nQGD8uTBIz4GfSMPIOCRWyTqQ"}]}}],"created":1794705820,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":308,"prompt_tokens":248,"total_tokens":556,"prompt_tokens_details":{"cached_tokens":247}},"id":"chatcmpl-D1xS7NnHi2SAtj8qFszuH2Bt6OOuR30y","timings":{"cache_n":247,"prompt_n":1,"prompt_ms":9.821,"prompt_per_token_ms":9.821,"prompt_per_second":101.82262498727218,"predicted_n":308,"predicted_ms":4218.684,"predicted_per_token_ms":13.741641693811076,"predicted_per_second":72.77150884019755}}'
+  recorded_at: Sun, 15 Nov 2026 01:23:40 GMT
+recorded_with: VCR 6.4.0

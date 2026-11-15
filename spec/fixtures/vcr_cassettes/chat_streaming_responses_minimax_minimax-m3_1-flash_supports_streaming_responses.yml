@@ -11,7 +11,7 @@ http_interactions:
       Accept-Encoding:
       - identity
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -28,25 +28,25 @@ http_interactions:
       Vary:
       - Accept-Encoding
       Trace-Id:
-      - 0746b282b93a578c456f3ff889d7d6ed
+      - '07483bceb1e021ea7af6de6123487d8d'
       X-Session-Id:
       - cdf8143f9fdeea1e518ed8e45fe7b8db
       X-Mm-Request-Id:
-      - 2092934004998157135_1794604930ewo7hk
+      - 2092934004998157135_1794705614i10qgm
       Minimax-Request-Id:
-      - f697c76867b577c0d6bb59ed0df88595
+      - 004b18f5a2da3c06439c9471041ce642
       Alb-Receive-Time:
-      - '1794604930.002'
+      - '1794705614.677'
       Alb-Request-Id:
-      - 1453901cb6a143c1a2277c15d8f9e65f6f89d6b7
+      - ddbcd8d2896144571c44dbd90657574d7f3e3b71
       Expires:
-      - Fri, 13 Nov 2026 21:22:10 GMT
+      - Sun, 15 Nov 2026 01:20:15 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Fri, 13 Nov 2026 21:22:10 GMT
+      - Sun, 15 Nov 2026 01:20:15 GMT
       Transfer-Encoding:
       - chunked
       Connection:
@@ -60,7 +60,7 @@ http_interactions:
       encoding: UTF-8
       string: |+
         event: message_start
-        data: {"type":"message_start","message":{"id":"0746b282b93a578c456f3ff889d7d6ed","type":"message","role":"assistant","content":[],"model":"MiniMax-M3.1-Flash","stop_reason":null,"stop_sequence":null,"usage":{"input_tokens":0,"output_tokens":0}}}
+        data: {"type":"message_start","message":{"id":"07483bceb1e021ea7af6de6123487d8d","type":"message","role":"assistant","content":[],"model":"MiniMax-M3.1-Flash","stop_reason":null,"stop_sequence":null,"usage":{"input_tokens":0,"output_tokens":0}}}
 
         event: ping
         data: {"type":"ping"}
@@ -69,25 +69,25 @@ http_interactions:
         data: {"type":"content_block_start","index":0,"content_block":{"type":"thinking","thinking":""}}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":"We need answer"}}
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":"We"}}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":" simply count"}}
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":" need answer count"}}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":" 1 to 3. Need maybe \"1, "}}
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":" 1 to 3. Need likely"}}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":"2, 3.\" Ensure n"}}
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":" \""}}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":"o complication"}}
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":"1, 2, 3.\""}}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":"."}}
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":"Could be concise."}}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"signature_delta","signature":"353495d9897f28fbcbe6133d6e3ce91edfd5a2bdea85680c0f070c648b94a406"}}
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"signature_delta","signature":"201c5d6e5ca4536ea324eb1028a48d0e5bd4a14327491f762f67bfde34912aa3"}}
 
         event: content_block_stop
         data: {"type":"content_block_stop","index":0}
@@ -96,20 +96,20 @@ http_interactions:
         data: {"type":"content_block_start","index":1,"content_block":{"type":"text","text":""}}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":1,"delta":{"type":"text_delta","text":"1, 2, "}}
+        data: {"type":"content_block_delta","index":1,"delta":{"type":"text_delta","text":"1"}}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":1,"delta":{"type":"text_delta","text":"3."}}
+        data: {"type":"content_block_delta","index":1,"delta":{"type":"text_delta","text":", 2, 3."}}
 
         event: content_block_stop
         data: {"type":"content_block_stop","index":1}
 
         event: message_delta
-        data: {"type":"message_delta","delta":{"stop_reason":"end_turn"},"usage":{"input_tokens":81,"output_tokens":37,"cache_read_input_tokens":128,"output_tokens_details":{"thinking_tokens":28}}}
+        data: {"type":"message_delta","delta":{"stop_reason":"end_turn"},"usage":{"input_tokens":12,"output_tokens":36,"cache_read_input_tokens":197,"output_tokens_details":{"thinking_tokens":25}}}
 
         event: message_stop
         data: {"type":"message_stop"}
 
-  recorded_at: Fri, 13 Nov 2026 21:22:11 GMT
-recorded_with: VCR 6.4.1
+  recorded_at: Sun, 15 Nov 2026 01:20:15 GMT
+recorded_with: VCR 6.4.0
 ...

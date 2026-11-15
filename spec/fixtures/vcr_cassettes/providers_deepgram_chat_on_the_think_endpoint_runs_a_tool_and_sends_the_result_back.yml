@@ -11,7 +11,7 @@ http_interactions:
         city name"}},"required":["city"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Token <DEEPGRAM_API_KEY>
       Content-Type:
@@ -37,30 +37,30 @@ http_interactions:
       Access-Control-Expose-Headers:
       - dg-model-name,dg-model-uuid,dg-additional-model-uuids,dg-char-count,dg-request-id,dg-project-id,dg-error,dg-breaks-applied,dg-pronunciations-applied,dg-pronunciation-warnings,dg-engine-instance
       Dg-Request-Id:
-      - 01a1d705-6b74-769f-99e0-ac72547b941f
+      - 01a1dcca-12c0-73fe-92da-28e7fdd211c7
       Transfer-Encoding:
       - chunked
       Date:
-      - Fri, 13 Nov 2026 22:26:59 GMT
+      - Sun, 15 Nov 2026 01:19:53 GMT
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"chatcmpl-1c7c2f31-2ece-471d-a6df-0ef06fdf7375","choices":[{"index":0,"message":{"content":"Okay,
-        checking Berlin.\n\n","refusal":null,"tool_calls":[{"id":"call-b084de07-d783-4f63-9a13-28f6f699fa95","type":"function","function":{"name":"weather","arguments":"{\"city\":\"Berlin\"}"}}],"role":"assistant"},"finish_reason":"tool_calls","logprobs":null}],"created":1794608819,"model":"think-fast","object":"chat.completion","usage":{"prompt_tokens":300,"completion_tokens":32,"total_tokens":332,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0}}}'
-  recorded_at: Fri, 13 Nov 2026 22:26:59 GMT
+      string: '{"id":"chatcmpl-0cc95690-e4a3-4395-bcef-7b24b52541d9","choices":[{"index":0,"message":{"content":"Sure,
+        checking Berlin''s weather.\n\n","refusal":null,"tool_calls":[{"id":"call-a5973db5-5ef0-4148-8945-3da106be295e","type":"function","function":{"name":"weather","arguments":"{\"city\":\"Berlin\"}"}}],"role":"assistant"},"finish_reason":"tool_calls","logprobs":null}],"created":1794705593,"model":"think-fast","object":"chat.completion","usage":{"prompt_tokens":300,"completion_tokens":34,"total_tokens":334,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0}}}'
+  recorded_at: Sun, 15 Nov 2026 01:19:53 GMT
 - request:
     method: post
     uri: https://agent.deepgram.com/v1/think
     body:
       encoding: UTF-8
       string: '{"model":"think-fast","messages":[{"role":"user","content":"What is
-        the weather in Berlin? Use the tool."},{"role":"assistant","content":"Okay,
-        checking Berlin.\n\n","tool_calls":[{"id":"call-b084de07-d783-4f63-9a13-28f6f699fa95","type":"function","function":{"name":"weather","arguments":"{\"city\":\"Berlin\"}"}}]},{"role":"tool","content":"Berlin:
-        15 degrees","tool_call_id":"call-b084de07-d783-4f63-9a13-28f6f699fa95"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the weather in Berlin? Use the tool."},{"role":"assistant","content":"Sure,
+        checking Berlin''s weather.\n\n","tool_calls":[{"id":"call-a5973db5-5ef0-4148-8945-3da106be295e","type":"function","function":{"name":"weather","arguments":"{\"city\":\"Berlin\"}"}}]},{"role":"tool","content":"Berlin:
+        15 degrees","tool_call_id":"call-a5973db5-5ef0-4148-8945-3da106be295e"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         the current weather for one city","parameters":{"type":"object","properties":{"city":{"type":"string","description":"The
         city name"}},"required":["city"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Token <DEEPGRAM_API_KEY>
       Content-Type:
@@ -86,14 +86,14 @@ http_interactions:
       Access-Control-Expose-Headers:
       - dg-model-name,dg-model-uuid,dg-additional-model-uuids,dg-char-count,dg-request-id,dg-project-id,dg-error,dg-breaks-applied,dg-pronunciations-applied,dg-pronunciation-warnings,dg-engine-instance
       Dg-Request-Id:
-      - 01a1d705-6e56-77e9-825d-035f4758aea0
+      - 01a1dcca-16d0-718b-a198-29ca05e40a53
       Transfer-Encoding:
       - chunked
       Date:
-      - Fri, 13 Nov 2026 22:26:59 GMT
+      - Sun, 15 Nov 2026 01:19:54 GMT
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"chatcmpl-333d709b-f23c-49e5-961d-0548bb382676","choices":[{"index":0,"message":{"content":"It''s
-        fifteen degrees in Berlin.","refusal":null,"role":"assistant"},"finish_reason":"stop","logprobs":null}],"created":1794608819,"model":"think-fast","object":"chat.completion","usage":{"prompt_tokens":355,"completion_tokens":8,"total_tokens":363,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0}}}'
-  recorded_at: Fri, 13 Nov 2026 22:26:59 GMT
-recorded_with: VCR 6.4.1
+      string: '{"id":"chatcmpl-44526820-beb9-4827-b42d-f623419c6df6","choices":[{"index":0,"message":{"content":"It''s
+        fifteen degrees in Berlin right now.","refusal":null,"role":"assistant"},"finish_reason":"stop","logprobs":null}],"created":1794705594,"model":"think-fast","object":"chat.completion","usage":{"prompt_tokens":357,"completion_tokens":10,"total_tokens":367,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0}}}'
+  recorded_at: Sun, 15 Nov 2026 01:19:54 GMT
+recorded_with: VCR 6.4.0

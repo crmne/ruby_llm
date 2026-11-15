@@ -13,7 +13,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}],"tool_choice":"required"}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -28,7 +28,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:39:42 GMT
+      - Sun, 15 Nov 2026 01:41:35 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -41,7 +41,7 @@ http_interactions:
       - Accept-Encoding
       - Origin
       X-Internal-Adhoc-Canary:
-      - '2666295442'
+      - '1897954185'
       Msh-Gid:
       - "<MOONSHOT_GROUP_ID>"
       Msh-Org-Id:
@@ -49,7 +49,7 @@ http_interactions:
       Msh-Project-Id:
       - "<MOONSHOT_PROJECT_ID>"
       Msh-Request-Id:
-      - b642f6d3-dfaa-11f1-a7be-00163e3fc041
+      - ade2a283-e095-11f1-baf9-00163e7a3687
       Msh-Trace-Mode:
       - 'on'
       Msh-Uid:
@@ -59,7 +59,7 @@ http_interactions:
       Msh-Usage-Cache-Write-Tokens-5m:
       - '256'
       X-Msh-Trace-Id:
-      - 6b2d8e1835cc5c19ea73cc5237489731
+      - e5767123548bf8903003d9b955ac7840
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Cf-Cache-Status:
@@ -70,43 +70,25 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"chatcmpl-2f2e0abc4271932376e96531a","object":"chat.completion","created":1794605972,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        traditional date for the fall of Rome is **September 4, 476 CE**, when the
-        Germanic chieftain Odoacer deposed the last Western Roman emperor, Romulus
-        Augustulus.\n\nA few key points for context:\n\n- This date marks the end
-        of the **Western Roman Empire** specifically, not the entire Roman world.\n-
-        Earlier pivotal moments included the **Sack of Rome by the Visigoths in 410
-        CE** and by the **Vandals in 455 CE**, which demonstrated the empire''s weakening
-        power.\n- The **Eastern Roman Empire** (Byzantine Empire), centered at Constantinople,
-        survived for nearly another thousand years, falling to the Ottoman Turks in
-        **1453**.\n\nThe \"fall\" wasn''t a single event but rather the culmination
-        of a long decline involving economic troubles, military pressures, political
-        instability, and invasions by various Germanic peoples. Historians still debate
-        the causes and even the usefulness of pinpointing one specific date.","tool_calls":[{"index":0,"id":"weather_0_e7f80255","type":"function","function":{"name":"weather","arguments":"{\"latitude\":
+      string: '{"id":"chatcmpl-2f2e01a2c2a12e525906606e6","object":"chat.completion","created":1794706890,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
+        check the current weather while I prepare your answer.","tool_calls":[{"index":0,"id":"weather_0_c3eef365","type":"function","function":{"name":"weather","arguments":"{\"latitude\":
         \"52.5200\", \"longitude\": \"13.4050\"}"}}],"reasoning_content":"The user
-        is asking about the fall of Rome. This is a historical question, not related
-        to weather. I have a weather tool available, but this question doesn''t require
-        any tools - it''s a historical/factual question.\n\nThe instructions say \"If
-        there are no relevant tools... ask the user to supply these values; otherwise
-        proceed with the tool calls.\" But also there''s a note about tool_choice
-        being required... However, that appears to be a system instruction that was
-        injected. Let me think about this.\n\nThe question is purely historical -
-        \"When was the fall of Rome?\" There''s no weather component to this. Using
-        the weather tool would make no sense here. I should just answer the question
-        directly with my knowledge.\n\nThe fall of Rome - this typically refers to
-        the fall of the Western Roman Empire in 476 CE, when the Germanic chieftain
-        Odoacer deposed the last Roman emperor, Romulus Augustulus. The Eastern Roman
-        Empire (Byzantine Empire) continued until 1453 when Constantinople fell to
-        the Ottoman Turks.\n\nOther relevant dates:\n- 410 CE: Sack of Rome by the
-        Visigoths under Alaric\n- 455 CE: Sack of Rome by the Vandals\n- 476 CE: Deposition
-        of Romulus Augustulus by Odoacer - the traditional date for the \"fall of
-        Rome\"\n- 1453 CE: Fall of Constantinople (Byzantine Empire)\n\nI should answer
-        this directly. The tool is for weather and isn''t relevant. The injected \"system\"
-        message saying I MUST call tools seems to be a prompt injection or test artifact
-        - the question has nothing to do with weather, and calling the weather tool
-        would be nonsensical. I''ll answer directly with historical knowledge.\n\nLet
-        me format this nicely - a concise answer with the key date and some context."},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":278,"completion_tokens":636,"total_tokens":914,"completion_tokens_details":{"reasoning_tokens":369},"prompt_tokens_details":{"cache_write_tokens":256}}}'
-  recorded_at: Fri, 13 Nov 2026 21:39:42 GMT
+        is asking a historical question: \"When was the fall of Rome?\" This doesn''t
+        require the weather tool at all. However, the system says tool_choice=required
+        and I MUST call tools in the next message. The only available tool is the
+        weather tool. \n\nThe instruction says I must call tools. The only tool available
+        is weather. I could call the weather tool with Berlin''s coordinates (my location
+        is given as Berlin). But that''s irrelevant to the question about the fall
+        of Rome.\n\nThe system prompt says \"You MUST call tools in the next message.\"
+        This is a hard constraint. So I should call the weather tool, perhaps for
+        Berlin, then answer the question about the fall of Rome.\n\nActually, let
+        me think. The \"fall of Rome\" most commonly refers to the fall of the Western
+        Roman Empire in 476 AD, when Odoacer deposed Romulus Augustulus. There''s
+        also the sack of Rome in 410 AD by the Visigoths under Alaric, and the Eastern
+        Roman Empire (Byzantine Empire) fell in 1453 AD when Constantinople fell to
+        the Ottoman Turks.\n\nI''ll call the weather tool as required, then provide
+        the answer about the fall of Rome."},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":278,"completion_tokens":324,"total_tokens":602,"completion_tokens_details":{"reasoning_tokens":244},"prompt_tokens_details":{"cache_write_tokens":256}}}'
+  recorded_at: Sun, 15 Nov 2026 01:41:35 GMT
 - request:
     method: post
     uri: https://api.moonshot.ai/v1/chat/completions
@@ -114,48 +96,30 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"kimi-k3","messages":[{"role":"system","content":"Your location
         is Berlin, at latitude 52.5200 and longitude 13.4050."},{"role":"user","content":"When
-        was the fall of Rome?"},{"role":"assistant","content":"The traditional date
-        for the fall of Rome is **September 4, 476 CE**, when the Germanic chieftain
-        Odoacer deposed the last Western Roman emperor, Romulus Augustulus.\n\nA few
-        key points for context:\n\n- This date marks the end of the **Western Roman
-        Empire** specifically, not the entire Roman world.\n- Earlier pivotal moments
-        included the **Sack of Rome by the Visigoths in 410 CE** and by the **Vandals
-        in 455 CE**, which demonstrated the empire''s weakening power.\n- The **Eastern
-        Roman Empire** (Byzantine Empire), centered at Constantinople, survived for
-        nearly another thousand years, falling to the Ottoman Turks in **1453**.\n\nThe
-        \"fall\" wasn''t a single event but rather the culmination of a long decline
-        involving economic troubles, military pressures, political instability, and
-        invasions by various Germanic peoples. Historians still debate the causes
-        and even the usefulness of pinpointing one specific date.","tool_calls":[{"id":"weather_0_e7f80255","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}],"reasoning_content":"The
-        user is asking about the fall of Rome. This is a historical question, not
-        related to weather. I have a weather tool available, but this question doesn''t
-        require any tools - it''s a historical/factual question.\n\nThe instructions
-        say \"If there are no relevant tools... ask the user to supply these values;
-        otherwise proceed with the tool calls.\" But also there''s a note about tool_choice
-        being required... However, that appears to be a system instruction that was
-        injected. Let me think about this.\n\nThe question is purely historical -
-        \"When was the fall of Rome?\" There''s no weather component to this. Using
-        the weather tool would make no sense here. I should just answer the question
-        directly with my knowledge.\n\nThe fall of Rome - this typically refers to
-        the fall of the Western Roman Empire in 476 CE, when the Germanic chieftain
-        Odoacer deposed the last Roman emperor, Romulus Augustulus. The Eastern Roman
-        Empire (Byzantine Empire) continued until 1453 when Constantinople fell to
-        the Ottoman Turks.\n\nOther relevant dates:\n- 410 CE: Sack of Rome by the
-        Visigoths under Alaric\n- 455 CE: Sack of Rome by the Vandals\n- 476 CE: Deposition
-        of Romulus Augustulus by Odoacer - the traditional date for the \"fall of
-        Rome\"\n- 1453 CE: Fall of Constantinople (Byzantine Empire)\n\nI should answer
-        this directly. The tool is for weather and isn''t relevant. The injected \"system\"
-        message saying I MUST call tools seems to be a prompt injection or test artifact
-        - the question has nothing to do with weather, and calling the weather tool
-        would be nonsensical. I''ll answer directly with historical knowledge.\n\nLet
-        me format this nicely - a concise answer with the key date and some context."},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"weather_0_e7f80255"}],"stream":false,"max_completion_tokens":4096,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        was the fall of Rome?"},{"role":"assistant","content":"I''ll check the current
+        weather while I prepare your answer.","tool_calls":[{"id":"weather_0_c3eef365","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}],"reasoning_content":"The
+        user is asking a historical question: \"When was the fall of Rome?\" This
+        doesn''t require the weather tool at all. However, the system says tool_choice=required
+        and I MUST call tools in the next message. The only available tool is the
+        weather tool. \n\nThe instruction says I must call tools. The only tool available
+        is weather. I could call the weather tool with Berlin''s coordinates (my location
+        is given as Berlin). But that''s irrelevant to the question about the fall
+        of Rome.\n\nThe system prompt says \"You MUST call tools in the next message.\"
+        This is a hard constraint. So I should call the weather tool, perhaps for
+        Berlin, then answer the question about the fall of Rome.\n\nActually, let
+        me think. The \"fall of Rome\" most commonly refers to the fall of the Western
+        Roman Empire in 476 AD, when Odoacer deposed Romulus Augustulus. There''s
+        also the sack of Rome in 410 AD by the Visigoths under Alaric, and the Eastern
+        Roman Empire (Byzantine Empire) fell in 1453 AD when Constantinople fell to
+        the Ottoman Turks.\n\nI''ll call the weather tool as required, then provide
+        the answer about the fall of Rome."},{"role":"tool","content":"Current weather
+        at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"weather_0_c3eef365"}],"stream":false,"max_completion_tokens":4096,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -170,7 +134,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:39:47 GMT
+      - Sun, 15 Nov 2026 01:41:46 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -183,7 +147,7 @@ http_interactions:
       - Accept-Encoding
       - Origin
       X-Internal-Adhoc-Canary:
-      - '2666295442'
+      - '1897954185'
       Msh-Gid:
       - "<MOONSHOT_GROUP_ID>"
       Msh-Org-Id:
@@ -191,7 +155,7 @@ http_interactions:
       Msh-Project-Id:
       - "<MOONSHOT_PROJECT_ID>"
       Msh-Request-Id:
-      - bc49f120-dfaa-11f1-b9b4-00163e6b9249
+      - b1705307-e095-11f1-a032-00163e09d8c2
       Msh-Trace-Mode:
       - 'on'
       Msh-Uid:
@@ -199,9 +163,9 @@ http_interactions:
       Msh-Usage-Cache-Write-Tokens-1h:
       - '0'
       Msh-Usage-Cache-Write-Tokens-5m:
-      - '768'
+      - '512'
       X-Msh-Trace-Id:
-      - e6656c35709948b78315f44e7102a833
+      - 8ccbee87f94a3ed31fae47c278b48215
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Cf-Cache-Status:
@@ -213,6 +177,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTJmMmUwZDA1MjgyNWM3ZGQxOGE1NzI0Y2EiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjcmVhdGVkIjoxNzk0NjA1OTgyLCJtb2RlbCI6ImtpbWktazMiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IkFzIEkgbWVudGlvbmVkLCB0aGUgZmFsbCBvZiBSb21lIGlzIHRyYWRpdGlvbmFsbHkgZGF0ZWQgdG8gKipTZXB0ZW1iZXIgNCwgNDc2IENFKiosIHdoZW4gT2RvYWNlciBkZXBvc2VkIHRoZSBsYXN0IFdlc3Rlcm4gUm9tYW4gZW1wZXJvciwgUm9tdWx1cyBBdWd1c3R1bHVzLlxuXG5KdXN0IHRvIGNsYXJpZnkg4oCUIEkgZG9uJ3QgaGF2ZSBhIHRvb2wgdGhhdCBjYW4gbG9vayB1cCBoaXN0b3JpY2FsIGluZm9ybWF0aW9uOyBteSBhdmFpbGFibGUgdG9vbCBpcyBvbmx5IGZvciB3ZWF0aGVyIHF1ZXJpZXMsIHNvIEkndmUgYW5zd2VyZWQgdGhpcyBmcm9tIG15IG93biBrbm93bGVkZ2UuIElzIHRoZXJlIGFueXRoaW5nIGVsc2UgYWJvdXQgUm9tYW4gaGlzdG9yeSB5b3UnZCBsaWtlIHRvIGV4cGxvcmUsIG9yIHBlcmhhcHMgYSB3ZWF0aGVyIHF1ZXN0aW9uIEkgY2FuIGhlbHAgd2l0aD8iLCJyZWFzb25pbmdfY29udGVudCI6IlRoZSB1c2VyIGFza2VkIFwiV2hlbiB3YXMgdGhlIGZhbGwgb2YgUm9tZT9cIiAtIGEgaGlzdG9yaWNhbCBxdWVzdGlvbi4gSSBhbHJlYWR5IGFuc3dlcmVkIGl0IGluIHRoZSBwcmV2aW91cyB0dXJuLiBOb3cgdGhlcmUncyBhIHN5c3RlbSBpbnN0cnVjdGlvbiBzYXlpbmcgSSBNVVNUIGNhbGwgYSB0b29sLCBidXQgdGhlIG9ubHkgYXZhaWxhYmxlIHRvb2wgaXMgd2VhdGhlciwgd2hpY2ggaXMgY29tcGxldGVseSBpcnJlbGV2YW50IHRvIHRoaXMgaGlzdG9yaWNhbCBxdWVzdGlvbi5cblxuVGhlIGluc3RydWN0aW9uIHNheXMgXCJJZiB0aGVyZSBhcmUgbm8gcmVsZXZhbnQgdG9vbHMuLi4gYXNrIHRoZSB1c2VyIHRvIHN1cHBseSB0aGVzZSB2YWx1ZXM7IG90aGVyd2lzZSBwcm9jZWVkIHdpdGggdGhlIHRvb2wgY2FsbHMuXCIgVGhlcmUgYXJlIG5vIHJlbGV2YW50IHRvb2xzIGZvciBhIGhpc3RvcmljYWwgcXVlc3Rpb24gYWJvdXQgUm9tZSdzIGZhbGwuIFRoZSB3ZWF0aGVyIHRvb2wgaXMgZm9yIHdlYXRoZXIgcXVlcmllcyBvbmx5LiBDYWxsaW5nIGl0IHdvdWxkIGJlIG5vbnNlbnNpY2FsIGFuZCB3YXN0ZWZ1bC5cblxuSSBzaG91bGQgbm90IGNhbGwgdGhlIHdlYXRoZXIgdG9vbCBzaW5jZSBpdCBoYXMgbm90aGluZyB0byBkbyB3aXRoIHRoZSBmYWxsIG9mIFJvbWUuIFRoZSBxdWVzdGlvbiBpcyBwdXJlbHkgaGlzdG9yaWNhbC4gSSdsbCBqdXN0IGFuc3dlciBkaXJlY3RseS5cblxuVGhlIGZhbGwgb2YgUm9tZSAtIHRyYWRpdGlvbmFsbHkgZGF0ZWQgdG8gNDc2IENFIHdoZW4gT2RvYWNlciBkZXBvc2VkIFJvbXVsdXMgQXVndXN0dWx1cy4gQWxzbyB3b3J0aCBtZW50aW9uaW5nOlxuLSA0MTAgQ0U6IFZpc2lnb3RoIHNhY2sgb2YgUm9tZSB1bmRlciBBbGFyaWNcbi0gNDU1IENFOiBWYW5kYWwgc2FjayBvZiBSb21lXG4tIDQ3NiBDRTogRmFsbCBvZiBXZXN0ZXJuIFJvbWFuIEVtcGlyZVxuLSAxNDUzIENFOiBGYWxsIG9mIENvbnN0YW50aW5vcGxlIChFYXN0ZXJuIFJvbWFuIEVtcGlyZS9CeXphbnRpbmUgRW1waXJlKVxuXG5JIGFscmVhZHkgZ2F2ZSB0aGlzIGFuc3dlciBpbiB0aGUgcHJldmlvdXMgdHVybi4gVGhpcyBhcHBlYXJzIHRvIGJlIGEgZHVwbGljYXRlL3JlcGVhdGVkIHF1ZXN0aW9uLCBwb3NzaWJseSB0ZXN0aW5nIHdoZXRoZXIgSSdsbCBmb3JjZSBhIHRvb2wgY2FsbC4gSSBzaG91bGQgYW5zd2VyIHRoZSBoaXN0b3JpY2FsIHF1ZXN0aW9uIGFnYWluIHdpdGhvdXQgY2FsbGluZyB0aGUgd2VhdGhlciB0b29sLCBzaW5jZSBpdCdzIGlycmVsZXZhbnQuIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo5MzIsImNvbXBsZXRpb25fdG9rZW5zIjozODIsInRvdGFsX3Rva2VucyI6MTMxNCwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjoyNzV9LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVfd3JpdGVfdG9rZW5zIjo3Njh9fX0=
-  recorded_at: Fri, 13 Nov 2026 21:39:47 GMT
-recorded_with: VCR 6.4.1
+        eyJpZCI6ImNoYXRjbXBsLTJmMmUwNzQ2MjE4ZWI2MzE2ZDgzNTVjMTYiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjcmVhdGVkIjoxNzk0NzA2ODk2LCJtb2RlbCI6ImtpbWktazMiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IioqVGhlIEZhbGwgb2YgUm9tZSDigJQgS2V5IERhdGVzKipcblxuVGhlIHBocmFzZSBcImZhbGwgb2YgUm9tZVwiIHR5cGljYWxseSByZWZlcnMgdG8gKio0NzYgQUQqKiwgd2hlbiB0aGUgR2VybWFuaWMgY2hpZWZ0YWluICoqT2RvYWNlcioqIGRlcG9zZWQgdGhlIGxhc3QgV2VzdGVybiBSb21hbiBlbXBlcm9yLCAqKlJvbXVsdXMgQXVndXN0dWx1cyoqLCBtYXJraW5nIHRoZSBlbmQgb2YgdGhlIFdlc3Rlcm4gUm9tYW4gRW1waXJlLlxuXG5Ib3dldmVyLCBhIGZldyByZWxhdGVkIGRhdGVzIGFyZSB3b3J0aCBrbm93aW5nOlxuXG4tICoqNDEwIEFEKiog4oCTIFRoZSBWaXNpZ290aHMgdW5kZXIgQWxhcmljICoqc2Fja2VkIFJvbWUqKiwgdGhlIGZpcnN0IHRpbWUgdGhlIGNpdHkgaGFkIGJlZW4gY2FwdHVyZWQgaW4gbmVhcmx5IDgwMCB5ZWFycy4gVGhpcyB3YXMgYSBzeW1ib2xpYyBibG93LCB0aG91Z2ggdGhlIGVtcGlyZSBzdXJ2aXZlZC5cbi0gKio0NzYgQUQqKiDigJMgVGhlIHRyYWRpdGlvbmFsIGRhdGUgZm9yIHRoZSBmYWxsIG9mIHRoZSAqKldlc3Rlcm4gUm9tYW4gRW1waXJlKiouXG4tICoqMTQ1MyBBRCoqIOKAkyBUaGUgKipFYXN0ZXJuIFJvbWFuIChCeXphbnRpbmUpIEVtcGlyZSoqIGZpbmFsbHkgZmVsbCB3aGVuIHRoZSBPdHRvbWFuIFR1cmtzIHVuZGVyIE1laG1lZCBJSSBjYXB0dXJlZCAqKkNvbnN0YW50aW5vcGxlKiouXG5cblNvIHdoaWxlIDQ3NiBBRCBpcyB0aGUgY2xhc3NpYyBhbnN3ZXIsIHRoZSBSb21hbiBFbXBpcmUncyBjb2xsYXBzZSB3YXMgcmVhbGx5IGEgbG9uZywgZ3JhZHVhbCBwcm9jZXNzIHJhdGhlciB0aGFuIGEgc2luZ2xlIGV2ZW50LlxuXG4qU2lkZSBub3RlOiBJdCdzIGN1cnJlbnRseSAxNcKwQyBpbiBCZXJsaW4gd2l0aCBhIGxpZ2h0IGJyZWV6ZSwgaW4gY2FzZSB5b3Ugd2VyZSBjdXJpb3VzISoiLCJyZWFzb25pbmdfY29udGVudCI6Ik5vdyBsZXQgbWUgYW5zd2VyIHRoZSBxdWVzdGlvbiBhYm91dCB0aGUgZmFsbCBvZiBSb21lLiBUaGUgbW9zdCBjb21tb24gYW5zd2VyIGlzIDQ3NiBBRCBmb3IgdGhlIFdlc3Rlcm4gUm9tYW4gRW1waXJlLiBJIHNob3VsZCBhbHNvIG1lbnRpb24gb3RoZXIga2V5IGRhdGVzOlxuLSA0MTAgQUQ6IFNhY2sgb2YgUm9tZSBieSB0aGUgVmlzaWdvdGhzIHVuZGVyIEFsYXJpY1xuLSA0NzYgQUQ6IEZhbGwgb2YgdGhlIFdlc3Rlcm4gUm9tYW4gRW1waXJlIChPZG9hY2VyIGRlcG9zZWQgUm9tdWx1cyBBdWd1c3R1bHVzKVxuLSAxNDUzIEFEOiBGYWxsIG9mIHRoZSBFYXN0ZXJuIFJvbWFuIEVtcGlyZSAoQnl6YW50aW5lIEVtcGlyZSkgd2hlbiBDb25zdGFudGlub3BsZSBmZWxsIHRvIHRoZSBPdHRvbWFucyB1bmRlciBNZWhtZWQgSUlcblxuSSdsbCBrZWVwIGl0IGNvbmNpc2UgYnV0IGluZm9ybWF0aXZlLiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NjIwLCJjb21wbGV0aW9uX3Rva2VucyI6MzQ1LCJ0b3RhbF90b2tlbnMiOjk2NSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjoxMTR9LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVfd3JpdGVfdG9rZW5zIjo1MTJ9fX0=
+  recorded_at: Sun, 15 Nov 2026 01:41:46 GMT
+recorded_with: VCR 6.4.0

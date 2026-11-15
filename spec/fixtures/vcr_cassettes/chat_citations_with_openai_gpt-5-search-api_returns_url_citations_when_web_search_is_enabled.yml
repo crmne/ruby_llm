@@ -9,7 +9,7 @@ http_interactions:
         is the latest stable version of Ruby? Cite your sources."}],"stream":false,"web_search_options":{}}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:22:32 GMT
+      - Sun, 15 Nov 2026 01:20:42 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -48,7 +48,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '5667'
+      - '4539'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -77,41 +77,23 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-1ba30bd9-8883-4e3e-b6f1-1c7242729c6e",
+          "id": "chatcmpl-a5b31ac7-6729-44c9-bc8a-09522d288eba",
           "object": "chat.completion",
-          "created": 1794604952,
+          "created": 1794705642,
           "model": "gpt-5-search-api-2025-10-14",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "As of **November 13, 2026**, the latest stable version of Ruby is **4.0.9**. ([ruby-lang.org](https://www.ruby-lang.org/en/downloads/?utm_source=openai))\n\nHere are some related stable versions for reference:\n\n- Ruby 3.4.12 (stable) ([ruby-lang.org](https://www.ruby-lang.org/en/downloads/?utm_source=openai))  \n- Ruby 3.3.13 (stable, in security maintenance phase) ([ruby-lang.org](https://www.ruby-lang.org/en/downloads/?utm_source=openai))",
+                "content": "The latest stable version of Ruby (MRI) is **Ruby 4.0.9**, released on **October 23, 2026**. ([ruby-lang.org](https://www.ruby-lang.org/en/downloads/?utm_source=openai))",
                 "refusal": null,
                 "annotations": [
                   {
                     "type": "url_citation",
                     "url_citation": {
-                      "end_index": 153,
-                      "start_index": 77,
-                      "title": "Download Ruby | Ruby",
-                      "url": "https://www.ruby-lang.org/en/downloads/?utm_source=openai"
-                    }
-                  },
-                  {
-                    "type": "url_citation",
-                    "url_citation": {
-                      "end_index": 308,
-                      "start_index": 232,
-                      "title": "Download Ruby | Ruby",
-                      "url": "https://www.ruby-lang.org/en/downloads/?utm_source=openai"
-                    }
-                  },
-                  {
-                    "type": "url_citation",
-                    "url_citation": {
-                      "end_index": 441,
-                      "start_index": 365,
+                      "end_index": 169,
+                      "start_index": 93,
                       "title": "Download Ruby | Ruby",
                       "url": "https://www.ruby-lang.org/en/downloads/?utm_source=openai"
                     }
@@ -122,9 +104,9 @@ http_interactions:
             }
           ],
           "usage": {
-            "prompt_tokens": 16697,
-            "completion_tokens": 153,
-            "total_tokens": 16850,
+            "prompt_tokens": 16388,
+            "completion_tokens": 66,
+            "total_tokens": 16454,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -138,5 +120,5 @@ http_interactions:
           },
           "system_fingerprint": null
         }
-  recorded_at: Fri, 13 Nov 2026 21:22:32 GMT
-recorded_with: VCR 6.4.1
+  recorded_at: Sun, 15 Nov 2026 01:20:42 GMT
+recorded_with: VCR 6.4.0

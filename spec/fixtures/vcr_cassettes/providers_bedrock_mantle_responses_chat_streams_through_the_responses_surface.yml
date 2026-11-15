@@ -9,11 +9,11 @@ http_interactions:
         from 1 to 5."}],"stream":true,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261113T212052Z
+      - 20261115T012052Z
       X-Amz-Content-Sha256:
       - cbf3696d10214f5c50a9bca4dcc815b609f32c3d2122a8724949d2e40ceee1fc
       Authorization:
@@ -29,7 +29,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:20:53 GMT
+      - Sun, 15 Nov 2026 01:20:52 GMT
       Content-Type:
       - text/event-stream
       Transfer-Encoding:
@@ -39,7 +39,7 @@ http_interactions:
       Cache-Control:
       - no-cache
       X-Amzn-Requestid:
-      - req_nutvkzun3ezobyt6yruhwnv3dixcb3e7shd763ynzzttuajonmoa
+      - req_nb6hnezbgznxgwfimtck36vky5irehrcgx7uadt45jaic5bjatpa
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Vary:
@@ -51,36 +51,36 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |+
-        data: {"response":{"background":false,"created_at":1794604853.0,"error":null,"id":"resp_nnrpsqd57z4dalv4r3cpkeybzszzby7ijur45rwl3iebx4755r2a","incomplete_details":null,"instructions":null,"metadata":null,"model":"openai.gpt-oss-20b","object":"response","output":[],"parallel_tool_calls":true,"service_tier":"auto","status":"in_progress","temperature":1.0,"tool_choice":"auto","tools":[],"top_p":1.0,"truncation":"disabled"},"sequence_number":0,"type":"response.created"}
+        data: {"response":{"background":false,"created_at":1794705652.0,"error":null,"id":"resp_zy3bd7ztghpn3cl4elk7bicmcntl6lrtpgn3cvpftvieeuf64tva","incomplete_details":null,"instructions":null,"metadata":null,"model":"openai.gpt-oss-20b","object":"response","output":[],"parallel_tool_calls":true,"service_tier":"auto","status":"in_progress","temperature":1.0,"tool_choice":"auto","tools":[],"top_p":1.0,"truncation":"disabled"},"sequence_number":0,"type":"response.created"}
 
-        data: {"response":{"background":false,"created_at":1794604853.0,"error":null,"id":"resp_nnrpsqd57z4dalv4r3cpkeybzszzby7ijur45rwl3iebx4755r2a","incomplete_details":null,"instructions":null,"metadata":null,"model":"openai.gpt-oss-20b","object":"response","output":[],"parallel_tool_calls":true,"service_tier":"auto","status":"in_progress","temperature":1.0,"tool_choice":"auto","tools":[],"top_p":1.0,"truncation":"disabled"},"sequence_number":1,"type":"response.in_progress"}
+        data: {"response":{"background":false,"created_at":1794705652.0,"error":null,"id":"resp_zy3bd7ztghpn3cl4elk7bicmcntl6lrtpgn3cvpftvieeuf64tva","incomplete_details":null,"instructions":null,"metadata":null,"model":"openai.gpt-oss-20b","object":"response","output":[],"parallel_tool_calls":true,"service_tier":"auto","status":"in_progress","temperature":1.0,"tool_choice":"auto","tools":[],"top_p":1.0,"truncation":"disabled"},"sequence_number":1,"type":"response.in_progress"}
 
-        data: {"item":{"id":"msg_85e090c0076bd055","status":"in_progress","summary":[],"type":"reasoning"},"output_index":0,"sequence_number":2,"type":"response.output_item.added"}
+        data: {"item":{"id":"msg_b2edc7b1e879ff97","status":"in_progress","summary":[],"type":"reasoning"},"output_index":0,"sequence_number":2,"type":"response.output_item.added"}
 
-        data: {"content_index":0,"item_id":"msg_85e090c0076bd055","output_index":0,"part":{"text":"","type":"reasoning_text"},"sequence_number":3,"type":"response.reasoning_part.added"}
+        data: {"content_index":0,"item_id":"msg_b2edc7b1e879ff97","output_index":0,"part":{"text":"","type":"reasoning_text"},"sequence_number":3,"type":"response.reasoning_part.added"}
 
-        data: {"content_index":0,"delta":"User's request: \"Count from 1 to 5.\" Likely want to see a simple response: \"1, 2, 3, 4, 5\" or \"1 2 3 4 5\". Just fulfill.","item_id":"msg_85e090c0076bd055","output_index":0,"sequence_number":4,"type":"response.reasoning_text.delta"}
+        data: {"content_index":0,"delta":"User: \"Count from 1 to 5.\" It's a simple instruction: \"Count from 1 to 5.\" Provide a count probably the numbers 1 2 3 4 5 or maybe write each number. I'll comply. It's straightforward.","item_id":"msg_b2edc7b1e879ff97","output_index":0,"sequence_number":4,"type":"response.reasoning_text.delta"}
 
-        data: {"content_index":0,"item_id":"msg_85e090c0076bd055","output_index":0,"sequence_number":5,"text":"User's request: \"Count from 1 to 5.\" Likely want to see a simple response: \"1, 2, 3, 4, 5\" or \"1 2 3 4 5\". Just fulfill.","type":"response.reasoning_text.done"}
+        data: {"content_index":0,"item_id":"msg_b2edc7b1e879ff97","output_index":0,"sequence_number":5,"text":"User: \"Count from 1 to 5.\" It's a simple instruction: \"Count from 1 to 5.\" Provide a count probably the numbers 1 2 3 4 5 or maybe write each number. I'll comply. It's straightforward.","type":"response.reasoning_text.done"}
 
-        data: {"content_index":0,"item_id":"msg_85e090c0076bd055","output_index":0,"part":{"text":"User's request: \"Count from 1 to 5.\" Likely want to see a simple response: \"1, 2, 3, 4, 5\" or \"1 2 3 4 5\". Just fulfill.","type":"reasoning_text"},"sequence_number":6,"type":"response.reasoning_part.done"}
+        data: {"content_index":0,"item_id":"msg_b2edc7b1e879ff97","output_index":0,"part":{"text":"User: \"Count from 1 to 5.\" It's a simple instruction: \"Count from 1 to 5.\" Provide a count probably the numbers 1 2 3 4 5 or maybe write each number. I'll comply. It's straightforward.","type":"reasoning_text"},"sequence_number":6,"type":"response.reasoning_part.done"}
 
-        data: {"item":{"content":[{"text":"User's request: \"Count from 1 to 5.\" Likely want to see a simple response: \"1, 2, 3, 4, 5\" or \"1 2 3 4 5\". Just fulfill.","type":"reasoning_text"}],"id":"msg_85e090c0076bd055","status":"completed","summary":[],"type":"reasoning"},"output_index":0,"sequence_number":7,"type":"response.output_item.done"}
+        data: {"item":{"content":[{"text":"User: \"Count from 1 to 5.\" It's a simple instruction: \"Count from 1 to 5.\" Provide a count probably the numbers 1 2 3 4 5 or maybe write each number. I'll comply. It's straightforward.","type":"reasoning_text"}],"id":"msg_b2edc7b1e879ff97","status":"completed","summary":[],"type":"reasoning"},"output_index":0,"sequence_number":7,"type":"response.output_item.done"}
 
-        data: {"item":{"content":[],"id":"msg_bc27767a78e58b37","role":"assistant","status":"in_progress","type":"message"},"output_index":1,"sequence_number":8,"type":"response.output_item.added"}
+        data: {"item":{"content":[],"id":"msg_b367781b26286f5a","role":"assistant","status":"in_progress","type":"message"},"output_index":1,"sequence_number":8,"type":"response.output_item.added"}
 
-        data: {"content_index":1,"item_id":"msg_bc27767a78e58b37","output_index":1,"part":{"annotations":[],"logprobs":[],"text":"","type":"output_text"},"sequence_number":9,"type":"response.content_part.added"}
+        data: {"content_index":1,"item_id":"msg_b367781b26286f5a","output_index":1,"part":{"annotations":[],"logprobs":[],"text":"","type":"output_text"},"sequence_number":9,"type":"response.content_part.added"}
 
-        data: {"content_index":1,"delta":"1, 2, 3, 4, 5.","item_id":"msg_bc27767a78e58b37","logprobs":[],"output_index":1,"sequence_number":10,"type":"response.output_text.delta"}
+        data: {"content_index":1,"delta":"1, 2, 3, 4, 5","item_id":"msg_b367781b26286f5a","logprobs":[],"output_index":1,"sequence_number":10,"type":"response.output_text.delta"}
 
-        data: {"content_index":1,"item_id":"msg_bc27767a78e58b37","logprobs":[],"output_index":1,"sequence_number":11,"text":"1, 2, 3, 4, 5.","type":"response.output_text.done"}
+        data: {"content_index":1,"item_id":"msg_b367781b26286f5a","logprobs":[],"output_index":1,"sequence_number":11,"text":"1, 2, 3, 4, 5","type":"response.output_text.done"}
 
-        data: {"content_index":1,"item_id":"msg_bc27767a78e58b37","output_index":1,"part":{"annotations":[],"text":"1, 2, 3, 4, 5.","type":"output_text"},"sequence_number":12,"type":"response.content_part.done"}
+        data: {"content_index":1,"item_id":"msg_b367781b26286f5a","output_index":1,"part":{"annotations":[],"text":"1, 2, 3, 4, 5","type":"output_text"},"sequence_number":12,"type":"response.content_part.done"}
 
-        data: {"item":{"content":[{"annotations":[],"text":"1, 2, 3, 4, 5.","type":"output_text"}],"id":"msg_bc27767a78e58b37","role":"assistant","status":"completed","type":"message"},"output_index":1,"sequence_number":13,"type":"response.output_item.done"}
+        data: {"item":{"content":[{"annotations":[],"text":"1, 2, 3, 4, 5","type":"output_text"}],"id":"msg_b367781b26286f5a","role":"assistant","status":"completed","type":"message"},"output_index":1,"sequence_number":13,"type":"response.output_item.done"}
 
-        data: {"response":{"background":false,"created_at":1794604853.0,"error":null,"id":"resp_nnrpsqd57z4dalv4r3cpkeybzszzby7ijur45rwl3iebx4755r2a","incomplete_details":null,"instructions":null,"metadata":null,"model":"openai.gpt-oss-20b","object":"response","output":[{"content":[{"text":"User's request: \"Count from 1 to 5.\" Likely want to see a simple response: \"1, 2, 3, 4, 5\" or \"1 2 3 4 5\". Just fulfill.","type":"reasoning_text"}],"id":"msg_85e090c0076bd055","status":"completed","summary":[],"type":"reasoning"},{"content":[{"annotations":[],"text":"1, 2, 3, 4, 5.","type":"output_text"}],"id":"msg_bc27767a78e58b37","role":"assistant","status":"completed","type":"message"}],"parallel_tool_calls":true,"service_tier":"auto","status":"completed","temperature":1.0,"tool_choice":"auto","tools":[],"top_p":1.0,"truncation":"disabled","usage":{"input_tokens":75,"input_tokens_details":{"cached_tokens":0},"output_tokens":76,"output_tokens_details":{"reasoning_tokens":53},"total_tokens":151}},"sequence_number":14,"type":"response.completed"}
+        data: {"response":{"background":false,"created_at":1794705652.0,"error":null,"id":"resp_zy3bd7ztghpn3cl4elk7bicmcntl6lrtpgn3cvpftvieeuf64tva","incomplete_details":null,"instructions":null,"metadata":null,"model":"openai.gpt-oss-20b","object":"response","output":[{"content":[{"text":"User: \"Count from 1 to 5.\" It's a simple instruction: \"Count from 1 to 5.\" Provide a count probably the numbers 1 2 3 4 5 or maybe write each number. I'll comply. It's straightforward.","type":"reasoning_text"}],"id":"msg_b2edc7b1e879ff97","status":"completed","summary":[],"type":"reasoning"},{"content":[{"annotations":[],"text":"1, 2, 3, 4, 5","type":"output_text"}],"id":"msg_b367781b26286f5a","role":"assistant","status":"completed","type":"message"}],"parallel_tool_calls":true,"service_tier":"auto","status":"completed","temperature":1.0,"tool_choice":"auto","tools":[],"top_p":1.0,"truncation":"disabled","usage":{"input_tokens":75,"input_tokens_details":{"cached_tokens":0},"output_tokens":76,"output_tokens_details":{"reasoning_tokens":54},"total_tokens":151}},"sequence_number":14,"type":"response.completed"}
 
-  recorded_at: Fri, 13 Nov 2026 21:20:53 GMT
-recorded_with: VCR 6.4.1
+  recorded_at: Sun, 15 Nov 2026 01:20:52 GMT
+recorded_with: VCR 6.4.0
 ...

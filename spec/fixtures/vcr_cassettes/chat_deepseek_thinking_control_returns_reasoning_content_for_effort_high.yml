@@ -9,7 +9,7 @@ http_interactions:
         is 2 + 2? Answer with just the number."}],"stream":false,"reasoning_effort":"high","thinking":{"type":"enabled"}}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -30,7 +30,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Fri, 13 Nov 2026 21:31:48 GMT
+      - Sun, 15 Nov 2026 01:34:46 GMT
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -40,20 +40,20 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 46f3674f734bf4e36aaaa0e0a4a3ea7e
+      - 24e68e495c3eea9997ecf252a382b632
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 9551dd6728d36b93275fb463d1fb5e6c.cloudfront.net (CloudFront)
+      - 1.1 e245f8b9af3dc3d1896ca714ebe230f4.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL50-P6
+      - TXL52-P2
       X-Amz-Cf-Id:
-      - 6slLY2MCl0KzG-qCxlabpnsbTLifcBnLLLYJ2ZorzrYuwiXx-n9foQ==
+      - xwkviUsGP7aaaclb78h3u8HBYxjQTgIKmh6QrwhT20E5Wt2ExS4d2Q==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"d428a8f1-4331-4b94-9e40-0261a9733af2","object":"chat.completion","created":1794605508,"model":"deepseek-flash","choices":[{"index":0,"message":{"role":"assistant","content":"4","reasoning_content":"We
-        need answer only number. 4."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":44,"completion_tokens":11,"total_tokens":55,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":9},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":44},"system_fingerprint":"bc19ba97cbe016479903222bb1578db6"}'
-  recorded_at: Fri, 13 Nov 2026 21:31:49 GMT
-recorded_with: VCR 6.4.1
+      string: '{"id":"0808ef06-8c32-46f6-b43c-6b8339f5134b","object":"chat.completion","created":1794706486,"model":"deepseek-flash","choices":[{"index":0,"message":{"role":"assistant","content":"4","reasoning_content":"We
+        need answer just number. 2+2=4. Must only number. \n"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":44,"completion_tokens":20,"total_tokens":64,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":18},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":44},"system_fingerprint":"bc19ba97cbe016479903222bb1578db6"}'
+  recorded_at: Sun, 15 Nov 2026 01:34:46 GMT
+recorded_with: VCR 6.4.0

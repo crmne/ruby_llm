@@ -9,7 +9,7 @@ http_interactions:
         is 2+2?"}],"stream":false,"reasoning_effort":"low"}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Token <DEEPGRAM_API_KEY>
       Content-Type:
@@ -35,27 +35,34 @@ http_interactions:
       Access-Control-Expose-Headers:
       - dg-model-name,dg-model-uuid,dg-additional-model-uuids,dg-char-count,dg-request-id,dg-project-id,dg-error,dg-breaks-applied,dg-pronunciations-applied,dg-pronunciation-warnings,dg-engine-instance
       Dg-Request-Id:
-      - 01a1d705-7c60-7209-9b72-5ebdf0940357
+      - 01a1dcca-27d8-7013-ae98-7f8932f53140
       Transfer-Encoding:
       - chunked
       Date:
-      - Fri, 13 Nov 2026 22:27:05 GMT
+      - Sun, 15 Nov 2026 01:20:00 GMT
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"chatcmpl-23de265a-da37-415a-bd8f-4ec03af204b9","choices":[{"index":0,"message":{"content":"Okay,
-        the user is asking \"What is 2+2?\" That seems like a very basic math question.
-        Let me think about how to approach this.\n\nFirst, I should confirm that this
-        is indeed a simple arithmetic question. The user might be testing me, or perhaps
-        they''re genuinely checking if I can handle simple calculations. Given that
-        it''s such a fundamental question, I should answer clearly and directly.\n\nI
-        know that 2+2 equals 4. That''s a basic fact from elementary mathematics.
-        I don''t need to overcomplicate it. The answer is straightforward. \n\nI should
-        also consider why someone would ask this. Maybe they''re a child learning
-        math, or someone verifying that the AI can perform basic calculations. It''s
-        possible they''re making sure I''m not giving wrong information. \n\nI''ll
-        just give the direct answer: 4. No need for extra explanation unless they
-        ask for it. Since it''s such a simple question, a concise response is appropriate
-        here. \n\nI''ll make sure my answer is clear and correct. No tricks here,
-        just 2 plus 2 is 4.\n</think>\nThe answer is **4**.","refusal":null,"role":"assistant"},"finish_reason":"stop","logprobs":null}],"created":1794608824,"model":"phonellm-mini-alpha-2-fp8","object":"chat.completion","usage":{"prompt_tokens":23,"completion_tokens":237,"total_tokens":260,"prompt_tokens_details":{"cached_tokens":0}}}'
-  recorded_at: Fri, 13 Nov 2026 22:27:05 GMT
-recorded_with: VCR 6.4.1
+      string: '{"id":"chatcmpl-c55ebe8a-3a4b-4535-b37c-d520b11407f7","choices":[{"index":0,"message":{"content":"Okay,
+        the user asked \"What is 2+2?\" Hmm, this seems like a very basic math question.
+        Let me think about how to approach it.\n\nFirst, I should confirm that this
+        is indeed a simple arithmetic question. The user might be a child learning
+        math, or maybe someone testing if the AI can handle basic calculations. Could
+        also be a non-native English speaker practicing simple questions.\n\nI recall
+        that in standard arithmetic, 2 plus 2 equals 4. But I should be careful not
+        to overcomplicate it. There''s no trick here - it''s straightforward. \n\nI
+        wonder if the user is expecting a joke answer? Sometimes people ask this to
+        see if the AI will give a humorous response. But since it''s a genuine math
+        question, I should stick to the factual answer.\n\nThe calculation is simple:
+        2 + 2 = 4. I can explain it as adding two apples to two more apples, resulting
+        in four apples. But maybe that''s too much for such a simple question.\n\nI
+        should just give the direct answer since it''s so basic. No need for lengthy
+        explanations. The user probably just wants the number.\n\nLet me make sure
+        there''s no cultural context I''m missing. In some number systems it might
+        be different, but the question doesn''t specify, so I''ll assume base 10.
+        And in base 10, 2+2 is definitely 4.\n\nI think the straightforward answer
+        is best here. Just \"4\" with a brief confirmation. No need to overthink it.\n\nThe
+        user seems to be in a neutral or casual mood, probably not looking for anything
+        deep. Just a quick fact. So I''ll respond with the number 4.\n</think>\n2
+        + 2 = 4.","refusal":null,"role":"assistant"},"finish_reason":"stop","logprobs":null}],"created":1794705598,"model":"phonellm-mini-alpha-2-fp8","object":"chat.completion","usage":{"prompt_tokens":23,"completion_tokens":358,"total_tokens":381,"prompt_tokens_details":{"cached_tokens":0}}}'
+  recorded_at: Sun, 15 Nov 2026 01:20:00 GMT
+recorded_with: VCR 6.4.0

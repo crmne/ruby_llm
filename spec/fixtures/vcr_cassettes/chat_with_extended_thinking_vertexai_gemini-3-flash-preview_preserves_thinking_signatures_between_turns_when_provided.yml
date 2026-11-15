@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
       Pragma:
       - no-cache
       Date:
-      - Fri, 13 Nov 2026 21:29:42 GMT
+      - Sun, 15 Nov 2026 01:32:35 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/sqlservice.login",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Fri, 13 Nov 2026 21:29:42 GMT
+  recorded_at: Sun, 15 Nov 2026 01:32:35 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-3-flash-preview:generateContent
@@ -65,7 +65,7 @@ http_interactions:
       string: '{"contents":[{"role":"user","parts":[{"text":"What is 5 + 3?"}]}],"generationConfig":{"thinkingConfig":{"includeThoughts":true,"thinkingLevel":"medium"}}}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -80,7 +80,7 @@ http_interactions:
       message: OK
     headers:
       X-Goog-Request-Id:
-      - R4H3auKEAvfDhcIPwpHMEQ
+      - swv5asjUKr302fMPjY6D8Q8
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -88,7 +88,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Fri, 13 Nov 2026 21:29:51 GMT
+      - Sun, 15 Nov 2026 01:32:37 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -111,12 +111,12 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "**My Cognitive Process for Calculating 5 + 3**\n\nAs an expert in processing information and executing operations, my initial analysis of the user's request immediately identified the core task: a simple arithmetic summation. I parsed the input and recognized the operands as \"5\" and \"3,\" and crucially, the explicit instruction to perform an \"addition.\"\n\nMy internal representation of this operation was thus: $5 + 3$.\n\nLeveraging my deeply ingrained computational capabilities, I then executed the addition. This is a fundamental operation, and the result is immediately accessible.\n\nThe outcome of this calculation is unequivocally 8.\n\nTherefore, my final output is a clear and direct statement of this result.\n\n",
+                    "text": "**My Internal Processing of Your Request**\n\nRight, let's break down what you've asked of me. You've presented a straightforward mathematical query, specifically an addition problem: $5 + 3$. My internal architecture immediately recognizes this as a fundamental arithmetic operation. The task is to execute this addition.\n\nTherefore, $5 + 3$ resolves to $8$. My next step is to articulate this result with absolute clarity, as you've requested a fulsome summary of my thought process, and stating the answer plainly is the culmination of that process. The ultimate output is the clear presentation of the sum.\n\n",
                     "thought": true
                   },
                   {
                     "text": "5 + 3 = 8",
-                    "thoughtSignature": "AY89a18OWCt8R7PskthTzXNtwSKaG5CdE2uLQJ8F61JlXt40Zza0Yv++8kQyFCgKfcH5siBJ3PoXnrtuZ+WY8DTS5mL7ZKRZSglWnHF6m6jsEzyq4Tk3G7Xte2WSRXs+0Z0s3/I9uaQMImrZd/To0XFr954Y+MwwjB2mvzvyrK38nVK3Mv3kSpYLoon5WQE5Yscv01A87Ei6K2S6oBPGGedJ+PNA7bu2PwDk8gWFS1IypmSSSBf81XZ/Kg2AK2gFbSzBscqfnrmCtt9x56IQCTXF"
+                    "thoughtSignature": "AY89a18H2obRTJYoJVhb0cMD64SJUABw+LuIW94/3waGQGMYVGt1cwI1A0SKAtl8XeIrEtHUHCwR4A18jXdyQRrC2uMUE6r1zBRY2/qksiuLE0ry3+lgZhXcvOAKUgct/8e31u08DJRkp9B6gq4FY4R3m3uTR3NH95xjv2nL7gmVH61wZBMKgSAu48yAP6GBmeXcUUGLTYF5r4/1HJWSqIf34VSOzJyFWXEhipcriCMlW82fGIwG+Y6rziDdgcIqGoYZ/d3dHF2q9zfU8q/SBSiSLYU1ueqyRUwFHimW3ZAs+rU="
                   }
                 ]
               },
@@ -126,7 +126,7 @@ http_interactions:
           "usageMetadata": {
             "promptTokenCount": 8,
             "candidatesTokenCount": 7,
-            "totalTokenCount": 57,
+            "totalTokenCount": 56,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -140,33 +140,31 @@ http_interactions:
                 "tokenCount": 7
               }
             ],
-            "thoughtsTokenCount": 42
+            "thoughtsTokenCount": 41
           },
           "modelVersion": "gemini-3-flash-preview",
-          "createTime": "2026-11-13T21:29:43.033378Z",
-          "responseId": "R4H3auKEAvfDhcIPwpHMEQ"
+          "createTime": "2026-11-15T01:32:35.698952Z",
+          "responseId": "swv5asjUKr302fMPjY6D8Q8"
         }
-  recorded_at: Fri, 13 Nov 2026 21:29:51 GMT
+  recorded_at: Sun, 15 Nov 2026 01:32:37 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-3-flash-preview:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What is 5 + 3?"}]},{"role":"model","parts":[{"thought":true,"text":"**My
-        Cognitive Process for Calculating 5 + 3**\n\nAs an expert in processing information
-        and executing operations, my initial analysis of the user''s request immediately
-        identified the core task: a simple arithmetic summation. I parsed the input
-        and recognized the operands as \"5\" and \"3,\" and crucially, the explicit
-        instruction to perform an \"addition.\"\n\nMy internal representation of this
-        operation was thus: $5 + 3$.\n\nLeveraging my deeply ingrained computational
-        capabilities, I then executed the addition. This is a fundamental operation,
-        and the result is immediately accessible.\n\nThe outcome of this calculation
-        is unequivocally 8.\n\nTherefore, my final output is a clear and direct statement
-        of this result.\n\n"},{"text":"5 + 3 = 8","thoughtSignature":"AY89a18OWCt8R7PskthTzXNtwSKaG5CdE2uLQJ8F61JlXt40Zza0Yv++8kQyFCgKfcH5siBJ3PoXnrtuZ+WY8DTS5mL7ZKRZSglWnHF6m6jsEzyq4Tk3G7Xte2WSRXs+0Z0s3/I9uaQMImrZd/To0XFr954Y+MwwjB2mvzvyrK38nVK3Mv3kSpYLoon5WQE5Yscv01A87Ei6K2S6oBPGGedJ+PNA7bu2PwDk8gWFS1IypmSSSBf81XZ/Kg2AK2gFbSzBscqfnrmCtt9x56IQCTXF"}]},{"role":"user","parts":[{"text":"Now
+        Internal Processing of Your Request**\n\nRight, let''s break down what you''ve
+        asked of me. You''ve presented a straightforward mathematical query, specifically
+        an addition problem: $5 + 3$. My internal architecture immediately recognizes
+        this as a fundamental arithmetic operation. The task is to execute this addition.\n\nTherefore,
+        $5 + 3$ resolves to $8$. My next step is to articulate this result with absolute
+        clarity, as you''ve requested a fulsome summary of my thought process, and
+        stating the answer plainly is the culmination of that process. The ultimate
+        output is the clear presentation of the sum.\n\n"},{"text":"5 + 3 = 8","thoughtSignature":"AY89a18H2obRTJYoJVhb0cMD64SJUABw+LuIW94/3waGQGMYVGt1cwI1A0SKAtl8XeIrEtHUHCwR4A18jXdyQRrC2uMUE6r1zBRY2/qksiuLE0ry3+lgZhXcvOAKUgct/8e31u08DJRkp9B6gq4FY4R3m3uTR3NH95xjv2nL7gmVH61wZBMKgSAu48yAP6GBmeXcUUGLTYF5r4/1HJWSqIf34VSOzJyFWXEhipcriCMlW82fGIwG+Y6rziDdgcIqGoYZ/d3dHF2q9zfU8q/SBSiSLYU1ueqyRUwFHimW3ZAs+rU="}]},{"role":"user","parts":[{"text":"Now
         multiply that by 2"}]}],"generationConfig":{"thinkingConfig":{"includeThoughts":true,"thinkingLevel":"medium"}}}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -181,7 +179,7 @@ http_interactions:
       message: OK
     headers:
       X-Goog-Request-Id:
-      - T4H3atyiGOvltfAP0quAiQE
+      - tQv5arHjCMWWzPsP1far0AI
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -189,7 +187,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Fri, 13 Nov 2026 21:29:54 GMT
+      - Sun, 15 Nov 2026 01:32:38 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -204,48 +202,7 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: |
-        {
-          "candidates": [
-            {
-              "content": {
-                "role": "model",
-                "parts": [
-                  {
-                    "text": "**My Mental Arithmetic Walkthrough**\n\nAlright, so I'm looking back at where I was just a moment ago. My prior result, the number I had landed on, was an 8. Now, the current instruction is to take that 8 and multiply it by 2. This is a straightforward operation, really. I simply perform the multiplication: 8 multiplied by 2. The outcome of that calculation, my next figure, is 16.\n\n",
-                    "thought": true
-                  },
-                  {
-                    "text": "8 * 2 = 16",
-                    "thoughtSignature": "AY89a19OhRNP2apbnM0QyJ9izAXtpIDLtfAK4zj8eQqLJJykHQewufpM6TSmAyWjcoWODCwiZwvxP+2wJnSt/48izgb4s21cvNMbGKfC5IpONHr5Tr0LE+CKn0++T9l13NtQjMKO9Z9/IJRDCOUlbbCKkEnoOyFnXsHfSF2jkZJJhLtPiOdjkW+Sn7nrRGhn4577qmLXryxVNRNe/oJyuJ6H8010GXK/BT+0oRS48go9Dyd6rXHN4I8SvhJi"
-                  }
-                ]
-              },
-              "finishReason": "STOP"
-            }
-          ],
-          "usageMetadata": {
-            "promptTokenCount": 21,
-            "candidatesTokenCount": 8,
-            "totalTokenCount": 64,
-            "trafficType": "ON_DEMAND",
-            "promptTokensDetails": [
-              {
-                "modality": "TEXT",
-                "tokenCount": 21
-              }
-            ],
-            "candidatesTokensDetails": [
-              {
-                "modality": "TEXT",
-                "tokenCount": 8
-              }
-            ],
-            "thoughtsTokenCount": 35
-          },
-          "modelVersion": "gemini-3-flash-preview",
-          "createTime": "2026-11-13T21:29:51.397660Z",
-          "responseId": "T4H3atyiGOvltfAP0quAiQE"
-        }
-  recorded_at: Fri, 13 Nov 2026 21:29:54 GMT
-recorded_with: VCR 6.4.1
+      string: !binary |-
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICIqKk15IFRob3VnaHQgUHJvY2VzcyBmb3IgdGhlIE5leHQgQ2FsY3VsYXRpb24qKlxuXG5BbHJpZ2h0LCBzbyB0aGUgbGFzdCB0aGluZyBJIGNhbGN1bGF0ZWQgY2FtZSBvdXQgdG8gOC4gTXkgY3VycmVudCBvYmplY3RpdmUgaXMgdG8gdGFrZSB0aGF0IHByZXZpb3VzIHJlc3VsdCwgd2hpY2ggSSBrbm93IHdhcyA4LCBhbmQgYXBwbHkgYSBtdWx0aXBsaWNhdGlvbiBvcGVyYXRpb24gdG8gaXQuIFRoZSBzcGVjaWZpYyBtdWx0aXBsaWVyIEkgbmVlZCB0byB1c2UgaGVyZSBpcyAyLiBUaGVyZWZvcmUsIHRoZSBjYWxjdWxhdGlvbiBJJ20gcGVyZm9ybWluZyBpcyBhIHN0cmFpZ2h0Zm9yd2FyZCBtdWx0aXBsaWNhdGlvbjogOCBtdWx0aXBsaWVkIGJ5IDIuIFRoZSBvdXRjb21lIG9mIHRoaXMgb3BlcmF0aW9uIHdpbGwgYmUgMTYuXG5cbiIsCiAgICAgICAgICAgICJ0aG91Z2h0IjogdHJ1ZQogICAgICAgICAgfSwKICAgICAgICAgIHsKICAgICAgICAgICAgInRleHQiOiAiOCDDlyAyID0gMTYiLAogICAgICAgICAgICAidGhvdWdodFNpZ25hdHVyZSI6ICJBWTg5YTErdTdBMTJSQ2lTRjFzdXFxdlpVemRhSHYxc05aMlhEQzhLKzIvWXlmR21aMXBkOGI3amY1czNDejRiUkRBQkdjSmFsK0xwRnE2ZUJZcUFnVXpRYXBtekN4TkErNUFhTVFBQmtOanAxTERQZVlxMkpndGkyRHdJMUFIYW1aMHl1MWtuaVFaNGsxVVJnOXBvTzdocUJMc2NhdjBtcGpCWGtqc3RDdFhvRi9MR2xqVjJlNnQxSEhXNDcrYWo0U25kNWJKMm9hcDlxWnhlVWNKQjllVlZDOEdWaUtGWWZSd1ZFeHl6YWxiM2M2YTNTVEJPQUt3WEhVVk4yYkhSM3BGM2syMzBFZUFoR1gvMmZSVzhIRk5yTTRPRjVNclh3N3oxVW9UQkJkTFlobkNDaDg5YkZvT2VFaDVWNG1HQXJwSTc5ckNzWGJHVUVYemVKTDEvdmhmK2g4aHlOVGJJS3VXcCIKICAgICAgICAgIH0KICAgICAgICBdCiAgICAgIH0sCiAgICAgICJmaW5pc2hSZWFzb24iOiAiU1RPUCIKICAgIH0KICBdLAogICJ1c2FnZU1ldGFkYXRhIjogewogICAgInByb21wdFRva2VuQ291bnQiOiAyMSwKICAgICJjYW5kaWRhdGVzVG9rZW5Db3VudCI6IDgsCiAgICAidG90YWxUb2tlbkNvdW50IjogODMsCiAgICAidHJhZmZpY1R5cGUiOiAiT05fREVNQU5EIiwKICAgICJwcm9tcHRUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogMjEKICAgICAgfQogICAgXSwKICAgICJjYW5kaWRhdGVzVG9rZW5zRGV0YWlscyI6IFsKICAgICAgewogICAgICAgICJtb2RhbGl0eSI6ICJURVhUIiwKICAgICAgICAidG9rZW5Db3VudCI6IDgKICAgICAgfQogICAgXSwKICAgICJ0aG91Z2h0c1Rva2VuQ291bnQiOiA1NAogIH0sCiAgIm1vZGVsVmVyc2lvbiI6ICJnZW1pbmktMy1mbGFzaC1wcmV2aWV3IiwKICAiY3JlYXRlVGltZSI6ICIyMDI2LTExLTE1VDAxOjMyOjM3LjE0Mzc5M1oiLAogICJyZXNwb25zZUlkIjogInRRdjVhckhqQ01XV3pQc1AxZmFyMEFJIgp9Cg==
+  recorded_at: Sun, 15 Nov 2026 01:32:39 GMT
+recorded_with: VCR 6.4.0

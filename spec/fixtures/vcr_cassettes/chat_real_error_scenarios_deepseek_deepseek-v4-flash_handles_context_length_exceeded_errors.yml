@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"deepseek-v4-flash","messages":[{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>","reasoning_content":""},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>","reasoning_content":""},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>","reasoning_content":""},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>","reasoning_content":""},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>","reasoning_content":""},{"role":"user","content":"Hi"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -29,7 +29,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Fri, 13 Nov 2026 21:22:16 GMT
+      - Sun, 15 Nov 2026 01:20:25 GMT
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -39,22 +39,22 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 77c16fc2914bd942a4ebcd1c059fb27e
+      - '049bbb8bcd6d174448ced959ef144bc3'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Cache:
       - Error from cloudfront
       Via:
-      - 1.1 db3cc869e0dda88ce4fa37dee230e06e.cloudfront.net (CloudFront)
+      - 1.1 192214f2b714ecde75ddd74c51389aaa.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL50-P6
+      - TXL52-P2
       X-Amz-Cf-Id:
-      - 7dgqaFq4x5ZmnLYuYShswouINA6HxvABo1yBTkCfn7EmzlPc1KWWAg==
+      - oBOp8kPdhT5jKWTEs42ymDhicz5HBONltNXzTBwOElVWe1vLFcdzeA==
     body:
       encoding: ASCII-8BIT
       string: '{"error":{"message":"This model''s maximum context length is 1048576
         tokens. However, you requested 1250051 tokens (1250051 in the messages, 0
         in the completion). Please reduce the length of the messages or completion.
-        (request_id: 3317f20b-12a0-4360-95ec-d3af64968103)","type":"invalid_request_error","param":null,"code":"invalid_request_error"}}'
-  recorded_at: Fri, 13 Nov 2026 21:22:16 GMT
-recorded_with: VCR 6.4.1
+        (request_id: df9bfc45-01af-44e7-9da7-968e9be6ccc7)","type":"invalid_request_error","param":null,"code":"invalid_request_error"}}'
+  recorded_at: Sun, 15 Nov 2026 01:20:25 GMT
+recorded_with: VCR 6.4.0

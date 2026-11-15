@@ -11,7 +11,7 @@ http_interactions:
         to process"}},"required":["query"],"additionalProperties":false,"strict":true}}]}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -34,7 +34,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Fri, 13 Nov 2026 21:37:29 GMT
+      - Sun, 15 Nov 2026 01:39:03 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -44,7 +44,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=695
+      - gfet4t7; dur=736
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -64,7 +64,7 @@ http_interactions:
                         "query": "test data"
                       }
                     },
-                    "thoughtSignature": "CqYCAWkUfROwLH7H72+seGz9Z5/2NQCcQ8Eiug65WK3kVYxgfnZBOfmyZqZnvawRJmpBfJkp71e7fL1Cgui+AKVvnWgdoxAL5ac7keIqQ10M0uHzY08ASkPOl+HAcUEp5Zm3UD5Hfl2aWHt86rtATZIZ0fcjmZviL40NGeKEL3XnxU2J6PcYKIpspZQn8xRLhZU0peHKMnfqWLEwNsqBinyLhn1hb8zI768HlRRQDLNa3Ye+X+Fr7zsG9CzShlOKsnVNeV4FfXPMM/KvpkLrTHnXrpjg3oHy6l8joNMJcAHatYDviQ4Oew6q2SfmVu5maaLKT7gvVCMO+EEfjYJNhNmLuQX+1FVRwnneIwZIB0mVvA87UEQCrNGsAzK1bL3PhCrVgqaqgUxe"
+                    "thoughtSignature": "CrACAWkUfRM87GTiP0vXuV2HBbAvGi0bYIAjrSX2ePKSGCjcBftqN6pLy2jM0taVrkjggihZdJzLwTAZjQk2u16pCDi3PvBSkSIf4XCDjiCK7lzeSZivS6IQVsUeXcoHO4/iDrKdU+Cr3jpvuTse1QQqfhQt+d83eAjp83OYyBV/z1SyrzQLBvYJVpdr6iY8/pVk4SvThKPidomjG0VfAqT8nv3ETO+xXUh0S829gYPsE8+OGd4JD/lC14aYXOuaQIgNSqP0KDdQIxs0ckfsX6Z443KmAfpqRykVzYm0EMUDg9oDUjX3VHj2VMkkK23PCmkCP+/m8pQLmcxqnD35rQ4/qMaF5K7Q+PpqbABlAj2/OuAb48yQYUXUUQ502dKgrQtW2DYJrflnZ7yDSp5TMqVMFg=="
                   }
                 ],
                 "role": "model"
@@ -77,20 +77,20 @@ http_interactions:
           "usageMetadata": {
             "promptTokenCount": 46,
             "candidatesTokenCount": 16,
-            "totalTokenCount": 126,
+            "totalTokenCount": 124,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
                 "tokenCount": 46
               }
             ],
-            "thoughtsTokenCount": 64,
+            "thoughtsTokenCount": 62,
             "serviceTier": "standard"
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "GYP3ar-TC4aHxs0P6K24sQg"
+          "responseId": "Nw35aoqiDtXp7M8P15XloQc"
         }
-  recorded_at: Fri, 13 Nov 2026 21:37:29 GMT
+  recorded_at: Sun, 15 Nov 2026 01:39:03 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
@@ -98,13 +98,13 @@ http_interactions:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"Process this query: test
         data"}]},{"role":"model","parts":[{"functionCall":{"name":"content_returning","args":{"query":"test
-        data"}},"thoughtSignature":"CqYCAWkUfROwLH7H72+seGz9Z5/2NQCcQ8Eiug65WK3kVYxgfnZBOfmyZqZnvawRJmpBfJkp71e7fL1Cgui+AKVvnWgdoxAL5ac7keIqQ10M0uHzY08ASkPOl+HAcUEp5Zm3UD5Hfl2aWHt86rtATZIZ0fcjmZviL40NGeKEL3XnxU2J6PcYKIpspZQn8xRLhZU0peHKMnfqWLEwNsqBinyLhn1hb8zI768HlRRQDLNa3Ye+X+Fr7zsG9CzShlOKsnVNeV4FfXPMM/KvpkLrTHnXrpjg3oHy6l8joNMJcAHatYDviQ4Oew6q2SfmVu5maaLKT7gvVCMO+EEfjYJNhNmLuQX+1FVRwnneIwZIB0mVvA87UEQCrNGsAzK1bL3PhCrVgqaqgUxe"}]},{"role":"user","parts":[{"functionResponse":{"name":"content_returning","response":{"name":"content_returning","content":[{"text":"Processed:
+        data"}},"thoughtSignature":"CrACAWkUfRM87GTiP0vXuV2HBbAvGi0bYIAjrSX2ePKSGCjcBftqN6pLy2jM0taVrkjggihZdJzLwTAZjQk2u16pCDi3PvBSkSIf4XCDjiCK7lzeSZivS6IQVsUeXcoHO4/iDrKdU+Cr3jpvuTse1QQqfhQt+d83eAjp83OYyBV/z1SyrzQLBvYJVpdr6iY8/pVk4SvThKPidomjG0VfAqT8nv3ETO+xXUh0S829gYPsE8+OGd4JD/lC14aYXOuaQIgNSqP0KDdQIxs0ckfsX6Z443KmAfpqRykVzYm0EMUDg9oDUjX3VHj2VMkkK23PCmkCP+/m8pQLmcxqnD35rQ4/qMaF5K7Q+PpqbABlAj2/OuAb48yQYUXUUQ502dKgrQtW2DYJrflnZ7yDSp5TMqVMFg=="}]},{"role":"user","parts":[{"functionResponse":{"name":"content_returning","response":{"name":"content_returning","content":[{"text":"Processed:
         test data"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"content_returning","description":"Returns
         a processed string result","parametersJsonSchema":{"type":"object","properties":{"query":{"type":"string","description":"Query
         to process"}},"required":["query"],"additionalProperties":false,"strict":true}}]}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -127,7 +127,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Fri, 13 Nov 2026 21:37:30 GMT
+      - Sun, 15 Nov 2026 01:39:04 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -137,7 +137,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=422
+      - gfet4t7; dur=412
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -151,7 +151,7 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "I have processed your query: \"test data\"."
+                    "text": "The query \"test data\" has been processed."
                   }
                 ],
                 "role": "model"
@@ -173,7 +173,7 @@ http_interactions:
             "serviceTier": "standard"
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "GYP3ar3SO4S2vdIP1ObHoQ8"
+          "responseId": "OA35aqzWBeSIvdIPyNOPmQw"
         }
-  recorded_at: Fri, 13 Nov 2026 21:37:30 GMT
-recorded_with: VCR 6.4.1
+  recorded_at: Sun, 15 Nov 2026 01:39:04 GMT
+recorded_with: VCR 6.4.0

@@ -8,7 +8,7 @@ http_interactions:
       string: '{"contents":[{"role":"user","parts":[{"text":"What is 5 + 3?"}]}],"generationConfig":{"thinkingConfig":{"includeThoughts":true,"thinkingLevel":"low"}}}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -31,7 +31,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Fri, 13 Nov 2026 21:23:45 GMT
+      - Sun, 15 Nov 2026 01:21:45 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -41,7 +41,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=1567
+      - gfet4t7; dur=1373
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -55,12 +55,12 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "Here's my understanding of the situation, given the user's apparent need:\n\n**Addressing a Simple Arithmetic Query**\n\nOkay, so the user has posed a straightforward question: \"What is 5 + 3?\". It's a fundamental addition problem. I need to break this down. They're asking about *addition*. Specifically, the sum of *5* and *3*. Therefore, logically, the answer must be $5 + 3 = 8$. It's a trivial calculation, but I'll make sure to get it right and provide the most straightforward answer.\n\n\n",
+                    "text": "Here's my thought process, as requested:\n\n**Calculating a Simple Sum**\n\nOkay, the request is straightforward. I'm being asked to calculate the sum of \"5 + 3\". That's basic arithmetic. Let's see... 5 plus 3. I know that from memory, or a quick calculation in my head, that equals 8. The task is to give the answer clearly, so I'll just state the result directly. No need for complex explanations or caveats. It's a simple request, and I should deliver a simple, accurate response.\n\n\n",
                     "thought": true
                   },
                   {
                     "text": "5 + 3 = 8",
-                    "thoughtSignature": "EsQBCsEBAWkUfROHTMZomNpRgBdmkkEKLS5TP+4oYQ7eUYwqgedA+VucfJ7E/ca7fhrFiHkT55ZY9Ia0TJ51mZ+sIk91i/IEoXmbPEf6T7SOP+KeRMQbTLJhEahGBuCKb8jMMy3xq5X34O/cBLFhyojJ14A4h2KS8bWlLPflS/yaYrDlB2T4YZ7cSTBYovPBrw+NqPmtBACOTxZBjcXlqLJAV6fgnAVHGRNjqUr8KYvgxVsjToz8nPMn8tFGw3QS8rt6BGDEyQ=="
+                    "thoughtSignature": "EscBCsQBAWkUfRPleC9oGoRZTuD2ycUBXPZh2PSDCuBJBU8rinyHloK/zFDbReD7n9eJYA4/cVq8qrVW4cGj1Rc6mobNbeJnFAgE9HtLhBiZPBkjEdBwBE7cSzGBRYi5x43LsFiR73mScoF1dP6c0aBw/Kg+2RvuERboQysARN8bIOhF2c97G+CYIpCgbypz7Ly7FyS1UXvd89U2p03j/G8dtFg8vRDDyygSiec0CAXgw7LpxOwQ4RxEdMR4R9/ZnESvwtKKnSJwVA=="
                   }
                 ],
                 "role": "model"
@@ -72,37 +72,37 @@ http_interactions:
           "usageMetadata": {
             "promptTokenCount": 9,
             "candidatesTokenCount": 7,
-            "totalTokenCount": 53,
+            "totalTokenCount": 47,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
                 "tokenCount": 9
               }
             ],
-            "thoughtsTokenCount": 37,
+            "thoughtsTokenCount": 31,
             "serviceTier": "standard"
           },
           "modelVersion": "gemini-3-flash-preview",
-          "responseId": "4H_3avatIf3qkdUP-93i-AQ"
+          "responseId": "Jwn5ao6ZOquN28oP86vg0Q0"
         }
-  recorded_at: Fri, 13 Nov 2026 21:23:45 GMT
+  recorded_at: Sun, 15 Nov 2026 01:21:45 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What is 5 + 3?"}]},{"role":"model","parts":[{"thought":true,"text":"Here''s
-        my understanding of the situation, given the user''s apparent need:\n\n**Addressing
-        a Simple Arithmetic Query**\n\nOkay, so the user has posed a straightforward
-        question: \"What is 5 + 3?\". It''s a fundamental addition problem. I need
-        to break this down. They''re asking about *addition*. Specifically, the sum
-        of *5* and *3*. Therefore, logically, the answer must be $5 + 3 = 8$. It''s
-        a trivial calculation, but I''ll make sure to get it right and provide the
-        most straightforward answer.\n\n\n"},{"text":"5 + 3 = 8","thoughtSignature":"EsQBCsEBAWkUfROHTMZomNpRgBdmkkEKLS5TP+4oYQ7eUYwqgedA+VucfJ7E/ca7fhrFiHkT55ZY9Ia0TJ51mZ+sIk91i/IEoXmbPEf6T7SOP+KeRMQbTLJhEahGBuCKb8jMMy3xq5X34O/cBLFhyojJ14A4h2KS8bWlLPflS/yaYrDlB2T4YZ7cSTBYovPBrw+NqPmtBACOTxZBjcXlqLJAV6fgnAVHGRNjqUr8KYvgxVsjToz8nPMn8tFGw3QS8rt6BGDEyQ=="}]},{"role":"user","parts":[{"text":"Now
+        my thought process, as requested:\n\n**Calculating a Simple Sum**\n\nOkay,
+        the request is straightforward. I''m being asked to calculate the sum of \"5
+        + 3\". That''s basic arithmetic. Let''s see... 5 plus 3. I know that from
+        memory, or a quick calculation in my head, that equals 8. The task is to give
+        the answer clearly, so I''ll just state the result directly. No need for complex
+        explanations or caveats. It''s a simple request, and I should deliver a simple,
+        accurate response.\n\n\n"},{"text":"5 + 3 = 8","thoughtSignature":"EscBCsQBAWkUfRPleC9oGoRZTuD2ycUBXPZh2PSDCuBJBU8rinyHloK/zFDbReD7n9eJYA4/cVq8qrVW4cGj1Rc6mobNbeJnFAgE9HtLhBiZPBkjEdBwBE7cSzGBRYi5x43LsFiR73mScoF1dP6c0aBw/Kg+2RvuERboQysARN8bIOhF2c97G+CYIpCgbypz7Ly7FyS1UXvd89U2p03j/G8dtFg8vRDDyygSiec0CAXgw7LpxOwQ4RxEdMR4R9/ZnESvwtKKnSJwVA=="}]},{"role":"user","parts":[{"text":"Now
         multiply that by 2"}]}],"generationConfig":{"thinkingConfig":{"includeThoughts":true,"thinkingLevel":"low"}}}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -125,7 +125,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Fri, 13 Nov 2026 21:23:47 GMT
+      - Sun, 15 Nov 2026 01:21:47 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -135,7 +135,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=1492
+      - gfet4t7; dur=1519
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -143,6 +143,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicGFydHMiOiBbCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIkhlcmUncyBteSB0aG91Z2h0IHByb2Nlc3MsIGRpc3RpbGxlZDpcblxuKipNdWx0aXBseWluZyB0aGUgUHJldmlvdXMgUmVzdWx0KipcblxuT2theSwgc28gSSBuZWVkIHRvIHRha2UgdGhlIHByZXZpb3VzIHJlc3VsdCBhbmQgZG91YmxlIGl0LiBMZXQgbWUgc2VlLi4uIHRoZSBwcmV2aW91cyByZXN1bHQgd2FzIDguIFRoYXQncyBhIHN0cmFpZ2h0Zm9yd2FyZCBtdWx0aXBsaWNhdGlvbi4gOCBtdWx0aXBsaWVkIGJ5IDIuIExldCdzIGdldCB0aGF0IGRvbmU6IDggKiAyID0gMTYuIERvbmUuXG5cblxuIiwKICAgICAgICAgICAgInRob3VnaHQiOiB0cnVlCiAgICAgICAgICB9LAogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICI4IMOXIDIgPSAxNiIsCiAgICAgICAgICAgICJ0aG91Z2h0U2lnbmF0dXJlIjogIkVzY0JDc1FCQVdrVWZSTk9pbXVPa3pKSCtERnBKcDNqeThOMUttQ2xic1dOVk00MGo0SmdnL3BKMTUrSGVBa1FlNG16WFlKQ3hxb3R4bnFRT0RuM2xqakE2TzFoNUk4dzZ2aldRNERKbzd6SVpSUitoY2Q1Rk9hY0VmSmx0cXRDSDY3VVBVMTRvUWNUbFVrTzR4S0xMY0pzN0hDbHpJcW04Y3ozcjV4UXRaU3JmT29sWDBvUi9uOHM2YkFneWN3WXVETE9GRGwxaWhGMXp3dXdZcWdndGVUbXR4Sm1TNmo1azdYNGFHWmNuMWlaMU9qWC9zZmtUUll0aXgrMjBPWHd2bWk4eS9WWG93dVdGQT09IgogICAgICAgICAgfQogICAgICAgIF0sCiAgICAgICAgInJvbGUiOiAibW9kZWwiCiAgICAgIH0sCiAgICAgICJmaW5pc2hSZWFzb24iOiAiU1RPUCIsCiAgICAgICJpbmRleCI6IDAKICAgIH0KICBdLAogICJ1c2FnZU1ldGFkYXRhIjogewogICAgInByb21wdFRva2VuQ291bnQiOiAxNDcsCiAgICAiY2FuZGlkYXRlc1Rva2VuQ291bnQiOiA4LAogICAgInRvdGFsVG9rZW5Db3VudCI6IDE4NywKICAgICJwcm9tcHRUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogMTQ3CiAgICAgIH0KICAgIF0sCiAgICAidGhvdWdodHNUb2tlbkNvdW50IjogMzIsCiAgICAic2VydmljZVRpZXIiOiAic3RhbmRhcmQiCiAgfSwKICAibW9kZWxWZXJzaW9uIjogImdlbWluaS0zLWZsYXNoLXByZXZpZXciLAogICJyZXNwb25zZUlkIjogIjRuXzNhdnV3RmNLbmtkVVB3NzItd1FrIgp9Cg==
-  recorded_at: Fri, 13 Nov 2026 21:23:47 GMT
-recorded_with: VCR 6.4.1
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicGFydHMiOiBbCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIk9rYXksIGhlcmUncyBteSB0YWtlIG9uIHRob3NlIHRob3VnaHRzLCBmcmFtZWQgYXMgbXkgb3duOlxuXG4qKk11bHRpcGx5aW5nIHRoZSBMYXN0IFJlc3VsdCoqXG5cbkFscmlnaHQsIGxldCdzIGtlZXAgdGhpbmdzIG1vdmluZy4gVGhlIGxhc3QgbnVtYmVyIEkgY2FsY3VsYXRlZCB3YXMgOC4gTm93IEkgbmVlZCB0byBtdWx0aXBseSB0aGF0IGJ5IDIuIFRoaXMgaXMgc3RyYWlnaHRmb3J3YXJkIGVub3VnaDsgdGhlIG9wZXJhdGlvbiBJJ20gZ29pbmcgdG8gcGVyZm9ybSBpcyBhIHNpbXBsZSBtdWx0aXBsaWNhdGlvbjogOCAqIDIuIEFuZCB0aGUgcmVzdWx0IGlzIGNsZWFybHkgMTYuIERvbmUuIE5leHQhXG5cblxuIiwKICAgICAgICAgICAgInRob3VnaHQiOiB0cnVlCiAgICAgICAgICB9LAogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICI4IMOXIDIgPSAxNiIsCiAgICAgICAgICAgICJ0aG91Z2h0U2lnbmF0dXJlIjogIkV1NEJDdXNCQVdrVWZSTUk3cHJmeUkzQlNCSDljN0xFU01lOEZieXdTY0ZXK2NIWmNrVzFYL2hFMGw1WStEdGZwVkRoeDkwa0JYb0pjamF6bUxsV2oyQ3BJZS80bm9paVY4WEMvNXp2NDMxb0xtbUZSQTR5R2RQMTMzVUsvWnVBVStkc25TN1VtcktBbUorYkNlQllCNllrem9UWThZblBQMEhXZThqalNKV2dpcVEwTm80QVBhRjg4RzZlajZTQi9oc2FHdlpDTHZ6RThveXFHcWJRMWlpZi93dG9YTTZsS2l1VHNOaVNaZ1NySHpjZUk1QmFqRUFmZGtZbGlwUTNobnpqRVc1a1NoV1ZJOXJuSDk0L1pJL3dqWVZmSUlQLzRMVktXQ0lIcXFHZHF1TVRxaHFVemJmS3RLRm5VeTYzR1E9PSIKICAgICAgICAgIH0KICAgICAgICBdLAogICAgICAgICJyb2xlIjogIm1vZGVsIgogICAgICB9LAogICAgICAiZmluaXNoUmVhc29uIjogIlNUT1AiLAogICAgICAiaW5kZXgiOiAwCiAgICB9CiAgXSwKICAidXNhZ2VNZXRhZGF0YSI6IHsKICAgICJwcm9tcHRUb2tlbkNvdW50IjogMTQ2LAogICAgImNhbmRpZGF0ZXNUb2tlbkNvdW50IjogOCwKICAgICJ0b3RhbFRva2VuQ291bnQiOiAxOTgsCiAgICAicHJvbXB0VG9rZW5zRGV0YWlscyI6IFsKICAgICAgewogICAgICAgICJtb2RhbGl0eSI6ICJURVhUIiwKICAgICAgICAidG9rZW5Db3VudCI6IDE0NgogICAgICB9CiAgICBdLAogICAgInRob3VnaHRzVG9rZW5Db3VudCI6IDQ0LAogICAgInNlcnZpY2VUaWVyIjogInN0YW5kYXJkIgogIH0sCiAgIm1vZGVsVmVyc2lvbiI6ICJnZW1pbmktMy1mbGFzaC1wcmV2aWV3IiwKICAicmVzcG9uc2VJZCI6ICJLUW41YW9lME1fNzV4TjhQMGFqNjBBVSIKfQo=
+  recorded_at: Sun, 15 Nov 2026 01:21:47 GMT
+recorded_with: VCR 6.4.0

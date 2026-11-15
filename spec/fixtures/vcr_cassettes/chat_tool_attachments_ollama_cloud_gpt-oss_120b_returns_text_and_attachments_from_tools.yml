@@ -10,7 +10,7 @@ http_interactions:
         a sample text file named ruby.txt","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -27,52 +27,52 @@ http_interactions:
       Content-Type:
       - application/json
       X-Build-Commit:
-      - be2a079e0a02b03cf1b3d1cab78f88a8b6c055b8
+      - 9259ed42dedddf2a22abf15e2a28fc3662da6272
       X-Build-Time:
-      - '2026-11-13T11:19:30-08:00'
+      - '2026-11-14T15:25:41-08:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Content-Length:
-      - '591'
+      - '574'
       Date:
-      - Fri, 13 Nov 2026 21:35:27 GMT
+      - Sun, 15 Nov 2026 01:36:57 GMT
       Server:
       - Google Frontend
-      Traceparent:
-      - 00-01757e05cf75db7f8ac83ff2890f17f4-ae90d44b155c0838-00
       X-Cloud-Trace-Context:
-      - 01757e05cf75db7f8ac83ff2890f17f4/12578787178191783992
+      - b8f2c6a97f581c1c155da76cf78dd06f/10236819780367813071
+      Traceparent:
+      - 00-b8f2c6a97f581c1c155da76cf78dd06f-8e107d5a6e8409cf-00
       Via:
       - 1.1 google
       Alt-Svc:
       - h3=":443"; ma=2592000
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-702","object":"chat.completion","created":1794605727,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"The
-        user wants to call file_fetch to get ruby.txt and then repeat the contents.
-        We need to call the function file_fetch.","tool_calls":[{"id":"call_8krypiue","index":0,"type":"function","function":{"name":"file_fetch","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":133,"completion_tokens":46,"total_tokens":179,"prompt_tokens_details":{"cached_tokens":64}}}
+      string: '{"id":"chatcmpl-115","object":"chat.completion","created":1794706617,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"User
+        wants to fetch ruby.txt via file_fetch tool, then repeat its contents. So
+        need to call file_fetch.","tool_calls":[{"id":"call_0p5enldh","index":0,"type":"function","function":{"name":"file_fetch","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":133,"completion_tokens":43,"total_tokens":176,"prompt_tokens_details":{"cached_tokens":64}}}
 
         '
-  recorded_at: Fri, 13 Nov 2026 21:35:27 GMT
+  recorded_at: Sun, 15 Nov 2026 01:36:58 GMT
 - request:
     method: post
     uri: https://ollama.com/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"gpt-oss:120b","messages":[{"role":"user","content":"Call
-        file_fetch to get ruby.txt, then repeat the contents of the attached file."},{"role":"assistant","content":"","tool_calls":[{"id":"call_8krypiue","type":"function","function":{"name":"file_fetch","arguments":"{}"}}],"reasoning":"The
-        user wants to call file_fetch to get ruby.txt and then repeat the contents.
-        We need to call the function file_fetch.","reasoning_content":"The user wants
-        to call file_fetch to get ruby.txt and then repeat the contents. We need to
-        call the function file_fetch."},{"role":"tool","content":"Fetched the file.","tool_call_id":"call_8krypiue"},{"role":"user","content":[{"type":"text","text":"Attachments
-        from tool call call_8krypiue:"},{"type":"text","text":"<file name=''ruby.txt''
+        file_fetch to get ruby.txt, then repeat the contents of the attached file."},{"role":"assistant","content":"","tool_calls":[{"id":"call_0p5enldh","type":"function","function":{"name":"file_fetch","arguments":"{}"}}],"reasoning":"User
+        wants to fetch ruby.txt via file_fetch tool, then repeat its contents. So
+        need to call file_fetch.","reasoning_content":"User wants to fetch ruby.txt
+        via file_fetch tool, then repeat its contents. So need to call file_fetch."},{"role":"tool","content":"Fetched
+        the file.","tool_call_id":"call_0p5enldh"},{"role":"user","content":[{"type":"text","text":"Attachments
+        from tool call call_0p5enldh:"},{"type":"text","text":"<file name=''ruby.txt''
         mime_type=''text/plain''>Ruby is the best.</file>"}]}],"stream":false,"tools":[{"type":"function","function":{"name":"file_fetch","description":"Fetches
         a sample text file named ruby.txt","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -89,33 +89,33 @@ http_interactions:
       Content-Type:
       - application/json
       X-Build-Commit:
-      - be2a079e0a02b03cf1b3d1cab78f88a8b6c055b8
+      - 9259ed42dedddf2a22abf15e2a28fc3662da6272
       X-Build-Time:
-      - '2026-11-13T11:19:30-08:00'
+      - '2026-11-14T15:25:41-08:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Content-Length:
-      - '483'
+      - '461'
       Date:
-      - Fri, 13 Nov 2026 21:35:28 GMT
+      - Sun, 15 Nov 2026 01:36:58 GMT
       Server:
       - Google Frontend
       X-Cloud-Trace-Context:
-      - 8c5784145b27b8010993114c1c0a7ddc/1601626140512729916
+      - 9d795a89eeb1d6ed00703ce5e0f17377/6006774497545281664
       Traceparent:
-      - 00-8c5784145b27b8010993114c1c0a7ddc-163a1e7d303dbb3c-00
+      - 00-9d795a89eeb1d6ed00703ce5e0f17377-535c59948c0fe080-00
       Via:
       - 1.1 google
       Alt-Svc:
       - h3=":443"; ma=2592000
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-107","object":"chat.completion","created":1794605728,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"Ruby
+      string: '{"id":"chatcmpl-160","object":"chat.completion","created":1794706618,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"Ruby
         is the best.","reasoning":"We need to repeat the contents of the attached
-        file. The file content: \"Ruby is the best.\" So we just output that."},"finish_reason":"stop"}],"usage":{"prompt_tokens":198,"completion_tokens":42,"total_tokens":240,"prompt_tokens_details":{"cached_tokens":112}}}
+        file, i.e., \"Ruby is the best.\" Provide that."},"finish_reason":"stop"}],"usage":{"prompt_tokens":199,"completion_tokens":38,"total_tokens":237,"prompt_tokens_details":{"cached_tokens":112}}}
 
         '
-  recorded_at: Fri, 13 Nov 2026 21:35:28 GMT
-recorded_with: VCR 6.4.1
+  recorded_at: Sun, 15 Nov 2026 01:36:58 GMT
+recorded_with: VCR 6.4.0

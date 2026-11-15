@@ -281,7 +281,7 @@ http_interactions:
         filler filler filler filler filler filler filler Name one colour."}],"stream":false,"max_tokens":8,"truncate_prompt_tokens":-1,"truncation_side":"left"}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -295,27 +295,27 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Date:
+      - Sun, 15 Nov 2026 01:19:25 GMT
+      Req-Cost-Time:
+      - '31'
       Resp-Start-Time:
-      - '1794608797748'
+      - '1794705565944'
       Server:
       - istio-envoy
-      Req-Cost-Time:
-      - '37'
-      Req-Arrive-Time:
-      - '1794608797711'
-      X-Envoy-Upstream-Service-Time:
-      - '33'
-      Date:
-      - Fri, 13 Nov 2026 22:26:37 GMT
       Content-Type:
       - application/json
+      Req-Arrive-Time:
+      - '1794705565913'
+      X-Envoy-Upstream-Service-Time:
+      - '25'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"chatcmpl-8d717277-7327-4e75-8435-d926b08b977d","object":"chat.completion","created":1794608797,"model":"smollm2-135m","choices":[{"index":0,"message":{"role":"assistant","content":"is
-        a jewelry?ker A speaks the","refusal":null,"annotations":null,"audio":null,"function_call":null,"reasoning":null},"logprobs":null,"finish_reason":"length","stop_reason":null,"token_ids":null,"routed_experts":null}],"service_tier":null,"system_fingerprint":"vllm-0.25.1-019fab29","usage":{"prompt_tokens":2040,"total_tokens":2048,"completion_tokens":8,"prompt_tokens_details":{"cached_tokens":16,"multimodal_tokens":null}},"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"metrics":null}'
-  recorded_at: Fri, 13 Nov 2026 22:26:37 GMT
-recorded_with: VCR 6.4.1
+      string: '{"id":"chatcmpl-f21f637c-cc1b-4e2f-890b-bd1da0ba465e","object":"chat.completion","created":1794705565,"model":"smollm2-135m","choices":[{"index":0,"message":{"role":"assistant","content":"\ncookbook\",
+        \"tight anchoring","refusal":null,"annotations":null,"audio":null,"function_call":null,"reasoning":null},"logprobs":null,"finish_reason":"length","stop_reason":null,"token_ids":null,"routed_experts":null}],"service_tier":null,"system_fingerprint":"vllm-0.25.1-019fab29","usage":{"prompt_tokens":2040,"total_tokens":2048,"completion_tokens":8,"prompt_tokens_details":{"cached_tokens":2032,"multimodal_tokens":null}},"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"metrics":null}'
+  recorded_at: Sun, 15 Nov 2026 01:19:25 GMT
+recorded_with: VCR 6.4.0

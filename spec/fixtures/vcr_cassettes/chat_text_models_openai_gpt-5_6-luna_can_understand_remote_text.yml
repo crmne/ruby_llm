@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -26,8 +26,6 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
-      X-Origin-Cache:
-      - HIT
       Last-Modified:
       - Tue, 03 Nov 2026 01:08:56 GMT
       Access-Control-Allow-Origin:
@@ -35,35 +33,35 @@ http_interactions:
       Etag:
       - W/"6ae93428-9c6"
       Expires:
-      - Fri, 13 Nov 2026 21:31:46 GMT
+      - Sun, 15 Nov 2026 01:29:24 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 75D8:818BB:BA3482:BB39B0:6AF77F6A
+      - 1AA8:148882:4D5DE00:4DD0C30:6AF9089B
       X-Github-Edge-Region:
       - fra
       Accept-Ranges:
       - bytes
       Date:
-      - Fri, 13 Nov 2026 21:24:20 GMT
+      - Sun, 15 Nov 2026 01:22:01 GMT
       Via:
       - 1.1 varnish
       Age:
       - '122'
       X-Served-By:
-      - cache-ber1080041-BER
+      - cache-ber1080044-BER
       X-Cache:
       - HIT
       X-Cache-Hits:
       - '1'
       X-Timer:
-      - S1794605061.811946,VS0,VE2
+      - S1794705722.696539,VS0,VE1
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - 4db139a4bd69d92f13ca36158bcffd89afdae30c
+      - 1b7731910a6b76e8b3349dbdfd9ff73f3232afe7
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -99,7 +97,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Fri, 13 Nov 2026 21:24:20 GMT
+  recorded_at: Sun, 15 Nov 2026 01:22:01 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/responses
@@ -142,7 +140,7 @@ http_interactions:
         A PARTICULAR\n     PURPOSE.\n</file>"}]}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -157,7 +155,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:24:23 GMT
+      - Sun, 15 Nov 2026 01:22:04 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -181,7 +179,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '2626'
+      - '3014'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -193,11 +191,11 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '4999'
       X-Ratelimit-Remaining-Tokens:
-      - '1999924'
+      - '1999842'
       X-Ratelimit-Reset-Requests:
       - 12ms
       X-Ratelimit-Reset-Tokens:
-      - 2ms
+      - 4ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Set-Cookie:
@@ -208,16 +206,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_08b5f28e4c3c0418016af78004ece887d2816234d0864fc890",
+          "id": "resp_063e90be3e0709ea016af90939d1b487d2b12a64fe0c820f8e",
           "object": "response",
-          "created_at": 1794605060,
+          "created_at": 1794705721,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794605063,
+          "completed_at": 1794705724,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
@@ -232,7 +230,14 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_08b5f28e4c3c0418016af780058ba887d281d01dab81ce64c9",
+              "id": "rs_063e90be3e0709ea016af9093a44fc87d2a7778c03cef8675c",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABq-Qk83EihY3C69ddG_YE-k9cvlKK0QygfDl7djc8bFHHd_D6LTJNJnCBnyJsVMp-NMcLu4f16kUBn2eFqQMP55mpE77wrUuyxGiVO4994cgbVOF4tJm7opeXhdORd5o-tbGB_oHmJCFOqk_mGr7JVjRKJB4gWTYkE9zHliHApN_SbVMpi0tDAA-GVk-kVNKcSRBMZ8_3-VjIUGO9oPlFMniZtDzf34-QyROl_WGRabMiMcmzpjkunqFYgYzRO_VuJBLmCThhenPpbi365dTwAt7h-LSdTflOMXCsiruHts7Zg4k8E25xVSUoMxKVP8-CM_hBLT5U5Hll8fnrSUdL5UgC-1iP8OUvBsSzwShUHf0tKx6Hq1OgOSgCpQJze3wsEoxqx_DuGQ0ufazWFIyR6pjLYrWNoUadVNYryJGz2RrhD-chLrRu1omfexknygECt89aNEYP2TIVIDIcLa2N_yseN5vD9P_jbyvu8dJXeMh9QHo0zLUTZdSfuBYxNKdXiiDXOTaByfx6kS2cSq7kvNXahWL2ndEUaT1P_3TPfR0dWYQoYDyH4lpQXRjESKTYfSL2eZ99Wl64jk4gBQwlMfEpe_QVydSmt6UM9IbWGWuv9P_eGpJg6H4KD0_GU3dc8ncuHwHmOhkv2F5knf3L6eyfTaO6of3Ci-Iu5xBArGelqLzhLz1yxqJdGJOooESY80s5t8BN0-wDnWvjeWt6Vy4cBUJ7vQVF3WZPZ6m4z0JThe1A73uunL5TBjLGfXONtLHQiY1D3kUnGRWHDFG26wdX6uBW6gkNhMgeOhZ2d9fr1LXjhnjQYEfk3Dn9z_OIchNx1oAhPij8pAXXfEl0tMklbf5GbYbUNBXPcRUk43HtcQIet_6ZNuwMMNJL62T3E_Xh7up2BdPxBLcFD87-YHvN2pqEPT-3ZFucw0hDBTQEbPi3-n0rMyh80x5gDihjN7rEfsBx_tncV2NVeG3Gj2wPDHw5vgnrh-0eu4C-s_ldMxCvyZCFjn5grzK6465LPk_6xNCPuvuPQpqvjCYr3t2Y5hmKVnvk9rM5_hx8VpKp4uNv06UMTRBhmCb2LVwEyjXxGqgiuCQtF6NS55eqpiWdkoVD0jxZAEN7sYf9IoIlFGSepjeo9DlTwIZ7DFBPIlco82xChIj9DXBpcE93UmT9ISYOGDJFUhKLGIm8QvOUMpfOY7pmVXPvEQtRFTRsiQWQ06LezXnQYD3-ePyEk6WHB1GZ_aEJP-h7KWH2JbXLXGHOMKJAXbpfJOjXQ0vo1bdtn-cCAMu8adR1k6-k6y0mOVZJIczWCfsJ26OGAyhoj_tT2c4PrKL7kx2owCyHmcK0h9V-hz6xWiO6fCC3nZcPoS7O5Atr5NrqM2uIgfxKc3jsdb6wDqx1lwLFpy9Blnj2JsPIIj1RVImWszRxpJma_eRRYoHGOZ_7bnvWLfsXKavxyxjxuVaV5nwnDcFRi-hz6BRErt7FgPMHqwFClhnJ-1rsb2u2YQ55u2BLNU7p50BMsTpK86_9ioSyZjG5cBg4EAvMUYeWZXMnfR4xSTJfjMD0dkOnWKnW1koYOeNinpM9n_MHbcuICIr1e_z9mcl1hbOsYZuYd7S4vcUnGW5TIeBPGbyzRJ_zxHErPctOdH3NQYffCQVe37DlOV16R-aeZr-yc3-3n8eYK2agvPVZIj3Tlb7i4Zrw7Q6bgi4OGA9iHdK_Yha_q94PwQt1kEJJx9mp64cxWuoW1ee-tFpzEDHlkSgIMgsLW7dJs5L3cXnRFeLlbhEshCDwKaFgj26WIo8uYnn6uDQPxwaS-P5a5DkU1Mf1MFZbOSV224CLMuojVYUhtKa7gMlbvsnHNtZGLzVKCpi9fGCz665DWQ5KxBRQMgryuNsYNALa6BM9CwbPkg5ol3WRrAx7uIKoOq9vVPpCPDxjBgqWeyz2btMXHOqDRiyvHWmYpRfx8SoK4tSQ4OFqMI6SbDh629ZtXBwuZbZMYDlYJwFokUy5q7x4ldBKJp9AHdG_uJSubVsTc8orPtugt30XpmRqfqzggjgKjj8T_YJQVKrkYDIfTdVanlk976W4p1gKEhE98H1UcPWkDYOb93x-qxK-GMDpZidWD8A6IrPR4qzriJLKJOaCEyCmouZvK-loxKYsl9lSSoWqdUwnSdy4mlMVJDLNc7TiveR7IE3micUqO5L3DlZFQ5dfBTE0egN8w54sFUvoyfthXn1W-1R96CRP9HjvAn7QUiKw_MzWyLbLdMix8kXLU8g==",
+              "summary": []
+            },
+            {
+              "id": "msg_063e90be3e0709ea016af9093ac1c087d29a5283b0960631d0",
               "type": "message",
               "status": "completed",
               "content": [
@@ -240,7 +245,7 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "This is the **license for the Ruby programming language**, attributed to Yukihiro \u201cMatz\u201d Matsumoto.\n\nIn summary:\n\n- Ruby may be redistributed and modified under either:\n  - The **2-clause BSD License** (referenced in the separate `BSDL` file), or\n  - The conditions listed in this file.\n- Source-code redistribution is allowed if copyright notices and disclaimers are preserved.\n- Modified source may be distributed if the modifications are:\n  - Released publicly,\n  - Kept within an organization,\n  - Distributed under a distinct binary name with instructions for obtaining the original, or\n  - Covered by another arrangement with the author.\n- Binary/object-code distribution requires accompanying source, instructions for obtaining the source, distinct naming, or another arrangement.\n- Some files may have different licenses; the separate `LEGAL` file identifies them.\n- Programs and libraries supplied to or generated by Ruby are not automatically covered by Ruby\u2019s copyright and may be used or sold commercially.\n- The software is provided **\u201cas is,\u201d without warranties**."
+                  "text": "This file is the license for the Ruby programming language, copyrighted by Yukihiro Matsumoto (\u201cMatz\u201d).\n\nIt allows:\n\n- Redistribution of unchanged source code, provided copyright notices and disclaimers are retained.\n- Modification of the software, if at least one condition is met:\n  - The changes are released freely or placed in the public domain.\n  - The modified software is used only within an organization.\n  - Modified binaries use distinct names and point users to the original distribution.\n  - Other distribution terms are agreed upon with the author.\n- Distribution of binaries, provided similar conditions are met, such as including source code, providing access to the original source, or using distinct binary names.\n- Incorporation of parts of Ruby into other software, including commercial software, except for components identified separately in the `LEGAL` file.\n- Commercial use and aggregation of scripts or library files supplied to or generated by Ruby; those files belong to their respective creators.\n\nThe license also states that the software is provided **\u201cas is,\u201d without warranties**, including implied warranties of merchantability or fitness for a particular purpose. It offers a choice between these conditions and the terms of the accompanying 2-clause BSD-style license (`BSDL`)."
                 }
               ],
               "phase": "final_answer",
@@ -295,16 +300,20 @@ http_interactions:
             "input_tokens": 539,
             "input_tokens_details": {
               "cache_write_tokens": 0,
+              "cache_write_tokens_details": {
+                "ttl_12h_tokens": 0,
+                "ttl_30m_tokens": 0
+              },
               "cached_tokens": 0
             },
-            "output_tokens": 219,
+            "output_tokens": 301,
             "output_tokens_details": {
-              "reasoning_tokens": 0
+              "reasoning_tokens": 50
             },
-            "total_tokens": 758
+            "total_tokens": 840
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Fri, 13 Nov 2026 21:24:23 GMT
-recorded_with: VCR 6.4.1
+  recorded_at: Sun, 15 Nov 2026 01:22:04 GMT
+recorded_with: VCR 6.4.0

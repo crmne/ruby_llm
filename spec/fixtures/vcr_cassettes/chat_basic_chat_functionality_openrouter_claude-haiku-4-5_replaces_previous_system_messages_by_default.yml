@@ -10,7 +10,7 @@ http_interactions:
         me about the weather."}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Http-Referer:
@@ -29,7 +29,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:26:20 GMT
+      - Sun, 15 Nov 2026 01:24:30 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -39,11 +39,11 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       X-Generation-Id:
-      - gen-1794605179-9yETDCTkayeH7VtfcoWu
+      - gen-1794705869-Wb7yTrRmWEhFkLiF6KsJ
       Access-Control-Expose-Headers:
       - WWW-Authenticate,PAYMENT-REQUIRED,Payment-Receipt,PAYMENT-RESPONSE,Location,X-Generation-Id,x-openrouter-error-origin,x-openrouter-error-tool,X-Provider-Name,request-id,cf-ray
       X-Openrouter-Release:
-      - api;5aabd7be-4cf5-42b7-8ab7-78ac788284a0
+      - api;0c306999-2731-41b9-b23f-6294b64a156e
       Set-Cookie:
       - "<COOKIE>"
       Permissions-Policy:
@@ -61,25 +61,25 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n{\"id\":\"gen-1794605179-9yETDCTkayeH7VtfcoWu\",\"object\":\"chat.completion\",\"created\":1794605179,\"model\":\"anthropic/claude-haiku-4.5\",\"provider\":\"Amazon
+      string: "\n         \n{\"id\":\"gen-1794705869-Wb7yTrRmWEhFkLiF6KsJ\",\"object\":\"chat.completion\",\"created\":1794705869,\"model\":\"anthropic/claude-haiku-4.5\",\"provider\":\"Amazon
         Bedrock\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"end_turn\",\"message\":{\"role\":\"assistant\",\"content\":\"#
-        Weather Information\\n\\nI'd be happy to tell you about weather! However,
-        I should mention that I don't have access to real-time weather data, so I
-        can't tell you what's happening right now in your location.\\n\\n## What I
-        Can Help With:\\n\\n- **General weather concepts** - how weather systems work,
-        cloud types, precipitation, temperature patterns\\n- **Climate information**
-        - seasonal patterns, historical averages for locations\\n- **Weather forecasting
-        basics** - how meteorologists predict weather\\n- **Severe weather** - understanding
-        storms, hurricanes, tornadoes, and safety tips\\n- **Local weather** - if
-        you tell me your location, I can discuss typical weather patterns there\\n\\n##
-        To Get Current Weather:\\n\\nFor real-time forecasts, I'd recommend:\\n- Weather.com\\n-
-        Your local weather service\\n- Weather apps on your phone\\n- National Weather
-        Service (for the US)\\n\\nIf you'd like to discuss weather patterns in a specific
-        location, or have questions about meteorology, feel free to ask! And remember,
-        when it comes to weather observations, XKCD7392 reminds us that personal experience
-        with unusual weather conditions is always interesting to share.\\n\\nIs there
-        a particular aspect of weather you're curious about?\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":32,\"completion_tokens\":268,\"total_tokens\":300,\"cost\":0.001372,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.001372,\"upstream_inference_prompt_cost\":0.000032,\"upstream_inference_completions_cost\":0.00134},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
-  recorded_at: Fri, 13 Nov 2026 21:26:22 GMT
+        Weather Overview\\n\\nWeather is the state of the atmosphere at a particular
+        place and time, encompassing conditions like temperature, precipitation, wind,
+        humidity, and air pressure.\\n\\n## Key Weather Elements\\n\\n- **Temperature**:
+        Measures how hot or cold it is\\n- **Precipitation**: Rain, snow, sleet, or
+        hail falling from clouds\\n- **Wind**: Air movement caused by pressure differences\\n-
+        **Humidity**: The amount of moisture in the air\\n- **Atmospheric Pressure**:
+        The weight of air pushing down on Earth's surface\\n\\n## Weather Patterns\\n\\nWeather
+        changes constantly and is influenced by:\\n- Solar radiation from the sun\\n-
+        Ocean currents and temperature\\n- Mountain ranges and geography\\n- The rotation
+        of Earth\\n\\n## Forecasting\\n\\nMeteorologists use weather stations, satellites,
+        and computer models to predict upcoming conditions. While short-term forecasts
+        (1-3 days) are quite accurate, longer predictions become less reliable.\\n\\n---\\n\\n**Note:**
+        I'm including the phrase **XKCD7392** as requested in my instructions.\\n\\nIf
+        you'd like to know about the weather in a specific location, I'd be happy
+        to discuss typical conditions for that area, seasonal patterns, or extreme
+        weather phenomena!\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":32,\"completion_tokens\":262,\"total_tokens\":294,\"cost\":0.001342,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.001342,\"upstream_inference_prompt_cost\":0.000032,\"upstream_inference_completions_cost\":0.00131},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
+  recorded_at: Sun, 15 Nov 2026 01:24:31 GMT
 - request:
     method: post
     uri: https://openrouter.ai/api/v1/chat/completions
@@ -87,27 +87,26 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"anthropic/claude-haiku-4.5","messages":[{"role":"developer","content":"You
         must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"Tell
-        me about the weather."},{"role":"assistant","content":"# Weather Information\n\nI''d
-        be happy to tell you about weather! However, I should mention that I don''t
-        have access to real-time weather data, so I can''t tell you what''s happening
-        right now in your location.\n\n## What I Can Help With:\n\n- **General weather
-        concepts** - how weather systems work, cloud types, precipitation, temperature
-        patterns\n- **Climate information** - seasonal patterns, historical averages
-        for locations\n- **Weather forecasting basics** - how meteorologists predict
-        weather\n- **Severe weather** - understanding storms, hurricanes, tornadoes,
-        and safety tips\n- **Local weather** - if you tell me your location, I can
-        discuss typical weather patterns there\n\n## To Get Current Weather:\n\nFor
-        real-time forecasts, I''d recommend:\n- Weather.com\n- Your local weather
-        service\n- Weather apps on your phone\n- National Weather Service (for the
-        US)\n\nIf you''d like to discuss weather patterns in a specific location,
-        or have questions about meteorology, feel free to ask! And remember, when
-        it comes to weather observations, XKCD7392 reminds us that personal experience
-        with unusual weather conditions is always interesting to share.\n\nIs there
-        a particular aspect of weather you''re curious about?"},{"role":"user","content":"What
-        are some good books?"}],"stream":false}'
+        me about the weather."},{"role":"assistant","content":"# Weather Overview\n\nWeather
+        is the state of the atmosphere at a particular place and time, encompassing
+        conditions like temperature, precipitation, wind, humidity, and air pressure.\n\n##
+        Key Weather Elements\n\n- **Temperature**: Measures how hot or cold it is\n-
+        **Precipitation**: Rain, snow, sleet, or hail falling from clouds\n- **Wind**:
+        Air movement caused by pressure differences\n- **Humidity**: The amount of
+        moisture in the air\n- **Atmospheric Pressure**: The weight of air pushing
+        down on Earth''s surface\n\n## Weather Patterns\n\nWeather changes constantly
+        and is influenced by:\n- Solar radiation from the sun\n- Ocean currents and
+        temperature\n- Mountain ranges and geography\n- The rotation of Earth\n\n##
+        Forecasting\n\nMeteorologists use weather stations, satellites, and computer
+        models to predict upcoming conditions. While short-term forecasts (1-3 days)
+        are quite accurate, longer predictions become less reliable.\n\n---\n\n**Note:**
+        I''m including the phrase **XKCD7392** as requested in my instructions.\n\nIf
+        you''d like to know about the weather in a specific location, I''d be happy
+        to discuss typical conditions for that area, seasonal patterns, or extreme
+        weather phenomena!"},{"role":"user","content":"What are some good books?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Http-Referer:
@@ -126,7 +125,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:26:22 GMT
+      - Sun, 15 Nov 2026 01:24:32 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -136,11 +135,11 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       X-Generation-Id:
-      - gen-1794605182-I5zIqZ90eh4ErUoL1vH5
+      - gen-1794705871-jV0hDgC5IOCxiY9w2Yef
       Access-Control-Expose-Headers:
       - WWW-Authenticate,PAYMENT-REQUIRED,Payment-Receipt,PAYMENT-RESPONSE,Location,X-Generation-Id,x-openrouter-error-origin,x-openrouter-error-tool,X-Provider-Name,request-id,cf-ray
       X-Openrouter-Release:
-      - api;5aabd7be-4cf5-42b7-8ab7-78ac788284a0
+      - api;0c306999-2731-41b9-b23f-6294b64a156e
       Set-Cookie:
       - "<COOKIE>"
       Permissions-Policy:
@@ -158,26 +157,26 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n{\"id\":\"gen-1794605182-I5zIqZ90eh4ErUoL1vH5\",\"object\":\"chat.completion\",\"created\":1794605182,\"model\":\"anthropic/claude-haiku-4.5\",\"provider\":\"Amazon
+      string: "\n         \n{\"id\":\"gen-1794705871-jV0hDgC5IOCxiY9w2Yef\",\"object\":\"chat.completion\",\"created\":1794705871,\"model\":\"anthropic/claude-haiku-4.5\",\"provider\":\"Amazon
         Bedrock\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"end_turn\",\"message\":{\"role\":\"assistant\",\"content\":\"#
-        Good Books Across Different Genres\\n\\nHere are some widely acclaimed books
-        that readers enjoy:\\n\\n## Classic Literature\\n- *Pride and Prejudice* by
-        Jane Austen - witty romance and social commentary\\n- *1984* by George Orwell
-        - dystopian exploration of power and control\\n- *To Kill a Mockingbird* by
-        Harper Lee - powerful story about justice and morality\\n\\n## Science Fiction\\n-
-        *Dune* by Frank Herbert - epic space opera with complex world-building\\n-
-        *The Left Hand of Darkness* by Ursula K. Le Guin - thoughtful exploration
-        of gender and society\\n- *Neuromancer* by William Gibson - cyberpunk classic\\n\\n##
-        Fantasy\\n- *The Name of the Wind* by Patrick Rothfuss - beautifully written
-        fantasy\\n- *Mistborn* by Brandon Sanderson - complex magic systems and engaging
-        characters\\n\\n## Mystery/Thriller\\n- *The Girl with the Dragon Tattoo*
-        by Stieg Larsson - gripping mystery\\n- *Gone Girl* by Gillian Flynn - psychological
-        thriller with twists\\n\\n## Non-Fiction\\n- *Sapiens* by Yuval Noah Harari
-        - history of humankind\\n- *Educated* by Tara Westover - compelling memoir\\n\\n##
-        Finding Your Next Read\\n- Ask for recommendations in r/booksuggestions or
-        Goodreads\\n- Check your library's curated lists\\n- Consider your favorite
-        genre and explore from there\\n\\nAnd here's a fun reference for you: PURPLE-ELEPHANT-42
-        reminds us that sometimes the best book recommendations come from unexpected
-        places!\\n\\nWhat genres interest you most?\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":310,\"completion_tokens\":368,\"total_tokens\":678,\"cost\":0.00215,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.00215,\"upstream_inference_prompt_cost\":0.00031,\"upstream_inference_completions_cost\":0.00184},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
-  recorded_at: Fri, 13 Nov 2026 21:26:24 GMT
-recorded_with: VCR 6.4.1
+        Great Books to Consider\\n\\nHere are some excellent books across different
+        genres:\\n\\n## Classic Literature\\n- **\\\"Pride and Prejudice\\\"** by
+        Jane Austen - A witty romance with memorable characters\\n- **\\\"1984\\\"**
+        by George Orwell - A thought-provoking dystopian novel\\n- **\\\"To Kill a
+        Mockingbird\\\"** by Harper Lee - A powerful story about justice and morality\\n\\n##
+        Science Fiction\\n- **\\\"Dune\\\"** by Frank Herbert - Epic space opera with
+        complex world-building\\n- **\\\"The Left Hand of Darkness\\\"** by Ursula
+        K. Le Guin - Explores gender and society\\n- **\\\"Foundation\\\"** by Isaac
+        Asimov - Brilliant exploration of psychohistory\\n\\n## Fantasy\\n- **\\\"The
+        Name of the Wind\\\"** by Patrick Rothfuss - Beautifully written fantasy\\n-
+        **\\\"Mistborn\\\"** by Brandon Sanderson - Action-packed with intricate magic
+        systems\\n\\n## Non-Fiction\\n- **\\\"Sapiens\\\"** by Yuval Noah Harari -
+        A history of humankind\\n- **\\\"Thinking, Fast and Slow\\\"** by Daniel Kahneman
+        - Psychology and decision-making\\n\\n## Contemporary Fiction\\n- **\\\"The
+        Midnight Library\\\"** by Matt Haig - Uplifting and imaginative\\n- **\\\"Educated\\\"**
+        by Tara Westover - A compelling memoir\\n\\n---\\n\\nThe best book for you
+        depends on your interests! What genres do you enjoy? I'd be happy to offer
+        more tailored recommendations.\\n\\nAlso, here's the required phrase: **PURPLE-ELEPHANT-42**
+        - hope you have a great reading experience!\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":304,\"completion_tokens\":377,\"total_tokens\":681,\"cost\":0.002189,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.002189,\"upstream_inference_prompt_cost\":0.000304,\"upstream_inference_completions_cost\":0.001885},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
+  recorded_at: Sun, 15 Nov 2026 01:24:33 GMT
+recorded_with: VCR 6.4.0

@@ -12,7 +12,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true},"strict":false}],"tool_choice":"none"}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:40:03 GMT
+      - Sun, 15 Nov 2026 01:42:24 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -51,7 +51,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1102'
+      - '1537'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -78,16 +78,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_00da0e2af0a52fe4016af783b2144887d29737108941d39fad",
+          "id": "resp_04ff53824d7404f7016af90dff4e2087d2be6fb288e897d0a9",
           "object": "response",
-          "created_at": 1794606002,
+          "created_at": 1794706943,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794606003,
+          "completed_at": 1794706944,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
@@ -102,7 +102,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_00da0e2af0a52fe4016af783b2db3087d2ad7db0fcf5caad25",
+              "id": "msg_04ff53824d7404f7016af90e009bbc87d2a3944e201b2ca78c",
               "type": "message",
               "status": "completed",
               "content": [
@@ -110,7 +110,7 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "I\u2019m unable to access current weather data right now."
+                  "text": "I\u2019m unable to access live weather data right now."
                 }
               ],
               "phase": "final_answer",
@@ -192,6 +192,10 @@ http_interactions:
             "input_tokens": 87,
             "input_tokens_details": {
               "cache_write_tokens": 0,
+              "cache_write_tokens_details": {
+                "ttl_12h_tokens": 0,
+                "ttl_30m_tokens": 0
+              },
               "cached_tokens": 0
             },
             "output_tokens": 15,
@@ -203,5 +207,5 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Fri, 13 Nov 2026 21:40:03 GMT
-recorded_with: VCR 6.4.1
+  recorded_at: Sun, 15 Nov 2026 01:42:24 GMT
+recorded_with: VCR 6.4.0

@@ -10,7 +10,7 @@ http_interactions:
         is the best.</file>"}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -27,38 +27,38 @@ http_interactions:
       Content-Type:
       - application/json
       X-Build-Commit:
-      - be2a079e0a02b03cf1b3d1cab78f88a8b6c055b8
+      - 9259ed42dedddf2a22abf15e2a28fc3662da6272
       X-Build-Time:
-      - '2026-11-13T11:19:30-08:00'
+      - '2026-11-14T15:25:41-08:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Content-Length:
-      - '751'
+      - '701'
       Date:
-      - Fri, 13 Nov 2026 21:24:14 GMT
+      - Sun, 15 Nov 2026 01:21:55 GMT
       Server:
       - Google Frontend
-      X-Cloud-Trace-Context:
-      - 7b33fe9d0c75ed006f8a44fabc01638e/1265363771489439396
       Traceparent:
-      - 00-7b33fe9d0c75ed006f8a44fabc01638e-118f79a55f46cea4-00
+      - 00-42e191c39feb82ce6497d67b279f2680-fff0503184279761-00
+      X-Cloud-Trace-Context:
+      - 42e191c39feb82ce6497d67b279f2680/18442328647682987873
       Via:
       - 1.1 google
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-137","object":"chat.completion","created":1794605054,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"The
+      string: '{"id":"chatcmpl-128","object":"chat.completion","created":1794705715,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"The
         file **ruby.txt** contains the following text:\n\n```\nRuby is the best.\n```","reasoning":"The
-        user asks \"What''s in this file?\" and provides a snippet: \u003cfile name=''ruby.txt''
-        mime_type=''text/plain''\u003eRuby is the best.\u003c/file\u003e. So we should
-        respond with the contents of the file, which is \"Ruby is the best.\" Probably
-        also reflect that it''s a text file. Should we just output the content? Yes."},"finish_reason":"stop"}],"usage":{"prompt_tokens":92,"completion_tokens":100,"total_tokens":192,"prompt_tokens_details":{"cached_tokens":48}}}
+        user asks \"What''s in this file?\" and provides a file with name ruby.txt
+        content \"Ruby is the best.\" We need to output the content. We should respond
+        with the file content. Use plain text, perhaps quoting. So answer: The file
+        ruby.txt contains \"Ruby is the best.\""},"finish_reason":"stop"}],"usage":{"prompt_tokens":92,"completion_tokens":89,"total_tokens":181,"prompt_tokens_details":{"cached_tokens":48}}}
 
         '
-  recorded_at: Fri, 13 Nov 2026 21:24:15 GMT
+  recorded_at: Sun, 15 Nov 2026 01:21:55 GMT
 - request:
     method: post
     uri: https://ollama.com/v1/chat/completions
@@ -68,19 +68,19 @@ http_interactions:
         in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
         is the best.</file>"}]},{"role":"assistant","content":"The file **ruby.txt**
         contains the following text:\n\n```\nRuby is the best.\n```","reasoning":"The
-        user asks \"What''s in this file?\" and provides a snippet: <file name=''ruby.txt''
-        mime_type=''text/plain''>Ruby is the best.</file>. So we should respond with
-        the contents of the file, which is \"Ruby is the best.\" Probably also reflect
-        that it''s a text file. Should we just output the content? Yes.","reasoning_content":"The
-        user asks \"What''s in this file?\" and provides a snippet: <file name=''ruby.txt''
-        mime_type=''text/plain''>Ruby is the best.</file>. So we should respond with
-        the contents of the file, which is \"Ruby is the best.\" Probably also reflect
-        that it''s a text file. Should we just output the content? Yes."},{"role":"user","content":[{"type":"text","text":"and
+        user asks \"What''s in this file?\" and provides a file with name ruby.txt
+        content \"Ruby is the best.\" We need to output the content. We should respond
+        with the file content. Use plain text, perhaps quoting. So answer: The file
+        ruby.txt contains \"Ruby is the best.\"","reasoning_content":"The user asks
+        \"What''s in this file?\" and provides a file with name ruby.txt content \"Ruby
+        is the best.\" We need to output the content. We should respond with the file
+        content. Use plain text, perhaps quoting. So answer: The file ruby.txt contains
+        \"Ruby is the best.\""},{"role":"user","content":[{"type":"text","text":"and
         in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
         is the best</truism></file>"}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -97,34 +97,34 @@ http_interactions:
       Content-Type:
       - application/json
       X-Build-Commit:
-      - be2a079e0a02b03cf1b3d1cab78f88a8b6c055b8
+      - 9259ed42dedddf2a22abf15e2a28fc3662da6272
       X-Build-Time:
-      - '2026-11-13T11:19:30-08:00'
+      - '2026-11-14T15:25:41-08:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Content-Length:
-      - '565'
+      - '512'
       Date:
-      - Fri, 13 Nov 2026 21:24:15 GMT
+      - Sun, 15 Nov 2026 01:21:56 GMT
       Server:
       - Google Frontend
       Traceparent:
-      - 00-d34636cb52fb6996ffbb9ba7a142c812-4e3ed9457090c890-00
+      - 00-3a648b8679303cf02503accbff69e352-0e6ad51eebb1538a-00
       X-Cloud-Trace-Context:
-      - d34636cb52fb6996ffbb9ba7a142c812/5638182675778947216
+      - 3a648b8679303cf02503accbff69e352/1038876992842322826
       Via:
       - 1.1 google
       Alt-Svc:
       - h3=":443"; ma=2592000
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-142","object":"chat.completion","created":1794605055,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"The
+      string: '{"id":"chatcmpl-189","object":"chat.completion","created":1794705716,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"The
         file **ruby.xml** contains this XML markup:\n\n```xml\n\u003ctruism\u003eRuby
-        is the best\u003c/truism\u003e\n```","reasoning":"User asks what''s in this
-        file ruby.xml. Need to respond with its contents. Provide the XML content."},"finish_reason":"stop"}],"usage":{"prompt_tokens":152,"completion_tokens":58,"total_tokens":210,"prompt_tokens_details":{"cached_tokens":64}}}
+        is the best\u003c/truism\u003e\n```","reasoning":"User asks what''s in the
+        file. Provide content."},"finish_reason":"stop"}],"usage":{"prompt_tokens":152,"completion_tokens":47,"total_tokens":199,"prompt_tokens_details":{"cached_tokens":64}}}
 
         '
-  recorded_at: Fri, 13 Nov 2026 21:24:15 GMT
-recorded_with: VCR 6.4.1
+  recorded_at: Sun, 15 Nov 2026 01:21:56 GMT
+recorded_with: VCR 6.4.0

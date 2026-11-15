@@ -11,7 +11,7 @@ http_interactions:
         of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:25:27 GMT
+      - Sun, 15 Nov 2026 01:24:11 GMT
       X-Llm-D-Flow-Queue-Duration-Ms:
       - '0'
       Vary:
@@ -37,9 +37,9 @@ http_interactions:
       - chunked
     body:
       encoding: UTF-8
-      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":348,"completion_tokens":71,"total_tokens":419,"completion_tokens_details":{"reasoning_tokens":38},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"tool_calls":[{"id":"chatcmpl-tool-b0a4ed4f0802e941","type":"function","function":{"name":"array_params","arguments":"{\"tags\":
+      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":348,"completion_tokens":65,"total_tokens":413,"completion_tokens_details":{"reasoning_tokens":32},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"tool_calls":[{"id":"chatcmpl-tool-9ab8ae40ce445a34","type":"function","function":{"name":"array_params","arguments":"{\"tags\":
         [\"red\", \"blue\"]}"}}],"reasoning":"The user wants me to call the array_params
-        tool with tags [\"red\", \"blue\"] and report the combined tags. This is a
-        simple tool call. Let''s try calling it.\n"},"index":0,"logprobs":null,"finish_reason":"tool_calls","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-9f0a0b8c-d553-4d50-a682-955b384477a7","object":"chat.completion","created":1794605127,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
-  recorded_at: Fri, 13 Nov 2026 21:25:28 GMT
-recorded_with: VCR 6.4.1
+        tool with tags [\"red\",\"blue\"] and tell them the combined tags. Let me
+        make that tool call.\n"},"index":0,"logprobs":null,"finish_reason":"tool_calls","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-e223b351-7448-400e-aa30-91fa6ad2a4e6","object":"chat.completion","created":1794705851,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
+  recorded_at: Sun, 15 Nov 2026 01:24:12 GMT
+recorded_with: VCR 6.4.0

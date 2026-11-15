@@ -8,7 +8,7 @@ http_interactions:
       string: '{"endpoint":"/v1/embeddings","model":"mistral-embed","requests":[{"custom_id":"0","body":{"input":"Ruby"}},{"custom_id":"1:array","body":{"input":["Rails"]}}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -23,7 +23,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:20:47 GMT
+      - Sun, 15 Nov 2026 01:21:01 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -31,49 +31,49 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a1d6c8-cf9e-70f6-8dca-df58418cee7b
+      - 01a1dccb-159f-7b91-8eb0-31735488e633
       X-Kong-Request-Id:
-      - 01a1d6c8-cf9e-70f6-8dca-df58418cee7b
+      - 01a1dccb-159f-7b91-8eb0-31735488e633
       Server:
       - cloudflare
       X-Envoy-Upstream-Service-Time:
-      - '645'
+      - '2055'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '647'
+      - '2064'
       X-Kong-Proxy-Latency:
-      - '12'
-      Cf-Cache-Status:
-      - DYNAMIC
+      - '18'
       Set-Cookie:
       - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id": "527df665-0370-4fd4-a292-33c207120455", "object": "batch", "input_files":
-        ["b38cccd2-9b9c-4414-a11f-7cd32760e784"], "metadata": null, "endpoint": "/v1/embeddings",
+      string: '{"id": "1c7c0415-4647-4c94-841c-8f7d36ca1962", "object": "batch", "input_files":
+        ["5be44266-a393-4018-8df9-fbba4c13782b"], "metadata": null, "endpoint": "/v1/embeddings",
         "model": "mistral-embed", "agent_id": null, "output_file": null, "error_file":
-        null, "errors": [], "outputs": null, "status": "QUEUED", "created_at": 1794604847,
+        null, "errors": [], "outputs": null, "status": "QUEUED", "created_at": 1794705661,
         "total_requests": 0, "completed_requests": 0, "succeeded_requests": 0, "failed_requests":
         0, "started_at": null, "completed_at": null}'
-  recorded_at: Fri, 13 Nov 2026 21:20:47 GMT
+  recorded_at: Sun, 15 Nov 2026 01:21:01 GMT
 - request:
     method: get
-    uri: https://api.mistral.ai/v1/batch/jobs/527df665-0370-4fd4-a292-33c207120455
+    uri: https://api.mistral.ai/v1/batch/jobs/1c7c0415-4647-4c94-841c-8f7d36ca1962
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Accept-Encoding:
@@ -86,7 +86,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:20:47 GMT
+      - Sun, 15 Nov 2026 01:21:01 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -94,49 +94,49 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a1d6c8-d26d-7f7b-b24e-cf8c760e9a49
+      - 01a1dccb-1dfe-7520-ae01-ef6ab2335b04
       X-Kong-Request-Id:
-      - 01a1d6c8-d26d-7f7b-b24e-cf8c760e9a49
+      - 01a1dccb-1dfe-7520-ae01-ef6ab2335b04
       Server:
       - cloudflare
       X-Envoy-Upstream-Service-Time:
-      - '37'
+      - '48'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '41'
+      - '49'
       X-Kong-Proxy-Latency:
-      - '17'
-      Cf-Cache-Status:
-      - DYNAMIC
+      - '16'
       Set-Cookie:
       - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id": "527df665-0370-4fd4-a292-33c207120455", "object": "batch", "input_files":
-        ["b38cccd2-9b9c-4414-a11f-7cd32760e784"], "metadata": null, "endpoint": "/v1/embeddings",
+      string: '{"id": "1c7c0415-4647-4c94-841c-8f7d36ca1962", "object": "batch", "input_files":
+        ["5be44266-a393-4018-8df9-fbba4c13782b"], "metadata": null, "endpoint": "/v1/embeddings",
         "model": "mistral-embed", "agent_id": null, "output_file": null, "error_file":
-        null, "errors": [], "outputs": null, "status": "QUEUED", "created_at": 1794604847,
+        null, "errors": [], "outputs": null, "status": "RUNNING", "created_at": 1794705661,
         "total_requests": 2, "completed_requests": 0, "succeeded_requests": 0, "failed_requests":
-        0, "started_at": null, "completed_at": null}'
-  recorded_at: Fri, 13 Nov 2026 21:20:47 GMT
+        0, "started_at": 1794705661, "completed_at": null}'
+  recorded_at: Sun, 15 Nov 2026 01:21:01 GMT
 - request:
     method: post
-    uri: https://api.mistral.ai/v1/batch/jobs/527df665-0370-4fd4-a292-33c207120455/cancel
+    uri: https://api.mistral.ai/v1/batch/jobs/1c7c0415-4647-4c94-841c-8f7d36ca1962/cancel
     body:
       encoding: UTF-8
       string: "{}"
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -151,7 +151,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:20:47 GMT
+      - Sun, 15 Nov 2026 01:21:01 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -159,38 +159,38 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a1d6c8-d2e4-7e74-bc63-ea831e591d78
+      - 01a1dccb-1e7e-794c-8ba5-300bed3ea5ce
       X-Kong-Request-Id:
-      - 01a1d6c8-d2e4-7e74-bc63-ea831e591d78
+      - 01a1dccb-1e7e-794c-8ba5-300bed3ea5ce
       Server:
       - cloudflare
       X-Envoy-Upstream-Service-Time:
-      - '92'
+      - '91'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '98'
+      - '93'
       X-Kong-Proxy-Latency:
-      - '19'
-      Cf-Cache-Status:
-      - DYNAMIC
+      - '21'
       Set-Cookie:
       - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id": "527df665-0370-4fd4-a292-33c207120455", "object": "batch", "input_files":
-        ["b38cccd2-9b9c-4414-a11f-7cd32760e784"], "metadata": null, "endpoint": "/v1/embeddings",
+      string: '{"id": "1c7c0415-4647-4c94-841c-8f7d36ca1962", "object": "batch", "input_files":
+        ["5be44266-a393-4018-8df9-fbba4c13782b"], "metadata": null, "endpoint": "/v1/embeddings",
         "model": "mistral-embed", "agent_id": null, "output_file": null, "error_file":
         null, "errors": [], "outputs": null, "status": "CANCELLATION_REQUESTED", "created_at":
-        1794604847, "total_requests": 2, "completed_requests": 0, "succeeded_requests":
-        0, "failed_requests": 0, "started_at": 1794604847, "completed_at": null}'
-  recorded_at: Fri, 13 Nov 2026 21:20:47 GMT
-recorded_with: VCR 6.4.1
+        1794705661, "total_requests": 2, "completed_requests": 0, "succeeded_requests":
+        0, "failed_requests": 0, "started_at": 1794705661, "completed_at": null}'
+  recorded_at: Sun, 15 Nov 2026 01:21:01 GMT
+recorded_with: VCR 6.4.0

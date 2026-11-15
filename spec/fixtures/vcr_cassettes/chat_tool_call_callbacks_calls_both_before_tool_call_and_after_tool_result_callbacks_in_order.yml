@@ -10,7 +10,7 @@ http_interactions:
         a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:34:42 GMT
+      - Sun, 15 Nov 2026 01:35:56 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -49,7 +49,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '981'
+      - '866'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -76,9 +76,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_01e837bceb627aa8016af782719ea087d282fd4372b60823c7",
+          "id": "resp_099cc84a7f1742d2016af90c7b3b8487d2a0f226c3ed2a2f78",
           "object": "response",
-          "created_at": 1794605681,
+          "created_at": 1794706555,
           "status": "completed",
           "access_programs": {
             "cyber": "standard"
@@ -87,7 +87,7 @@ http_interactions:
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794605682,
+          "completed_at": 1794706556,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
@@ -102,11 +102,11 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "fc_01e837bceb627aa8016af782727a3487d2bf66933855f5cdf4",
+              "id": "fc_099cc84a7f1742d2016af90c7bf95087d2a90306876a96bcd8",
               "type": "function_call",
               "status": "completed",
               "arguments": "{}",
-              "call_id": "call_KU38mTWXvPhAZoCwuJ2wxf31",
+              "call_id": "call_wM1VoFMpL3X7YxKL19DrzzNM",
               "name": "dice_roll"
             }
           ],
@@ -173,6 +173,10 @@ http_interactions:
             "input_tokens": 46,
             "input_tokens_details": {
               "cache_write_tokens": 0,
+              "cache_write_tokens_details": {
+                "ttl_12h_tokens": 0,
+                "ttl_30m_tokens": 0
+              },
               "cached_tokens": 0
             },
             "output_tokens": 15,
@@ -184,18 +188,18 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Fri, 13 Nov 2026 21:34:42 GMT
+  recorded_at: Sun, 15 Nov 2026 01:35:56 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
       string: '{"model":"gpt-6.1-sol","input":[{"role":"user","content":"Roll a die
-        for me"},{"type":"function_call","call_id":"call_KU38mTWXvPhAZoCwuJ2wxf31","name":"dice_roll","arguments":"{}"},{"type":"function_call_output","call_id":"call_KU38mTWXvPhAZoCwuJ2wxf31","output":"{\"roll\":3}"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"dice_roll","description":"Rolls
+        for me"},{"type":"function_call","call_id":"call_wM1VoFMpL3X7YxKL19DrzzNM","name":"dice_roll","arguments":"{}"},{"type":"function_call_output","call_id":"call_wM1VoFMpL3X7YxKL19DrzzNM","output":"{\"roll\":1}"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -210,7 +214,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:34:43 GMT
+      - Sun, 15 Nov 2026 01:35:57 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -234,7 +238,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1288'
+      - '1452'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -261,9 +265,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_04a69f60a0900053016af78272b03c87d2bd191be72484e303",
+          "id": "resp_06439b76f73609c7016af90c7c40ec87d2ae0212b4882e5509",
           "object": "response",
-          "created_at": 1794605682,
+          "created_at": 1794706556,
           "status": "completed",
           "access_programs": {
             "cyber": "standard"
@@ -272,7 +276,7 @@ http_interactions:
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794605683,
+          "completed_at": 1794706557,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
@@ -287,7 +291,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_04a69f60a0900053016af78273999c87d2a8951b2397d1fd80",
+              "id": "msg_06439b76f73609c7016af90c7d6b6487d2b5d8fdbbe6879ab3",
               "type": "message",
               "status": "completed",
               "content": [
@@ -295,7 +299,7 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "\ud83c\udfb2 You rolled a **3**."
+                  "text": "\ud83c\udfb2 You rolled a **1**."
                 }
               ],
               "phase": "final_answer",
@@ -365,6 +369,10 @@ http_interactions:
             "input_tokens": 78,
             "input_tokens_details": {
               "cache_write_tokens": 0,
+              "cache_write_tokens_details": {
+                "ttl_12h_tokens": 0,
+                "ttl_30m_tokens": 0
+              },
               "cached_tokens": 0
             },
             "output_tokens": 13,
@@ -376,5 +384,5 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Fri, 13 Nov 2026 21:34:43 GMT
-recorded_with: VCR 6.4.1
+  recorded_at: Sun, 15 Nov 2026 01:35:57 GMT
+recorded_with: VCR 6.4.0

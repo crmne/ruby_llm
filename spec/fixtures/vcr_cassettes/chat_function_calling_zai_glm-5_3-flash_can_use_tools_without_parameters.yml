@@ -10,7 +10,7 @@ http_interactions:
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:33:03 GMT
+      - Sun, 15 Nov 2026 01:34:01 GMT
       Content-Type:
       - application/json; charset=UTF-8
       Transfer-Encoding:
@@ -37,7 +37,7 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       Ga-Traceid:
-      - cbffdfdedfdbc631b5c5f83bb5b8e9e5
+      - 79a22fed7fa5791f22a87fc638de2c53
       Vary:
       - Accept-Encoding
       - Access-Control-Request-Headers
@@ -48,28 +48,28 @@ http_interactions:
       - Origin
       - Origin
       X-Log-Id:
-      - 20261114053257e233ba8db9504191
+      - 2026111509335694bbf7827798434f
       X-Request-Id:
       - "<X_REQUEST_ID>"
     body:
       encoding: ASCII-8BIT
       string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":"","reasoning_content":"The
-        user wants me to use the best_language_to_learn tool to tell them which language
-        to learn. Let me call that tool.","role":"assistant","tool_calls":[{"function":{"arguments":"{}","name":"best_language_to_learn"},"id":"call_-7080011110782333454","index":0,"type":"function"}]}}],"created":1794605583,"id":"20261114053257e233ba8db9504191","model":"glm-5.3-flash","object":"chat.completion","request_id":"20261114053257e233ba8db9504191","usage":{"completion_tokens":34,"completion_tokens_details":{"reasoning_tokens":26},"prompt_tokens":171,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":205}}'
-  recorded_at: Fri, 13 Nov 2026 21:33:03 GMT
+        user wants me to use the best_language_to_learn tool. This tool has no required
+        parameters, so I can just call it directly.","role":"assistant","tool_calls":[{"function":{"arguments":"{}","name":"best_language_to_learn"},"id":"call_-7080008602521432614","index":0,"type":"function"}]}}],"created":1794706441,"id":"2026111509335694bbf7827798434f","model":"glm-5.3-flash","object":"chat.completion","request_id":"2026111509335694bbf7827798434f","usage":{"completion_tokens":36,"completion_tokens_details":{"reasoning_tokens":28},"prompt_tokens":171,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":207}}'
+  recorded_at: Sun, 15 Nov 2026 01:34:01 GMT
 - request:
     method: post
     uri: https://api.z.ai/api/paas/v4/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"glm-5.3-flash","messages":[{"role":"user","content":"Use
-        the best_language_to_learn tool to tell me which language to learn."},{"role":"assistant","content":"","tool_calls":[{"id":"call_-7080011110782333454","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning_content":"The
-        user wants me to use the best_language_to_learn tool to tell them which language
-        to learn. Let me call that tool."},{"role":"tool","content":"Ruby","tool_call_id":"call_-7080011110782333454"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best_language_to_learn tool to tell me which language to learn."},{"role":"assistant","content":"","tool_calls":[{"id":"call_-7080008602521432614","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning_content":"The
+        user wants me to use the best_language_to_learn tool. This tool has no required
+        parameters, so I can just call it directly."},{"role":"tool","content":"Ruby","tool_call_id":"call_-7080008602521432614"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -84,7 +84,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 13 Nov 2026 21:33:10 GMT
+      - Sun, 15 Nov 2026 01:34:07 GMT
       Content-Type:
       - application/json; charset=UTF-8
       Transfer-Encoding:
@@ -96,7 +96,7 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       Ga-Traceid:
-      - e16e96a8b0c23c5b40fcc07e3b3cba46
+      - e43f3db33c9c1855150f310234d820a6
       Vary:
       - Accept-Encoding
       - Access-Control-Request-Headers
@@ -107,12 +107,12 @@ http_interactions:
       - Origin
       - Origin
       X-Log-Id:
-      - 202611140533032b000d4be4f14dab
+      - 20261115093401cb04805f771244c1
       X-Request-Id:
       - "<X_REQUEST_ID>"
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJBY2NvcmRpbmcgdG8gdGhlIHRvb2wsIHRoZSBiZXN0IGxhbmd1YWdlIHRvIGxlYXJuIGlzICoqUnVieSoqISDwn5KOXG5cblJ1YnkgaXMgYSBncmVhdCBjaG9pY2Ug4oCUIGl0J3Mga25vd24gZm9yIGl0cyBlbGVnYW50LCBodW1hbi1yZWFkYWJsZSBzeW50YXgsIGFuZCBpdCBwb3dlcnMgcG9wdWxhciBmcmFtZXdvcmtzIGxpa2UgUnVieSBvbiBSYWlscywgbWFraW5nIGl0IGV4Y2VsbGVudCBmb3Igd2ViIGRldmVsb3BtZW50LiBXb3VsZCB5b3UgbGlrZSBhbnkgdGlwcyBvbiBnZXR0aW5nIHN0YXJ0ZWQgd2l0aCBpdD8iLCJyZWFzb25pbmdfY29udGVudCI6IlRoZSB0b29sIHJldHVybmVkIFwiUnVieVwiIGFzIHRoZSBiZXN0IGxhbmd1YWdlIHRvIGxlYXJuLiBMZXQgbWUgdGVsbCB0aGUgdXNlci4iLCJyb2xlIjoiYXNzaXN0YW50In19XSwiY3JlYXRlZCI6MTc5NDYwNTU5MCwiaWQiOiIyMDI2MTExNDA1MzMwMzJiMDAwZDRiZTRmMTRkYWIiLCJtb2RlbCI6ImdsbS01LjMtZmxhc2giLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJyZXF1ZXN0X2lkIjoiMjAyNjExMTQwNTMzMDMyYjAwMGQ0YmU0ZjE0ZGFiIiwidXNhZ2UiOnsiY29tcGxldGlvbl90b2tlbnMiOjg0LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjE5fSwicHJvbXB0X3Rva2VucyI6MjEwLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MH0sInRvdGFsX3Rva2VucyI6Mjk0fX0=
-  recorded_at: Fri, 13 Nov 2026 21:33:10 GMT
-recorded_with: VCR 6.4.1
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJCYXNlZCBvbiB0aGUgdG9vbCdzIHJlc3VsdCwgdGhlIGJlc3QgbGFuZ3VhZ2UgZm9yIHlvdSB0byBsZWFybiBpcyAqKlJ1YnkqKiEg8J+SjlxuXG5SdWJ5IGlzIGEgZ3JlYXQgY2hvaWNlIOKAlCBpdCdzIGtub3duIGZvciBpdHMgZWxlZ2FudCwgcmVhZGFibGUgc3ludGF4IGFuZCBpcyB3aWRlbHkgdXNlZCBmb3Igd2ViIGRldmVsb3BtZW50IChlc3BlY2lhbGx5IHdpdGggdGhlIFJ1Ynkgb24gUmFpbHMgZnJhbWV3b3JrKSwgc2NyaXB0aW5nLCBhbmQgYXV0b21hdGlvbi4gSXQncyBhbHNvIGJlZ2lubmVyLWZyaWVuZGx5LCBtYWtpbmcgaXQgYSByZXdhcmRpbmcgbGFuZ3VhZ2UgdG8gcGljayB1cC4iLCJyZWFzb25pbmdfY29udGVudCI6IlRoZSB0b29sIHJldHVybmVkIFwiUnVieVwiIGFzIHRoZSBiZXN0IGxhbmd1YWdlIHRvIGxlYXJuLiBMZXQgbWUgc2hhcmUgdGhpcyB3aXRoIHRoZSB1c2VyLiIsInJvbGUiOiJhc3Npc3RhbnQifX1dLCJjcmVhdGVkIjoxNzk0NzA2NDQ2LCJpZCI6IjIwMjYxMTE1MDkzNDAxY2IwNDgwNWY3NzEyNDRjMSIsIm1vZGVsIjoiZ2xtLTUuMy1mbGFzaCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInJlcXVlc3RfaWQiOiIyMDI2MTExNTA5MzQwMWNiMDQ4MDVmNzcxMjQ0YzEiLCJ1c2FnZSI6eyJjb21wbGV0aW9uX3Rva2VucyI6OTYsImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MjF9LCJwcm9tcHRfdG9rZW5zIjoyMTIsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowfSwidG90YWxfdG9rZW5zIjozMDh9fQ==
+  recorded_at: Sun, 15 Nov 2026 01:34:07 GMT
+recorded_with: VCR 6.4.0
