@@ -462,8 +462,9 @@ RSpec.describe RubyLLM::MCP do
       expect(mcp.deploy.text).to eq('Deploy cancelled')
       expect(requests.first).to have_attributes(message: 'Which environment?', url: nil)
       expect(requests.first).to be_form
-      expect(requests.first.fields.first).to have_attributes(name: :environment, title: 'Environment',
-                                                             choices: %w[staging production])
+      expect(requests.first.fields.first)
+        .to have_attributes(name: :environment, title: 'Environment', choices: %w[staging production],
+                            choice_titles: { 'staging' => 'Staging', 'production' => 'Production' })
       expect(requests.first.fields.first).to be_required
     ensure
       mcp&.close

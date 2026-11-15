@@ -447,12 +447,13 @@ chat.ask "Deploy the release branch"
 question = chat.pending_questions.first
 question.message                    # => "Which environment?"
 question.fields.first.choices       # => ["staging", "production"]
+question.fields.first.choice_titles # => {"staging" => "Staging", "production" => "Production"}
 
 question.answer "staging"           # or question.decline
 chat.complete
 ```
 
-A question describes what it asks for in `fields`, each with a `name`, `type`, `title`, `description`, `choices`, and `default`, and `required?`. Show each `default` in your form: the fields an answer leaves out take theirs. A question with one field takes its value, and one with several takes them by name: `question.answer(environment: "staging", reason: "Release 2.2")`. A question with a `url` asks the user to visit it, and `answer` with no value means they agreed to go. Show the whole address, since the server chose it. RubyLLM declines a request to visit anything but a web page, an `http` or `https` address, so a link to it can't run script in your app. `decline` refuses either kind.
+A question describes what it asks for in `fields`, each with a `name`, `type`, `title`, `description`, `choices`, and `default`, and `required?`. `choice_titles` maps each choice to the title the server gives it, or to the choice itself when it gives none: show the title and answer with the choice. Show each `default` in your form: the fields an answer leaves out take theirs. A question with one field takes its value, and one with several takes them by name: `question.answer(environment: "staging", reason: "Release 2.2")`. A question with a `url` asks the user to visit it, and `answer` with no value means they agreed to go. Show the whole address, since the server chose it. RubyLLM declines a request to visit anything but a web page, an `http` or `https` address, so a link to it can't run script in your app. `decline` refuses either kind.
 
 `complete` resumes the call once all its questions are answered: RubyLLM sends the answers with the server's saved request state, and the server finishes, or asks something more. Then the call pauses again with the new questions, so check `pending_questions` after each `complete` and answer until none are left. Until then the chat is `waiting?`, as it is while a call waits for approval. Calling a tool outside a chat raises `RubyLLM::MCP::InputRequiredError` instead, with the unanswered questions in `requests`.
 

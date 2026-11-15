@@ -38,8 +38,16 @@ module RubyLLM
                 'boolean' => [TrueClass, FalseClass], 'array' => [Array] }.freeze
     private_constant :BOOLEANS, :TYPES, :CLASSES
 
-    # A value a question asks for.
-    Field = Struct.new(:name, :type, :title, :description, :required, :choices, :default, keyword_init: true) do
+    # A value a question asks for. +choices+ lists the values a field
+    # offers, and +choice_titles+ maps each one to the title to show for
+    # it, which is the value itself when the field gives it none:
+    #
+    #   field.choices       # => ["s", "l"]
+    #   field.choice_titles # => {"s" => "Small", "l" => "Large"}
+    #
+    # Both are +nil+ for a field that takes any value.
+    Field = Struct.new(:name, :type, :title, :description, :required, :choices, :default, :choice_titles,
+                       keyword_init: true) do
       # Returns whether the question needs this value.
       def required?
         required == true
@@ -370,16 +378,25 @@ module RubyLLM
     def fields_from(schema)
       required = Array(schema['required'])
       schema.fetch('properties', {}).map do |name, property|
+        titled = titled_choices(property)
         Field.new(name: name.to_sym, type: property['type'], title: property['title'],
                   description: property['description'], required: required.include?(name),
-                  choices: choices(property), default: property['default'])
+                  choices: titled&.map(&:first), default: property['default'], choice_titles: titled&.to_h)
       end
     end
 
-    def choices(property)
-      options = property['enum'] || property.dig('items', 'enum') ||
-                Array(property['oneOf'] || property.dig('items', 'anyOf')).map { |o| o['const'] }
-      options unless options.empty?
+    def titled_choices(property)
+      values = property['enum'] || property.dig('items', 'enum')
+      titled = values ? named(values, Array(property['enumNames'])) : options(property)
+      titled unless titled.empty?
+    end
+
+    def named(values, names)
+      values.each_with_index.map { |value, index| [value, names[index] || value] }
+    end
+
+    def options(property)
+      Array(property['oneOf'] || property.dig('items', 'anyOf')).map { |o| [o['const'], o['title'] || o['const']] }
     end
 
     def inspect_attributes

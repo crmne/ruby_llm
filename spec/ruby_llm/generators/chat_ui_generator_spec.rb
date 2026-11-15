@@ -256,10 +256,28 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         end
       end
     RUBY
+    File.write('app/tools/pick_card_tool.rb', <<~RUBY)
+      class PickCardTool < RubyLLM::Tool
+        description "Picks a card"
+
+        CARDS = [{ "const" => "17", "title" => "River bank" }, { "const" => "42", "title" => "Money bank" }].freeze
+        DECKS = [{ "const" => "d1", "title" => "Nouns" }, { "const" => "d2", "title" => "Verbs" }].freeze
+
+        def execute
+          card = ask("Which card?") { raw :card, { type: "string", oneOf: CARDS } }
+          deck = ask("Which deck?") do
+            raw :deck, { type: "string", oneOf: DECKS }
+            string :note, required: false
+          end
+          "Card \#{card[:card]} in deck \#{deck[:deck]}"
+        end
+      end
+    RUBY
     agent = File.read(agent_path)
     return if agent.include?('SendMailTool')
 
-    File.write(agent_path, agent.sub(/^end\n\z/, "  tools SendMailTool, PickSeatTool, ReleaseTagsTool\nend\n"))
+    tools = 'SendMailTool, PickSeatTool, ReleaseTagsTool, PickCardTool'
+    File.write(agent_path, agent.sub(/^end\n\z/, "  tools #{tools}\nend\n"))
   end
 
   def broadcast_order_script(agent:, **)
@@ -491,6 +509,38 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       #{agent}.find(release.id).run_tools
       result = RubyLLM::ActiveRecord::ToolCall.find_by!(tool_call_id: "call_release").result
       abort "tool received \#{result.content}" unless JSON.parse(result.content) == expected
+    RUBY
+  end
+
+  def choice_titles_script(agent:, chats_path:, **)
+    <<~RUBY
+      ActiveJob::Base.queue_adapter = :test
+      ActionController::Base.allow_forgery_protection = false
+      session = ActionDispatch::Integration::Session.new(Rails.application)
+      session.host! "localhost"
+      picking = #{agent}.create!
+      call = RubyLLM::ToolCall.new(id: "call_card", name: "pick_card", arguments: {})
+      picking.add_message(role: :assistant, content: "", tool_calls: { call.id => call })
+      picking.run_tools
+
+      path = "#{chats_path}/\#{picking.id}"
+      session.get path
+      forms = Nokogiri::HTML(session.response.body).css("form").select { |node| node["action"] == "\#{path}/answers" }
+      buttons = forms.filter_map do |form|
+        answer = form.at_css('input[name="answer"]')
+        [form.at_css("button").text.strip, answer["value"]] if answer
+      end
+      abort "choice buttons are \#{buttons}" unless buttons == [["River bank", "17"], ["Money bank", "42"]]
+
+      session.post "\#{path}/answers", params: { question_id: picking.pending_questions.sole.id, answer: "42" },
+        headers: { "Accept" => "text/vnd.turbo-stream.html" }
+      abort "card answer returned \#{session.response.status}: \#{session.flash[:notice]}" unless session.response.status == 200
+      #{agent}.find(picking.id).run_tools
+
+      session.get path
+      options = Nokogiri::HTML(session.response.body).css('select[name="answer[deck]"] option')
+      shown = options.map { |option| [option.text, option["value"]] }
+      abort "deck options are \#{shown}" unless shown == [["Nouns", "d1"], ["Verbs", "d2"]]
     RUBY
   end
 
@@ -1318,7 +1368,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
 
               flow = config[:approval_flow]
               give_chat_agent_tools_that_ask(flow[:agent_path])
-              output, status = run_rails_runner_outside_executor(array_answer_script(**flow))
+              scripts = array_answer_script(**flow) + choice_titles_script(**flow)
+              output, status = run_rails_runner_outside_executor(scripts)
               expect(status.success?).to be(true), output
             end
           end
@@ -1799,7 +1850,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         within_test_app(app_path) do
           give_chat_agent_tools_that_ask(config[:approval_flow][:agent_path])
           flow = config[:approval_flow]
-          output, status = run_rails_runner_outside_executor(question_flow_script(**flow) + array_answer_script(**flow))
+          scripts = [question_flow_script(**flow), array_answer_script(**flow), choice_titles_script(**flow)]
+          output, status = run_rails_runner_outside_executor(scripts.join)
           expect(status.success?).to be(true), output
         end
       end

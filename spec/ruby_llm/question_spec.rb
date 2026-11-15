@@ -109,6 +109,46 @@ RSpec.describe RubyLLM::Question do
     expect(question.fields.map(&:choices)).to eq([%w[s l], %w[a]])
   end
 
+  it 'gives each choice the title its field gives it' do
+    sizes = [{ 'const' => 's', 'title' => 'Small' }, { 'const' => 'l', 'title' => 'Large' }]
+    question = form('size' => { 'type' => 'string', 'oneOf' => sizes },
+                    'tags' => { 'type' => 'array', 'items' => { 'anyOf' => [{ 'const' => 'a', 'title' => 'A' }] } })
+
+    expect(question.fields.map(&:choice_titles)).to eq([{ 's' => 'Small', 'l' => 'Large' }, { 'a' => 'A' }])
+  end
+
+  it 'reads the titles of choices from the names listed beside them' do
+    question = form('size' => { 'type' => 'string', 'enum' => %w[s l], 'enumNames' => %w[Small Large] })
+
+    expect(question.fields.first)
+      .to have_attributes(choices: %w[s l], choice_titles: { 's' => 'Small', 'l' => 'Large' })
+  end
+
+  it 'titles a choice with its value when the field gives it no title' do
+    cards = [{ 'const' => '17', 'title' => 'bank' }, { 'const' => '42' }]
+    question = form('seat' => { 'type' => 'string', 'enum' => %w[window aisle] },
+                    'size' => { 'type' => 'string', 'enum' => %w[s l], 'enumNames' => %w[Small] },
+                    'card' => { 'type' => 'string', 'oneOf' => cards },
+                    'tags' => { 'type' => 'array', 'items' => { 'type' => 'string', 'enum' => %w[a b] } })
+
+    expect(question.fields.map(&:choice_titles))
+      .to eq([{ 'window' => 'window', 'aisle' => 'aisle' }, { 's' => 'Small', 'l' => 'l' },
+              { '17' => 'bank', '42' => '42' }, { 'a' => 'a', 'b' => 'b' }])
+  end
+
+  it 'keeps choices apart that share a title' do
+    banks = [{ 'const' => '17', 'title' => 'bank' }, { 'const' => '42', 'title' => 'bank' }]
+    question = form('card' => { 'type' => 'string', 'oneOf' => banks })
+
+    expect(question.fields.first.choice_titles).to eq('17' => 'bank', '42' => 'bank')
+  end
+
+  it 'gives no choice titles for a field without choices' do
+    question = form('name' => { 'type' => 'string' })
+
+    expect(question.fields.first).to have_attributes(choices: nil, choice_titles: nil)
+  end
+
   it 'refuses a field the question does not ask for' do
     question = form('name' => { 'type' => 'string' })
 
