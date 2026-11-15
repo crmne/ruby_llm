@@ -417,8 +417,8 @@ module RubyLLM
     end
 
     def titled_choices(property)
-      values = property['enum'] || property.dig('items', 'enum')
-      titled = values ? named(values, Array(property['enumNames'])) : options(property)
+      listed = property['enum'] ? property : property['items'].to_h
+      titled = listed['enum'] ? named(listed['enum'], Array(listed['enumNames'])) : options(property)
       titled unless titled.empty?
     end
 
