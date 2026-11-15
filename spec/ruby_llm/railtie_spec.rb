@@ -163,6 +163,22 @@ RSpec.describe 'RubyLLM::Railtie' do
       expect(File.exist?(File.join(root, 'invoice.txt'))).to be(false)
     end
 
+    it 'keeps a skill folder that is a symbolic link out of the autoloader' do
+      linked = Dir.mktmpdir('ruby_llm_linked_skills')
+      write_skill_folder(File.join(linked, 'pdf-processing'), 'pdf-processing')
+      write_skill_folder(File.join(linked, 'pdf-refunds'), 'pdf-refunds')
+      write_ruby('summarizer.rb', "class Summarizer; def self.call = 'summary'; end\n")
+      FileUtils.mkdir_p(File.join(root, 'app/skills/billing'))
+      File.symlink(File.join(linked, 'pdf-processing'), File.join(root, 'app/skills/pdf-processing'))
+      File.symlink(File.join(linked, 'pdf-refunds'), File.join(root, 'app/skills/billing/pdf-refunds'))
+
+      expect(boot(eager_load: true, then_run: '[Summarizer.call, RubyLLM::Skill.all.map(&:name)].join(",")'))
+        .to eq('summary,pdf-processing')
+      expect(File.exist?(File.join(root, 'invoice.txt'))).to be(false)
+    ensure
+      FileUtils.remove_entry(linked)
+    end
+
     it 'keeps a skill added after boot out of the autoloader when the app reloads' do
       write_ruby('summarizer.rb', "class Summarizer; def self.call = 'summary'; end\n")
       File.write(File.join(root, 'after_boot.rb'), <<~RUBY)
