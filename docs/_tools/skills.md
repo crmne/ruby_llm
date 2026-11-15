@@ -169,7 +169,7 @@ initializer "billing_engine.skills", before: "ruby_llm.skills" do
 end
 ```
 
-Rails does not autoload skills. RubyLLM keeps `app/skills` and every root registered before its `ruby_llm.skills` initializer out of the autoloader, so a skill's Ruby scripts are never loaded at boot and a hyphenated folder is never read as a namespace. Keep the roots you add in `config/initializers` outside `app/`.
+Rails does not autoload skills. RubyLLM keeps every folder that holds a `SKILL.md`, at any depth under `app/skills` and every root registered before its `ruby_llm.skills` initializer, out of the autoloader, so a skill's Ruby scripts are never loaded at boot and a hyphenated folder is never read as a namespace. Other Ruby files in those roots autoload as usual, so an app that keeps its own classes in `app/skills` can keep them there next to its skills. A skill added while a development server runs is kept out on the next reload. Keep the roots you add in `config/initializers` outside `app/`.
 
 ### Adding Skills Written Elsewhere
 
