@@ -23,7 +23,7 @@ RSpec.describe RubyLLM::Transport::LogFormatter do
   end
 
   it 'filters the credentials of the request it logs from an exception' do
-    skip 'Faraday 1 does not log exceptions' if Faraday::VERSION.start_with?('1')
+    skip 'This Faraday does not log exceptions' unless Faraday::Logging::Formatter.method_defined?(:exception)
 
     described_class.with_config(config_with_key('sk-first')) do
       formatter.exception(Faraday::ClientError.new('rejected sk-first'))
