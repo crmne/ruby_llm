@@ -77,14 +77,39 @@ module RubyLLM
         # dangle the reference. That row is stamped unlisted instead, keeping
         # the chats that use it resolvable while the application migrates them.
         def unlist(dropped_ids)
+          referenced = referenced_ids(dropped_ids)
           stayed = []
           where(id: dropped_ids).find_each do |model|
-            transaction(requires_new: true) { model.destroy! }
-          rescue ::ActiveRecord::InvalidForeignKey
+            next if referenced.exclude?(model.id) && destroy_unreferenced(model)
+
             model.update!(unlisted_at: Time.current) unless model.unlisted_at
             stayed << "#{model.provider}/#{model.model_id}"
           end
           warn_unlisted(stayed)
+        end
+
+        # Not every schema has the foreign key that refuses the delete, and the
+        # application's chat classes may not be loaded yet, so this checks
+        # every table with the ruby_llm_model_id column acts_as_chat uses.
+        def referenced_ids(ids)
+          return [] if ids.empty?
+
+          referencing_tables.flat_map do |name|
+            table = Arel::Table.new(name)
+            where(id: ids).where(arel_table[:id].in(table.project(table[:ruby_llm_model_id]))).pluck(:id)
+          end
+        end
+
+        def referencing_tables
+          connection_pool.with_connection do |connection|
+            connection.tables.select { |table| connection.column_exists?(table, :ruby_llm_model_id) }
+          end
+        end
+
+        def destroy_unreferenced(model)
+          transaction(requires_new: true) { model.destroy! }
+        rescue ::ActiveRecord::InvalidForeignKey
+          false
         end
 
         def warn_unlisted(names)
