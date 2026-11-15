@@ -124,9 +124,17 @@ module RubyLLM
       def choice_schema(choices)
         case choices
         when nil then {}
-        when Hash then { 'oneOf' => choices.map { |value, title| choice(value, title) } }
+        when Hash then { 'oneOf' => distinct(choices).map { |value, title| choice(value, title) } }
         else { 'enum' => choices.map(&:to_s) }
         end
+      end
+
+      def distinct(choices)
+        values = choices.keys.map(&:to_s)
+        repeated = values.find { |value| values.count(value) > 1 }
+        raise ArgumentError, "choices: has more than one choice #{repeated.inspect}." if repeated
+
+        choices
       end
 
       def choice(value, title)

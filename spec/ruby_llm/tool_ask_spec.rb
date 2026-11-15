@@ -168,6 +168,11 @@ RSpec.describe RubyLLM::Tool do
     end
   end
 
+  it 'refuses titled choices that share a value' do
+    expect { tool { ask('Pick one', choices: { a: 'First', b: 'Other', 'a' => 'Second' }) }.new.call }
+      .to raise_error(ArgumentError, 'choices: has more than one choice "a".')
+  end
+
   it 'asks several questions one after another' do
     asking(tool { "#{ask('Name?')} likes #{ask('Color?', choices: %w[red blue])}" })
     chat.pending_questions.sole.answer('Ada')
