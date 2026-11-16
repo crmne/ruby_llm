@@ -308,6 +308,20 @@ RSpec.describe RubyLLM::Tool do
       expect(chat.pending_questions.map(&:message)).to eq(['Delete every card in the deck?'])
     end
 
+    it 'asks again when the tool changed the text it asked with in place' do
+      wording = +'Delete every card?'
+      offered = %w[yes no].map(&:dup)
+      asking(tool { ask(wording, choices: offered).inspect })
+      chat.pending_questions.sole.answer('yes')
+      wording.replace('Delete every deck?')
+      offered.first.replace('all')
+      chat.complete
+
+      question = chat.pending_questions.sole
+      expect(question.message).to eq('Delete every deck?')
+      expect(question.fields.sole.choices).to eq(%w[all no])
+    end
+
     it 'asks for fields where a choice was answered' do
       fields = [false]
       asking(tool do

@@ -83,7 +83,7 @@ module RubyLLM
         else
           params['requestedSchema'] = schema || answer_schema(choices)
         end
-        new("ask_#{index}", params)
+        new("ask_#{index}", JSON.parse(JSON.generate(params)))
       end
 
       # Returns the approval +chat+ waits on before it runs +tool_call+.
