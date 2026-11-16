@@ -96,10 +96,10 @@ module RubyLLM
       # expired at once like the chat's: the expired claim is the only
       # record that it started. So does an interrupted call this run didn't
       # get to answer, which stays interrupted for the next one. Every other
-      # call is released. A round that
-      # stopped before it +finished+ writes its claims without yielding to a
-      # fiber scheduler, as #unyielding explains, while one that finished
-      # releases the calls that paused as usual.
+      # call is released. A round that was stopped before it +finished+
+      # writes its claims without yielding to a fiber scheduler, as
+      # #unyielding explains, while one that finished, or failed with an
+      # error, releases them as usual.
       def release_persisted_tool_calls(tool_call_ids, stopped_by = nil, finished: false) # :nodoc:
         expired = Time.current.change(usec: 0)
         shutting_down = shutting_down?(stopped_by)
@@ -108,9 +108,11 @@ module RubyLLM
           next unless claim
 
           kept = claim.interrupted || (claim.started && shutting_down)
-          unyielding(!finished) do
-            RubyLLM::ActiveRecord::ToolCall.where(id: claim.row, result_id: nil, claimed_until: claim.written)
-                                           .update_all(claimed_until: (expired if kept))
+          unyielding(finished, stopped_by) do
+            ending_claim(RubyLLM::ActiveRecord::ToolCall) do
+              RubyLLM::ActiveRecord::ToolCall.where(id: claim.row, result_id: nil, claimed_until: claim.written)
+                                             .update_all(claimed_until: (expired if kept))
+            end
           end
         end
       ensure
@@ -213,11 +215,11 @@ module RubyLLM
         @message.destroy if blank_placeholder?
         resync_messages if @chat
         busy.call
-      rescue SignalException, SystemExit => e
+      rescue SignalException, SystemExit, StandardError => e
         stopped_by = e
         raise
       ensure
-        unyielding(!completed) do
+        unyielding(completed, stopped_by) do
           stop_claim_heartbeat
         ensure
           shutting_down?(stopped_by) ? expire_run_claim : release_run_claim(completed)
@@ -227,11 +229,46 @@ module RubyLLM
       # Under a fiber scheduler, as in Async or Solid Queue's fiber workers,
       # a fiber whose thread is exiting or whose reactor is stopping is
       # cancelled, or never resumed, once it waits on a socket, a file or a
-      # thread. So a run that +stopped+ before it finished ends its claims
-      # without yielding to the scheduler, and one that finished yields as
-      # usual.
-      def unyielding(stopped, &)
-        stopped ? Fiber.blocking(&) : yield
+      # thread. So a run that was stopped before it +finished+, by a thread
+      # kill, a signal, an exit or the scheduler's own stop, ends its claims
+      # without yielding to the scheduler. One that finished, or that
+      # +stopped_by+ an error while its thread carries on, yields as usual.
+      def unyielding(finished, stopped_by, &)
+        failed = stopped_by.is_a?(StandardError) && Thread.current.status != 'aborting'
+        finished || failed ? yield : Fiber.blocking(&)
+      end
+
+      # A fiber that can't yield to its scheduler holds up every other fiber
+      # on its thread while it waits for a connection from the pool of
+      # +model+, so none of them can return one, and the wait ends in
+      # ActiveRecord::ConnectionTimeoutError. Such a fiber ends a claim only
+      # with a connection it holds or one that is free, and otherwise leaves
+      # the claim to lapse within its lease, rather than raise over what
+      # stopped the run. Returns the block's result, or nil when skipped.
+      def ending_claim(model, &)
+        return yield unless Fiber.scheduler && Fiber.blocking?
+
+        ending_claim_without_waiting(model.connection_pool, &)
+      end
+
+      def ending_claim_without_waiting(pool)
+        return yield if pool.active_connection? || connection_free?(pool)
+
+        RubyLLM.logger.warn("RubyLLM left a stopped run's claim to lapse within #{CLAIM_LEASE} seconds: " \
+                            'no database connection was free')
+        nil
+      rescue ::ActiveRecord::ConnectionTimeoutError => e
+        RubyLLM.logger.warn("RubyLLM left a stopped run's claim to lapse within #{CLAIM_LEASE} seconds: " \
+                            "#{e.class}: #{e.message}")
+        nil
+      end
+
+      # Whether a checkout from +pool+ would get a connection without
+      # waiting: one is idle, or the pool may open another, and no thread
+      # is waiting ahead of it. Max connections is nil when unlimited.
+      def connection_free?(pool)
+        stat = pool.stat
+        stat[:waiting].zero? && (stat[:idle].positive? || stat[:size].nil? || stat[:connections] < stat[:size])
       end
 
       # Whether the process is shutting down: a thread killed at exit, or
@@ -281,7 +318,11 @@ module RubyLLM
       def expire_run_claim
         token = @run_claim_token
         @synced_usage_count = @synced_run_claim_token = @run_claim_token = nil
-        chat_row.where(claim_token: token).update_all(claimed_until: Time.current.change(usec: 0)) if token
+        return unless token
+
+        ending_claim(self.class) do
+          chat_row.where(claim_token: token).update_all(claimed_until: Time.current.change(usec: 0))
+        end
       end
 
       def release_run_claim(completed)
@@ -298,7 +339,8 @@ module RubyLLM
         cancellable = has_attribute?(:cancelled)
         released = { claim_token: nil, claimed_until: nil }
         released[:cancelled] = false if cancellable
-        self[:cancelled] = false if chat_row.where(claim_token: token).update_all(released) == 1 && cancellable
+        freed = ending_claim(self.class) { chat_row.where(claim_token: token).update_all(released) == 1 }
+        self[:cancelled] = false if freed && cancellable
       end
 
       def renew_run_claim(force: false)

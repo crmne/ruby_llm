@@ -2602,7 +2602,7 @@ module RubyLLM
         handle_sequential_tool_calls(runnable)
       end
       finished = true
-    rescue SignalException, SystemExit => e
+    rescue SignalException, SystemExit, StandardError => e
       stopped_by = e
       raise
     ensure

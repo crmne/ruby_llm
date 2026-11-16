@@ -563,6 +563,68 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     end
   end
 
+  # An error stops a run, but its thread and scheduler carry on, so waiting
+  # for the database as usual is safe, and blocking would hold up the
+  # other fibers on its scheduler.
+  it 'releases the claims of a run that an error stopped in a fiber without blocking its scheduler' do
+    chat = asked
+    job = posting_job(chat) { raise ArgumentError, 'Posting failed' }
+    releases = blocking_for_updates(/\AUPDATE \S+ SET "?claim(_token|ed_until)"? = /) do
+      expect { in_reactor { job.complete } }.to raise_error(ArgumentError, 'Posting failed')
+    end
+
+    expect(releases).to be_present.and(all(be(false)))
+    expect(row(chat)).to have_attributes(claim_token: nil, claimed_until: nil)
+    expect(tool_call_rows(chat).sole).to have_attributes(result_id: nil, claimed_until: nil)
+  end
+
+  def with_isolation(level)
+    previous = ActiveSupport::IsolatedExecutionState.isolation_level
+    ActiveSupport::IsolatedExecutionState.isolation_level = level
+    yield
+  ensure
+    ActiveSupport::IsolatedExecutionState.isolation_level = previous
+  end
+
+  # Takes every connection +pool+ has left in another fiber on this thread,
+  # as busy fibers sharing a scheduler do, and returns them once that fiber
+  # runs again.
+  def holding_every_free_connection(pool)
+    Async do
+      held = []
+      held << pool.checkout while (stat = pool.stat)[:idle].positive? || stat[:connections] < stat[:size]
+      sleep 0.01
+    ensure
+      held&.each { |connection| pool.checkin(connection) }
+    end
+  end
+
+  # A stopped run's fiber doesn't yield to its scheduler, so it can't wait
+  # for a fiber on its own thread to return a connection: the wait would
+  # block the thread until the checkout timed out, and the timeout would
+  # replace the signal that stopped the run. Its claims lapse instead.
+  it 'stops a run in a fiber without waiting for a connection that another fiber on its thread holds' do
+    skip 'async runs on MRI' unless RUBY_ENGINE == 'ruby'
+    require 'async'
+    chat = asked
+    pool = ActiveRecord::Base.connection_pool
+    checkout_timeout = pool.checkout_timeout
+    pool.checkout_timeout = 1
+    job = posting_job(chat) do
+      holding_every_free_connection(pool)
+      raise SignalException, 'TERM'
+    end
+    with_isolation(:fiber) do
+      expect { in_reactor { job.complete } }.to raise_error(SignalException, 'SIGTERM')
+    end
+
+    travel lease + 1
+    expect(tool_call_rows(chat).sole).to have_attributes(result_id: nil, claimed_until: be <= Time.current)
+    expect(chats.interrupted).to contain_exactly(chat)
+  ensure
+    pool&.checkout_timeout = checkout_timeout
+  end
+
   it 'keeps the expired claim of a tool call that was running when a TERM signal stopped its run' do
     chat = asked
     job = posting_job(chat) { raise SignalException, 'TERM' }
