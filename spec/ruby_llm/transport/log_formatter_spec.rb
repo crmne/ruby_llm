@@ -59,6 +59,13 @@ RSpec.describe RubyLLM::Transport::LogFormatter do
     expect(io.string).not_to include('sk-outer')
   end
 
+  it 'filters a key that contains another key whole' do
+    config = config_with_key('sk-abc')
+    config.openrouter_api_key = 'sk-abcdef'
+
+    expect(described_class.redact('sent sk-abcdef', config.secret_values)).to eq('sent [FILTERED]')
+  end
+
   it 'writes debug lines to the configuration logger with its credentials filtered' do
     config = config_with_key('sk-first')
     config.logger = Logger.new(io)

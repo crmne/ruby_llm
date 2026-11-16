@@ -32,8 +32,11 @@ module RubyLLM
         (config.logger || RubyLLM.logger).debug { redact(message.call, config.secret_values) }
       end
 
+      # Longer secrets go first, so a key that contains another key is
+      # replaced whole instead of leaving its remainder in the line.
       def self.redact(text, secrets)
-        secrets.reduce(text.to_s) { |output, secret| output.gsub(secret, FILTERED) }
+        secrets.uniq.sort_by { |secret| -secret.length }
+               .reduce(text.to_s) { |output, secret| output.gsub(secret, FILTERED) }
       end
 
       # Faraday 2.12 and earlier write exception messages without
