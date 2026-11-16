@@ -23,8 +23,17 @@ module RubyLLM
       end
 
       def resolve_protocol(name, model, operation: nil, **options)
+        return OpenAI::Rerank if operation == :rerank
+
         name ||= :decisions if operation == :judge
         super
+      end
+
+      def rerank(...) # :nodoc:
+        return super unless openai_hosted?
+
+        raise Error, "OpenAI doesn't support reranking. To rerank on an OpenAI-compatible server with a " \
+                     '/rerank endpoint, such as llama.cpp or vLLM, set openai_api_base to its address'
       end
 
       # Audio, realtime, and dedicated search models only exist on Chat Completions.
@@ -97,6 +106,11 @@ module RubyLLM
       end
 
       private
+
+      def openai_hosted?
+        host = URI(api_base).host.to_s.downcase
+        host == 'openai.com' || host.end_with?('.openai.com')
+      end
 
       def parse_reset_duration(value)
         duration = value.to_s

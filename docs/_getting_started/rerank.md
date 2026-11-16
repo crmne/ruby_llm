@@ -105,6 +105,21 @@ RubyLLM.rerank(
 
 The semantic ranker is absent from the general model catalog, so it requires `assume_model_exists: true`. It does not require a search data store.
 
+### OpenAI-Compatible Servers
+
+Servers that speak the OpenAI API and serve a `/rerank` endpoint, such as llama.cpp's `llama-server` and vLLM, rerank through `provider: :openai` once `openai_api_base` points at them:
+
+```ruby
+local = RubyLLM.context do |config|
+  config.openai_api_base = "http://localhost:8080/v1"
+  config.openai_api_key = "unused"
+end
+
+local.rerank(query, documents, model: "bge-reranker-v2-m3", provider: :openai, assume_model_exists: true)
+```
+
+OpenAI's own API has no rerank endpoint, so `provider: :openai` raises an error when `openai_api_base` is left at OpenAI.
+
 ## Cost and Usage
 
 Reranking lands in the same usage ledger as chat and embeddings. Providers that bill per token report the tokens they read:
