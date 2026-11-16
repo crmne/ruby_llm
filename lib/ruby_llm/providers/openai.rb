@@ -10,6 +10,7 @@ module RubyLLM
                batches: Protocols::ChatCompletions::EmbeddingBatches
       protocol :files, Protocols::OpenAI::Files
       protocol :decisions, Protocols::OpenAI::Decisions
+      protocol :rerank, OpenAI::Rerank
 
       RATE_LIMIT_RESET_HEADERS = %w[x-ratelimit-reset-requests x-ratelimit-reset-tokens].freeze
       RESET_DURATION_UNITS = { 'h' => 3600, 'm' => 60, 's' => 1, 'ms' => 0.001 }.freeze
@@ -24,7 +25,15 @@ module RubyLLM
 
       def resolve_protocol(name, model, operation: nil, **options)
         name ||= :decisions if operation == :judge
+        name ||= :rerank if operation == :rerank
         super
+      end
+
+      def rerank(...) # :nodoc:
+        return super unless openai_hosted?
+
+        raise Error, "OpenAI doesn't support reranking. To rerank on an OpenAI-compatible server with a " \
+                     '/rerank endpoint, such as llama.cpp or vLLM, set openai_api_base to its address'
       end
 
       # Audio, realtime, and dedicated search models only exist on Chat Completions.
@@ -97,6 +106,11 @@ module RubyLLM
       end
 
       private
+
+      def openai_hosted?
+        host = URI(api_base).host.to_s.downcase.delete_suffix('.')
+        host == 'openai.com' || host.end_with?('.openai.com')
+      end
 
       def parse_reset_duration(value)
         duration = value.to_s
