@@ -203,7 +203,7 @@ passenger                                              # => {name: "Ada Lovelace
 ask("Connect your calendar", url: calendar.authorization_url)
 ```
 
-`ask` returns `nil` when the person declines with `question.decline`. A note they give, `question.decline("I'll choose at the gate")`, follows the tool's result to the model, and a Hash follows it as JSON. A call can ask several questions, one after another, and each run asks them in the same order. Outside a chat, nothing can pause the call, so `ask` raises `RubyLLM::InputRequiredError`.
+`ask` returns `nil` when the person declines with `question.decline`. A note they give, `question.decline("I'll choose at the gate")`, follows the tool's result to the model, and a Hash follows it as JSON. A call can ask several questions, one after another, and each run asks them in the same order. An answer only ever reaches the question it was given to: if a run asks something else in its place, such as when a condition skips an earlier question or the choices come from data that changed, the call pauses on the new question, and the questions after it are asked again. A page to visit counts as the same question when only its address changed, since a sign-in link is often new on every run. Outside a chat, nothing can pause the call, so `ask` raises `RubyLLM::InputRequiredError`.
 
 [MCP servers]({% link _tools/mcp.md %}#questions-from-servers) ask their questions the same way, and you answer them the same way.
 

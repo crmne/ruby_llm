@@ -83,7 +83,7 @@ module RubyLLM
         else
           params['requestedSchema'] = schema || answer_schema(choices)
         end
-        new("ask_#{index}", params)
+        new("ask_#{index}", JSON.parse(JSON.generate(params)))
       end
 
       # Returns the approval +chat+ waits on before it runs +tool_call+.
@@ -252,6 +252,16 @@ module RubyLLM
       by_name ? content.transform_keys(&:to_sym) : content['answer']
     end
 
+    # Returns whether +question+ asks what this one asks, so that an answer
+    # to one answers the other: the same message and the same kind of
+    # answer, with the same choices or fields, however the keys that
+    # describe them are ordered or stored. A page to visit is the same
+    # page under another address, since a sign-in link often changes on
+    # every run.
+    def asks?(question) # :nodoc:
+      comparable == question.comparable
+    end
+
     # Records +response+ as the question's own, and returns +self+.
     def respond(response) # :nodoc:
       @response = response
@@ -270,6 +280,15 @@ module RubyLLM
 
     def to_h # :nodoc:
       { 'id' => @nonce, 'key' => key, 'params' => @params, 'response' => response }.compact
+    end
+
+    protected
+
+    # The question's params as JSON stores them, without a page's address.
+    def comparable
+      params = JSON.parse(JSON.generate(@params.to_h))
+      params.delete('url') if params['mode'] == 'url'
+      params
     end
 
     private

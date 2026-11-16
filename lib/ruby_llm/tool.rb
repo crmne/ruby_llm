@@ -539,7 +539,11 @@ module RubyLLM
     #
     # Code before +ask+ runs again too, so make it safe to repeat: ask
     # first, then act. A call may ask several questions, one after
-    # another, and each run asks them in the same order.
+    # another, and each run asks them in the same order. An answer
+    # reaches only the question it was given to: when a run asks
+    # something else in its place, such as after skipping a question or
+    # with other choices, the call pauses on the new question, and the
+    # questions after it are asked again.
     #
     # Without options, +ask+ takes free text and returns the String. With
     # +choices:+ it returns the one the person picked. With a block, it
@@ -569,11 +573,12 @@ module RubyLLM
       index = state['asked']
       state['asked'] += 1
       requests = Array(state['input']&.[]('requests'))
-      return Question.from_h(requests[index]).asked_answer(fields) if requests[index]&.[]('response')
-
       schema = SchemaDefinition.new(block: fields).json_schema if fields
-      asked = requests.first(index).map { |data| Question.from_h(data) }
       question = Question.asked(index, message, choices:, url:, schema:)
+      stored = answered_as(requests[index], question)
+      return stored.asked_answer(fields) if stored
+
+      asked = requests.first(index).map { |data| Question.from_h(data) }
       raise InputRequiredError.new(name, { 'requests' => [*asked, question] })
     end
 
@@ -708,6 +713,13 @@ module RubyLLM
       call(**arguments, tool_call:)
     ensure
       Fiber[RESUMING] = nil
+    end
+
+    # The question +data+ stored, when it was answered and asks what
+    # +question+ asks.
+    def answered_as(data, question) # :nodoc:
+      stored = Question.from_h(data) if data
+      stored if stored&.answered? && stored.asks?(question)
     end
 
     def execute_accepts_tool_call? # :nodoc:
