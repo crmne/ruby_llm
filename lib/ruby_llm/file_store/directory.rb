@@ -149,9 +149,11 @@ module RubyLLM
         Find.find(start) do |path|
           next if path == root
 
-          stat = File.lstat(path)
           Find.prune if File.basename(path).start_with?('.')
+          stat = File.lstat(path)
           files << stored_file(path, stat) if stat.file?
+        rescue Errno::ENOENT, Errno::ENOTDIR
+          next
         end
         files
       end
