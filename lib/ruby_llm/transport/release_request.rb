@@ -19,8 +19,12 @@ module RubyLLM
 
         env.request_body = nil
         env.request_headers = Faraday::Utils::Headers.new
-        env.request.on_data = nil
-        env.request.context = nil
+        # A response built by hand, such as one a protocol attaches to the
+        # error it raises, has no request options to clear.
+        if env.request
+          env.request.on_data = nil
+          env.request.context = nil
+        end
         response
       end
 
