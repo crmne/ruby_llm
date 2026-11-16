@@ -132,16 +132,17 @@ module RubyLLM
       def full_path(path)
         parent = root
         path.split('/').each do |part|
-          raise ArgumentError, "#{path} is not inside the chat's files" if part.start_with?('.')
+          if part.start_with?('.') || linked_folder?(parent)
+            raise ArgumentError, "#{path} is not inside the chat's files"
+          end
 
           parent = File.join(parent, part)
         end
-        folder = File.dirname(parent)
-        if File.directory?(folder) && !"#{File.realpath(folder)}/".start_with?("#{root}/")
-          raise ArgumentError, "#{path} is not inside the chat's files"
-        end
-
         parent
+      end
+
+      def linked_folder?(path)
+        File.symlink?(path) && File.directory?(path)
       end
 
       def walk(start)
