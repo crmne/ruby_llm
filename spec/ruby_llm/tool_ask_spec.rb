@@ -254,6 +254,151 @@ RSpec.describe RubyLLM::Tool do
       .to eq('Booked a aisle seat to Lisbon')
   end
 
+  describe 'an answer given to another question' do
+    let(:draft) { { present: true } }
+    let(:seats) { %w[window aisle] }
+
+    it 'asks a question again when a run skips the one answered in its place' do
+      present = draft
+      asking(tool do
+        keep = ask('Keep the draft?', choices: %w[yes no]) if present[:present]
+        wipe = ask('Delete every card?', choices: %w[yes no])
+        "keep: #{keep.inspect}, wipe: #{wipe.inspect}"
+      end)
+      chat.pending_questions.sole.answer('yes')
+      chat.complete
+      chat.pending_questions.sole.answer('no')
+      draft[:present] = false
+      chat.complete
+
+      expect(result).to be_nil
+      expect(chat.pending_questions.map(&:message)).to eq(['Delete every card?'])
+
+      chat.pending_questions.sole.answer('no')
+      chat.complete
+
+      expect(result).to eq('keep: nil, wipe: "no"')
+    end
+
+    it 'asks again when the choices changed while the person decided' do
+      offered = seats
+      asking(tool { "Seat #{ask('Which seat?', choices: offered)}" })
+      first = chat.pending_questions.sole
+      first.answer('aisle')
+      seats.replace(%w[front back])
+      chat.complete
+
+      expect(result).to be_nil
+      question = chat.pending_questions.sole
+      expect(question.fields.sole.choices).to eq(%w[front back])
+      expect(question.id).not_to eq(first.id)
+
+      chat.answer(question.id, 'back').complete
+
+      expect(result).to eq('Seat back')
+    end
+
+    it 'asks again when another message takes the place' do
+      wording = ['Delete every card?']
+      asking(tool { ask(wording.first, choices: %w[yes no]).inspect })
+      chat.pending_questions.sole.answer('yes')
+      wording.replace(['Delete every card in the deck?'])
+      chat.complete
+
+      expect(chat.pending_questions.map(&:message)).to eq(['Delete every card in the deck?'])
+    end
+
+    it 'asks for fields where a choice was answered' do
+      fields = [false]
+      asking(tool do
+        (fields.first ? ask('Which seat?') { string :row } : ask('Which seat?', choices: %w[window aisle])).inspect
+      end)
+      chat.pending_questions.sole.answer('aisle')
+      fields.replace([true])
+      chat.complete
+
+      expect(chat.pending_questions.sole.fields.map(&:name)).to eq([:row])
+    end
+
+    it 'asks the questions after a changed one again, keeping the answers before it' do
+      wording = ['Color?']
+      asking(tool { "#{ask('Name?')} likes #{ask(wording.first)} and #{ask('Food?')}" })
+      chat.pending_questions.sole.answer('Ada')
+      chat.complete
+      chat.pending_questions.sole.answer('blue')
+      chat.complete
+      wording.replace(['Colour?'])
+      chat.pending_questions.sole.answer('figs')
+      chat.complete
+
+      expect(chat.pending_questions.map(&:message)).to eq(['Colour?'])
+
+      chat.pending_questions.sole.answer('green')
+      chat.complete
+
+      expect(chat.pending_questions.map(&:message)).to eq(['Food?'])
+
+      chat.pending_questions.sole.answer('pears')
+      chat.complete
+
+      expect(result).to eq('Ada likes green and pears')
+    end
+
+    it 'keeps a declined question declined when the question is the same' do
+      asking(book_flight, 'destination' => 'Lisbon')
+      chat.pending_questions.sole.decline('Later')
+      chat.complete
+
+      expect(result).to start_with('No seat chosen')
+    end
+
+    it 'takes a page to visit as the same question under a new address' do
+      visits = []
+      asking(tool do
+        visits << "https://example.com/connect?state=#{visits.size}"
+        ask('Connect your calendar', url: visits.last) ? 'Connected' : 'Not connected'
+      end)
+      chat.pending_questions.sole.answer
+      chat.complete
+
+      expect(result).to eq('Connected')
+    end
+  end
+
+  it 'reads an answer whose question was stored with its keys in another order' do
+    question = RubyLLM::Question.asked(0, 'Who is flying?', schema: RubyLLM::Tool::SchemaDefinition.new(block: proc do
+      string :name
+      integer :age, required: false
+    end).json_schema)
+    stored = JSON.parse(JSON.generate(question.respond({ 'action' => 'accept',
+                                                         'content' => { 'name' => 'Ada' } }).to_h))
+    stored['params'] = stored['params'].to_a.reverse.to_h
+    stored['params']['requestedSchema'] = stored['params']['requestedSchema'].to_a.reverse.to_h
+    passenger = tool do
+      ask('Who is flying?') do
+        string :name
+        integer :age, required: false
+      end.inspect
+    end
+
+    expect(passenger.new.resume_call({ 'requests' => [stored] }, {}, tool_call: nil)).to eq({ name: 'Ada' }.inspect)
+  end
+
+  it 'reads an answer stored before questions were compared, without an id' do
+    stored = {
+      'key' => 'ask_0',
+      'params' => { 'mode' => 'form', 'message' => 'Window or aisle?',
+                    'requestedSchema' => { 'type' => 'object',
+                                           'properties' => { 'answer' => { 'type' => 'string',
+                                                                           'enum' => %w[window aisle] } },
+                                           'required' => ['answer'] } },
+      'response' => { 'action' => 'accept', 'content' => { 'answer' => 'aisle' } }
+    }
+
+    expect(book_flight.new.resume_call({ 'requests' => [stored] }, { destination: 'Lisbon' }, tool_call: nil))
+      .to eq('Booked a aisle seat to Lisbon')
+  end
+
   it 'keeps a server question as the same object, under its old names' do
     expect(RubyLLM::MCP::InputRequest).to be(RubyLLM::Question)
     expect(RubyLLM::MCP::InputRequiredError.ancestors).to include(RubyLLM::InputRequiredError)

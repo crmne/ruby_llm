@@ -294,6 +294,30 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(result_of(asking)).to eq({ name: 'Ada', age: 36 }.inspect)
   end
 
+  it 'asks again in a later job when the choices changed after the answer' do
+    offered = %w[window aisle]
+    picker = Class.new(RubyLLM::Tool) do
+      def self.name = 'PickSeat'
+
+      description 'Asks for a seat'
+      define_method(:execute) { "Seat #{ask('Which seat?', choices: offered)}" }
+    end
+    asking = call('pick_seat')
+    chat = paused(asking, tools: [picker])
+    Chat.find(chat.id).answer(chat.pending_questions.sole.id, 'aisle')
+    offered = %w[front back]
+    job_for(chat.id, picker).complete
+
+    expect(result_of(asking)).to be_nil
+    question = Chat.find(chat.id).pending_questions.sole
+    expect(question.fields.sole.choices).to eq(%w[front back])
+
+    Chat.find(chat.id).answer(question.id, 'front')
+    job_for(chat.id, picker).complete
+
+    expect(result_of(asking)).to eq('Seat front')
+  end
+
   it 'changes nothing for a question answered twice, or after its call finished' do
     question = call('pick_seat')
     chat = paused(question)
