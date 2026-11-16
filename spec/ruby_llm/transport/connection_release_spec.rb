@@ -55,6 +55,13 @@ RSpec.describe RubyLLM::Transport::Connection do
     expect(responses.map { |response| keeps_no_request?(response.env) }).to all(be(true))
   end
 
+  it 'raises the original error when its response has no request options' do
+    response = Faraday::Response.new(status: 500, body: 'provider error', response_headers: {})
+    error = RubyLLM::ServerError.new('stream failed', response:)
+
+    expect { transport.post('chat/completions', {}) { raise error } }.to raise_error(error)
+  end
+
   context 'when the provider refuses the request' do
     let(:status) { 401 }
 

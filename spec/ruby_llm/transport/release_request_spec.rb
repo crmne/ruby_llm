@@ -32,6 +32,14 @@ RSpec.describe RubyLLM::Transport::ReleaseRequest do
     expect(env.request.to_h.values_at(:context, :on_data)).to eq([nil, nil])
   end
 
+  it 'releases a response that has no request options' do
+    response = Faraday::Response.new(status: 500, body: 'provider error', request_body: 'prompt',
+                                     request_headers: { 'x-api-key' => 'secret-key' })
+
+    expect(described_class.release(response)).to be(response)
+    expect(response.env.to_h.values_at(:request_body, :request_headers)).to eq([nil, {}])
+  end
+
   it 'leaves a successful request alone' do
     expect(get(status: 200).env.request_headers['x-goog-api-key']).to eq('secret-key')
   end
