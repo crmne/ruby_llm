@@ -10,6 +10,7 @@ module RubyLLM
                batches: Protocols::ChatCompletions::EmbeddingBatches
       protocol :files, Protocols::OpenAI::Files
       protocol :decisions, Protocols::OpenAI::Decisions
+      protocol :rerank, OpenAI::Rerank
 
       RATE_LIMIT_RESET_HEADERS = %w[x-ratelimit-reset-requests x-ratelimit-reset-tokens].freeze
       RESET_DURATION_UNITS = { 'h' => 3600, 'm' => 60, 's' => 1, 'ms' => 0.001 }.freeze
@@ -23,9 +24,8 @@ module RubyLLM
       end
 
       def resolve_protocol(name, model, operation: nil, **options)
-        return OpenAI::Rerank if operation == :rerank
-
         name ||= :decisions if operation == :judge
+        name ||= :rerank if operation == :rerank
         super
       end
 
