@@ -26,6 +26,7 @@ RSpec.describe RubyLLM::Transport::Connection do
         http_proxy: nil,
         ssl: nil,
         log_regexp_timeout: 1.0,
+        log_bodies: nil,
         faraday_adapter: :net_http,
         logger: nil
       )
@@ -75,6 +76,58 @@ RSpec.describe RubyLLM::Transport::Connection do
       options = middleware.instance_variable_get(:@formatter).instance_variable_get(:@options)
 
       expect(options[:bodies]).to be(true)
+    end
+
+    it 'keeps bodies out of a debug log when log_bodies is false' do
+      allow(RubyLLM).to receive(:logger).and_return(Logger.new(File::NULL, level: Logger::DEBUG))
+      allow(config).to receive(:log_bodies).and_return(false)
+
+      settings = described_class.new(provider, config).send(:settings_for, false)
+
+      expect(settings.log_bodies).to be(false)
+    end
+
+    it 'logs bodies above debug level when log_bodies is true' do
+      allow(RubyLLM).to receive(:logger).and_return(Logger.new(File::NULL, level: Logger::INFO))
+      allow(config).to receive(:log_bodies).and_return(true)
+
+      settings = described_class.new(provider, config).send(:settings_for, false)
+
+      expect(settings.log_bodies).to be(true)
+    end
+
+    it 'filters its configured credentials from a logged response body' do
+      io = StringIO.new
+      context_config = RubyLLM::Configuration.new.tap do |real|
+        real.logger = Logger.new(io)
+        real.openai_api_key = 'sk-echoed'
+      end
+      allow(provider).to receive_messages(slug: 'openai', error_status: nil)
+      stub_request(:get, 'https://example.com/echo').to_return(status: 200, body: 'you sent sk-echoed')
+
+      described_class.new(provider, context_config).get('echo')
+
+      expect(io.string).to include('you sent [FILTERED]')
+      expect(io.string).not_to include('sk-echoed')
+    end
+
+    it 'filters credentials from the exceptions a basic connection logs' do
+      skip 'This Faraday does not log exceptions' unless Faraday::Logging::Formatter.method_defined?(:exception)
+
+      io = StringIO.new
+      context_config = RubyLLM::Configuration.new.tap do |real|
+        real.logger = Logger.new(io)
+        real.openai_api_key = 'sk-echoed'
+      end
+      connection = described_class.basic(context_config) do |faraday|
+        faraday.adapter :test do |stub|
+          stub.get('/token') { raise Faraday::ConnectionFailed, 'refused for sk-echoed' }
+        end
+      end
+
+      expect { connection.get('https://auth.example.test/token') }.to raise_error(Faraday::ConnectionFailed)
+      expect(io.string).to include('refused for [FILTERED]')
+      expect(io.string).not_to include('sk-echoed')
     end
 
     it 'uses the configured Faraday adapter' do

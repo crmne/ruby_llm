@@ -104,7 +104,7 @@ module RubyLLM
       end
 
       # Frees the claims on +ids+ once their round ends, whether it ended
-      # normally or by +stopped_by+, the signal or exit that stopped it.
+      # normally or by +stopped_by+, the signal, exit or error that stopped it.
       # A round that +finished+ left only calls that paused unanswered.
       def release(_ids, _stopped_by = nil, finished: false); end
 

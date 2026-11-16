@@ -89,6 +89,55 @@ RSpec.describe RubyLLM::FileStore::Directory do
     expect(store.list('in/a.txt').map(&:path)).to eq(['in/a.txt'])
   end
 
+  context 'when the folder changes while it is listed' do
+    def change_before_lstat(path)
+      full = File.join(store.root, path)
+      changed = false
+      allow(File).to receive(:lstat).and_call_original
+      allow(File).to receive(:lstat).with(full).and_wrap_original do |original, *arguments|
+        unless changed
+          changed = true
+          yield full
+        end
+        original.call(*arguments)
+      end
+    end
+
+    it 'lists the other files when one is deleted' do
+      %w[a.txt b.txt c.txt].each { |name| store.write(name, name) }
+      change_before_lstat('b.txt') { |full| File.delete(full) }
+
+      expect(store.list.map(&:path)).to eq(%w[a.txt c.txt])
+    end
+
+    it 'lists the other files when a write moves its temporary file into place' do
+      %w[a.txt c.txt].each { |name| store.write(name, name) }
+      File.write(File.join(store.root, '.b.txt.tmp'), 'b')
+      change_before_lstat('.b.txt.tmp') { |full| File.rename(full, File.join(store.root, 'b.txt')) }
+
+      expect(store.list.map(&:path)).to include('a.txt', 'c.txt')
+    end
+
+    it 'lists the other files when a folder is replaced by a file' do
+      %w[a.txt notes/plan.md].each { |name| store.write(name, name) }
+      change_before_lstat('notes/plan.md') do
+        FileUtils.rm_r(File.join(store.root, 'notes'))
+        File.write(File.join(store.root, 'notes'), 'now a file')
+      end
+
+      expect(store.list.map(&:path)).to eq(['a.txt'])
+    end
+
+    it 'leaves out a hidden folder that vanishes and comes back' do
+      store.write('a.txt', 'a')
+      FileUtils.mkdir_p(File.join(store.root, '.cache'))
+      File.write(File.join(store.root, '.cache', 'data.txt'), 'cached')
+      change_before_lstat('.cache') { raise Errno::ENOENT }
+
+      expect(store.list.map(&:path)).to eq(['a.txt'])
+    end
+  end
+
   it 'identifies extensionless media put in the folder after reopening the store' do
     content = File.binread(File.expand_path('../../fixtures/ruby.png', __dir__))
     File.binwrite(File.join(root, 'logo'), content)
@@ -144,6 +193,36 @@ RSpec.describe RubyLLM::FileStore::Directory do
     expect { store.read('folder/secret.txt') }.to raise_error(ArgumentError, /not inside/)
   ensure
     FileUtils.rm_rf(outside)
+  end
+
+  it 'never follows a link to a hidden folder inside it' do
+    FileUtils.mkdir_p(File.join(root, '.private'))
+    File.write(File.join(root, '.private', 'secret.txt'), 'secret')
+    File.symlink(File.join(root, '.private'), File.join(root, 'alias'))
+
+    expect { store.read('alias/secret.txt') }.to raise_error(ArgumentError, /not inside/)
+    expect { store['alias/secret.txt'] }.to raise_error(ArgumentError, /not inside/)
+    expect { store.delete('alias/secret.txt') }.to raise_error(ArgumentError, /not inside/)
+    expect(File.read(File.join(root, '.private', 'secret.txt'))).to eq('secret')
+  end
+
+  it 'never follows a link to another folder inside it' do
+    store.write('reports/q3.txt', 'q3')
+    File.symlink(File.join(root, 'reports'), File.join(root, 'shortcut'))
+
+    expect { store.read('shortcut/q3.txt') }.to raise_error(ArgumentError, /not inside/)
+    expect { store.write('shortcut/q4.txt', 'q4') }.to raise_error(ArgumentError, /not inside/)
+    expect(store.list.map(&:path)).to eq(['reports/q3.txt'])
+  end
+
+  it 'replaces a link to a file that stands where a folder goes when writing' do
+    store.write('target.txt', 'target')
+    File.symlink(File.join(root, 'target.txt'), File.join(root, 'notes'))
+
+    store.write('notes/plan.md', 'plan')
+
+    expect(store.read('notes/plan.md')).to eq('plan')
+    expect(store.read('target.txt')).to eq('target')
   end
 
   it 'does not sniff a file replaced by a symbolic link before opening it' do

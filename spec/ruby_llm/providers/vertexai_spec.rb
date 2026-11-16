@@ -19,6 +19,7 @@ RSpec.describe RubyLLM::Providers::VertexAI do
       http_proxy: nil,
       ssl: nil,
       log_regexp_timeout: 1.0,
+      log_bodies: nil,
       faraday_adapter: :net_http,
       vertexai_location: location,
       vertexai_project_id: 'test-project',

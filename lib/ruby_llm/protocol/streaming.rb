@@ -56,7 +56,7 @@ module RubyLLM
       module_function
 
       def stream_response(payload, additional_headers = {}, &block)
-        accumulator = StreamAccumulator.new
+        accumulator = StreamAccumulator.new(log: method(:log_stream_debug))
         received = false
 
         response = stream_events(stream_url, payload, additional_headers) do |data|
@@ -73,7 +73,7 @@ module RubyLLM
         end
 
         message = accumulator.to_message(response)
-        RubyLLM.logger.debug { "Stream completed: #{message.content}" }
+        log_body_debug { "Stream completed: #{message.content}" }
         message
       end
 
@@ -105,6 +105,20 @@ module RubyLLM
 
       def faraday_1?
         Faraday::VERSION.start_with?('1')
+      end
+
+      def log_debug(&)
+        Transport::LogFormatter.log_debug(config, &)
+      end
+
+      # For lines that quote what the provider sent, such as the answer or a
+      # JSON parse error, which includes the text it could not parse.
+      def log_body_debug(&)
+        log_debug(&) unless config.log_bodies == false
+      end
+
+      def log_stream_debug(&)
+        log_debug(&) if config.log_stream_debug
       end
 
       def post_stream(url, payload, on_data:, progress:, on_reset:, on_failure: nil)
@@ -143,7 +157,7 @@ module RubyLLM
       end
 
       def process_stream_chunk(chunk, state, env, progress, &)
-        RubyLLM.logger.debug { "Received chunk: #{chunk}" } if RubyLLM.config.log_stream_debug
+        log_stream_debug { "Received chunk: #{chunk}" }
 
         if json_body?(chunk, state)
           handle_json_body(chunk, state, env)
@@ -186,7 +200,7 @@ module RubyLLM
         parsed = JSON.parse(state.buffer)
         raise_stream_error(state.buffer, parsed, env) if parsed.is_a?(Hash) && parsed['error']
       rescue JSON::ParserError
-        RubyLLM.logger.debug { 'Waiting for the remaining JSON response bytes' }
+        log_debug { 'Waiting for the remaining JSON response bytes' }
       end
 
       # Runs once the response has ended, when a body that never parsed as
@@ -207,7 +221,7 @@ module RubyLLM
         error_data = JSON.parse(buffer)
         raise_stream_error(buffer, error_data, env)
       rescue JSON::ParserError
-        RubyLLM.logger.debug { "Accumulating error chunk: #{chunk}" }
+        log_stream_debug { "Accumulating error chunk: #{chunk}" }
       end
 
       # Marking progress just before a chunk reaches the user lets the retry
@@ -237,7 +251,7 @@ module RubyLLM
 
         raise_stream_error(data, parsed, env)
       rescue JSON::ParserError => e
-        RubyLLM.logger.debug { "Failed to parse data chunk: #{e.message}" }
+        log_body_debug { "Failed to parse data chunk: #{e.message}" }
       end
 
       def handle_error_event(data, env)
@@ -249,7 +263,7 @@ module RubyLLM
         message = error_data.is_a?(Hash) ? error_data['message'] : error_data.to_s
         [500, message || 'Unknown streaming error']
       rescue JSON::ParserError => e
-        RubyLLM.logger.debug { "Failed to parse streaming error: #{e.message}" }
+        log_body_debug { "Failed to parse streaming error: #{e.message}" }
         [500, "Failed to parse error: #{data}"]
       end
 
@@ -264,7 +278,7 @@ module RubyLLM
         parsed_data = JSON.parse(data)
         raise_stream_error(data, parsed_data, env)
       rescue JSON::ParserError => e
-        RubyLLM.logger.debug { "#{error_message}: #{e.message}" }
+        log_body_debug { "#{error_message}: #{e.message}" }
       end
 
       def build_stream_error_response(parsed_data, env, status)
