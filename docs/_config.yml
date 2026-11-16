@@ -243,6 +243,11 @@ jekyll_vitepress:
       - _plugins/social_cards.rb
       - _plugins/social_cards
       - _data/llms_areas.yml
+      # The homepage credit, so it reaches / without a release (home.html and
+      # rubyllm-overrides.css already come from main via bin/prepare_version.rb).
+      - _data/built_with.yml
+      - _includes/built_with.html
+      - assets/images/chat-with-work/logo.svg
   build:
     before_build: ruby bin/prepare_version.rb
     after_build: SITE_BASE_URL="${VITEPRESS_VERSION_URL%/}" bin/build-api.sh "$VITEPRESS_VERSION_OUTPUT/api" "$VITEPRESS_VERSION_ROOT"

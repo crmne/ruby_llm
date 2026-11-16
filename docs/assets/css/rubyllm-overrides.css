@@ -371,6 +371,65 @@ body:has(.VPHome .home-section.home-band:last-child) .VPFooter {
   stroke-linejoin: round;
 }
 
+/* "Built with RubyLLM" credit under the hero buttons (_includes/built_with.html).
+   A quiet card: badge-sized type and the badges' surface, below the buttons'
+   weight. */
+.VPHome .VPHero .home-built-with {
+  order: 4;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 100%;
+  margin-top: 20px;
+  border: 1px solid var(--home-line);
+  border-radius: 12px;
+  background: var(--vp-c-bg-soft);
+  padding: 9px 16px 9px 10px;
+  color: var(--home-muted);
+  font-size: 13px;
+  line-height: 1.35;
+  text-align: left;
+  text-decoration: none !important;
+  transition: border-color 0.18s ease, background-color 0.18s ease;
+}
+
+.VPHome .VPHero .home-built-with:hover {
+  border-color: color-mix(in srgb, var(--home-muted) 42%, var(--home-line));
+  background: var(--vp-c-bg-elv);
+}
+
+.VPHome .VPHero .home-built-with:focus-visible {
+  outline: 2px solid var(--vp-c-brand-1);
+  outline-offset: 2px;
+}
+
+.VPHome .VPHero .home-built-with-logo {
+  flex: none;
+  width: 28px;
+  height: 28px;
+}
+
+.VPHome .VPHero .home-built-with-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.VPHome .VPHero .home-built-with-title {
+  font-weight: 500;
+}
+
+.VPHome .VPHero .home-built-with-title strong {
+  color: var(--home-text);
+  font-weight: 600;
+}
+
+.VPHome .VPHero .home-built-with-description {
+  color: var(--home-muted);
+  font-size: 12px;
+}
+
 .VPHome .VPButton.brand,
 .VPHome .VPHero .VPButton.medium.brand,
 .home-button--solid {
@@ -2173,6 +2232,11 @@ body:has(.VPHome .home-section.home-band:last-child) .VPFooter {
 
   .VPHome .VPHero .action {
     padding-block: 0;
+  }
+
+  /* Line up with the full-width button, which sits inside .action's 6px. */
+  .VPHome .VPHero .home-built-with {
+    width: calc(100% - 12px);
   }
 
   .VPHome .VPButton,

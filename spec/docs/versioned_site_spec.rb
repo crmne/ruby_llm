@@ -84,6 +84,17 @@ RSpec.describe 'Versioned documentation site', type: :task do
       overlay.each { |path| expect(File).to exist(File.join(root, 'docs', path)) }
       expect(overlay).to include('_plugins/versioned_docs.rb', '_plugins/social_cards.rb')
     end
+
+    it 'shows the Built with RubyLLM credit in the stable docs without waiting for a release' do
+      overlay = config.dig('jekyll_vitepress', 'versions', 'overlay')
+      credit = YAML.load_file(File.join(root, 'docs/_data/built_with.yml'))
+      prepare = File.read(File.join(root, 'docs/bin/prepare_version.rb'))
+
+      expect(overlay).to include('_data/built_with.yml', '_includes/built_with.html', credit['logo'].delete_prefix('/'))
+      expect(credit['url']).to eq('https://chatwithwork.com/?utm_source=rubyllm')
+      expect(File.read(File.join(root, 'docs/_includes/home.html'))).to include('{% include built_with.html %}')
+      expect(prepare).to include("'_includes/home.html'", "'assets/css/rubyllm-overrides.css'")
+    end
   end
 
   describe 'versioned metadata' do

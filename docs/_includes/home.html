@@ -146,6 +146,8 @@
             </div>
           {% endif %}
 
+          {% include built_with.html %}
+
           {% if gem_downloads_enabled or github_trending_enabled %}
             <div class="home-hero-badges" aria-label="Project badges">
               {% if gem_downloads_enabled %}

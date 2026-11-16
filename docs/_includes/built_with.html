@@ -1,0 +1,15 @@
+{%- comment -%}
+  The "Built with RubyLLM" credit under the homepage hero, from
+  _data/built_with.yml. It renders nothing when the data file is absent, so a
+  release whose own copy predates it still builds.
+{%- endcomment -%}
+{%- assign built_with = site.data.built_with -%}
+{%- if built_with and built_with.url -%}
+<a class="home-built-with" href="{{ built_with.url }}" target="_blank" rel="noopener">
+  <img class="home-built-with-logo" src="{{ built_with.logo | relative_url }}" alt="" width="28" height="28">
+  <span class="home-built-with-text">
+    <span class="home-built-with-title">{{ built_with.label }}: <strong>{{ built_with.name }}</strong></span>
+    <span class="home-built-with-description">{{ built_with.description }}</span>
+  </span>
+</a>
+{%- endif -%}

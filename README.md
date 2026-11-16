@@ -347,6 +347,10 @@ See [AI Coding Assistants](https://rubyllm.com/ai-coding-assistants/) for setup 
 
 [Guides](https://rubyllm.com/getting-started/) · [API reference](https://rubyllm.com/api/) · [Models](https://rubyllm.com/available-models/) · [Upgrading](https://rubyllm.com/upgrading/) · [1.x docs](https://rubyllm.com/v1/)
 
+## Built with RubyLLM
+
+- [Chat with Work](https://chatwithwork.com/?utm_source=rubyllm): AI bots across 1,898 integrations, hosted in Europe. Made by RubyLLM's maintainer.
+
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md).
