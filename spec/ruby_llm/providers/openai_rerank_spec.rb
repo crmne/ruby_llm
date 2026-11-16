@@ -33,7 +33,7 @@ RSpec.describe RubyLLM::Providers::OpenAI do
   end
 
   it 'refuses to rerank on OpenAI itself, which has no rerank endpoint' do
-    [nil, 'https://api.openai.com/v1', 'https://eu.api.openai.com/v1'].each do |api_base|
+    [nil, 'https://api.openai.com/v1', 'https://eu.api.openai.com/v1', 'https://api.openai.com./v1'].each do |api_base|
       expect { rerank_on(api_base) }
         .to raise_error(RubyLLM::Error, /OpenAI doesn't support reranking.*openai_api_base/)
     end

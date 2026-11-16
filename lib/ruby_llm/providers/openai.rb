@@ -108,7 +108,7 @@ module RubyLLM
       private
 
       def openai_hosted?
-        host = URI(api_base).host.to_s.downcase
+        host = URI(api_base).host.to_s.downcase.delete_suffix('.')
         host == 'openai.com' || host.end_with?('.openai.com')
       end
 
