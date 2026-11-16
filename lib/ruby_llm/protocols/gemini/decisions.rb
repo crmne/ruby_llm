@@ -7,6 +7,15 @@ module RubyLLM
         include SystemOne::Judgments
         include SystemOne::Responses
 
+        def judge(...)
+          super
+        rescue BadRequestError => e
+          raise unless %w[safety prohibited_content blocklist image_safety content_blocked].include?(e.error_code)
+
+          raise ContentFilterError.new(response: e.response, provider: e.provider, error_code: e.error_code,
+                                       provider_message: e.provider_message, redact: @config.redact_error_messages)
+        end
+
         def judgment_url
           'decisions'
         end
@@ -41,6 +50,15 @@ module RubyLLM
         end
 
         private
+
+        def parse_score(answer, question)
+          indexes = question.criteria.each_index.to_h { |index| [index.to_s, index] }
+          RubyLLM::Score.new(
+            score: answer.fetch('score'), levels: question.criteria,
+            probabilities: parse_probabilities(answer.fetch('probabilities'), indexes),
+            confidence: answer.fetch('confidence')
+          )
+        end
 
         def render_question(question)
           payload = super

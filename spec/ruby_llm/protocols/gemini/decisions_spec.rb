@@ -155,6 +155,27 @@ RSpec.describe RubyLLM::Protocols::Gemini::Decisions do
     expect(judgment.tokens.to_h).to eq(input_tokens: 120, output_tokens: 0)
   end
 
+  it 'preserves structured score levels through the request and response' do
+    levels = ['Minor', { 'impact' => 'Outage' }, %w[Major Blocking]]
+    question = RubyLLM::Judge::Question.new(:severity, type: :score, criteria: levels)
+    score_questions = { 'severity' => question.resolve(RubyLLM::Judge.new) }
+
+    expect(render(questions: score_questions)[:questions]['severity'][:criteria])
+      .to eq(['Minor', '{"impact":"Outage"}', '["Major","Blocking"]'])
+
+    body['answers'] = {
+      'severity' => { 'type' => 'score', 'score' => 0.5, 'confidence' => 0.8,
+                      'legend' => { '2' => '["Major","Blocking"]', '0' => 'Minor', '1' => '{"impact":"Outage"}' },
+                      'probabilities' => { '2' => 0.1, '0' => 0.6, '1' => 0.3 } }
+    }
+    result = protocol.parse_judgment_response(response, questions: score_questions).severity
+
+    expect(result.levels).to eq(levels)
+    expect(result.score).to eq(0.5)
+    expect(result.probabilities).to eq(0 => 0.6, 1 => 0.3, 2 => 0.1)
+    expect(result.confidence).to eq(0.8)
+  end
+
   it 'preserves unknown input usage' do
     body.delete('usage')
 
@@ -178,7 +199,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Decisions do
       -> { body['answers']['urgent'] = { 'type' => 'choice', 'choice' => 'other' } },
       -> { body['answers']['team']['choice'] = 'unknown' },
       -> { body['answers']['team']['probabilities'].delete('other') },
-      -> { body['answers']['severity']['legend'].delete('0') },
+      -> { body['answers']['severity']['probabilities'].delete('0') },
       -> { body['answers'] = [] }
     ]
     original = JSON.generate(body)

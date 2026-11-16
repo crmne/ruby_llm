@@ -41,6 +41,35 @@ RSpec.describe RubyLLM::Providers::Gemini do
     expect(stub).to have_been_requested.once
   end
 
+  it 'normalizes HTTP 400 safety blocks without losing error details' do
+    context = RubyLLM.context { |config| config.redact_error_messages = true }
+    %w[safety prohibited_content blocklist image_safety content_blocked].each do |code|
+      stub = stub_request(:post, endpoint)
+             .with(body: hash_including('input' => code))
+             .to_return(status: 400, headers: { 'Content-Type' => 'application/json' },
+                        body: { error: { code:, message: 'Blocked private input' } }.to_json)
+
+      expect { context.judge(code, model: model_id, provider: :gemini, questions:) }
+        .to raise_error(RubyLLM::ContentFilterError) do |error|
+          expect(error.response.status).to eq(400)
+          expect(error.provider).to eq('gemini')
+          expect(error.error_code).to eq(code)
+          expect(error.provider_message).to eq('Blocked private input')
+          expect(error.message).not_to include('Blocked private input')
+        end
+      expect(stub).to have_been_requested.once
+    end
+  end
+
+  it 'keeps other HTTP 400 errors as bad requests' do
+    stub_request(:post, endpoint)
+      .to_return(status: 400, headers: { 'Content-Type' => 'application/json' },
+                 body: { error: { code: 'invalid_argument', message: 'Too many questions' } }.to_json)
+
+    expect { RubyLLM.judge('Help', model: model_id, provider: :gemini, questions:) }
+      .to raise_error(RubyLLM::BadRequestError, 'Too many questions')
+  end
+
   it 'records billed usage when the answers cannot be parsed' do
     instrumenter = CaptureInstrumenter.new
     context = RubyLLM.context { |config| config.instrumenter = instrumenter }
