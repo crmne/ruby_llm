@@ -192,10 +192,18 @@ Use these options when you need deeper troubleshooting or safer handling of larg
 
 ```ruby
 RubyLLM.configure do |config|
+  config.log_bodies = false
   config.log_stream_debug = true
   config.log_regexp_timeout = 1.5
 end
 ```
+
+`log_bodies` notes:
+- Logs request and response bodies, including the bodies of failed requests
+- Defaults to logging them whenever the logger is at debug level
+- Set it to `false` to keep an application at debug level without writing request and response bodies, or a streamed answer, to its log
+- Raw streaming chunks are still logged when `log_stream_debug` is on, so leave that off as well to keep payloads out
+- `Error#message` follows `redact_error_messages` instead, wherever the error is raised or reported. That option doesn't cover raw stream chunks, which only `log_stream_debug` controls
 
 `log_stream_debug` notes:
 - Shows chunk-by-chunk streaming internals (accumulator state, parsing, tool chunks)
@@ -210,6 +218,7 @@ end
 Built-in debug log redaction:
 - Large base64-like blobs are redacted as `[BASE64 DATA]`
 - Large embedding arrays are redacted as `[EMBEDDINGS ARRAY]`
+- API keys and other credentials set on the configuration or context are redacted as `[FILTERED]`
 
 ## Contexts: Isolated Configurations
 
@@ -326,6 +335,7 @@ Every setting that isn't a provider's, with its default. Provider keys and endpo
 | `logger` | `nil` | A `Logger`. When set, it overrides `log_file` and `log_level`. |
 | `log_file` | `$stdout`, or `RUBYLLM_LOG_FILE` | Destination of the built-in logger: a path or an IO. |
 | `log_level` | `Logger::INFO`, or `DEBUG` with `RUBYLLM_DEBUG` | Severity of the built-in logger. |
+| `log_bodies` | `nil`, which follows the logger's debug level | Log request and response bodies. |
 | `log_stream_debug` | on with `RUBYLLM_STREAM_DEBUG` | Log raw streaming chunks. |
 | `log_regexp_timeout` | `Regexp.timeout`, or `1.0` | Timeout in seconds for the regular expressions that scrub logged payloads. |
 | `instrumenter` | `nil` | Object that answers `instrument(name, payload) { ... }`. |

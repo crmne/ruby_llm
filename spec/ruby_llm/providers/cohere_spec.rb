@@ -19,6 +19,7 @@ RSpec.describe RubyLLM::Providers::Cohere do
       http_proxy: nil,
       ssl: nil,
       log_regexp_timeout: 1.0,
+      log_bodies: nil,
       faraday_adapter: :net_http,
       cohere_api_key: 'test-key',
       cohere_api_base: cohere_api_base

@@ -8,7 +8,8 @@ module RubyLLM
     class StreamAccumulator # :nodoc:
       attr_reader :content, :model, :tool_calls
 
-      def initialize
+      def initialize(log: nil)
+        @log = log
         @content = +''
         @attachments = []
         @citations = []
@@ -27,7 +28,7 @@ module RubyLLM
       end
 
       def add(chunk)
-        RubyLLM.logger.debug { chunk.inspect } if RubyLLM.config.log_stream_debug
+        log_stream_debug { chunk.inspect }
         @model = chunk.model if @model.to_s.empty?
 
         handle_chunk_content(chunk)
@@ -39,7 +40,7 @@ module RubyLLM
         @finish_reason = chunk.finish_reason if chunk.finish_reason
         accumulate_content_filters(chunk.content_filters)
         count_tokens chunk
-        RubyLLM.logger.debug { inspect } if RubyLLM.config.log_stream_debug
+        log_stream_debug { inspect }
       end
 
       def to_message(response)
@@ -147,7 +148,7 @@ module RubyLLM
       end
 
       def accumulate_tool_calls(new_tool_calls)
-        RubyLLM.logger.debug { "Accumulating tool calls: #{new_tool_calls}" } if RubyLLM.config.log_stream_debug
+        log_stream_debug { "Accumulating tool calls: #{new_tool_calls}" }
         new_tool_calls.to_h.each do |stream_key, tool_call|
           if continues_tool_call?(stream_key, tool_call)
             append_tool_call_fragment(stream_key, tool_call)
@@ -232,6 +233,10 @@ module RubyLLM
           @thinking_text << thinking.text.to_s
         end
         @thinking_signature ||= thinking.signature # rubocop:disable Naming/MemoizedInstanceVariableName
+      end
+
+      def log_stream_debug(&)
+        @log&.call(&)
       end
     end
   end

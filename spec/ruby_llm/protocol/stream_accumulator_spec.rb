@@ -480,10 +480,9 @@ RSpec.describe RubyLLM::Protocol::StreamAccumulator do
   end
 
   describe 'debug logging' do
-    it 'logs each chunk when stream debugging is on' do
-      allow(RubyLLM.config).to receive(:log_stream_debug).and_return(true)
-      allow(RubyLLM.logger).to receive(:debug)
-      accumulator = described_class.new
+    it 'logs each chunk through the log it was given' do
+      lines = []
+      accumulator = described_class.new(log: ->(&message) { lines << message.call })
 
       accumulator.add(
         RubyLLM::Chunk.new(
@@ -492,7 +491,7 @@ RSpec.describe RubyLLM::Protocol::StreamAccumulator do
         )
       )
 
-      expect(RubyLLM.logger).to have_received(:debug).at_least(:once)
+      expect(lines).to include(a_string_including('Accumulating tool calls'))
     end
   end
 

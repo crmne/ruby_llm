@@ -48,11 +48,14 @@ module RubyLLM
           f.proxy = config.http_proxy if config.http_proxy
           f.ssl.update(ssl_snapshot(config.ssl)) if config.ssl
           f.response :logger,
-                     RubyLLM.logger,
+                     config.logger || RubyLLM.logger,
                      bodies: false,
                      errors: true,
                      headers: false,
-                     log_level: :debug
+                     log_level: :debug,
+                     formatter: LogFormatter do |formatter|
+            formatter.config = config
+          end
           f.response :raise_error
           yield f if block_given?
         end
@@ -186,7 +189,7 @@ module RubyLLM
 
       private
 
-      def instrument_request(method, url)
+      def instrument_request(method, url, &block)
         payload = {
           provider: @provider.slug,
           method: method,
@@ -194,7 +197,7 @@ module RubyLLM
         }
 
         RubyLLM.instrument('request.ruby_llm', payload, config: @config) do |event|
-          response = ReleaseRequest.release(yield)
+          response = ReleaseRequest.release(LogFormatter.with_config(@config, &block))
           event[:status] = response.status if response.respond_to?(:status)
           response
         rescue RubyLLM::Error => e
@@ -216,7 +219,7 @@ module RubyLLM
           proxy: @config.http_proxy,
           ssl: (self.class.ssl_snapshot(@config.ssl) if @config.ssl),
           logger: logger,
-          log_bodies: logger.debug?,
+          log_bodies: @config.log_bodies.nil? ? logger.debug? : @config.log_bodies,
           log_regexp_timeout: @config.log_regexp_timeout,
           max_retries: @config.max_retries,
           retry_interval: @config.retry_interval,

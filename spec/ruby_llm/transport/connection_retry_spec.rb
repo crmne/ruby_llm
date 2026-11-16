@@ -27,6 +27,7 @@ RSpec.describe RubyLLM::Transport::Connection do
         http_proxy: nil,
         ssl: nil,
         log_regexp_timeout: 1.0,
+        log_bodies: nil,
         faraday_adapter: :net_http
       )
     end

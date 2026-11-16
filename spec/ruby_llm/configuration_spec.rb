@@ -83,6 +83,18 @@ RSpec.describe RubyLLM::Configuration do
 
       expect(config.instance_variables).not_to include(:@bedrock_credential_provider)
     end
+
+    it 'leaves body logging to the logger level' do
+      expect(config.log_bodies).to be_nil
+    end
+
+    it 'lists the credentials it holds as secret values' do
+      config.openai_api_key = 'sk-openai'
+      config.bedrock_secret_key = 'bedrock-secret'
+      config.openai_api_base = 'https://openai-compatible.example.com/v1'
+
+      expect(config.secret_values).to contain_exactly('sk-openai', 'bedrock-secret')
+    end
   end
 
   describe 'an option with a block' do

@@ -3,7 +3,9 @@
 require 'spec_helper'
 
 RSpec.describe RubyLLM::Protocols::Responses::Streaming do
-  let(:protocol) { RubyLLM::Protocols::Responses.allocate }
+  let(:protocol) do
+    RubyLLM::Protocols::Responses.allocate.tap { |protocol| protocol.instance_variable_set(:@config, RubyLLM.config) }
+  end
 
   def build_chunk(data)
     protocol.send(:build_chunk, data)

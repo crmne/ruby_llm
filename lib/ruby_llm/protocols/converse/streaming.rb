@@ -19,7 +19,7 @@ module RubyLLM
           @thinking_stream = ThinkingStream.new
           @stream_text_lengths = Hash.new(0)
           @stream_citations = {}
-          accumulator = RubyLLM::Protocol::StreamAccumulator.new
+          accumulator = RubyLLM::Protocol::StreamAccumulator.new(log: method(:log_stream_debug))
 
           response = stream_events(stream_url, JSON.generate(payload), additional_headers) do |event|
             chunk = build_chunk(event)
@@ -28,7 +28,7 @@ module RubyLLM
           end
 
           message = accumulator.to_message(response)
-          RubyLLM.logger.debug { "Stream completed: #{message.content}" }
+          log_body_debug { "Stream completed: #{message.content}" }
           message
         end
 

@@ -35,7 +35,8 @@ RSpec.describe RubyLLM::Transport::Connection do
         openai_api_base: 'https://openai.example.test/v1', request_timeout: 7, connect_timeout: 2,
         http_proxy: 'http://proxy.example.test:8080',
         faraday_adapter: :test, max_retries: 9, retry_interval: 2.5, retry_max_interval: 99,
-        retry_interval_randomness: 0.9, retry_backoff_factor: 5, log_regexp_timeout: 3.0, ssl: { verify: false }
+        retry_interval_randomness: 0.9, retry_backoff_factor: 5, log_regexp_timeout: 3.0, log_bodies: true,
+        ssl: { verify: false }
       }.each do |option, value|
         expect(faraday_for(configured(option => value))).not_to be(shared), "expected #{option} to separate connections"
       end

@@ -6,6 +6,7 @@ RSpec.describe RubyLLM::Protocol::Streaming do
   let(:test_obj) do
     Object.new.tap do |obj|
       obj.extend(described_class)
+      obj.define_singleton_method(:config) { RubyLLM.config }
       obj.define_singleton_method(:build_chunk) { |data| "chunk:#{data['x']}" }
       obj.define_singleton_method(:parse_error) do |response|
         response.body.dig('error', 'message') if response.body.is_a?(Hash)
@@ -356,5 +357,52 @@ RSpec.describe RubyLLM::Protocol::Streaming do
     expect do
       handler.call("data: {\"error\":{}}\n\n", 0, env)
     end.to raise_error(RubyLLM::Error)
+  end
+
+  describe 'logging' do
+    let(:io) { StringIO.new }
+    let(:context_config) do
+      RubyLLM::Configuration.new.tap do |config|
+        config.logger = Logger.new(io)
+        config.openai_api_key = 'sk-secret'
+      end
+    end
+
+    before do
+      config = context_config
+      test_obj.define_singleton_method(:config) { config }
+      allow(RubyLLM.logger).to receive(:debug)
+    end
+
+    it 'writes to the logger of its configuration' do
+      chunk_handler { |_chunk| nil }.call("data: {broken\n\n", 0, env)
+
+      expect(io.string).to include('Failed to parse data chunk')
+      expect(RubyLLM.logger).not_to have_received(:debug)
+    end
+
+    it 'keeps provider text out of parse failures when log_bodies is false' do
+      context_config.log_bodies = false
+
+      chunk_handler { |_chunk| nil }.call("data: Private answer\n\n", 0, env)
+
+      expect(io.string).not_to include('Private')
+    end
+
+    it 'keeps an accumulating error chunk out of the log unless stream debugging is on' do
+      chunk_handler { |_chunk| nil }.call('{"error":{"message":"sk-secret', 0, Faraday::Env.from(status: 500))
+
+      expect(io.string).not_to include('Accumulating error chunk')
+      expect(RubyLLM.logger).not_to have_received(:debug)
+    end
+
+    it 'logs an accumulating error chunk with its credentials filtered when stream debugging is on' do
+      context_config.log_stream_debug = true
+
+      chunk_handler { |_chunk| nil }.call('{"error":{"message":"sk-secret', 0, Faraday::Env.from(status: 500))
+
+      expect(io.string).to include('Accumulating error chunk')
+      expect(io.string).not_to include('sk-secret')
+    end
   end
 end
