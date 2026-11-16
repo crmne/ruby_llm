@@ -16,18 +16,20 @@ RSpec.describe RubyLLM::Providers::OpenAI do
                                               assume_model_exists: true)
   end
 
-  it 'reranks on an OpenAI-compatible server through its rerank endpoint' do
-    stub = stub_request(:post, 'http://localhost:8080/v1/rerank')
-           .with(body: { model: 'bge-reranker-v2-m3', query: 'what is ruby', documents: documents })
-           .to_return(status: 200, headers: { 'Content-Type' => 'application/json' },
-                      body: { results: [{ index: 1, relevance_score: 0.98 },
-                                        { index: 0, relevance_score: -10.2 }] }.to_json)
+  [nil, :responses, :chat_completions].each do |chat_protocol|
+    it "reranks on an OpenAI-compatible server with openai_protocol #{chat_protocol.inspect}" do
+      stub = stub_request(:post, 'http://localhost:8080/v1/rerank')
+             .with(body: { model: 'bge-reranker-v2-m3', query: 'what is ruby', documents: documents })
+             .to_return(status: 200, headers: { 'Content-Type' => 'application/json' },
+                        body: { results: [{ index: 1, relevance_score: 0.98 },
+                                          { index: 0, relevance_score: -10.2 }] }.to_json)
 
-    rerank = rerank_on('http://localhost:8080/v1', openai_protocol: :chat_completions)
+      rerank = rerank_on('http://localhost:8080/v1', openai_protocol: chat_protocol)
 
-    expect(rerank.results.map { |result| [result.index, result.document, result.score] })
-      .to eq([[1, documents[1], 0.98], [0, documents[0], -10.2]])
-    expect(stub).to have_been_requested.once
+      expect(rerank.results.map { |result| [result.index, result.document, result.score] })
+        .to eq([[1, documents[1], 0.98], [0, documents[0], -10.2]])
+      expect(stub).to have_been_requested.once
+    end
   end
 
   it 'refuses to rerank on OpenAI itself, which has no rerank endpoint' do
