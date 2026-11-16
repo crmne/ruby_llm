@@ -36,6 +36,8 @@ In Rails, `bin/rails generate ruby_llm:judge Urgency` creates `UrgencyJudge` in 
 
 Configure your [TypeSafe API key]({% link _reference/configuration-providers.md %}#typesafe) or a [Jev-compatible local endpoint]({% link _reference/configuration-providers.md %}#jev-compatible-apis) before making a request. With an [OpenAI API key]({% link _reference/configuration-providers.md %}#api-keys), choose `{{ site.models.openai_judgment }}`. OpenAI judgments use the Decisions API and answer the same questions. On Azure, pass the name of your `{{ site.models.openai_judgment }}` [deployment]({% link _reference/configuration-providers.md %}#azure-deployments) with `provider: :azure`. With an [OpenRouter API key]({% link _reference/configuration-providers.md %}#api-keys), choose a decision model such as `{{ site.models.openrouter_judgment }}` with `provider: :openrouter`. OpenRouter serves Jev, Clef, and other decision models and reports the exact cost of each judgment. To judge on your own machine, run a decision model such as Clef with [Ollama](#local-decision-models). Judges use `config.default_judgment_model`, not the default chat model.
 
+With a [Gemini API key]({% link _reference/configuration-providers.md %}#api-keys), choose `{{ site.models.gemini_judgment }}` with `provider: :gemini`. Gemini judgments use the Decisions API for probabilities, choices, and scores.
+
 Each call judges the input you supply. It does not retain conversation history. Put a conversation in the input when you want the questions to consider it.
 
 ## Defining Questions
@@ -143,6 +145,8 @@ DocumentType.judge(with: document.scan).type.choice
 ```
 
 `with:` accepts the same files, URLs, and Active Storage attachments as chat. Images need a model that accepts them, such as `{{ site.models.openai_judgment }}`, Clef on OpenRouter, or Clef on Ollama. Clef Omni on OpenRouter also reads audio and video passed with `with:`. OpenRouter passes media to the model you chose, which answers or rejects the request. Other attachment types raise `RubyLLM::UnsupportedAttachmentError`, and so does any attachment sent to TypeSafe, which judges text only.
+
+Gemini's `{{ site.models.gemini_judgment }}` accepts text input and images attached with `with:`. Pass an `Attachment` with `resolution:` to select image detail. Audio, video, and PDF attachments are not supported by this integration.
 
 ## Structured Questions and Dynamic Values
 
