@@ -107,25 +107,29 @@ module RubyLLM
         ids = messages.flat_map { |message| run_code_call_ids(message) }
         return messages if ids.empty?
 
-        names = Workspace.input_names(messages.flat_map(&:attachments))
+        describe = describer(messages)
         messages.map do |message|
-          returned_files?(message, ids) ? message.with_attachments(model_view(message.attachments, names)) : message
+          returned_files?(message, ids) ? message.with_attachments(model_view(message.attachments, describe)) : message
         end
       end
 
-      # Returns a callable that describes one of +attachments+, the
-      # conversation's files, under the name its run finds.
-      def describer(attachments) # :nodoc:
-        names = Workspace.input_names(attachments)
-        ->(attachment) { describe(attachment, name: names[attachment]) }
+      # Returns a callable that describes a file in +messages+ under the
+      # name its run found when the file arrived. A newer file of the same
+      # name takes that name over, and its description says where the
+      # earlier files moved, so what the model has already read never
+      # changes and its cached prompt and signed reasoning stay valid.
+      def describer(messages) # :nodoc:
+        arrivals = arrival_names(messages)
+        ->(attachment) { describe(attachment, **arrivals.fetch(attachment, {})) }
       end
 
       # Returns a text Attachment telling the model where its code finds
-      # +attachment+.
-      def describe(attachment, name: nil) # :nodoc:
+      # +attachment+, and where the earlier files it displaced went.
+      def describe(attachment, name: nil, moved: []) # :nodoc:
         name ||= Workspace.filename(attachment.filename)
         text = "#{name} (#{attachment.mime_type}, #{attachment.byte_size} bytes) is not shown here. " \
                "Code you run with #{tool_name} can read it at #{Workspace::ATTACHMENTS}/#{name}."
+        moved.each { |from, to| text += " The earlier #{from} is now at #{Workspace::ATTACHMENTS}/#{to}." }
         Attachment.new(StringIO.new(text), filename: "#{name}.txt")
       end
 
@@ -215,8 +219,30 @@ module RubyLLM
         message.tool_result? && ids.include?(message.tool_call_id) && message.attachments.any?
       end
 
-      def model_view(files, names)
-        files.map { |file| readable_by_model?(file) ? file : describe(file, name: names[file]) }
+      def model_view(files, describe)
+        files.map { |file| readable_by_model?(file) ? file : describe.call(file) }
+      end
+
+      def arrival_names(messages)
+        arrived = []
+        before = {}.compare_by_identity
+        messages.each_with_object({}.compare_by_identity) do |message, arrivals|
+          next if message.attachments.empty?
+
+          arrived += message.attachments
+          names = Workspace.input_names(arrived)
+          moved = before.filter_map { |file, name| [name, names[file]] unless names[file] == name }.to_h
+          message.attachments.each do |file|
+            arrivals[file] = { name: names[file], moved: displaced(names[file], moved) } if names.key?(file)
+          end
+          before = names
+        end
+      end
+
+      def displaced(name, moved)
+        chain = []
+        chain << [name, name = moved[name]] while moved.key?(name) && chain.size < moved.size
+        chain
       end
 
       def run_code_call_ids(message)
