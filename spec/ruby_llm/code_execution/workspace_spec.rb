@@ -39,6 +39,18 @@ RSpec.describe RubyLLM::CodeExecution::Workspace do
     expect(copied(*files)).to eq('report-2.txt' => 'c', 'report.txt' => 'b', 'report-3.txt' => 'a')
   end
 
+  it 'keeps the numbered name an earlier file moved to' do
+    files = [attachment('a'), attachment('b'), attachment('c')]
+
+    expect(copied(*files)).to eq('report-2.txt' => 'a', 'report-3.txt' => 'b', 'report.txt' => 'c')
+  end
+
+  it 'names a file once, however often it is attached' do
+    first = attachment('a')
+
+    expect(described_class.input_names([first, attachment('b'), first]).values).to eq(%w[report-2.txt report.txt])
+  end
+
   it 'numbers past a name that differs only in case' do
     files = [attachment('a'), attachment('b'), attachment('c', 'REPORT-2.TXT')]
 
@@ -49,7 +61,7 @@ RSpec.describe RubyLLM::CodeExecution::Workspace do
     same = attachment('x', 'Report.txt')
     twin = attachment('x', 'report.txt')
 
-    expect(described_class.input_names([same, twin]).values).to eq(%w[report.txt report.txt])
+    expect(described_class.input_names([same, twin]).values).to eq(%w[Report.txt Report.txt])
   end
 
   it 'never numbers a file into a folder another input needs' do
@@ -58,6 +70,14 @@ RSpec.describe RubyLLM::CodeExecution::Workspace do
     expect { described_class.open { |workspace| workspace.copy_in(files) } }.not_to raise_error
     expect(described_class.input_names(files).values).to contain_exactly('report-2.txt/part', 'report.txt',
                                                                          'report-3.txt')
+  end
+
+  it 'moves a numbered file out of a folder once, however many inputs the folder holds' do
+    files = [attachment('a'), attachment('b'), attachment('c', 'report-2.txt/part'),
+             attachment('d', 'report-2.txt/other')]
+
+    expect(described_class.input_names(files).values).to eq(%w[report-3.txt report.txt report-2.txt/part
+                                                               report-2.txt/other])
   end
 
   it 'leaves provider files out of the names' do

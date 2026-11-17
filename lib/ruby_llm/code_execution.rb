@@ -107,9 +107,9 @@ module RubyLLM
         ids = messages.flat_map { |message| run_code_call_ids(message) }
         return messages if ids.empty?
 
-        describe = describer(messages)
+        arrivals = arrival_names(messages)
         messages.map do |message|
-          returned_files?(message, ids) ? message.with_attachments(model_view(message.attachments, describe)) : message
+          returned_files?(message, ids) ? message.with_attachments(model_view(message.attachments, arrivals)) : message
         end
       end
 
@@ -129,8 +129,7 @@ module RubyLLM
         name ||= Workspace.filename(attachment.filename)
         text = "#{name} (#{attachment.mime_type}, #{attachment.byte_size} bytes) is not shown here. " \
                "Code you run with #{tool_name} can read it at #{Workspace::ATTACHMENTS}/#{name}."
-        moved.each { |from, to| text += " The earlier #{from} is now at #{Workspace::ATTACHMENTS}/#{to}." }
-        Attachment.new(StringIO.new(text), filename: "#{name}.txt")
+        Attachment.new(StringIO.new([text, *relocations(moved)].join(' ')), filename: "#{name}.txt")
       end
 
       # Returns +true+ when +sandbox+ runs +language+, or why it cannot.
@@ -219,30 +218,36 @@ module RubyLLM
         message.tool_result? && ids.include?(message.tool_call_id) && message.attachments.any?
       end
 
-      def model_view(files, describe)
-        files.map { |file| readable_by_model?(file) ? file : describe.call(file) }
-      end
+      def model_view(files, arrivals)
+        files.flat_map do |file|
+          arrival = arrivals.fetch(file, {})
+          next describe(file, **arrival) unless readable_by_model?(file)
 
-      def arrival_names(messages)
-        arrived = []
-        before = {}.compare_by_identity
-        messages.each_with_object({}.compare_by_identity) do |message, arrivals|
-          next if message.attachments.empty?
-
-          arrived += message.attachments
-          names = Workspace.input_names(arrived)
-          moved = before.filter_map { |file, name| [name, names[file]] unless names[file] == name }.to_h
-          message.attachments.each do |file|
-            arrivals[file] = { name: names[file], moved: displaced(names[file], moved) } if names.key?(file)
-          end
-          before = names
+          [file, relocation_note(**arrival)].compact
         end
       end
 
-      def displaced(name, moved)
-        chain = []
-        chain << [name, name = moved[name]] while moved.key?(name) && chain.size < moved.size
-        chain
+      def relocation_note(name: nil, moved: [])
+        Attachment.new(StringIO.new(relocations(moved).join(' ')), filename: "#{name}.txt") if moved.any?
+      end
+
+      def relocations(moved)
+        moved.map { |from, to| "The earlier #{from} is now at #{Workspace::ATTACHMENTS}/#{to}." }
+      end
+
+      def arrival_names(messages)
+        names = InputNames.new
+        messages.each_with_object({}.compare_by_identity) do |message, arrivals|
+          moves = message.attachments.map { |file| names.add(file) }
+          message.attachments.zip(moves) do |file, made|
+            arrivals[file] ||= { name: names.names[file], moved: earlier(made, message.attachments) }
+          end
+        end
+      end
+
+      def earlier(moves, arriving)
+        moves.reject { |move| move.files.all? { |file| arriving.any? { |other| other.equal?(file) } } }
+             .map { |move| [move.from, move.to] }
       end
 
       def run_code_call_ids(message)
