@@ -189,7 +189,7 @@ The call pauses on the question. Once the person answers, `complete` runs `execu
 Code before `ask` runs again when the call resumes, so make it safe to repeat: ask first, then act.
 {: .warning }
 
-Without options, `ask` takes free text. With `choices:`, it returns the one the person picked. A block declares several fields, in the same DSL as [`parameters`]({% link _tools/tool-parameters.md %}), and `ask` returns their values by name. `url:` asks the person to visit a page, such as to connect an account, and `ask` returns `true` once they say they did:
+Without options, `ask` takes free text. With `choices:`, it returns the one the person picked, as a String: a choice given as `17` comes back as `"17"`. A block declares several fields, in the same DSL as [`parameters`]({% link _tools/tool-parameters.md %}), and `ask` returns their values by name. `url:` asks the person to visit a page, such as to connect an account, and `ask` returns `true` once they say they did:
 
 ```ruby
 name = ask("What name should the booking use?")       # => "Ada Lovelace"
@@ -202,6 +202,17 @@ passenger                                              # => {name: "Ada Lovelace
 
 ask("Connect your calendar", url: calendar.authorization_url)
 ```
+
+When the value to return is not what the person should read, such as a record's id, pass a Hash that gives each value its title. `ask` returns the value, and the question keeps the titles for whatever shows it:
+
+```ruby
+card = ask("Which card?", choices: { "17" => "River bank", "42" => "Money bank" }) # => "42"
+
+question.fields.first.choices       # => ["17", "42"]
+question.fields.first.choice_titles # => {"17" => "River bank", "42" => "Money bank"}
+```
+
+A value whose title is `nil` is shown as itself.
 
 `ask` returns `nil` when the person declines with `question.decline`. A note they give, `question.decline("I'll choose at the gate")`, follows the tool's result to the model, and a Hash follows it as JSON. A call can ask several questions, one after another, and each run asks them in the same order. An answer only ever reaches the question it was given to: if a run asks something else in its place, such as when a condition skips an earlier question or the choices come from data that changed, the call pauses on the new question, and the questions after it are asked again. A page to visit counts as the same question when only its address changed, since a sign-in link is often new on every run. Outside a chat, nothing can pause the call, so `ask` raises `RubyLLM::InputRequiredError`.
 

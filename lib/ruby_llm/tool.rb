@@ -546,11 +546,18 @@ module RubyLLM
     # questions after it are asked again.
     #
     # Without options, +ask+ takes free text and returns the String. With
-    # +choices:+ it returns the one the person picked. With a block, it
+    # +choices:+ it returns the one the person picked, as a String: a
+    # choice given as +17+ comes back as <tt>"17"</tt>. With a block, it
     # asks for the fields the block declares, in the DSL of
     # Tool.parameters, and returns their values by name. With +url:+, it
     # asks the person to visit a page, such as to connect an account, and
     # returns +true+ once they say they did.
+    #
+    # A Hash of +choices:+ gives each value the title to show for it, and
+    # +ask+ returns the value. A value whose title is +nil+ is shown as
+    # itself.
+    #
+    #   ask("Which card?", choices: { "17" => "River bank", "42" => "Money bank" }) # => "42"
     #
     #   passenger = ask("Who is flying?") do
     #     string :name, description: "As on the passport"

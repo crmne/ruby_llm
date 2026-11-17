@@ -264,6 +264,14 @@ RSpec.describe RubyLLM::Question do
       .to have_attributes(choices: %w[s l], choice_titles: { 's' => 'Small', 'l' => 'Large' })
   end
 
+  it 'reads the names of the choices of a list from the list items' do
+    tags = { 'type' => 'string', 'enum' => %w[a b], 'enumNames' => %w[Alpha Beta] }
+    question = form('tags' => { 'type' => 'array', 'items' => tags })
+
+    expect(question.fields.first)
+      .to have_attributes(choices: %w[a b], choice_titles: { 'a' => 'Alpha', 'b' => 'Beta' })
+  end
+
   it 'titles a choice with its value when the field gives it no title' do
     cards = [{ 'const' => '17', 'title' => 'bank' }, { 'const' => '42' }]
     question = form('seat' => { 'type' => 'string', 'enum' => %w[window aisle] },
