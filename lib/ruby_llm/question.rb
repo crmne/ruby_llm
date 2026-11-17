@@ -339,7 +339,8 @@ module RubyLLM
     def typed(field, value)
       value = parsed(field, value) if value.is_a?(String)
       value = value.to_s if value.is_a?(Symbol) && field.type == 'string'
-      return value if CLASSES.fetch(field.type, [Object]).any? { |kind| value.is_a?(kind) }
+      valid = CLASSES.fetch(field.type, [Object]).any? { |kind| value.is_a?(kind) }
+      return value if valid && (field.type != 'number' || value.finite?)
 
       raise ArgumentError, "#{label(field)} takes #{TYPES.fetch(field.type)}."
     end

@@ -101,6 +101,27 @@ RSpec.describe RubyLLM::Question do
       .to eq('seats' => 2, 'name' => 'ada', 'window' => false, 'notes' => { 'any' => 'thing' })
   end
 
+  ['1e309', '-1e309', Float::INFINITY, -Float::INFINITY, Float::NAN].each do |value|
+    it "refuses a non-finite numeric answer of #{value.inspect}" do
+      question = form('budget' => { 'type' => 'number', 'title' => 'Budget' })
+
+      expect { question.answer(budget: value) }.to raise_error(ArgumentError, 'Budget takes a number.')
+      expect(question).not_to be_answered
+    end
+  end
+
+  [0, -1.5, 1e308, 10**400, '-1.5', '1e308'].each do |value|
+    it "keeps a finite numeric answer of #{value.inspect} serializable" do
+      question = form('budget' => { 'type' => 'number' })
+
+      question.answer(budget: value)
+
+      expected = value.is_a?(String) ? Float(value) : value
+      expect(question.response['content']).to eq('budget' => expected)
+      expect { JSON.generate(question.to_h) }.not_to raise_error
+    end
+  end
+
   it 'lists the choices of fields that give them titles' do
     sizes = [{ 'const' => 's', 'title' => 'Small' }, { 'const' => 'l', 'title' => 'Large' }]
     question = form('size' => { 'type' => 'string', 'oneOf' => sizes },
