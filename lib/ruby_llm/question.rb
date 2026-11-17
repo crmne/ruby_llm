@@ -338,10 +338,20 @@ module RubyLLM
 
     def typed(field, value)
       value = parsed(field, value) if value.is_a?(String)
+      value = typed_items(field, value) if value.is_a?(Array)
       value = value.to_s if value.is_a?(Symbol) && field.type == 'string'
       return value if CLASSES.fetch(field.type, [Object]).any? { |kind| value.is_a?(kind) }
 
       raise ArgumentError, "#{label(field)} takes #{TYPES.fetch(field.type)}."
+    end
+
+    def typed_items(field, values)
+      type = @params.dig('requestedSchema', 'properties', field.name.to_s, 'items', 'type')
+      return values if type == 'array'
+
+      item = field.dup
+      item.type = type
+      values.map { |value| typed(item, value) }
     end
 
     def parsed(field, text)
