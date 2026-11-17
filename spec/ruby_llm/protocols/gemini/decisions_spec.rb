@@ -128,10 +128,21 @@ RSpec.describe RubyLLM::Protocols::Gemini::Decisions do
     expect(input.last).to eq(type: 'text', text: notes.content)
   end
 
-  it 'keeps resolution for images only' do
-    video = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.mp4', __dir__), resolution: :low)
+  it 'sends the resolution of videos and PDFs, up to the highest they take' do
+    { 'ruby.mp4' => { low: 'low', original: 'high', ultra_high: 'high' },
+      'sample.pdf' => { medium: 'medium', original: 'high' } }.each do |name, levels|
+      levels.each do |resolution, sent|
+        file = RubyLLM::Attachment.new(File.expand_path("../../../fixtures/#{name}", __dir__), resolution:)
 
-    expect(render(nil, with: [video])[:input].first).not_to have_key(:resolution)
+        expect(render(nil, with: [file])[:input].first[:resolution]).to eq(sent)
+      end
+    end
+  end
+
+  it 'sends no resolution for audio' do
+    audio = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.wav', __dir__), resolution: :low)
+
+    expect(render(nil, with: [audio])[:input].first).not_to have_key(:resolution)
   end
 
   it 'rejects attachments the Decisions API has no part for' do

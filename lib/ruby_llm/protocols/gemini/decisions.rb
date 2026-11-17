@@ -87,12 +87,14 @@ module RubyLLM
           raise UnsupportedAttachmentError, attachment.mime_type unless type
 
           part = { type:, mime_type: attachment.mime_type }
-          part[:resolution] = render_resolution(attachment.resolution) if attachment.image? && attachment.resolution
+          part[:resolution] = render_resolution(attachment) if attachment.resolution && type != 'audio'
           part.merge(Interactions::Content.interaction_attachment_source(attachment))
         end
 
-        def render_resolution(resolution)
-          (resolution == :original ? :ultra_high : resolution).to_s
+        def render_resolution(attachment)
+          level = attachment.resolution == :original ? :ultra_high : attachment.resolution
+          level = :high if level == :ultra_high && !attachment.image?
+          level.to_s
         end
 
         def describe(value)
