@@ -496,6 +496,34 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(attempts.size).to be > 1
       expect(requests.sole.messages.last.content).to eq('Done')
     end
+
+    it 'keeps a tool call claimed after a renewal its transaction rolled back' do
+      failed = false
+      Chat.around_claim_renewal do |_chat, renew|
+        Chat.transaction do
+          wrote = false
+          note = ->(*, payload) { wrote ||= payload[:sql].start_with?('UPDATE "ruby_llm_tool_calls"') }
+          ActiveSupport::Notifications.subscribed(note, 'sql.active_record', &renew)
+          next unless wrote && !failed
+
+          failed = true
+          raise 'connection lost'
+        end
+      end
+      allow(RubyLLM.logger).to receive(:warn)
+      running = []
+      job = Chat.find(tool_call_chat.id).with_tools(lookup_tool do
+        sleep lease * 1.5
+        running << tool_call_record.running?
+      end)
+      allow(job.to_llm.provider).to receive(:complete)
+        .and_return(RubyLLM::Message.new(role: :assistant, content: 'Done', input_tokens: 1, output_tokens: 1))
+
+      job.complete
+
+      expect(failed).to be(true)
+      expect(running).to eq([true])
+    end
   end
 
   it 'stops renewing when the run ends, however it ends' do

@@ -84,7 +84,9 @@ module RubyLLM
       #     end
       #   end
       #
-      # An error the callback raises counts as a failed renewal, which the
+      # A transaction covers the chat's connection. When tool calls live in
+      # another database, set its connection up in the callback as well. An
+      # error the callback raises counts as a failed renewal, which the
       # next one retries.
 
       included do

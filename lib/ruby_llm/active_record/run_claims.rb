@@ -451,8 +451,21 @@ module RubyLLM
 
         claim_lock
         @claim_heartbeat = ClaimHeartbeat.new([self.class, RubyLLM::ActiveRecord::ToolCall], claim_renewal_interval) do
-          run_callbacks(:claim_renewal) { renew_claim_leases }
+          renew_claim_leases_in_callbacks
         end
+      end
+
+      # A callback that raises may have rolled back renewals already
+      # counted as written, so the expiries from before stay good matches
+      # for the rows.
+      def renew_claim_leases_in_callbacks
+        written = claim_lock.synchronize { tool_call_claims.transform_values { |claim| claim.written.dup } }
+        run_callbacks(:claim_renewal) { renew_claim_leases }
+      rescue StandardError
+        claim_lock.synchronize do
+          tool_call_claims.each { |tool_call_id, claim| claim.written |= written.fetch(tool_call_id, []) }
+        end
+        raise
       end
 
       def stop_idle_claim_heartbeat
