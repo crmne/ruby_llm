@@ -333,6 +333,37 @@ Rails chat records use the same settings.
 With concurrency enabled, tool results are added back to the conversation as each tool finishes. RubyLLM waits
 for all tool results before asking the model for the next response.
 
+### Limiting How Many Calls Run at Once
+
+Every call in a response starts at once. When the tools reach a rate-limited API, hand out a fixed number of slots with [`around_tool_call`]({% link _core_features/chat-callbacks.md %}#wrapping-tool-calls), which runs in the thread or fiber that runs the call:
+
+```ruby
+slots = Thread::Queue.new
+4.times { slots << true }
+
+chat.with_tool_options(concurrency: :threads).around_tool_call do |_call, &run|
+  slot = slots.pop
+  begin
+    run.call
+  ensure
+    slots << slot
+  end
+end
+```
+
+With `:fibers`, use a semaphore from the `async` gem:
+
+```ruby
+require "async/semaphore"
+
+semaphore = Async::Semaphore.new(4)
+chat.with_tool_options(concurrency: :fibers).around_tool_call do |_call, &run|
+  semaphore.acquire { run.call }
+end
+```
+
+Every call still runs and returns its result, four at a time. To skip the calls past a limit instead, see [`calls:`](#limiting-tool-calls).
+
 ### Exclusive Tools
 
 Some tools share state that can't take two calls at once, such as a browser page: two clicks in the same round race each other. Declare them `exclusive`:
