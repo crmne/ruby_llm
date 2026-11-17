@@ -1,0 +1,59 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/decisions
+    body:
+      encoding: UTF-8
+      string: '{"model":"models/gemini-decision-1","input":"{\"message\":\"I was charged
+        twice. Please refund the duplicate charge today.\"}","questions":{"urgent":{"type":"noul","instructions":"Does
+        the customer explicitly need action today?","criteria":{"true_description":"Explicitly
+        asks for action today","false_description":"No deadline or a later deadline"}},"department":{"type":"choice","instructions":"Which
+        team should handle this message?","criteria":{"billing":"Payments and refunds","technical":"Bugs
+        and integrations","other":""}},"frustration":{"type":"score","instructions":"How
+        frustrated is the customer?","criteria":["Calm and polite","Expresses frustration","Angry
+        or hostile"]}}}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Mon, 16 Nov 2026 17:52:36 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=222
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"answers":{"urgent":{"confidence":0.9311117607727707,"noul":0.9311117607727707,"type":"noul"},"department":{"confidence":0.993829741456098,"choice":"billing","probabilities":{"other":0.001460820446409161,"billing":0.993829741456098,"technical":0.004709438097492867},"type":"choice"},"frustration":{"confidence":0.6269692521755009,"score":0.9016957543917034,"probabilities":{"2":0.13736325110810121,"1":0.6269692521755009,"0":0.23566749671639786},"legend":{"2":"Angry
+        or hostile","0":"Calm and polite","1":"Expresses frustration"},"type":"score"}},"usage":{"total_tokens":252,"total_input_tokens":252,"input_tokens_by_modality":[{"modality":"text","tokens":252}],"total_output_tokens":0}}'
+  recorded_at: Mon, 16 Nov 2026 17:52:36 GMT
+recorded_with: VCR 6.4.1
