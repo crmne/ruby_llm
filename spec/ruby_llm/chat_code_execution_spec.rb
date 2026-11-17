@@ -209,7 +209,7 @@ RSpec.describe RubyLLM::Chat do
       chat.send(:unsupported_attachment_handler).call(attachment).content
     end
 
-    it 'names the file the run finds, and follows a newer file of the same name' do
+    it 'keeps the name a file arrived under, and says where a newer file of that name moved it' do
       chat.with_code_execution
       older = binary('old')
       chat.add_message(role: :user, content: 'One', attachments: [older])
@@ -218,8 +218,30 @@ RSpec.describe RubyLLM::Chat do
       newer = binary('new')
       chat.add_message(role: :user, content: 'Two', attachments: [newer])
 
-      expect(described_in(older)).to include('attachments/report-2.bin')
-      expect(described_in(newer)).to include('attachments/report.bin')
+      expect(described_in(older)).to include('read it at attachments/report.bin.')
+      expect(described_in(older)).not_to include('report-2.bin')
+      expect(described_in(newer)).to include('read it at attachments/report.bin. ' \
+                                             'The earlier report.bin is now at attachments/report-2.bin.')
+    end
+
+    it 'moves an earlier file once, to a name it keeps' do
+      chat.with_code_execution
+      files = %w[one two three].map { |content| binary(content) }
+      files.each { |file| chat.add_message(role: :user, content: 'Here', attachments: [file]) }
+
+      expect(described_in(files[1])).to end_with('The earlier report.bin is now at attachments/report-2.bin.')
+      expect(described_in(files[2])).to end_with('attachments/report.bin. ' \
+                                                 'The earlier report.bin is now at attachments/report-3.bin.')
+    end
+
+    it 'says where a numbered file moved when a folder needs its name' do
+      chat.with_code_execution
+      chat.add_message(role: :user, content: 'One', attachments: [binary('old')])
+      chat.add_message(role: :user, content: 'Two', attachments: [binary('new')])
+      part = RubyLLM::Attachment.new(StringIO.new('part'), filename: 'report-2.bin/part.bin')
+      chat.add_message(role: :user, content: 'Three', attachments: [part])
+
+      expect(described_in(part)).to end_with('The earlier report-2.bin is now at attachments/report-3.bin.')
     end
 
     it 'has no handler without code execution or a callback' do
@@ -245,19 +267,61 @@ RSpec.describe RubyLLM::Chat do
       expect(calls).to eq(1)
     end
 
-    it 'names a file a run returned the same way' do
-      older = binary('old')
-      newer = binary('new')
+    it 'shows the model the same transcript after a newer file of the same name arrives' do
       call = RubyLLM::ToolCall.new(id: 'call_1', name: 'run_code', arguments: {})
       messages = [
         RubyLLM::Message.new(role: :assistant, content: '', tool_calls: { 'call_1' => call }),
-        RubyLLM::Message.new(role: :tool, content: 'ran', tool_call_id: 'call_1', attachments: [older]),
-        RubyLLM::Message.new(role: :user, content: 'Hi', attachments: [newer])
+        RubyLLM::Message.new(role: :tool, content: 'ran', tool_call_id: 'call_1', attachments: [binary('old')])
       ]
+      before = RubyLLM::CodeExecution.for_model(messages)[1].attachments.first.content
 
-      seen = RubyLLM::CodeExecution.for_model(messages)[1].attachments.first
+      later = messages + [RubyLLM::Message.new(role: :user, content: 'Hi', attachments: [binary('new')])]
+      after = RubyLLM::CodeExecution.for_model(later)[1].attachments.first.content
 
-      expect(seen.content).to include('attachments/report-2.bin')
+      expect(after).to eq(before)
+    end
+
+    def returned(id, *files)
+      call = RubyLLM::ToolCall.new(id: id, name: 'run_code', arguments: {})
+      [RubyLLM::Message.new(role: :assistant, content: '', tool_calls: { id => call }),
+       RubyLLM::Message.new(role: :tool, content: 'ran', tool_call_id: id, attachments: files)]
+    end
+
+    it 'keeps the first description of a file that is attached again' do
+      first = binary('old')
+      messages = returned('call_1', first)
+      before = RubyLLM::CodeExecution.for_model(messages)[1].attachments.first.content
+
+      later = messages + returned('call_2', binary('new')) + returned('call_3', first)
+      after = RubyLLM::CodeExecution.for_model(later)[1].attachments.first.content
+
+      expect(after).to eq(before)
+    end
+
+    it 'says where a file moved when it is attached again beside the newer one' do
+      first = binary('old')
+      newer = binary('new')
+
+      seen = RubyLLM::CodeExecution.for_model(returned('call_1', first) + returned('call_2', first, newer))
+
+      expect(seen[3].attachments.last.content).to end_with('The earlier report.bin is now at attachments/report-2.bin.')
+    end
+
+    it 'reports no move between two files that arrive together' do
+      seen = RubyLLM::CodeExecution.for_model(returned('call_1', binary('old'), binary('new')))
+
+      expect(seen[1].attachments.map(&:content)).to all(end_with('.bin.'))
+    end
+
+    it 'says where an earlier file moved when the newer one is shown in full' do
+      long = RubyLLM::Attachment.new(StringIO.new('a,b' * RubyLLM::CodeExecution::MAX_MODEL_TEXT), filename: 'rows.csv')
+      short = RubyLLM::Attachment.new(StringIO.new('a,b'), filename: 'rows.csv')
+
+      seen = RubyLLM::CodeExecution.for_model(returned('call_1', long) + returned('call_2', short))
+
+      expect(seen[1].attachments.sole.content).to include('read it at attachments/rows.csv.')
+      expect(seen[3].attachments.first).to equal(short)
+      expect(seen[3].attachments.last.content).to eq('The earlier rows.csv is now at attachments/rows-2.csv.')
     end
   end
 

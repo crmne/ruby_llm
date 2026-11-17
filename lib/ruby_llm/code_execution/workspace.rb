@@ -60,44 +60,11 @@ module RubyLLM
         "#{name.scrub} (name is not valid UTF-8)"
       end
 
-      # Returns each attachment's name under +attachments/+, newest first:
-      # the newest keeps its name, as it would on a disk, and an older one
-      # stays readable beside it. Names compare without case, for the
-      # filesystems that do, and files with equal content share one.
+      # Returns each attachment's name under +attachments/+, as InputNames
+      # gives them.
       def self.input_names(attachments)
-        attachments = attachments.reject(&:provider_file?)
-        folders = input_folders(attachments)
-        taken = {}
-        attachments.reverse.each_with_object({}.compare_by_identity) do |attachment, names|
-          name = filename(attachment.filename)
-          choice = numbered_names(name).find do |candidate|
-            (candidate == name || !folders.include?(candidate.downcase)) &&
-              !different?(taken[candidate.downcase], attachment)
-          end
-          taken[choice.downcase] ||= [choice, attachment]
-          names[attachment] = taken[choice.downcase].first
-        end
+        attachments.each_with_object(InputNames.new) { |attachment, names| names.add(attachment) }.names
       end
-
-      def self.different?(holder, attachment)
-        holder && !holder.last.equal?(attachment) && holder.last.content.b != attachment.content.b
-      end
-      private_class_method :different?
-
-      def self.input_folders(attachments)
-        attachments.flat_map do |attachment|
-          parts = filename(attachment.filename).downcase.split('/')
-          (1...parts.size).map { |size| parts.first(size).join('/') }
-        end
-      end
-      private_class_method :input_folders
-
-      def self.numbered_names(name)
-        extension = File.extname(name)
-        stem = name.delete_suffix(extension)
-        [name].chain((2..).lazy.map { |number| "#{stem}-#{number}#{extension}" })
-      end
-      private_class_method :numbered_names
 
       def initialize(root, attachments: true)
         @directory = File.join(root, 'work')
@@ -160,7 +127,7 @@ module RubyLLM
       end
 
       def copy_in(attachments)
-        self.class.input_names(attachments).to_a.reverse_each do |attachment, name|
+        self.class.input_names(attachments).each do |attachment, name|
           path = File.join(inputs, name)
           make_room(path, inputs)
           File.binwrite(path, attachment.content.b)

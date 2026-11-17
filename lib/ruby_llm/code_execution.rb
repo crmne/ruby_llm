@@ -107,26 +107,29 @@ module RubyLLM
         ids = messages.flat_map { |message| run_code_call_ids(message) }
         return messages if ids.empty?
 
-        names = Workspace.input_names(messages.flat_map(&:attachments))
+        arrivals = arrival_names(messages)
         messages.map do |message|
-          returned_files?(message, ids) ? message.with_attachments(model_view(message.attachments, names)) : message
+          returned_files?(message, ids) ? message.with_attachments(model_view(message.attachments, arrivals)) : message
         end
       end
 
-      # Returns a callable that describes one of +attachments+, the
-      # conversation's files, under the name its run finds.
-      def describer(attachments) # :nodoc:
-        names = Workspace.input_names(attachments)
-        ->(attachment) { describe(attachment, name: names[attachment]) }
+      # Returns a callable that describes a file in +messages+ under the
+      # name its run found when the file arrived. A newer file of the same
+      # name takes that name over, and its description says where the
+      # earlier files moved, so what the model has already read never
+      # changes and its cached prompt and signed reasoning stay valid.
+      def describer(messages) # :nodoc:
+        arrivals = arrival_names(messages)
+        ->(attachment) { describe(attachment, **arrivals.fetch(attachment, {})) }
       end
 
       # Returns a text Attachment telling the model where its code finds
-      # +attachment+.
-      def describe(attachment, name: nil) # :nodoc:
+      # +attachment+, and where the earlier files it displaced went.
+      def describe(attachment, name: nil, moved: []) # :nodoc:
         name ||= Workspace.filename(attachment.filename)
         text = "#{name} (#{attachment.mime_type}, #{attachment.byte_size} bytes) is not shown here. " \
                "Code you run with #{tool_name} can read it at #{Workspace::ATTACHMENTS}/#{name}."
-        Attachment.new(StringIO.new(text), filename: "#{name}.txt")
+        Attachment.new(StringIO.new([text, *relocations(moved)].join(' ')), filename: "#{name}.txt")
       end
 
       # Returns +true+ when +sandbox+ runs +language+, or why it cannot.
@@ -215,8 +218,37 @@ module RubyLLM
         message.tool_result? && ids.include?(message.tool_call_id) && message.attachments.any?
       end
 
-      def model_view(files, names)
-        files.map { |file| readable_by_model?(file) ? file : describe(file, name: names[file]) }
+      def model_view(files, arrivals)
+        files.flat_map do |file|
+          arrival = arrivals.fetch(file, {})
+          next describe(file, **arrival) unless readable_by_model?(file)
+
+          [file, relocation_note(**arrival)].compact
+        end
+      end
+
+      def relocation_note(name: nil, moved: [])
+        Attachment.new(StringIO.new(relocations(moved).join(' ')), filename: "#{name}.txt") if moved.any?
+      end
+
+      def relocations(moved)
+        moved.map { |from, to| "The earlier #{from} is now at #{Workspace::ATTACHMENTS}/#{to}." }
+      end
+
+      def arrival_names(messages)
+        names = InputNames.new
+        messages.each_with_object({}.compare_by_identity) do |message, arrivals|
+          fresh = message.attachments.reject { |file| names.names.key?(file) }
+          moves = message.attachments.map { |file| names.add(file) }
+          message.attachments.zip(moves) do |file, made|
+            arrivals[file] ||= { name: names.names[file], moved: earlier(made, fresh) }
+          end
+        end
+      end
+
+      def earlier(moves, fresh)
+        moves.reject { |move| move.files.all? { |file| fresh.any? { |other| other.equal?(file) } } }
+             .map { |move| [move.from, move.to] }
       end
 
       def run_code_call_ids(message)

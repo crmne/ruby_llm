@@ -2369,11 +2369,10 @@ module RubyLLM
       end
     end
 
-    # A run's names shift as files arrive, so descriptions are not memoized.
     def attachment_describer
       return ->(_attachment) {} unless @code_execution
 
-      CodeExecution.describer(messages.flat_map(&:attachments))
+      CodeExecution.describer(messages)
     end
 
     # A process that dies mid-round leaves a blank assistant placeholder,
