@@ -451,7 +451,7 @@ module RubyLLM
 
         claim_lock
         @claim_heartbeat = ClaimHeartbeat.new([self.class, RubyLLM::ActiveRecord::ToolCall], claim_renewal_interval) do
-          renew_claim_leases
+          run_callbacks(:claim_renewal) { renew_claim_leases }
         end
       end
 

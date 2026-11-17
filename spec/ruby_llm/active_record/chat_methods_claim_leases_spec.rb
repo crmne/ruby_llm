@@ -464,6 +464,40 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(roles(chat)).to eq(%w[user])
   end
 
+  describe 'around_claim_renewal' do
+    after { Chat.reset_callbacks(:claim_renewal) }
+
+    it 'wraps each renewal, on the thread and connection that renew' do
+      renewals = Queue.new
+      Chat.around_claim_renewal do |chat, renew|
+        writes = []
+        note = ->(*, payload) { writes << payload[:connection] if payload[:sql].start_with?('UPDATE') }
+        ActiveSupport::Notifications.subscribed(note, 'sql.active_record', &renew)
+        renewals << [chat.id, Thread.current.name, writes.all?(Chat.connection)] if writes.any?
+      end
+      chat = question_chat
+
+      job_for(chat) { sleep lease * 0.75 }.complete
+
+      expect(renewals.pop(timeout: 0)).to eq([chat.id, 'ruby_llm claim heartbeat', true])
+    end
+
+    it 'skips a renewal whose callback raises, and tries the next one' do
+      attempts = Queue.new
+      Chat.around_claim_renewal do |_chat, renew|
+        attempts << true
+        attempts.size == 1 ? raise('no tenant') : renew.call
+      end
+      allow(RubyLLM.logger).to receive(:warn)
+
+      job_for(question_chat) { sleep lease * 0.75 }.complete
+
+      expect(RubyLLM.logger).to have_received(:warn).with(/could not renew a chat's claims \(1 in a row\).*no tenant/)
+      expect(attempts.size).to be > 1
+      expect(requests.sole.messages.last.content).to eq('Done')
+    end
+  end
+
   it 'stops renewing when the run ends, however it ends' do
     outcomes = []
     job_for(question_chat) { outcomes << heartbeats.size }.complete
