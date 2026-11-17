@@ -238,15 +238,16 @@ module RubyLLM
       def arrival_names(messages)
         names = InputNames.new
         messages.each_with_object({}.compare_by_identity) do |message, arrivals|
+          fresh = message.attachments.reject { |file| names.names.key?(file) }
           moves = message.attachments.map { |file| names.add(file) }
           message.attachments.zip(moves) do |file, made|
-            arrivals[file] ||= { name: names.names[file], moved: earlier(made, message.attachments) }
+            arrivals[file] ||= { name: names.names[file], moved: earlier(made, fresh) }
           end
         end
       end
 
-      def earlier(moves, arriving)
-        moves.reject { |move| move.files.all? { |file| arriving.any? { |other| other.equal?(file) } } }
+      def earlier(moves, fresh)
+        moves.reject { |move| move.files.all? { |file| fresh.any? { |other| other.equal?(file) } } }
              .map { |move| [move.from, move.to] }
       end
 

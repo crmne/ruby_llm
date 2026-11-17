@@ -298,6 +298,21 @@ RSpec.describe RubyLLM::Chat do
       expect(after).to eq(before)
     end
 
+    it 'says where a file moved when it is attached again beside the newer one' do
+      first = binary('old')
+      newer = binary('new')
+
+      seen = RubyLLM::CodeExecution.for_model(returned('call_1', first) + returned('call_2', first, newer))
+
+      expect(seen[3].attachments.last.content).to end_with('The earlier report.bin is now at attachments/report-2.bin.')
+    end
+
+    it 'reports no move between two files that arrive together' do
+      seen = RubyLLM::CodeExecution.for_model(returned('call_1', binary('old'), binary('new')))
+
+      expect(seen[1].attachments.map(&:content)).to all(end_with('.bin.'))
+    end
+
     it 'says where an earlier file moved when the newer one is shown in full' do
       long = RubyLLM::Attachment.new(StringIO.new('a,b' * RubyLLM::CodeExecution::MAX_MODEL_TEXT), filename: 'rows.csv')
       short = RubyLLM::Attachment.new(StringIO.new('a,b'), filename: 'rows.csv')
