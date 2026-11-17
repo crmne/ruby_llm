@@ -70,6 +70,125 @@ RSpec.describe RubyLLM::Question do
     expect(question.response['content']).to eq('seats' => 1)
   end
 
+  describe 'typed list items' do
+    it 'turns integer form values into the integers the list asks for' do
+      question = form('seats' => { 'type' => 'array', 'items' => { 'type' => 'integer' } })
+
+      question.answer(seats: [' 2 ', '', '3'])
+
+      expect(question.response['content']).to eq('seats' => [2, 3])
+    end
+
+    it 'refuses an invalid integer item without recording the answer' do
+      question = form('seats' => { 'type' => 'array', 'title' => 'Seats', 'items' => { 'type' => 'integer' } })
+
+      expect { question.answer(seats: %w[2 bad]) }.to raise_error(ArgumentError, 'Seats takes a whole number.')
+      expect(question).not_to be_answered
+    end
+
+    it 'refuses a number item that overflows' do
+      question = form('prices' => { 'type' => 'array', 'title' => 'Prices', 'items' => { 'type' => 'number' } })
+
+      expect { question.answer(prices: %w[1.5 1e400]) }.to raise_error(ArgumentError, 'Prices takes a number.')
+      expect(question).not_to be_answered
+    end
+
+    it 'types the single text value a list takes as one item' do
+      question = form('seats' => { 'type' => 'array', 'items' => { 'type' => 'integer' } })
+
+      question.answer(seats: '2')
+
+      expect(question.response['content']).to eq('seats' => [2])
+    end
+
+    it 'still refuses a value that is not a list' do
+      question = form('seats' => { 'type' => 'array', 'items' => { 'type' => 'integer' } })
+
+      expect { question.answer(seats: 2) }.to raise_error(ArgumentError, /takes a list/)
+    end
+
+    it 'keeps native integers as integers' do
+      question = form('seats' => { 'type' => 'array', 'items' => { 'type' => 'integer' } })
+
+      question.answer(seats: [0, -2, 10**400])
+
+      expect(question.response['content']).to eq('seats' => [0, -2, 10**400])
+    end
+
+    [['number', ['2.5', 0], [2.5, 0]],
+     ['boolean', ['yes', false], [true, false]],
+     ['string', [:red, ' blue '], %w[red blue]]].each do |type, values, expected|
+      it "types #{type} items by the same rules as scalar fields" do
+        question = form('values' => { 'type' => 'array', 'items' => { 'type' => type } })
+
+        question.answer(values: values)
+
+        expect(question.response['content']).to eq('values' => expected)
+      end
+    end
+
+    it 'refuses a non-string item in a string list' do
+      question = form('tags' => { 'type' => 'array', 'items' => { 'type' => 'string' } })
+
+      expect { question.answer(tags: [1]) }.to raise_error(ArgumentError, /takes text/)
+    end
+
+    it 'types the list values permitted from form parameters' do
+      question = form('seats' => { 'type' => 'array', 'items' => { 'type' => 'integer' } })
+
+      question.answer(ActionController::Parameters.new(seats: %w[2 3], admin: 'true'))
+
+      expect(question.response['content']).to eq('seats' => [2, 3])
+    end
+
+    it 'checks offered choices after typing each item' do
+      question = form('seats' => { 'type' => 'array', 'items' => { 'type' => 'integer', 'enum' => [1, 2] } })
+
+      question.answer(seats: ['2'])
+
+      expect(question.response['content']).to eq('seats' => [2])
+      expect { question.answer(seats: ['3']) }.to raise_error(ArgumentError, /not one of the choices/)
+    end
+
+    it 'leaves untyped lists unchanged' do
+      question = form('values' => { 'type' => 'array' })
+
+      question.answer(values: ['2', false])
+
+      expect(question.response['content']).to eq('values' => ['2', false])
+    end
+
+    it 'leaves item schemas with no primitive type unchanged' do
+      question = form('values' => { 'type' => 'array', 'items' => { 'type' => 'object' } })
+
+      question.answer(values: [{ 'value' => 2 }])
+
+      expect(question.response['content']).to eq('values' => [{ 'value' => 2 }])
+    end
+
+    it 'keeps nested lists without imposing a primitive item type' do
+      question = form('values' => { 'type' => 'array', 'items' => { 'type' => 'array' } })
+
+      question.answer(values: [[' x ']])
+
+      expect(question.response['content']).to eq('values' => [['x']])
+    end
+
+    it 'keeps the default for an optional list whose items are all blank' do
+      question = form('seats' => { 'type' => 'array', 'items' => { 'type' => 'integer' }, 'default' => [1] })
+
+      question.answer(seats: [' ', nil])
+
+      expect(question.response['content']).to eq('seats' => [1])
+    end
+
+    it 'still requires a list with no nonblank items to be answered' do
+      question = form({ 'seats' => { 'type' => 'array', 'items' => { 'type' => 'integer' } } }, ['seats'])
+
+      expect { question.answer(seats: [' ']) }.to raise_error(ArgumentError, /needs an answer/)
+    end
+  end
+
   it 'keeps its id when saved and loaded, and takes the key of one saved without an id' do
     question = form('name' => { 'type' => 'string' })
 
@@ -99,6 +218,27 @@ RSpec.describe RubyLLM::Question do
 
     expect(question.response['content'])
       .to eq('seats' => 2, 'name' => 'ada', 'window' => false, 'notes' => { 'any' => 'thing' })
+  end
+
+  ['1e309', '-1e309', Float::INFINITY, -Float::INFINITY, Float::NAN].each do |value|
+    it "refuses a non-finite numeric answer of #{value.inspect}" do
+      question = form('budget' => { 'type' => 'number', 'title' => 'Budget' })
+
+      expect { question.answer(budget: value) }.to raise_error(ArgumentError, 'Budget takes a number.')
+      expect(question).not_to be_answered
+    end
+  end
+
+  [0, -1.5, 1e308, 10**400, '-1.5', '1e308'].each do |value|
+    it "keeps a finite numeric answer of #{value.inspect} serializable" do
+      question = form('budget' => { 'type' => 'number' })
+
+      question.answer(budget: value)
+
+      expected = value.is_a?(String) ? Float(value) : value
+      expect(question.response['content']).to eq('budget' => expected)
+      expect { JSON.generate(question.to_h) }.not_to raise_error
+    end
   end
 
   it 'lists the choices of fields that give them titles' do
