@@ -86,6 +86,13 @@ RSpec.describe RubyLLM::Question do
       expect(question).not_to be_answered
     end
 
+    it 'refuses a number item that overflows' do
+      question = form('prices' => { 'type' => 'array', 'title' => 'Prices', 'items' => { 'type' => 'number' } })
+
+      expect { question.answer(prices: %w[1.5 1e400]) }.to raise_error(ArgumentError, 'Prices takes a number.')
+      expect(question).not_to be_answered
+    end
+
     it 'types the single text value a list takes as one item' do
       question = form('seats' => { 'type' => 'array', 'items' => { 'type' => 'integer' } })
 
