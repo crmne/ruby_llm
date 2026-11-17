@@ -118,6 +118,23 @@ RSpec.describe RubyLLM::Tool do
     expect(result).to eq({ name: 'Ada', age: 36 }.inspect)
   end
 
+  it 'keeps a list question pending until its items have the declared type' do
+    asking(tool do
+      values = ask('How many seats?') { array :seats, of: :integer }
+      "Seats #{values.fetch(:seats).sum}"
+    end)
+    question = chat.pending_questions.sole
+
+    expect { question.answer(seats: %w[2 bad]) }.to raise_error(ArgumentError, /takes a whole number/)
+    expect(chat.pending_questions.map(&:id)).to eq([question.id])
+
+    question.answer(seats: %w[2 3])
+    chat.complete
+
+    expect(result).to eq('Seats 5')
+    expect(chat.pending_questions).to be_empty
+  end
+
   it 'asks the person to visit a page, and returns true once they say they did' do
     asking(tool { ask('Connect your calendar', url: 'https://example.com/connect') ? 'Connected' : 'Not connected' })
 
