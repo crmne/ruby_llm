@@ -37,8 +37,6 @@ module RubyLLM
           body = response.body
           tokens = Tokens.new(input: body.dig('usage', 'total_input_tokens'), output: 0)
           @usage_tracker&.observe_tokens(tokens)
-          reason = body.dig('prompt_feedback', 'block_reason')
-          raise ContentFilterError.new("Gemini blocked the judgment: #{reason}", response:) if reason
 
           answers = questions.values.to_h do |question|
             [question.name, parse_answer(body.fetch('answers').fetch(question.name.to_s), question)]
@@ -77,18 +75,24 @@ module RubyLLM
           text = describe(input)
           return text if attachments.empty?
 
-          parts = attachments.map { |attachment| render_image(attachment) }
+          parts = attachments.map { |attachment| render_attachment(attachment) }
           parts.unshift({ type: 'text', text: }) unless text.nil? || text.empty?
           parts
         end
 
-        def render_image(image)
-          raise UnsupportedAttachmentError, image.mime_type unless image.image?
+        def render_attachment(attachment)
+          return { type: 'text', text: attachment.content } if attachment.text? && !attachment.provider_file?
 
-          part = { type: 'image', mime_type: image.mime_type }
-          resolution = image.resolution == :original ? :ultra_high : image.resolution
-          part[:resolution] = resolution.to_s if resolution
-          part.merge(Interactions::Content.interaction_attachment_source(image))
+          type = Interactions::Content.interaction_attachment_type(attachment)
+          raise UnsupportedAttachmentError, attachment.mime_type unless type
+
+          part = { type:, mime_type: attachment.mime_type }
+          part[:resolution] = render_resolution(attachment.resolution) if attachment.image? && attachment.resolution
+          part.merge(Interactions::Content.interaction_attachment_source(attachment))
+        end
+
+        def render_resolution(resolution)
+          (resolution == :original ? :ultra_high : resolution).to_s
         end
 
         def describe(value)

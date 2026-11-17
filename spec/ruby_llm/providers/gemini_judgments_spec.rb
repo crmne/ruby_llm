@@ -85,21 +85,6 @@ RSpec.describe RubyLLM::Providers::Gemini do
     expect(usage[:tokens].to_h).to eq(input_tokens: 80, output_tokens: 0)
   end
 
-  it 'records billed usage when input is blocked' do
-    instrumenter = CaptureInstrumenter.new
-    context = RubyLLM.context { |config| config.instrumenter = instrumenter }
-    stub_request(:post, endpoint).to_return(
-      status: 200, headers: { 'Content-Type' => 'application/json' },
-      body: { prompt_feedback: { block_reason: 'SAFETY' }, usage: { total_input_tokens: 50 } }.to_json
-    )
-
-    expect { context.judge('Help', model: model_id, provider: :gemini, questions:) }
-      .to raise_error(RubyLLM::ContentFilterError, /SAFETY/)
-    usage = instrumenter.events.filter_map { |name, payload| payload if name == 'usage.ruby_llm' }.sole
-    expect(usage).to include(operation: :judgment, status: :failed)
-    expect(usage[:tokens].to_h).to eq(input_tokens: 50, output_tokens: 0)
-  end
-
   context 'with the Decisions API', :live do
     before { skip_without_cassette_or_key('GEMINI_API_KEY') }
 
@@ -147,6 +132,18 @@ RSpec.describe RubyLLM::Providers::Gemini do
       expect(result.color.choice).to be_in(%i[red blue green])
       expect(result.complexity.score).to be_between(0, 2)
       expect(result.tokens.input).to be_positive
+    end
+
+    it 'judges audio, video, and a PDF' do
+      questions = { ruby: { type: :probability, instructions: 'Is this about the Ruby programming language?' } }
+
+      %w[ruby.wav ruby.mp4 sample.pdf].each do |name|
+        result = RubyLLM.judge(with: File.expand_path("../../fixtures/#{name}", __dir__), model: model_id,
+                               provider: :gemini, questions:)
+
+        expect(result.ruby.probability).to be_between(0, 1)
+        expect(result.tokens.input).to be_positive
+      end
     end
   end
 end

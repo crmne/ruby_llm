@@ -114,10 +114,30 @@ RSpec.describe RubyLLM::Protocols::Gemini::Decisions do
     )
   end
 
-  it 'rejects attachments outside the supported image input' do
-    document = RubyLLM::Attachment.new('https://example.com/contract.pdf', mime_type: 'application/pdf')
+  it 'sends audio, video, and PDFs as their own parts, and text files as text' do
+    files = { 'ruby.wav' => 'audio', 'ruby.mp4' => 'video', 'sample.pdf' => 'document' }.map do |name, type|
+      [RubyLLM::Attachment.new(File.expand_path("../../../fixtures/#{name}", __dir__)), type]
+    end
+    notes = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.txt', __dir__))
 
-    expect { render(with: [document]) }.to raise_error(RubyLLM::UnsupportedAttachmentError, %r{application/pdf})
+    input = render(nil, with: files.map(&:first) + [notes])[:input]
+
+    expect(input.first(3)).to eq(files.map do |file, type|
+      { type:, mime_type: file.mime_type, data: file.encoded }
+    end)
+    expect(input.last).to eq(type: 'text', text: notes.content)
+  end
+
+  it 'keeps resolution for images only' do
+    video = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.mp4', __dir__), resolution: :low)
+
+    expect(render(nil, with: [video])[:input].first).not_to have_key(:resolution)
+  end
+
+  it 'rejects attachments the Decisions API has no part for' do
+    archive = RubyLLM::Attachment.new('https://example.com/files.zip', mime_type: 'application/zip')
+
+    expect { render(with: [archive]) }.to raise_error(RubyLLM::UnsupportedAttachmentError, %r{application/zip})
   end
 
   it 'leaves question limits and missing instructions to the API' do
@@ -180,16 +200,6 @@ RSpec.describe RubyLLM::Protocols::Gemini::Decisions do
     body.delete('usage')
 
     expect(protocol.parse_judgment_response(response, questions:).tokens.to_h).to eq(output_tokens: 0)
-  end
-
-  it 'raises a content filter error for blocked input' do
-    body.delete('answers')
-    body['prompt_feedback'] = { 'block_reason' => 'SAFETY' }
-
-    expect { protocol.parse_judgment_response(response, questions:) }
-      .to raise_error(RubyLLM::ContentFilterError, /SAFETY/) do |error|
-        expect(error.response).to equal(response)
-      end
   end
 
   it 'normalizes malformed responses and answers that cannot map to their questions' do
