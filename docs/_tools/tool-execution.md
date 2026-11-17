@@ -189,7 +189,7 @@ The call pauses on the question. Once the person answers, `complete` runs `execu
 Code before `ask` runs again when the call resumes, so make it safe to repeat: ask first, then act.
 {: .warning }
 
-Without options, `ask` takes free text. With `choices:`, it returns the one the person picked. A block declares several fields, in the same DSL as [`parameters`]({% link _tools/tool-parameters.md %}), and `ask` returns their values by name. `url:` asks the person to visit a page, such as to connect an account, and `ask` returns `true` once they say they did:
+Without options, `ask` takes free text. With `choices:`, it returns the one the person picked, as a String: a choice given as `17` comes back as `"17"`. A block declares several fields, in the same DSL as [`parameters`]({% link _tools/tool-parameters.md %}), and `ask` returns their values by name. `url:` asks the person to visit a page, such as to connect an account, and `ask` returns `true` once they say they did:
 
 ```ruby
 name = ask("What name should the booking use?")       # => "Ada Lovelace"

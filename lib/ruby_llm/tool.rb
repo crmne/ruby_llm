@@ -546,7 +546,8 @@ module RubyLLM
     # questions after it are asked again.
     #
     # Without options, +ask+ takes free text and returns the String. With
-    # +choices:+ it returns the one the person picked. With a block, it
+    # +choices:+ it returns the one the person picked, as a String: a
+    # choice given as +17+ comes back as <tt>"17"</tt>. With a block, it
     # asks for the fields the block declares, in the DSL of
     # Tool.parameters, and returns their values by name. With +url:+, it
     # asks the person to visit a page, such as to connect an account, and
