@@ -85,9 +85,7 @@ jobs:
           fail_ci_if_error: false
 
       - name: Upload coverage to UndercoverCI
-        if: >-
-          matrix.ruby-version == '4.0' && matrix.rails-version == 'rails-8.1' &&
-          github.repository_owner == 'grodowski'
+        if: matrix.ruby-version == '4.0' && matrix.rails-version == 'rails-8.1'
         continue-on-error: true
         run: |
           ruby -e "$(curl -fsSL https://undercover-ci.com/uploader.rb)" -- \
