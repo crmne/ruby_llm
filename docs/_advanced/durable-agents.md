@@ -132,7 +132,7 @@ class Chat < ApplicationRecord
 end
 ```
 
-The callback runs on the renewal's thread, after it checks out its connections, so a transaction you open covers the renewal and the setting ends with it. A transaction covers one connection: if `RubyLLM::ActiveRecord::ToolCall` connects to another database than your chats, set the context on its connection in the callback too. An error the callback raises counts as a failed renewal.
+The callback runs on the renewal's thread, after it checks out its connections, so a transaction you open covers the renewal and the setting ends with it. A transaction covers one connection: if `RubyLLM::ActiveRecord::ToolCall` uses another connection pool than your chats, even one to the same database, open a transaction on its connection in the callback too and set the context there. An error the callback raises counts as a failed renewal.
 
 `config.max_run_time`, ten minutes by default, limits how long a run may go without progress. A run makes progress as it streams, between steps, and as each message is saved. Past that, the run stops renewing and counts as crashed:
 
