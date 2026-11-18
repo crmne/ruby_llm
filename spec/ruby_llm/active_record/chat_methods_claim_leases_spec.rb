@@ -464,6 +464,115 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(roles(chat)).to eq(%w[user])
   end
 
+  describe 'around_claim_renewal' do
+    after { Chat.reset_callbacks(:claim_renewal) }
+
+    it 'wraps each renewal, on the thread and connection that renew' do
+      renewals = Queue.new
+      Chat.around_claim_renewal do |chat, renew|
+        writes = []
+        note = ->(*, payload) { writes << payload[:connection] if payload[:sql].start_with?('UPDATE') }
+        ActiveSupport::Notifications.subscribed(note, 'sql.active_record', &renew)
+        renewals << [chat.id, Thread.current.name, writes.all?(Chat.connection)] if writes.any?
+      end
+      chat = question_chat
+
+      job_for(chat) { sleep lease * 0.75 }.complete
+
+      expect(renewals.pop(timeout: 0)).to eq([chat.id, 'ruby_llm claim heartbeat', true])
+    end
+
+    it 'skips a renewal whose callback raises, and tries the next one' do
+      attempts = Queue.new
+      Chat.around_claim_renewal do |_chat, renew|
+        attempts << true
+        attempts.size == 1 ? raise('no tenant') : renew.call
+      end
+      allow(RubyLLM.logger).to receive(:warn)
+
+      job_for(question_chat) { sleep lease * 0.75 }.complete
+
+      expect(RubyLLM.logger).to have_received(:warn).with(/could not renew a chat's claims \(1 in a row\).*no tenant/)
+      expect(attempts.size).to be > 1
+      expect(requests.sole.messages.last.content).to eq('Done')
+    end
+
+    def failing_first_tool_call_renewal
+      failed = false
+      Chat.around_claim_renewal do |_chat, renew|
+        Chat.transaction do
+          wrote = false
+          note = ->(*, payload) { wrote ||= payload[:sql].start_with?('UPDATE "ruby_llm_tool_calls"') }
+          ActiveSupport::Notifications.subscribed(note, 'sql.active_record', &renew)
+          next unless wrote && !failed
+
+          failed = true
+          raise 'connection lost'
+        end
+      end
+      allow(RubyLLM.logger).to receive(:warn)
+    end
+
+    it 'writes a rolled-back renewal again, though the next one asks for the same expiry' do
+      stub_const('RubyLLM::ActiveRecord::RunClaims::CLAIM_LEASE', 60)
+      freeze_time
+      failing_first_tool_call_renewal
+      expiries = []
+      job = Chat.find(tool_call_chat.id).with_tools(lookup_tool do
+        expiries << tool_call_record.claimed_until
+        travel 5.seconds
+        within?(2) { tool_call_record.claimed_until > expiries.first }
+        expiries << tool_call_record.claimed_until
+      end)
+      allow(job.to_llm.provider).to receive(:complete)
+        .and_return(RubyLLM::Message.new(role: :assistant, content: 'Done', input_tokens: 1, output_tokens: 1))
+
+      job.complete
+
+      expect(expiries.last - expiries.first).to eq(5)
+    ensure
+      travel_back
+    end
+
+    it "doesn't write a tool call's expiry again while it stays the same" do
+      stub_const('RubyLLM::ActiveRecord::RunClaims::CLAIM_LEASE', 60)
+      freeze_time
+      beats = Queue.new
+      writes = Queue.new
+      Chat.around_claim_renewal do |_chat, renew|
+        note = ->(*, payload) { writes << true if payload[:sql].match?(/\AUPDATE.*ruby_llm_tool_calls/) }
+        ActiveSupport::Notifications.subscribed(note, 'sql.active_record', &renew)
+        beats << true
+      end
+      job = Chat.find(tool_call_chat.id).with_tools(lookup_tool { within?(2) { beats.size >= 3 } })
+      allow(job.to_llm.provider).to receive(:complete)
+        .and_return(RubyLLM::Message.new(role: :assistant, content: 'Done', input_tokens: 1, output_tokens: 1))
+
+      job.complete
+
+      expect(beats.size).to be >= 3
+      expect(writes).to be_empty
+    ensure
+      travel_back
+    end
+
+    it 'keeps a tool call claimed after a renewal its transaction rolled back' do
+      failing_first_tool_call_renewal
+      running = []
+      job = Chat.find(tool_call_chat.id).with_tools(lookup_tool do
+        sleep lease * 1.5
+        running << tool_call_record.running?
+      end)
+      allow(job.to_llm.provider).to receive(:complete)
+        .and_return(RubyLLM::Message.new(role: :assistant, content: 'Done', input_tokens: 1, output_tokens: 1))
+
+      job.complete
+
+      expect(RubyLLM.logger).to have_received(:warn).with(/connection lost/)
+      expect(running).to eq([true])
+    end
+  end
+
   it 'stops renewing when the run ends, however it ends' do
     outcomes = []
     job_for(question_chat) { outcomes << heartbeats.size }.complete

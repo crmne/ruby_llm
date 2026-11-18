@@ -112,6 +112,28 @@ The process that holds the claim finishes the work recorded while it ran. An ans
 
 A claim is a one-minute lease. While a run is alive, a background thread renews the leases on the chat and on the tool calls it runs every 15 seconds, whether the model streams, stays silent, or a tool works for minutes. Each renewal checks out a database connection and returns it, so leave room in your connection pool for one more connection per running chat. A process that dies stops renewing, and its claims expire within a minute, on any number of servers, without a step at boot. Each server compares leases against its own clock, so keep your servers' clocks synchronized. A renewal that fails, for example because the database is locked, is skipped, and the next one tries again. A claim outlasts a skipped renewal, and RubyLLM logs a warning when two in a row fail, since the claim may then lapse before the next one. On SQLite before Rails 8, a thread waiting for a lock holds Ruby's global lock and would stop the whole process, including the run that holds the database lock. There a renewal waits with Ruby's lock released, for at most a quarter of the interval, then reconnects, so your own queries keep the database's `timeout` as you configured it.
 
+A renewal has none of the `Current` attributes or connection settings of the request or job that runs the chat. When the database needs them to see the chat's row, as with PostgreSQL row-level security, the renewal updates no rows, and the run stops as if another process had taken the chat. Set them around each renewal with `around_claim_renewal`:
+
+```ruby
+class Chat < ApplicationRecord
+  acts_as_chat
+  around_claim_renewal :with_tenant
+
+  private
+
+  def with_tenant
+    transaction do
+      self.class.connection.execute(
+        self.class.sanitize_sql(["SELECT set_config('app.tenant_id', ?, true)", tenant_id.to_s])
+      )
+      yield
+    end
+  end
+end
+```
+
+The callback runs on the renewal's thread, after it checks out its connections, so a transaction you open covers the renewal and the setting ends with it. A transaction covers one connection: if `RubyLLM::ActiveRecord::ToolCall` uses another connection pool than your chats, even one to the same database, open a transaction on its connection in the callback too and set the context there. An error the callback raises counts as a failed renewal.
+
 `config.max_run_time`, ten minutes by default, limits how long a run may go without progress. A run makes progress as it streams, between steps, and as each message is saved. Past that, the run stops renewing and counts as crashed:
 
 ```ruby

@@ -64,7 +64,34 @@ module RubyLLM
       # Chains with other scopes. Returns none when the chats table has no
       # claim columns, since then no process records that it runs a chat.
 
+      ##
+      # :singleton-method: around_claim_renewal
+      # :call-seq: around_claim_renewal(*methods, &block)
+      #
+      # Registers a callback around each renewal of a running chat's
+      # claims. The renewal runs on a background thread, on database
+      # connections it checks out for that renewal, without the Current
+      # attributes or the connection settings of the request or job that
+      # runs the chat. Set what the database needs to see the chat's rows
+      # there, such as the tenant for row-level security, and yield:
+      #
+      #   around_claim_renewal :with_tenant
+      #
+      #   def with_tenant
+      #     transaction do
+      #       self.class.connection.execute(tenant_setting)
+      #       yield
+      #     end
+      #   end
+      #
+      # A transaction covers the chat's connection. When tool calls use
+      # another connection pool, even one to the same database, open a
+      # transaction on its connection in the callback as well and set the
+      # context there. An error the callback raises counts as a failed
+      # renewal, which the next one retries.
+
       included do
+        define_model_callbacks :claim_renewal, only: :around
         scope :interrupted, -> { RunClaims.interrupted(self) }
         before_save :resolve_model
         after_commit :remember_model_registry_stored, if: -> { @model_registry_loaded_into }
