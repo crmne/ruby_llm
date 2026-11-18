@@ -247,13 +247,21 @@ module RubyLLM
       [deployed, id].compact.flat_map { |model_id| prices_named(prices, model_id.to_s) }.reduce({}, :merge)
     end
 
-    # The prices set under an alias of +model_id+, then the ones set under
-    # the id itself.
+    # The prices set under another name of +model_id+, then the ones set
+    # under the id itself.
     def prices_named(prices, model_id)
-      aliased = prices.select do |(slug, name), _|
-        slug == provider.to_s && name != model_id && Models::Aliases.resolve(name, slug) == model_id
+      renamed = prices.select do |(slug, name), _|
+        slug == provider.to_s && name != model_id && names?(name, model_id)
       end
-      [*aliased.values, prices[[provider.to_s, model_id]]].compact
+      [*renamed.values, prices[[provider.to_s, model_id]]].compact
+    end
+
+    # Whether lookup resolves +name+ to +model_id+: an alias, or an id the
+    # provider's registry stores under another one.
+    def names?(name, model_id)
+      resolved = Models::Aliases.resolve(name, provider.to_s)
+      resolved == model_id ||
+        provider_class&.resolve_registry_id(resolved, RubyLLM.models, RubyLLM.config) == model_id
     end
 
     def usage_entries_of(source)

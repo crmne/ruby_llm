@@ -97,8 +97,9 @@ RSpec.describe RubyLLM::Configuration, '#price' do
 
   it 'prices a model on a provider RubyLLM does not know' do
     RubyLLM.config.price 'house-model', provider: :house, input: 1
+    RubyLLM.config.price 'other-model', provider: :house, input: 2, output: 3
 
-    expect(priced_model('house-model', provider: 'house').price(:input)).to eq(1)
+    expect(%i[input output].map { |kind| priced_model('house-model', provider: 'house').price(kind) }).to eq([1, 1.2])
   end
 
   describe 'under an alias' do
@@ -123,6 +124,31 @@ RSpec.describe RubyLLM::Configuration, '#price' do
       listed = haiku.registry_pricing.text_tokens.input
 
       expect(haiku.price(:input)).to eq(listed)
+    end
+  end
+
+  describe 'under an id the provider stores under another one' do
+    before { RubyLLM.config.bedrock_region = 'us-east-1' }
+
+    let(:profile) { RubyLLM.models.find('claude-haiku-4-5', provider: :bedrock) }
+
+    it 'prices the model lookup resolves an alias to' do
+      RubyLLM.config.price 'claude-haiku-4-5', provider: :bedrock, input: 9
+
+      expect(profile).to have_attributes(id: 'us.anthropic.claude-haiku-4-5-20251001-v1:0')
+      expect(profile.price(:input)).to eq(9)
+    end
+
+    it 'prices the model lookup resolves an id to' do
+      RubyLLM.config.price 'anthropic.claude-haiku-4-5-20251001-v1:0', provider: :bedrock, input: 9
+
+      expect(profile.price(:input)).to eq(9)
+    end
+
+    it 'leaves a model with another id at its registry price' do
+      RubyLLM.config.price 'claude-haiku-5-5', provider: :bedrock, input: 9
+
+      expect(profile.price(:input)).to eq(profile.registry_pricing.text_tokens.input)
     end
   end
 

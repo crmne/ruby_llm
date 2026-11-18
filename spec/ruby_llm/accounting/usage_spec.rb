@@ -273,6 +273,16 @@ RSpec.describe 'RubyLLM::Accounting::Usage::Tracker' do
       expect(entry.cost.total).to eq(3)
     end
 
+    it 'looks the echoed model up when no model was requested' do
+      tracker = RubyLLM::Accounting::Usage::Tracker.new(operation: :chat, provider:, model: nil,
+                                                        config: RubyLLM.config)
+      tracker.start
+
+      tracker.succeed(result)
+
+      expect(result.model_info).to eq(model)
+    end
+
     it 'uses a different echoed model when it belongs to the same provider' do
       echoed_model = RubyLLM::Model.new(other_model.to_h.merge(id: 'gpt-4.1', provider: 'custom'))
       registry.all_including_unlisted << echoed_model
