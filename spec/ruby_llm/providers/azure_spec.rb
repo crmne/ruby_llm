@@ -24,7 +24,8 @@ RSpec.describe RubyLLM::Providers::Azure do
       model = registry.find('gpt-4o-global', provider: :azure, config: config)
 
       expect(model.id).to eq('gpt-4o-global')
-      expect(model.to_h.except(:id)).to eq(gpt4o.to_h.except(:id))
+      expect(model.to_h.except(:id, :metadata)).to eq(gpt4o.to_h.except(:id, :metadata))
+      expect(model.metadata).to eq(gpt4o.metadata.merge(deployed_model_id: 'gpt-4o'))
     end
 
     it 'accepts Symbol keys and values' do
@@ -81,7 +82,8 @@ RSpec.describe RubyLLM::Providers::Azure do
       end.chat(model: 'gpt-4o-global', provider: :azure)
 
       expect(chat.model.id).to eq('gpt-4o-global')
-      expect(chat.model.metadata).to eq(RubyLLM.models.find('gpt-4o', provider: :azure).metadata)
+      deployed = RubyLLM.models.find('gpt-4o', provider: :azure).metadata.merge(deployed_model_id: 'gpt-4o')
+      expect(chat.model.metadata).to eq(deployed)
     end
   end
 end

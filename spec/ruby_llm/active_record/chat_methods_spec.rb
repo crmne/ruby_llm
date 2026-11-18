@@ -388,7 +388,22 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       chat.with_model('gpt-4o-global', provider: :azure)
 
       expect(chat.model_id).to eq('gpt-4o-global')
-      expect(chat.model.metadata).to eq(RubyLLM.models.find('gpt-4o', provider: :azure).metadata.deep_stringify_keys)
+      deployed = RubyLLM.models.find('gpt-4o', provider: :azure).metadata.merge(deployed_model_id: 'gpt-4o')
+      expect(chat.model.metadata).to eq(deployed.deep_stringify_keys)
+    ensure
+      RubyLLM.config.azure_deployments = nil
+    end
+
+    it 'stores a new model row with the registry price, and costs it at the configured price' do
+      RubyLLM.config.azure_deployments = { 'gpt-4o-priced' => 'gpt-4o' }
+      listed = RubyLLM.models.find('gpt-4o', provider: :azure).price(:input)
+      RubyLLM.config.price 'gpt-4o', provider: :azure, input: listed * 2
+      chat = Chat.create!(model: model_id)
+
+      chat.with_model('gpt-4o-priced', provider: :azure)
+
+      expect(chat.model.pricing.dig('text_tokens', 'standard', 'input_per_million')).to eq(listed)
+      expect(chat.model.price(:input)).to eq(listed * 2)
     ensure
       RubyLLM.config.azure_deployments = nil
     end

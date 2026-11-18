@@ -37,6 +37,7 @@ module RubyLLM
           value = nil if value.is_a?(String) && value.strip.empty?
           value = normalize.call(value) if normalize
           instance_variable_set(:"@#{key}", value)
+          @revision = @revision.to_i + 1
         end
 
         option_keys << key
@@ -473,11 +474,45 @@ module RubyLLM
     # when none is set.
     option :log_regexp_timeout, -> { Regexp.timeout || 1.0 }
 
+    attr_reader :prices # :nodoc:
+
+    # Counts the assignments to this configuration, so that what was
+    # derived from it can tell when to derive it again.
+    attr_reader :revision # :nodoc:
+
     def initialize # :nodoc:
+      @prices = {}.freeze
       self.class.send(:defaults).each do |key, default|
         value = default.respond_to?(:call) ? instance_exec(&default) : default
         public_send("#{key}=", value)
       end
+    end
+
+    # Sets what +model+ costs on +provider+, in USD per million, in place
+    # of the registry's prices. Use it when you pay another price than the
+    # list price, or when the registry has none:
+    #
+    #   RubyLLM.configure do |config|
+    #     config.price 'gpt-5.6-luna', provider: :azure, input: 0.24, output: 1.44
+    #     config.price 'Cohere-rerank-v4.0-fast', provider: :azure, input: 0.024
+    #   end
+    #
+    # The prices are +input+, +output+, +cache_read+, and +cache_write+ per
+    # million tokens, and +characters+, +audio_seconds+, and +search_units+
+    # per million of those units. Prices you leave out stay as the registry
+    # has them, and so do the batch and long-context rates. A model takes
+    # its prices under the id you call it by, including an id the registry
+    # does not list.
+    #
+    # Model#pricing, Model#price, and every Cost use the prices from then
+    # on, and a registry refresh keeps them. They belong to the global
+    # configuration: a context raises ConfigurationError.
+    def price(model, provider:, **prices)
+      raise ConfigurationError, 'Set prices in RubyLLM.configure: a context cannot price a model differently' if @copy
+
+      key = [provider.to_s, model.to_s]
+      @prices = @prices.merge(key => @prices.fetch(key, {}).merge(Model::Pricing.override(prices)).freeze).freeze
+      @revision += 1
     end
 
     # Copies file_converters too, so registering one on a context's copy,
@@ -485,6 +520,7 @@ module RubyLLM
     # original alone.
     def initialize_copy(source) # :nodoc:
       super
+      @copy = true
       @file_converters = @file_converters.dup
       @ssl = @ssl.to_h.transform_values { |value| value.is_a?(String) ? value.dup : value } if @ssl
     end

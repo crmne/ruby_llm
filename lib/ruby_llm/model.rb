@@ -49,8 +49,34 @@ module RubyLLM
     # e.g. <tt>["function_calling", "streaming"]</tt>.
     attr_reader :capabilities
 
-    # The model's pricing as a Model::Pricing object, in USD per million tokens.
-    attr_reader :pricing
+    # The model's pricing as a Model::Pricing object, in USD per million
+    # tokens: the registry's prices, with the ones set through
+    # Configuration#price in their place.
+    def pricing
+      config = RubyLLM.config
+      revision = config.revision
+      prices = config.prices
+      return @pricing if prices.empty?
+
+      priced = @priced
+      return priced.last if priced && priced[0].equal?(config) && priced[1] == revision
+
+      override = configured_prices(prices)
+      pricing = override.empty? ? @pricing : Pricing.new(Pricing.overridden(@pricing_data, override))
+      @priced = [config, revision, pricing].freeze
+      pricing
+    end
+
+    # The registry's own pricing, which is what a registry store keeps.
+    def registry_pricing # :nodoc:
+      @pricing
+    end
+
+    # Whether the configuration prices this model, so that its costs use
+    # those prices whatever model id the provider answers with.
+    def configured_prices? # :nodoc:
+      !configured_prices(RubyLLM.config.prices).empty?
+    end
 
     # Provider-specific metadata as a Hash.
     attr_reader :metadata
@@ -86,7 +112,8 @@ module RubyLLM
       @capabilities = data[:capabilities] || []
       @metadata = data[:metadata]&.dup || {}
       @unlisted_at = Support::Utils.to_time(data[:unlisted_at])&.utc
-      @pricing = Pricing.new(pricing_data_with_long_context(data[:pricing] || {}))
+      @pricing_data = pricing_data_with_long_context(data[:pricing] || {})
+      @pricing = Pricing.new(@pricing_data)
       @reasoning_options = normalize_reasoning_options(reasoning_options_from(data))
       store_reasoning_options_metadata
     end
@@ -205,7 +232,7 @@ module RubyLLM
         knowledge_cutoff: knowledge_cutoff,
         modalities: modalities.to_h,
         capabilities: capabilities,
-        pricing: pricing.to_h,
+        pricing: registry_pricing.to_h,
         metadata: metadata
       }
       # A JSON registry drops unlisted models, so the key stays out of it.
@@ -214,6 +241,30 @@ module RubyLLM
     end
 
     private
+
+    # A deployment costs what its model costs, unless it has prices of its
+    # own. A deployment a context declared carries its model's id.
+    def configured_prices(prices)
+      deployed = metadata[:deployed_model_id] || provider_class&.deployed_model_id(id, RubyLLM.config)
+      [deployed, id].compact.flat_map { |model_id| prices_named(prices, model_id.to_s) }.reduce({}, :merge)
+    end
+
+    # The prices set under another name of +model_id+, then the ones set
+    # under the id itself.
+    def prices_named(prices, model_id)
+      renamed = prices.select do |(slug, name), _|
+        slug == provider.to_s && name != model_id && names?(name, model_id)
+      end
+      [*renamed.values, prices[[provider.to_s, model_id]]].compact
+    end
+
+    # Whether lookup resolves +name+ to +model_id+: an alias, or an id the
+    # provider's registry stores under another one.
+    def names?(name, model_id)
+      resolved = Models::Aliases.resolve(name, provider.to_s)
+      resolved == model_id ||
+        provider_class&.resolve_registry_id(resolved, RubyLLM.models, RubyLLM.config) == model_id
+    end
 
     def usage_entries_of(source)
       return source.usage_entries if source.respond_to?(:usage_entries)

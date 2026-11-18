@@ -363,7 +363,7 @@ module RubyLLM
         if models_dev_model.type == :chat && provider_model.type != :chat
           data[:modalities] = provider_model.modalities.to_h
         end
-        data[:pricing] = Support::Utils.deep_merge(provider_model.pricing.to_h, data[:pricing].to_h)
+        data[:pricing] = Support::Utils.deep_merge(provider_model.registry_pricing.to_h, data[:pricing].to_h)
         data[:metadata] = provider_model.metadata.merge(data[:metadata] || {})
         data[:capabilities] = merge_capabilities(models_dev_model, provider_model, data[:modalities])
         normalize_embedding_modalities(data)

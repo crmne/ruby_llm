@@ -23,6 +23,7 @@ After reading this guide, you will know:
 * What each token bucket counts.
 * How the internal usage ledger accounts for retries, fallbacks, and cancellations.
 * How to price token usage yourself with `cost_for` and `Cost.aggregate`.
+* How to set the prices you pay when they differ from the registry's.
 * How to price provider tools billed per use, such as web search.
 * How costs are recorded in Rails and how to keep registry pricing fresh.
 * How to attribute chat and one-shot usage to a user or account.
@@ -182,6 +183,32 @@ rerank.cost.search_units
 `cost` prices each unit from the model registry, in US dollars per million units, and adds it to `cost.total`. When the registry has no price for a unit that was used, that component and `cost.total` are `nil`, never zero.
 
 Token prices in the registry come from [models.dev](https://models.dev), which has no fields for these units yet. Until it does, RubyLLM fills them from each provider's published list price, checked by date, for models whose page states one plainly, such as OpenAI's `tts-1` and `whisper-1` or Cloud Text-to-Speech's `Chirp3-HD`. Once models.dev prices a model, its prices win. A model without a listed price, such as one billed differently on each plan, keeps a `nil` cost for the unit.
+
+## Setting Your Own Prices
+
+The registry holds each provider's list price. You may pay something else: an Azure Data Zone deployment costs more than a global one, a negotiated rate costs less, and some models have no price in the registry at all. Tell RubyLLM what you pay with `config.price`:
+
+```ruby
+RubyLLM.configure do |config|
+  config.price "{{ site.models.default_chat }}", provider: :azure, input: 2.2, output: 11
+  config.price "{{ site.models.azure_rerank }}", provider: :azure, input: 0.024
+end
+```
+
+Prices are in US dollars per million. `input`, `output`, `cache_read`, and `cache_write` price tokens, and `characters`, `audio_seconds`, and `search_units` price the [other units](#characters-audio-seconds-and-search-units). A price you leave out stays as the registry has it, and so do the model's batch and long-context rates.
+
+Every cost uses your prices from then on: `response.cost`, `chat.cost`, `model.cost_for`, and `model.price(:input)`. `RubyLLM.models.refresh` keeps them, because they live in your configuration. The registry file, or the `ruby_llm_models` table in Rails, keeps the list price.
+
+A model takes its prices under the ID you call it by, so you can price a model the registry does not list. An [Azure deployment]({% link _reference/configuration-providers.md %}) costs what its model costs, unless you price the deployment itself:
+
+```ruby
+RubyLLM.configure do |config|
+  config.azure_deployments = { "chat-data-zone" => "{{ site.models.default_chat }}" }
+  config.price "chat-data-zone", provider: :azure, input: 2.2, output: 11
+end
+```
+
+Prices belong to the global configuration. Setting one on a [context]({% link _reference/configuration-connection.md %}#contexts-isolated-configurations) raises `RubyLLM::ConfigurationError`: a cost read later, such as from a saved chat, would not know which context it ran in.
 
 ## Pricing Tool Use
 

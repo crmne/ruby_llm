@@ -38,9 +38,11 @@ RSpec.configure do |config|
       value = global.instance_variable_get(:"@#{key}")
       [key, value.is_a?(Hash) || value.is_a?(Array) ? value.dup : value]
     end
+    prices = global.prices
     example.run
   ensure
     saved.each { |key, value| global.instance_variable_set(:"@#{key}", value) }
+    global.instance_variable_set(:@prices, prices)
   end
 
   # Connections, credentials, and confirmed provider files outlive a call,

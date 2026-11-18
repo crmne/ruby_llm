@@ -18,7 +18,8 @@ module RubyLLM
         deployed_id = Provider.resolve(provider)&.deployed_model_id(model_id, config || RubyLLM.config)
         return find_registered(model_id, provider, config) unless deployed_id
 
-        Model.new(find_deployed_model(model_id, deployed_id, provider, config).to_h.merge(id: model_id))
+        model = find_deployed_model(model_id, deployed_id, provider, config)
+        Model.new(model.to_h.merge(id: model_id, metadata: model.metadata.merge(deployed_model_id: model.id)))
       end
 
       def find_deployed_model(deployment, model_id, provider, config)

@@ -306,6 +306,17 @@ RSpec.describe RubyLLM::Models do
   end
 
   describe '.add_provider_metadata' do
+    it 'merges the registry price of a provider entry the configuration prices' do
+      RubyLLM.config.price 'test', provider: :openai, input: 3.0
+      provider_model = model(id: 'test', provider: 'openai', name: 'Test',
+                             pricing: { text_tokens: { standard: { input_per_million: 1.0 } } })
+
+      merged = described_class.add_provider_metadata(model(id: 'test', provider: 'openai'), provider_model)
+
+      expect(merged.to_h.dig(:pricing, :text_tokens, :standard, :input_per_million)).to eq(1.0)
+      expect(merged.price(:input)).to eq(3.0)
+    end
+
     it 'fills every blank models.dev field from the provider entry' do
       models_dev_model = model(id: 'test', provider: 'openai', metadata: { source: 'models.dev' })
       provider_model = model(

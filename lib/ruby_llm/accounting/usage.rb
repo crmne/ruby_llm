@@ -274,6 +274,7 @@ module RubyLLM
 
         def result_model(result)
           return @model_info if result.model.nil? || result.model == @model_info&.id
+          return @model_info if @model_info&.configured_prices?
 
           RubyLLM.models.find(result.model, provider: @provider.slug, config: @config)
         rescue ModelNotFoundError
