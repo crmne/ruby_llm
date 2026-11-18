@@ -53,15 +53,15 @@ module RubyLLM
     # tokens: the registry's prices, with the ones set through
     # Configuration#price in their place.
     def pricing
-      prices = RubyLLM.config.prices
-      return @pricing if prices.empty?
+      config = RubyLLM.config
+      return @pricing if config.prices.empty?
 
       priced = @priced
-      return priced.last if priced&.first.equal?(prices)
+      return priced.last if priced && priced[0].equal?(config) && priced[1] == config.revision
 
-      override = configured_prices(prices)
+      override = configured_prices(config.prices)
       pricing = override.empty? ? @pricing : Pricing.new(Pricing.overridden(@pricing_data, override))
-      @priced = [prices, pricing].freeze
+      @priced = [config, config.revision, pricing].freeze
       pricing
     end
 

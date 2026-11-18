@@ -145,6 +145,17 @@ RSpec.describe RubyLLM::Configuration, '#price' do
       expect(profile.price(:input)).to eq(9)
     end
 
+    it 'follows a region set after the model was last read' do
+      RubyLLM.config.price 'anthropic.claude-haiku-4-5-20251001-v1:0', provider: :bedrock, input: 9
+      listed = profile.registry_pricing.text_tokens.input
+      RubyLLM.config.bedrock_region = 'eu-west-1'
+      elsewhere = profile.price(:input)
+
+      RubyLLM.config.bedrock_region = 'us-east-1'
+
+      expect([elsewhere, profile.price(:input)]).to eq([listed, 9])
+    end
+
     it 'leaves a model with another id at its registry price' do
       RubyLLM.config.price 'claude-haiku-5-5', provider: :bedrock, input: 9
 
@@ -167,7 +178,20 @@ RSpec.describe RubyLLM::Configuration, '#price' do
     expect(model.price(:input)).to eq(0.3)
   end
 
-  it 'builds the pricing of a model once per set of prices' do
+  it 'follows the prices of another global configuration' do
+    RubyLLM.config.price 'gpt-5.6-luna', provider: :azure, input: 0.24
+    model.pricing
+    revision = RubyLLM.config.revision
+    other = described_class.new
+    (revision - other.revision - 1).times { other.request_timeout = 1 }
+    other.price 'gpt-5.6-luna', provider: :azure, input: 0.3
+    allow(RubyLLM).to receive(:config).and_return(other)
+
+    expect(other.revision).to eq(revision)
+    expect(model.price(:input)).to eq(0.3)
+  end
+
+  it 'builds the pricing of a model once per state of the configuration' do
     RubyLLM.config.price 'gpt-5.6-luna', provider: :azure, input: 0.24
     other = priced_model('gpt-5.6-terra')
 
@@ -240,8 +264,9 @@ RSpec.describe RubyLLM::Configuration, '#price' do
       deployment = priced_model('invoice-reader')
       deployment.pricing
 
-      RubyLLM.config.azure_deployments = { 'invoice-reader' => 'gpt-5.6-terra' }
       RubyLLM.config.price 'gpt-5.6-terra', provider: :azure, output: 1.5
+      deployment.pricing
+      RubyLLM.config.azure_deployments = { 'invoice-reader' => 'gpt-5.6-terra' }
 
       expect(%i[input output].map { |kind| deployment.price(kind) }).to eq([0.2, 1.5])
     end

@@ -36,6 +36,7 @@ module RubyLLM
         define_method("#{key}=") do |value|
           value = nil if value.is_a?(String) && value.strip.empty?
           value = normalize.call(value) if normalize
+          @revision = @revision.to_i + 1
           instance_variable_set(:"@#{key}", value)
         end
 
@@ -475,6 +476,10 @@ module RubyLLM
 
     attr_reader :prices # :nodoc:
 
+    # Counts the assignments to this configuration, so that what was
+    # derived from it can tell when to derive it again.
+    attr_reader :revision # :nodoc:
+
     def initialize # :nodoc:
       @prices = {}.freeze
       self.class.send(:defaults).each do |key, default|
@@ -505,6 +510,7 @@ module RubyLLM
     def price(model, provider:, **prices)
       raise ConfigurationError, 'Set prices in RubyLLM.configure: a context cannot price a model differently' if @copy
 
+      @revision += 1
       key = [provider.to_s, model.to_s]
       @prices = @prices.merge(key => @prices.fetch(key, {}).merge(Model::Pricing.override(prices)).freeze).freeze
     end
