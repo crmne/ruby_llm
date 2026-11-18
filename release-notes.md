@@ -1,4 +1,4 @@
-RubyLLM 2.2.3 adds Gemini judgments, your own prices for models, a callback for chats under row-level security, and titled choices from a Hash. It also fixes a batch of bugs in questions, file stores, code execution, and logging.
+RubyLLM 2.2.3 adds Gemini judgments, your own prices for models, a limit on how many tool calls run at once, a callback for chats under row-level security, and titled choices from a Hash. It also fixes a batch of bugs in questions, file stores, code execution, and logging.
 
 ```sh
 bundle add ruby_llm --version 2.2.3
@@ -10,6 +10,7 @@ Already on 2.2? Run `bundle update ruby_llm`. No schema or code changes are need
 
 - **Judge with Gemini.** `RubyLLM::Judge` works with `gemini-decision-1` through Google's Decisions API, for probabilities, choices, and scores over text, images, audio, video, and PDFs. A blocked input raises `ContentFilterError`. By @alextrueman. (#1692)
 - **Set the prices you pay.** `config.price "gpt-5.6-luna", provider: :azure, input: 0.24, output: 1.44` replaces the registry's price for a model, for a Data Zone deployment, a negotiated rate, or a model the registry has no price for. Every cost uses it, and a registry refresh keeps it. Prices are global: a context can't set them. By @crmne; thanks @siem-moneybird. (#1685, #1703)
+- **Cap how many tool calls run at once.** `chat.with_tool_options(concurrency: :threads, workers: 4)` runs a response's tool calls four at a time, on a pool of that many threads or fibers. Every call still runs and returns its result. By @crmne; thanks @yorzi. (#1674, #1707)
 - **Renew claims under row-level security.** A running chat renews its claims from a thread of its own, on a connection with no tenant set, so under PostgreSQL row-level security any run longer than the renewal interval stopped as busy. `around_claim_renewal` on an `acts_as_chat` model wraps each renewal, so you can set the tenant in a transaction around it. By @crmne; thanks @PabloAraya6. (#1694, #1701)
 - **Title each choice with a Hash.** `ask("Which card?", choices: { "17" => "River bank", "42" => "Money bank" })` shows the titles and returns the value, without writing the `oneOf` schema by hand. By @kryzhovnik. (#1662)
 - **Rerank on OpenAI-compatible servers.** `RubyLLM.rerank` with `provider: :openai` and a custom `openai_api_base` reaches the `/v1/rerank` endpoint of llama.cpp, vLLM, and similar servers. By @crmne; thanks @mvysny. (#1684, #1690)
@@ -33,6 +34,6 @@ Already on 2.2? Run `bundle update ruby_llm`. No schema or code changes are need
 
 ## Thanks
 
-Thanks to @alextrueman, @kryzhovnik, @josh-sanders, @jordanyeo, @yorzi, and @Evshved for the features and fixes in this release, and to @siem-moneybird, @PabloAraya6, @mvysny, and @thomaswitt for the reports behind them.
+Thanks to @alextrueman, @kryzhovnik, @josh-sanders, @jordanyeo, @yorzi, and @Evshved for the features and fixes in this release, and to @siem-moneybird, @yorzi, @PabloAraya6, @mvysny, and @thomaswitt for the reports behind them.
 
 **Full changelog**: https://github.com/crmne/ruby_llm/compare/v2.2.2...v2.2.3
