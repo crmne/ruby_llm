@@ -402,7 +402,7 @@ module RubyLLM
               next unless deadline
 
               claimed_until = by_exit([now.change(usec: 0) + CLAIM_LEASE, deadline].min)
-              next if deadline <= now || claim.written.include?(claimed_until)
+              next if deadline <= now || claim.written == [claimed_until]
 
               [tool_call_id, claim.row, claim.written.dup, claim.written.push(claimed_until).last]
             end
@@ -457,7 +457,7 @@ module RubyLLM
 
       # A callback that raises may have rolled back renewals already
       # counted as written, so the expiries from before stay good matches
-      # for the rows.
+      # for the rows, and with more than one the next renewal writes again.
       def renew_claim_leases_in_callbacks
         written = claim_lock.synchronize { tool_call_claims.transform_values { |claim| claim.written.dup } }
         run_callbacks(:claim_renewal) { renew_claim_leases }

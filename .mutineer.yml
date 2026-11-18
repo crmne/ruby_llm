@@ -20,6 +20,9 @@ ignore:
   - da765b7a56dc
   # RunClaims#release_run_claim: no claim token is true either.
   - 47b0cc41573b
+  # RunClaims#renew_tool_call_leases: at the deadline itself the expiry
+  # to write is the deadline, which has passed either way.
+  - 1e1602bf9fd1
   # RunClaims#run_claims?: only an unsaved chat tells them apart, and it
   # has no row to claim.
   - 4d8df17b0a5a

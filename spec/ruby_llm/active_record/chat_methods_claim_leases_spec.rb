@@ -497,7 +497,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(requests.sole.messages.last.content).to eq('Done')
     end
 
-    it 'keeps a tool call claimed after a renewal its transaction rolled back' do
+    def failing_first_tool_call_renewal
       failed = false
       Chat.around_claim_renewal do |_chat, renew|
         Chat.transaction do
@@ -511,6 +511,53 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
         end
       end
       allow(RubyLLM.logger).to receive(:warn)
+    end
+
+    it 'writes a rolled-back renewal again, though the next one asks for the same expiry' do
+      stub_const('RubyLLM::ActiveRecord::RunClaims::CLAIM_LEASE', 60)
+      freeze_time
+      failing_first_tool_call_renewal
+      expiries = []
+      job = Chat.find(tool_call_chat.id).with_tools(lookup_tool do
+        expiries << tool_call_record.claimed_until
+        travel 5.seconds
+        within?(2) { tool_call_record.claimed_until > expiries.first }
+        expiries << tool_call_record.claimed_until
+      end)
+      allow(job.to_llm.provider).to receive(:complete)
+        .and_return(RubyLLM::Message.new(role: :assistant, content: 'Done', input_tokens: 1, output_tokens: 1))
+
+      job.complete
+
+      expect(expiries.last - expiries.first).to eq(5)
+    ensure
+      travel_back
+    end
+
+    it "doesn't write a tool call's expiry again while it stays the same" do
+      stub_const('RubyLLM::ActiveRecord::RunClaims::CLAIM_LEASE', 60)
+      freeze_time
+      beats = Queue.new
+      writes = Queue.new
+      Chat.around_claim_renewal do |_chat, renew|
+        note = ->(*, payload) { writes << true if payload[:sql].match?(/\AUPDATE.*ruby_llm_tool_calls/) }
+        ActiveSupport::Notifications.subscribed(note, 'sql.active_record', &renew)
+        beats << true
+      end
+      job = Chat.find(tool_call_chat.id).with_tools(lookup_tool { within?(2) { beats.size >= 3 } })
+      allow(job.to_llm.provider).to receive(:complete)
+        .and_return(RubyLLM::Message.new(role: :assistant, content: 'Done', input_tokens: 1, output_tokens: 1))
+
+      job.complete
+
+      expect(beats.size).to be >= 3
+      expect(writes).to be_empty
+    ensure
+      travel_back
+    end
+
+    it 'keeps a tool call claimed after a renewal its transaction rolled back' do
+      failing_first_tool_call_renewal
       running = []
       job = Chat.find(tool_call_chat.id).with_tools(lookup_tool do
         sleep lease * 1.5
@@ -521,7 +568,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
 
       job.complete
 
-      expect(failed).to be(true)
+      expect(RubyLLM.logger).to have_received(:warn).with(/connection lost/)
       expect(running).to eq([true])
     end
   end
