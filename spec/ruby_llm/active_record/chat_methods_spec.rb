@@ -388,7 +388,8 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       chat.with_model('gpt-4o-global', provider: :azure)
 
       expect(chat.model_id).to eq('gpt-4o-global')
-      expect(chat.model.metadata).to eq(RubyLLM.models.find('gpt-4o', provider: :azure).metadata.deep_stringify_keys)
+      deployed = RubyLLM.models.find('gpt-4o', provider: :azure).metadata.merge(deployed_model_id: 'gpt-4o')
+      expect(chat.model.metadata).to eq(deployed.deep_stringify_keys)
     ensure
       RubyLLM.config.azure_deployments = nil
     end

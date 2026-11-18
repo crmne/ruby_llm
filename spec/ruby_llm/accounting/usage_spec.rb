@@ -258,6 +258,21 @@ RSpec.describe 'RubyLLM::Accounting::Usage::Tracker' do
       expect(entry.cost.total).to be_within(1e-12).of(0.0000123)
     end
 
+    it 'keeps the requested model when the configuration prices it, whatever id the provider echoes' do
+      echoed_model = RubyLLM::Model.new(other_model.to_h.merge(id: 'gpt-4.1', provider: 'custom'))
+      registry.all_including_unlisted << echoed_model
+      RubyLLM.config.price model.id, provider: :custom, input: 1, output: 2
+      result = RubyLLM::Message.new(role: :assistant, content: 'ok', model: echoed_model.id,
+                                    input_tokens: 1_000_000, output_tokens: 1_000_000)
+      tracker = build_tracker
+      entry = tracker.start
+
+      tracker.succeed(result)
+
+      expect(result.model_info).to eq(model)
+      expect(entry.cost.total).to eq(3)
+    end
+
     it 'uses a different echoed model when it belongs to the same provider' do
       echoed_model = RubyLLM::Model.new(other_model.to_h.merge(id: 'gpt-4.1', provider: 'custom'))
       registry.all_including_unlisted << echoed_model

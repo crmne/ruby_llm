@@ -70,6 +70,12 @@ module RubyLLM
       @pricing
     end
 
+    # Whether the configuration prices this model, so that its costs use
+    # those prices whatever model id the provider answers with.
+    def configured_prices? # :nodoc:
+      !configured_prices(RubyLLM.config.prices).empty?
+    end
+
     # Provider-specific metadata as a Hash.
     attr_reader :metadata
 
@@ -104,7 +110,6 @@ module RubyLLM
       @capabilities = data[:capabilities] || []
       @metadata = data[:metadata]&.dup || {}
       @unlisted_at = Support::Utils.to_time(data[:unlisted_at])&.utc
-      @deployed_model_id = data[:deployed_model_id]
       @pricing_data = pricing_data_with_long_context(data[:pricing] || {})
       @pricing = Pricing.new(@pricing_data)
       @reasoning_options = normalize_reasoning_options(reasoning_options_from(data))
@@ -236,11 +241,19 @@ module RubyLLM
     private
 
     # A deployment costs what its model costs, unless it has prices of its
-    # own.
+    # own. A deployment a context declared carries its model's id.
     def configured_prices(prices)
-      deployed = @deployed_model_id || provider_class&.deployed_model_id(id, RubyLLM.config)
-      keys = [deployed, id].compact.map { |model_id| [provider.to_s, model_id.to_s] }
-      prices.values_at(*keys).compact.reduce({}, :merge)
+      deployed = metadata[:deployed_model_id] || provider_class&.deployed_model_id(id, RubyLLM.config)
+      [deployed, id].compact.flat_map { |model_id| prices_named(prices, model_id.to_s) }.reduce({}, :merge)
+    end
+
+    # The prices set under an alias of +model_id+, then the ones set under
+    # the id itself.
+    def prices_named(prices, model_id)
+      aliased = prices.select do |(slug, name), _|
+        slug == provider.to_s && name != model_id && Models::Aliases.resolve(name, slug) == model_id
+      end
+      [*aliased.values, prices[[provider.to_s, model_id]]].compact
     end
 
     def usage_entries_of(source)

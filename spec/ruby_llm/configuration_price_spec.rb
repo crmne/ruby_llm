@@ -95,6 +95,37 @@ RSpec.describe RubyLLM::Configuration, '#price' do
     expect(priced_model('gpt-5.6-terra').price(:input)).to eq(0.2)
   end
 
+  it 'prices a model on a provider RubyLLM does not know' do
+    RubyLLM.config.price 'house-model', provider: :house, input: 1
+
+    expect(priced_model('house-model', provider: 'house').price(:input)).to eq(1)
+  end
+
+  describe 'under an alias' do
+    let(:haiku) { RubyLLM.models.find('claude-haiku-4-5', provider: :anthropic) }
+
+    it 'prices the model the alias names' do
+      RubyLLM.config.price 'claude-haiku-4-5', provider: :anthropic, input: 9
+
+      expect(haiku).to have_attributes(id: 'claude-haiku-4-5-20251001')
+      expect(haiku.price(:input)).to eq(9)
+    end
+
+    it 'gives way to prices under the id itself' do
+      RubyLLM.config.price 'claude-haiku-4-5-20251001', provider: :anthropic, input: 8
+      RubyLLM.config.price 'claude-haiku-4-5', provider: :anthropic, input: 9, output: 7
+
+      expect([haiku.price(:input), haiku.price(:output)]).to eq([8, 7])
+    end
+
+    it 'prices the provider it names only' do
+      RubyLLM.config.price 'claude-haiku-4-5', provider: :azure, input: 9
+      listed = haiku.registry_pricing.text_tokens.input
+
+      expect(haiku.price(:input)).to eq(listed)
+    end
+  end
+
   it 'prices a model the registry does not list' do
     RubyLLM.config.price 'house-model', provider: :azure, input: 1
 

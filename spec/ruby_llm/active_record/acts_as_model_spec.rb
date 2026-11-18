@@ -124,6 +124,14 @@ RSpec.describe RubyLLM::ActiveRecord::Model do # rubocop:disable RSpec/SpecFileP
     expect(described_class.from_llm(model_info).pricing.dig('text_tokens', 'standard', 'input_per_million')).to eq(1.0)
   end
 
+  it 'costs a stored deployment a context declared as the model it deploys' do
+    context = RubyLLM.context { |config| config.azure_deployments = { 'ledger-reader' => 'gpt-4o' } }
+    deployment = RubyLLM.models.find('ledger-reader', provider: :azure, config: context.config)
+    RubyLLM.config.price 'gpt-4o', provider: :azure, input: 9
+
+    expect(described_class.from_llm(deployment).to_llm.price(:input)).to eq(9)
+  end
+
   it 'does not expose application acts_as macros for internal records' do
     expect(ActiveRecord::Base).not_to respond_to(:acts_as_model)
     expect(ActiveRecord::Base).not_to respond_to(:acts_as_tool_call)
