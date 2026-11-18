@@ -35,7 +35,7 @@ module RubyLLM
     # The provider-neutral options #with_compaction accepts.
     COMPACTION_OPTIONS = %i[at instructions pause_after].freeze
     THINKING_OPTIONS = %i[effort budget display].freeze
-    TOOL_OPTIONS = %i[choice calls concurrency rounds].freeze
+    TOOL_OPTIONS = %i[choice calls concurrency workers rounds].freeze
     PAUSED = Object.new.freeze
     TOOL_CHOICE_MODES = %i[auto none required].freeze
     AGENT_RUN_KEY = :ruby_llm_agent_run
@@ -138,11 +138,12 @@ module RubyLLM
 
     attr_reader :tool_prefs, :fallback_errors, :usage_entries # :nodoc:
 
-    # Returns the +choice+, +calls+, +concurrency+, and +rounds+ set with
-    # #with_tool_options, with +nil+ for anything left at the default.
+    # Returns the +choice+, +calls+, +concurrency+, +workers+, and +rounds+
+    # set with #with_tool_options, with +nil+ for anything left at the
+    # default.
     def tool_options
       { choice: tool_prefs[:choice], calls: tool_prefs[:calls] || @tool_call_cap, concurrency: concurrency,
-        rounds: @tool_rounds }
+        workers: @tool_workers, rounds: @tool_rounds }
     end
 
     # Creates a chat with +model:+, or with the configured default model
@@ -855,6 +856,9 @@ module RubyLLM
     # emits one +tool_calls_capped.ruby_llm+ event per response. It is off
     # by default. +concurrency:+ runs tool calls
     # concurrently: +true+ or +:threads+ for threads, +:fibers+ for fibers.
+    # +workers:+ limits how many of a response's calls run at once under
+    # +concurrency:+. The others wait their turn, and every call still
+    # runs. Without it they all start together.
     # +rounds:+ limits how many model responses that ask for tools one
     # #complete may run, however many calls each holds. It is off by
     # default. Once the last round's results are saved, #complete raises
@@ -862,10 +866,12 @@ module RubyLLM
     # #complete continues with a fresh count, as does a pause for a person.
     # #step is not limited. An omitted option is left unchanged; passing
     # +nil+ explicitly resets that option (+concurrency: nil+ returns to the
-    # configured default, +rounds: nil+ removes the limit). Returns +self+.
+    # configured default, +rounds: nil+ and +workers: nil+ remove the
+    # limit). Returns +self+.
     #
     #   chat.with_tools(Weather, Search).with_tool_options(choice: :required)
     #   chat.with_tool_options(calls: :one, concurrency: :threads)
+    #   chat.with_tool_options(concurrency: :threads, workers: 4)
     #   chat.with_tool_options(rounds: 25, calls: 50)
     #   chat.with_tool_options(choice: nil)
     #
@@ -875,7 +881,8 @@ module RubyLLM
         when :choice then apply_tool_choice(value)
         when :calls then apply_tool_calls(value)
         when :concurrency then apply_tool_concurrency(value)
-        when :rounds then @tool_rounds = normalize_rounds(value)
+        when :workers then @tool_workers = normalize_limit(:workers, value)
+        when :rounds then @tool_rounds = normalize_limit(:rounds, value)
         else raise ArgumentError, "Unknown tool option: #{option}. Valid options are: #{TOOL_OPTIONS.join(', ')}"
         end
       end
@@ -2775,7 +2782,8 @@ module RubyLLM
     def execute_tools_concurrently(tool_calls, &on_result)
       exclusive = ->(tool_call) { exclusive_call?(tool_call) }
       paused = ->(result) { result.equal?(PAUSED) }
-      ToolConcurrency.run(concurrency, tool_calls, exclusive:, paused:, on_result:, config: @config) do |tool_call|
+      ToolConcurrency.run(concurrency, tool_calls, exclusive:, paused:, workers: @tool_workers, on_result:,
+                                                   config: @config) do |tool_call|
         execute_tool_with_callbacks(tool_call)
       end
     end
@@ -3116,10 +3124,10 @@ module RubyLLM
       end
     end
 
-    def normalize_rounds(rounds)
-      return rounds if rounds.nil? || (rounds.is_a?(Integer) && rounds.positive?)
+    def normalize_limit(option, limit)
+      return limit if limit.nil? || (limit.is_a?(Integer) && limit.positive?)
 
-      raise ArgumentError, "Invalid rounds value: #{rounds.inspect}. Valid values are positive integers"
+      raise ArgumentError, "Invalid #{option} value: #{limit.inspect}. Valid values are positive integers"
     end
 
     def normalize_tool_choice(choice)

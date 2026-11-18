@@ -83,11 +83,11 @@ A larger number caps the calls RubyLLM runs from one response, whatever the prov
 
 ### Clearing Tools and Options
 
-Call `with_tools(nil)` to clear the attached tool list. It leaves the options set with `with_tool_options` in place; pass `nil` options to reset `choice`, `calls`, `concurrency`, and `rounds`:
+Call `with_tools(nil)` to clear the attached tool list. It leaves the options set with `with_tool_options` in place; pass `nil` options to reset `choice`, `calls`, `concurrency`, `workers`, and `rounds`:
 
 ```ruby
 chat.with_tools(nil)       # forget the tools, keep the options
-chat.with_tool_options(choice: nil, calls: nil, concurrency: nil, rounds: nil) # reset all four
+chat.with_tool_options(choice: nil, calls: nil, concurrency: nil, workers: nil, rounds: nil) # reset all five
 ```
 
 ## Asking a Person
@@ -346,34 +346,29 @@ for all tool results before asking the model for the next response.
 
 ### Limiting How Many Calls Run at Once
 
-Every call in a response starts at once. When the tools reach a rate-limited API, hand out a fixed number of slots with [`around_tool_call`]({% link _core_features/chat-callbacks.md %}#wrapping-tool-calls), which runs in the thread or fiber that runs the call:
+Every call in a response starts at once. When the tools reach a rate-limited API, or each call is heavy, give the response a fixed number of workers:
 
 ```ruby
-slots = Thread::Queue.new
-4.times { slots << true }
+chat.with_tool_options(concurrency: :threads, workers: 4)
+```
+
+Every call still runs and returns its result, four at a time, and only four threads or fibers exist. `workers: nil` removes the limit. To skip the calls past a limit instead, see [`calls:`](#limiting-tool-calls).
+
+The limit covers one response of one chat. To share a limit between chats, such as one API quota for the whole application, take a slot in [`around_tool_call`]({% link _core_features/chat-callbacks.md %}#wrapping-tool-calls), which runs in the thread or fiber that runs the call:
+
+```ruby
+SLOTS = Thread::Queue.new
+4.times { SLOTS << true }
 
 chat.with_tool_options(concurrency: :threads).around_tool_call do |_call, &run|
-  slot = slots.pop
+  slot = SLOTS.pop
   begin
     run.call
   ensure
-    slots << slot
+    SLOTS << slot
   end
 end
 ```
-
-With `:fibers`, use a semaphore from the `async` gem:
-
-```ruby
-require "async/semaphore"
-
-semaphore = Async::Semaphore.new(4)
-chat.with_tool_options(concurrency: :fibers).around_tool_call do |_call, &run|
-  semaphore.acquire { run.call }
-end
-```
-
-Every call still runs and returns its result, four at a time. To skip the calls past a limit instead, see [`calls:`](#limiting-tool-calls).
 
 ### Exclusive Tools
 

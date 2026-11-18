@@ -194,6 +194,62 @@ RSpec.describe RubyLLM::Chat::ToolConcurrency do
     )
   end
 
+  describe 'with workers' do
+    let(:many_calls) { (1..6).to_h { |number| [number, number] } }
+
+    def peak_of(mode)
+      running = 0
+      peak = 0
+      lock = Mutex.new
+      results = described_class.run(mode, many_calls, workers: 2) do |tool_call|
+        lock.synchronize { peak = [peak, running += 1].max }
+        Timeout.timeout(5) { sleep 0.001 until peak >= 2 }
+        sleep 0.02
+        lock.synchronize { running -= 1 }
+        tool_call * 10
+      end
+      [peak, results]
+    end
+
+    %i[threads fibers].each do |mode|
+      it "runs every call with #{mode}, no more than the workers at once" do
+        peak, results = peak_of(mode)
+
+        expect(peak).to eq(2)
+        expect(results).to eq(many_calls.values.map { |number| [number, number * 10] })
+      end
+
+      it "starts no more calls with #{mode} once one has raised" do
+        started = Queue.new
+
+        expect do
+          described_class.run(mode, many_calls, workers: 1) do |tool_call|
+            started << tool_call
+            raise ArgumentError, 'tool blew up'
+          end
+        end.to raise_error(ArgumentError, 'tool blew up')
+        expect(started.size).to eq(1)
+      end
+    end
+
+    it 'starts no more threads than the calls' do
+      allow(Thread).to receive(:new).and_call_original
+
+      described_class.run(:threads, tool_calls, workers: 8) { |tool_call| tool_call }
+
+      expect(Thread).to have_received(:new).twice
+    end
+
+    it 'raises when the thread of a worker exits, without waiting for the calls behind it' do
+      calls = (1..3).to_h { |id| [id, RubyLLM::ToolCall.new(id: id.to_s, name: 'gone', arguments: {})] }
+
+      Timeout.timeout(2) do
+        expect { described_class.run(:threads, calls, workers: 1) { Thread.exit } }
+          .to raise_error(RubyLLM::Error, /gone exited its thread/)
+      end
+    end
+  end
+
   it 'raises the first error a threaded tool call produced' do
     expect do
       described_class.run(:threads, tool_calls) { |_tool_call| raise ArgumentError, 'tool blew up' }
