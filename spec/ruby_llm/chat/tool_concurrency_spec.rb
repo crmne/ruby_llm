@@ -203,6 +203,7 @@ RSpec.describe RubyLLM::Chat::ToolConcurrency do
       lock = Mutex.new
       results = described_class.run(mode, many_calls, workers: 2) do |tool_call|
         lock.synchronize { peak = [peak, running += 1].max }
+        Timeout.timeout(5) { sleep 0.001 until peak >= 2 }
         sleep 0.02
         lock.synchronize { running -= 1 }
         tool_call * 10

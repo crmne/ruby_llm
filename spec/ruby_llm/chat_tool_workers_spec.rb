@@ -6,7 +6,7 @@ RSpec.describe RubyLLM::Chat do
   include_context 'with configured RubyLLM'
 
   let(:chat) { described_class.new(model: model_for(:anthropic)).with_tools(lookup) }
-  let(:running) { { now: 0, peak: 0, lock: Mutex.new } }
+  let(:running) { { now: 0, peak: 0, together: 2, lock: Mutex.new } }
 
   let(:lookup) do
     running = self.running
@@ -14,6 +14,7 @@ RSpec.describe RubyLLM::Chat do
       define_singleton_method(:tool_name) { 'lookup' }
       define_method(:execute) do
         running[:lock].synchronize { running[:peak] = [running[:peak], running[:now] += 1].max }
+        Timeout.timeout(5) { sleep 0.001 until running[:peak] >= running[:together] }
         sleep 0.02
         running[:lock].synchronize { running[:now] -= 1 }
         'found'
@@ -56,12 +57,13 @@ RSpec.describe RubyLLM::Chat do
     end
 
     it 'resets with nil' do
+      running[:together] = 3
       chat.with_tool_options(concurrency: :threads, workers: 2).with_tool_options(workers: nil)
       allow(chat.provider).to receive(:complete).and_return(calls(6), answer)
       chat.ask('Go')
 
       expect(chat.tool_options[:workers]).to be_nil
-      expect(running[:peak]).to be > 2
+      expect(running[:peak]).to be >= 3
     end
 
     [0, -1, 1.5, '4', :many, true].each do |value|
