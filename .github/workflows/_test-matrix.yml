@@ -88,7 +88,8 @@ jobs:
         if: matrix.ruby-version == '4.0' && matrix.rails-version == 'rails-8.1'
         continue-on-error: true
         run: |
-          ruby -e "$(curl -fsSL https://undercover-ci.com/uploader.rb)" -- \
+          curl -fsSL https://undercover-ci.com/uploader.rb -o "$RUNNER_TEMP/undercover-uploader.rb"
+          ruby "$RUNNER_TEMP/undercover-uploader.rb" \
             --repo ${{ github.repository }} \
             --commit ${{ github.event.pull_request.head.sha || github.sha }} \
             --simplecov coverage/coverage.json
