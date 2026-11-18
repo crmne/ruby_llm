@@ -10,7 +10,7 @@ http_interactions:
         a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:35:56 GMT
+      - Wed, 18 Nov 2026 06:50:06 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -49,7 +49,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '866'
+      - '1037'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -76,9 +76,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_099cc84a7f1742d2016af90c7b3b8487d2a0f226c3ed2a2f78",
+          "id": "resp_06c580083394bec7016afd4a9d2ce487d282f297a909dd3846",
           "object": "response",
-          "created_at": 1794706555,
+          "created_at": 1794984605,
           "status": "completed",
           "access_programs": {
             "cyber": "standard"
@@ -87,7 +87,7 @@ http_interactions:
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794706556,
+          "completed_at": 1794984606,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
@@ -102,11 +102,11 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "fc_099cc84a7f1742d2016af90c7bf95087d2a90306876a96bcd8",
+              "id": "fc_06c580083394bec7016afd4a9e153487d294b13891df65f246",
               "type": "function_call",
               "status": "completed",
               "arguments": "{}",
-              "call_id": "call_wM1VoFMpL3X7YxKL19DrzzNM",
+              "call_id": "call_Q6C54PdC5bTkhVRTaP0WQJjX",
               "name": "dice_roll"
             }
           ],
@@ -188,18 +188,18 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Sun, 15 Nov 2026 01:35:56 GMT
+  recorded_at: Wed, 18 Nov 2026 06:50:06 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
       string: '{"model":"gpt-6.1-sol","input":[{"role":"user","content":"Roll a die
-        for me"},{"type":"function_call","call_id":"call_wM1VoFMpL3X7YxKL19DrzzNM","name":"dice_roll","arguments":"{}"},{"type":"function_call_output","call_id":"call_wM1VoFMpL3X7YxKL19DrzzNM","output":"{\"roll\":1}"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"dice_roll","description":"Rolls
+        for me"},{"type":"function_call","call_id":"call_Q6C54PdC5bTkhVRTaP0WQJjX","name":"dice_roll","arguments":"{}"},{"type":"function_call_output","call_id":"call_Q6C54PdC5bTkhVRTaP0WQJjX","output":"{\"roll\":6}"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -214,7 +214,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:35:57 GMT
+      - Wed, 18 Nov 2026 06:50:07 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -238,7 +238,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1452'
+      - '1264'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -265,9 +265,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_06439b76f73609c7016af90c7c40ec87d2ae0212b4882e5509",
+          "id": "resp_0d959dc5f4a26c6d016afd4a9e4cc887d2b8ae3aa7d42d93c9",
           "object": "response",
-          "created_at": 1794706556,
+          "created_at": 1794984606,
           "status": "completed",
           "access_programs": {
             "cyber": "standard"
@@ -276,7 +276,7 @@ http_interactions:
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794706557,
+          "completed_at": 1794984607,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
@@ -291,7 +291,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_06439b76f73609c7016af90c7d6b6487d2b5d8fdbbe6879ab3",
+              "id": "msg_0d959dc5f4a26c6d016afd4a9f283487d2ba7f09adbb9e9de9",
               "type": "message",
               "status": "completed",
               "content": [
@@ -299,7 +299,7 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "\ud83c\udfb2 You rolled a **1**."
+                  "text": "\ud83c\udfb2 You rolled a **6**!"
                 }
               ],
               "phase": "final_answer",
@@ -384,5 +384,5 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Sun, 15 Nov 2026 01:35:57 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:50:07 GMT
+recorded_with: VCR 6.4.1

@@ -9,7 +9,7 @@ http_interactions:
         is 5 + 3?"}]}],"stream":false,"max_tokens":524288,"thinking":{"type":"adaptive"},"output_config":{"effort":"medium"}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -28,25 +28,25 @@ http_interactions:
       Content-Length:
       - '324'
       Trace-Id:
-      - '07483dbfdf1eeda6a7105406d76c4b97'
+      - 074c7b85add21fc145d1ab0a9c5520e6
       X-Session-Id:
       - 274551bcc9e22f9f6058802300eb6876
       X-Mm-Request-Id:
-      - 2092934004998157135_1794706111vs2nla
+      - 2092934004998157135_1794984069actr20
       Minimax-Request-Id:
-      - 650ca57fb7a2e1b864a798fe4b3f148e
+      - 6f6cc27fbe66b75bcbd31a1a4463914e
       Alb-Receive-Time:
-      - '1794706111.091'
+      - '1794984069.707'
       Alb-Request-Id:
-      - 5f08c4ab4643639a96cb2f9935c677fe90dcda3b
+      - db4469eb0218d83f64b8231501c8f1a123110c48
       Expires:
-      - Sun, 15 Nov 2026 01:28:31 GMT
+      - Wed, 18 Nov 2026 06:41:16 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Sun, 15 Nov 2026 01:28:31 GMT
+      - Wed, 18 Nov 2026 06:41:16 GMT
       Connection:
       - keep-alive
       Access-Control-Allow-Origin:
@@ -55,8 +55,8 @@ http_interactions:
       - ak
     body:
       encoding: UTF-8
-      string: '{"id":"07483dbfdf1eeda6a7105406d76c4b97","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"text":"8","type":"text"}],"usage":{"input_tokens":13,"output_tokens":3,"cache_creation_input_tokens":0,"cache_read_input_tokens":197},"stop_reason":"end_turn","base_resp":{"status_code":0,"status_msg":""}}'
-  recorded_at: Sun, 15 Nov 2026 01:28:31 GMT
+      string: '{"id":"074c7b85add21fc145d1ab0a9c5520e6","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"text":"8","type":"text"}],"usage":{"input_tokens":82,"output_tokens":3,"cache_creation_input_tokens":0,"cache_read_input_tokens":128},"stop_reason":"end_turn","base_resp":{"status_code":0,"status_msg":""}}'
+  recorded_at: Wed, 18 Nov 2026 06:41:16 GMT
 - request:
     method: post
     uri: https://api.minimax.io/anthropic/v1/messages
@@ -67,7 +67,7 @@ http_interactions:
         multiply that by 2"}]}],"stream":false,"max_tokens":524288,"thinking":{"type":"adaptive"},"output_config":{"effort":"medium"}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -84,27 +84,27 @@ http_interactions:
       Content-Type:
       - application/json; charset=utf-8
       Content-Length:
-      - '325'
+      - '326'
       Trace-Id:
-      - '07483dbfb3ce87b09a549d1568973380'
+      - 074c7b8c0553c9fbdf188b7f201503de
       X-Session-Id:
       - 274551bcc9e22f9f6058802300eb6876
       X-Mm-Request-Id:
-      - 2092934004998157135_1794706111e9phed
+      - 2092934004998157135_17949840763tdxd9
       Minimax-Request-Id:
-      - 9e8ac1432ccf12c8e33e084783e60f9c
+      - 68e624449b8b7c8d25c0d2fe786a36b7
       Alb-Receive-Time:
-      - '1794706111.974'
+      - '1794984076.691'
       Alb-Request-Id:
-      - 37e6c58fc489c834127307e00bf1ed2fad410c3d
+      - 252e388b8c87f061580814c2d744cc6e6cb0e5b3
       Expires:
-      - Sun, 15 Nov 2026 01:28:32 GMT
+      - Wed, 18 Nov 2026 06:41:17 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Sun, 15 Nov 2026 01:28:32 GMT
+      - Wed, 18 Nov 2026 06:41:17 GMT
       Connection:
       - keep-alive
       Access-Control-Allow-Origin:
@@ -113,6 +113,6 @@ http_interactions:
       - ak
     body:
       encoding: UTF-8
-      string: '{"id":"07483dbfb3ce87b09a549d1568973380","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"text":"16","type":"text"}],"usage":{"input_tokens":18,"output_tokens":3,"cache_creation_input_tokens":0,"cache_read_input_tokens":210},"stop_reason":"end_turn","base_resp":{"status_code":0,"status_msg":""}}'
-  recorded_at: Sun, 15 Nov 2026 01:28:32 GMT
-recorded_with: VCR 6.4.0
+      string: '{"id":"074c7b8c0553c9fbdf188b7f201503de","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"text":"16","type":"text"}],"usage":{"input_tokens":100,"output_tokens":3,"cache_creation_input_tokens":0,"cache_read_input_tokens":128},"stop_reason":"end_turn","base_resp":{"status_code":0,"status_msg":""}}'
+  recorded_at: Wed, 18 Nov 2026 06:41:17 GMT
+recorded_with: VCR 6.4.1

@@ -9,7 +9,7 @@ http_interactions:
         is the creator of the programming language Ruby?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -30,7 +30,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Sun, 15 Nov 2026 01:20:21 GMT
+      - Wed, 18 Nov 2026 06:36:12 GMT
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -40,40 +40,37 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - b8f30e2069f41fc12f6c59c7bd6535fa
+      - 9e9ed639003fe2c602d8c071d1c0c770
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 826a57ac22bb182622bb767d7ed86c26.cloudfront.net (CloudFront)
+      - 1.1 07612651e03eef4292eed033ad965d0e.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
       - TXL52-P4
       X-Amz-Cf-Id:
-      - pQRMuaJvCKp-MscG25Zc27Zzha2C3TqIs4Te1vr1SqGZjnQb4WXpJA==
+      - p3u4jqilyryYTtcIRghxZMkqhc558rLJkurFIty-cAwWpHeLIyL_zw==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"06f1988c-7462-4ef7-b611-c8a2fb7ee084","object":"chat.completion","created":1794705621,"model":"deepseek-flash","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        creator of the Ruby programming language is **Yukihiro Matsumoto**, also known
-        as **Matz**.","reasoning_content":"We need answer. Need answer concise. Creator
-        of Ruby: Yukihiro Matsumoto (Matz). Maybe mention. Final."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":40,"completion_tokens":52,"total_tokens":92,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":27},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":40},"system_fingerprint":"bc19ba97cbe016479903222bb1578db6"}'
-  recorded_at: Sun, 15 Nov 2026 01:20:22 GMT
+      string: !binary |-
+        eyJpZCI6IjE5OTM5NGNmLTZiMDUtNGM4MC1hZTc3LTYyZGYyNTg0YjQ5MSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTQ5ODM3NzIsIm1vZGVsIjoiZGVlcHNlZWstZmxhc2giLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlJ1Ynkgd2FzIGNyZWF0ZWQgYnkgKipZdWtpaGlybyDigJxNYXR64oCdIE1hdHN1bW90byoqLiIsInJlYXNvbmluZ19jb250ZW50IjoiV2UgbmVlZCBhbnN3ZXIuIE5lZWQgYmUgY2FyZWZ1bC4gQ3JlYXRvciBvZiBSdWJ5OiBZdWtpaGlybyBcIk1hdHpcIiBNYXRzdW1vdG8uIFByb3ZpZGUgY29uY2lzZS4gZmluYWwuIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NDAsImNvbXBsZXRpb25fdG9rZW5zIjo0NiwidG90YWxfdG9rZW5zIjo4NiwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjI4fSwicHJvbXB0X2NhY2hlX2hpdF90b2tlbnMiOjAsInByb21wdF9jYWNoZV9taXNzX3Rva2VucyI6NDB9LCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJiYzE5YmE5N2NiZTAxNjQ3OTkwMzIyMmJiMTU3OGRiNiJ9
+  recorded_at: Wed, 18 Nov 2026 06:36:12 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"deepseek-v4-flash","messages":[{"role":"user","content":"Who
-        is the creator of the programming language Ruby?"},{"role":"assistant","content":"The
-        creator of the Ruby programming language is **Yukihiro Matsumoto**, also known
-        as **Matz**.","reasoning_content":"We need answer. Need answer concise. Creator
-        of Ruby: Yukihiro Matsumoto (Matz). Maybe mention. Final.","reasoning":"We
-        need answer. Need answer concise. Creator of Ruby: Yukihiro Matsumoto (Matz).
-        Maybe mention. Final."},{"role":"user","content":"What year did he create
-        Ruby?"}],"stream":false}'
+        is the creator of the programming language Ruby?"},{"role":"assistant","content":"Ruby
+        was created by **Yukihiro “Matz” Matsumoto**.","reasoning_content":"We need
+        answer. Need be careful. Creator of Ruby: Yukihiro \"Matz\" Matsumoto. Provide
+        concise. final.","reasoning":"We need answer. Need be careful. Creator of
+        Ruby: Yukihiro \"Matz\" Matsumoto. Provide concise. final."},{"role":"user","content":"What
+        year did he create Ruby?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -94,7 +91,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Sun, 15 Nov 2026 01:20:22 GMT
+      - Wed, 18 Nov 2026 06:36:13 GMT
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -104,24 +101,20 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - bbf682e1d9dbcbe332130ab6a8731a79
+      - 6287386a414c761174bf5a61d896abbd
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 cd3dcd861336f875b918b4feb519ddca.cloudfront.net (CloudFront)
+      - 1.1 25caf7ddbe5cc1b13bee94fe7993749e.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL52-P4
+      - TXL52-P3
       X-Amz-Cf-Id:
-      - PKS01swK_bXFUdQ-2WboejZ048LI-gUkUJkHGqbH4r9zGJ_6jNg1LQ==
+      - pG4mSo3arh4ar3bhwFh--18V6t-eQ9fIutKmV8B_TnsDg9ufhDJBwg==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"0359e66a-4c72-4e34-8f3d-c26e0f9b521c","object":"chat.completion","created":1794705622,"model":"deepseek-flash","choices":[{"index":0,"message":{"role":"assistant","content":"Yukihiro
-        Matsumoto began developing Ruby in **1993** and released it publicly in **1995**.","reasoning_content":"We
-        need answer. Need know Ruby creation year. Yukihiro Matsumoto began work on
-        Ruby in 1993, first public release 1995. Question \"What year did he create
-        Ruby?\" Likely 1993 or 1995 depending phrasing. Need clarify: began developing
-        in 1993, released publicly in 1995. Answer concise."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":75,"completion_tokens":98,"total_tokens":173,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":73},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":75},"system_fingerprint":"bc19ba97cbe016479903222bb1578db6"}'
-  recorded_at: Sun, 15 Nov 2026 01:20:23 GMT
-recorded_with: VCR 6.4.0
+      string: !binary |-
+        eyJpZCI6IjE1OTZhMGEzLWM5NTAtNGNjMi1hYmVjLTFkZjIzNGYyZmViNSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTQ5ODM3NzMsIm1vZGVsIjoiZGVlcHNlZWstZmxhc2giLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6Ill1a2loaXJvIOKAnE1hdHrigJ0gTWF0c3Vtb3RvIGJlZ2FuIGRldmVsb3BpbmcgUnVieSBpbiAqKjE5OTMqKiBhbmQgcmVsZWFzZWQgdGhlIGZpcnN0IHB1YmxpYyB2ZXJzaW9uIGluICoqMTk5NSoqLiBTbyBpZiDigJxjcmVhdGVk4oCdIG1lYW5zIGZpcnN0IHB1YmxpYyByZWxlYXNlLCB0aGUgeWVhciBpcyAqKjE5OTUqKi4iLCJyZWFzb25pbmdfY29udGVudCI6IldlIG5lZWQgYW5zd2VyLiBOZWVkIGtub3cgUnVieSBjcmVhdGlvbiB5ZWFyLiBZdWtpaGlybyBNYXRzdW1vdG8gYmVnYW4gd29yayBpbiAxOTkzLCBmaXJzdCBwdWJsaWMgcmVsZWFzZSAxOTk1LiBRdWVzdGlvbiBcIldoYXQgeWVhciBkaWQgaGUgY3JlYXRlIFJ1Ynk/XCIgVXN1YWxseSBSdWJ5IHdhcyBjcmVhdGVkIGluIDE5OTU/IExldCdzIHZlcmlmeTogUnVieSBkZXNpZ25lZCBhbmQgZGV2ZWxvcGVkIGJ5IE1hdHogc3RhcnRpbmcgaW4gMTk5MywgcmVsZWFzZWQgaW4gMTk5NS4gSWYgYXNrZWQgY3JlYXRlIHllYXIsIGNvbW1vbiBhbnN3ZXIgMTk5NS4gQnV0IFwiY3JlYXRlZFwiIGNvdWxkIGJlIDE5OTMuIE5lZWQgbnVhbmNlLiBGaW5hbCBjb25jaXNlOiBiZWdhbiBkZXZlbG9waW5nIGluIDE5OTMsIGZpcnN0IHB1YmxpYyByZWxlYXNlIGluIDE5OTUuIEFuc3dlciBsaWtlbHkgMTk5NS4gTWVudGlvbiBib3RoLiJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjY4LCJjb21wbGV0aW9uX3Rva2VucyI6MTcwLCJ0b3RhbF90b2tlbnMiOjIzOCwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjEyMn0sInByb21wdF9jYWNoZV9oaXRfdG9rZW5zIjowLCJwcm9tcHRfY2FjaGVfbWlzc190b2tlbnMiOjY4fSwic3lzdGVtX2ZpbmdlcnByaW50IjoiYmMxOWJhOTdjYmUwMTY0Nzk5MDMyMjJiYjE1NzhkYjYifQ==
+  recorded_at: Wed, 18 Nov 2026 06:36:14 GMT
+recorded_with: VCR 6.4.1

@@ -14,7 +14,7 @@ http_interactions:
       Accept-Encoding:
       - identity
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -31,25 +31,25 @@ http_interactions:
       Vary:
       - Accept-Encoding
       Trace-Id:
-      - '07483d56af041aaf7a157e1f96caaa26'
+      - 074c7b7512af5f396b6c392baf652fc9
       X-Session-Id:
       - f950ddba17296fc881a49ec8d6450c57
       X-Mm-Request-Id:
-      - 2092934004998157135_1794706006xdarrl
+      - 2092934004998157135_1794984053aheegc
       Minimax-Request-Id:
-      - be31bd185f6771585e63d08fbc8f8087
+      - 54038373a7e37bd0e2eefbb8c8fa9726
       Alb-Receive-Time:
-      - '1794706006.061'
+      - '1794984053.565'
       Alb-Request-Id:
-      - 5d13094a69a1d5e3c271f48b003a404feceff738
+      - fd9fc65be6c2501de23f42a16de71b35dd6855b9
       Expires:
-      - Sun, 15 Nov 2026 01:26:48 GMT
+      - Wed, 18 Nov 2026 06:40:54 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Sun, 15 Nov 2026 01:26:48 GMT
+      - Wed, 18 Nov 2026 06:40:54 GMT
       Transfer-Encoding:
       - chunked
       Connection:
@@ -63,7 +63,7 @@ http_interactions:
       encoding: UTF-8
       string: |+
         event: message_start
-        data: {"type":"message_start","message":{"id":"07483d56af041aaf7a157e1f96caaa26","type":"message","role":"assistant","content":[],"model":"MiniMax-M3.1-Flash","stop_reason":null,"stop_sequence":null,"usage":{"input_tokens":0,"output_tokens":0}}}
+        data: {"type":"message_start","message":{"id":"074c7b7512af5f396b6c392baf652fc9","type":"message","role":"assistant","content":[],"model":"MiniMax-M3.1-Flash","stop_reason":null,"stop_sequence":null,"usage":{"input_tokens":0,"output_tokens":0}}}
 
         event: ping
         data: {"type":"ping"}
@@ -78,7 +78,7 @@ http_interactions:
         data: {"type":"content_block_stop","index":0}
 
         event: content_block_start
-        data: {"type":"content_block_start","index":1,"content_block":{"type":"tool_use","id":"chatcmpl-tool-b1ca2b799c333eb7","name":"weather","input":{}}}
+        data: {"type":"content_block_start","index":1,"content_block":{"type":"tool_use","id":"chatcmpl-tool-befc1e3740f638a0","name":"weather","input":{}}}
 
         event: content_block_delta
         data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":""}}
@@ -90,12 +90,12 @@ http_interactions:
         data: {"type":"content_block_stop","index":1}
 
         event: message_delta
-        data: {"type":"message_delta","delta":{"stop_reason":"tool_use"},"usage":{"input_tokens":243,"output_tokens":52,"cache_read_input_tokens":256}}
+        data: {"type":"message_delta","delta":{"stop_reason":"tool_use"},"usage":{"input_tokens":499,"output_tokens":52}}
 
         event: message_stop
         data: {"type":"message_stop"}
 
-  recorded_at: Sun, 15 Nov 2026 01:26:48 GMT
+  recorded_at: Wed, 18 Nov 2026 06:40:55 GMT
 - request:
     method: post
     uri: https://api.minimax.io/anthropic/v1/messages
@@ -103,7 +103,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"MiniMax-M3.1-Flash","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         the weather in Berlin? (52.5200, 13.4050)"}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
-        check the current weather in Berlin for you."},{"type":"tool_use","id":"chatcmpl-tool-b1ca2b799c333eb7","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"chatcmpl-tool-b1ca2b799c333eb7","content":[{"type":"text","text":"Current
+        check the current weather in Berlin for you."},{"type":"tool_use","id":"chatcmpl-tool-befc1e3740f638a0","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"chatcmpl-tool-befc1e3740f638a0","content":[{"type":"text","text":"Current
         weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}]}],"stream":true,"max_tokens":524288,"tools":[{"name":"weather","description":"Gets
         current weather for a location","input_schema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
@@ -112,7 +112,7 @@ http_interactions:
       Accept-Encoding:
       - identity
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -129,25 +129,25 @@ http_interactions:
       Vary:
       - Accept-Encoding
       Trace-Id:
-      - '07483d58e727f73c332485a9c118e35a'
+      - 074c7b7805000009e059fe42dd06bbee
       X-Session-Id:
       - f950ddba17296fc881a49ec8d6450c57
       X-Mm-Request-Id:
-      - 2092934004998157135_1794706008uum2kf
+      - 2092934004998157135_1794984056iac1lx
       Minimax-Request-Id:
-      - a536bf71bf762ee903e7f0676c43a481
+      - 40fdb7c61feb3df8358d1ea390b68fc6
       Alb-Receive-Time:
-      - '1794706008.578'
+      - '1794984056.181'
       Alb-Request-Id:
-      - 350e26a8f6b233765804a4227c700d9b92d9f7a2
+      - e6a6710ffdb4670956feacaa58c9ce2575b192ff
       Expires:
-      - Sun, 15 Nov 2026 01:26:51 GMT
+      - Wed, 18 Nov 2026 06:40:56 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Sun, 15 Nov 2026 01:26:51 GMT
+      - Wed, 18 Nov 2026 06:40:56 GMT
       Transfer-Encoding:
       - chunked
       Connection:
@@ -160,8 +160,8 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ZXZlbnQ6IG1lc3NhZ2Vfc3RhcnQKZGF0YTogeyJ0eXBlIjoibWVzc2FnZV9zdGFydCIsIm1lc3NhZ2UiOnsiaWQiOiIwNzQ4M2Q1OGU3MjdmNzNjMzMyNDg1YTljMTE4ZTM1YSIsInR5cGUiOiJtZXNzYWdlIiwicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOltdLCJtb2RlbCI6Ik1pbmlNYXgtTTMuMS1GbGFzaCIsInN0b3BfcmVhc29uIjpudWxsLCJzdG9wX3NlcXVlbmNlIjpudWxsLCJ1c2FnZSI6eyJpbnB1dF90b2tlbnMiOjAsIm91dHB1dF90b2tlbnMiOjB9fX0KCmV2ZW50OiBwaW5nCmRhdGE6IHsidHlwZSI6InBpbmcifQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfc3RhcnQKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19zdGFydCIsImluZGV4IjowLCJjb250ZW50X2Jsb2NrIjp7InR5cGUiOiJ0ZXh0IiwidGV4dCI6IiJ9fQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiJUaGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiAoNTIuNTIwMCwgMTMuNDA1MCkgaXM6XG5cbi0gKipUZW1wZXJhdHVyZSJ9fQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiI6KiogMTXCsENcbi0gKipXaW5kOioqIDEwIGttL2hcblxuQSBtaWxkLCBwbGVhc2FudCBkYXkgaW4gdGhlIn19CgpldmVudDogY29udGVudF9ibG9ja19kZWx0YQpkYXRhOiB7InR5cGUiOiJjb250ZW50X2Jsb2NrX2RlbHRhIiwiaW5kZXgiOjAsImRlbHRhIjp7InR5cGUiOiJ0ZXh0X2RlbHRhIiwidGV4dCI6IiBHZXJtYW4gY2FwaXRhbCDigJQgbm8gamFja2V0IHdlYXRoZXIsIGJ1dCB5b3UgbWlnaHQgd2FudCBhIGxpZ2h0IGxheWVyIGZvciB0aGUgZXZlbmluZy4gTGV0IG1lIGtub3cifX0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiIGlmIHlvdSdkIGxpa2UgYW55IG90aGVyIGRldGFpbHMhIn19CgpldmVudDogY29udGVudF9ibG9ja19zdG9wCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfc3RvcCIsImluZGV4IjowfQoKZXZlbnQ6IG1lc3NhZ2VfZGVsdGEKZGF0YTogeyJ0eXBlIjoibWVzc2FnZV9kZWx0YSIsImRlbHRhIjp7InN0b3BfcmVhc29uIjoiZW5kX3R1cm4ifSwidXNhZ2UiOnsiaW5wdXRfdG9rZW5zIjo3OCwib3V0cHV0X3Rva2VucyI6NzMsImNhY2hlX3JlYWRfaW5wdXRfdG9rZW5zIjo1MTJ9fQoKZXZlbnQ6IG1lc3NhZ2Vfc3RvcApkYXRhOiB7InR5cGUiOiJtZXNzYWdlX3N0b3AifQoK
-  recorded_at: Sun, 15 Nov 2026 01:26:51 GMT
+        ZXZlbnQ6IG1lc3NhZ2Vfc3RhcnQKZGF0YTogeyJ0eXBlIjoibWVzc2FnZV9zdGFydCIsIm1lc3NhZ2UiOnsiaWQiOiIwNzRjN2I3ODA1MDAwMDA5ZTA1OWZlNDJkZDA2YmJlZSIsInR5cGUiOiJtZXNzYWdlIiwicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOltdLCJtb2RlbCI6Ik1pbmlNYXgtTTMuMS1GbGFzaCIsInN0b3BfcmVhc29uIjpudWxsLCJzdG9wX3NlcXVlbmNlIjpudWxsLCJ1c2FnZSI6eyJpbnB1dF90b2tlbnMiOjAsIm91dHB1dF90b2tlbnMiOjB9fX0KCmV2ZW50OiBwaW5nCmRhdGE6IHsidHlwZSI6InBpbmcifQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfc3RhcnQKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19zdGFydCIsImluZGV4IjowLCJjb250ZW50X2Jsb2NrIjp7InR5cGUiOiJ0ZXh0IiwidGV4dCI6IiJ9fQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiJUaGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiBpczpcblxuLSAqKlRlbXBlcmF0dXJlOioqIDE1wrBDXG4tICoqV2luZDoqKiAxMCBrbS9oXG5cbkEifX0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiIG1pbGQsIHBsZWFzYW50IGRheSBpbiB0aGUgR2VybWFuIGNhcGl0YWwuIElmIHlvdSdkIGxpa2UgbW9yZSBkZXRhaWxzIChsaWtlIGh1bWlkaXR5LCBwcmVjaXBpdGF0aW9uIGNoYW5jZXMifX0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiLCBvciBhIG11bHRpLWRheSBmb3JlY2FzdCksIGxldCBtZSBrbm93LiJ9fQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfc3RvcApkYXRhOiB7InR5cGUiOiJjb250ZW50X2Jsb2NrX3N0b3AiLCJpbmRleCI6MH0KCmV2ZW50OiBtZXNzYWdlX2RlbHRhCmRhdGE6IHsidHlwZSI6Im1lc3NhZ2VfZGVsdGEiLCJkZWx0YSI6eyJzdG9wX3JlYXNvbiI6ImVuZF90dXJuIn0sInVzYWdlIjp7ImlucHV0X3Rva2VucyI6MzM0LCJvdXRwdXRfdG9rZW5zIjo1OCwiY2FjaGVfcmVhZF9pbnB1dF90b2tlbnMiOjI1Nn19CgpldmVudDogbWVzc2FnZV9zdG9wCmRhdGE6IHsidHlwZSI6Im1lc3NhZ2Vfc3RvcCJ9Cgo=
+  recorded_at: Wed, 18 Nov 2026 06:40:58 GMT
 - request:
     method: post
     uri: https://api.minimax.io/anthropic/v1/messages
@@ -169,12 +169,11 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"MiniMax-M3.1-Flash","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         the weather in Berlin? (52.5200, 13.4050)"}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
-        check the current weather in Berlin for you."},{"type":"tool_use","id":"chatcmpl-tool-b1ca2b799c333eb7","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"chatcmpl-tool-b1ca2b799c333eb7","content":[{"type":"text","text":"Current
+        check the current weather in Berlin for you."},{"type":"tool_use","id":"chatcmpl-tool-befc1e3740f638a0","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"chatcmpl-tool-befc1e3740f638a0","content":[{"type":"text","text":"Current
         weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}]},{"role":"assistant","content":[{"type":"text","text":"The
-        current weather in Berlin (52.5200, 13.4050) is:\n\n- **Temperature:** 15°C\n-
-        **Wind:** 10 km/h\n\nA mild, pleasant day in the German capital — no jacket
-        weather, but you might want a light layer for the evening. Let me know if
-        you''d like any other details!"}]},{"role":"user","content":[{"type":"text","text":"What''s
+        current weather in Berlin is:\n\n- **Temperature:** 15°C\n- **Wind:** 10 km/h\n\nA
+        mild, pleasant day in the German capital. If you''d like more details (like
+        humidity, precipitation chances, or a multi-day forecast), let me know."}]},{"role":"user","content":[{"type":"text","text":"What''s
         the weather in Paris? (48.8575, 2.3514)"}]}],"stream":true,"max_tokens":524288,"tools":[{"name":"weather","description":"Gets
         current weather for a location","input_schema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
@@ -183,7 +182,7 @@ http_interactions:
       Accept-Encoding:
       - identity
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -200,25 +199,25 @@ http_interactions:
       Vary:
       - Accept-Encoding
       Trace-Id:
-      - '07483d5bc2f1c112e2e63d0bb4187e1f'
+      - 074c7b7bd5657b2ce93df0e5ba5f2c98
       X-Session-Id:
       - f950ddba17296fc881a49ec8d6450c57
       X-Mm-Request-Id:
-      - 2092934004998157135_179470601211gh2i
+      - 2092934004998157135_1794984059mn59wr
       Minimax-Request-Id:
-      - a0fe43118082edd0af506a1f9aee16e5
+      - bc693c326dee0c528ddd10b857b29ed7
       Alb-Receive-Time:
-      - '1794706011.983'
+      - '1794984059.093'
       Alb-Request-Id:
-      - b1113a1d131999ee6a9d3e362d76c699d5729f96
+      - 46900a5f3fdef3671de414e02c2ea224006b2703
       Expires:
-      - Sun, 15 Nov 2026 01:26:54 GMT
+      - Wed, 18 Nov 2026 06:40:59 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Sun, 15 Nov 2026 01:26:54 GMT
+      - Wed, 18 Nov 2026 06:40:59 GMT
       Transfer-Encoding:
       - chunked
       Connection:
@@ -232,7 +231,7 @@ http_interactions:
       encoding: UTF-8
       string: |+
         event: message_start
-        data: {"type":"message_start","message":{"id":"07483d5bc2f1c112e2e63d0bb4187e1f","type":"message","role":"assistant","content":[],"model":"MiniMax-M3.1-Flash","stop_reason":null,"stop_sequence":null,"usage":{"input_tokens":0,"output_tokens":0}}}
+        data: {"type":"message_start","message":{"id":"074c7b7bd5657b2ce93df0e5ba5f2c98","type":"message","role":"assistant","content":[],"model":"MiniMax-M3.1-Flash","stop_reason":null,"stop_sequence":null,"usage":{"input_tokens":0,"output_tokens":0}}}
 
         event: ping
         data: {"type":"ping"}
@@ -241,36 +240,33 @@ http_interactions:
         data: {"type":"content_block_start","index":0,"content_block":{"type":"thinking","thinking":""}}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":"The user wants Paris weather. Call the tool."}}
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":"The user asks for weather in Paris. I have the coordinates. Call the weather tool."}}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"signature_delta","signature":"52ce754bcad69818e0438ac6ab3c62ff1aa1738b2a8725bd12073b6a45332f10"}}
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"signature_delta","signature":"1e4f59a3714c1cdce937eddfa13d412d04d47948829d2b253ae9a44bab55ead1"}}
 
         event: content_block_stop
         data: {"type":"content_block_stop","index":0}
 
         event: content_block_start
-        data: {"type":"content_block_start","index":1,"content_block":{"type":"tool_use","id":"chatcmpl-tool-91cb2e6a6f1cdb64","name":"weather","input":{}}}
+        data: {"type":"content_block_start","index":1,"content_block":{"type":"tool_use","id":"chatcmpl-tool-976fef083582c22c","name":"weather","input":{}}}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":""}}
+        data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":"{\"latitude\":\"48.8575\",\"longitude\":\"2"}}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\""}}
-
-        event: content_block_delta
-        data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":"}"}}
+        data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":".3514\"}"}}
 
         event: content_block_stop
         data: {"type":"content_block_stop","index":1}
 
         event: message_delta
-        data: {"type":"message_delta","delta":{"stop_reason":"tool_use"},"usage":{"input_tokens":178,"output_tokens":53,"cache_read_input_tokens":512,"output_tokens_details":{"thinking_tokens":10}}}
+        data: {"type":"message_delta","delta":{"stop_reason":"tool_use"},"usage":{"input_tokens":163,"output_tokens":61,"cache_read_input_tokens":512,"output_tokens_details":{"thinking_tokens":18}}}
 
         event: message_stop
         data: {"type":"message_stop"}
 
-  recorded_at: Sun, 15 Nov 2026 01:26:54 GMT
+  recorded_at: Wed, 18 Nov 2026 06:41:01 GMT
 - request:
     method: post
     uri: https://api.minimax.io/anthropic/v1/messages
@@ -278,14 +274,13 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"MiniMax-M3.1-Flash","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         the weather in Berlin? (52.5200, 13.4050)"}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
-        check the current weather in Berlin for you."},{"type":"tool_use","id":"chatcmpl-tool-b1ca2b799c333eb7","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"chatcmpl-tool-b1ca2b799c333eb7","content":[{"type":"text","text":"Current
+        check the current weather in Berlin for you."},{"type":"tool_use","id":"chatcmpl-tool-befc1e3740f638a0","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"chatcmpl-tool-befc1e3740f638a0","content":[{"type":"text","text":"Current
         weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}]},{"role":"assistant","content":[{"type":"text","text":"The
-        current weather in Berlin (52.5200, 13.4050) is:\n\n- **Temperature:** 15°C\n-
-        **Wind:** 10 km/h\n\nA mild, pleasant day in the German capital — no jacket
-        weather, but you might want a light layer for the evening. Let me know if
-        you''d like any other details!"}]},{"role":"user","content":[{"type":"text","text":"What''s
+        current weather in Berlin is:\n\n- **Temperature:** 15°C\n- **Wind:** 10 km/h\n\nA
+        mild, pleasant day in the German capital. If you''d like more details (like
+        humidity, precipitation chances, or a multi-day forecast), let me know."}]},{"role":"user","content":[{"type":"text","text":"What''s
         the weather in Paris? (48.8575, 2.3514)"}]},{"role":"assistant","content":[{"type":"thinking","thinking":"The
-        user wants Paris weather. Call the tool.","signature":"52ce754bcad69818e0438ac6ab3c62ff1aa1738b2a8725bd12073b6a45332f10"},{"type":"tool_use","id":"chatcmpl-tool-91cb2e6a6f1cdb64","name":"weather","input":{"latitude":"48.8575","longitude":"2.3514"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"chatcmpl-tool-91cb2e6a6f1cdb64","content":[{"type":"text","text":"Current
+        user asks for weather in Paris. I have the coordinates. Call the weather tool.","signature":"1e4f59a3714c1cdce937eddfa13d412d04d47948829d2b253ae9a44bab55ead1"},{"type":"tool_use","id":"chatcmpl-tool-976fef083582c22c","name":"weather","input":{"latitude":"48.8575","longitude":"2.3514"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"chatcmpl-tool-976fef083582c22c","content":[{"type":"text","text":"Current
         weather at 48.8575, 2.3514: 15°C, Wind: 10 km/h"}]}]}],"stream":true,"max_tokens":524288,"tools":[{"name":"weather","description":"Gets
         current weather for a location","input_schema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
@@ -294,7 +289,7 @@ http_interactions:
       Accept-Encoding:
       - identity
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -311,25 +306,25 @@ http_interactions:
       Vary:
       - Accept-Encoding
       Trace-Id:
-      - '07483d5e3e25128347a2c4c3ac82fe83'
+      - 074c7b7d2eb07ff4bfca29287a4bd424
       X-Session-Id:
       - f950ddba17296fc881a49ec8d6450c57
       X-Mm-Request-Id:
-      - 2092934004998157135_1794706014rmpry4
+      - 2092934004998157135_1794984061ntw94y
       Minimax-Request-Id:
-      - 731ef2de8454c0b9a2f362a25a8b5c3a
+      - 998e14e65c938ad2d5118fa833857745
       Alb-Receive-Time:
-      - '1794706014.738'
+      - '1794984061.666'
       Alb-Request-Id:
-      - cb21d4e996e475e12f535522c28b904c3821c3a0
+      - 17c5e0479df716929387206999b9fec984b83436
       Expires:
-      - Sun, 15 Nov 2026 01:26:57 GMT
+      - Wed, 18 Nov 2026 06:41:02 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Sun, 15 Nov 2026 01:26:57 GMT
+      - Wed, 18 Nov 2026 06:41:02 GMT
       Transfer-Encoding:
       - chunked
       Connection:
@@ -342,6 +337,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ZXZlbnQ6IG1lc3NhZ2Vfc3RhcnQKZGF0YTogeyJ0eXBlIjoibWVzc2FnZV9zdGFydCIsIm1lc3NhZ2UiOnsiaWQiOiIwNzQ4M2Q1ZTNlMjUxMjgzNDdhMmM0YzNhYzgyZmU4MyIsInR5cGUiOiJtZXNzYWdlIiwicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOltdLCJtb2RlbCI6Ik1pbmlNYXgtTTMuMS1GbGFzaCIsInN0b3BfcmVhc29uIjpudWxsLCJzdG9wX3NlcXVlbmNlIjpudWxsLCJ1c2FnZSI6eyJpbnB1dF90b2tlbnMiOjAsIm91dHB1dF90b2tlbnMiOjB9fX0KCmV2ZW50OiBwaW5nCmRhdGE6IHsidHlwZSI6InBpbmcifQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfc3RhcnQKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19zdGFydCIsImluZGV4IjowLCJjb250ZW50X2Jsb2NrIjp7InR5cGUiOiJ0ZXh0IiwidGV4dCI6IiJ9fQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiJUaGUgY3VycmVudCB3ZWF0aGVyIGluIFBhcmlzICg0OC44NTc1LCAyLjM1MTQpIGlzOlxuXG4tICoqVGVtcGVyYXR1cmU6KiogMTUifX0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiwrBDXG4tICoqV2luZDoqKiAxMCBrbS9oXG5cbkludGVyZXN0aW5nbHksIGl0J3MgZXhhY3RseSB0aGUgc2FtZSBhcyBCZXJsaW4g4oCUIDE1wrBDIHdpdGgifX0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiIDEwIGttL2ggd2luZHMuIE5pY2Ugc3ByaW5nIGNvbmRpdGlvbnMgZm9yIGJvdGggY2l0aWVzISBMZXQgbWUga25vdyBpZiB5b3UnZCBsaWtlIHRoZSJ9fQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiIgd2VhdGhlciBmb3IgYW55d2hlcmUgZWxzZS4ifX0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX3N0b3AKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19zdG9wIiwiaW5kZXgiOjB9CgpldmVudDogbWVzc2FnZV9kZWx0YQpkYXRhOiB7InR5cGUiOiJtZXNzYWdlX2RlbHRhIiwiZGVsdGEiOnsic3RvcF9yZWFzb24iOiJlbmRfdHVybiJ9LCJ1c2FnZSI6eyJpbnB1dF90b2tlbnMiOjI3MSwib3V0cHV0X3Rva2VucyI6NzYsImNhY2hlX3JlYWRfaW5wdXRfdG9rZW5zIjo1MTJ9fQoKZXZlbnQ6IG1lc3NhZ2Vfc3RvcApkYXRhOiB7InR5cGUiOiJtZXNzYWdlX3N0b3AifQoK
-  recorded_at: Sun, 15 Nov 2026 01:26:57 GMT
-recorded_with: VCR 6.4.0
+        ZXZlbnQ6IG1lc3NhZ2Vfc3RhcnQKZGF0YTogeyJ0eXBlIjoibWVzc2FnZV9zdGFydCIsIm1lc3NhZ2UiOnsiaWQiOiIwNzRjN2I3ZDJlYjA3ZmY0YmZjYTI5Mjg3YTRiZDQyNCIsInR5cGUiOiJtZXNzYWdlIiwicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOltdLCJtb2RlbCI6Ik1pbmlNYXgtTTMuMS1GbGFzaCIsInN0b3BfcmVhc29uIjpudWxsLCJzdG9wX3NlcXVlbmNlIjpudWxsLCJ1c2FnZSI6eyJpbnB1dF90b2tlbnMiOjAsIm91dHB1dF90b2tlbnMiOjB9fX0KCmV2ZW50OiBwaW5nCmRhdGE6IHsidHlwZSI6InBpbmcifQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfc3RhcnQKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19zdGFydCIsImluZGV4IjowLCJjb250ZW50X2Jsb2NrIjp7InR5cGUiOiJ0ZXh0IiwidGV4dCI6IiJ9fQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiJUaGUgY3VycmVudCB3ZWF0aGVyIGluIFBhcmlzIGlzOlxuXG4tICoqVGVtcGVyYXR1cmU6KiogMTXCsENcbi0gKipXaW5kOioqIDEwIGttL2hcblxuSW50ZXJlc3RpbmdseSJ9fQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiIsIGl0J3MgbmVhcmx5IGlkZW50aWNhbCB0byBCZXJsaW4gcmlnaHQgbm93IOKAlCBzYW1lIDE1wrBDIGFuZCAxMCBrbS9oIHdpbmQuIExldCJ9fQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiIgbWUga25vdyBpZiB5b3UnZCBsaWtlIHRvIGNoZWNrIGFueSBvdGhlciBjaXRpZXMuIn19CgpldmVudDogY29udGVudF9ibG9ja19zdG9wCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfc3RvcCIsImluZGV4IjowfQoKZXZlbnQ6IG1lc3NhZ2VfZGVsdGEKZGF0YTogeyJ0eXBlIjoibWVzc2FnZV9kZWx0YSIsImRlbHRhIjp7InN0b3BfcmVhc29uIjoiZW5kX3R1cm4ifSwidXNhZ2UiOnsiaW5wdXRfdG9rZW5zIjoyNjQsIm91dHB1dF90b2tlbnMiOjU5LCJjYWNoZV9yZWFkX2lucHV0X3Rva2VucyI6NTEyfX0KCmV2ZW50OiBtZXNzYWdlX3N0b3AKZGF0YTogeyJ0eXBlIjoibWVzc2FnZV9zdG9wIn0KCg==
+  recorded_at: Wed, 18 Nov 2026 06:41:04 GMT
+recorded_with: VCR 6.4.1

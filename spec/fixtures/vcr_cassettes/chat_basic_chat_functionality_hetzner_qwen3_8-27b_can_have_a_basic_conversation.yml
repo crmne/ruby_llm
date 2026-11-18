@@ -9,7 +9,7 @@ http_interactions:
         2 + 2?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,20 +24,20 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:21:10 GMT
+      - Wed, 18 Nov 2026 06:37:00 GMT
       X-Llm-D-Flow-Queue-Duration-Ms:
       - '0'
       Vary:
       - Origin
       Content-Type:
       - application/json
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
       Transfer-Encoding:
       - chunked
     body:
       encoding: UTF-8
-      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":60,"completion_tokens":34,"total_tokens":94,"completion_tokens_details":{"reasoning_tokens":24},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"content":"\n\n2
-        + 2 = 4","role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"reasoning":"We
-        need answer user''s simple question \"What''s 2 + 2?\" in English. Then final
-        concise.\n"},"index":0,"logprobs":null,"finish_reason":"stop","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-176847ae-b097-4121-aa37-bc534ca6dade","object":"chat.completion","created":1794705671,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
-  recorded_at: Sun, 15 Nov 2026 01:21:11 GMT
-recorded_with: VCR 6.4.0
+      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":60,"completion_tokens":13,"total_tokens":73,"completion_tokens_details":{"reasoning_tokens":9},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"content":"\n\n4","role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"reasoning":"We
+        need answer simple. Then final.\n"},"index":0,"logprobs":null,"finish_reason":"stop","stop_reason":null,"token_ids":null,"routed_experts":null,"weight_versions":null}],"id":"chatcmpl-d86ef91b-3f84-4aff-a913-5079ec7951c9","object":"chat.completion","created":1794983820,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
+  recorded_at: Wed, 18 Nov 2026 06:37:01 GMT
+recorded_with: VCR 6.4.1

@@ -11,7 +11,7 @@ http_interactions:
         one short sentence."}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -26,31 +26,29 @@ http_interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Sun, 15 Nov 2026 01:21:02 GMT
+      - Wed, 18 Nov 2026 06:34:52 GMT
       Content-Length:
-      - '681'
+      - '604'
     body:
       encoding: UTF-8
-      string: '{"id":"resp_compact_1794705662701416321","object":"response.compaction","created_at":1794705662,"output":[{"type":"compaction","encrypted_content":"{\"type\":\"ollama_compaction\",\"version\":1,\"summary\":\"The
-        user introduced the Thimble project coded in Ruby. The assistant confirmed
-        remembering the project and language.\",\"retained\":[{\"role\":\"user\",\"content\":\"The
+      string: '{"id":"resp_compact_1794983692847261097","object":"response.compaction","created_at":1794983692,"output":[{"type":"compaction","encrypted_content":"{\"type\":\"ollama_compaction\",\"version\":1,\"summary\":\"The
+        Thimble project is written in Ruby.\",\"retained\":[{\"role\":\"user\",\"content\":\"The
         project codename is Thimble. We write it in Ruby.\"},{\"role\":\"assistant\",\"content\":\"I
-        will remember the Thimble project and Ruby.\"}]}"}],"usage":{"input_tokens":345,"output_tokens":334,"total_tokens":679,"input_tokens_details":{"cached_tokens":1},"output_tokens_details":{"reasoning_tokens":0}}}'
-  recorded_at: Sun, 15 Nov 2026 01:21:02 GMT
+        will remember the Thimble project and Ruby.\"}]}"}],"usage":{"input_tokens":345,"output_tokens":326,"total_tokens":671,"input_tokens_details":{"cached_tokens":2},"output_tokens_details":{"reasoning_tokens":0}}}'
+  recorded_at: Wed, 18 Nov 2026 06:34:52 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/responses"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","input":[{"type":"compaction","encrypted_content":"{\"type\":\"ollama_compaction\",\"version\":1,\"summary\":\"The
-        user introduced the Thimble project coded in Ruby. The assistant confirmed
-        remembering the project and language.\",\"retained\":[{\"role\":\"user\",\"content\":\"The
+        Thimble project is written in Ruby.\",\"retained\":[{\"role\":\"user\",\"content\":\"The
         project codename is Thimble. We write it in Ruby.\"},{\"role\":\"assistant\",\"content\":\"I
         will remember the Thimble project and Ruby.\"}]}"},{"role":"user","content":"What
         is the project codename?"}],"instructions":"Answer in one short sentence.","stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -65,31 +63,27 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 15 Nov 2026 01:21:04 GMT
-      Transfer-Encoding:
-      - chunked
+      - Wed, 18 Nov 2026 06:34:53 GMT
+      Content-Length:
+      - '1964'
     body:
       encoding: UTF-8
-      string: '{"id":"resp_452224","object":"response","created_at":1794705664,"completed_at":1794705664,"status":"completed","incomplete_details":null,"model":"qwen3","previous_response_id":null,"instructions":"Answer
-        in one short sentence.","output":[{"id":"rs_resp_452224","type":"reasoning","summary":[{"type":"summary_text","text":"Okay,
-        the user asked, \"What is the project codename?\" Let me recall the conversation
-        history.\n\nEarlier, the user mentioned that the project codename is Thimble
-        and they''re writing it in Ruby. The assistant confirmed remembering the project
-        and language. Then the user repeated the codename and language, and the assistant
-        said they''ll remember it. Now, the user is directly asking for the codename
-        again.\n\nSince the information was already provided and confirmed, the answer
-        should be straightforward. The codename is Thimble. No need for extra details
-        since the user just wants the name. Keep it simple and direct.\n"}],"encrypted_content":"Okay,
-        the user asked, \"What is the project codename?\" Let me recall the conversation
-        history.\n\nEarlier, the user mentioned that the project codename is Thimble
-        and they''re writing it in Ruby. The assistant confirmed remembering the project
-        and language. Then the user repeated the codename and language, and the assistant
-        said they''ll remember it. Now, the user is directly asking for the codename
-        again.\n\nSince the information was already provided and confirmed, the answer
-        should be straightforward. The codename is Thimble. No need for extra details
-        since the user just wants the name. Keep it simple and direct.\n"},{"id":"msg_631375","type":"message","status":"completed","role":"assistant","content":[{"type":"output_text","text":"The
-        project codename is Thimble.","annotations":[],"logprobs":[]}]}],"error":null,"tools":[],"tool_choice":"auto","truncation":"disabled","parallel_tool_calls":true,"text":{"format":{"type":"text"}},"top_p":1,"presence_penalty":0,"frequency_penalty":0,"top_logprobs":0,"temperature":1,"reasoning":null,"usage":{"input_tokens":119,"output_tokens":140,"total_tokens":259,"input_tokens_details":{"cached_tokens":3},"output_tokens_details":{"reasoning_tokens":0}},"max_output_tokens":null,"max_tool_calls":null,"store":false,"background":false,"service_tier":"default","metadata":{},"safety_identifier":null,"prompt_cache_key":null}
+      string: '{"id":"resp_630437","object":"response","created_at":1794983693,"completed_at":1794983693,"status":"completed","incomplete_details":null,"model":"qwen3","previous_response_id":null,"instructions":"Answer
+        in one short sentence.","output":[{"id":"rs_resp_630437","type":"reasoning","summary":[{"type":"summary_text","text":"Okay,
+        the user is asking for the project codename. Let me check the conversation
+        history.\n\nIn the first message, the user mentioned \"The Thimble project
+        is written in Ruby.\" Then they said, \"The project codename is Thimble. We
+        write it in Ruby.\" So the codename is definitely Thimble. The user might
+        be confirming or testing if I remember. Since I acknowledged it earlier, I
+        should just repeat that. Keep it simple and direct.\n"}],"encrypted_content":"Okay,
+        the user is asking for the project codename. Let me check the conversation
+        history.\n\nIn the first message, the user mentioned \"The Thimble project
+        is written in Ruby.\" Then they said, \"The project codename is Thimble. We
+        write it in Ruby.\" So the codename is definitely Thimble. The user might
+        be confirming or testing if I remember. Since I acknowledged it earlier, I
+        should just repeat that. Keep it simple and direct.\n"},{"id":"msg_812958","type":"message","status":"completed","role":"assistant","content":[{"type":"output_text","text":"The
+        project codename is Thimble.","annotations":[],"logprobs":[]}]}],"error":null,"tools":[],"tool_choice":"auto","truncation":"disabled","parallel_tool_calls":true,"text":{"format":{"type":"text"}},"top_p":1,"presence_penalty":0,"frequency_penalty":0,"top_logprobs":0,"temperature":1,"reasoning":null,"usage":{"input_tokens":108,"output_tokens":111,"total_tokens":219,"input_tokens_details":{"cached_tokens":3},"output_tokens_details":{"reasoning_tokens":0}},"max_output_tokens":null,"max_tool_calls":null,"store":false,"background":false,"service_tier":"default","metadata":{},"safety_identifier":null,"prompt_cache_key":null}
 
         '
-  recorded_at: Sun, 15 Nov 2026 01:21:04 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:34:53 GMT
+recorded_with: VCR 6.4.1

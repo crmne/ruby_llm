@@ -12,7 +12,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}],"tool_choice":{"type":"tool","name":"weather"}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -29,7 +29,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:40:24 GMT
+      - Wed, 18 Nov 2026 06:54:11 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -41,31 +41,31 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '10000000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-11-15T01:40:23Z'
+      - '2026-11-18T06:54:11Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-11-15T01:40:23Z'
+      - '2026-11-18T06:54:11Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-11-15T01:40:23Z'
+      - '2026-11-18T06:54:11Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-11-15T01:40:23Z'
+      - '2026-11-18T06:54:11Z'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Request-Id:
       - "<REQUEST_ID>"
       Traceresponse:
-      - 00-6db9511cc997e7924a503c9948c43589-98ce54f2521efacf-01
+      - 00-b5edab031cadfb25acbd21bd788c9e03-63c0538d6d32549b-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
@@ -77,7 +77,7 @@ http_interactions:
       Server:
       - cloudflare
       Server-Timing:
-      - x-originResponse;dur=603
+      - x-originResponse;dur=452
       Cf-Cache-Status:
       - DYNAMIC
       X-Robots-Tag:
@@ -86,22 +86,22 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Ch3rwLgxQFBtuZc8RXq3N","type":"message","role":"assistant","content":[{"type":"tool_use","id":"toolu_01MMuSQtCyZVdu6q1jK8ezso","name":"weather","input":{"latitude":"41.9028","longitude":"12.4964"},"caller":{"type":"direct"}}],"container":null,"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":716,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":56,"service_tier":"standard","inference_geo":"not_available","speed":"standard"},"diagnostics":null}'
-  recorded_at: Sun, 15 Nov 2026 01:40:24 GMT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Ch9xHyjZwTRwvLQrkNEn3","type":"message","role":"assistant","content":[{"type":"tool_use","id":"toolu_01ThLzPMhk9JGXLxsqkY9RvU","name":"weather","input":{"latitude":"41.9028","longitude":"12.4964"},"caller":{"type":"direct"}}],"container":null,"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":716,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":56,"service_tier":"standard","inference_geo":"not_available","speed":"standard"},"diagnostics":null}'
+  recorded_at: Wed, 18 Nov 2026 06:54:11 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
     body:
       encoding: UTF-8
       string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"What''s
-        the fall of Rome?"}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_01MMuSQtCyZVdu6q1jK8ezso","name":"weather","input":{"latitude":"41.9028","longitude":"12.4964"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01MMuSQtCyZVdu6q1jK8ezso","content":[{"type":"text","text":"Current
+        the fall of Rome?"}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_01ThLzPMhk9JGXLxsqkY9RvU","name":"weather","input":{"latitude":"41.9028","longitude":"12.4964"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01ThLzPMhk9JGXLxsqkY9RvU","content":[{"type":"text","text":"Current
         weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h"}]}]}],"stream":false,"max_tokens":64000,"tools":[{"name":"weather","description":"Gets
         current weather for a location","input_schema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -118,7 +118,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:40:28 GMT
+      - Wed, 18 Nov 2026 06:54:15 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -130,31 +130,31 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '9999000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-11-15T01:40:24Z'
+      - '2026-11-18T06:54:12Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-11-15T01:40:28Z'
+      - '2026-11-18T06:54:15Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-11-15T01:40:24Z'
+      - '2026-11-18T06:54:11Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '11999000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-11-15T01:40:24Z'
+      - '2026-11-18T06:54:12Z'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Request-Id:
       - "<REQUEST_ID>"
       Traceresponse:
-      - 00-d9000b07e26c06f610f1ac0dca621bea-cec5739a909dd71c-01
+      - 00-a4d159f646271df6d56d17615b0f4312-a36c4ecc0f2adcf6-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
@@ -166,7 +166,7 @@ http_interactions:
       Server:
       - cloudflare
       Server-Timing:
-      - x-originResponse;dur=4201
+      - x-originResponse;dur=3380
       Cf-Cache-Status:
       - DYNAMIC
       X-Robots-Tag:
@@ -175,7 +175,28 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJtb2RlbCI6ImNsYXVkZS1oYWlrdS00LTUtMjAyNTEwMDEiLCJpZCI6Im1zZ18wMTFDaDNyd1BzaG9RQlZOOGVvSlZvOWoiLCJ0eXBlIjoibWVzc2FnZSIsInJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjpbeyJ0eXBlIjoidGV4dCIsInRleHQiOiJJIGFwb2xvZ2l6ZSBmb3IgdGhlIGNvbmZ1c2lvbuKAlEkgYWNjaWRlbnRhbGx5IGNhbGxlZCB0aGUgd2VhdGhlciBmdW5jdGlvbiEgTGV0IG1lIGFuc3dlciB5b3VyIGFjdHVhbCBxdWVzdGlvbiBhYm91dCB0aGUgRmFsbCBvZiBSb21lLlxuXG4qKlRoZSBGYWxsIG9mIFJvbWUqKiByZWZlcnMgdG8gdGhlIGNvbGxhcHNlIG9mIHRoZSBSb21hbiBFbXBpcmUsIHNwZWNpZmljYWxseSB0aGUgKipXZXN0ZXJuIFJvbWFuIEVtcGlyZSoqLCB3aGljaCBvY2N1cnJlZCBpbiAqKjQ3NiBDRSoqLiBIZXJlIGFyZSB0aGUga2V5IHBvaW50czpcblxuIyMgTWFqb3IgQ2F1c2VzOlxuMS4gKipQb2xpdGljYWwgSW5zdGFiaWxpdHkqKiAtIEZyZXF1ZW50IGNpdmlsIHdhcnMgYW5kIGxlYWRlcnNoaXAgY3Jpc2VzIHdlYWtlbmVkIGNlbnRyYWwgYXV0aG9yaXR5XG4yLiAqKkVjb25vbWljIERlY2xpbmUqKiAtIERlYmFzZW1lbnQgb2YgY3VycmVuY3ksIGluZmxhdGlvbiwgYW5kIGRpc3J1cHRpb24gb2YgdHJhZGUgbmV0d29ya3NcbjMuICoqTWlsaXRhcnkgUHJlc3N1cmUqKiAtIEludmFzaW9ucyBieSBHZXJtYW5pYyB0cmliZXMgKFZpc2lnb3RocywgVmFuZGFscywgT3N0cm9nb3RocywgZXRjLikgZnJvbSB0aGUgbm9ydGhcbjQuICoqT3ZlcmV4cGFuc2lvbioqIC0gVGhlIGVtcGlyZSB3YXMgdG9vIGxhcmdlIHRvIGRlZmVuZCBlZmZlY3RpdmVseVxuNS4gKipQbGFndWUgYW5kIERpc2Vhc2UqKiAtIFBhbmRlbWljcyByZWR1Y2VkIHBvcHVsYXRpb24gYW5kIG1pbGl0YXJ5IHN0cmVuZ3RoXG42LiAqKkRpdmlzaW9uIG9mIHRoZSBFbXBpcmUqKiAtIEJ5IDI4NSBDRSwgdGhlIGVtcGlyZSB3YXMgc3BsaXQgYmV0d2VlbiBFYXN0IGFuZCBXZXN0LCB3ZWFrZW5pbmcgdGhlIFdlc3RcbjcuICoqUmlzZSBvZiBDaHJpc3RpYW5pdHkqKiAtIFNvbWUgaGlzdG9yaWFucyBhcmd1ZSB0aGUgc2hpZnQgaW4gdmFsdWVzIHVuZGVybWluZWQgbWlsaXRhcnkgdmlnb3IgKHRob3VnaCB0aGlzIGlzIGRlYmF0ZWQpXG5cbiMjIFRoZSBGaW5hbCBDb2xsYXBzZTpcbi0gSW4gKio0MTAgQ0UqKiwgdGhlIFZpc2lnb3RoIEFsYXJpYyBzYWNrZWQgUm9tZSBpdHNlbGZcbi0gSW4gKio0NzYgQ0UqKiwgdGhlIEdlcm1hbmljIGNoaWVmdGFpbiBPZG9hY2VyIGRlcG9zZWQgdGhlIGxhc3QgV2VzdGVybiBSb21hbiBFbXBlcm9yLCBSb211bHVzIEF1Z3VzdHVsdXNcbi0gVGhpcyBkYXRlIGlzIHRyYWRpdGlvbmFsbHkgbWFya2VkIGFzIHRoZSBcImZhbGxcIiBvZiBSb21lXG5cbiMjIEltcG9ydGFudCBOb3RlOlxuVGhlICoqRWFzdGVybiBSb21hbiBFbXBpcmUgKEJ5emFudGluZSBFbXBpcmUpKiogY29udGludWVkIGZvciBhbm90aGVyIDEsMDAwIHllYXJzIHVudGlsIDE0NTMgQ0UsIHNvIFwiUm9tZVwiIGRpZG4ndCBlbnRpcmVseSBkaXNhcHBlYXLigJRpdCBldm9sdmVkIGFuZCB0cmFuc2Zvcm1lZC5cblxuVGhlIGZhbGwgd2FzIGdyYWR1YWwgcmF0aGVyIHRoYW4gc3VkZGVuLCBzcGFubmluZyBzZXZlcmFsIGNlbnR1cmllcyBvZiBkZWNsaW5lLiJ9XSwiY29udGFpbmVyIjpudWxsLCJzdG9wX3JlYXNvbiI6ImVuZF90dXJuIiwic3RvcF9zZXF1ZW5jZSI6bnVsbCwic3RvcF9kZXRhaWxzIjpudWxsLCJ1c2FnZSI6eyJpbnB1dF90b2tlbnMiOjczNiwiY2FjaGVfY3JlYXRpb25faW5wdXRfdG9rZW5zIjowLCJjYWNoZV9yZWFkX2lucHV0X3Rva2VucyI6MCwiY2FjaGVfY3JlYXRpb24iOnsiZXBoZW1lcmFsXzVtX2lucHV0X3Rva2VucyI6MCwiZXBoZW1lcmFsXzFoX2lucHV0X3Rva2VucyI6MH0sIm91dHB1dF90b2tlbnMiOjM4NSwic2VydmljZV90aWVyIjoic3RhbmRhcmQiLCJpbmZlcmVuY2VfZ2VvIjoibm90X2F2YWlsYWJsZSIsInNwZWVkIjoic3RhbmRhcmQifSwiZGlhZ25vc3RpY3MiOm51bGx9
-  recorded_at: Sun, 15 Nov 2026 01:40:28 GMT
-recorded_with: VCR 6.4.0
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Ch9xJ2J6yW6jEEUqinS8w","type":"message","role":"assistant","content":[{"type":"text","text":"I
+        apologize for that incorrect action! You asked about the Fall of Rome, which
+        is a historical question, not a weather question. Let me give you a proper
+        answer:\n\n## The Fall of Rome\n\nThe **Fall of Rome** refers to the collapse
+        of the Western Roman Empire in the late 5th century CE (around 476 CE). This
+        was a gradual process rather than a single event, and it marked the end of
+        classical antiquity and the beginning of the Middle Ages in Europe.\n\n###
+        Key Factors:\n\n1. **Political Instability**: Frequent changes in leadership,
+        civil wars, and the difficulty of governing such a vast empire weakened central
+        authority.\n\n2. **Economic Decline**: Inflation, taxation problems, and disruption
+        of trade networks weakened the economy.\n\n3. **Military Pressure**: Invasions
+        by Germanic tribes and other \"barbarian\" groups (Goths, Vandals, Huns, etc.)
+        from the north and east overwhelmed Roman defenses.\n\n4. **Division of the
+        Empire**: The empire had been split into Eastern and Western halves, making
+        the West more vulnerable. The Eastern Roman (Byzantine) Empire continued for
+        another thousand years.\n\n5. **Social and Cultural Changes**: Loss of civic
+        virtue, the spread of Christianity, and changing social structures contributed
+        to the decline.\n\n6. **Administrative Challenges**: The empire became too
+        large and complex to govern effectively with the technology and systems available.\n\n###
+        The End:\n\nIn **476 CE**, the Germanic general Odoacer deposed the last Western
+        Roman Emperor, Romulus Augustulus, marking the conventional end date of the
+        Western Roman Empire.\n\nHowever, Roman culture, law, and institutions had
+        a lasting impact and influenced the development of European civilization."}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":736,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":376,"service_tier":"standard","inference_geo":"not_available","speed":"standard"},"diagnostics":null}'
+  recorded_at: Wed, 18 Nov 2026 06:54:15 GMT
+recorded_with: VCR 6.4.1

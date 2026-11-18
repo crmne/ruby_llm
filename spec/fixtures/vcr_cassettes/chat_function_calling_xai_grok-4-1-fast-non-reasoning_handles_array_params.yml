@@ -11,7 +11,7 @@ http_interactions:
         of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:33:14 GMT
+      - Wed, 18 Nov 2026 06:47:04 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -42,7 +42,7 @@ http_interactions:
       X-Ratelimit-Limit-Tokens:
       - '10000000'
       X-Ratelimit-Remaining-Tokens:
-      - '10000000'
+      - '9997484'
       X-Ratelimit-Limit-Requests:
       - '1800'
       X-Ratelimit-Remaining-Requests:
@@ -54,11 +54,11 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '457.5'
+      - '232.5'
       X-Metrics-E2e-Ms:
-      - '5555.4'
+      - '5997.7'
       Traceparent:
-      - 00-bee5d94d8587393b21169ced87040dd3-64f20d98000a14b0-01
+      - 00-87a767af4b6bd87e98f087ed7ff562c1-da30391800082abe-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
@@ -73,10 +73,12 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1794706388,"completed_at":1794706393,"id":"6405724e-10cc-9c18-90c5-923ee6d9592d","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_6405724e-10cc-9c18-90c5-923ee6d9592d","summary":[{"text":"I
+      string: '{"created_at":1794984418,"completed_at":1794984424,"id":"39f8dc8e-033c-9e6d-b82d-d83db9986697","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_39f8dc8e-033c-9e6d-b82d-d83db9986697","summary":[{"text":"I
         will call the array params tool with tags [\"red\",\"blue\"] and report the
-        combined tags.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"9dZkqlvgPWN/lua4qUUUjArHSJZRzwIOR9gc1n3pDVTRCnbcjE7qkI0ItFTJh0AVst3haCX9ouyo9nhR98TxKd8uHfZyjXLKxnUaU8+mfDsV3J5Dud7l4EYnYQN6n2f1xvVSv3txhfmgTD4qhZko7ENYKsgvxSMFRnjjbzc5Px9wYSs+G38pndWE0Y3DTrTGszDWwDQBHMKlGv802psFcQE2aL4KIM3tcGMQBm0EDu3UIUl+1OxDxMP+Kh5Lf+PG6Q5V+g1Y6QVIVbc/mAT02D3n3SPtjgQDAvJU8CDb61/t2XyaKYyjX9mdinYbFfwlhqnNQEVnsswaKx4K0j0upZX23sZXVsMi3xke/qaorPwqEs3/UlcEA7qA0TPoaF+7tFLqVXkFjT4RHZ3mI02Sfwc65UgcrU+AOq5ueWb5SK+ZGuA48ODnYBe+GNjTtrfAJ127IuZ6W4VUEGWJQGbEoAsIfi3yu3U2uHx3N2EiglGtxRXHivv7z7liXWTHS8GD2gPo/IW6+5UTQ9MhRGdvtMzdu5EmshSgLN30HSSBDBhRDzeVb4F6qLzk5nEkMLDrNlZ5MNoqpLaQYWULXl05ejNladgiz9WTQ65W08A6XTXTtAniYEDlwe7rYGXA3GLkTrvNVrLZCBEcM1IKXegYW0VZ4GgOvXODtQrmtBoeb/5mk+J4bNUhAN36Bhf+wRro7ZyQirYToojhmh/gcYUDUamzMWzNdGe4vCGzQ7OG187/Pr7lf7l7iWF0onjOh/aov2OUbyBl1CBKMwAmAYcfd367pXlszFUK/plJXz8nj4AK7vli7IWr+D4g76GFmpQ8RxoLxsxqj80s6Alox6viv90EYwhNt+OC02qfLTdFUeTTcbISx5T0zQOb1voaxA"},{"arguments":"{\"tags\":[\"red\",\"blue\"]}","call_id":"call-07b50749-28fd-4f8d-a86c-0e3b1c2c48d0-0","name":"array_params","type":"function_call","id":"fc_6405724e-10cc-9c18-90c5-923ee6d9592d_0","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Uses
+        combined tags.\n\nI''m figuring out the exact syntax for passing the array
+        parameter.\n\nThe syntax is tags is [\"red\",\"blue\"]. I will make the function
+        call now.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"0XeZEPhNmqBubVbDFtwnCGOK/3VI2Z50UiingbW+IYtdboHEYumj58YT79XMMm+XdKc2wxVc/dn+I/RqfU7mVpxPR746zFAS+EThuyU0BZzcUiHDA2DS886Yf66Hr+NmX7lMUjdQtaPVayWdnYC9Xl16W2UwVwiLT5jqjssGyqPmMacQ5RJGptU1VrgkEBHMLsWKqYmB5Rx1zhuxGTOgW+SR/hd8I3PL3HmDQ5qPkilT9sC8feBFtkhl6Oal2NTfPT3Q/OgHdmuZSYRjgg/1ybYq2grxMOzv1++bs+c6r+/LwcObOJZwRlZLjoM+hjp2U+9ldjBGYh/x88mS1U+KepBV0oUEp3uuK9wHeMvGd4xN3vM9TMjn4UgsoqqSKL6/ItpCpsPrP+JrRFTSuhxdZM17H8RigBKLz72CJ7zB0sN7CntKDvE/mO3HCY/6iN7AKgHNWnP1ZD73NcciraSB64ce75w9dwQR6/ryoGu2qEP5evxzbA2oN1RhVbB3fs46gKHoJLE/aIRcb43k+9NKZjL9EiFNKj26ISwkqWDRUjQythY2Msvqv5HymGysnq++7mZl7LlmhgnJJFeBuAdIS+0FVo7XE8l+rawI5VDU/ncgwSYXgS8Zp+mAcbUqvGUE8jZR/drU/JvANzXp10fhZsSxTPe8MwsGBjv5q/Zsf8AYQeXmG14VWfkF5ThNNEiIvDt7S0XFHd77OyzPDkLjaQDOFv4XATxM2c9CzAdipq5YKdt5GLwLKuAahGzPszfqwQYpia5W5695S8o3AHTulzX9F5HrZmprX92KxO+Econ/tKRIaFU1jkqbTLhLYQvIygYpXv3qTJ1IwzT4B+SKKBDujiHlfA77WwKBzH3rfzonr2t8Tn6D+E8KG5AYkb2knM0mnT0pOv6zm1+lLeuh74cPXtp96aRW8jCY5TelyukSZ8fKycYvE+QsLoeXnIhtlXdeQkzhXgboiXLvL7HmO2N4VcHJgtehnFa6L4Cm00DiiKZ9d78b639g9roUFaz0HKwR3S69ZvYHPHsz+8g/YzK71TB6k1wqrs/dtp9V4RwtlsuByu9bX+ffnRxbfgwB6FNuHOocU9HFKQxc4g1hWiV3g3/mfQSTvzT8KhGDgATleYAlgEBztLuUwHBre54"},{"arguments":"{\"tags\":[\"red\",\"blue\"]}","call_id":"call-5205e151-7cd3-4eb7-b60f-21acd7f6afed-0","name":"array_params","type":"function_call","id":"fc_39f8dc8e-033c-9e6d-b82d-d83db9986697_0","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Uses
         params DSL array support","name":"array_params","parameters":{"type":"object","properties":{"tags":{"type":"array","description":"List
-        of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false},"strict":false}],"top_p":0.95,"usage":{"input_tokens":311,"input_tokens_details":{"cached_tokens":128},"output_tokens":350,"output_tokens_details":{"reasoning_tokens":336},"total_tokens":661,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":11293500,"context_details":{"input_tokens":311,"output_tokens":354}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
-  recorded_at: Sun, 15 Nov 2026 01:33:14 GMT
-recorded_with: VCR 6.4.0
+        of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false},"strict":false}],"top_p":0.95,"usage":{"input_tokens":311,"input_tokens_details":{"cached_tokens":128},"output_tokens":432,"output_tokens_details":{"reasoning_tokens":418},"total_tokens":743,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":13343500,"context_details":{"input_tokens":311,"output_tokens":436}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Wed, 18 Nov 2026 06:47:04 GMT
+recorded_with: VCR 6.4.1

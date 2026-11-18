@@ -9,7 +9,7 @@ http_interactions:
         the capital of France?"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:24:16 GMT
+      - Wed, 18 Nov 2026 06:39:48 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -48,7 +48,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '715'
+      - '912'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -75,18 +75,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0579781d988b2ef3016af909bf988487d291c9dee8d54633d0",
-          "object": "response",
-          "created_at": 1794705855,
-          "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794705856,
+          "completed_at": 1794983988,
+          "created_at": 1794983988,
           "error": null,
           "frequency_penalty": 0.0,
+          "id": "resp_042b33408832562c016afd4834019487d290d15b0d6477a5c5",
           "image": {
             "context_compression": "disabled"
           },
@@ -97,21 +95,22 @@ http_interactions:
           "max_tool_calls": null,
           "model": "gpt-5.6-luna",
           "moderation": null,
+          "object": "response",
           "output": [
             {
-              "id": "msg_0579781d988b2ef3016af909c012a887d2a8fe64a8da057bf5",
-              "type": "message",
-              "status": "completed",
               "content": [
                 {
-                  "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "The capital of France is **Paris**."
+                  "text": "The capital of France is Paris.",
+                  "type": "output_text"
                 }
               ],
+              "id": "msg_042b33408832562c016afd4834b93c87d2a9b3fdbee68c9bc1",
               "phase": "final_answer",
-              "role": "assistant"
+              "role": "assistant",
+              "status": "completed",
+              "type": "message"
             }
           ],
           "parallel_tool_calls": true,
@@ -127,6 +126,7 @@ http_interactions:
           },
           "safety_identifier": null,
           "service_tier": "default",
+          "status": "completed",
           "store": false,
           "temperature": 1.0,
           "text": {
@@ -168,14 +168,14 @@ http_interactions:
               },
               "cached_tokens": 0
             },
-            "output_tokens": 13,
+            "output_tokens": 11,
             "output_tokens_details": {
               "reasoning_tokens": 0
             },
-            "total_tokens": 26
+            "total_tokens": 24
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Sun, 15 Nov 2026 01:24:16 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:39:48 GMT
+recorded_with: VCR 6.4.1

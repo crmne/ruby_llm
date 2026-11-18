@@ -10,7 +10,7 @@ http_interactions:
         and tell me which parser became the default. One sentence."}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"web_search"}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -31,7 +31,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Sun, 15 Nov 2026 01:20:18 GMT
+      - Wed, 18 Nov 2026 06:35:56 GMT
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -41,25 +41,25 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 974debe634571ed34922dfdd6579fd16
+      - 3bf95f3b638039cf06e4809e071603c5
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 b14aacfdf690e6766b147237ecffcc36.cloudfront.net (CloudFront)
+      - 1.1 2100d540f999998fa77c167c10cba074.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL52-P3
+      - TXL50-P5
       X-Amz-Cf-Id:
-      - xLFrzuMOBjyZOLOu2569zBATk8UwE34H3_lp2SUuRUY1tZP_lW7FEw==
+      - MvXWDDXPia3U9bIR-XQBPWHgfsvSrbcpr-PBfj8Mc_4SIQPm13bQ5Q==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"d3c69622-af67-4a1d-90bc-30a93bf56a46","object":"response","created_at":1794705618,"status":"completed","background":false,"completed_at":1794705623,"content_filters":null,"error":null,"frequency_penalty":0.0,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"deepseek-v4-pro","moderation":null,"output":[{"type":"reasoning","id":"c152c35d-e911-44fb-82ea-20f0c4f8c414","status":"completed","content":[{"type":"reasoning_text","text":"The
-        user wants me to search the web, then open the URL and tell which parser became
-        the default. I need to do a search first, then open the page."}],"summary":[],"encrypted_content":"d3c69622-af67-4a1d-90bc-30a93bf56a46-0"},{"type":"web_search_call","id":"call_00_DD6LWUyudpcX9gbP3nbM3079","status":"completed","action":{"type":"search","queries":["Ruby
-        3.4.0 released default parser","ws_call_id=call_00_DD6LWUyudpcX9gbP3nbM3079"]}},{"type":"web_search_call","id":"call_01_40f1XOVLis33F7rtgnzA9188","status":"completed","action":{"type":"open_page","url":"https://www.ruby-lang.org/en/news/2024/12/25/ruby-3-4-0-released/#ws_call_id=call_01_40f1XOVLis33F7rtgnzA9188"}},{"type":"message","id":"4913cefb-5ac9-4382-99e6-13b825d140fa","status":"completed","content":[{"type":"output_text","annotations":[],"logprobs":[],"text":"The
-        default parser in Ruby 3.4.0 is Prism, which replaced parse.y."}],"phase":"final_answer","role":"assistant"}],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":null,"reasoning":{"effort":null,"summary":null},"safety_identifier":null,"service_tier":"default","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":null},"tool_choice":"auto","tools":[{"type":"web_search","search_context_size":null,"user_location":null}],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":{"input_tokens":6563,"input_tokens_details":{"cached_tokens":1152},"output_tokens":167,"output_tokens_details":{"reasoning_tokens":34},"total_tokens":6730,"server_tool_use":{"tool_search":1,"tool_fetch":1,"tool_image_search":0}},"user":null,"metadata":{}}'
-  recorded_at: Sun, 15 Nov 2026 01:20:24 GMT
+      string: '{"id":"395b331f-39d7-48b2-9ca9-23b06280b2b6","object":"response","created_at":1794983756,"status":"completed","background":false,"completed_at":1794983765,"content_filters":null,"error":null,"frequency_penalty":0.0,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"deepseek-v4-pro","moderation":null,"output":[{"type":"reasoning","id":"8ea3d22d-aa14-4236-a144-ca182d6a7e75","status":"completed","content":[{"type":"reasoning_text","text":"The
+        user wants me to search the web and then open a specific URL to find which
+        parser became the default in Ruby 3.4.0. Let me do both."}],"summary":[],"encrypted_content":"395b331f-39d7-48b2-9ca9-23b06280b2b6-0"},{"type":"web_search_call","id":"call_00_4wGnS8BuRNdl1kdAbegh9858","status":"completed","action":{"type":"search","queries":["Ruby
+        3.4.0 released default parser","ws_call_id=call_00_4wGnS8BuRNdl1kdAbegh9858"]}},{"type":"web_search_call","id":"call_01_X5vDM3KFD8fge3dTrgKB1985","status":"completed","action":{"type":"open_page","url":"https://www.ruby-lang.org/en/news/2024/12/25/ruby-3-4-0-released/#ws_call_id=call_01_X5vDM3KFD8fge3dTrgKB1985"}},{"type":"message","id":"5b7badf3-3118-4cca-a0c8-d5a5b28b795a","status":"completed","content":[{"type":"output_text","annotations":[],"logprobs":[],"text":"Prism
+        became the default parser in Ruby 3.4.0, replacing parse.y."}],"phase":"final_answer","role":"assistant"}],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":null,"reasoning":{"effort":null,"summary":null},"safety_identifier":null,"service_tier":"default","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":null},"tool_choice":"auto","tools":[{"type":"web_search","search_context_size":null,"user_location":null}],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":{"input_tokens":6488,"input_tokens_details":{"cached_tokens":1152},"output_tokens":167,"output_tokens_details":{"reasoning_tokens":35},"total_tokens":6655,"server_tool_use":{"tool_search":1,"tool_fetch":1,"tool_image_search":0}},"user":null,"metadata":{}}'
+  recorded_at: Wed, 18 Nov 2026 06:36:05 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/responses
@@ -67,15 +67,15 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"deepseek-v4-pro","input":[{"role":"user","content":"Search
         the web, then open https://www.ruby-lang.org/en/news/2024/12/25/ruby-3-4-0-released/
-        and tell me which parser became the default. One sentence."},{"type":"reasoning","id":"c152c35d-e911-44fb-82ea-20f0c4f8c414","status":"completed","content":[{"type":"reasoning_text","text":"The
-        user wants me to search the web, then open the URL and tell which parser became
-        the default. I need to do a search first, then open the page."}],"summary":[],"encrypted_content":"d3c69622-af67-4a1d-90bc-30a93bf56a46-0"},{"type":"web_search_call","id":"call_00_DD6LWUyudpcX9gbP3nbM3079","status":"completed","action":{"type":"search","queries":["Ruby
-        3.4.0 released default parser","ws_call_id=call_00_DD6LWUyudpcX9gbP3nbM3079"]}},{"type":"web_search_call","id":"call_01_40f1XOVLis33F7rtgnzA9188","status":"completed","action":{"type":"open_page","url":"https://www.ruby-lang.org/en/news/2024/12/25/ruby-3-4-0-released/#ws_call_id=call_01_40f1XOVLis33F7rtgnzA9188"}},{"type":"message","id":"4913cefb-5ac9-4382-99e6-13b825d140fa","status":"completed","content":[{"type":"output_text","annotations":[],"logprobs":[],"text":"The
-        default parser in Ruby 3.4.0 is Prism, which replaced parse.y."}],"phase":"final_answer","role":"assistant"},{"role":"user","content":"Which
+        and tell me which parser became the default. One sentence."},{"type":"reasoning","id":"8ea3d22d-aa14-4236-a144-ca182d6a7e75","status":"completed","content":[{"type":"reasoning_text","text":"The
+        user wants me to search the web and then open a specific URL to find which
+        parser became the default in Ruby 3.4.0. Let me do both."}],"summary":[],"encrypted_content":"395b331f-39d7-48b2-9ca9-23b06280b2b6-0"},{"type":"web_search_call","id":"call_00_4wGnS8BuRNdl1kdAbegh9858","status":"completed","action":{"type":"search","queries":["Ruby
+        3.4.0 released default parser","ws_call_id=call_00_4wGnS8BuRNdl1kdAbegh9858"]}},{"type":"web_search_call","id":"call_01_X5vDM3KFD8fge3dTrgKB1985","status":"completed","action":{"type":"open_page","url":"https://www.ruby-lang.org/en/news/2024/12/25/ruby-3-4-0-released/#ws_call_id=call_01_X5vDM3KFD8fge3dTrgKB1985"}},{"type":"message","id":"5b7badf3-3118-4cca-a0c8-d5a5b28b795a","status":"completed","content":[{"type":"output_text","annotations":[],"logprobs":[],"text":"Prism
+        became the default parser in Ruby 3.4.0, replacing parse.y."}],"phase":"final_answer","role":"assistant"},{"role":"user","content":"Which
         Ruby version was that? Reply with the version only."}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"web_search"}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -96,7 +96,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Sun, 15 Nov 2026 01:20:24 GMT
+      - Wed, 18 Nov 2026 06:36:05 GMT
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -106,19 +106,19 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 943e05586229a9587ea2cfc46f7d6e7b
+      - c9521fc59a5f1817c957dd81ae61fa1e
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 248d3faad7fd09173570f149b8abed20.cloudfront.net (CloudFront)
+      - 1.1 23c7f408e3c2c70c183833481d523024.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL52-P4
+      - TXL52-P3
       X-Amz-Cf-Id:
-      - 1TYm2GzaRE6ocvkCt9CFk8VlZHwac0zdIA_tWPUSoGPOEVugOBchQQ==
+      - w05uptfY51tpg5NDDIeyjGSQ7CZZPtmlRrMFTp-WArjFsS_4Nq2ceg==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"17820360-4d22-494d-a83b-d318ef59b61d","object":"response","created_at":1794705624,"status":"completed","background":false,"completed_at":1794705625,"content_filters":null,"error":null,"frequency_penalty":0.0,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"deepseek-v4-pro","moderation":null,"output":[{"type":"message","id":"6c6b4691-62c0-430e-8688-96e3a983a69e","status":"completed","content":[{"type":"output_text","annotations":[],"logprobs":[],"text":"3.4.0"}],"phase":"final_answer","role":"assistant"}],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":null,"reasoning":{"effort":null,"summary":null},"safety_identifier":null,"service_tier":"default","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":null},"tool_choice":"auto","tools":[{"type":"web_search","search_context_size":null,"user_location":null}],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":{"input_tokens":5984,"input_tokens_details":{"cached_tokens":5888},"output_tokens":6,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":5990},"user":null,"metadata":{}}'
-  recorded_at: Sun, 15 Nov 2026 01:20:25 GMT
-recorded_with: VCR 6.4.0
+      string: '{"id":"1fcc495e-b8f6-4603-8f30-387adf6218a3","object":"response","created_at":1794983765,"status":"completed","background":false,"completed_at":1794983766,"content_filters":null,"error":null,"frequency_penalty":0.0,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"deepseek-v4-pro","moderation":null,"output":[{"type":"message","id":"0c76bde2-fcee-4e7d-a353-46e85324a60f","status":"completed","content":[{"type":"output_text","annotations":[],"logprobs":[],"text":"3.4.0"}],"phase":"final_answer","role":"assistant"}],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":null,"reasoning":{"effort":null,"summary":null},"safety_identifier":null,"service_tier":"default","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":null},"tool_choice":"auto","tools":[{"type":"web_search","search_context_size":null,"user_location":null}],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":{"input_tokens":5908,"input_tokens_details":{"cached_tokens":5888},"output_tokens":6,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":5914},"user":null,"metadata":{}}'
+  recorded_at: Wed, 18 Nov 2026 06:36:07 GMT
+recorded_with: VCR 6.4.1

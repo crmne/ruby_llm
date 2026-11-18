@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -20,12 +20,12 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Sun, 15 Nov 2026 01:32:01 GMT
-      Pragma:
-      - no-cache
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
+      Pragma:
+      - no-cache
+      Date:
+      - Wed, 18 Nov 2026 06:46:00 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
       Content-Type:
@@ -56,7 +56,7 @@ http_interactions:
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Sun, 15 Nov 2026 01:32:01 GMT
+  recorded_at: Wed, 18 Nov 2026 06:46:00 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:streamGenerateContent?alt=sse
@@ -68,7 +68,7 @@ http_interactions:
         the best language to learn","parametersJsonSchema":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}]}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -93,7 +93,7 @@ http_interactions:
       Transfer-Encoding:
       - chunked
       Date:
-      - Sun, 15 Nov 2026 01:32:02 GMT
+      - Wed, 18 Nov 2026 06:46:01 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -109,15 +109,15 @@ http_interactions:
       string: "data: {\"candidates\": [{\"content\": {\"role\": \"model\",\"parts\":
         [{\"functionCall\": {\"name\": \"best_language_to_learn\",\"args\": {}}}]}}],\"usageMetadata\":
         {\"trafficType\": \"ON_DEMAND\"},\"modelVersion\": \"gemini-2.5-flash\",\"createTime\":
-        \"2026-11-15T01:32:01.343620Z\",\"responseId\": \"kQv5asT8FMWWzPsP1far0AI\"}\r\n\r\ndata:
+        \"2026-11-18T06:46:00.721118Z\",\"responseId\": \"qEn9at6BLID6hu0Pj86KiAc\"}\r\n\r\ndata:
         {\"candidates\": [{\"content\": {\"role\": \"model\",\"parts\": [{\"text\":
         \"\"}]},\"finishReason\": \"STOP\"}],\"usageMetadata\": {\"promptTokenCount\":
-        36,\"candidatesTokenCount\": 14,\"totalTokenCount\": 103,\"trafficType\":
-        \"ON_DEMAND\",\"promptTokensDetails\": [{\"modality\": \"TEXT\",\"tokenCount\":
-        36}],\"candidatesTokensDetails\": [{\"modality\": \"TEXT\",\"tokenCount\":
-        14}],\"thoughtsTokenCount\": 53},\"modelVersion\": \"gemini-2.5-flash\",\"createTime\":
-        \"2026-11-15T01:32:01.343620Z\",\"responseId\": \"kQv5asT8FMWWzPsP1far0AI\"}\r\n\r\n"
-  recorded_at: Sun, 15 Nov 2026 01:32:02 GMT
+        36,\"candidatesTokenCount\": 14,\"totalTokenCount\": 97,\"trafficType\": \"ON_DEMAND\",\"promptTokensDetails\":
+        [{\"modality\": \"TEXT\",\"tokenCount\": 36}],\"candidatesTokensDetails\":
+        [{\"modality\": \"TEXT\",\"tokenCount\": 14}],\"thoughtsTokenCount\": 47},\"modelVersion\":
+        \"gemini-2.5-flash\",\"createTime\": \"2026-11-18T06:46:00.721118Z\",\"responseId\":
+        \"qEn9at6BLID6hu0Pj86KiAc\"}\r\n\r\n"
+  recorded_at: Wed, 18 Nov 2026 06:46:01 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:streamGenerateContent?alt=sse
@@ -129,7 +129,7 @@ http_interactions:
         the best language to learn","parametersJsonSchema":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}]}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -154,7 +154,7 @@ http_interactions:
       Transfer-Encoding:
       - chunked
       Date:
-      - Sun, 15 Nov 2026 01:32:02 GMT
+      - Wed, 18 Nov 2026 06:46:02 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -168,33 +168,30 @@ http_interactions:
     body:
       encoding: UTF-8
       string: "data: {\"candidates\": [{\"content\": {\"role\": \"model\",\"parts\":
-        [{\"text\": \"The best language to learn is\"}]}}],\"usageMetadata\": {\"trafficType\":
-        \"ON_DEMAND\"},\"modelVersion\": \"gemini-2.5-flash\",\"createTime\": \"2026-11-15T01:32:02.486191Z\",\"responseId\":
-        \"kgv5aq_WHbGA2fMP0PrW4Qc\"}\r\n\r\ndata: {\"candidates\": [{\"content\":
-        {\"role\": \"model\",\"parts\": [{\"text\": \" Ruby.\"}]}}],\"usageMetadata\":
-        {\"trafficType\": \"ON_DEMAND\"},\"modelVersion\": \"gemini-2.5-flash\",\"createTime\":
-        \"2026-11-15T01:32:02.486191Z\",\"responseId\": \"kgv5aq_WHbGA2fMP0PrW4Qc\"}\r\n\r\ndata:
-        {\"candidates\": [{\"content\": {\"role\": \"model\",\"parts\": [{\"text\":
-        \"\"}]},\"finishReason\": \"STOP\"}],\"usageMetadata\": {\"promptTokenCount\":
-        61,\"candidatesTokenCount\": 8,\"totalTokenCount\": 69,\"trafficType\": \"ON_DEMAND\",\"promptTokensDetails\":
-        [{\"modality\": \"TEXT\",\"tokenCount\": 61}],\"candidatesTokensDetails\":
-        [{\"modality\": \"TEXT\",\"tokenCount\": 8}]},\"modelVersion\": \"gemini-2.5-flash\",\"createTime\":
-        \"2026-11-15T01:32:02.486191Z\",\"responseId\": \"kgv5aq_WHbGA2fMP0PrW4Qc\"}\r\n\r\n"
-  recorded_at: Sun, 15 Nov 2026 01:32:02 GMT
+        [{\"text\": \"Ruby\"}]}}],\"usageMetadata\": {\"trafficType\": \"ON_DEMAND\"},\"modelVersion\":
+        \"gemini-2.5-flash\",\"createTime\": \"2026-11-18T06:46:01.772648Z\",\"responseId\":
+        \"qUn9aqiUL-6d3PQPlvfZuAw\"}\r\n\r\ndata: {\"candidates\": [{\"content\":
+        {\"role\": \"model\",\"parts\": [{\"text\": \"\"}]},\"finishReason\": \"STOP\"}],\"usageMetadata\":
+        {\"promptTokenCount\": 61,\"candidatesTokenCount\": 1,\"totalTokenCount\":
+        104,\"trafficType\": \"ON_DEMAND\",\"promptTokensDetails\": [{\"modality\":
+        \"TEXT\",\"tokenCount\": 61}],\"candidatesTokensDetails\": [{\"modality\":
+        \"TEXT\",\"tokenCount\": 1}],\"thoughtsTokenCount\": 42},\"modelVersion\":
+        \"gemini-2.5-flash\",\"createTime\": \"2026-11-18T06:46:01.772648Z\",\"responseId\":
+        \"qUn9aqiUL-6d3PQPlvfZuAw\"}\r\n\r\n"
+  recorded_at: Wed, 18 Nov 2026 06:46:02 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:streamGenerateContent?alt=sse
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"Call best_language_to_learn
-        and repeat the programming language it returns."}]},{"role":"model","parts":[{"functionCall":{"name":"best_language_to_learn","args":{}}}]},{"role":"user","parts":[{"functionResponse":{"name":"best_language_to_learn","response":{"name":"best_language_to_learn","content":[{"text":"Ruby"}]}}}]},{"role":"model","parts":[{"text":"The
-        best language to learn is Ruby."}]},{"role":"user","parts":[{"text":"Call
+        and repeat the programming language it returns."}]},{"role":"model","parts":[{"functionCall":{"name":"best_language_to_learn","args":{}}}]},{"role":"user","parts":[{"functionResponse":{"name":"best_language_to_learn","response":{"name":"best_language_to_learn","content":[{"text":"Ruby"}]}}}]},{"role":"model","parts":[{"text":"Ruby"}]},{"role":"user","parts":[{"text":"Call
         best_language_to_learn again and repeat the programming language it returns."}]}],"generationConfig":{},"systemInstruction":{"parts":[{"text":"You
         must use tools whenever possible."}]},"tools":[{"functionDeclarations":[{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parametersJsonSchema":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}]}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -219,7 +216,7 @@ http_interactions:
       Transfer-Encoding:
       - chunked
       Date:
-      - Sun, 15 Nov 2026 01:32:03 GMT
+      - Wed, 18 Nov 2026 06:46:04 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -235,29 +232,28 @@ http_interactions:
       string: "data: {\"candidates\": [{\"content\": {\"role\": \"model\",\"parts\":
         [{\"functionCall\": {\"name\": \"best_language_to_learn\",\"args\": {}}}]}}],\"usageMetadata\":
         {\"trafficType\": \"ON_DEMAND\"},\"modelVersion\": \"gemini-2.5-flash\",\"createTime\":
-        \"2026-11-15T01:32:02.983281Z\",\"responseId\": \"kgv5avGBPIamz_IP6YG74QQ\"}\r\n\r\ndata:
+        \"2026-11-18T06:46:03.148583Z\",\"responseId\": \"q0n9aueICfqSmNAPg8jUkQ0\"}\r\n\r\ndata:
         {\"candidates\": [{\"content\": {\"role\": \"model\",\"parts\": [{\"text\":
         \"\"}]},\"finishReason\": \"STOP\"}],\"usageMetadata\": {\"promptTokenCount\":
-        86,\"candidatesTokenCount\": 14,\"totalTokenCount\": 153,\"trafficType\":
+        79,\"candidatesTokenCount\": 14,\"totalTokenCount\": 144,\"trafficType\":
         \"ON_DEMAND\",\"promptTokensDetails\": [{\"modality\": \"TEXT\",\"tokenCount\":
-        86}],\"candidatesTokensDetails\": [{\"modality\": \"TEXT\",\"tokenCount\":
-        14}],\"thoughtsTokenCount\": 53},\"modelVersion\": \"gemini-2.5-flash\",\"createTime\":
-        \"2026-11-15T01:32:02.983281Z\",\"responseId\": \"kgv5avGBPIamz_IP6YG74QQ\"}\r\n\r\n"
-  recorded_at: Sun, 15 Nov 2026 01:32:04 GMT
+        79}],\"candidatesTokensDetails\": [{\"modality\": \"TEXT\",\"tokenCount\":
+        14}],\"thoughtsTokenCount\": 51},\"modelVersion\": \"gemini-2.5-flash\",\"createTime\":
+        \"2026-11-18T06:46:03.148583Z\",\"responseId\": \"q0n9aueICfqSmNAPg8jUkQ0\"}\r\n\r\n"
+  recorded_at: Wed, 18 Nov 2026 06:46:04 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:streamGenerateContent?alt=sse
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"Call best_language_to_learn
-        and repeat the programming language it returns."}]},{"role":"model","parts":[{"functionCall":{"name":"best_language_to_learn","args":{}}}]},{"role":"user","parts":[{"functionResponse":{"name":"best_language_to_learn","response":{"name":"best_language_to_learn","content":[{"text":"Ruby"}]}}}]},{"role":"model","parts":[{"text":"The
-        best language to learn is Ruby."}]},{"role":"user","parts":[{"text":"Call
+        and repeat the programming language it returns."}]},{"role":"model","parts":[{"functionCall":{"name":"best_language_to_learn","args":{}}}]},{"role":"user","parts":[{"functionResponse":{"name":"best_language_to_learn","response":{"name":"best_language_to_learn","content":[{"text":"Ruby"}]}}}]},{"role":"model","parts":[{"text":"Ruby"}]},{"role":"user","parts":[{"text":"Call
         best_language_to_learn again and repeat the programming language it returns."}]},{"role":"model","parts":[{"functionCall":{"name":"best_language_to_learn","args":{}},"thoughtSignature":"skip_thought_signature_validator"}]},{"role":"user","parts":[{"functionResponse":{"name":"best_language_to_learn","response":{"name":"best_language_to_learn","content":[{"text":"Ruby"}]}}}]}],"generationConfig":{},"systemInstruction":{"parts":[{"text":"You
         must use tools whenever possible."}]},"tools":[{"functionDeclarations":[{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parametersJsonSchema":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}]}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -282,7 +278,7 @@ http_interactions:
       Transfer-Encoding:
       - chunked
       Date:
-      - Sun, 15 Nov 2026 01:32:05 GMT
+      - Wed, 18 Nov 2026 06:46:05 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -296,15 +292,14 @@ http_interactions:
     body:
       encoding: UTF-8
       string: "data: {\"candidates\": [{\"content\": {\"role\": \"model\",\"parts\":
-        [{\"text\": \"The best language to learn is Ruby.\"}]}}],\"usageMetadata\":
-        {\"trafficType\": \"ON_DEMAND\"},\"modelVersion\": \"gemini-2.5-flash\",\"createTime\":
-        \"2026-11-15T01:32:04.179702Z\",\"responseId\": \"lAv5avb7CsqNkuwPk5yk-A0\"}\r\n\r\ndata:
-        {\"candidates\": [{\"content\": {\"role\": \"model\",\"parts\": [{\"text\":
-        \"\"}]},\"finishReason\": \"STOP\"}],\"usageMetadata\": {\"promptTokenCount\":
-        111,\"candidatesTokenCount\": 8,\"totalTokenCount\": 211,\"trafficType\":
-        \"ON_DEMAND\",\"promptTokensDetails\": [{\"modality\": \"TEXT\",\"tokenCount\":
-        111}],\"candidatesTokensDetails\": [{\"modality\": \"TEXT\",\"tokenCount\":
-        8}],\"thoughtsTokenCount\": 92},\"modelVersion\": \"gemini-2.5-flash\",\"createTime\":
-        \"2026-11-15T01:32:04.179702Z\",\"responseId\": \"lAv5avb7CsqNkuwPk5yk-A0\"}\r\n\r\n"
-  recorded_at: Sun, 15 Nov 2026 01:32:05 GMT
-recorded_with: VCR 6.4.0
+        [{\"text\": \"Ruby\"}]}}],\"usageMetadata\": {\"trafficType\": \"ON_DEMAND\"},\"modelVersion\":
+        \"gemini-2.5-flash\",\"createTime\": \"2026-11-18T06:46:04.679508Z\",\"responseId\":
+        \"rEn9atS8KYqOu_EP8fDd6Q4\"}\r\n\r\ndata: {\"candidates\": [{\"content\":
+        {\"role\": \"model\",\"parts\": [{\"text\": \"\"}]},\"finishReason\": \"STOP\"}],\"usageMetadata\":
+        {\"promptTokenCount\": 104,\"candidatesTokenCount\": 1,\"totalTokenCount\":
+        105,\"trafficType\": \"ON_DEMAND\",\"promptTokensDetails\": [{\"modality\":
+        \"TEXT\",\"tokenCount\": 104}],\"candidatesTokensDetails\": [{\"modality\":
+        \"TEXT\",\"tokenCount\": 1}]},\"modelVersion\": \"gemini-2.5-flash\",\"createTime\":
+        \"2026-11-18T06:46:04.679508Z\",\"responseId\": \"rEn9atS8KYqOu_EP8fDd6Q4\"}\r\n\r\n"
+  recorded_at: Wed, 18 Nov 2026 06:46:05 GMT
+recorded_with: VCR 6.4.1

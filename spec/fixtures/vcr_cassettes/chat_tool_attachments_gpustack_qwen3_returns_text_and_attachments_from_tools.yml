@@ -10,7 +10,7 @@ http_interactions:
         a sample text file named ruby.txt","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,22 +24,22 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Req-Arrive-Time:
+      - '1794984619402'
+      Date:
+      - Wed, 18 Nov 2026 06:50:19 GMT
+      Server:
+      - istio-envoy
+      Req-Cost-Time:
+      - '3824'
+      Resp-Start-Time:
+      - '1794984623226'
+      X-Envoy-Upstream-Service-Time:
+      - '3745'
       Access-Control-Allow-Origin:
       - ''
       Content-Type:
       - application/json; charset=utf-8
-      Req-Arrive-Time:
-      - '1794706569838'
-      X-Envoy-Upstream-Service-Time:
-      - '3790'
-      Date:
-      - Sun, 15 Nov 2026 01:36:08 GMT
-      Server:
-      - istio-envoy
-      Req-Cost-Time:
-      - '3854'
-      Resp-Start-Time:
-      - '1794706573692'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
@@ -75,15 +75,15 @@ http_interactions:
         the next step would be to read the contents and repeat them. But since the
         user''s instruction is to first call file_fetch and then repeat the contents,
         I need to make sure that the tool call is made first. Therefore, the correct
-        response is to output the tool call for file_fetch.\n","tool_calls":[{"type":"function","function":{"name":"file_fetch","arguments":"{}"},"id":"zt8qZAonvdTcii0xs2J3m8ADLU6b5IMI"}]}}],"created":1794706573,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":488,"prompt_tokens":166,"total_tokens":654,"prompt_tokens_details":{"cached_tokens":165}},"id":"chatcmpl-j3BTUEWCFIxZkbmkxsikryJFgaYTKGyI","timings":{"cache_n":165,"prompt_n":1,"prompt_ms":9.557,"prompt_per_token_ms":9.557,"prompt_per_second":104.63534581981793,"predicted_n":488,"predicted_ms":3691.897,"predicted_per_token_ms":7.580897330595483,"predicted_per_second":131.910505628949}}'
-  recorded_at: Sun, 15 Nov 2026 01:36:13 GMT
+        response is to output the tool call for file_fetch.\n","tool_calls":[{"type":"function","function":{"name":"file_fetch","arguments":"{}"},"id":"kd1lhDrhha06t6j8Yr59FcC0grZgnEaB"}]}}],"created":1794984623,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":488,"prompt_tokens":166,"total_tokens":654,"prompt_tokens_details":{"cached_tokens":165}},"id":"chatcmpl-wQa3HWuXnxLgI36paqbKDZgs5fTwLmou","timings":{"cache_n":165,"prompt_n":1,"prompt_ms":37.444,"prompt_per_token_ms":37.444,"prompt_per_second":26.70654844567888,"predicted_n":488,"predicted_ms":3552.283,"predicted_per_token_ms":7.2942156057494865,"predicted_per_second":137.0949330332071}}'
+  recorded_at: Wed, 18 Nov 2026 06:50:23 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"Call file_fetch
-        to get ruby.txt, then repeat the contents of the attached file."},{"role":"assistant","content":"","tool_calls":[{"id":"zt8qZAonvdTcii0xs2J3m8ADLU6b5IMI","type":"function","function":{"name":"file_fetch","arguments":"{}"}}],"reasoning":"Okay,
+        to get ruby.txt, then repeat the contents of the attached file."},{"role":"assistant","content":"","tool_calls":[{"id":"kd1lhDrhha06t6j8Yr59FcC0grZgnEaB","type":"function","function":{"name":"file_fetch","arguments":"{}"}}],"reasoning":"Okay,
         the user wants me to call the file_fetch function to get ruby.txt and then
         repeat the contents of the file. Let me start by checking the available tools.
         The tools section says there''s a function called file_fetch that fetches
@@ -142,13 +142,13 @@ http_interactions:
         user''s instruction is to first call file_fetch and then repeat the contents,
         I need to make sure that the tool call is made first. Therefore, the correct
         response is to output the tool call for file_fetch.\n"},{"role":"tool","content":"Fetched
-        the file.","tool_call_id":"zt8qZAonvdTcii0xs2J3m8ADLU6b5IMI"},{"role":"user","content":[{"type":"text","text":"Attachments
-        from tool call zt8qZAonvdTcii0xs2J3m8ADLU6b5IMI:"},{"type":"text","text":"<file
+        the file.","tool_call_id":"kd1lhDrhha06t6j8Yr59FcC0grZgnEaB"},{"role":"user","content":[{"type":"text","text":"Attachments
+        from tool call kd1lhDrhha06t6j8Yr59FcC0grZgnEaB:"},{"type":"text","text":"<file
         name=''ruby.txt'' mime_type=''text/plain''>Ruby is the best.</file>"}]}],"stream":false,"temperature":0,"tools":[{"type":"function","function":{"name":"file_fetch","description":"Fetches
         a sample text file named ruby.txt","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -162,22 +162,22 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Sun, 15 Nov 2026 01:36:12 GMT
-      Server:
-      - istio-envoy
       Access-Control-Allow-Origin:
       - ''
       Req-Cost-Time:
-      - '2285'
-      Resp-Start-Time:
-      - '1794706575985'
+      - '2300'
       X-Envoy-Upstream-Service-Time:
-      - '2280'
+      - '2290'
+      Server:
+      - istio-envoy
       Content-Type:
       - application/json; charset=utf-8
       Req-Arrive-Time:
-      - '1794706573700'
+      - '1794984623234'
+      Resp-Start-Time:
+      - '1794984625535'
+      Date:
+      - Wed, 18 Nov 2026 06:50:22 GMT
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
@@ -191,17 +191,18 @@ http_interactions:
         I need to check the available tools. The provided tool is file_fetch, which
         fetches a sample text file named ruby.txt. The function doesn''t require any
         parameters, so when I call it, I just need to use the name \"file_fetch\"
-        with empty arguments.\n\nOnce I call file_fetch, the system responds by fetching
-        the file. The response from the tool indicates that the file was fetched successfully.
-        The attachment provided is a file named ruby.txt with MIME type text/plain
-        and the content \"Ruby is the best.\"\n\nNow, the user''s next instruction
-        is to repeat the contents of the attached file. Since I have the content from
-        the file, I should simply output that text. The MIME type is text/plain, so
-        there''s no need for any special encoding or formatting. I just need to make
-        sure the text is displayed correctly.\n\nI should verify that the content
-        is indeed \"Ruby is the best.\" and that there are no additional characters
-        or formatting issues. Once confirmed, I can present the content to the user
-        as the response. There''s no further action needed since the user only asked
-        to repeat the contents after fetching the file.\n"}}],"created":1794706575,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":287,"prompt_tokens":253,"total_tokens":540,"prompt_tokens_details":{"cached_tokens":166}},"id":"chatcmpl-F53LYe6RqDWOluWW2hXR5zmJ2ixeGl6I","timings":{"cache_n":166,"prompt_n":87,"prompt_ms":77.084,"prompt_per_token_ms":0.8860229885057471,"prompt_per_second":1128.6388874474599,"predicted_n":287,"predicted_ms":2159.212,"predicted_per_token_ms":7.5496923076923075,"predicted_per_second":132.45572921973385}}'
-  recorded_at: Sun, 15 Nov 2026 01:36:15 GMT
-recorded_with: VCR 6.4.0
+        with empty arguments.\n\nOnce the file is fetched, the response from the tool
+        indicates that the file was successfully retrieved. The attachment provided
+        is a file named ruby.txt with the content \"Ruby is the best.\" My next task
+        is to repeat the contents of this file. Since the file is already fetched,
+        I can directly access its content from the tool''s response.\n\nI should make
+        sure that the content is correctly extracted and presented to the user. The
+        user probably wants the exact text from the file, so I need to output \"Ruby
+        is the best.\" without any modifications. There''s no need for additional
+        processing since the file is straightforward and the content is short.\n\nI
+        should also verify that there are no errors in the file fetching process.
+        The tool response mentions \"Fetched the file.\" which suggests success. Therefore,
+        the content should be reliable. Finally, I''ll format the response to clearly
+        present the file''s content as instructed.\n"}}],"created":1794984625,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":295,"prompt_tokens":254,"total_tokens":549,"prompt_tokens_details":{"cached_tokens":203}},"id":"chatcmpl-K1x8QpW20ZtONYbHX5CiXVuEDAwYhobA","timings":{"cache_n":203,"prompt_n":51,"prompt_ms":112.249,"prompt_per_token_ms":2.2009607843137253,"prompt_per_second":454.3470320448289,"predicted_n":295,"predicted_ms":2109.995,"predicted_per_token_ms":7.176853741496598,"predicted_per_second":139.33682307304045}}'
+  recorded_at: Wed, 18 Nov 2026 06:50:25 GMT
+recorded_with: VCR 6.4.1

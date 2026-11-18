@@ -11,7 +11,7 @@ http_interactions:
         to process"}},"required":["query"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -26,44 +26,48 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:39:05 GMT
+      - Wed, 18 Nov 2026 06:52:57 GMT
       X-Llm-D-Flow-Queue-Duration-Ms:
       - '0'
       Vary:
       - Origin
       Content-Type:
       - application/json
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
       Transfer-Encoding:
       - chunked
     body:
       encoding: UTF-8
-      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":330,"completion_tokens":90,"total_tokens":420,"completion_tokens_details":{"reasoning_tokens":60},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"tool_calls":[{"id":"chatcmpl-tool-8c645503bdf14f64","type":"function","function":{"name":"content_returning","arguments":"{\"query\":
-        \"test data\"}"}}],"reasoning":"The user says: \"Process this query: test
-        data\"\n\nThe available function is content_returning, which \"Returns a processed
-        string result\" with a required query parameter. The query to process is \"test
-        data\".\n\nSo I should call content_returning with query: \"test data\".\n"},"index":0,"logprobs":null,"finish_reason":"tool_calls","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-40b90f88-95f0-417b-a4cf-68fae8b7e49e","object":"chat.completion","created":1794706746,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
-  recorded_at: Sun, 15 Nov 2026 01:39:07 GMT
+      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":330,"completion_tokens":94,"total_tokens":424,"completion_tokens_details":{"reasoning_tokens":64},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"tool_calls":[{"id":"chatcmpl-tool-a7eaa909d053cc80","type":"function","function":{"name":"content_returning","arguments":"{\"query\":
+        \"test data\"}"}}],"reasoning":"We need answer user: \"Process this query:
+        test data\". Need call content_returning likely. We need use tool? They specifically
+        say process this query: test data. The tool returns processed string result.
+        We should call content_returning with query \"test data\". Then likely return
+        result. Let''s call.\n"},"index":0,"logprobs":null,"finish_reason":"tool_calls","stop_reason":null,"token_ids":null,"routed_experts":null,"weight_versions":null}],"id":"chatcmpl-333a1119-84d3-411b-b39c-b2984860b4b2","object":"chat.completion","created":1794984777,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
+  recorded_at: Wed, 18 Nov 2026 06:52:59 GMT
 - request:
     method: post
     uri: https://inference.hetzner.com/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"Qwen3.8-27B","messages":[{"role":"user","content":"Process
-        this query: test data"},{"role":"assistant","content":"","tool_calls":[{"id":"chatcmpl-tool-8c645503bdf14f64","type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
-        data\"}"}}],"reasoning":"The user says: \"Process this query: test data\"\n\nThe
-        available function is content_returning, which \"Returns a processed string
-        result\" with a required query parameter. The query to process is \"test data\".\n\nSo
-        I should call content_returning with query: \"test data\".\n","reasoning_content":"The
-        user says: \"Process this query: test data\"\n\nThe available function is
-        content_returning, which \"Returns a processed string result\" with a required
-        query parameter. The query to process is \"test data\".\n\nSo I should call
-        content_returning with query: \"test data\".\n"},{"role":"tool","content":"Processed:
-        test data","tool_call_id":"chatcmpl-tool-8c645503bdf14f64"}],"stream":false,"tools":[{"type":"function","function":{"name":"content_returning","description":"Returns
+        this query: test data"},{"role":"assistant","content":"","tool_calls":[{"id":"chatcmpl-tool-a7eaa909d053cc80","type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
+        data\"}"}}],"reasoning":"We need answer user: \"Process this query: test data\".
+        Need call content_returning likely. We need use tool? They specifically say
+        process this query: test data. The tool returns processed string result. We
+        should call content_returning with query \"test data\". Then likely return
+        result. Let''s call.\n","reasoning_content":"We need answer user: \"Process
+        this query: test data\". Need call content_returning likely. We need use tool?
+        They specifically say process this query: test data. The tool returns processed
+        string result. We should call content_returning with query \"test data\".
+        Then likely return result. Let''s call.\n"},{"role":"tool","content":"Processed:
+        test data","tool_call_id":"chatcmpl-tool-a7eaa909d053cc80"}],"stream":false,"tools":[{"type":"function","function":{"name":"content_returning","description":"Returns
         a processed string result","parameters":{"type":"object","properties":{"query":{"type":"string","description":"Query
         to process"}},"required":["query"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -78,19 +82,21 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:39:07 GMT
+      - Wed, 18 Nov 2026 06:52:59 GMT
       X-Llm-D-Flow-Queue-Duration-Ms:
       - '0'
       Vary:
       - Origin
       Content-Type:
       - application/json
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
       Transfer-Encoding:
       - chunked
     body:
       encoding: UTF-8
-      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":439,"completion_tokens":35,"total_tokens":474,"completion_tokens_details":{"reasoning_tokens":18},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"content":"\n\nThe
-        query has been processed. Result: **Processed: test data**","role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"reasoning":"The
-        function returned \"Processed: test data\". I should report this to the user.\n"},"index":0,"logprobs":null,"finish_reason":"stop","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-3a097a85-a53f-447f-804e-87c378630cce","object":"chat.completion","created":1794706747,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
-  recorded_at: Sun, 15 Nov 2026 01:39:10 GMT
-recorded_with: VCR 6.4.0
+      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":443,"completion_tokens":23,"total_tokens":466,"completion_tokens_details":{"reasoning_tokens":16},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"content":"\n\nProcessed:
+        test data","role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"reasoning":"Need
+        final answer concise maybe \"Processed: test data\". Ensure no extra.\n"},"index":0,"logprobs":null,"finish_reason":"stop","stop_reason":null,"token_ids":null,"routed_experts":null,"weight_versions":null}],"id":"chatcmpl-edea8c7b-5264-4363-a44b-a819bb292859","object":"chat.completion","created":1794984779,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
+  recorded_at: Wed, 18 Nov 2026 06:52:59 GMT
+recorded_with: VCR 6.4.1

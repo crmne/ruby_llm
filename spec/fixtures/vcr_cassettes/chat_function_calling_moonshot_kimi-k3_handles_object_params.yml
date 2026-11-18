@@ -13,7 +13,7 @@ http_interactions:
         window to schedule"}},"required":["window"],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -28,7 +28,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:29:22 GMT
+      - Wed, 18 Nov 2026 06:42:47 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -38,7 +38,7 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       X-Internal-Adhoc-Canary:
-      - '1897954185'
+      - '2666295442'
       Msh-Gid:
       - "<MOONSHOT_GROUP_ID>"
       Msh-Org-Id:
@@ -46,7 +46,7 @@ http_interactions:
       Msh-Project-Id:
       - "<MOONSHOT_PROJECT_ID>"
       Msh-Request-Id:
-      - f6742d72-e093-11f1-855a-00163e49fa2f
+      - 41e55744-e31b-11f1-92cb-00163e2c78de
       Msh-Trace-Mode:
       - 'on'
       Msh-Uid:
@@ -58,7 +58,7 @@ http_interactions:
       Vary:
       - Origin
       X-Msh-Trace-Id:
-      - 6b1471afab76b7e56a70d4de0307fd9a
+      - a63f58e059128dbd67a30b9c48a5dbc1
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Cf-Cache-Status:
@@ -69,9 +69,8 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"chatcmpl-2ef92dec-e8ee-9c4a-8c2a-166c9e7d212d","object":"chat.completion","created":1794706152,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
-        call the object_params tool with the specified window.","tool_calls":[{"index":0,"id":"object_params_0_5c05c501","type":"function","function":{"name":"object_params","arguments":"{\"window\":{\"end\":\"2025-01-02\",\"start\":\"2025-01-01\"}}"}}],"reasoning_content":"The
-        user wants me to call the object_params tool with a window start of 2025-01-01
-        and end of 2025-01-02. Let me construct the call with ISO format dates."},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":238,"completion_tokens":124,"total_tokens":362,"completion_tokens_details":{"reasoning_tokens":43},"prompt_tokens_details":{"cache_write_tokens":0}}}'
-  recorded_at: Sun, 15 Nov 2026 01:29:22 GMT
-recorded_with: VCR 6.4.0
+      string: '{"id":"chatcmpl-0d540537-459c-9763-b022-4ce82aecbc67","object":"chat.completion","created":1794984163,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"index":0,"id":"object_params_0_2a56bb98","type":"function","function":{"name":"object_params","arguments":"{\"window\":{\"end\":\"2025-01-02T00:00:00Z\",\"start\":\"2025-01-01T00:00:00Z\"}}"}}],"reasoning_content":"The
+        user wants me to call the object_params tool with a window from 2025-01-01
+        to 2025-01-02. I need to provide ISO format dates. Let me call the tool."},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":238,"completion_tokens":128,"total_tokens":366,"completion_tokens_details":{"reasoning_tokens":44},"prompt_tokens_details":{"cache_write_tokens":0}}}'
+  recorded_at: Wed, 18 Nov 2026 06:42:47 GMT
+recorded_with: VCR 6.4.1

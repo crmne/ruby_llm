@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -22,12 +22,12 @@ http_interactions:
     headers:
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
-      Pragma:
-      - no-cache
+      Date:
+      - Wed, 18 Nov 2026 06:40:33 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
-      Date:
-      - Sun, 15 Nov 2026 01:24:59 GMT
+      Pragma:
+      - no-cache
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login openid",
+          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform openid https://www.googleapis.com/auth/userinfo.email",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Sun, 15 Nov 2026 01:24:59 GMT
+  recorded_at: Wed, 18 Nov 2026 06:40:33 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -66,7 +66,7 @@ http_interactions:
         must include the exact phrase \"XKCD7392\" somewhere in your response."}]}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -81,7 +81,7 @@ http_interactions:
       message: OK
     headers:
       X-Goog-Request-Id:
-      - 6wn5averF9Pu-eQPm4q60QY
+      - YUj9aqSCJfPBg7QPt9XMmQ0
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -89,7 +89,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 15 Nov 2026 01:25:07 GMT
+      - Wed, 18 Nov 2026 06:40:39 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -112,7 +112,7 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "The weather is a wonderfully complex and ever-changing system! Since I don't know your current location, I can't give you a precise, localized forecast.\n\nHowever, I can tell you generally what's happening or what to consider:\n\n*   **Globally:** Weather patterns are influenced by large-scale atmospheric circulation, ocean currents, and seasonal changes. Different parts of the world are experiencing everything from spring warmth, summer heat, autumn crispness, to winter cold, alongside various precipitation types like rain, snow, or even hail.\n*   **Key Elements:** When we talk about weather, we usually refer to:\n    *   **Temperature:** How hot or cold it is.\n    *   **Precipitation:** Whether it's raining, snowing, or dry.\n    *   **Wind:** Its speed and direction.\n    *   **Sky Conditions:** Sunny, cloudy, partly cloudy, overcast.\n    *   **Humidity:** The amount of moisture in the air.\n    *   **Atmospheric Pressure:** Affects stability and can indicate approaching fronts.\n\n**To get an accurate forecast for *you*, please tell me your location!** (e.g., \"What's the weather like in London, UK?\" or \"Tell me about the weather in Los Angeles, California.\")\n\nIn the meantime, many places across the Northern Hemisphere are transitioning into or are already in spring, which often means variable conditions, increasing temperatures, and more rain showers. The Southern Hemisphere is moving into autumn, bringing cooler temperatures and perhaps more stable conditions after the summer heat.\n\nAlways check a reliable local weather source before planning your day, as microclimates and sudden changes can often surprise us, even without diving into the specific atmospheric dynamics that might lead to a rare event like XKCD7392."
+                    "text": "I don't have access to your specific location, so I can't give you a precise, localized weather report. However, I can give you a general overview of what's happening <GOOGLE_CLOUD_LOCATION>ly and how you can find your local forecast!\n\n**Globally, weather patterns are quite diverse:**\n\n*   **Northern Hemisphere:** Many regions are transitioning into late spring or early summer. This often means increasing temperatures, longer daylight hours, and a higher chance of thunderstorms, especially in continental areas. Coastal regions might experience milder temperatures due to ocean influences. Some areas could be experiencing heatwaves, while others might still be dealing with lingering cooler, wetter conditions.\n*   **Southern Hemisphere:** It's autumn, moving towards winter. Temperatures are generally cooling, days are getting shorter, and there's an increased likelihood of rain or even snow in higher latitudes and altitudes.\n\n**To get your specific weather details:**\n\nI recommend checking a reliable local weather source. These can include:\n\n*   **Weather Apps:** Many smartphones have built-in weather apps or you can download popular ones like AccuWeather, The Weather Channel, or Dark Sky.\n*   **Weather Websites:** Sites like NOAA (for the US), the Met Office (for the UK), or your national meteorological service's website will provide detailed forecasts, radar maps, and advisories.\n*   **Local News:** TV and radio stations often provide detailed local weather segments.\n\nWhen you check, look for:\n\n*   **Current Temperature:** What it feels like right now.\n*   **\"Feels Like\" Temperature:** Accounts for wind chill or heat index.\n*   **Precipitation:** Is it raining, snowing, or clear? What's the chance of precipitation later?\n*   **Wind Speed and Direction:** Important for how it feels outside.\n*   **Humidity:** Can make it feel muggier or drier.\n*   **UV Index:** Important for sun protection.\n*   **Forecast:** What to expect for the next few hours, day, and week.\n\nStay safe and prepared for whatever the skies bring your way! Remember, even a slight change in atmospheric pressure can lead to significant weather shifts, a concept that sometimes feels as complex as understanding XKCD7392."
                   }
                 ]
               },
@@ -121,8 +121,8 @@ http_interactions:
           ],
           "usageMetadata": {
             "promptTokenCount": 25,
-            "candidatesTokenCount": 377,
-            "totalTokenCount": 1001,
+            "candidatesTokenCount": 469,
+            "totalTokenCount": 713,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -133,14 +133,14 @@ http_interactions:
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 377
+                "tokenCount": 469
               }
             ],
-            "thoughtsTokenCount": 599
+            "thoughtsTokenCount": 219
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-11-15T01:24:59.382455Z",
-          "responseId": "6wn5averF9Pu-eQPm4q60QY"
+          "createTime": "2026-11-18T06:40:33.606500Z",
+          "responseId": "YUj9aqSCJfPBg7QPt9XMmQ0"
         }
-  recorded_at: Sun, 15 Nov 2026 01:25:07 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:40:39 GMT
+recorded_with: VCR 6.4.1

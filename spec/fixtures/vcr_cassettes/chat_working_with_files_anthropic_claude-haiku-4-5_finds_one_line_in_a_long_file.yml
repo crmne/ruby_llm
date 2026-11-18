@@ -46,7 +46,7 @@ http_interactions:
         changes; each may name a path","items":{"type":"object","properties":{"path":{"type":["string","null"]},"old_text":{"type":"string"},"new_text":{"type":"string"},"replace_all":{"type":["boolean","null"]}},"required":["old_text","new_text"],"additionalProperties":false}}},"additionalProperties":false}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -63,7 +63,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:20:48 GMT
+      - Wed, 18 Nov 2026 06:34:29 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -75,31 +75,31 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '9999000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-11-15T01:20:48Z'
+      - '2026-11-18T06:34:29Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-11-15T01:20:48Z'
+      - '2026-11-18T06:34:29Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-11-15T01:20:47Z'
+      - '2026-11-18T06:34:29Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '11999000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-11-15T01:20:48Z'
+      - '2026-11-18T06:34:29Z'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Request-Id:
       - "<REQUEST_ID>"
       Traceresponse:
-      - 00-c097a03b2ced7162265a1e8d28c466e0-bb3e427c3fb34b65-01
+      - 00-eaf4005702462c41d3450b814836ac4e-f1221e2add2a9b18-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
@@ -111,7 +111,7 @@ http_interactions:
       Server:
       - cloudflare
       Server-Timing:
-      - x-originResponse;dur=597
+      - x-originResponse;dur=602
       Cf-Cache-Status:
       - DYNAMIC
       X-Robots-Tag:
@@ -120,9 +120,9 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Ch3qSgtDjhjoZ8M2XPkq9","type":"message","role":"assistant","content":[{"type":"text","text":"I''ll
-        search for the parking garage door code in the handbook.md file."},{"type":"tool_use","id":"toolu_01BP6cQKV28of9Zuj4iZTtSY","name":"read_file","input":{"path":"handbook.md"},"caller":{"type":"direct"}}],"container":null,"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":1599,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":72,"service_tier":"standard","inference_geo":"not_available","speed":"standard"},"diagnostics":null}'
-  recorded_at: Sun, 15 Nov 2026 01:20:48 GMT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Ch9vnqihKdWRP57TFPX97","type":"message","role":"assistant","content":[{"type":"text","text":"I''ll
+        search for the parking garage door code in the handbook.md file."},{"type":"tool_use","id":"toolu_015VDQAnH2gJJ6jJPUJV5F3w","name":"read_file","input":{"path":"handbook.md"},"caller":{"type":"direct"}}],"container":null,"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":1599,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":72,"service_tier":"standard","inference_geo":"not_available","speed":"standard"},"diagnostics":null}'
+  recorded_at: Wed, 18 Nov 2026 06:34:29 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
@@ -130,7 +130,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"What
         is the parking garage door code? It is in handbook.md in your files."}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
-        search for the parking garage door code in the handbook.md file."},{"type":"tool_use","id":"toolu_01BP6cQKV28of9Zuj4iZTtSY","name":"read_file","input":{"path":"handbook.md"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01BP6cQKV28of9Zuj4iZTtSY","content":[{"type":"text","text":"handbook.md,
+        search for the parking garage door code in the handbook.md file."},{"type":"tool_use","id":"toolu_015VDQAnH2gJJ6jJPUJV5F3w","name":"read_file","input":{"path":"handbook.md"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_015VDQAnH2gJJ6jJPUJV5F3w","content":[{"type":"text","text":"handbook.md,
         lines 1-401 of 401:\n     1\t1. Section 1 covers office policy number 1.\n     2\t2.
         Section 2 covers office policy number 2.\n     3\t3. Section 3 covers office
         policy number 3.\n     4\t4. Section 4 covers office policy number 4.\n     5\t5.
@@ -467,7 +467,7 @@ http_interactions:
         changes; each may name a path","items":{"type":"object","properties":{"path":{"type":["string","null"]},"old_text":{"type":"string"},"new_text":{"type":"string"},"replace_all":{"type":["boolean","null"]}},"required":["old_text","new_text"],"additionalProperties":false}}},"additionalProperties":false}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -484,7 +484,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:20:49 GMT
+      - Wed, 18 Nov 2026 06:34:30 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -496,31 +496,31 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '9992000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-11-15T01:20:48Z'
+      - '2026-11-18T06:34:30Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-11-15T01:20:49Z'
+      - '2026-11-18T06:34:30Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-11-15T01:20:48Z'
+      - '2026-11-18T06:34:30Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '11992000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-11-15T01:20:48Z'
+      - '2026-11-18T06:34:30Z'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Request-Id:
       - "<REQUEST_ID>"
       Traceresponse:
-      - 00-98f8083b157da50664c974a0afb058d2-335af95d77bc2cac-01
+      - 00-3f86d552ac0fc39052a1e1f744db435c-fd6e0f3e413365c6-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
@@ -532,7 +532,7 @@ http_interactions:
       Server:
       - cloudflare
       Server-Timing:
-      - x-originResponse;dur=814
+      - x-originResponse;dur=832
       Cf-Cache-Status:
       - DYNAMIC
       X-Robots-Tag:
@@ -541,8 +541,8 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Ch3qSkGMn7sgaSydNQv3Q","type":"message","role":"assistant","content":[{"type":"text","text":"Found
-        it! The parking garage door code is **4471-KESTREL** (located on line 288
-        of the handbook)."}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":8517,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":32,"service_tier":"standard","inference_geo":"not_available","speed":"standard"},"diagnostics":null}'
-  recorded_at: Sun, 15 Nov 2026 01:20:49 GMT
-recorded_with: VCR 6.4.0
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Ch9vntyABWgcJwted6sMj","type":"message","role":"assistant","content":[{"type":"text","text":"Found
+        it! The parking garage door code is **4471-KESTREL** (shown on line 288 of
+        the handbook)."}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":8517,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":32,"service_tier":"standard","inference_geo":"not_available","speed":"standard"},"diagnostics":null}'
+  recorded_at: Wed, 18 Nov 2026 06:34:30 GMT
+recorded_with: VCR 6.4.1

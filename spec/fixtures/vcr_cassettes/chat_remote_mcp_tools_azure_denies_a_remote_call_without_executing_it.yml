@@ -11,7 +11,7 @@ http_interactions:
         a denied call.","stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"mcp","allowed_tools":["microsoft_docs_search"],"require_approval":"always","server_url":"https://learn.microsoft.com/api/mcp","server_label":"docs"}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -30,7 +30,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 15 Nov 2026 01:20:37 GMT
+      - Wed, 18 Nov 2026 06:35:59 GMT
       Server:
       - istio-envoy
       Vary:
@@ -70,9 +70,9 @@ http_interactions:
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Apim-Request-Id:
-      - 9ad41e09-a88c-4fc4-a72a-9fb4982f3a21
+      - bea19517-e942-4ff0-b2be-967223a400a5
       X-Http2-Stream-Id:
-      - '245'
+      - '187'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -83,13 +83,13 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "resp_05573ec0d5ce8aee016af908e5ea44819784e437bd5049909b",
+          "id": "resp_0077801a30adbfda016afd475039948193977c6c1d86d845c1",
           "object": "response",
-          "created_at": 1794705637,
+          "created_at": 1794983760,
           "status": "completed",
           "access_programs": null,
           "background": false,
-          "completed_at": 1794705640,
+          "completed_at": 1794983761,
           "content_filters": [
             {
               "blocked": false,
@@ -134,7 +134,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "mcpl_05573ec0d5ce8aee016af908e600a88197a398b1bf6c6d74cf",
+              "id": "mcpl_0077801a30adbfda016afd47504ea48193a6007d803f807ca9",
               "type": "mcp_list_tools",
               "server_label": "docs",
               "tools": [
@@ -158,7 +158,7 @@ http_interactions:
               ]
             },
             {
-              "id": "mcpr_05573ec0d5ce8aee016af908e82d288197b9aedd295d7f5a67",
+              "id": "mcpr_0077801a30adbfda016afd4751ca6c8193bbcf3246007da4f3",
               "type": "mcp_approval_request",
               "arguments": "{\"query\":\"Azure Blob Storage Microsoft documentation\"}",
               "name": "microsoft_docs_search",
@@ -236,14 +236,14 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Sun, 15 Nov 2026 01:20:40 GMT
+  recorded_at: Wed, 18 Nov 2026 06:36:01 GMT
 - request:
     method: post
     uri: https://rubyllm.services.ai.azure.com/openai/v1/responses
     body:
       encoding: UTF-8
       string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"Search Microsoft
-        documentation for Azure Blob Storage, then give one short sentence about it."},{"id":"mcpl_05573ec0d5ce8aee016af908e600a88197a398b1bf6c6d74cf","type":"mcp_list_tools","server_label":"docs","tools":[{"annotations":{"read_only":true},"description":"Search
+        documentation for Azure Blob Storage, then give one short sentence about it."},{"id":"mcpl_0077801a30adbfda016afd47504ea48193a6007d803f807ca9","type":"mcp_list_tools","server_label":"docs","tools":[{"annotations":{"read_only":true},"description":"Search
         official Microsoft/Azure documentation to find the most relevant and trustworthy
         content for a user''s query. This tool returns up to 10 high-quality content
         chunks (each max 500 tokens), extracted from Microsoft Learn and other official
@@ -255,13 +255,13 @@ http_interactions:
         search by providing the full detail. This is a required step for comprehensive
         results.","input_schema":{"type":"object","properties":{"query":{"description":"a
         query or topic about Microsoft/Azure products, services, platforms, developer
-        tools, frameworks, or APIs","type":"string","default":null}}},"name":"microsoft_docs_search"}]},{"id":"mcpr_05573ec0d5ce8aee016af908e82d288197b9aedd295d7f5a67","type":"mcp_approval_request","arguments":"{\"query\":\"Azure
-        Blob Storage Microsoft documentation\"}","name":"microsoft_docs_search","server_label":"docs"},{"type":"mcp_approval_response","approval_request_id":"mcpr_05573ec0d5ce8aee016af908e82d288197b9aedd295d7f5a67","approve":false}],"instructions":"Use
+        tools, frameworks, or APIs","type":"string","default":null}}},"name":"microsoft_docs_search"}]},{"id":"mcpr_0077801a30adbfda016afd4751ca6c8193bbcf3246007da4f3","type":"mcp_approval_request","arguments":"{\"query\":\"Azure
+        Blob Storage Microsoft documentation\"}","name":"microsoft_docs_search","server_label":"docs"},{"type":"mcp_approval_response","approval_request_id":"mcpr_0077801a30adbfda016afd4751ca6c8193bbcf3246007da4f3","approve":false}],"instructions":"Use
         microsoft_docs_search exactly once when asked for documentation. Do not retry
         a denied call.","stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"mcp","allowed_tools":["microsoft_docs_search"],"require_approval":"always","server_url":"https://learn.microsoft.com/api/mcp","server_label":"docs"}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -276,11 +276,11 @@ http_interactions:
       message: OK
     headers:
       Content-Length:
-      - '4113'
+      - '4121'
       Content-Type:
       - application/json
       Date:
-      - Sun, 15 Nov 2026 01:20:39 GMT
+      - Wed, 18 Nov 2026 06:36:01 GMT
       Server:
       - istio-envoy
       Vary:
@@ -320,9 +320,9 @@ http_interactions:
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Apim-Request-Id:
-      - 8d5b9000-9a5a-4e7c-80e8-527cbdbfbf25
+      - '0058721c-3831-45e3-bfd8-c735904e4ea0'
       X-Http2-Stream-Id:
-      - '861'
+      - '213'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -333,13 +333,13 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "resp_05573ec0d5ce8aee016af908e8bb908197a39d9a80755231c4",
+          "id": "resp_0077801a30adbfda016afd475220c081939f9840c18d4d5a4a",
           "object": "response",
-          "created_at": 1794705640,
+          "created_at": 1794983762,
           "status": "completed",
           "access_programs": null,
           "background": false,
-          "completed_at": 1794705641,
+          "completed_at": 1794983762,
           "content_filters": [
             {
               "blocked": false,
@@ -405,7 +405,7 @@ http_interactions:
               },
               "content_filter_offsets": {
                 "start_offset": 0,
-                "end_offset": 146,
+                "end_offset": 154,
                 "check_offset": 0
               }
             }
@@ -420,7 +420,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_05573ec0d5ce8aee016af908e93e0081978669f79d5475a189",
+              "id": "msg_0077801a30adbfda016afd475283f88193810cac91110b6c5e",
               "type": "message",
               "status": "completed",
               "content": [
@@ -428,7 +428,7 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "Azure Blob Storage is Microsoft\u2019s object storage service for storing large amounts of unstructured data such as text, images, videos, and backups."
+                  "text": "Azure Blob Storage is Microsoft Azure\u2019s object storage service for storing massive amounts of unstructured data such as text, images, videos, and backups."
                 }
               ],
               "phase": "final_answer",
@@ -497,14 +497,14 @@ http_interactions:
               "cache_write_tokens": 0,
               "cached_tokens": 0
             },
-            "output_tokens": 32,
+            "output_tokens": 33,
             "output_tokens_details": {
               "reasoning_tokens": 0
             },
-            "total_tokens": 390
+            "total_tokens": 391
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Sun, 15 Nov 2026 01:20:41 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:36:02 GMT
+recorded_with: VCR 6.4.1

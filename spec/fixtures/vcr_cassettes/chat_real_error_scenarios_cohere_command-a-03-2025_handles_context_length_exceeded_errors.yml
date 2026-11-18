@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"command-a-03-2025","messages":[{"role":"user","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"type":"text","text":"Hi"}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -37,11 +37,11 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - e410b5fc4e8f7d4f0534bac78b77f169
+      - 838ff6aa6c5b575b6f5c2fcd79fdc487
       Date:
-      - Sun, 15 Nov 2026 01:20:21 GMT
+      - Wed, 18 Nov 2026 06:35:56 GMT
       X-Envoy-Upstream-Service-Time:
-      - '4399'
+      - '3683'
       Server:
       - envoy
       Via:
@@ -52,8 +52,8 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"error_type":"TOO_MANY_TOKENS","id":"157e1d61-3efb-4a9c-8396-260da3324648","message":"too
+      string: '{"error_type":"TOO_MANY_TOKENS","id":"ea55b63b-c9b9-4636-be09-5adb797dac35","message":"too
         many tokens: size limit exceeded by 25836 tokens. Try using shorter or fewer
         inputs. The limit for this model is 288000 tokens."}'
-  recorded_at: Sun, 15 Nov 2026 01:20:21 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:35:56 GMT
+recorded_with: VCR 6.4.1

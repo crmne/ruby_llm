@@ -11,11 +11,11 @@ http_interactions:
         to process"}},"required":["query"],"additionalProperties":false,"strict":true}}}}]}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261115T013857Z
+      - 20261118T065248Z
       X-Amz-Content-Sha256:
       - bb500e9687fd1a7f06b15f14044e00cb02632b8aa86bab2d7d779a8d27a2034d
       Authorization:
@@ -31,7 +31,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:38:58 GMT
+      - Wed, 18 Nov 2026 06:52:49 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -39,32 +39,32 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 1d77ec41-81da-4f25-a560-c536cfe5dc1c
+      - 89eb7aeb-4f5e-4b02-b00a-b4a2cc048d44
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":474},"output":{"message":{"content":[{"toolUse":{"input":{"query":"test
-        data"},"name":"content_returning","toolUseId":"tooluse_IC9Sd17Mw17sdrUqmD0vLV"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"inputTokens":939,"outputTokens":26,"serverToolUsage":{},"totalTokens":965}}'
-  recorded_at: Sun, 15 Nov 2026 01:38:58 GMT
+      string: '{"metrics":{"latencyMs":380},"output":{"message":{"content":[{"toolUse":{"input":{"query":"test
+        data"},"name":"content_returning","toolUseId":"tooluse_DnY6N5WFkuINkgF0TUCrjA"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"inputTokens":939,"outputTokens":26,"serverToolUsage":{},"totalTokens":965}}'
+  recorded_at: Wed, 18 Nov 2026 06:52:49 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.amazon.nova-2-lite-v1:0/converse
     body:
       encoding: UTF-8
       string: '{"messages":[{"role":"user","content":[{"text":"Process this query:
-        test data"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_IC9Sd17Mw17sdrUqmD0vLV","name":"content_returning","input":{"query":"test
-        data"}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_IC9Sd17Mw17sdrUqmD0vLV","content":[{"text":"Processed:
+        test data"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_DnY6N5WFkuINkgF0TUCrjA","name":"content_returning","input":{"query":"test
+        data"}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_DnY6N5WFkuINkgF0TUCrjA","content":[{"text":"Processed:
         test data"}]}}]}],"inferenceConfig":{"maxTokens":65535},"toolConfig":{"tools":[{"toolSpec":{"name":"content_returning","description":"Returns
         a processed string result","inputSchema":{"json":{"type":"object","properties":{"query":{"type":"string","description":"Query
         to process"}},"required":["query"],"additionalProperties":false,"strict":true}}}}]}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261115T013858Z
+      - 20261118T065249Z
       X-Amz-Content-Sha256:
-      - 91c61ec1af6c218cceea2280bf45ab2cf3425e6d7d84a10da1b5f15db7083483
+      - ee892fdaac1f68f0bc982ea3f969805bbad65a16ff1eacdb8c2d7b720b059510
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
@@ -78,7 +78,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:38:59 GMT
+      - Wed, 18 Nov 2026 06:52:50 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -86,10 +86,10 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - e47b7687-1632-4184-98da-aa08b73c4ad9
+      - f9d88b12-f8d2-4c10-b013-e2e99188993e
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":398},"output":{"message":{"content":[{"text":"The
+      string: '{"metrics":{"latencyMs":520},"output":{"message":{"content":[{"text":"The
         query has been processed successfully. Result: **Processed: test data**"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":996,"outputTokens":18,"serverToolUsage":{},"totalTokens":1014}}'
-  recorded_at: Sun, 15 Nov 2026 01:38:59 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:52:50 GMT
+recorded_with: VCR 6.4.1

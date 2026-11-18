@@ -9,7 +9,7 @@ http_interactions:
         is the square root of 64? Answer with a JSON object with the key `result`."}],"stream":false,"response_format":{"type":"json_object"}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -30,7 +30,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Sun, 15 Nov 2026 01:20:17 GMT
+      - Wed, 18 Nov 2026 06:35:19 GMT
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -40,20 +40,21 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - '038808b4456f5aff02f4f69780e64ccf'
+      - 2039373b9980fcbb7aedd4084e6a4944
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 83dede49b3c78b7f99a0399a34264ed6.cloudfront.net (CloudFront)
+      - 1.1 14d5a8a1fbe4228e0d0a0b8054cd53e2.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
       - TXL52-P2
       X-Amz-Cf-Id:
-      - guQ6oh91q3BNWFDyAtuBUciQ6xiGCPKQ1W4-a28KQQvl25uYOJyEYw==
+      - Dxh0dfoEUV7_voyjtuX9qKbTEPn7d1_seQTWMqEU8yRpujl62VkuMw==
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6Ijk2NDQ1YjA0LWM2MzItNGUxNi05YWYyLTk1YmU1YzA3OTUzMCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTQ3MDU2MTcsIm1vZGVsIjoiZGVlcHNlZWstZmxhc2giLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IntcInJlc3VsdFwiOjh9IiwicmVhc29uaW5nX2NvbnRlbnQiOiJXZSBuZWVkIGFuc3dlciBKU09OIG9iamVjdCBrZXkgcmVzdWx0LiBOZWVkIHNxdWFyZSByb290IG9mIDY0LiBVc3VhbGx5IHByaW5jaXBhbCBzcXVhcmUgcm9vdCA4LiBCdXQgbm90ZSBzcXVhcmUgcm9vdHMgwrE4PyBRdWVzdGlvbiBzaW5ndWxhciBcInRoZSBzcXVhcmUgcm9vdFwiIGluIGNvbW1vbiBtYXRoIGlzIHByaW5jaXBhbCA4LiBOZWVkIG91dHB1dCBKU09OIG9iamVjdCBvbmx5PyBUaGUgdXNlciBzYXlzIFJlc3BvbnNlIEZvcm1hdCBtdXN0IGFkaGVyZSBzY2hlbWEge1widHlwZVwiOlwianNvbl9vYmplY3RcIn0uIEFsc28gYW5zd2VyIHdpdGggSlNPTiBvYmplY3Qga2V5IHJlc3VsdC4gU28gZmluYWwgc2hvdWxkIGJlIHtcInJlc3VsdFwiOjh9IG1heWJlIHZhbHVlIG51bWJlci4gRW5zdXJlIHZhbGlkIEpTT04uIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NzIsImNvbXBsZXRpb25fdG9rZW5zIjo5NiwidG90YWxfdG9rZW5zIjoxNjgsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowfSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjo5MH0sInByb21wdF9jYWNoZV9oaXRfdG9rZW5zIjowLCJwcm9tcHRfY2FjaGVfbWlzc190b2tlbnMiOjcyfSwic3lzdGVtX2ZpbmdlcnByaW50IjoiYmMxOWJhOTdjYmUwMTY0Nzk5MDMyMjJiYjE1NzhkYjYifQ==
-  recorded_at: Sun, 15 Nov 2026 01:20:18 GMT
-recorded_with: VCR 6.4.0
+      string: '{"id":"6260c75c-2b3b-4f69-80e7-ff2976d4d6f0","object":"chat.completion","created":1794983719,"model":"deepseek-flash","choices":[{"index":0,"message":{"role":"assistant","content":"{\"result\":
+        8}","reasoning_content":"We need answer JSON object key result. Square root
+        64 = 8 (principal). Need strictly schema. Ensure valid JSON."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":72,"completion_tokens":33,"total_tokens":105,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":26},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":72},"system_fingerprint":"bc19ba97cbe016479903222bb1578db6"}'
+  recorded_at: Wed, 18 Nov 2026 06:35:20 GMT
+recorded_with: VCR 6.4.1

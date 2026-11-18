@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -20,12 +20,12 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
       Date:
-      - Sun, 15 Nov 2026 01:21:32 GMT
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
+      - Wed, 18 Nov 2026 06:36:59 GMT
       Pragma:
       - no-cache
       Content-Type:
@@ -56,7 +56,7 @@ http_interactions:
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Sun, 15 Nov 2026 01:21:32 GMT
+  recorded_at: Wed, 18 Nov 2026 06:36:59 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-3-flash-preview:generateContent
@@ -66,7 +66,7 @@ http_interactions:
         John who is 30 years old"}]}],"generationConfig":{"responseMimeType":"application/json","responseJsonSchema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -81,7 +81,7 @@ http_interactions:
       message: OK
     headers:
       X-Goog-Request-Id:
-      - HQn5auzgBfez2fMP_6SFoQI
+      - i0f9atbhJYqOu_EP8fDd6Q4
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -89,7 +89,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 15 Nov 2026 01:21:34 GMT
+      - Wed, 18 Nov 2026 06:37:02 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -112,8 +112,8 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "{\"name\":\"John\",\"age\":30}",
-                    "thoughtSignature": "AY89a1/WB/GKBx4lI+rD1bM8tNq2w2Yu0i0+CKnuJkGj5xxfWwxliJzoDWi3kcv5X9K8IsA0nYKrInDQ5LQlee7Y4tlrgbSSQmsXR4Ul69d+zuayaPKXFj+Jug72KV7HIzuLL6zpZqwMURX11+XYqsqO8DnZ0UdzeFC33qBkmBOpkTviEI2blCx8W+ZZrkbOSKBwJBqs8aTOIqaLBRndlj9zB76ZcNzDB0rA6mMFwodSceVdwXuDrjEbS583+b2eP09QXRJKaKJEPN8w4xy5D1CpYflq+HBTc07JdmZzl7syXfXmunKFdskXbdvKlMexVkyCK7BDQb9Hz4Bg4RsmKzR8nJMCuTvx7ZA0n8Z54zeZnge7DUaCrfxWUgBo3RWRU6apkQQZbvCNUgXKxfugo9du/cw67Y1/yZaeQwCsVIodEyVqImkFkqrTWn2NbH/zWoOG0rBmkfhyOd9fxjCmLA0Yfc9gSpjwKkm6C0Qb7Dbovr5wTNAHNaPZPR+8oCnK6fxjgtOOGgXfEYK0q6TLop4w8nLfNQDBaaP3fsUcb8ORucxTHbGMtBGy3V5j8vEEK2KUi08Fq1dC3UP+buo6VIRYRZscEA1ujk8s+lrLjGZkwtKlNTQrOmNV88Mxh5Bs9id/txovNncpWJZ9tmIFQrpVUg9RMrt7yEHRpuYoAqq+Dh94E4Q6XK5yKoxKybm8P7Gs4SLBgULZjvuKP1feUmkgtio/2PWCaeMJ6icg2uj12AyFyoIPmAXbAXetiZykjeMZDh8cCDJbeaC6vmqZHpwIuguzlrkohX/hyZSFna8RrNR+fTeYll3pAHre2k34yKhzJJ3iVu2xCQAUmGhYgshxWwDB+xwHt6HJPLyA3xeSF0U1YE7+iteffj0SuOTFlB+O/Wx4rxnl8PUb2RLeRHdjWv0enFzmqjmpvM0P73erx4++LCmwogXzQILxS1hS/SB+sFC7XqrhJn9vI+Up3ek9Vaw0WhQtO5p/n+w6EwHeC3SfiiHkEXUA1twl0PJ/VsPMckGsRflrgtc1mscgxc6eGzP7VQUm4KEcTCXMP0+cqcjOIkTuAkkczHRDkRArjMbD9Qt3pEpfFAaOwhW4L4H0ex9UxmoI40/iHemeVJ8sjza8AcCEADLSai28n8bItvoG869AJ0ma6CukIO10Ucv705I3rcXU1QWhQoubBEAJXISzzJocQK+J25rN3QoxLOJfOWzW23KXLiOkdIOMlHIwMUz7+8a8mcivdiae25A/xgetzewaPE7yMFgUujf03FAeEqN0E5yQUqJ4UhAE4zMrIMh2Nl0ipHB82gBEXw8ehihHyTdGKYMQqFWfWUv5aBsk5jSi7FNVhFrbcstdCxWjIizbnsOv/b+B7WktA8OP00qxs/iJwmRlOiAXmupv+dJL6zoJZYJD2iv4"
+                    "text": "{\"name\": \"John\", \"age\": 30}",
+                    "thoughtSignature": "AY89a18C/lIaxFfj2pIxYnW5ELGe+SMJE6YBEDaWhP2jmdWoU8UAyCBDGcCggFeOYT+s41JoZkT4TDoIcwUZAtC8L/Yg1/JqCVNO0JUQSaq5ACGORcfS6XH7420uaj3yssJANCjEuYynuLkaezUpCv0waNm6UBoiEiio1pkgQT7LBx+kZFghD5lsC3eYDh76d6PO3wKpViqX5u/7t17BaWYtImzTk35i2bBdE26E0YnbK+ISaGHryop8ed078TwWx4GwdjDLoVpHjHB6QcYvoFtU8AtkHG/UKmZMzvjgSTD4HmsRmltGnZgAjYwBuwO3DE5o3xzTHhCzrrFnIK0cj4Tl5mkzwmhrDHrMmMbQdJh2Yp/AQltFkvD8LyIckKS76ZhaTooE5wDZLU0G1p8YwVnYt8w1c+vw+Fcw5hBDn7gTmWfG4OzCn2hHrPva3l0f8YxZNtMEkUW09cyIbovQE/ZoMsLRggqCgcATnmQWjjuLgxGDAnop1wiMzCXQCpqE84hNzlueErajpVcZuiQ14hzMO/Ux5JW4FJparl//d/64Oh9mt1qz6yLSVHqGT14f9yAcS6LQ9PNkFm8fJyIGJnht0YGhTOBkcvJJNfwMlRUPJ0GWtRuEjqrrlnsXvkJzTG00yLx5bQS+Fe+XA+acyGhW8pEDdZVq6KJte05dUVrVZW76y2506Utvc2wxRCW1Li3h2Ch9OuVmhHT4gNnvR/hbsVM5hO/yL0J2k75UUBbRNl4fTjMbeESk3fxeBTwr8fik9t8ouNP7EAI0cXjpUXmOqnZdIHAvGMEtm+WERnInowmY13N91KfDhyLIpJBbzHuZ7vHkumW1BI6lzWHBQqlTh/yrcirgD4gyHl8NOzMau9jamqggrW1LEXMRZuqHOcqAz/rEWExmLDSklMIdHKtCxfWkFc1pWBn1fn5M/SJCx236qzXd6IPZctsBjXuDBYqPBqF68Wy7D8IOBytMXRSUPt/hPgcyYcgU2RVVQbmHLg/pNXU2uxf8/N5tK52bfY7OZ0DPUXzn4irvr3iUBHXFmxEC6Hm7VuThsHtgxT0gmdv6wrdH94DLackvwpQK8DVAKErttr8kfKmnLH7Qfp4typabdpaK48dCrzP7NgYqwyLZxumkO4fBBA=="
                   }
                 ]
               },
@@ -122,8 +122,8 @@ http_interactions:
           ],
           "usageMetadata": {
             "promptTokenCount": 77,
-            "candidatesTokenCount": 10,
-            "totalTokenCount": 371,
+            "candidatesTokenCount": 13,
+            "totalTokenCount": 316,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -134,14 +134,14 @@ http_interactions:
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 10
+                "tokenCount": 13
               }
             ],
-            "thoughtsTokenCount": 284
+            "thoughtsTokenCount": 226
           },
           "modelVersion": "gemini-3-flash-preview",
-          "createTime": "2026-11-15T01:21:33.094316Z",
-          "responseId": "HQn5auzgBfez2fMP_6SFoQI"
+          "createTime": "2026-11-18T06:36:59.618710Z",
+          "responseId": "i0f9atbhJYqOu_EP8fDd6Q4"
         }
-  recorded_at: Sun, 15 Nov 2026 01:21:34 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:37:02 GMT
+recorded_with: VCR 6.4.1

@@ -9,7 +9,7 @@ http_interactions:
         this document in one sentence."},{"type":"input_file","file_url":"https://pdfobject.com/pdf/sample.pdf"}]}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:39:24 GMT
+      - Wed, 18 Nov 2026 06:52:38 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -44,7 +44,9 @@ http_interactions:
       X-Ratelimit-Limit-Requests:
       - '1800'
       X-Ratelimit-Remaining-Requests:
-      - '1798'
+      - '1799'
+      Cf-Cache-Status:
+      - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Zero-Data-Retention:
@@ -52,30 +54,27 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '271.6'
+      - '332.2'
       X-Metrics-E2e-Ms:
-      - '3105.9'
-      Traceparent:
-      - 00-27ce0c68607358b61e6a808b30c922b9-0883c404000a34ff-01
+      - '5597.4'
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
-      Cf-Cache-Status:
-      - DYNAMIC
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1794706761,"completed_at":1794706764,"id":"6de57869-1725-93c2-a37e-c69bf7a9b8e7","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_6de57869-1725-93c2-a37e-c69bf7a9b8e7","summary":[{"text":"The
-        user wants a one-sentence summary of a document, but no document content has
-        been provided yet.\n\nThe document is a sample PDF containing only placeholder
-        text and a rendered page image.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"SKi57vD4edirEMsrDdS5jF81Spg/sjzjlHBg8pcScp6b9zjBO2oLfDj7D4adhJjvuC8OdCWi0J65JrFm6fnc7qfsSSP94sDkZW38Sj+vHkDItUWtJPpP9OX8SpH+vYRI26afZbZ1tWyNz6fEj+/4cJEh+AqGuLQEvbXvQaTCPCoDxoD/BfDGd3pn8rl6N2lhR/o56spkgM5WJawzxfGWYX3z6uet++uCmE23jURRLKFPeGGq/LEgtWDDR8v/UwSN6b60ZvXKAwMsBfig0kkAj9fjzHl+u4XjbAbADCgn6DFub9c/6P7Ak9nPeJdHLE4fF+s37K3luQ67/SZPaAK6F8UeiJlDTAlGVvcG9BUJGz4GIBIG6IyLzYkdsA+k4t9waEpEpb5VH7nqe3CVzaHb54o0nfDC/JgSyVLMOyyntez3Yre5XyDVKfxbeHKj3mte234EBdUShqp2VLc4G+/5rKrJbYZu8QGjJijAv372J1GZqN+gZM23wKu2d+Mgn7HD7uhDMYGxGZG6kl43UbuU939TNE02Fh2NCjrQMXAk4o25hvd4mNQlB57f4/svyjlRS4jCz9P7sURMZwvTA6PHnLXHIbCqg/Y640BRcQn8DqMML7+qJUk9J/Wcndyc4HgPZ661WaJB4mysablu4MOZWJ0C0GOPZFEAWwCabB5a8CbzxNvUxi+TEQ1nc2lSWUv8ASmY38Xd9aS/Z2g2WeRVGj8oM3oc0jwceg"},{"content":[{"type":"output_text","text":"This
-        is a sample PDF consisting of placeholder \"Lorem ipsum\" text under the heading
-        \"Sample PDF\" and subtitle \"This is a simple PDF file. Fun fun fun.\"","logprobs":[],"annotations":[]}],"id":"msg_6de57869-1725-93c2-a37e-c69bf7a9b8e7","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":1931,"input_tokens_details":{"cached_tokens":512},"output_tokens":260,"output_tokens_details":{"reasoning_tokens":226},"total_tokens":2191,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":25261500,"context_details":{"input_tokens":1931,"output_tokens":268}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
-  recorded_at: Sun, 15 Nov 2026 01:39:24 GMT
-recorded_with: VCR 6.4.0
+      string: '{"created_at":1794984755,"completed_at":1794984758,"id":"62625dc6-079d-4bb4-8f0b-63aa155201ef","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_62625dc6-079d-4bb4-8f0b-63aa155201ef","summary":[{"text":"The
+        user wants a one-sentence summary of a document. No document content has been
+        provided yet.\n\nThe document is a sample PDF containing placeholder text,
+        commonly known as Lorem Ipsum. It is dummy content used to demonstrate document
+        layout and formatting.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"ZO+NMlQztNnP+JNzqnGROhpnbRW5Os0sczNDZUGlJPBsROVmGg4N84bMNeaIjG0s9U7qliJ1gRti+Ekz98ESjNySP1R3MaVRBbz/t1qBF7nNjDbFrCwr7rcbswHJ8Ad/W6SJy3K1I+ujZpBzjXOJCwcddanOh4EjddtjqeRbLxggHsBiF7VpDMNuCf9kjp4VRjr5aj65adRbjY6a06DDMK/SGu1dOFMXXBGHFqRCUzpNKrbUPs5jdt7yK9GBrUelIAlleUaQeM/DAROWQFkBr+QIhETIYBnhhjdzA0OEmGojgreSw5LvLPqROfJ6mJYVj9+QGT02Rn2yr/QE0aghcVZQtw+CaNf+axq1qgpam7mw5Qyqj7yMgaMNeZHTBkk5meN6yVWj7ihEZl7VneLUd6aymtq6n1f0LfqdAZ3QrOsowyKT3498IOx8ybv5u7jID+pICVhT08SgzD4PNumkaNtX615NrovGiCnLeWmCsuKea7eHKyam7vRLaF6ZkybUNZyko5j1fG1X1ZNrbIXa0H28I9fYp6rvjxk9BHWDjvyA4yn2LcmcmnLxfE4DY3ehP1jzO4cPP21SEP8J0TPV8tn1Srr/fuoHDVM5eLAY2d4g+Yf0YgREjisKhjnXeLNuVkqSovkG8LnJevsDhL57x5EUbyS95m2m1hWnNf3ooCY5HOBpkLEm2FOAdrQf9u1azuwPfsYgtIDX84Lzc14U3Sr0xJJJvjNZ8HURipPMg7yHdjY4P1DukYuB8mfO1YinmVIa4g/LlAGZZ59hVxPSfeK0AhfUtq2bd1Bhje/7KbuyOVI4DrvmNP1TZTKUB4jKEln/SjzVXguJhDuwXuFE3M6skg51zqO+HMLT487CtZrAhxcuFKlWSFhrmeVt6r/x0/ImBeuJ3UHX/jLK9UAMm97QdAy9tz7w4hsJMnJZZal7kRTiZFxEdpa/ZVJt/+90i6eIh8ZYSQ3Sn3caItNe4ksSGzDHKpxlRUzQgf6K5hY2WbFuJ84Sxh8WP166D7yGTF0QYLHkUCBdNjW3+Qf8h1dXs3dhb7THLpcspNyA3ygPHgYuqwy4YHQ6ZN820NYlQmJrEFlIHTIfjGfKzPvRQx3P/syplrTVxi7/PXPT0HkaG8Bfmo4dbeR+g8um/+Ysu10T2AvF6pt4ADG+P0mBrsxv0dsvw8r+ny131naOJe8zuDRogzDqf4twOLktL97pZRbILdVOHG0vBz3hIh1/H00bSKUzD3ih1du3fEBBufl282b2834yA2L5llOY9kTY0K5PSc+GOaIu/zsjHI1W9lzwExzULTDPPUqFPKoALpZoZxSBSfESCAxsasTyM4foArceM26syVcUTJIkLIIC7yaT3OIYfMCD6177nqDs+DiCeMj3ZCaAvvbE0oCmEkWVj4SkDJmklJrlLpujcHzilElxzemcBK3G+CEKGtOTZz1xR7a7m4SHo1p5bcpvDd1AAqc/+dBI+JiObcy+6Om6dyj8KmTW6J4O4Umr"},{"content":[{"type":"output_text","text":"This
+        is a sample PDF consisting of placeholder \"Lorem Ipsum\" text used to demonstrate
+        document formatting.","logprobs":[],"annotations":[]}],"id":"msg_62625dc6-079d-4bb4-8f0b-63aa155201ef","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":1931,"input_tokens_details":{"cached_tokens":128},"output_tokens":235,"output_tokens_details":{"reasoning_tokens":216},"total_tokens":2166,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":28668500,"context_details":{"input_tokens":1931,"output_tokens":243}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Wed, 18 Nov 2026 06:52:38 GMT
+recorded_with: VCR 6.4.1

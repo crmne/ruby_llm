@@ -11,7 +11,7 @@ http_interactions:
         of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -25,22 +25,22 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      X-Envoy-Upstream-Service-Time:
-      - '2744'
-      Date:
-      - Sun, 15 Nov 2026 01:23:29 GMT
-      Server:
-      - istio-envoy
-      Req-Cost-Time:
-      - '2749'
       Req-Arrive-Time:
-      - '1794705810168'
+      - '1794983921700'
+      Resp-Start-Time:
+      - '1794983922752'
+      X-Envoy-Upstream-Service-Time:
+      - '1048'
+      Date:
+      - Wed, 18 Nov 2026 06:38:40 GMT
       Access-Control-Allow-Origin:
       - ''
+      Server:
+      - istio-envoy
       Content-Type:
       - application/json; charset=utf-8
-      Resp-Start-Time:
-      - '1794705812917'
+      Req-Cost-Time:
+      - '1051'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
@@ -51,13 +51,11 @@ http_interactions:
         the user wants me to call the array_params function with the tags [\"red\",
         \"blue\"] and then combine them. Let me check the function''s parameters.
         The function requires an array of strings called \"tags\". So I need to structure
-        the tool call correctly. The arguments should be a JSON object with the \"tags\"
-        key and the array as its value. I''ll make sure the syntax is right, using
-        double quotes and proper brackets. Once the function is called, it should
-        return the combined tags, which would just be the two elements joined somehow.
-        But my main task here is to generate the correct tool call JSON. Let me verify
-        that there are no typos and that the array items are strings. Yep, looks good.
-        Time to output the tool_call in the specified XML format.\n","tool_calls":[{"type":"function","function":{"name":"array_params","arguments":"{\"tags\":
-        [\"red\", \"blue\"]}"},"id":"JXQZLRGJHggrC2aG8NZF8hXXbte4v4zN"}]}}],"created":1794705812,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":190,"prompt_tokens":189,"total_tokens":379,"prompt_tokens_details":{"cached_tokens":188}},"id":"chatcmpl-R4h61LEgnbA2FL3197LnzRsPyQla60fZ","timings":{"cache_n":188,"prompt_n":1,"prompt_ms":10.263,"prompt_per_token_ms":10.263,"prompt_per_second":97.43739647276625,"predicted_n":190,"predicted_ms":2669.81,"predicted_per_token_ms":14.125978835978836,"predicted_per_second":70.79155445518595}}'
-  recorded_at: Sun, 15 Nov 2026 01:23:32 GMT
-recorded_with: VCR 6.4.0
+        the tool call with those tags. I''ll format the JSON correctly, making sure
+        the arguments are a JSON object with the tags array. Then, after calling the
+        function, I should present the combined tags as the response. Let me verify
+        that there are no additional parameters needed and that the function is properly
+        called.\n","tool_calls":[{"type":"function","function":{"name":"array_params","arguments":"{\"tags\":
+        [\"red\", \"blue\"]}"},"id":"FEHn1FM5u0BfmyEtVUj2NHhpeu8XIQ8o"}]}}],"created":1794983922,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":140,"prompt_tokens":189,"total_tokens":329,"prompt_tokens_details":{"cached_tokens":188}},"id":"chatcmpl-a3yqVnF4hr51tSkscfcBNjLfLVEhyDcJ","timings":{"cache_n":188,"prompt_n":1,"prompt_ms":8.157,"prompt_per_token_ms":8.157,"prompt_per_second":122.59409096481549,"predicted_n":140,"predicted_ms":990.473,"predicted_per_token_ms":7.125705035971222,"predicted_per_second":140.3369905085752}}'
+  recorded_at: Wed, 18 Nov 2026 06:38:42 GMT
+recorded_with: VCR 6.4.1

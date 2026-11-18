@@ -9,7 +9,7 @@ http_interactions:
         a person named John who is 30 years old"}]}],"stream":false,"response_format":{"type":"json_object","json_schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -42,11 +42,11 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - e3839d1baa27bb5931bfbd40b8b8fa06
+      - 8656d0913fdb0d5b74c4e3c5019f98ee
       Date:
-      - Sun, 15 Nov 2026 01:20:01 GMT
+      - Wed, 18 Nov 2026 06:35:31 GMT
       X-Envoy-Upstream-Service-Time:
-      - '311'
+      - '260'
       Server:
       - envoy
       Via:
@@ -57,6 +57,6 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"447f43bc-617e-4472-9dd3-86ce73b06256","message":{"role":"assistant","content":[{"type":"text","text":"{\"name\":\"John\",\"age\":30}"}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":12,"output_tokens":10},"tokens":{"input_tokens":614,"output_tokens":13},"cached_tokens":496}}'
-  recorded_at: Sun, 15 Nov 2026 01:20:01 GMT
-recorded_with: VCR 6.4.0
+      string: '{"id":"12686a12-ac85-43d6-948b-f5b7ac31742c","message":{"role":"assistant","content":[{"type":"text","text":"{\"name\":\"John\",\"age\":30}"}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":12,"output_tokens":10},"tokens":{"input_tokens":614,"output_tokens":13},"cached_tokens":496}}'
+  recorded_at: Wed, 18 Nov 2026 06:35:31 GMT
+recorded_with: VCR 6.4.1

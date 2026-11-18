@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"gpt-oss:120b","messages":[{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"Hi"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -25,9 +25,9 @@ http_interactions:
       Content-Type:
       - application/json
       X-Build-Commit:
-      - 9259ed42dedddf2a22abf15e2a28fc3662da6272
+      - cf4922364784346c6f13e06b08149fb1469e06a1
       X-Build-Time:
-      - '2026-11-14T15:25:41-08:00'
+      - '2026-11-17T18:17:32-08:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
@@ -35,13 +35,13 @@ http_interactions:
       Content-Length:
       - '194'
       Date:
-      - Sun, 15 Nov 2026 01:24:41 GMT
+      - Wed, 18 Nov 2026 06:40:16 GMT
       Server:
       - Google Frontend
       Traceparent:
-      - 00-69d1040d4b888d8fc4229df98970a424-b0f26a8105e04cec-00
+      - 00-27dc93ecad6f641b178fb3ab8c6e81c3-48f80d7c6ec169e2-00
       X-Cloud-Trace-Context:
-      - 69d1040d4b888d8fc4229df98970a424/12750370597421206764
+      - 27dc93ecad6f641b178fb3ab8c6e81c3/5257967393040329186
       Via:
       - 1.1 google
       Alt-Svc:
@@ -49,8 +49,8 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"error":{"message":"The prompt is too long: 1250128, model maximum
-        context length: 131072 (ref: 72375612-a2cd-4a6d-9f76-e0c738a0211e)","type":"invalid_request_error","param":null,"code":null}}
+        context length: 131072 (ref: 423ee044-c11d-4134-9769-328055acf7d5)","type":"invalid_request_error","param":null,"code":null}}
 
         '
-  recorded_at: Sun, 15 Nov 2026 01:24:41 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:40:16 GMT
+recorded_with: VCR 6.4.1

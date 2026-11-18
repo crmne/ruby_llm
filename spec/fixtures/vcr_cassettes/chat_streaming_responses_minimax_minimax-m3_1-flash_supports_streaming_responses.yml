@@ -11,7 +11,7 @@ http_interactions:
       Accept-Encoding:
       - identity
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -28,25 +28,25 @@ http_interactions:
       Vary:
       - Accept-Encoding
       Trace-Id:
-      - '07483bceb1e021ea7af6de6123487d8d'
+      - 074c7a45a2708198434cf5c35da04efa
       X-Session-Id:
       - cdf8143f9fdeea1e518ed8e45fe7b8db
       X-Mm-Request-Id:
-      - 2092934004998157135_1794705614i10qgm
+      - 2092934004998157135_1794983749fdgg97
       Minimax-Request-Id:
-      - 004b18f5a2da3c06439c9471041ce642
+      - 25ded1b991c6603f448557b536d1450b
       Alb-Receive-Time:
-      - '1794705614.677'
+      - '1794983749.011'
       Alb-Request-Id:
-      - ddbcd8d2896144571c44dbd90657574d7f3e3b71
+      - 014ac392b997f65567a04fe5ec8a168ed0380db6
       Expires:
-      - Sun, 15 Nov 2026 01:20:15 GMT
+      - Wed, 18 Nov 2026 06:35:49 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Sun, 15 Nov 2026 01:20:15 GMT
+      - Wed, 18 Nov 2026 06:35:49 GMT
       Transfer-Encoding:
       - chunked
       Connection:
@@ -60,7 +60,7 @@ http_interactions:
       encoding: UTF-8
       string: |+
         event: message_start
-        data: {"type":"message_start","message":{"id":"07483bceb1e021ea7af6de6123487d8d","type":"message","role":"assistant","content":[],"model":"MiniMax-M3.1-Flash","stop_reason":null,"stop_sequence":null,"usage":{"input_tokens":0,"output_tokens":0}}}
+        data: {"type":"message_start","message":{"id":"074c7a45a2708198434cf5c35da04efa","type":"message","role":"assistant","content":[],"model":"MiniMax-M3.1-Flash","stop_reason":null,"stop_sequence":null,"usage":{"input_tokens":0,"output_tokens":0}}}
 
         event: ping
         data: {"type":"ping"}
@@ -72,22 +72,28 @@ http_interactions:
         data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":"We"}}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":" need answer count"}}
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":" need answer"}}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":" 1 to 3. Need likely"}}
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":" count"}}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":" \""}}
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":" 1 to 3. Likely"}}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":"1, 2, 3.\""}}
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":" \"1, 2, 3"}}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":"Could be concise."}}
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":".\" Need no"}}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"signature_delta","signature":"201c5d6e5ca4536ea324eb1028a48d0e5bd4a14327491f762f67bfde34912aa3"}}
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":" complication"}}
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":"."}}
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"signature_delta","signature":"813db91ff29049e9b11b598554a41c14140675b893734a51e13905e47b307d54"}}
 
         event: content_block_stop
         data: {"type":"content_block_stop","index":0}
@@ -105,11 +111,11 @@ http_interactions:
         data: {"type":"content_block_stop","index":1}
 
         event: message_delta
-        data: {"type":"message_delta","delta":{"stop_reason":"end_turn"},"usage":{"input_tokens":12,"output_tokens":36,"cache_read_input_tokens":197,"output_tokens_details":{"thinking_tokens":25}}}
+        data: {"type":"message_delta","delta":{"stop_reason":"end_turn"},"usage":{"input_tokens":12,"output_tokens":35,"cache_read_input_tokens":197,"output_tokens_details":{"thinking_tokens":24}}}
 
         event: message_stop
         data: {"type":"message_stop"}
 
-  recorded_at: Sun, 15 Nov 2026 01:20:15 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:35:49 GMT
+recorded_with: VCR 6.4.1
 ...

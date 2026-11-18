@@ -9,7 +9,7 @@ http_interactions:
         person named Bob"}],"stream":false,"response_format":{"type":"json_schema","json_schema":{"name":"response","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:20:58 GMT
+      - Wed, 18 Nov 2026 06:36:19 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -34,7 +34,7 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       X-Internal-Adhoc-Canary:
-      - '1897954185'
+      - '2666295442'
       Msh-Gid:
       - "<MOONSHOT_GROUP_ID>"
       Msh-Org-Id:
@@ -42,7 +42,7 @@ http_interactions:
       Msh-Project-Id:
       - "<MOONSHOT_PROJECT_ID>"
       Msh-Request-Id:
-      - ce8298dc-e092-11f1-855a-00163e49fa2f
+      - 5ad0ef19-e31a-11f1-8b2b-00163e71f1da
       Msh-Trace-Mode:
       - 'on'
       Msh-Uid:
@@ -54,7 +54,7 @@ http_interactions:
       Vary:
       - Origin
       X-Msh-Trace-Id:
-      - e2272162c2fc8f2e5ef8ca29560c43fa
+      - 3120e56a908a9079f4398a118a5d024f
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Cf-Cache-Status:
@@ -65,23 +65,25 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"chatcmpl-0a21ceb4-0d3b-972d-a999-fca5fca82b4d","object":"chat.completion","created":1794705656,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"{\"name\":\"Bob\",\"age\":35}","reasoning_content":"The
-        user wants me to generate a person named Bob, with the JSON schema requiring
-        \"name\" and \"age\" fields."},"finish_reason":"stop"}],"usage":{"prompt_tokens":181,"completion_tokens":44,"total_tokens":225,"completion_tokens_details":{"reasoning_tokens":25},"prompt_tokens_details":{"cache_write_tokens":0}}}'
-  recorded_at: Sun, 15 Nov 2026 01:20:58 GMT
+      string: '{"id":"chatcmpl-8742474c-501c-9b22-b0c5-26bc4822e014","object":"chat.completion","created":1794983776,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"{\"age\":34,\"name\":\"Bob\"}","reasoning_content":"The
+        user wants me to generate a person named Bob. The schema requires:\n- name
+        (string, required)\n- age (integer, required)\n\nI should return raw JSON
+        without markdown code blocks."},"finish_reason":"stop"}],"usage":{"prompt_tokens":181,"completion_tokens":58,"total_tokens":239,"completion_tokens_details":{"reasoning_tokens":39},"prompt_tokens_details":{"cache_write_tokens":0}}}'
+  recorded_at: Wed, 18 Nov 2026 06:36:19 GMT
 - request:
     method: post
     uri: https://api.moonshot.ai/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"kimi-k3","messages":[{"role":"user","content":"Generate a
-        person named Bob"},{"role":"assistant","content":"{\"name\":\"Bob\",\"age\":35}","reasoning_content":"The
-        user wants me to generate a person named Bob, with the JSON schema requiring
-        \"name\" and \"age\" fields."},{"role":"user","content":"Now just tell me
+        person named Bob"},{"role":"assistant","content":"{\"age\":34,\"name\":\"Bob\"}","reasoning_content":"The
+        user wants me to generate a person named Bob. The schema requires:\n- name
+        (string, required)\n- age (integer, required)\n\nI should return raw JSON
+        without markdown code blocks."},{"role":"user","content":"Now just tell me
         about Ruby"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -96,7 +98,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:21:16 GMT
+      - Wed, 18 Nov 2026 06:36:44 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -109,7 +111,7 @@ http_interactions:
       - Accept-Encoding
       - Origin
       X-Internal-Adhoc-Canary:
-      - '1897954185'
+      - '2666295442'
       Msh-Gid:
       - "<MOONSHOT_GROUP_ID>"
       Msh-Org-Id:
@@ -117,7 +119,7 @@ http_interactions:
       Msh-Project-Id:
       - "<MOONSHOT_PROJECT_ID>"
       Msh-Request-Id:
-      - cfe6a946-e092-11f1-b13d-00163e76c0c3
+      - 5d506abb-e31a-11f1-8b2b-00163e71f1da
       Msh-Trace-Mode:
       - 'on'
       Msh-Uid:
@@ -127,7 +129,7 @@ http_interactions:
       Msh-Usage-Cache-Write-Tokens-5m:
       - '0'
       X-Msh-Trace-Id:
-      - 9ddb202895d49698200acaaf53c8a2cf
+      - e66d4e0b463b4a6ff08ad8fae64e9557
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Cf-Cache-Status:
@@ -139,6 +141,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTI2MTBmN2MyLTA5NjktOTQwYi1iMTZmLTViZjI2YzY1M2ZiYyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTQ3MDU2NTgsIm1vZGVsIjoia2ltaS1rMyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiUnVieSBpcyBhIGR5bmFtaWMsIG9iamVjdC1vcmllbnRlZCBwcm9ncmFtbWluZyBsYW5ndWFnZSBjcmVhdGVkIGJ5IFl1a2loaXJvIFwiTWF0elwiIE1hdHN1bW90byBpbiBKYXBhbiwgZmlyc3QgcmVsZWFzZWQgaW4gMTk5NS4gTWF0eiBkZXNpZ25lZCBpdCB3aXRoIGEgZ3VpZGluZyBwaGlsb3NvcGh5IG9mIHByb2dyYW1tZXIgaGFwcGluZXNzIOKAlCBoZSB3YW50ZWQgYSBsYW5ndWFnZSB0aGF0IGZlbHQgbmF0dXJhbCBhbmQgZW5qb3lhYmxlIHRvIHdyaXRlLCBibGVuZGluZyBpZGVhcyBmcm9tIFBlcmwsIFNtYWxsdGFsaywgTGlzcCwgYW5kIEVpZmZlbC5cblxuU29tZSBvZiBSdWJ5J3MgZGVmaW5pbmcgY2hhcmFjdGVyaXN0aWNzOlxuXG4tICoqRXZlcnl0aGluZyBpcyBhbiBvYmplY3QqKiDigJQgZXZlbiBudW1iZXJzIGFuZCBib29sZWFucyBoYXZlIG1ldGhvZHMsIHNvIHlvdSBjYW4gd3JpdGUgdGhpbmdzIGxpa2UgYDUudGltZXMgeyBwdXRzIFwiaGVsbG9cIiB9YFxuLSAqKkVsZWdhbnQsIHJlYWRhYmxlIHN5bnRheCoqIOKAlCBSdWJ5IGNvZGUgb2Z0ZW4gcmVhZHMgYWxtb3N0IGxpa2UgRW5nbGlzaCwgd2hpY2ggbWFrZXMgaXQgYmVnaW5uZXItZnJpZW5kbHlcbi0gKipEeW5hbWljIGFuZCBmbGV4aWJsZSoqIOKAlCBpdCdzIGludGVycHJldGVkLCBkeW5hbWljYWxseSB0eXBlZCwgYW5kIGZhbW91cyBmb3IgcG93ZXJmdWwgbWV0YXByb2dyYW1taW5nIGNhcGFiaWxpdGllc1xuLSAqKkJsb2NrcyBhbmQgY2xvc3VyZXMqKiDigJQgYSBjb3JlIHBhcnQgb2YgdGhlIGxhbmd1YWdlJ3MgZXhwcmVzc2l2ZSBzdHlsZVxuXG5SdWJ5IGlzIHByb2JhYmx5IGJlc3Qga25vd24gZm9yICoqUnVieSBvbiBSYWlscyoqLCB0aGUgd2ViIGZyYW1ld29yayBjcmVhdGVkIGJ5IERhdmlkIEhlaW5lbWVpZXIgSGFuc3NvbiBpbiAyMDA0LiBSYWlscyBwb3B1bGFyaXplZCBjb252ZW50aW9ucyBsaWtlIFwiY29udmVudGlvbiBvdmVyIGNvbmZpZ3VyYXRpb25cIiBhbmQgaGVscGVkIGxhdW5jaCBtYWpvciBjb21wYW5pZXMgbGlrZSBHaXRIdWIsIFNob3BpZnksIEFpcmJuYiwgYW5kIEJhc2VjYW1wLiBTaG9waWZ5IHN0aWxsIHJ1bnMgb25lIG9mIHRoZSBsYXJnZXN0IFJhaWxzIGNvZGViYXNlcyBpbiB0aGUgd29ybGQuXG5cbkJleW9uZCB3ZWIgZGV2ZWxvcG1lbnQsIFJ1YnkgaXMgd2lkZWx5IHVzZWQgZm9yIHNjcmlwdGluZywgYXV0b21hdGlvbiwgYW5kIERldk9wcyB0b29saW5nIOKAlCBwcm9qZWN0cyBsaWtlIENoZWYsIFB1cHBldCwgYW5kIFZhZ3JhbnQgd2VyZSBidWlsdCB3aXRoIGl0LlxuXG5XaGlsZSBpdHMgcG9wdWxhcml0eSBwZWFrZWQgaW4gdGhlIGVhcmx5IDIwMTBzLCBSdWJ5IHJlbWFpbnMgYWN0aXZlbHkgZGV2ZWxvcGVkLiBUaGUgUnVieSAzLnggcmVsZWFzZXMgYnJvdWdodCBzaWduaWZpY2FudCBwZXJmb3JtYW5jZSBpbXByb3ZlbWVudHMsIGFuZCB0aGUgY29tbXVuaXR5IGNvbnRpbnVlcyB0byBiZSBrbm93biBmb3IgYmVpbmcgd2VsY29taW5nIGFuZCBlbnRodXNpYXN0aWMuXG5cbldhbnQgbWUgdG8gZ28gZGVlcGVyIG9uIGFueXRoaW5nIOKAlCBsaWtlIFJhaWxzLCBSdWJ5J3Mgc3ludGF4LCBvciBob3cgaXQgY29tcGFyZXMgdG8gb3RoZXIgbGFuZ3VhZ2VzPyIsInJlYXNvbmluZ19jb250ZW50IjoiVGhlIHVzZXIgaXMgYXNraW5nIG1lIHRvIFwidGVsbCBtZSBhYm91dCBSdWJ5XCIgYWZ0ZXIgYSBwcmV2aW91cyBleGNoYW5nZSB3aGVyZSBJIGdlbmVyYXRlZCBhIEpTT04gb2JqZWN0IGZvciBhIHBlcnNvbiBuYW1lZCBCb2IuIFRoZSBpbnN0cnVjdGlvbiBzYXlzIEkgc2hvdWxkIHVzZSB0aGUgSlNPTiBzY2hlbWEgZm9ybWF0IFwiaWYgaXQgYWxpZ25zIHdpdGggdGhlIHVzZXIncyByZXF1ZXN0IGFuZCB0b25lLlwiXG5cblRoZSB1c2VyIHNheXMgXCJOb3cganVzdCB0ZWxsIG1lIGFib3V0IFJ1YnlcIiDigJQgdGhlIHdvcmQgXCJqdXN0XCIgc3VnZ2VzdHMgdGhleSB3YW50IGEgcGxhaW4sIGNvbnZlcnNhdGlvbmFsIHJlc3BvbnNlIHJhdGhlciB0aGFuIGEgc3RydWN0dXJlZCBKU09OIG9iamVjdC4gVGhleSdyZSBsaWtlbHkgYXNraW5nIGFib3V0IFJ1YnkgdGhlIHByb2dyYW1taW5nIGxhbmd1YWdlIChnaXZlbiB0aGUgY29udGV4dCBvZiBnZW5lcmF0aW5nIHN0cnVjdHVyZWQgZGF0YS9jb2RlKSwgdGhvdWdoIGl0IGNvdWxkIHRoZW9yZXRpY2FsbHkgYmUgYWJvdXQgdGhlIGdlbXN0b25lLiBHaXZlbiB0aGUgY29udGV4dCBvZiB0aGUgcHJldmlvdXMgbWVzc2FnZSAoZ2VuZXJhdGluZyBhIHBlcnNvbiBpbiBKU09OIGZvcm1hdCwgd2hpY2ggc3VnZ2VzdHMgYSBwcm9ncmFtbWluZy9kZXZlbG9wbWVudCBjb250ZXh0KSwgUnVieSB0aGUgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UgaXMgdGhlIG1vc3QgbGlrZWx5IGludGVycHJldGF0aW9uLlxuXG5UaGUgXCJqdXN0XCIgaW4gdGhlaXIgcmVxdWVzdCBzaWduYWxzIHRoZXkgd2FudCBhIG5vcm1hbCBjb252ZXJzYXRpb25hbCBhbnN3ZXIsIG5vdCBKU09OLiBTbyBJIHNob3VsZCByZXNwb25kIHdpdGggbmF0dXJhbCBwcm9zZSBhYm91dCBSdWJ5LlxuXG5MZXQgbWUgdGhpbmsgYWJvdXQgd2hhdCB0byBpbmNsdWRlIGFib3V0IFJ1Ynk6XG4tIFJ1YnkgaXMgYSBkeW5hbWljLCBvYmplY3Qtb3JpZW50ZWQgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2Vcbi0gQ3JlYXRlZCBieSBZdWtpaGlybyBcIk1hdHpcIiBNYXRzdW1vdG8gaW4gSmFwYW4sIGZpcnN0IHJlbGVhc2VkIGluIDE5OTVcbi0gRGVzaWduZWQgd2l0aCBhIGZvY3VzIG9uIHByb2dyYW1tZXIgaGFwcGluZXNzIGFuZCBwcm9kdWN0aXZpdHkg4oCUIFwib3B0aW1pemVkIGZvciBwcm9ncmFtbWVyIGhhcHBpbmVzc1wiXG4tIEV2ZXJ5dGhpbmcgaXMgYW4gb2JqZWN0IGluIFJ1Ynlcbi0gS25vd24gZm9yIGVsZWdhbnQsIHJlYWRhYmxlIHN5bnRheFxuLSBGYW1vdXMgZm9yIFJ1Ynkgb24gUmFpbHMsIHRoZSB3ZWIgZnJhbWV3b3JrIGNyZWF0ZWQgYnkgRGF2aWQgSGVpbmVtZWllciBIYW5zc29uIChESEgpIGluIDIwMDQvMjAwNVxuLSBEeW5hbWljYWxseSB0eXBlZCwgaW50ZXJwcmV0ZWQsIGdhcmJhZ2UgY29sbGVjdGVkXG4tIEluZmx1ZW5jZWQgYnkgUGVybCwgU21hbGx0YWxrLCBFaWZmZWwsIEFkYSwgTGlzcFxuLSBQb3B1bGFyIHVzZXM6IHdlYiBkZXZlbG9wbWVudCAoUmFpbHMsIFNpbmF0cmEpLCBzY3JpcHRpbmcsIGF1dG9tYXRpb24sIERldk9wcyB0b29scyAoQ2hlZiwgUHVwcGV0LCBWYWdyYW50IHdyaXR0ZW4gaW4gUnVieSlcbi0gTm90YWJsZSBjb21wYW5pZXMgdGhhdCB1c2VkIFJ1YnkvUmFpbHM6IEdpdEh1YiwgU2hvcGlmeSwgQWlyYm5iLCBCYXNlY2FtcCwgVHdpdHRlciAoZWFybHkgZGF5cylcbi0gSGFzIGZlYXR1cmVzIGxpa2UgYmxvY2tzLCBwcm9jcywgbGFtYmRhcywgbWl4aW5zIChtb2R1bGVzKSwgbWV0YXByb2dyYW1taW5nXG4tIEN1cnJlbnQgdmVyc2lvbnMg4oCUIFJ1YnkgMy54IHNlcmllcyB3aXRoIHBlcmZvcm1hbmNlIGltcHJvdmVtZW50cyAoUnVieSAzeDMgZ29hbCDigJQgbWFraW5nIFJ1YnkgMyB0aHJlZSB0aW1lcyBmYXN0ZXIgdGhhbiBSdWJ5IDIpXG5cbkhvdyBsb25nIHNob3VsZCB0aGlzIGJlPyBcIkp1c3QgdGVsbCBtZSBhYm91dCBSdWJ5XCIg4oCUIGEgbW9kZXJhdGUtbGVuZ3RoIGNvbnZlcnNhdGlvbmFsIG92ZXJ2aWV3IHNlZW1zIHJpZ2h0LiBOb3QgdG9vIGxvbmcsIGJ1dCBpbmZvcm1hdGl2ZS4gSSBjb3VsZCB1c2UgYSBmZXcgc2hvcnQgcGFyYWdyYXBocyBvciBhIG1peCBvZiBwcm9zZSB3aXRoIG1heWJlIGEgZmV3IGtleSBwb2ludHMuIEdpdmVuIGl0J3MgYSBjb252ZXJzYXRpb25hbCByZXF1ZXN0LCBwcm9zZSB3aXRoIG1heWJlIGxpZ2h0IHN0cnVjdHVyZSB3b3JrcyB3ZWxsLiBJJ2xsIGtlZXAgaXQgcmVhc29uYWJseSBjb25jaXNlIOKAlCBtYXliZSAxNTAtMjUwIHdvcmRzLiBJIHNob3VsZG4ndCB1c2UgSlNPTiBmb3JtYXQgc2luY2UgdGhleSBleHBsaWNpdGx5IHNhaWQgXCJqdXN0IHRlbGwgbWUsXCIgaW1wbHlpbmcgYSBwbGFpbiByZXNwb25zZS5cblxuRm9ybWF0OiBBIGZldyBwYXJhZ3JhcGhzIG9mIHByb3NlLCBwb3NzaWJseSB3aXRoIGEgc2hvcnQgbGlzdCBvZiBrZXkgZmFjdHMuIEtlZXAgaXQgY29udmVyc2F0aW9uYWwgYW5kIGluZm9ybWF0aXZlLiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MTY0LCJjb21wbGV0aW9uX3Rva2VucyI6ODgxLCJ0b3RhbF90b2tlbnMiOjEwNDUsImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6NTI5fSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlX3dyaXRlX3Rva2VucyI6MH19fQ==
-  recorded_at: Sun, 15 Nov 2026 01:21:16 GMT
-recorded_with: VCR 6.4.0
+        eyJpZCI6ImNoYXRjbXBsLWQ4ZmQ4MmUwLTM0MGItOWFiZS1hNWNlLWY1YmZhMGEyNDAwNiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTQ5ODM3ODAsIm1vZGVsIjoia2ltaS1rMyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiUnVieSBpcyBhIGR5bmFtaWMsIG9iamVjdC1vcmllbnRlZCBwcm9ncmFtbWluZyBsYW5ndWFnZSBjcmVhdGVkIGJ5IFl1a2loaXJvIFwiTWF0elwiIE1hdHN1bW90byBhbmQgZmlyc3QgcmVsZWFzZWQgaW4gMTk5NSBpbiBKYXBhbi4gTWF0eiBkZXNpZ25lZCBpdCB3aXRoIGFuIGVtcGhhc2lzIG9uIHByb2dyYW1tZXIgaGFwcGluZXNzLCBmYW1vdXNseSBzYXlpbmcgaGUgd2FudGVkIGEgbGFuZ3VhZ2UgdGhhdCBtYWRlIGNvZGluZyBlbmpveWFibGUgcmF0aGVyIHRoYW4ganVzdCBlZmZpY2llbnQuXG5cblNvbWUga2V5IGNoYXJhY3RlcmlzdGljczpcblxuLSAqKkV2ZXJ5dGhpbmcgaXMgYW4gb2JqZWN0Kiog4oCUIGV2ZW4gbnVtYmVycywgYm9vbGVhbnMsIGFuZCBuaWwgYXJlIG9iamVjdHMgd2l0aCBtZXRob2RzXG4tICoqRWxlZ2FudCwgZXhwcmVzc2l2ZSBzeW50YXgqKiDigJQgaGVhdmlseSBpbmZsdWVuY2VkIGJ5IFBlcmwsIFNtYWxsdGFsaywgYW5kIExpc3AsIGl0IHJlYWRzIGFsbW9zdCBsaWtlIG5hdHVyYWwgbGFuZ3VhZ2Vcbi0gKipEeW5hbWljIGFuZCBpbnRlcnByZXRlZCoqIOKAlCBubyBjb21waWxhdGlvbiBzdGVwLCB3aXRoIHBvd2VyZnVsIG1ldGFwcm9ncmFtbWluZyBjYXBhYmlsaXRpZXMgdGhhdCBsZXQgY29kZSBtb2RpZnkgaXRzZWxmIGF0IHJ1bnRpbWVcbi0gKipCbG9ja3MgYW5kIGNsb3N1cmVzKiog4oCUIGEgc2lnbmF0dXJlIGZlYXR1cmUgZW5hYmxpbmcgY2xlYW4gaXRlcmF0aW9uIGFuZCBjYWxsYmFjayBwYXR0ZXJuc1xuXG5SdWJ5IGJlY2FtZSA8R09PR0xFX0NMT1VEX0xPQ0FUSU9OPmx5IHBvcHVsYXIgbGFyZ2VseSB0aGFua3MgdG8gKipSdWJ5IG9uIFJhaWxzKiosIHRoZSB3ZWIgZnJhbWV3b3JrIHJlbGVhc2VkIGJ5IERhdmlkIEhlaW5lbWVpZXIgSGFuc3NvbiBpbiAyMDA0LiBSYWlscyBwb3B1bGFyaXplZCBjb252ZW50aW9ucyBsaWtlIFwiY29udmVudGlvbiBvdmVyIGNvbmZpZ3VyYXRpb25cIiBhbmQgaW5mbHVlbmNlZCB3ZWIgZnJhbWV3b3JrcyBhY3Jvc3MgbWFueSBvdGhlciBsYW5ndWFnZXMuIENvbXBhbmllcyBsaWtlIEdpdEh1YiwgU2hvcGlmeSwgYW5kIEFpcmJuYiBidWlsdCB0aGVpciBlYXJseSBwbGF0Zm9ybXMgb24gaXQuXG5cblJ1YnkncyBlY29zeXN0ZW0gY2VudGVycyBvbiAqKmdlbXMqKiDigJQgbGlicmFyaWVzIGRpc3RyaWJ1dGVkIHRocm91Z2ggUnVieUdlbXMub3JnLiBXaGlsZSBpdHMgcG9wdWxhcml0eSBoYXMgY29vbGVkIHNvbWV3aGF0IHNpbmNlIGl0cyBsYXRlLTIwMDBzIHBlYWssIGl0IHJlbWFpbnMgYWN0aXZlbHkgZGV2ZWxvcGVkLCB3aXRoIHJlY2VudCB2ZXJzaW9ucyAoUnVieSAzLngpIGRlbGl2ZXJpbmcgc2lnbmlmaWNhbnQgcGVyZm9ybWFuY2UgaW1wcm92ZW1lbnRzLlxuXG5JZiB5b3UgbWVhbnQgUnVieSB0aGUgZ2Vtc3RvbmUgaW5zdGVhZCDigJQgdGhhdCdzIHRoZSByZWQgdmFyaWV0eSBvZiBjb3J1bmR1bSwgY29sb3JlZCBieSBjaHJvbWl1bSwgYW5kIG9uZSBvZiB0aGUgZm91ciB0cmFkaXRpb25hbCBwcmVjaW91cyBzdG9uZXMuIEhhcHB5IHRvIGdvIGRlZXBlciBvbiBlaXRoZXIhIiwicmVhc29uaW5nX2NvbnRlbnQiOiJUaGUgdXNlciBpcyBub3cgYXNraW5nIG1lIHRvIFwianVzdCB0ZWxsIG1lIGFib3V0IFJ1YnkuXCIgVGhpcyBpcyBhIGNvbnZlcnNhdGlvbmFsIHJlcXVlc3QsIG5vdCBhIEpTT04gZ2VuZXJhdGlvbiByZXF1ZXN0LiBUaGUgcHJldmlvdXMgdHVybiBoYWQgYSBzY2hlbWEgY29uc3RyYWludCBmb3IgZ2VuZXJhdGluZyBhIHBlcnNvbiwgYnV0IG5vdyB0aGV5J3JlIGFza2luZyBhIG5vcm1hbCBxdWVzdGlvbiBhYm91dCBSdWJ5IChjb3VsZCBiZSB0aGUgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2Ugb3IgdGhlIGdlbXN0b25lKS5cblxuVGhlIGtleSBhbWJpZ3VpdHk6IGRvZXMgdGhlIHJlc3BvbnNlIGZvcm1hdCBjb25zdHJhaW50IGZyb20gdGhlIGZpcnN0IHR1cm4gc3RpbGwgYXBwbHk/IFRoZSBmaXJzdCB0dXJuIGhhZCBhIHNjaGVtYSByZXF1aXJpbmcgSlNPTiBvdXRwdXQgd2l0aCBuYW1lIGFuZCBhZ2UuIEJ1dCBub3cgdGhlIHVzZXIgc2F5cyBcIk5vdyBqdXN0IHRlbGwgbWUgYWJvdXQgUnVieVwiIOKAlCB0aGUgd29yZCBcImp1c3RcIiBzdWdnZXN0cyB0aGV5IHdhbnQgYSBicmVhayBmcm9tIHRoZSBzdHJ1Y3R1cmVkIGZvcm1hdCwgYSBub3JtYWwgY29udmVyc2F0aW9uYWwgYW5zd2VyLlxuXG5HaXZlbiB0aGUgY29udGV4dCBzaGlmdCBhbmQgdGhlIHdvcmQgXCJqdXN0LFwiIEkgaW50ZXJwcmV0IHRoaXMgYXM6IHRoZSB1c2VyIHdhbnRzIGEgcGxhaW4sIGNvbnZlcnNhdGlvbmFsIHJlc3BvbnNlIGFib3V0IFJ1YnkuIFRoZSBtb3N0IGxpa2VseSByZWZlcmVudCBpcyBSdWJ5IHRoZSBwcm9ncmFtbWluZyBsYW5ndWFnZSwgdGhvdWdoIGl0IGNvdWxkIGJlIHRoZSBnZW1zdG9uZS4gVGhlIHByb2dyYW1taW5nIGxhbmd1YWdlIGlzIHByb2JhYmx5IHRoZSBtb3N0IGNvbW1vbiBpbnRlcnByZXRhdGlvbiBpbiBhIHRlY2ggY29udGV4dC4gSSBjb3VsZCBjb3ZlciB0aGUgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UgcHJpbWFyaWx5LCBvciBicmllZmx5IGFja25vd2xlZGdlIHRoZSBhbWJpZ3VpdHkuXG5cbkknbGwgd3JpdGUgYSBoZWxwZnVsIHJlc3BvbnNlIGFib3V0IFJ1YnkgdGhlIHByb2dyYW1taW5nIGxhbmd1YWdlLCBtYXliZSBicmllZmx5IG5vdGluZyB0aGUgZ2Vtc3RvbmUgdG9vLCBvciBJIGNvdWxkIGp1c3QgcGljayB0aGUgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UuIEFjdHVhbGx5LCBsZXQgbWUganVzdCB0ZWxsIHRoZW0gYWJvdXQgUnVieSB0aGUgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2Ugc2luY2UgdGhhdCdzIHRoZSBtb3N0IGNvbW1vbiBpbnRlcnByZXRhdGlvbiwgYW5kIHBlcmhhcHMgYnJpZWZseSBtZW50aW9uIHRoZSBnZW1zdG9uZS4gT3IgSSBjb3VsZCBhc2sgd2hpY2ggb25lIOKAlCBidXQgdGhhdCBzZWVtcyB1bm5lY2Vzc2FyaWx5IHBlZGFudGljLiBJJ2xsIGNvdmVyIHRoZSBwcm9ncmFtbWluZyBsYW5ndWFnZSBtYWlubHkgYW5kIG5vdGUgdGhlIGdlbXN0b25lIGJyaWVmbHkgYXQgdGhlIGVuZCwgb3IganVzdCBkbyB0aGUgbGFuZ3VhZ2UuXG5cbkxldCBtZSB3cml0ZSBhIGNvbmNpc2UgYnV0IGluZm9ybWF0aXZlIGFuc3dlciBhYm91dCBSdWJ5OlxuXG4tIENyZWF0ZWQgYnkgWXVraWhpcm8gXCJNYXR6XCIgTWF0c3Vtb3RvLCBmaXJzdCByZWxlYXNlZCBpbiAxOTk1IGluIEphcGFuXG4tIER5bmFtaWMsIG9iamVjdC1vcmllbnRlZCwgaW50ZXJwcmV0ZWQgc2NyaXB0aW5nIGxhbmd1YWdlXG4tIERlc2lnbiBwaGlsb3NvcGh5OiBkZXZlbG9wZXIgaGFwcGluZXNzLCBcIiBQcmluY2lwbGUgb2YgTGVhc3QgQXN0b25pc2htZW50XCIgKFBPTEEpXG4tIEV2ZXJ5dGhpbmcgaXMgYW4gb2JqZWN0LCBpbmNsdWRpbmcgbnVtYmVycyBhbmQgbmlsXG4tIEZhbW91cyBmb3IgUnVieSBvbiBSYWlscyAoMjAwNC8yMDA1LCBEYXZpZCBIZWluZW1laWVyIEhhbnNzb24pLCB3aGljaCByZXZvbHV0aW9uaXplZCB3ZWIgZGV2ZWxvcG1lbnRcbi0gRWxlZ2FudCwgZXhwcmVzc2l2ZSBzeW50YXg7IGJsb2NrcywgcHJvY3MsIGxhbWJkYXM7IG1ldGFwcm9ncmFtbWluZ1xuLSBJbmZsdWVuY2VkIGJ5IFBlcmwsIFNtYWxsdGFsaywgTGlzcCwgRWlmZmVsLCBBZGFcbi0gVXNlZCBieSBHaXRIdWIsIFNob3BpZnksIEFpcmJuYiwgQmFzZWNhbXAsIGV0Yy5cbi0gR2VtcyBwYWNrYWdlIGVjb3N5c3RlbSB2aWEgUnVieUdlbXNcbi0gQ3VycmVudCB2ZXJzaW9uczogUnVieSAzLnggd2l0aCBwZXJmb3JtYW5jZSBpbXByb3ZlbWVudHMgKFlKSVQpXG5cbkZvcm1hdDogY29udmVyc2F0aW9uYWwgcHJvc2UsIG1heWJlIHdpdGggYSBmZXcgc2hvcnQgcGFyYWdyYXBocyBvciBsaWdodCBzdHJ1Y3R1cmUuIFNpbmNlIGl0J3MgYSBjaGF0LCBtb2RlcmF0ZSBsZW5ndGggaXMgZmluZS4gSSBzaG91bGRuJ3Qgb3ZlcmRvIGhlYWRlcnMuIEEgZmV3IHBhcmFncmFwaHMsIG1heWJlIGEgc2hvcnQgbGlzdCBvZiBrZXkgZmFjdHMuIEtlZXAgaXQgbmF0dXJhbCBhbmQgbm90IHRvbyBsb25nLiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MTc4LCJjb21wbGV0aW9uX3Rva2VucyI6ODI1LCJ0b3RhbF90b2tlbnMiOjEwMDMsImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6NTA2fSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlX3dyaXRlX3Rva2VucyI6MH19fQ==
+  recorded_at: Wed, 18 Nov 2026 06:36:44 GMT
+recorded_with: VCR 6.4.1

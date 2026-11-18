@@ -9,7 +9,7 @@ http_interactions:
         named John who is 30 years old"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"text":{"format":{"type":"json_schema","name":"response","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:21:58 GMT
+      - Wed, 18 Nov 2026 06:37:18 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -40,11 +40,13 @@ http_interactions:
       X-Ratelimit-Limit-Tokens:
       - '10000000'
       X-Ratelimit-Remaining-Tokens:
-      - '9992083'
+      - '10000000'
       X-Ratelimit-Limit-Requests:
       - '1800'
       X-Ratelimit-Remaining-Requests:
       - '1800'
+      Cf-Cache-Status:
+      - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Zero-Data-Retention:
@@ -52,27 +54,25 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '681.7'
+      - '238.7'
       X-Metrics-E2e-Ms:
-      - '6252.4'
+      - '2681.9'
       Traceparent:
-      - 00-5cf59e4797a6d8da8c041733df4258d0-ede91009000a3d1f-01
+      - 00-4c14ac71637b317544c00cc4761ad169-871dc5fd000273a2-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
-      Cf-Cache-Status:
-      - DYNAMIC
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1794705712,"completed_at":1794705718,"id":"f56b912a-6567-9d12-8c6f-39046d52e146","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_f56b912a-6567-9d12-8c6f-39046d52e146","summary":[{"text":"Generating
+      string: '{"created_at":1794983836,"completed_at":1794983838,"id":"07071e4c-c214-9129-9f76-ec72fb46ccec","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_07071e4c-c214-9129-9f76-ec72fb46ccec","summary":[{"text":"Generating
         a 30-year-old person named John.\n\nThe response will be a JSON object with
-        only name and age fields.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"DbjtHx45RpmEppcmIOBQv799bdvHvsVG35dYSBi8hLIrGWVsJJHfusB+yyp5jGhG0WN9iAbRbnkEBJely0maFBXNUcu39ZSNhnkb40x2KaZxitOMi96cFVsV5D7yKRoyZr8hKOaBkFygXooihMUyX6qw3qMLV5PsSKAi5enQQ7ODWVfobN5iePrcaC62vOX40MVh1KLJp42Cd1WuHNERWPdhX0RCuX8x7UVtHiI4A1bhfitw8txLAEmT4YSK54HksQYTMbcYr1D53jZkZABmnLyG5b7YFgP7u4BG8T3ccEfnQQfQcKF4U2mzrdSV2I1vnYQXXbShD4/gC5Qhvv9P1W5DB+LUO31sUAghgRQiT9TnHHZGYzD4vqgba5IET27GHZqzEcuFTHGwGvr15CzbKPb1UtuhHAyQwIaa6VssK/EC81J3aPZA6W4cTSO5qNTdcUFR6HqVTr/k/5gwEQyclq/o2JFK6lr7WwNsX/W2a8jQ4MrU79fnAEESoARKshoiH7NsaGRL9K2FkwZLBOqjekBlFvd1RCAEVAQT4oFKnt2m0sKSSfHb5fIHSE/G2EP9BgR9nNbG2eyiS8zmyjF0TT2LBk1oVn31a5Aiw76akpJB/BO9xQNkxRw3f2SW6tkPjYxNpA0E0LfOJKc+lfa7zNMNzQjNOlzvzrI9gXeNQiWeqbCS2taHYhJnx8oJwEA4VW4VPg6ZE1eRa/l7+YFDzDkhxttG9+p3zdCi2fNZXvjWHc1wQB9o12vdu2sDwb4IHqNakKTNeaH7eXlUC2WLrdlU4hU5ArfIgjVhPcMGTtU6WH0qs2Cjgimu0gos8AuHWt2BfqGnMylM09NSiSyJSaJDlTW37Vy10bBLOSWe8DpihT1TVBdOU6z0lN3rjBY+3j3xxw"},{"content":[{"type":"output_text","text":"{\"name\":\"John\",\"age\":30}","logprobs":[],"annotations":[]}],"id":"msg_f56b912a-6567-9d12-8c6f-39046d52e146","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"json_schema","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false}}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":254,"input_tokens_details":{"cached_tokens":128},"output_tokens":308,"output_tokens_details":{"reasoning_tokens":299},"total_tokens":562,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":9531000,"context_details":{"input_tokens":254,"output_tokens":316}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
-  recorded_at: Sun, 15 Nov 2026 01:21:58 GMT
-recorded_with: VCR 6.4.0
+        name and age fields.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"DI7nxtPyL0xetH5z6XkwUr/d9wNPccJmLn7sC/lMFAUQxuNxfDLfX6cZEAMjgMLAgbXh56wlj8f3ZzttqvFLuQ3X9n0c/DgXKYnvDUYoTGa6M7l2zl4Qni2Wul0aHBRFvBP/taNd/52vXF/jLD036NQ7NN3hoDqj7yseRCr333V+ZPtSqVsWwpK2tX69B9BLKA6QalFr1uSoFVdHM1O2ihZnadmIJhup5j6YhlYHFqu/5dOZ8TyFHJ5j7SoFAx3paan3mM5Bn8Jr7oxp9NBAIMD/m4cFzw7Ulq8wnXtq4JO/KyJYqMImfCcXmDcGNhP0yHoMBCtrd5Fz4qoc1rJ51YE44FrZR+ABCZVMhMzyQAzIY4IbiernAO+okAzdB1C7cx8TgV/7mBJ+/xUdKe+8NweTf0Tl5Fhm79WFD8SLy4fpEUxUhFbQyWrkN1dCd6K+qugMiriBcUI3zvogVagwH5TcmSPYh7dcBn7MjZzG2m7n9Pkjh1qU/spbqoHXWb0SY7LRVeacPnGkyU2toS4Fdj6kBnMFZFx9wFDyzVizLhH9OR5QsV2jdpmGPJeqmYs3jjsNGTP/pQ7yIf95PLGs3arUQ3XUd+SNznFa6PNpUYAXlGo97uaIEDRfn1FnC4jcLUFnF8bHcG060l8SOMo"},{"content":[{"type":"output_text","text":"{\"name\":\"John\",\"age\":30}","logprobs":[],"annotations":[]}],"id":"msg_07071e4c-c214-9129-9f76-ec72fb46ccec","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"json_schema","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false}}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":254,"input_tokens_details":{"cached_tokens":128},"output_tokens":197,"output_tokens_details":{"reasoning_tokens":188},"total_tokens":451,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":6756000,"context_details":{"input_tokens":254,"output_tokens":205}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Wed, 18 Nov 2026 06:37:18 GMT
+recorded_with: VCR 6.4.1

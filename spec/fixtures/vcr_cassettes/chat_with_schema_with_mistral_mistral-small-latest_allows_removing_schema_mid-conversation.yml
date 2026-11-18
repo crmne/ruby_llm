@@ -9,7 +9,7 @@ http_interactions:
         a person named Bob"}],"stream":false,"response_format":{"type":"json_schema","json_schema":{"name":"response","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,112 +24,37 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:20:51 GMT
+      - Wed, 18 Nov 2026 06:36:09 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Set-Cookie:
-      - "<COOKIE>"
       Mistral-Correlation-Id:
-      - 01a1dcca-f46b-7474-80c3-0f5350c71004
+      - 01a1ed5e-b54c-7c7c-beb6-fcdb9f04bc08
       X-Kong-Request-Id:
-      - 01a1dcca-f46b-7474-80c3-0f5350c71004
+      - 01a1ed5e-b54c-7c7c-beb6-fcdb9f04bc08
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '97571'
+      - '99410'
       X-Ratelimit-Tokens-Query-Cost:
       - '34'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
-      - '94'
+      - '96'
       X-Envoy-Upstream-Service-Time:
-      - '247'
+      - '528'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '248'
-      X-Kong-Proxy-Latency:
-      - '18'
-      X-Content-Type-Options:
-      - nosniff
-      Cf-Cache-Status:
-      - DYNAMIC
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
-      Cf-Ray:
-      - "<CF_RAY>"
-      Alt-Svc:
-      - h3=":443"; ma=86400
-    body:
-      encoding: ASCII-8BIT
-      string: '{"id":"5bcf5232e7334e698bc98f4333a88bc8","created":1794705650,"model":"mistral-small-latest","usage":{"prompt_tokens":20,"total_tokens":34,"completion_tokens":14,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"{\"name\":
-        \"Bob\", \"age\": 30}"}}]}'
-  recorded_at: Sun, 15 Nov 2026 01:20:51 GMT
-- request:
-    method: post
-    uri: https://api.mistral.ai/v1/chat/completions
-    body:
-      encoding: UTF-8
-      string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"Generate
-        a person named Bob"},{"role":"assistant","content":"{\"name\": \"Bob\", \"age\":
-        30}"},{"role":"user","content":"Now just tell me about Ruby"}],"stream":false}'
-    headers:
-      User-Agent:
-      - Faraday v2.14.3
-      Authorization:
-      - Bearer <AUTH_TOKEN>
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Sun, 15 Nov 2026 01:20:53 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Mistral-Correlation-Id:
-      - 01a1dcca-f5cb-7f5b-af9e-d046a1518d61
-      X-Kong-Request-Id:
-      - 01a1dcca-f5cb-7f5b-af9e-d046a1518d61
-      X-Max-Retry-Attempts-Reached:
-      - 'false'
-      X-Ratelimit-Limit-Tokens-Minute:
-      - '100000'
-      X-Ratelimit-Remaining-Tokens-Minute:
-      - '97284'
-      X-Ratelimit-Tokens-Query-Cost:
-      - '367'
-      X-Ratelimit-Limit-Req-Minute:
-      - '100'
-      X-Ratelimit-Remaining-Req-Minute:
-      - '93'
-      X-Envoy-Upstream-Service-Time:
-      - '2052'
-      Server:
-      - cloudflare
-      Access-Control-Allow-Origin:
-      - "*"
-      X-Kong-Upstream-Latency:
-      - '2053'
+      - '529'
       X-Kong-Proxy-Latency:
       - '16'
       Cf-Cache-Status:
@@ -146,7 +71,94 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6ImUwZWE2M2VjMmQ1OTQxMTM5MmQ5YTk1MGFiYTNkY2ZjIiwiY3JlYXRlZCI6MTc5NDcwNTY1MSwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjQyLCJ0b3RhbF90b2tlbnMiOjM2NywiY29tcGxldGlvbl90b2tlbnMiOjMyNSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjB9LCJzZXJ2aWNlX3RpZXIiOiJzdGFuZGFyZCJ9LCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJ0b29sX2NhbGxzIjpudWxsLCJjb250ZW50IjoiUnVieSBpcyBhIGR5bmFtaWMsIG9wZW4tc291cmNlIHByb2dyYW1taW5nIGxhbmd1YWdlIHdpdGggYSBmb2N1cyBvbiBzaW1wbGljaXR5IGFuZCBwcm9kdWN0aXZpdHkuIEl0IGhhcyBhbiBlbGVnYW50IHN5bnRheCB0aGF0IGlzIG5hdHVyYWwgdG8gcmVhZCBhbmQgZWFzeSB0byB3cml0ZS4gUnVieSB3YXMgY3JlYXRlZCBieSBZdWtpaGlybyBcIk1hdHpcIiBNYXRzdW1vdG8gaW4gdGhlIG1pZC0xOTkwcyBhbmQgaGFzIHNpbmNlIGdhaW5lZCBwb3B1bGFyaXR5LCBlc3BlY2lhbGx5IHdpdGggdGhlIFJ1Ynkgb24gUmFpbHMgd2ViIGZyYW1ld29yay5cblxuIyMjICoqS2V5IEZlYXR1cmVzIG9mIFJ1Ynk6Kipcbi0gKipSZWFkYWJsZSBTeW50YXg6KiogUnVieeKAmXMgc3ludGF4IGlzIGRlc2lnbmVkIHRvIGJlIGludHVpdGl2ZSBhbmQgaHVtYW4tZnJpZW5kbHkuXG4tICoqT2JqZWN0LU9yaWVudGVkOioqIEV2ZXJ5dGhpbmcgaW4gUnVieSBpcyBhbiBvYmplY3QsIGV2ZW4gcHJpbWl0aXZlIHR5cGVzIGxpa2UgbnVtYmVycy5cbi0gKipEeW5hbWljIFR5cGluZzoqKiBWYXJpYWJsZXMgZG9u4oCZdCBuZWVkIGV4cGxpY2l0IHR5cGUgZGVjbGFyYXRpb25zLlxuLSAqKkZsZXhpYmxlOioqIFJ1YnkgYWxsb3dzIG1ldGFwcm9ncmFtbWluZywgbWVhbmluZyBjb2RlIGNhbiBtb2RpZnkgaXRzZWxmIGF0IHJ1bnRpbWUuXG4tICoqQ29tbXVuaXR5ICYgR2VtczoqKiBBIHJpY2ggZWNvc3lzdGVtIG9mIGxpYnJhcmllcyAoY2FsbGVkIFwiZ2Vtc1wiKSBleHRlbmRzIFJ1YnnigJlzIGZ1bmN0aW9uYWxpdHkuXG5cbiMjIyAqKkV4YW1wbGUgQ29kZToqKlxuYGBgcnVieVxuIyBTaW1wbGUgY2xhc3NcbmNsYXNzIFBlcnNvblxuICBkZWYgaW5pdGlhbGl6ZShuYW1lLCBhZ2UpXG4gICAgQG5hbWUgPSBuYW1lXG4gICAgQGFnZSA9IGFnZVxuICBlbmRcblxuICBkZWYgZ3JlZXRcbiAgICBwdXRzIFwiSGVsbG8sIEknbSAje0BuYW1lfSBhbmQgSSdtICN7QGFnZX0geWVhcnMgb2xkLlwiXG4gIGVuZFxuZW5kXG5cbiMgQ3JlYXRlIGFuIGluc3RhbmNlXG5ib2IgPSBQZXJzb24ubmV3KFwiQm9iXCIsIDMwKVxuYm9iLmdyZWV0ICAjIE91dHB1dDogXCJIZWxsbywgSSdtIEJvYiBhbmQgSSdtIDMwIHllYXJzIG9sZC5cIlxuYGBgXG5cbiMjIyAqKlVzZSBDYXNlczoqKlxuLSBXZWIgZGV2ZWxvcG1lbnQgKFJ1Ynkgb24gUmFpbHMpXG4tIFNjcmlwdGluZyAmIGF1dG9tYXRpb25cbi0gUHJvdG90eXBpbmcgJiByYXBpZCBkZXZlbG9wbWVudFxuLSBEYXRhIHByb2Nlc3NpbmcgJiBhbmFseXNpc1xuXG5Xb3VsZCB5b3UgbGlrZSBhIGRlZXBlciBkaXZlIGludG8gYW55IHNwZWNpZmljIGFzcGVjdCBvZiBSdWJ5PyJ9fV19
-  recorded_at: Sun, 15 Nov 2026 01:20:53 GMT
-recorded_with: VCR 6.4.0
+      string: '{"id":"3dcb7ee1b2994d97b134101d57097727","created":1794983769,"model":"mistral-small-latest","usage":{"prompt_tokens":20,"total_tokens":34,"completion_tokens":14,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"{\"name\":
+        \"Bob\", \"age\": 30}"}}]}'
+  recorded_at: Wed, 18 Nov 2026 06:36:09 GMT
+- request:
+    method: post
+    uri: https://api.mistral.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"Generate
+        a person named Bob"},{"role":"assistant","content":"{\"name\": \"Bob\", \"age\":
+        30}"},{"role":"user","content":"Now just tell me about Ruby"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 18 Nov 2026 06:36:11 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Mistral-Correlation-Id:
+      - 01a1ed5e-b7ae-7114-8c1d-92e184628df2
+      X-Kong-Request-Id:
+      - 01a1ed5e-b7ae-7114-8c1d-92e184628df2
+      X-Max-Retry-Attempts-Reached:
+      - 'false'
+      X-Ratelimit-Limit-Tokens-Minute:
+      - '100000'
+      X-Ratelimit-Remaining-Tokens-Minute:
+      - '99173'
+      X-Ratelimit-Tokens-Query-Cost:
+      - '241'
+      X-Ratelimit-Limit-Req-Minute:
+      - '100'
+      X-Ratelimit-Remaining-Req-Minute:
+      - '95'
+      X-Envoy-Upstream-Service-Time:
+      - '1508'
+      Server:
+      - cloudflare
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Kong-Upstream-Latency:
+      - '1509'
+      X-Kong-Proxy-Latency:
+      - '18'
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"14bcf528026a482cbbe674d90f7f9e0c","created":1794983770,"model":"mistral-small-latest","usage":{"prompt_tokens":42,"total_tokens":241,"completion_tokens":199,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"Ruby
+        is a dynamic, open-source programming language known for its simplicity and
+        productivity. It was created by Yukihiro \"Matz\" Matsumoto in the mid-1990s
+        and has since gained popularity for its elegant syntax and focus on developer
+        happiness.\n\nKey features of Ruby include:\n- **Object-oriented**: Everything
+        in Ruby is an object, even primitive types like numbers.\n- **Expressive syntax**:
+        Ruby''s syntax is designed to be natural and easy to read.\n- **Metaprogramming**:
+        Ruby allows you to write code that writes code, enabling powerful abstractions.\n-
+        **Rich standard library**: Ruby comes with a comprehensive standard library
+        that provides many useful functionalities out of the box.\n- **Community and
+        ecosystem**: Ruby has a vibrant community and a rich ecosystem of gems (libraries)
+        that extend its functionality.\n\nRuby is often used with the Ruby on Rails
+        framework for web development, but it can also be used for scripting, automation,
+        and other tasks."}}]}'
+  recorded_at: Wed, 18 Nov 2026 06:36:11 GMT
+recorded_with: VCR 6.4.1

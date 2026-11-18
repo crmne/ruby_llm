@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -26,42 +26,44 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
+      X-Origin-Cache:
+      - HIT
       Last-Modified:
-      - Tue, 03 Nov 2026 01:08:56 GMT
+      - Tue, 17 Nov 2026 10:38:58 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"6ae93428-9c6"
+      - W/"6afc2ec2-9c6"
       Expires:
-      - Sun, 15 Nov 2026 01:29:24 GMT
+      - Wed, 18 Nov 2026 06:45:29 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 1AA8:148882:4D5DE00:4DD0C30:6AF9089B
+      - FC46:157F:1704236:172B244:6AFD4731
       X-Github-Edge-Region:
       - fra
       Accept-Ranges:
       - bytes
       Date:
-      - Sun, 15 Nov 2026 01:22:13 GMT
+      - Wed, 18 Nov 2026 06:38:03 GMT
       Via:
       - 1.1 varnish
       Age:
-      - '134'
+      - '120'
       X-Served-By:
-      - cache-ber1080049-BER
+      - cache-ber1080025-BER
       X-Cache:
       - HIT
       X-Cache-Hits:
-      - '2'
+      - '1'
       X-Timer:
-      - S1794705733.042938,VS0,VE0
+      - S1794983884.549493,VS0,VE1
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - 13c0c2a8c9d3cc68886c5b94612a5d50e05a2a74
+      - ea1b2534d3c439ce30edf224e891d6aa3f6e4fcf
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -97,7 +99,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Sun, 15 Nov 2026 01:22:13 GMT
+  recorded_at: Wed, 18 Nov 2026 06:38:03 GMT
 - request:
     method: post
     uri: https://openrouter.ai/api/v1/chat/completions
@@ -140,7 +142,7 @@ http_interactions:
         A PARTICULAR\n     PURPOSE.\n</file>"}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Http-Referer:
@@ -159,7 +161,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:22:13 GMT
+      - Wed, 18 Nov 2026 06:38:06 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -169,11 +171,11 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       X-Generation-Id:
-      - gen-1794705733-rIgt6wiornI7CDBPwWMc
+      - gen-1794983883-f3UXi7MZuirAR7aj2Tjl
       Access-Control-Expose-Headers:
       - WWW-Authenticate,PAYMENT-REQUIRED,Payment-Receipt,PAYMENT-RESPONSE,Location,X-Generation-Id,x-openrouter-error-origin,x-openrouter-error-tool,X-Provider-Name,request-id,cf-ray
       X-Openrouter-Release:
-      - api;0c306999-2731-41b9-b23f-6294b64a156e
+      - api;552c4bf2-ed6b-4058-b8f6-693241cb446c
       Set-Cookie:
       - "<COOKIE>"
       Permissions-Policy:
@@ -191,7 +193,24 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        CiAgICAgICAgIAoKICAgICAgICAgCnsiaWQiOiJnZW4tMTc5NDcwNTczMy1ySWd0Nndpb3JuSTdDREJQd1dNYyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTQ3MDU3MzMsIm1vZGVsIjoiYW50aHJvcGljL2NsYXVkZS1oYWlrdS00LjUiLCJwcm92aWRlciI6IkFtYXpvbiBCZWRyb2NrIiwic3lzdGVtX2ZpbmdlcnByaW50IjpudWxsLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0IiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCIsIm5hdGl2ZV9maW5pc2hfcmVhc29uIjoiZW5kX3R1cm4iLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiIyBSdWJ5IExpY2Vuc2UgU3VtbWFyeVxuXG5UaGlzIGZpbGUgY29udGFpbnMgdGhlICoqbGljZW5zZSB0ZXJtcyBmb3IgdGhlIFJ1YnkgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UqKiwgY3JlYXRlZCBieSBZdWtpaGlybyBNYXRzdW1vdG8gKG1hdHopLiBIZXJlIGFyZSB0aGUga2V5IHBvaW50czpcblxuIyMgTGljZW5zaW5nIE9wdGlvbnNcblJ1YnkgaXMgb2ZmZXJlZCB1bmRlciBlaXRoZXI6XG4tICoqMi1jbGF1c2UgQlNEIExpY2Vuc2UgKEJTREwpKiosIG9yXG4tICoqQ3VzdG9tIGNvbmRpdGlvbnMqKiBvdXRsaW5lZCBpbiB0aGlzIGZpbGVcblxuIyMgTWFpbiBQZXJtaXNzaW9uc1xuMS4gKipGcmVlIHJlZGlzdHJpYnV0aW9uKiogb2Ygc291cmNlIGNvZGUgd2l0aCBvcmlnaW5hbCBjb3B5cmlnaHQgbm90aWNlcyBpbnRhY3RcbjIuICoqTW9kaWZpY2F0aW9uIHJpZ2h0cyoqIHdpdGggb25lIG9mIHRoZXNlIHJlcXVpcmVtZW50czpcbiAgIC0gTWFrZSBtb2RpZmljYXRpb25zIHB1YmxpY2x5IGF2YWlsYWJsZVxuICAgLSBVc2Ugb25seSB3aXRoaW4geW91ciBvcmdhbml6YXRpb25cbiAgIC0gR2l2ZSBtb2RpZmllZCBiaW5hcmllcyBkaWZmZXJlbnQgbmFtZXMgd2l0aCBvcmlnaW5hbCBzb3VyY2UgbG9jYXRpb24gaW5mb1xuICAgLSBBcnJhbmdlIHdpdGggdGhlIGF1dGhvclxuXG4zLiAqKkJpbmFyeSBkaXN0cmlidXRpb24qKiBhbGxvd2VkIGlmIHlvdSBlaXRoZXI6XG4gICAtIEluY2x1ZGUgaW5zdHJ1Y3Rpb25zIG9uIHdoZXJlIHRvIGdldCB0aGUgb3JpZ2luYWxcbiAgIC0gUHJvdmlkZSBtYWNoaW5lLXJlYWRhYmxlIHNvdXJjZSBjb2RlXG4gICAtIFVzZSBub24tc3RhbmRhcmQgbmFtZXMgd2l0aCBzb3VyY2UgbG9jYXRpb24gaW5mb1xuICAgLSBBcnJhbmdlIHdpdGggdGhlIGF1dGhvclxuXG40LiAqKkNvbW1lcmNpYWwgdXNlKiogcGVybWl0dGVk4oCUeW91IGNhbiBpbmNvcnBvcmF0ZSBSdWJ5IGludG8gb3RoZXIgc29mdHdhcmVcbjUuICoqR2VuZXJhdGVkIHNjcmlwdHMvb3V0cHV0KiogYXJlbid0IGF1dG9tYXRpY2FsbHkgdW5kZXIgUnVieSdzIGNvcHlyaWdodCBhbmQgY2FuIGJlIHNvbGQgY29tbWVyY2lhbGx5XG5cbiMjIEltcG9ydGFudCBOb3Rlc1xuLSBTb21lIGZpbGVzIGluIHRoZSBkaXN0cmlidXRpb24gbWF5IGhhdmUgZGlmZmVyZW50IHRlcm1zIChzZWUgTEVHQUwgZmlsZSlcbi0gKipOTyBXQVJSQU5USUVTKiogcHJvdmlkZWTigJR1c2VkIFwiYXMgaXNcIlxuLSBUaGlzIGlzIGVzc2VudGlhbGx5IGEgKipwZXJtaXNzaXZlIG9wZW4tc291cmNlIGxpY2Vuc2UqKiBhbGxvd2luZyBicm9hZCBjb21tZXJjaWFsIGFuZCBwcml2YXRlIHVzZSIsInJlZnVzYWwiOm51bGwsInJlYXNvbmluZyI6bnVsbH19XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NTg4LCJjb21wbGV0aW9uX3Rva2VucyI6Mjk2LCJ0b3RhbF90b2tlbnMiOjg4NCwiY29zdCI6MC4wMDIwNjgsImlzX2J5b2siOmZhbHNlLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MCwiY2FjaGVfd3JpdGVfdG9rZW5zIjowLCJhdWRpb190b2tlbnMiOjAsInZpZGVvX3Rva2VucyI6MH0sImNvc3RfZGV0YWlscyI6eyJ1cHN0cmVhbV9pbmZlcmVuY2VfY29zdCI6MC4wMDIwNjgsInVwc3RyZWFtX2luZmVyZW5jZV9wcm9tcHRfY29zdCI6MC4wMDA1ODgsInVwc3RyZWFtX2luZmVyZW5jZV9jb21wbGV0aW9uc19jb3N0IjowLjAwMTQ4fSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjowLCJpbWFnZV90b2tlbnMiOjAsImF1ZGlvX3Rva2VucyI6MH19fQ==
-  recorded_at: Sun, 15 Nov 2026 01:22:16 GMT
-recorded_with: VCR 6.4.0
+      string: "\n         \n{\"id\":\"gen-1794983883-f3UXi7MZuirAR7aj2Tjl\",\"object\":\"chat.completion\",\"created\":1794983883,\"model\":\"anthropic/claude-haiku-4.5\",\"provider\":\"Amazon
+        Bedrock\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"end_turn\",\"message\":{\"role\":\"assistant\",\"content\":\"#
+        License File Contents\\n\\nThis is the **Ruby programming language license
+        file**. It outlines the terms under which Ruby (created by Yukihiro Matsumoto)
+        can be used and distributed.\\n\\n## Key Points:\\n\\n**License Options:**\\n-
+        You can choose either the 2-clause BSD License (BSDL) OR the conditions listed
+        in this file\\n\\n**Main Permissions:**\\n1. **Source code** - Can be freely
+        copied and redistributed with original copyright notices intact\\n2. **Modifications**
+        - Can be modified if you either:\\n   - Release modifications publicly/freely\\n
+        \  - Use them only within your organization\\n   - Give modified binaries
+        distinctive names\\n   - Arrange with the author\\n\\n3. **Distribution**
+        - Can distribute binaries/object code if you provide source access or instructions
+        on obtaining it\\n\\n4. **Integration** - Can incorporate Ruby into other
+        software (including commercial), with exceptions for third-party files (see
+        LEGAL file)\\n\\n5. **Output Works** - Scripts and files generated by Ruby
+        belong to whoever created them and can be sold commercially\\n\\n**Disclaimer:**\\n-
+        The software is provided \\\"as-is\\\" with no warranties of any kind\\n\\nThis
+        is a relatively permissive open-source license that allows commercial use
+        while maintaining attribution to the original author.\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":588,\"completion_tokens\":280,\"total_tokens\":868,\"cost\":0.001988,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.001988,\"upstream_inference_prompt_cost\":0.000588,\"upstream_inference_completions_cost\":0.0014},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
+  recorded_at: Wed, 18 Nov 2026 06:38:06 GMT
+recorded_with: VCR 6.4.1

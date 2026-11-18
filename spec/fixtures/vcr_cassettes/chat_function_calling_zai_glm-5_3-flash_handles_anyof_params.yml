@@ -12,7 +12,7 @@ http_interactions:
         description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:35:13 GMT
+      - Wed, 18 Nov 2026 06:49:31 GMT
       Content-Type:
       - application/json; charset=UTF-8
       Transfer-Encoding:
@@ -39,7 +39,7 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       Ga-Traceid:
-      - 0ef77776774a872c8f07b84ee1402b89
+      - 1e6152c64bc434d834fa4047cb569d16
       Vary:
       - Accept-Encoding
       - Access-Control-Request-Headers
@@ -50,14 +50,14 @@ http_interactions:
       - Origin
       - Origin
       X-Log-Id:
-      - 202611150935089ac9aabb97a34d14
+      - 202611181449254f2c37ec65154707
       X-Request-Id:
       - "<X_REQUEST_ID>"
     body:
       encoding: ASCII-8BIT
       string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":"","reasoning_content":"The
         user wants me to call the any_of_params tool with task \"Review PR\" and status
-        \"pending\". Let me do that.","role":"assistant","tool_calls":[{"function":{"arguments":"{\"status\":\"pending\",\"task\":\"Review
-        PR\"}","name":"any_of_params"},"id":"call_-7080002898804863413","index":0,"type":"function"}]}}],"created":1794706513,"id":"202611150935089ac9aabb97a34d14","model":"glm-5.3-flash","object":"chat.completion","request_id":"202611150935089ac9aabb97a34d14","usage":{"completion_tokens":47,"completion_tokens_details":{"reasoning_tokens":27},"prompt_tokens":231,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":278}}'
-  recorded_at: Sun, 15 Nov 2026 01:35:13 GMT
-recorded_with: VCR 6.4.0
+        \"pending\". This is a single tool call. Let me make it.","role":"assistant","tool_calls":[{"function":{"arguments":"{\"status\":\"pending\",\"task\":\"Review
+        PR\"}","name":"any_of_params"},"id":"call_-7065237213558075320","index":0,"type":"function"}]}}],"created":1794984571,"id":"202611181449254f2c37ec65154707","model":"glm-5.3-flash","object":"chat.completion","request_id":"202611181449254f2c37ec65154707","usage":{"completion_tokens":54,"completion_tokens_details":{"reasoning_tokens":34},"prompt_tokens":231,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":285}}'
+  recorded_at: Wed, 18 Nov 2026 06:49:31 GMT
+recorded_with: VCR 6.4.1

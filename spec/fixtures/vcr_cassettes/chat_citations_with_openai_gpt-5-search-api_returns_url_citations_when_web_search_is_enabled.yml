@@ -9,7 +9,7 @@ http_interactions:
         is the latest stable version of Ruby? Cite your sources."}],"stream":false,"web_search_options":{}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:20:42 GMT
+      - Wed, 18 Nov 2026 06:36:08 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -48,7 +48,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '4539'
+      - '4521'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -75,50 +75,7 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: |
-        {
-          "id": "chatcmpl-a5b31ac7-6729-44c9-bc8a-09522d288eba",
-          "object": "chat.completion",
-          "created": 1794705642,
-          "model": "gpt-5-search-api-2025-10-14",
-          "choices": [
-            {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": "The latest stable version of Ruby (MRI) is **Ruby 4.0.9**, released on **October 23, 2026**. ([ruby-lang.org](https://www.ruby-lang.org/en/downloads/?utm_source=openai))",
-                "refusal": null,
-                "annotations": [
-                  {
-                    "type": "url_citation",
-                    "url_citation": {
-                      "end_index": 169,
-                      "start_index": 93,
-                      "title": "Download Ruby | Ruby",
-                      "url": "https://www.ruby-lang.org/en/downloads/?utm_source=openai"
-                    }
-                  }
-                ]
-              },
-              "finish_reason": "stop"
-            }
-          ],
-          "usage": {
-            "prompt_tokens": 16388,
-            "completion_tokens": 66,
-            "total_tokens": 16454,
-            "prompt_tokens_details": {
-              "cached_tokens": 0,
-              "audio_tokens": 0
-            },
-            "completion_tokens_details": {
-              "reasoning_tokens": 0,
-              "audio_tokens": 0,
-              "accepted_prediction_tokens": 0,
-              "rejected_prediction_tokens": 0
-            }
-          },
-          "system_fingerprint": null
-        }
-  recorded_at: Sun, 15 Nov 2026 01:20:42 GMT
-recorded_with: VCR 6.4.0
+      string: !binary |-
+        ewogICJpZCI6ICJjaGF0Y21wbC0xMTY4YTk2Ny00YWYzLTRmYzQtOGI0NS1kMzA5YTE0ZDU2ODgiLAogICJvYmplY3QiOiAiY2hhdC5jb21wbGV0aW9uIiwKICAiY3JlYXRlZCI6IDE3OTQ5ODM3NjgsCiAgIm1vZGVsIjogImdwdC01LXNlYXJjaC1hcGktMjAyNS0xMC0xNCIsCiAgImNob2ljZXMiOiBbCiAgICB7CiAgICAgICJpbmRleCI6IDAsCiAgICAgICJtZXNzYWdlIjogewogICAgICAgICJyb2xlIjogImFzc2lzdGFudCIsCiAgICAgICAgImNvbnRlbnQiOiAiVGhlIGxhdGVzdCBzdGFibGUgdmVyc2lvbiBvZiBSdWJ5IGlzICoqNC4wLjkqKi4gKFtydWJ5LWxhbmcub3JnXShodHRwczovL3d3dy5ydWJ5LWxhbmcub3JnL2VuL2Rvd25sb2Fkcy8/dXRtX3NvdXJjZT1vcGVuYWkpKVxuXG5IZXJl4oCZcyBhZGRpdGlvbmFsIGNvbnRleHQ6XG5cbi0gUnVieSA0LjAuOSB3YXMgcmVsZWFzZWQgb24gKipPY3RvYmVyIDIzLCAyMDI2KiouIChbcnVieS1sYW5nLm9yZ10oaHR0cHM6Ly93d3cucnVieS1sYW5nLm9yZy9lbi9uZXdzLzIwMjYvMTAvMjMvcnVieS00LTAtOS1yZWxlYXNlZC8/dXRtX3NvdXJjZT1vcGVuYWkpKSAgXG4tIE90aGVyIGFjdGl2ZWx5IG1haW50YWluZWQgdmVyc2lvbnMgaW5jbHVkZSAqKlJ1YnkgMy40LjEyKiosIGFsc28gcmVsZWFzZWQgb24gT2N0b2JlciAyMywgMjAyNi4gKFtydWJ5LWxhbmcub3JnXShodHRwczovL3d3dy5ydWJ5LWxhbmcub3JnL2VuL2Rvd25sb2Fkcy8/dXRtX3NvdXJjZT1vcGVuYWkpKSIsCiAgICAgICAgInJlZnVzYWwiOiBudWxsLAogICAgICAgICJhbm5vdGF0aW9ucyI6IFsKICAgICAgICAgIHsKICAgICAgICAgICAgInR5cGUiOiAidXJsX2NpdGF0aW9uIiwKICAgICAgICAgICAgInVybF9jaXRhdGlvbiI6IHsKICAgICAgICAgICAgICAiZW5kX2luZGV4IjogMTI0LAogICAgICAgICAgICAgICJzdGFydF9pbmRleCI6IDQ4LAogICAgICAgICAgICAgICJ0aXRsZSI6ICJEb3dubG9hZCBSdWJ5IHwgUnVieSIsCiAgICAgICAgICAgICAgInVybCI6ICJodHRwczovL3d3dy5ydWJ5LWxhbmcub3JnL2VuL2Rvd25sb2Fkcy8/dXRtX3NvdXJjZT1vcGVuYWkiCiAgICAgICAgICAgIH0KICAgICAgICAgIH0sCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0eXBlIjogInVybF9jaXRhdGlvbiIsCiAgICAgICAgICAgICJ1cmxfY2l0YXRpb24iOiB7CiAgICAgICAgICAgICAgImVuZF9pbmRleCI6IDMwNywKICAgICAgICAgICAgICAic3RhcnRfaW5kZXgiOiAyMDUsCiAgICAgICAgICAgICAgInRpdGxlIjogIlJ1YnkgNC4wLjkgUmVsZWFzZWQgfCBSdWJ5IiwKICAgICAgICAgICAgICAidXJsIjogImh0dHBzOi8vd3d3LnJ1YnktbGFuZy5vcmcvZW4vbmV3cy8yMDI2LzEwLzIzL3J1YnktNC0wLTktcmVsZWFzZWQvP3V0bV9zb3VyY2U9b3BlbmFpIgogICAgICAgICAgICB9CiAgICAgICAgICB9LAogICAgICAgICAgewogICAgICAgICAgICAidHlwZSI6ICJ1cmxfY2l0YXRpb24iLAogICAgICAgICAgICAidXJsX2NpdGF0aW9uIjogewogICAgICAgICAgICAgICJlbmRfaW5kZXgiOiA0ODMsCiAgICAgICAgICAgICAgInN0YXJ0X2luZGV4IjogNDA3LAogICAgICAgICAgICAgICJ0aXRsZSI6ICJEb3dubG9hZCBSdWJ5IHwgUnVieSIsCiAgICAgICAgICAgICAgInVybCI6ICJodHRwczovL3d3dy5ydWJ5LWxhbmcub3JnL2VuL2Rvd25sb2Fkcy8/dXRtX3NvdXJjZT1vcGVuYWkiCiAgICAgICAgICAgIH0KICAgICAgICAgIH0KICAgICAgICBdCiAgICAgIH0sCiAgICAgICJmaW5pc2hfcmVhc29uIjogInN0b3AiCiAgICB9CiAgXSwKICAidXNhZ2UiOiB7CiAgICAicHJvbXB0X3Rva2VucyI6IDE2Njc1LAogICAgImNvbXBsZXRpb25fdG9rZW5zIjogMTUwLAogICAgInRvdGFsX3Rva2VucyI6IDE2ODI1LAogICAgInByb21wdF90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgImNhY2hlZF90b2tlbnMiOiAwLAogICAgICAiYXVkaW9fdG9rZW5zIjogMAogICAgfSwKICAgICJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjogewogICAgICAicmVhc29uaW5nX3Rva2VucyI6IDAsCiAgICAgICJhdWRpb190b2tlbnMiOiAwLAogICAgICAiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwLAogICAgICAicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwCiAgICB9CiAgfSwKICAic3lzdGVtX2ZpbmdlcnByaW50IjogbnVsbAp9Cg==
+  recorded_at: Wed, 18 Nov 2026 06:36:08 GMT
+recorded_with: VCR 6.4.1

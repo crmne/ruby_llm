@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
       Pragma:
       - no-cache
       Date:
-      - Sun, 15 Nov 2026 01:24:55 GMT
+      - Wed, 18 Nov 2026 06:40:29 GMT
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/sqlservice.login",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Sun, 15 Nov 2026 01:24:55 GMT
+  recorded_at: Wed, 18 Nov 2026 06:40:29 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -66,7 +66,7 @@ http_interactions:
         the programming language Ruby?"}]}],"generationConfig":{}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -81,7 +81,7 @@ http_interactions:
       message: OK
     headers:
       X-Goog-Request-Id:
-      - 5wn5as3iEP-B-eQP9IH74AQ
+      - XUj9ap30B_WRu_EPybiM4AU
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -89,7 +89,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 15 Nov 2026 01:24:56 GMT
+      - Wed, 18 Nov 2026 06:40:30 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -112,7 +112,7 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "The creator of the programming language Ruby is **Yukihiro Matsumoto** (often known by his nickname, **Matz**).\n\nHe began developing Ruby in 1993 and released its first public version in 1995."
+                    "text": "The creator of the programming language Ruby is **Yukihiro Matsumoto**, often referred to as **\"Matz\"**."
                   }
                 ]
               },
@@ -121,8 +121,8 @@ http_interactions:
           ],
           "usageMetadata": {
             "promptTokenCount": 10,
-            "candidatesTokenCount": 50,
-            "totalTokenCount": 224,
+            "candidatesTokenCount": 24,
+            "totalTokenCount": 180,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -133,16 +133,16 @@ http_interactions:
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 50
+                "tokenCount": 24
               }
             ],
-            "thoughtsTokenCount": 164
+            "thoughtsTokenCount": 146
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-11-15T01:24:55.274765Z",
-          "responseId": "5wn5as3iEP-B-eQP9IH74AQ"
+          "createTime": "2026-11-18T06:40:29.129565Z",
+          "responseId": "XUj9ap30B_WRu_EPybiM4AU"
         }
-  recorded_at: Sun, 15 Nov 2026 01:24:56 GMT
+  recorded_at: Wed, 18 Nov 2026 06:40:30 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -150,13 +150,12 @@ http_interactions:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"Who is the creator of
         the programming language Ruby?"}]},{"role":"model","parts":[{"text":"The creator
-        of the programming language Ruby is **Yukihiro Matsumoto** (often known by
-        his nickname, **Matz**).\n\nHe began developing Ruby in 1993 and released
-        its first public version in 1995."}]},{"role":"user","parts":[{"text":"What
-        year did he create Ruby?"}]}],"generationConfig":{}}'
+        of the programming language Ruby is **Yukihiro Matsumoto**, often referred
+        to as **\"Matz\"**."}]},{"role":"user","parts":[{"text":"What year did he
+        create Ruby?"}]}],"generationConfig":{}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -171,7 +170,7 @@ http_interactions:
       message: OK
     headers:
       X-Goog-Request-Id:
-      - 6Qn5atiHBMOU7bQP45yTuA0
+      - X0j9auYlxrODtA-o1aLRAQ
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -179,7 +178,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 15 Nov 2026 01:24:58 GMT
+      - Wed, 18 Nov 2026 06:40:32 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -202,7 +201,7 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "He began creating Ruby in **1993**."
+                    "text": "Yukihiro Matsumoto (Matz) started working on Ruby in **1993**.\n\nThe first public release of Ruby (Ruby 0.95) was in **December 1995**."
                   }
                 ]
               },
@@ -210,27 +209,27 @@ http_interactions:
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 67,
-            "candidatesTokenCount": 11,
-            "totalTokenCount": 229,
+            "promptTokenCount": 41,
+            "candidatesTokenCount": 44,
+            "totalTokenCount": 172,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 67
+                "tokenCount": 41
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 11
+                "tokenCount": 44
               }
             ],
-            "thoughtsTokenCount": 151
+            "thoughtsTokenCount": 87
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-11-15T01:24:57.066520Z",
-          "responseId": "6Qn5atiHBMOU7bQP45yTuA0"
+          "createTime": "2026-11-18T06:40:31.004838Z",
+          "responseId": "X0j9auYlxrODtA-o1aLRAQ"
         }
-  recorded_at: Sun, 15 Nov 2026 01:24:58 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:40:32 GMT
+recorded_with: VCR 6.4.1

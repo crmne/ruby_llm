@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -20,12 +20,12 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
       Pragma:
       - no-cache
       Date:
-      - Sun, 15 Nov 2026 01:42:47 GMT
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
+      - Wed, 18 Nov 2026 06:56:39 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
       Content-Type:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/cloud-platform",
+          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform openid https://www.googleapis.com/auth/userinfo.email",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Sun, 15 Nov 2026 01:42:47 GMT
+  recorded_at: Wed, 18 Nov 2026 06:56:39 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -69,7 +69,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}]}],"toolConfig":{"functionCallingConfig":{"mode":"none"}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -84,7 +84,7 @@ http_interactions:
       message: OK
     headers:
       X-Goog-Request-Id:
-      - Fw75avjjKvrI8uMPy8r_sAg
+      - J0z9aoDrDLqIhcIP_o2tiQY
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -92,7 +92,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 15 Nov 2026 01:42:50 GMT
+      - Wed, 18 Nov 2026 06:56:43 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -107,43 +107,7 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: |
-        {
-          "candidates": [
-            {
-              "content": {
-                "role": "model",
-                "parts": [
-                  {
-                    "text": "I'm sorry, I cannot fulfill this request. I do not have access to real-time weather information."
-                  }
-                ]
-              },
-              "finishReason": "STOP"
-            }
-          ],
-          "usageMetadata": {
-            "promptTokenCount": 33,
-            "candidatesTokenCount": 23,
-            "totalTokenCount": 276,
-            "trafficType": "ON_DEMAND",
-            "promptTokensDetails": [
-              {
-                "modality": "TEXT",
-                "tokenCount": 33
-              }
-            ],
-            "candidatesTokensDetails": [
-              {
-                "modality": "TEXT",
-                "tokenCount": 23
-              }
-            ],
-            "thoughtsTokenCount": 220
-          },
-          "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-11-15T01:42:47.700920Z",
-          "responseId": "Fw75avjjKvrI8uMPy8r_sAg"
-        }
-  recorded_at: Sun, 15 Nov 2026 01:42:50 GMT
-recorded_with: VCR 6.4.0
+      string: !binary |-
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICJUaGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiwgR2VybWFueSAoNTIuNTIwMCwgMTMuNDA1MCkgaXMgKioxOMKwQyAoNjTCsEYpKiogYW5kICoqcGFydGx5IGNsb3VkeSoqLlxuXG5UaGVyZSdzIGEgZ2VudGxlIGJyZWV6ZSBmcm9tIHRoZSBub3J0aHdlc3QgYXQgYWJvdXQgMTUga20vaCAoOSBtcGgpLCBhbmQgdGhlIGh1bWlkaXR5IGlzIGFyb3VuZCA3MCUuIEl0IGZlZWxzIGxpa2UgMTfCsEMgKDYzwrBGKS4iCiAgICAgICAgICB9CiAgICAgICAgXQogICAgICB9LAogICAgICAiZmluaXNoUmVhc29uIjogIlNUT1AiCiAgICB9CiAgXSwKICAidXNhZ2VNZXRhZGF0YSI6IHsKICAgICJwcm9tcHRUb2tlbkNvdW50IjogMzMsCiAgICAiY2FuZGlkYXRlc1Rva2VuQ291bnQiOiA4OCwKICAgICJ0b3RhbFRva2VuQ291bnQiOiA2NTEsCiAgICAidHJhZmZpY1R5cGUiOiAiT05fREVNQU5EIiwKICAgICJwcm9tcHRUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogMzMKICAgICAgfQogICAgXSwKICAgICJjYW5kaWRhdGVzVG9rZW5zRGV0YWlscyI6IFsKICAgICAgewogICAgICAgICJtb2RhbGl0eSI6ICJURVhUIiwKICAgICAgICAidG9rZW5Db3VudCI6IDg4CiAgICAgIH0KICAgIF0sCiAgICAidGhvdWdodHNUb2tlbkNvdW50IjogNTMwCiAgfSwKICAibW9kZWxWZXJzaW9uIjogImdlbWluaS0yLjUtZmxhc2giLAogICJjcmVhdGVUaW1lIjogIjIwMjYtMTEtMThUMDY6NTY6MzkuMjEwMzA0WiIsCiAgInJlc3BvbnNlSWQiOiAiSjB6OWFvRHJETHFJaGNJUF9vMnRpUVkiCn0K
+  recorded_at: Wed, 18 Nov 2026 06:56:43 GMT
+recorded_with: VCR 6.4.1

@@ -12,7 +12,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}],"tool_choice":"none"}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -29,7 +29,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 15 Nov 2026 01:40:31 GMT
+      - Wed, 18 Nov 2026 06:54:18 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
@@ -49,13 +49,13 @@ http_interactions:
       X-Watermark:
       - 'false'
       Traceparent:
-      - 00-614b27f0052008955162763a709b92ef-85948d0b000d8af3-00
+      - 00-b4d9d782a79ad7b62af00f525ddcd7eb-91f84614000e4859-00
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Ms-Client-Request-Id:
-      - f369d611-091c-40f8-b081-40e2be101530
+      - 5bbea6cc-d38a-42eb-9458-e10d3f4f938a
       Azureml-Model-Session:
-      - d20261110012600-4baac0fe
+      - d20261110015917-e7d4cb48
       X-Ms-Inference-Retry-History:
       - '{"v":1,"entries":[{"service_id":"mir.frontdoor","layer":"regional","role":"direct","retries":0}]}'
       Azureai-Requested-Tier:
@@ -89,9 +89,9 @@ http_interactions:
       Azureai-Fe-Offer-Type:
       - paygo
       Apim-Request-Id:
-      - f369d611-091c-40f8-b081-40e2be101530
+      - 5bbea6cc-d38a-42eb-9458-e10d3f4f938a
       X-Http2-Stream-Id:
-      - '869'
+      - '491'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -99,12 +99,8 @@ http_interactions:
       X-Ms-Region:
       - West Europe
     body:
-      encoding: UTF-8
-      string: '{"id":"57fed6e1-84d1-4eae-904f-11b436dd0fba","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"I''m
-        sorry, but I don''t have real-time weather data available from my knowledge
-        base. For the most accurate and current information in Berlin (52.5200, 13.4050),
-        I''d recommend checking a reliable weather service like weather.com or your
-        local app. Generally, Berlin in this season tends to have mild temperatures,
-        but it varies!"},"finish_reason":"stop"}],"usage":{"prompt_tokens":456,"completion_tokens":69,"total_tokens":525,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":314,"audio_tokens":0,"text_tokens":456,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1794706832,"object":"chat.completion","prompt_filter_results":null}'
-  recorded_at: Sun, 15 Nov 2026 01:40:32 GMT
-recorded_with: VCR 6.4.0
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImRmNWVmMTJhLWE2YzgtNDlkMC1hZjg0LTAzYmExMmZhNTllYSIsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJJJ20gc29ycnksIGJ1dCB3aXRob3V0IHVzaW5nIHRvb2xzLCBJIGRvbid0IGhhdmUgYWNjZXNzIHRvIHJlYWwtdGltZSB3ZWF0aGVyIGRhdGEuIEFzIG9mIG15IGxhc3Qga25vd2xlZGdlIHVwZGF0ZSwgQmVybGluIHR5cGljYWxseSBoYXMgYSB0ZW1wZXJhdGUgY2xpbWF0ZeKAlGNvb2wgYW5kIG9mdGVuIHJhaW55IGluIHNwcmluZy9mYWxsLCBtaWxkIHN1bW1lcnMsIGFuZCBjb2xkIHdpbnRlcnMuIEZvciBjdXJyZW50IGNvbmRpdGlvbnMsIEknZCByZWNvbW1lbmQgY2hlY2tpbmcgYSB3ZWF0aGVyIGFwcCBvciBzaXRlLiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NDU2LCJjb21wbGV0aW9uX3Rva2VucyI6NjEsInRvdGFsX3Rva2VucyI6NTE3LCJhdWRpb19wcm9tcHRfdG9rZW5zIjowLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MzE0LCJhdWRpb190b2tlbnMiOjAsInRleHRfdG9rZW5zIjo0NTYsImltYWdlX3Rva2VucyI6MH0sImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MCwiYXVkaW9fdG9rZW5zIjowLCJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6MCwicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjB9LCJudW1fc291cmNlc191c2VkIjowfSwiY3JlYXRlZCI6MTc5NDk4NDg1OSwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwicHJvbXB0X2ZpbHRlcl9yZXN1bHRzIjpudWxsfQ==
+  recorded_at: Wed, 18 Nov 2026 06:54:19 GMT
+recorded_with: VCR 6.4.1

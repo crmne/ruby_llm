@@ -9,7 +9,7 @@ http_interactions:
         the capital of France?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,19 +24,21 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:21:11 GMT
+      - Wed, 18 Nov 2026 06:37:01 GMT
       X-Llm-D-Flow-Queue-Duration-Ms:
       - '0'
       Vary:
       - Origin
       Content-Type:
       - application/json
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
       Transfer-Encoding:
       - chunked
     body:
       encoding: UTF-8
-      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":59,"completion_tokens":24,"total_tokens":83,"completion_tokens_details":{"reasoning_tokens":14},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"content":"\n\nThe
-        capital of France is Paris.","role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"reasoning":"We
-        need answer simple question. Need final answer. Keep concise.\n"},"index":0,"logprobs":null,"finish_reason":"stop","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-d484d796-8198-499f-9ec1-d4e40b88894b","object":"chat.completion","created":1794705671,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
-  recorded_at: Sun, 15 Nov 2026 01:21:12 GMT
-recorded_with: VCR 6.4.0
+      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":59,"completion_tokens":28,"total_tokens":87,"completion_tokens_details":{"reasoning_tokens":24},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"content":"\n\nParis","role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"reasoning":"We
+        need answer simple question. Need then final answer. User: What is the capital
+        of France? Answer Paris.\n"},"index":0,"logprobs":null,"finish_reason":"stop","stop_reason":null,"token_ids":null,"routed_experts":null,"weight_versions":null}],"id":"chatcmpl-7060332c-031a-4898-a82c-c9311f5f8810","object":"chat.completion","created":1794983821,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
+  recorded_at: Wed, 18 Nov 2026 06:37:01 GMT
+recorded_with: VCR 6.4.1

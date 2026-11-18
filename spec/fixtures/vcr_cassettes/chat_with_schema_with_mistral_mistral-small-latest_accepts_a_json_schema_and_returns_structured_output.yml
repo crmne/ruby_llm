@@ -9,7 +9,7 @@ http_interactions:
         a person named John who is 30 years old"}],"stream":false,"response_format":{"type":"json_schema","json_schema":{"name":"response","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,54 +24,54 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:20:50 GMT
+      - Wed, 18 Nov 2026 06:36:08 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Set-Cookie:
-      - "<COOKIE>"
       Mistral-Correlation-Id:
-      - 01a1dcca-f278-75ce-87ee-730fb1d17514
+      - 01a1ed5e-b0e2-7321-88f0-fba27755be6b
       X-Kong-Request-Id:
-      - 01a1dcca-f278-75ce-87ee-730fb1d17514
+      - 01a1ed5e-b0e2-7321-88f0-fba27755be6b
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '97493'
+      - '99434'
       X-Ratelimit-Tokens-Query-Cost:
       - '41'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
-      - '95'
+      - '97'
       X-Envoy-Upstream-Service-Time:
-      - '390'
+      - '483'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '390'
+      - '484'
       X-Kong-Proxy-Latency:
-      - '19'
-      X-Content-Type-Options:
-      - nosniff
+      - '18'
       Cf-Cache-Status:
       - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"bb6e826fb63a4c89bafe427daa8113d0","created":1794705650,"model":"mistral-small-latest","usage":{"prompt_tokens":27,"total_tokens":41,"completion_tokens":14,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"{\"name\":
+      string: '{"id":"4c0b722c5c3e4308b4a969d514380a6e","created":1794983768,"model":"mistral-small-latest","usage":{"prompt_tokens":27,"total_tokens":41,"completion_tokens":14,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"{\"name\":
         \"John\", \"age\": 30}"}}]}'
-  recorded_at: Sun, 15 Nov 2026 01:20:50 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:36:08 GMT
+recorded_with: VCR 6.4.1

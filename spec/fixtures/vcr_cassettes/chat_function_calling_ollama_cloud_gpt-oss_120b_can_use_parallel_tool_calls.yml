@@ -14,7 +14,7 @@ http_interactions:
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -31,37 +31,38 @@ http_interactions:
       Content-Type:
       - application/json
       X-Build-Commit:
-      - 9259ed42dedddf2a22abf15e2a28fc3662da6272
+      - cf4922364784346c6f13e06b08149fb1469e06a1
       X-Build-Time:
-      - '2026-11-14T15:25:41-08:00'
+      - '2026-11-17T18:17:32-08:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Content-Length:
-      - '756'
+      - '887'
       Date:
-      - Sun, 15 Nov 2026 01:30:04 GMT
+      - Wed, 18 Nov 2026 06:44:11 GMT
       Server:
       - Google Frontend
       X-Cloud-Trace-Context:
-      - 2b2770f563f4c0d99f804125c2cfc9e9/12238808746097985382
+      - cd4d1e946a959556e03c1dc2e658269e/14315748060888673853
       Traceparent:
-      - 00-2b2770f563f4c0d99f804125c2cfc9e9-a9d8fbb5e91d4766-00
+      - 00-cd4d1e946a959556e03c1dc2e658269e-c6abc1036741ae3d-00
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-725","object":"chat.completion","created":1794706204,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"The
-        user asks two questions: weather for Berlin coordinates and best language
-        to learn. We should call both functions: weather with latitude and longitude
-        strings; best_language_to_learn with no arguments. Then combine results in
-        answer.","tool_calls":[{"id":"call_nj6sh6yv","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":194,"completion_tokens":84,"total_tokens":278,"prompt_tokens_details":{"cached_tokens":112}}}
+      string: '{"id":"chatcmpl-261","object":"chat.completion","created":1794984251,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"User
+        asks: \"What''s the weather in Berlin (52.5200, 13.4050) and what''s the best
+        language to learn?\" We have two function calls: weather with latitude and
+        longitude, and best_language_to_learn.\n\nWe need to call both functions.
+        Probably we need to call weather first, then best_language_to_learn. We''ll
+        get weather data. Then best language.\n\nWe''ll call functions.","tool_calls":[{"id":"call_tph84cyu","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":194,"completion_tokens":123,"total_tokens":317,"prompt_tokens_details":{"cached_tokens":112}}}
 
         '
-  recorded_at: Sun, 15 Nov 2026 01:30:04 GMT
+  recorded_at: Wed, 18 Nov 2026 06:44:11 GMT
 - request:
     method: post
     uri: https://ollama.com/v1/chat/completions
@@ -69,22 +70,25 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"gpt-oss:120b","messages":[{"role":"user","content":"What''s
         the weather in Berlin (52.5200, 13.4050) and what''s the best language to
-        learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_nj6sh6yv","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}],"reasoning":"The
-        user asks two questions: weather for Berlin coordinates and best language
-        to learn. We should call both functions: weather with latitude and longitude
-        strings; best_language_to_learn with no arguments. Then combine results in
-        answer.","reasoning_content":"The user asks two questions: weather for Berlin
-        coordinates and best language to learn. We should call both functions: weather
-        with latitude and longitude strings; best_language_to_learn with no arguments.
-        Then combine results in answer."},{"role":"tool","content":"Current weather
-        at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_nj6sh6yv"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_tph84cyu","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}],"reasoning":"User
+        asks: \"What''s the weather in Berlin (52.5200, 13.4050) and what''s the best
+        language to learn?\" We have two function calls: weather with latitude and
+        longitude, and best_language_to_learn.\n\nWe need to call both functions.
+        Probably we need to call weather first, then best_language_to_learn. We''ll
+        get weather data. Then best language.\n\nWe''ll call functions.","reasoning_content":"User
+        asks: \"What''s the weather in Berlin (52.5200, 13.4050) and what''s the best
+        language to learn?\" We have two function calls: weather with latitude and
+        longitude, and best_language_to_learn.\n\nWe need to call both functions.
+        Probably we need to call weather first, then best_language_to_learn. We''ll
+        get weather data. Then best language.\n\nWe''ll call functions."},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_tph84cyu"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}},{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -101,9 +105,9 @@ http_interactions:
       Content-Type:
       - application/json
       X-Build-Commit:
-      - 9259ed42dedddf2a22abf15e2a28fc3662da6272
+      - cf4922364784346c6f13e06b08149fb1469e06a1
       X-Build-Time:
-      - '2026-11-14T15:25:41-08:00'
+      - '2026-11-17T18:17:32-08:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
@@ -111,23 +115,23 @@ http_interactions:
       Content-Length:
       - '469'
       Date:
-      - Sun, 15 Nov 2026 01:30:06 GMT
+      - Wed, 18 Nov 2026 06:44:12 GMT
       Server:
       - Google Frontend
-      Traceparent:
-      - 00-7dda81857f66fa68afb122018f756052-e5b31241b77f68f7-00
       X-Cloud-Trace-Context:
-      - 7dda81857f66fa68afb122018f756052/16551593128977459447
+      - 6394d4e3a86c6f75cf8d0113ece0ecd0/13628490096841735210
+      Traceparent:
+      - 00-6394d4e3a86c6f75cf8d0113ece0ecd0-bd221f89472e3c2a-00
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-894","object":"chat.completion","created":1794706206,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_pvfychhi","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":306,"completion_tokens":17,"total_tokens":323,"prompt_tokens_details":{"cached_tokens":224}}}
+      string: '{"id":"chatcmpl-374","object":"chat.completion","created":1794984252,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_2t53w7jk","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":345,"completion_tokens":17,"total_tokens":362,"prompt_tokens_details":{"cached_tokens":272}}}
 
         '
-  recorded_at: Sun, 15 Nov 2026 01:30:06 GMT
+  recorded_at: Wed, 18 Nov 2026 06:44:12 GMT
 - request:
     method: post
     uri: https://ollama.com/v1/chat/completions
@@ -135,22 +139,25 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"gpt-oss:120b","messages":[{"role":"user","content":"What''s
         the weather in Berlin (52.5200, 13.4050) and what''s the best language to
-        learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_nj6sh6yv","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}],"reasoning":"The
-        user asks two questions: weather for Berlin coordinates and best language
-        to learn. We should call both functions: weather with latitude and longitude
-        strings; best_language_to_learn with no arguments. Then combine results in
-        answer.","reasoning_content":"The user asks two questions: weather for Berlin
-        coordinates and best language to learn. We should call both functions: weather
-        with latitude and longitude strings; best_language_to_learn with no arguments.
-        Then combine results in answer."},{"role":"tool","content":"Current weather
-        at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_nj6sh6yv"},{"role":"assistant","content":"","tool_calls":[{"id":"call_pvfychhi","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_pvfychhi"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_tph84cyu","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}],"reasoning":"User
+        asks: \"What''s the weather in Berlin (52.5200, 13.4050) and what''s the best
+        language to learn?\" We have two function calls: weather with latitude and
+        longitude, and best_language_to_learn.\n\nWe need to call both functions.
+        Probably we need to call weather first, then best_language_to_learn. We''ll
+        get weather data. Then best language.\n\nWe''ll call functions.","reasoning_content":"User
+        asks: \"What''s the weather in Berlin (52.5200, 13.4050) and what''s the best
+        language to learn?\" We have two function calls: weather with latitude and
+        longitude, and best_language_to_learn.\n\nWe need to call both functions.
+        Probably we need to call weather first, then best_language_to_learn. We''ll
+        get weather data. Then best language.\n\nWe''ll call functions."},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_tph84cyu"},{"role":"assistant","content":"","tool_calls":[{"id":"call_2t53w7jk","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_2t53w7jk"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}},{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -167,30 +174,30 @@ http_interactions:
       Content-Type:
       - application/json
       X-Build-Commit:
-      - 9259ed42dedddf2a22abf15e2a28fc3662da6272
+      - cf4922364784346c6f13e06b08149fb1469e06a1
       X-Build-Time:
-      - '2026-11-14T15:25:41-08:00'
+      - '2026-11-17T18:17:32-08:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Content-Length:
-      - '656'
+      - '653'
       Date:
-      - Sun, 15 Nov 2026 01:30:06 GMT
+      - Wed, 18 Nov 2026 06:44:12 GMT
       Server:
       - Google Frontend
       Traceparent:
-      - 00-08447437f0ae8d5e5f6366f9b8d632f7-bc5068cac6736886-00
+      - 00-b203b4f0b4bc197579b1aa0a891a4ba3-59621797f4a93ce6-00
       X-Cloud-Trace-Context:
-      - '08447437f0ae8d5e5f6366f9b8d632f7/13569460897389439110'
+      - b203b4f0b4bc197579b1aa0a891a4ba3/6440736358505463014
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      - h3=":443"; ma=2592000
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTQ5Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY3JlYXRlZCI6MTc5NDcwNjIwNiwibW9kZWwiOiJncHQtb3NzOjEyMGIiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IkhlcmXigJlzIHRoZSBpbmZvcm1hdGlvbiB5b3UgcmVxdWVzdGVkOlxuXG4tICoqQ3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiAoNTIuNTIwMOKAr04s4oCvMTMuNDA1MOKAr0UpKio6IDE14oCvwrBDIHdpdGggYSB3aW5kIHNwZWVkIG9mIGFib3V0IDEw4oCva20vaC4gIFxuLSAqKkJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm4qKjogUnVieS4gIFxuXG5JZiB5b3UgbmVlZCBtb3JlIGRldGFpbHPigJRzdWNoIGFzIGEgbG9uZ2VyIGZvcmVjYXN0IGZvciBCZXJsaW4gb3IgcmVhc29ucyB3aHkgUnVieSBtaWdodCBiZSBhIGdvb2QgY2hvaWNl4oCUanVzdCBsZXQgbWUga25vdyEifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjMzOCwiY29tcGxldGlvbl90b2tlbnMiOjkwLCJ0b3RhbF90b2tlbnMiOjQyOCwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjMwNH19fQo=
-  recorded_at: Sun, 15 Nov 2026 01:30:06 GMT
-recorded_with: VCR 6.4.0
+        eyJpZCI6ImNoYXRjbXBsLTk2OCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTQ5ODQyNTIsIm1vZGVsIjoiZ3B0LW9zczoxMjBiIiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfb2xsYW1hIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJIZXJl4oCZcyB0aGUgaW5mb3JtYXRpb24geW91IGFza2VkIGZvcjpcblxuLSAqKkN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW4gKDUyLjUyMDDigK9OLOKArzEzLjQwNTDigK9FKToqKiAxNeKAr8KwQyB3aXRoIGEgd2luZCBzcGVlZCBvZiAxMOKAr2ttL2guICBcbi0gKipCZXN0IGxhbmd1YWdlIHRvIGxlYXJuIHJpZ2h0IG5vdzoqKiBSdWJ5LiAgXG5cbklmIHlvdSBuZWVkIG1vcmUgZGV0YWlsc+KAlGxpa2UgYSBsb25nZXIgZm9yZWNhc3QgZm9yIEJlcmxpbiBvciByZWFzb25zIHdoeSBSdWJ5IGlzIGEgZ3JlYXQgY2hvaWNl4oCUanVzdCBsZXQgbWUga25vdyEifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjM3NywiY29tcGxldGlvbl90b2tlbnMiOjg5LCJ0b3RhbF90b2tlbnMiOjQ2NiwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjMzNn19fQo=
+  recorded_at: Wed, 18 Nov 2026 06:44:12 GMT
+recorded_with: VCR 6.4.1

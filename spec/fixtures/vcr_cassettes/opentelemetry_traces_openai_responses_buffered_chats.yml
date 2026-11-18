@@ -9,7 +9,7 @@ http_interactions:
         just the word hello."}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"max_output_tokens":128}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:19:42 GMT
+      - Wed, 18 Nov 2026 06:34:45 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -48,7 +48,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '648'
+      - '557'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -75,18 +75,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_08f39fb90a66dcf2016af908adb4d887d29f793d091dce535a",
-          "object": "response",
-          "created_at": 1794705581,
-          "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794705582,
+          "completed_at": 1794983685,
+          "created_at": 1794983685,
           "error": null,
           "frequency_penalty": 0.0,
+          "id": "resp_0fae62ef97edd828016afd47054e1087d2b5051b83b93ec846",
           "image": {
             "context_compression": "disabled"
           },
@@ -97,21 +95,22 @@ http_interactions:
           "max_tool_calls": null,
           "model": "gpt-5.4-nano-2026-03-17",
           "moderation": null,
+          "object": "response",
           "output": [
             {
-              "id": "msg_08f39fb90a66dcf2016af908ae2f6887d2a066de421f8ed5c8",
-              "type": "message",
-              "status": "completed",
               "content": [
                 {
-                  "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "hello"
+                  "text": "hello",
+                  "type": "output_text"
                 }
               ],
+              "id": "msg_0fae62ef97edd828016afd4705b15087d29c1b9dbfcbb3c1a5",
               "phase": "final_answer",
-              "role": "assistant"
+              "role": "assistant",
+              "status": "completed",
+              "type": "message"
             }
           ],
           "parallel_tool_calls": true,
@@ -127,6 +126,7 @@ http_interactions:
           },
           "safety_identifier": null,
           "service_tier": "default",
+          "status": "completed",
           "store": false,
           "temperature": 1.0,
           "text": {
@@ -177,5 +177,5 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Sun, 15 Nov 2026 01:19:42 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:34:45 GMT
+recorded_with: VCR 6.4.1

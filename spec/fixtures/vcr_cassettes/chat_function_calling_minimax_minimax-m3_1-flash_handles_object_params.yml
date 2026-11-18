@@ -13,7 +13,7 @@ http_interactions:
         window to schedule"}},"required":["window"],"additionalProperties":false}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -30,27 +30,27 @@ http_interactions:
       Content-Type:
       - application/json; charset=utf-8
       Content-Length:
-      - '530'
+      - '525'
       Trace-Id:
-      - '07483d666bcebbf1f599066c82679fe6'
+      - 074c7b856c6baefaa33296a452fb51c0
       X-Session-Id:
       - d7795d70f5ff0932a7eb31218cd29dc6
       X-Mm-Request-Id:
-      - 2092934004998157135_17947060227tpp3s
+      - 2092934004998157135_1794984069q2z78g
       Minimax-Request-Id:
-      - 6683ff6aed9eb8da376711d7146f6eec
+      - 4b2d59cae0c31ea15b8847772cd7c32e
       Alb-Receive-Time:
-      - '1794706022.738'
+      - '1794984069.893'
       Alb-Request-Id:
-      - 3a6d72c44abbe9f19145de615f0621691dbeb904
+      - 6c9fa95b3fdd083ee068089a346e1c194075846a
       Expires:
-      - Sun, 15 Nov 2026 01:27:06 GMT
+      - Wed, 18 Nov 2026 06:41:10 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Sun, 15 Nov 2026 01:27:06 GMT
+      - Wed, 18 Nov 2026 06:41:10 GMT
       Connection:
       - keep-alive
       Access-Control-Allow-Origin:
@@ -59,7 +59,7 @@ http_interactions:
       - ak
     body:
       encoding: UTF-8
-      string: '{"id":"07483d666bcebbf1f599066c82679fe6","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"text":"I''ll
-        call the params tool with the specified window.","type":"text"},{"type":"tool_use","id":"call-6b67179e-8732-417c-ab94-41d082bf2bfa","name":"object_params","input":{"window":{"end":"2025-01-02","start":"2025-01-01"}}}],"usage":{"input_tokens":393,"output_tokens":65,"cache_creation_input_tokens":0,"cache_read_input_tokens":128},"stop_reason":"tool_use","base_resp":{"status_code":0,"status_msg":""}}'
-  recorded_at: Sun, 15 Nov 2026 01:27:06 GMT
-recorded_with: VCR 6.4.0
+      string: '{"id":"074c7b856c6baefaa33296a452fb51c0","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"text":"I''ll
+        call the object_params tool with the specified window.","type":"text"},{"type":"tool_use","id":"call_01a1ed634e2b70499c0ecfec","name":"object_params","input":{"window":{"end":"2025-01-02","start":"2025-01-01"}}}],"usage":{"input_tokens":393,"output_tokens":66,"cache_creation_input_tokens":0,"cache_read_input_tokens":128},"stop_reason":"tool_use","base_resp":{"status_code":0,"status_msg":""}}'
+  recorded_at: Wed, 18 Nov 2026 06:41:10 GMT
+recorded_with: VCR 6.4.1

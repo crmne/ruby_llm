@@ -11,7 +11,7 @@ http_interactions:
         numbered sources about a topic.","parameters":{"type":"object","properties":{"topic":{"type":"string"}},"required":["topic"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:19:27 GMT
+      - Wed, 18 Nov 2026 06:34:30 GMT
       Content-Type:
       - text/event-stream; charset=utf-8
       Transfer-Encoding:
@@ -34,9 +34,9 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a1dcc9-ae68-74a9-820a-96498f38fa93
+      - 01a1ed5d-2e9e-712e-b272-65898eff75c6
       X-Kong-Request-Id:
-      - 01a1dcc9-ae68-74a9-820a-96498f38fa93
+      - 01a1ed5d-2e9e-712e-b272-65898eff75c6
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Req-Minute:
@@ -46,25 +46,25 @@ http_interactions:
       X-Ratelimit-Limit-Tokens-Minute:
       - '400000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '399590'
+      - '399870'
       X-Envoy-Upstream-Service-Time:
-      - '473'
+      - '679'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '474'
+      - '680'
       X-Kong-Proxy-Latency:
-      - '13'
-      Set-Cookie:
-      - "<COOKIE>"
-      X-Content-Type-Options:
-      - nosniff
+      - '17'
       Cf-Cache-Status:
       - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
@@ -72,13 +72,13 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |+
-        data: {"id":"fe7755e9842f4851bf58f146388850da","object":"chat.completion.chunk","created":1794705567,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
+        data: {"id":"532c5a0e4dbb42f0a2ab69286ba939a5","object":"chat.completion.chunk","created":1794983669,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
 
-        data: {"id":"fe7755e9842f4851bf58f146388850da","object":"chat.completion.chunk","created":1794705567,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"tool_calls":[{"id":"NhgtyavER","type":"function","function":{"name":"lookup","arguments":"{\"topic\": \"Ruby 3.4.0 release date and default parser\"}"},"index":0}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":109,"total_tokens":130,"completion_tokens":21,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"p":"abc"}
+        data: {"id":"532c5a0e4dbb42f0a2ab69286ba939a5","object":"chat.completion.chunk","created":1794983669,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"tool_calls":[{"id":"Ju6xJb367","type":"function","function":{"name":"lookup","arguments":"{\"topic\": \"Ruby 3.4.0 release date and default parser\"}"},"index":0}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":109,"total_tokens":130,"completion_tokens":21,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"p":"abcdefghijklmnop"}
 
         data: [DONE]
 
-  recorded_at: Sun, 15 Nov 2026 01:19:27 GMT
+  recorded_at: Wed, 18 Nov 2026 06:34:30 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
@@ -86,16 +86,16 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"mistral-large-2512","messages":[{"role":"system","content":"Use
         the lookup tool, then answer and cite the sources you use with reference chunks."},{"role":"user","content":"When
-        was Ruby 3.4.0 released, and what parser became the default?"},{"role":"assistant","content":"","tool_calls":[{"id":"NhgtyavER","type":"function","function":{"name":"lookup","arguments":"{\"topic\":\"Ruby
+        was Ruby 3.4.0 released, and what parser became the default?"},{"role":"assistant","content":"","tool_calls":[{"id":"Ju6xJb367","type":"function","function":{"name":"lookup","arguments":"{\"topic\":\"Ruby
         3.4.0 release date and default parser\"}"}}]},{"role":"tool","content":"{\"0\":{\"url\":\"https://example.test/a\",\"title\":\"Ruby
         releases\",\"source\":\"example\",\"snippets\":[[\"Ruby 3.4.0 was released
         on 25 December 2024.\"]],\"description\":null,\"date\":null},\"1\":{\"url\":\"https://example.test/b\",\"title\":\"Ruby
         3.4 notes\",\"source\":\"example\",\"snippets\":[[\"Prism became the default
-        parser in Ruby 3.4.\"]],\"description\":null,\"date\":null}}","tool_call_id":"NhgtyavER"}],"stream":true,"tools":[{"type":"function","function":{"name":"lookup","description":"Find
+        parser in Ruby 3.4.\"]],\"description\":null,\"date\":null}}","tool_call_id":"Ju6xJb367"}],"stream":true,"tools":[{"type":"function","function":{"name":"lookup","description":"Find
         numbered sources about a topic.","parameters":{"type":"object","properties":{"topic":{"type":"string"}},"required":["topic"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -110,7 +110,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:19:28 GMT
+      - Wed, 18 Nov 2026 06:34:30 GMT
       Content-Type:
       - text/event-stream; charset=utf-8
       Transfer-Encoding:
@@ -118,9 +118,9 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a1dcc9-b0f7-7997-a481-99ef3ea73d41
+      - 01a1ed5d-319c-7196-80b8-2024649f2f23
       X-Kong-Request-Id:
-      - 01a1dcc9-b0f7-7997-a481-99ef3ea73d41
+      - 01a1ed5d-319c-7196-80b8-2024649f2f23
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Req-Minute:
@@ -130,25 +130,25 @@ http_interactions:
       X-Ratelimit-Limit-Tokens-Minute:
       - '400000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '399460'
+      - '399462'
       X-Envoy-Upstream-Service-Time:
-      - '268'
+      - '300'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '269'
+      - '302'
       X-Kong-Proxy-Latency:
       - '14'
-      Set-Cookie:
-      - "<COOKIE>"
-      X-Content-Type-Options:
-      - nosniff
       Cf-Cache-Status:
       - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
@@ -156,40 +156,64 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |+
-        data: {"id":"d7b9f14b90ff486ea69b1321cbe6ba2d","object":"chat.completion.chunk","created":1794705568,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
+        data: {"id":"2782682a06814e56810b14907bd6765a","object":"chat.completion.chunk","created":1794983670,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
 
-        data: {"id":"d7b9f14b90ff486ea69b1321cbe6ba2d","object":"chat.completion.chunk","created":1794705568,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":"Ruby"},"finish_reason":null}],"p":"ab"}
+        data: {"id":"2782682a06814e56810b14907bd6765a","object":"chat.completion.chunk","created":1794983670,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":"Ruby"},"finish_reason":null}],"p":"abcdefghijklmnopqrst"}
 
-        data: {"id":"d7b9f14b90ff486ea69b1321cbe6ba2d","object":"chat.completion.chunk","created":1794705568,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":" **"},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxyz01"}
+        data: {"id":"2782682a06814e56810b14907bd6765a","object":"chat.completion.chunk","created":1794983670,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":" 3.4"},"finish_reason":null}],"p":"abcdefghijk"}
 
-        data: {"id":"d7b9f14b90ff486ea69b1321cbe6ba2d","object":"chat.completion.chunk","created":1794705568,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":"3.4."},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxyz0123456"}
+        data: {"id":"2782682a06814e56810b14907bd6765a","object":"chat.completion.chunk","created":1794983670,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":".0 was released"},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxyz0"}
 
-        data: {"id":"d7b9f14b90ff486ea69b1321cbe6ba2d","object":"chat.completion.chunk","created":1794705568,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":"0** was released"},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxyz012345678"}
+        data: {"id":"2782682a06814e56810b14907bd6765a","object":"chat.completion.chunk","created":1794983670,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":" on **2"},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxy"}
 
-        data: {"id":"d7b9f14b90ff486ea69b1321cbe6ba2d","object":"chat.completion.chunk","created":1794705568,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":" on **2"},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxyz0123456789"}
+        data: {"id":"2782682a06814e56810b14907bd6765a","object":"chat.completion.chunk","created":1794983670,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":"5 December 2"},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwx"}
 
-        data: {"id":"d7b9f14b90ff486ea69b1321cbe6ba2d","object":"chat.completion.chunk","created":1794705568,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":"5 December 2"},"finish_reason":null}],"p":"abcdefghijklmnopqrs"}
+        data: {"id":"2782682a06814e56810b14907bd6765a","object":"chat.completion.chunk","created":1794983670,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":"024**,"},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvw"}
 
-        data: {"id":"d7b9f14b90ff486ea69b1321cbe6ba2d","object":"chat.completion.chunk","created":1794705568,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":"024**."},"finish_reason":null}],"p":"abcdefg"}
+        data: {"id":"2782682a06814e56810b14907bd6765a","object":"chat.completion.chunk","created":1794983670,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":" and the **Pr"},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxyz0123"}
 
-        data: {"id":"d7b9f14b90ff486ea69b1321cbe6ba2d","object":"chat.completion.chunk","created":1794705568,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":" Additionally, the **"},"finish_reason":null}],"p":"abc"}
+        data: {"id":"2782682a06814e56810b14907bd6765a","object":"chat.completion.chunk","created":1794983670,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":"ism parser"},"finish_reason":null}],"p":"abc"}
 
-        data: {"id":"d7b9f14b90ff486ea69b1321cbe6ba2d","object":"chat.completion.chunk","created":1794705568,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":"Prism parser"},"finish_reason":null}],"p":"ab"}
+        data: {"id":"2782682a06814e56810b14907bd6765a","object":"chat.completion.chunk","created":1794983670,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":" became"},"finish_reason":null}],"p":"a"}
 
-        data: {"id":"d7b9f14b90ff486ea69b1321cbe6ba2d","object":"chat.completion.chunk","created":1794705568,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":" became"},"finish_reason":null}],"p":"abcdefghijklmnop"}
+        data: {"id":"2782682a06814e56810b14907bd6765a","object":"chat.completion.chunk","created":1794983670,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":" the default"},"finish_reason":null}],"p":"abcdefghijklmnop"}
 
-        data: {"id":"d7b9f14b90ff486ea69b1321cbe6ba2d","object":"chat.completion.chunk","created":1794705568,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":" the default"},"finish_reason":null}],"p":"abcdefghijklm"}
+        data: {"id":"2782682a06814e56810b14907bd6765a","object":"chat.completion.chunk","created":1794983670,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":"**"},"finish_reason":null}],"p":"abcdef"}
 
-        data: {"id":"d7b9f14b90ff486ea69b1321cbe6ba2d","object":"chat.completion.chunk","created":1794705568,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":" parser** in this"},"finish_reason":null}],"p":"abcdefghijklmnopqrst"}
+        data: {"id":"2782682a06814e56810b14907bd6765a","object":"chat.completion.chunk","created":1794983670,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":" in this"},"finish_reason":null}],"p":"abcdefghijklmnopqrstu"}
 
-        data: {"id":"d7b9f14b90ff486ea69b1321cbe6ba2d","object":"chat.completion.chunk","created":1794705568,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":" version"},"finish_reason":null}],"p":"abcdefghijklm"}
+        data: {"id":"2782682a06814e56810b14907bd6765a","object":"chat.completion.chunk","created":1794983670,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":" version"},"finish_reason":null}],"p":"abcde"}
 
-        data: {"id":"d7b9f14b90ff486ea69b1321cbe6ba2d","object":"chat.completion.chunk","created":1794705568,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":[{"type":"reference","reference_ids":[0,1]},{"type":"text","text":"."}]},"finish_reason":null}],"p":"abcdefghijklmno"}
+        data: {"id":"2782682a06814e56810b14907bd6765a","object":"chat.completion.chunk","created":1794983670,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":[{"type":"reference","reference_ids":[0,1]}]},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxy"}
 
-        data: {"id":"d7b9f14b90ff486ea69b1321cbe6ba2d","object":"chat.completion.chunk","created":1794705568,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":""},"finish_reason":"stop"}],"usage":{"prompt_tokens":237,"total_tokens":280,"completion_tokens":43,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"p":"a"}
+        data: {"id":"2782682a06814e56810b14907bd6765a","object":"chat.completion.chunk","created":1794983670,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":".\n\n---\n"},"finish_reason":null}],"p":"abcdefg"}
+
+        data: {"id":"2782682a06814e56810b14907bd6765a","object":"chat.completion.chunk","created":1794983670,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":"**Sources"},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxyz0123456"}
+
+        data: {"id":"2782682a06814e56810b14907bd6765a","object":"chat.completion.chunk","created":1794983670,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":":**\n- [Ruby"},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxyz01234567"}
+
+        data: {"id":"2782682a06814e56810b14907bd6765a","object":"chat.completion.chunk","created":1794983670,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":" releases"},"finish_reason":null}],"p":"abcd"}
+
+        data: {"id":"2782682a06814e56810b14907bd6765a","object":"chat.completion.chunk","created":1794983670,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":"](https://example"},"finish_reason":null}],"p":"abcdefghijklm"}
+
+        data: {"id":"2782682a06814e56810b14907bd6765a","object":"chat.completion.chunk","created":1794983670,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":".test/a"},"finish_reason":null}],"p":"abcdefghijklmnopqrs"}
+
+        data: {"id":"2782682a06814e56810b14907bd6765a","object":"chat.completion.chunk","created":1794983670,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":")"},"finish_reason":null}],"p":"abcdef"}
+
+        data: {"id":"2782682a06814e56810b14907bd6765a","object":"chat.completion.chunk","created":1794983670,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":[{"type":"reference","reference_ids":[0]}]},"finish_reason":null}],"p":"abcdefghijklm"}
+
+        data: {"id":"2782682a06814e56810b14907bd6765a","object":"chat.completion.chunk","created":1794983670,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":"\n- [Ruby"},"finish_reason":null}],"p":"abcde"}
+
+        data: {"id":"2782682a06814e56810b14907bd6765a","object":"chat.completion.chunk","created":1794983670,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":" 3.4"},"finish_reason":null}],"p":"abcdefghij"}
+
+        data: {"id":"2782682a06814e56810b14907bd6765a","object":"chat.completion.chunk","created":1794983670,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":" notes](https://"},"finish_reason":null}],"p":"abcdefghijklmno"}
+
+        data: {"id":"2782682a06814e56810b14907bd6765a","object":"chat.completion.chunk","created":1794983670,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":"example.test/b)"},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxyz012345678"}
+
+        data: {"id":"2782682a06814e56810b14907bd6765a","object":"chat.completion.chunk","created":1794983670,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":[{"type":"reference","reference_ids":[1]}]},"finish_reason":"stop"}],"usage":{"prompt_tokens":237,"total_tokens":314,"completion_tokens":77,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"p":"abcdefghijklmnopqrstuvw"}
 
         data: [DONE]
 
-  recorded_at: Sun, 15 Nov 2026 01:19:28 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:34:31 GMT
+recorded_with: VCR 6.4.1
 ...

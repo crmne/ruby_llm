@@ -10,7 +10,7 @@ http_interactions:
         a sample text file named ruby.txt","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -25,12 +25,12 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 15 Nov 2026 01:36:55 GMT
+      - Wed, 18 Nov 2026 06:50:56 GMT
       Content-Length:
       - '1192'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-13","object":"chat.completion","created":1794706615,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
+      string: '{"id":"chatcmpl-55","object":"chat.completion","created":1794984656,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
         the user wants me to call the file_fetch function to get ruby.txt and then
         repeat the contents of that file. Let me start by checking the tools provided.
         The tool listed is file_fetch, which is supposed to fetch a sample text file
@@ -40,17 +40,17 @@ http_interactions:
         them back to the user. Let me make sure I''m using the correct function name
         and that there are no typos. Alright, the function is called file_fetch, and
         the file name is ruby.txt. I''ll call the function and then display the content
-        once it''s retrieved.\n","tool_calls":[{"id":"call_2gwtypjf","index":0,"type":"function","function":{"name":"file_fetch","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":142,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens":177,"total_tokens":319}}
+        once it''s retrieved.\n","tool_calls":[{"id":"call_47xszq36","index":0,"type":"function","function":{"name":"file_fetch","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":142,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens":177,"total_tokens":319}}
 
         '
-  recorded_at: Sun, 15 Nov 2026 01:36:55 GMT
+  recorded_at: Wed, 18 Nov 2026 06:50:56 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"Call file_fetch
-        to get ruby.txt, then repeat the contents of the attached file."},{"role":"assistant","content":"","tool_calls":[{"id":"call_2gwtypjf","type":"function","function":{"name":"file_fetch","arguments":"{}"}}],"reasoning":"Okay,
+        to get ruby.txt, then repeat the contents of the attached file."},{"role":"assistant","content":"","tool_calls":[{"id":"call_47xszq36","type":"function","function":{"name":"file_fetch","arguments":"{}"}}],"reasoning":"Okay,
         the user wants me to call the file_fetch function to get ruby.txt and then
         repeat the contents of that file. Let me start by checking the tools provided.
         The tool listed is file_fetch, which is supposed to fetch a sample text file
@@ -70,13 +70,13 @@ http_interactions:
         Let me make sure I''m using the correct function name and that there are no
         typos. Alright, the function is called file_fetch, and the file name is ruby.txt.
         I''ll call the function and then display the content once it''s retrieved.\n"},{"role":"tool","content":"Fetched
-        the file.","tool_call_id":"call_2gwtypjf"},{"role":"user","content":[{"type":"text","text":"Attachments
-        from tool call call_2gwtypjf:"},{"type":"text","text":"<file name=''ruby.txt''
+        the file.","tool_call_id":"call_47xszq36"},{"role":"user","content":[{"type":"text","text":"Attachments
+        from tool call call_47xszq36:"},{"type":"text","text":"<file name=''ruby.txt''
         mime_type=''text/plain''>Ruby is the best.</file>"}]}],"stream":false,"temperature":0,"tools":[{"type":"function","function":{"name":"file_fetch","description":"Fetches
         a sample text file named ruby.txt","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -91,29 +91,29 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 15 Nov 2026 01:36:57 GMT
+      - Wed, 18 Nov 2026 06:50:57 GMT
       Content-Length:
-      - '1510'
+      - '1536'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-275","object":"chat.completion","created":1794706617,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"The
+      string: '{"id":"chatcmpl-931","object":"chat.completion","created":1794984657,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"The
         contents of ruby.txt are:  \n**Ruby is the best.**","reasoning":"Okay, the
         user asked me to call the file_fetch function to get ruby.txt and then repeat
         the contents of the attached file. Let me start by checking if I have the
         correct function available. The tools provided include a file_fetch function
         that fetches a sample text file named ruby.txt. \n\nFirst, I need to make
-        sure I call file_fetch correctly. The function doesn''t require any arguments,
-        so the tool call should be straightforward. I''ll generate the tool call with
-        empty arguments as specified.\n\nOnce the file is fetched, the response indicates
-        that the file was successfully retrieved. The attachment provided is ruby.txt
-        with the content \"Ruby is the best.\" Now, I need to repeat the contents
-        of this file. Since the user mentioned \"repeat the contents,\" I should simply
-        output the text from the file as the response.\n\nI should verify that there
-        are no other steps or functions needed. The user didn''t mention any additional
-        processing, so just echoing the file''s content should suffice. Let me make
-        sure the response is clear and directly answers the user''s request without
-        any extra information.\n"},"finish_reason":"stop"}],"usage":{"prompt_tokens":211,"prompt_tokens_details":{"cached_tokens":135},"completion_tokens":237,"total_tokens":448}}
+        sure I call the file_fetch function correctly. The function doesn''t require
+        any arguments, so the tool call should be straightforward. I''ll generate
+        the tool call with empty arguments as specified.\n\nOnce the file is fetched,
+        the response indicates that the file was successfully retrieved. The attachment
+        provided is a file named ruby.txt with the content \"Ruby is the best.\" Now,
+        I need to repeat the contents of this file. Since the user mentioned \"repeat
+        the contents,\" I should simply output the text from the file as the response.\n\nI
+        should verify that there are no other steps or functions needed. The user
+        didn''t mention any additional processing, so just echoing the file''s content
+        should suffice. Let me make sure the response is clear and directly answers
+        the user''s request without any extra information.\n"},"finish_reason":"stop"}],"usage":{"prompt_tokens":214,"prompt_tokens_details":{"cached_tokens":135},"completion_tokens":242,"total_tokens":456}}
 
         '
-  recorded_at: Sun, 15 Nov 2026 01:36:57 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:50:57 GMT
+recorded_with: VCR 6.4.1

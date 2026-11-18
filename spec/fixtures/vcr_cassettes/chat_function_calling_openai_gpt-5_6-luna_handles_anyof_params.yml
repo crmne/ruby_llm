@@ -12,7 +12,7 @@ http_interactions:
         description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:30:43 GMT
+      - Wed, 18 Nov 2026 06:44:44 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -51,7 +51,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '974'
+      - '858'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -78,16 +78,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_00a255c9788939c0016af90b42dee887d2b53b764a3a034057",
+          "id": "resp_0db920a7a3aa1977016afd495bdc7087d293afa37fb9daecf9",
           "object": "response",
-          "created_at": 1794706242,
+          "created_at": 1794984283,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794706243,
+          "completed_at": 1794984284,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
@@ -102,11 +102,11 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "fc_00a255c9788939c0016af90b43728487d2ab13b8071e765097",
+              "id": "fc_0db920a7a3aa1977016afd495c558087d2b0b1062edf757779",
               "type": "function_call",
               "status": "completed",
               "arguments": "{\"task\":\"Review PR\",\"status\":\"pending\"}",
-              "call_id": "call_HgYuRaAc3nKrV6QKBg3xTm2F",
+              "call_id": "call_OiqktFnMDzBzafIphFNrrIbf",
               "name": "any_of_params"
             }
           ],
@@ -210,5 +210,5 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Sun, 15 Nov 2026 01:30:43 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:44:44 GMT
+recorded_with: VCR 6.4.1

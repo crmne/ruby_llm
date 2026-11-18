@@ -12,7 +12,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -29,7 +29,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 15 Nov 2026 01:19:24 GMT
+      - Wed, 18 Nov 2026 06:35:09 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
@@ -49,13 +49,13 @@ http_interactions:
       X-Watermark:
       - 'false'
       Traceparent:
-      - 00-902a27338dbaad17b87324af809a076a-b97ab2b9000f4761-00
+      - 00-00f06c49c3d5cf614aa87eb7ab1af785-989605ba0013c6b2-00
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Ms-Client-Request-Id:
-      - 5e3ac109-6295-4d07-91ef-a8835c68fc05
+      - 52260ffe-58ae-4fcf-9391-59599340dfaa
       Azureml-Model-Session:
-      - d20261110012600-4baac0fe
+      - d20261110015917-e7d4cb48
       X-Ms-Inference-Retry-History:
       - '{"v":1,"entries":[{"service_id":"mir.frontdoor","layer":"regional","role":"direct","retries":0}]}'
       Azureai-Requested-Tier:
@@ -89,9 +89,9 @@ http_interactions:
       Azureai-Fe-Offer-Type:
       - paygo
       Apim-Request-Id:
-      - 5e3ac109-6295-4d07-91ef-a8835c68fc05
+      - 52260ffe-58ae-4fcf-9391-59599340dfaa
       X-Http2-Stream-Id:
-      - '957'
+      - '305'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -100,22 +100,22 @@ http_interactions:
       - West Europe
     body:
       encoding: UTF-8
-      string: '{"id":"f8aa1d17-cb0e-4be9-b8c0-f3eed4a66ac6","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_22469296","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":417,"completion_tokens":40,"total_tokens":457,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":158,"audio_tokens":0,"text_tokens":417,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1794705564,"object":"chat.completion","prompt_filter_results":null}'
-  recorded_at: Sun, 15 Nov 2026 01:19:24 GMT
+      string: '{"id":"5e645e5e-a65e-4c83-8995-d8cc34f678ac","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_39002021","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":417,"completion_tokens":40,"total_tokens":457,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":158,"audio_tokens":0,"text_tokens":417,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1794983710,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Wed, 18 Nov 2026 06:35:10 GMT
 - request:
     method: post
     uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
     body:
       encoding: UTF-8
       string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"call_22469296","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_22469296"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"call_39002021","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_39002021"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -132,7 +132,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 15 Nov 2026 01:19:25 GMT
+      - Wed, 18 Nov 2026 06:35:10 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
@@ -152,13 +152,13 @@ http_interactions:
       X-Watermark:
       - 'false'
       Traceparent:
-      - 00-27d343ae01eab6f8453c1c544509c8ca-498c70e500104eb7-00
+      - 00-e44ca5c5e8f951c9f1b4e9227bc99e84-af2290ea00095c6a-00
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Ms-Client-Request-Id:
-      - d30d66b6-c56c-410f-b7d8-64af0adecad0
+      - 1a22d8d5-d6d9-4b45-9110-e50416caa454
       Azureml-Model-Session:
-      - d20261110012600-4baac0fe
+      - d20261110015917-e7d4cb48
       X-Ms-Inference-Retry-History:
       - '{"v":1,"entries":[{"service_id":"mir.frontdoor","layer":"regional","role":"direct","retries":0}]}'
       Azureai-Requested-Tier:
@@ -192,9 +192,9 @@ http_interactions:
       Azureai-Fe-Offer-Type:
       - paygo
       Apim-Request-Id:
-      - d30d66b6-c56c-410f-b7d8-64af0adecad0
+      - 1a22d8d5-d6d9-4b45-9110-e50416caa454
       X-Http2-Stream-Id:
-      - '181'
+      - '673'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -204,6 +204,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6IjQzODhlYWYzLTI5OTItNDAxZi1iNDQxLTk5MjM1YzM3N2U2ZCIsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJUaGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiAoNTIuNTIwMCwgMTMuNDA1MCkgaXMgMTXCsEMgd2l0aCB3aW5kcyBhdCAxMCBrbS9oLiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NDkzLCJjb21wbGV0aW9uX3Rva2VucyI6MjksInRvdGFsX3Rva2VucyI6NTIyLCJhdWRpb19wcm9tcHRfdG9rZW5zIjowLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6NDE3LCJhdWRpb190b2tlbnMiOjAsInRleHRfdG9rZW5zIjo0OTMsImltYWdlX3Rva2VucyI6MH0sImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MCwiYXVkaW9fdG9rZW5zIjowLCJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6MCwicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjB9LCJudW1fc291cmNlc191c2VkIjowfSwiY3JlYXRlZCI6MTc5NDcwNTU2NSwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwicHJvbXB0X2ZpbHRlcl9yZXN1bHRzIjpudWxsfQ==
-  recorded_at: Sun, 15 Nov 2026 01:19:25 GMT
-recorded_with: VCR 6.4.0
+        eyJpZCI6IjFhZGViZGQzLWRhNTQtNDQzMS05ODU0LWE5NDE2ZTNkNDBiZiIsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJUaGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiAoNTIuNTIwMCwgMTMuNDA1MCkgaXMgMTXCsEMgd2l0aCB3aW5kcyBhdCAxMCBrbS9oLiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NDkzLCJjb21wbGV0aW9uX3Rva2VucyI6MjksInRvdGFsX3Rva2VucyI6NTIyLCJhdWRpb19wcm9tcHRfdG9rZW5zIjowLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6NDE3LCJhdWRpb190b2tlbnMiOjAsInRleHRfdG9rZW5zIjo0OTMsImltYWdlX3Rva2VucyI6MH0sImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MCwiYXVkaW9fdG9rZW5zIjowLCJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6MCwicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjB9LCJudW1fc291cmNlc191c2VkIjowfSwiY3JlYXRlZCI6MTc5NDk4MzcxMSwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwicHJvbXB0X2ZpbHRlcl9yZXN1bHRzIjpudWxsfQ==
+  recorded_at: Wed, 18 Nov 2026 06:35:11 GMT
+recorded_with: VCR 6.4.1

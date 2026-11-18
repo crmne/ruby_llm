@@ -12,7 +12,7 @@ http_interactions:
         description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -27,23 +27,22 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:24:12 GMT
+      - Wed, 18 Nov 2026 06:39:25 GMT
       X-Llm-D-Flow-Queue-Duration-Ms:
       - '0'
       Vary:
       - Origin
       Content-Type:
       - application/json
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
       Transfer-Encoding:
       - chunked
     body:
       encoding: UTF-8
-      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":382,"completion_tokens":126,"total_tokens":508,"completion_tokens_details":{"reasoning_tokens":84},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"tool_calls":[{"id":"chatcmpl-tool-ade8d883fd782689","type":"function","function":{"name":"any_of_params","arguments":"{\"task\":
+      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":382,"completion_tokens":70,"total_tokens":452,"completion_tokens_details":{"reasoning_tokens":28},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"tool_calls":[{"id":"chatcmpl-tool-af6f38ae0c6d972d","type":"function","function":{"name":"any_of_params","arguments":"{\"task\":
         \"Review PR\", \"status\": \"pending\"}"}}],"reasoning":"The user is asking
-        to call the any_of_params tool, specifying task \"Review PR\" and status \"pending\".
-        Let me check the schema:\n\nany_of_params has the following parameters:\n-
-        task: string (required)\n- status: string enum [\"pending\", \"done\"] or
-        null (required, though nullable)\n\nTherefore, I should call this with task=\"Review
-        PR\", status=\"pending\".\n"},"index":0,"logprobs":null,"finish_reason":"tool_calls","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-3e86b76c-aaf6-4dae-9f80-cbeedc2199fa","object":"chat.completion","created":1794705852,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
-  recorded_at: Sun, 15 Nov 2026 01:25:08 GMT
-recorded_with: VCR 6.4.0
+        to call the any_of_params tool with task \"Review PR\" and status \"pending\".
+        Let''s do that.\n"},"index":0,"logprobs":null,"finish_reason":"tool_calls","stop_reason":null,"token_ids":null,"routed_experts":null,"weight_versions":null}],"id":"chatcmpl-b38f6c2d-2996-4b00-be01-ac83351eafc9","object":"chat.completion","created":1794983966,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
+  recorded_at: Wed, 18 Nov 2026 06:39:28 GMT
+recorded_with: VCR 6.4.1

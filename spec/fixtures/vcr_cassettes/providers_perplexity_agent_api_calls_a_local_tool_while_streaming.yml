@@ -10,7 +10,7 @@ http_interactions:
         two integers.","parameters":{"type":"object","properties":{"left":{"type":"integer"},"right":{"type":"integer"}},"required":["left","right"],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:20:32 GMT
+      - Wed, 18 Nov 2026 06:34:33 GMT
       Content-Type:
       - text/event-stream
       Transfer-Encoding:
@@ -41,20 +41,20 @@ http_interactions:
       X-Ratelimit-Remaining:
       - '0'
       X-Ratelimit-Reset:
-      - '1794705633'
+      - '1794983674'
       X-Ratelimit-Used:
       - '1'
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Access-Control-Allow-Origin:
       - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
-      Cf-Cache-Status:
-      - DYNAMIC
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
@@ -63,32 +63,32 @@ http_interactions:
       encoding: UTF-8
       string: |+
         event: response.created
-        data: {"response":{"background":false,"completed_at":null,"created_at":1794705631,"error":null,"frequency_penalty":0,"id":"resp_afe6592f-72a0-4835-b8d5-f311df6575eb","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5.6-luna","object":"response","output":[],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"in_progress","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"add","description":"Add two integers.","parameters":{"additionalProperties":false,"properties":{"left":{"type":"integer"},"right":{"type":"integer"}},"required":["left","right"],"strict":true,"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":null,"user":null},"sequence_number":0,"type":"response.created"}
+        data: {"response":{"background":false,"completed_at":null,"created_at":1794983673,"error":null,"frequency_penalty":0,"id":"resp_063500c0-5273-4705-9dfd-355dfdccb227","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5.6-luna","object":"response","output":[],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"in_progress","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"add","description":"Add two integers.","parameters":{"additionalProperties":false,"properties":{"left":{"type":"integer"},"right":{"type":"integer"}},"required":["left","right"],"strict":true,"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":null,"user":null},"sequence_number":0,"type":"response.created"}
 
         event: response.in_progress
-        data: {"response":{"background":false,"completed_at":null,"created_at":1794705631,"error":null,"frequency_penalty":0,"id":"resp_afe6592f-72a0-4835-b8d5-f311df6575eb","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5.6-luna","object":"response","output":[],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"in_progress","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"add","description":"Add two integers.","parameters":{"additionalProperties":false,"properties":{"left":{"type":"integer"},"right":{"type":"integer"}},"required":["left","right"],"strict":true,"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":null,"user":null},"sequence_number":1,"type":"response.in_progress"}
+        data: {"response":{"background":false,"completed_at":null,"created_at":1794983673,"error":null,"frequency_penalty":0,"id":"resp_063500c0-5273-4705-9dfd-355dfdccb227","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5.6-luna","object":"response","output":[],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"in_progress","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"add","description":"Add two integers.","parameters":{"additionalProperties":false,"properties":{"left":{"type":"integer"},"right":{"type":"integer"}},"required":["left","right"],"strict":true,"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":null,"user":null},"sequence_number":1,"type":"response.in_progress"}
 
         event: response.output_item.added
-        data: {"item":{"arguments":"{\"left\":17,\"right\":25}","call_id":"call_gKoeAez7E7P87Z5g6vVLq0Ri","id":"fc_d328c9aa-70ac-4bb5-89d8-922dc4ff692c","name":"add","status":"completed","type":"function_call"},"output_index":0,"sequence_number":4,"type":"response.output_item.added"}
+        data: {"item":{"arguments":"{\"left\":17,\"right\":25}","call_id":"call_JJLjMgOyy44zeMnZW8V9wJVw","id":"fc_00c0e406-489a-4b5c-a10d-bb6ecf06fedd","name":"add","status":"completed","type":"function_call"},"output_index":0,"sequence_number":4,"type":"response.output_item.added"}
 
         event: response.output_item.done
-        data: {"item":{"arguments":"{\"left\":17,\"right\":25}","call_id":"call_gKoeAez7E7P87Z5g6vVLq0Ri","id":"fc_d328c9aa-70ac-4bb5-89d8-922dc4ff692c","name":"add","status":"completed","type":"function_call"},"output_index":0,"sequence_number":5,"type":"response.output_item.done"}
+        data: {"item":{"arguments":"{\"left\":17,\"right\":25}","call_id":"call_JJLjMgOyy44zeMnZW8V9wJVw","id":"fc_00c0e406-489a-4b5c-a10d-bb6ecf06fedd","name":"add","status":"completed","type":"function_call"},"output_index":0,"sequence_number":5,"type":"response.output_item.done"}
 
         event: response.completed
-        data: {"response":{"background":false,"completed_at":1794705631,"created_at":1794705631,"error":null,"frequency_penalty":0,"id":"resp_afe6592f-72a0-4835-b8d5-f311df6575eb","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5.6-luna","object":"response","output":[{"arguments":"{\"left\":17,\"right\":25}","call_id":"call_gKoeAez7E7P87Z5g6vVLq0Ri","id":"fc_d328c9aa-70ac-4bb5-89d8-922dc4ff692c","name":"add","status":"completed","type":"function_call"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"add","description":"Add two integers.","parameters":{"additionalProperties":false,"properties":{"left":{"type":"integer"},"right":{"type":"integer"}},"required":["left","right"],"strict":true,"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0.00001,"output_cost":0.00003,"total_cost":0.00004},"input_tokens":74,"input_tokens_details":{"cached_tokens":0},"output_tokens":21,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":95},"user":null},"sequence_number":6,"type":"response.completed"}
+        data: {"response":{"background":false,"completed_at":1794983673,"created_at":1794983673,"error":null,"frequency_penalty":0,"id":"resp_063500c0-5273-4705-9dfd-355dfdccb227","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5.6-luna","object":"response","output":[{"arguments":"{\"left\":17,\"right\":25}","call_id":"call_JJLjMgOyy44zeMnZW8V9wJVw","id":"fc_00c0e406-489a-4b5c-a10d-bb6ecf06fedd","name":"add","status":"completed","type":"function_call"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"add","description":"Add two integers.","parameters":{"additionalProperties":false,"properties":{"left":{"type":"integer"},"right":{"type":"integer"}},"required":["left","right"],"strict":true,"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0.00001,"output_cost":0.00003,"total_cost":0.00004},"input_tokens":74,"input_tokens_details":{"cached_tokens":0},"output_tokens":21,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":95},"user":null},"sequence_number":6,"type":"response.completed"}
 
-  recorded_at: Sun, 15 Nov 2026 01:20:33 GMT
+  recorded_at: Wed, 18 Nov 2026 06:34:34 GMT
 - request:
     method: post
     uri: https://api.perplexity.ai/v1/agent
     body:
       encoding: UTF-8
       string: '{"model":"openai/gpt-5.6-luna","input":[{"role":"user","content":"Use
-        the add tool to add 17 and 25."},{"type":"function_call","call_id":"call_gKoeAez7E7P87Z5g6vVLq0Ri","name":"add","arguments":"{\"left\":17,\"right\":25}"},{"type":"function_call_output","call_id":"call_gKoeAez7E7P87Z5g6vVLq0Ri","output":"42"}],"stream":true,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"add","description":"Add
+        the add tool to add 17 and 25."},{"type":"function_call","call_id":"call_JJLjMgOyy44zeMnZW8V9wJVw","name":"add","arguments":"{\"left\":17,\"right\":25}"},{"type":"function_call_output","call_id":"call_JJLjMgOyy44zeMnZW8V9wJVw","output":"42"}],"stream":true,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"add","description":"Add
         two integers.","parameters":{"type":"object","properties":{"left":{"type":"integer"},"right":{"type":"integer"}},"required":["left","right"],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -103,7 +103,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:20:33 GMT
+      - Wed, 18 Nov 2026 06:34:34 GMT
       Content-Type:
       - text/event-stream
       Transfer-Encoding:
@@ -119,20 +119,20 @@ http_interactions:
       X-Ratelimit-Remaining:
       - '0'
       X-Ratelimit-Reset:
-      - '1794705634'
+      - '1794983675'
       X-Ratelimit-Used:
       - '1'
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Access-Control-Allow-Origin:
       - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
-      Cf-Cache-Status:
-      - DYNAMIC
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
@@ -141,26 +141,26 @@ http_interactions:
       encoding: UTF-8
       string: |+
         event: response.created
-        data: {"response":{"background":false,"completed_at":null,"created_at":1794705633,"error":null,"frequency_penalty":0,"id":"resp_c3551b3e-47f8-48f4-bba2-2dcc9e7d9e16","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5.6-luna","object":"response","output":[],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"in_progress","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"add","description":"Add two integers.","parameters":{"additionalProperties":false,"properties":{"left":{"type":"integer"},"right":{"type":"integer"}},"required":["left","right"],"strict":true,"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":null,"user":null},"sequence_number":0,"type":"response.created"}
+        data: {"response":{"background":false,"completed_at":null,"created_at":1794983674,"error":null,"frequency_penalty":0,"id":"resp_a1e90ceb-c456-4f63-bf30-f00f68419d93","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5.6-luna","object":"response","output":[],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"in_progress","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"add","description":"Add two integers.","parameters":{"additionalProperties":false,"properties":{"left":{"type":"integer"},"right":{"type":"integer"}},"required":["left","right"],"strict":true,"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":null,"user":null},"sequence_number":0,"type":"response.created"}
 
         event: response.in_progress
-        data: {"response":{"background":false,"completed_at":null,"created_at":1794705633,"error":null,"frequency_penalty":0,"id":"resp_c3551b3e-47f8-48f4-bba2-2dcc9e7d9e16","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5.6-luna","object":"response","output":[],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"in_progress","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"add","description":"Add two integers.","parameters":{"additionalProperties":false,"properties":{"left":{"type":"integer"},"right":{"type":"integer"}},"required":["left","right"],"strict":true,"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":null,"user":null},"sequence_number":1,"type":"response.in_progress"}
+        data: {"response":{"background":false,"completed_at":null,"created_at":1794983674,"error":null,"frequency_penalty":0,"id":"resp_a1e90ceb-c456-4f63-bf30-f00f68419d93","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5.6-luna","object":"response","output":[],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"in_progress","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"add","description":"Add two integers.","parameters":{"additionalProperties":false,"properties":{"left":{"type":"integer"},"right":{"type":"integer"}},"required":["left","right"],"strict":true,"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":null,"user":null},"sequence_number":1,"type":"response.in_progress"}
 
         event: response.output_item.added
-        data: {"item":{"content":null,"id":"msg_f6e9de06-bc55-4972-b840-7708fdedb941","role":"assistant","status":"completed","type":"message"},"output_index":0,"sequence_number":4,"type":"response.output_item.added"}
+        data: {"item":{"content":null,"id":"msg_b56cce4b-500e-4cf8-8df7-582bb0c28807","role":"assistant","status":"completed","type":"message"},"output_index":0,"sequence_number":4,"type":"response.output_item.added"}
 
         event: response.output_text.delta
-        data: {"content_index":0,"delta":"42","item_id":"msg_f6e9de06-bc55-4972-b840-7708fdedb941","output_index":0,"sequence_number":5,"type":"response.output_text.delta"}
+        data: {"content_index":0,"delta":"42","item_id":"msg_b56cce4b-500e-4cf8-8df7-582bb0c28807","output_index":0,"sequence_number":5,"type":"response.output_text.delta"}
 
         event: response.output_text.done
-        data: {"content_index":0,"item_id":"msg_f6e9de06-bc55-4972-b840-7708fdedb941","output_index":0,"sequence_number":7,"text":"42","type":"response.output_text.done"}
+        data: {"content_index":0,"item_id":"msg_b56cce4b-500e-4cf8-8df7-582bb0c28807","output_index":0,"sequence_number":7,"text":"42","type":"response.output_text.done"}
 
         event: response.output_item.done
-        data: {"item":{"content":[{"annotations":[],"text":"42","type":"output_text"}],"id":"msg_f6e9de06-bc55-4972-b840-7708fdedb941","role":"assistant","status":"completed","type":"message"},"output_index":0,"sequence_number":8,"type":"response.output_item.done"}
+        data: {"item":{"content":[{"annotations":[],"text":"42","type":"output_text"}],"id":"msg_b56cce4b-500e-4cf8-8df7-582bb0c28807","role":"assistant","status":"completed","type":"message"},"output_index":0,"sequence_number":8,"type":"response.output_item.done"}
 
         event: response.completed
-        data: {"response":{"background":false,"completed_at":1794705633,"created_at":1794705633,"error":null,"frequency_penalty":0,"id":"resp_c3551b3e-47f8-48f4-bba2-2dcc9e7d9e16","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5.6-luna","object":"response","output":[{"content":[{"annotations":[],"text":"42","type":"output_text"}],"id":"msg_f6e9de06-bc55-4972-b840-7708fdedb941","role":"assistant","status":"completed","type":"message"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"add","description":"Add two integers.","parameters":{"additionalProperties":false,"properties":{"left":{"type":"integer"},"right":{"type":"integer"}},"required":["left","right"],"strict":true,"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0.00002,"output_cost":0.00001,"total_cost":0.00003},"input_tokens":106,"input_tokens_details":{"cached_tokens":0},"output_tokens":5,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":111},"user":null},"sequence_number":9,"type":"response.completed"}
+        data: {"response":{"background":false,"completed_at":1794983674,"created_at":1794983674,"error":null,"frequency_penalty":0,"id":"resp_a1e90ceb-c456-4f63-bf30-f00f68419d93","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5.6-luna","object":"response","output":[{"content":[{"annotations":[],"text":"42","type":"output_text"}],"id":"msg_b56cce4b-500e-4cf8-8df7-582bb0c28807","role":"assistant","status":"completed","type":"message"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"add","description":"Add two integers.","parameters":{"additionalProperties":false,"properties":{"left":{"type":"integer"},"right":{"type":"integer"}},"required":["left","right"],"strict":true,"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0.00002,"output_cost":0.00001,"total_cost":0.00003},"input_tokens":106,"input_tokens_details":{"cached_tokens":0},"output_tokens":5,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":111},"user":null},"sequence_number":9,"type":"response.completed"}
 
-  recorded_at: Sun, 15 Nov 2026 01:20:34 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:34:36 GMT
+recorded_with: VCR 6.4.1
 ...

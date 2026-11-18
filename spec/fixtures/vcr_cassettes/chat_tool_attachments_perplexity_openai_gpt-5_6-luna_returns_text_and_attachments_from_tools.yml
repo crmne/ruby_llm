@@ -10,7 +10,7 @@ http_interactions:
         a sample text file named ruby.txt","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -25,16 +25,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:37:04 GMT
+      - Wed, 18 Nov 2026 06:51:06 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Set-Cookie:
-      - "<COOKIE>"
-      - "<COOKIE>"
       Server:
       - cloudflare
       X-Ratelimit-Limit:
@@ -42,42 +39,45 @@ http_interactions:
       X-Ratelimit-Remaining:
       - '0'
       X-Ratelimit-Reset:
-      - '1794706625'
+      - '1794984667'
       X-Ratelimit-Used:
       - '1'
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Access-Control-Allow-Origin:
       - "*"
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
       Cf-Cache-Status:
       - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"background":false,"completed_at":1794706622,"created_at":1794706622,"error":null,"frequency_penalty":0,"id":"resp_36753dc0-cc42-4282-b3ec-c6cb13a3b852","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5.6-luna","object":"response","output":[{"arguments":"{}","call_id":"call_I6mSRVGB1D2LDjq0fseeT27J","id":"fc_700149e4-22fa-4db0-9f47-ab5a74d25b93","name":"file_fetch","status":"completed","type":"function_call"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"file_fetch","description":"Fetches
+      string: '{"background":false,"completed_at":1794984665,"created_at":1794984665,"error":null,"frequency_penalty":0,"id":"resp_8b83e621-89ee-4103-b613-de730be1a919","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5.6-luna","object":"response","output":[{"arguments":"{}","call_id":"call_swexdjxtVkd1fNrOiEsXM6Le","id":"fc_3de0763a-5bd0-4d8d-a05f-1757016f44d2","name":"file_fetch","status":"completed","type":"function_call"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"file_fetch","description":"Fetches
         a sample text file named ruby.txt","parameters":{"additionalProperties":false,"properties":{},"required":[],"strict":true,"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0.00002,"output_cost":0.00003,"total_cost":0.00005},"input_tokens":76,"input_tokens_details":{"cached_tokens":0},"output_tokens":29,"output_tokens_details":{"reasoning_tokens":13},"total_tokens":105},"user":null}
 
         '
-  recorded_at: Sun, 15 Nov 2026 01:37:04 GMT
+  recorded_at: Wed, 18 Nov 2026 06:51:06 GMT
 - request:
     method: post
     uri: https://api.perplexity.ai/v1/agent
     body:
       encoding: UTF-8
       string: '{"model":"openai/gpt-5.6-luna","input":[{"role":"user","content":"Call
-        file_fetch to get ruby.txt, then repeat the contents of the attached file."},{"type":"function_call","call_id":"call_I6mSRVGB1D2LDjq0fseeT27J","name":"file_fetch","arguments":"{}"},{"type":"function_call_output","call_id":"call_I6mSRVGB1D2LDjq0fseeT27J","output":"Fetched
+        file_fetch to get ruby.txt, then repeat the contents of the attached file."},{"type":"function_call","call_id":"call_swexdjxtVkd1fNrOiEsXM6Le","name":"file_fetch","arguments":"{}"},{"type":"function_call_output","call_id":"call_swexdjxtVkd1fNrOiEsXM6Le","output":"Fetched
         the file."},{"role":"user","content":[{"type":"input_text","text":"Attachments
-        from tool call call_I6mSRVGB1D2LDjq0fseeT27J:"},{"type":"input_text","text":"<file
+        from tool call call_swexdjxtVkd1fNrOiEsXM6Le:"},{"type":"input_text","text":"<file
         name=''ruby.txt'' mime_type=''text/plain''>Ruby is the best.</file>"}]}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"file_fetch","description":"Fetches
         a sample text file named ruby.txt","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -92,7 +92,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:37:05 GMT
+      - Wed, 18 Nov 2026 06:51:08 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -106,7 +106,7 @@ http_interactions:
       X-Ratelimit-Remaining:
       - '0'
       X-Ratelimit-Reset:
-      - '1794706626'
+      - '1794984669'
       X-Ratelimit-Used:
       - '1'
       X-Request-Id:
@@ -126,10 +126,10 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"background":false,"completed_at":1794706624,"created_at":1794706624,"error":null,"frequency_penalty":0,"id":"resp_f9e24022-dea5-447a-a6ff-bce9c70c1ae1","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5.6-luna","object":"response","output":[{"content":[{"annotations":[],"text":"Ruby
-        is the best.","type":"output_text"}],"id":"msg_04da77d4-a577-43fc-a447-dd3e5dc832ac","role":"assistant","status":"completed","type":"message"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"file_fetch","description":"Fetches
-        a sample text file named ruby.txt","parameters":{"additionalProperties":false,"properties":{},"required":[],"strict":true,"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0.00003,"output_cost":0.00001,"total_cost":0.00004},"input_tokens":152,"input_tokens_details":{"cached_tokens":0},"output_tokens":9,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":161},"user":null}
+      string: '{"background":false,"completed_at":1794984666,"created_at":1794984666,"error":null,"frequency_penalty":0,"id":"resp_83a99f2c-4f3c-4b46-9ee8-9cb5c8c65535","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5.6-luna","object":"response","output":[{"content":[{"annotations":[],"text":"Ruby
+        is the best.","type":"output_text"}],"id":"msg_0006542c-e6b6-439a-98a9-f518472b087a","role":"assistant","status":"completed","type":"message"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"file_fetch","description":"Fetches
+        a sample text file named ruby.txt","parameters":{"additionalProperties":false,"properties":{},"required":[],"strict":true,"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0.00003,"output_cost":0.00003,"total_cost":0.00006},"input_tokens":168,"input_tokens_details":{"cached_tokens":0},"output_tokens":21,"output_tokens_details":{"reasoning_tokens":10},"total_tokens":189},"user":null}
 
         '
-  recorded_at: Sun, 15 Nov 2026 01:37:05 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:51:08 GMT
+recorded_with: VCR 6.4.1

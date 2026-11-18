@@ -11,7 +11,7 @@ http_interactions:
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -26,9 +26,9 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:30:33 GMT
+      - Wed, 18 Nov 2026 06:44:33 GMT
       Content-Type:
-      - text/event-stream; charset=utf-8
+      - text/event-stream
       Transfer-Encoding:
       - chunked
       Connection:
@@ -37,6 +37,8 @@ http_interactions:
       - "<CF_RAY>"
       Cf-Cache-Status:
       - DYNAMIC
+      Cache-Control:
+      - no-cache
       Server:
       - cloudflare
       Strict-Transport-Security:
@@ -50,7 +52,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '287'
+      - '177'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -77,39 +79,39 @@ http_interactions:
       encoding: UTF-8
       string: |+
         event: response.created
-        data: {"type":"response.created","response":{"id":"resp_0772866c3476c183016af90b38ea5c87d2b846bcbb6607c9dd","object":"response","created_at":1794706232,"status":"in_progress","access_programs":null,"background":false,"completed_at":null,"error":null,"frequency_penalty":0.0,"image":{"context_compression":"disabled"},"incomplete_details":null,"input_transformations":[],"instructions":"You must use tools whenever possible.","max_output_tokens":null,"max_tool_calls":null,"model":"gpt-5.6-luna","moderation":null,"output":[],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":"24h","reasoning":{"context":"all_turns","effort":"medium","mode":"standard","summary":null},"safety_identifier":null,"service_tier":"auto","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":"medium"},"tool_choice":"auto","tool_usage":{"image_gen":{"input_tokens":0,"input_tokens_details":{"image_tokens":0,"text_tokens":0},"output_tokens":0,"output_tokens_details":{"image_tokens":0,"text_tokens":0},"total_tokens":0},"web_search":{"num_requests":0}},"tools":[{"type":"function","description":"Gets the best language to learn","name":"best_language_to_learn","output_schema":null,"parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"top_logprobs":0,"top_p":0.98,"truncation":"disabled","usage":null,"user":null,"metadata":{}},"sequence_number":0}
+        data: {"type":"response.created","sequence_number":0,"response":{"input_transformations":[],"id":"resp_0478bed0a0adbc9a016afd495127f887d2accd137a688c9dbe","object":"response","created_at":1794984273,"completed_at":null,"status":"in_progress","background":false,"frequency_penalty":0.0,"presence_penalty":0.0,"moderation":null,"model":"gpt-5.6-luna","access_programs":null,"previous_response_id":null,"instructions":"You must use tools whenever possible.","output":[],"error":null,"incomplete_details":null,"tools":[{"type":"function","name":"best_language_to_learn","description":"Gets the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"output_schema":null,"strict":false}],"tool_choice":"auto","parallel_tool_calls":true,"prompt_cache_key":null,"prompt_cache_retention":"24h","text":{"format":{"type":"text"},"verbosity":"medium"},"top_p":0.98,"top_logprobs":0,"temperature":1.0,"reasoning":{"context":"all_turns","effort":"medium","summary":null,"mode":"standard"},"user":null,"usage":null,"tool_usage":{"image_gen":{"input_tokens":0,"output_tokens":0,"total_tokens":0,"input_tokens_details":{"text_tokens":0,"image_tokens":0},"output_tokens_details":{"image_tokens":0,"text_tokens":0}},"web_search":{"num_requests":0}},"safety_identifier":null,"store":false,"metadata":{},"max_output_tokens":null,"max_tool_calls":null,"service_tier":"auto","truncation":"disabled","image":{"context_compression":"disabled"}}}
 
         event: response.in_progress
-        data: {"type":"response.in_progress","response":{"id":"resp_0772866c3476c183016af90b38ea5c87d2b846bcbb6607c9dd","object":"response","created_at":1794706232,"status":"in_progress","access_programs":null,"background":false,"completed_at":null,"error":null,"frequency_penalty":0.0,"image":{"context_compression":"disabled"},"incomplete_details":null,"input_transformations":[],"instructions":"You must use tools whenever possible.","max_output_tokens":null,"max_tool_calls":null,"model":"gpt-5.6-luna","moderation":null,"output":[],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":"24h","reasoning":{"context":"all_turns","effort":"medium","mode":"standard","summary":null},"safety_identifier":null,"service_tier":"auto","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":"medium"},"tool_choice":"auto","tool_usage":{"image_gen":{"input_tokens":0,"input_tokens_details":{"image_tokens":0,"text_tokens":0},"output_tokens":0,"output_tokens_details":{"image_tokens":0,"text_tokens":0},"total_tokens":0},"web_search":{"num_requests":0}},"tools":[{"type":"function","description":"Gets the best language to learn","name":"best_language_to_learn","output_schema":null,"parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"top_logprobs":0,"top_p":0.98,"truncation":"disabled","usage":null,"user":null,"metadata":{}},"sequence_number":1}
+        data: {"type":"response.in_progress","sequence_number":1,"response":{"input_transformations":[],"id":"resp_0478bed0a0adbc9a016afd495127f887d2accd137a688c9dbe","object":"response","created_at":1794984273,"completed_at":null,"status":"in_progress","background":false,"frequency_penalty":0.0,"presence_penalty":0.0,"moderation":null,"model":"gpt-5.6-luna","access_programs":null,"previous_response_id":null,"instructions":"You must use tools whenever possible.","output":[],"error":null,"incomplete_details":null,"tools":[{"type":"function","name":"best_language_to_learn","description":"Gets the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"output_schema":null,"strict":false}],"tool_choice":"auto","parallel_tool_calls":true,"prompt_cache_key":null,"prompt_cache_retention":"24h","text":{"format":{"type":"text"},"verbosity":"medium"},"top_p":0.98,"top_logprobs":0,"temperature":1.0,"reasoning":{"context":"all_turns","effort":"medium","summary":null,"mode":"standard"},"user":null,"usage":null,"tool_usage":{"image_gen":{"input_tokens":0,"output_tokens":0,"total_tokens":0,"input_tokens_details":{"text_tokens":0,"image_tokens":0},"output_tokens_details":{"image_tokens":0,"text_tokens":0}},"web_search":{"num_requests":0}},"safety_identifier":null,"store":false,"metadata":{},"max_output_tokens":null,"max_tool_calls":null,"service_tier":"auto","truncation":"disabled","image":{"context_compression":"disabled"}}}
 
         event: response.output_item.added
-        data: {"type":"response.output_item.added","item":{"id":"fc_0772866c3476c183016af90b39902c87d28bbdb5a547aa4685","type":"function_call","status":"in_progress","arguments":"","call_id":"call_Pi3ShjZw2Txx8FGRLzJYOfh4","name":"best_language_to_learn"},"output_index":0,"sequence_number":2}
+        data: {"type":"response.output_item.added","sequence_number":2,"output_index":0,"item":{"type":"function_call","id":"fc_0478bed0a0adbc9a016afd49519c3487d29832d4c4beda0785","call_id":"call_f7a3b5bac47f41d6911fe9e41a9cb7f9","name":"best_language_to_learn","arguments":"","status":"in_progress"}}
 
         event: response.function_call_arguments.delta
-        data: {"type":"response.function_call_arguments.delta","delta":"{}","item_id":"fc_0772866c3476c183016af90b39902c87d28bbdb5a547aa4685","obfuscation":"uu5AcB1aFoDocx","output_index":0,"sequence_number":3}
+        data: {"type":"response.function_call_arguments.delta","sequence_number":3,"item_id":"fc_0478bed0a0adbc9a016afd49519c3487d29832d4c4beda0785","output_index":0,"delta":"{}","obfuscation":"hJ0jZuf0cKUCF4"}
 
         event: response.function_call_arguments.done
-        data: {"type":"response.function_call_arguments.done","arguments":"{}","item_id":"fc_0772866c3476c183016af90b39902c87d28bbdb5a547aa4685","output_index":0,"sequence_number":4}
+        data: {"type":"response.function_call_arguments.done","sequence_number":4,"item_id":"fc_0478bed0a0adbc9a016afd49519c3487d29832d4c4beda0785","output_index":0,"arguments":"{}"}
 
         event: response.output_item.done
-        data: {"type":"response.output_item.done","item":{"id":"fc_0772866c3476c183016af90b39902c87d28bbdb5a547aa4685","type":"function_call","status":"completed","arguments":"{}","call_id":"call_Pi3ShjZw2Txx8FGRLzJYOfh4","name":"best_language_to_learn"},"output_index":0,"sequence_number":5}
+        data: {"type":"response.output_item.done","sequence_number":5,"output_index":0,"item":{"type":"function_call","id":"fc_0478bed0a0adbc9a016afd49519c3487d29832d4c4beda0785","call_id":"call_f7a3b5bac47f41d6911fe9e41a9cb7f9","name":"best_language_to_learn","arguments":"{}","status":"completed"}}
 
         event: response.completed
-        data: {"type":"response.completed","response":{"id":"resp_0772866c3476c183016af90b38ea5c87d2b846bcbb6607c9dd","object":"response","created_at":1794706232,"status":"completed","access_programs":null,"background":false,"completed_at":1794706233,"error":null,"frequency_penalty":0.0,"image":{"context_compression":"disabled"},"incomplete_details":null,"input_transformations":[],"instructions":"You must use tools whenever possible.","max_output_tokens":null,"max_tool_calls":null,"model":"gpt-5.6-luna","moderation":null,"output":[{"id":"fc_0772866c3476c183016af90b39902c87d28bbdb5a547aa4685","type":"function_call","status":"completed","arguments":"{}","call_id":"call_Pi3ShjZw2Txx8FGRLzJYOfh4","name":"best_language_to_learn"}],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":"24h","reasoning":{"context":"all_turns","effort":"medium","mode":"standard","summary":null},"safety_identifier":null,"service_tier":"default","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":"medium"},"tool_choice":"auto","tool_usage":{"image_gen":{"input_tokens":0,"input_tokens_details":{"image_tokens":0,"text_tokens":0},"output_tokens":0,"output_tokens_details":{"image_tokens":0,"text_tokens":0},"total_tokens":0},"web_search":{"num_requests":0}},"tools":[{"type":"function","description":"Gets the best language to learn","name":"best_language_to_learn","output_schema":null,"parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"top_logprobs":0,"top_p":0.98,"truncation":"disabled","usage":{"input_tokens":65,"input_tokens_details":{"cache_write_tokens":0,"cache_write_tokens_details":{"ttl_12h_tokens":0,"ttl_30m_tokens":0},"cached_tokens":0},"output_tokens":17,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":82},"user":null,"metadata":{}},"sequence_number":6}
+        data: {"type":"response.completed","sequence_number":6,"response":{"input_transformations":[],"id":"resp_0478bed0a0adbc9a016afd495127f887d2accd137a688c9dbe","object":"response","created_at":1794984273,"completed_at":1794984274,"status":"completed","background":false,"frequency_penalty":0.0,"presence_penalty":0.0,"moderation":null,"model":"gpt-5.6-luna","access_programs":null,"previous_response_id":null,"instructions":"You must use tools whenever possible.","output":[{"type":"function_call","id":"fc_0478bed0a0adbc9a016afd49519c3487d29832d4c4beda0785","call_id":"call_f7a3b5bac47f41d6911fe9e41a9cb7f9","name":"best_language_to_learn","arguments":"{}","status":"completed"}],"error":null,"incomplete_details":null,"tools":[{"type":"function","name":"best_language_to_learn","description":"Gets the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"output_schema":null,"strict":false}],"tool_choice":"auto","parallel_tool_calls":true,"prompt_cache_key":null,"prompt_cache_retention":"24h","text":{"format":{"type":"text"},"verbosity":"medium"},"top_p":0.98,"top_logprobs":0,"temperature":1.0,"reasoning":{"context":"all_turns","effort":"medium","summary":null,"mode":"standard"},"user":null,"usage":{"input_tokens":65,"input_tokens_details":{"cached_tokens":0,"cache_write_tokens":0,"cache_write_tokens_details":{"ttl_30m_tokens":0,"ttl_12h_tokens":0}},"output_tokens":17,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":82},"tool_usage":{"image_gen":{"input_tokens":0,"output_tokens":0,"total_tokens":0,"input_tokens_details":{"text_tokens":0,"image_tokens":0},"output_tokens_details":{"image_tokens":0,"text_tokens":0}},"web_search":{"num_requests":0}},"safety_identifier":null,"store":false,"metadata":{},"max_output_tokens":null,"max_tool_calls":null,"service_tier":"default","truncation":"disabled","image":{"context_compression":"disabled"}}}
 
-  recorded_at: Sun, 15 Nov 2026 01:30:33 GMT
+  recorded_at: Wed, 18 Nov 2026 06:44:34 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
       string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"Call best_language_to_learn
-        and repeat the programming language it returns."},{"type":"function_call","call_id":"call_Pi3ShjZw2Txx8FGRLzJYOfh4","name":"best_language_to_learn","arguments":"{}"},{"type":"function_call_output","call_id":"call_Pi3ShjZw2Txx8FGRLzJYOfh4","output":"Ruby"}],"instructions":"You
+        and repeat the programming language it returns."},{"type":"function_call","call_id":"call_f7a3b5bac47f41d6911fe9e41a9cb7f9","name":"best_language_to_learn","arguments":"{}"},{"type":"function_call_output","call_id":"call_f7a3b5bac47f41d6911fe9e41a9cb7f9","output":"Ruby"}],"instructions":"You
         must use tools whenever possible.","stream":true,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -124,9 +126,9 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:30:34 GMT
+      - Wed, 18 Nov 2026 06:44:34 GMT
       Content-Type:
-      - text/event-stream; charset=utf-8
+      - text/event-stream
       Transfer-Encoding:
       - chunked
       Connection:
@@ -135,6 +137,8 @@ http_interactions:
       - "<CF_RAY>"
       Cf-Cache-Status:
       - DYNAMIC
+      Cache-Control:
+      - no-cache
       Server:
       - cloudflare
       Strict-Transport-Security:
@@ -148,7 +152,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '214'
+      - '222'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -175,46 +179,46 @@ http_interactions:
       encoding: UTF-8
       string: |+
         event: response.created
-        data: {"type":"response.created","response":{"id":"resp_064a79785874f388016af90b39d1bc87d2a3ed4752dd36b9bb","object":"response","created_at":1794706233,"status":"in_progress","access_programs":null,"background":false,"completed_at":null,"error":null,"frequency_penalty":0.0,"image":{"context_compression":"disabled"},"incomplete_details":null,"input_transformations":[],"instructions":"You must use tools whenever possible.","max_output_tokens":null,"max_tool_calls":null,"model":"gpt-5.6-luna","moderation":null,"output":[],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":"24h","reasoning":{"context":"all_turns","effort":"medium","mode":"standard","summary":null},"safety_identifier":null,"service_tier":"auto","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":"medium"},"tool_choice":"auto","tool_usage":{"image_gen":{"input_tokens":0,"input_tokens_details":{"image_tokens":0,"text_tokens":0},"output_tokens":0,"output_tokens_details":{"image_tokens":0,"text_tokens":0},"total_tokens":0},"web_search":{"num_requests":0}},"tools":[{"type":"function","description":"Gets the best language to learn","name":"best_language_to_learn","output_schema":null,"parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"top_logprobs":0,"top_p":0.98,"truncation":"disabled","usage":null,"user":null,"metadata":{}},"sequence_number":0}
+        data: {"type":"response.created","sequence_number":0,"response":{"input_transformations":[],"id":"resp_01f04dc3113c56fc016afd49526c3c87d283d1e273ad0471ec","object":"response","created_at":1794984274,"completed_at":null,"status":"in_progress","background":false,"frequency_penalty":0.0,"presence_penalty":0.0,"moderation":null,"model":"gpt-5.6-luna","access_programs":null,"previous_response_id":null,"instructions":"You must use tools whenever possible.","output":[],"error":null,"incomplete_details":null,"tools":[{"type":"function","name":"best_language_to_learn","description":"Gets the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"output_schema":null,"strict":false}],"tool_choice":"auto","parallel_tool_calls":true,"prompt_cache_key":null,"prompt_cache_retention":"24h","text":{"format":{"type":"text"},"verbosity":"medium"},"top_p":0.98,"top_logprobs":0,"temperature":1.0,"reasoning":{"context":"all_turns","effort":"medium","summary":null,"mode":"standard"},"user":null,"usage":null,"tool_usage":{"image_gen":{"input_tokens":0,"output_tokens":0,"total_tokens":0,"input_tokens_details":{"text_tokens":0,"image_tokens":0},"output_tokens_details":{"image_tokens":0,"text_tokens":0}},"web_search":{"num_requests":0}},"safety_identifier":null,"store":false,"metadata":{},"max_output_tokens":null,"max_tool_calls":null,"service_tier":"auto","truncation":"disabled","image":{"context_compression":"disabled"}}}
 
         event: response.in_progress
-        data: {"type":"response.in_progress","response":{"id":"resp_064a79785874f388016af90b39d1bc87d2a3ed4752dd36b9bb","object":"response","created_at":1794706233,"status":"in_progress","access_programs":null,"background":false,"completed_at":null,"error":null,"frequency_penalty":0.0,"image":{"context_compression":"disabled"},"incomplete_details":null,"input_transformations":[],"instructions":"You must use tools whenever possible.","max_output_tokens":null,"max_tool_calls":null,"model":"gpt-5.6-luna","moderation":null,"output":[],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":"24h","reasoning":{"context":"all_turns","effort":"medium","mode":"standard","summary":null},"safety_identifier":null,"service_tier":"auto","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":"medium"},"tool_choice":"auto","tool_usage":{"image_gen":{"input_tokens":0,"input_tokens_details":{"image_tokens":0,"text_tokens":0},"output_tokens":0,"output_tokens_details":{"image_tokens":0,"text_tokens":0},"total_tokens":0},"web_search":{"num_requests":0}},"tools":[{"type":"function","description":"Gets the best language to learn","name":"best_language_to_learn","output_schema":null,"parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"top_logprobs":0,"top_p":0.98,"truncation":"disabled","usage":null,"user":null,"metadata":{}},"sequence_number":1}
+        data: {"type":"response.in_progress","sequence_number":1,"response":{"input_transformations":[],"id":"resp_01f04dc3113c56fc016afd49526c3c87d283d1e273ad0471ec","object":"response","created_at":1794984274,"completed_at":null,"status":"in_progress","background":false,"frequency_penalty":0.0,"presence_penalty":0.0,"moderation":null,"model":"gpt-5.6-luna","access_programs":null,"previous_response_id":null,"instructions":"You must use tools whenever possible.","output":[],"error":null,"incomplete_details":null,"tools":[{"type":"function","name":"best_language_to_learn","description":"Gets the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"output_schema":null,"strict":false}],"tool_choice":"auto","parallel_tool_calls":true,"prompt_cache_key":null,"prompt_cache_retention":"24h","text":{"format":{"type":"text"},"verbosity":"medium"},"top_p":0.98,"top_logprobs":0,"temperature":1.0,"reasoning":{"context":"all_turns","effort":"medium","summary":null,"mode":"standard"},"user":null,"usage":null,"tool_usage":{"image_gen":{"input_tokens":0,"output_tokens":0,"total_tokens":0,"input_tokens_details":{"text_tokens":0,"image_tokens":0},"output_tokens_details":{"image_tokens":0,"text_tokens":0}},"web_search":{"num_requests":0}},"safety_identifier":null,"store":false,"metadata":{},"max_output_tokens":null,"max_tool_calls":null,"service_tier":"auto","truncation":"disabled","image":{"context_compression":"disabled"}}}
 
         event: response.output_item.added
-        data: {"type":"response.output_item.added","item":{"id":"msg_064a79785874f388016af90b3a555c87d2828baf6a3ee5d02a","type":"message","status":"in_progress","content":[],"phase":"final_answer","role":"assistant"},"output_index":0,"sequence_number":2}
+        data: {"type":"response.output_item.added","sequence_number":2,"output_index":0,"item":{"type":"message","id":"msg_01f04dc3113c56fc016afd4952d9fc87d29c53edb0759ad810","role":"assistant","status":"in_progress","content":[],"phase":"final_answer"}}
 
         event: response.content_part.added
-        data: {"type":"response.content_part.added","content_index":0,"item_id":"msg_064a79785874f388016af90b3a555c87d2828baf6a3ee5d02a","output_index":0,"part":{"type":"output_text","annotations":[],"logprobs":[],"text":""},"sequence_number":3}
+        data: {"type":"response.content_part.added","sequence_number":3,"item_id":"msg_01f04dc3113c56fc016afd4952d9fc87d29c53edb0759ad810","output_index":0,"content_index":0,"part":{"type":"output_text","text":"","annotations":[],"logprobs":[]}}
 
         event: response.output_text.delta
-        data: {"type":"response.output_text.delta","content_index":0,"delta":"Ruby","item_id":"msg_064a79785874f388016af90b3a555c87d2828baf6a3ee5d02a","logprobs":[],"obfuscation":"RhNwLiHXeRoY","output_index":0,"sequence_number":4}
+        data: {"type":"response.output_text.delta","sequence_number":4,"item_id":"msg_01f04dc3113c56fc016afd4952d9fc87d29c53edb0759ad810","output_index":0,"content_index":0,"delta":"Ruby","logprobs":[],"obfuscation":"eWnf32ark5fj"}
 
         event: response.output_text.done
-        data: {"type":"response.output_text.done","content_index":0,"item_id":"msg_064a79785874f388016af90b3a555c87d2828baf6a3ee5d02a","logprobs":[],"output_index":0,"sequence_number":5,"text":"Ruby"}
+        data: {"type":"response.output_text.done","sequence_number":5,"item_id":"msg_01f04dc3113c56fc016afd4952d9fc87d29c53edb0759ad810","output_index":0,"content_index":0,"text":"Ruby","logprobs":[]}
 
         event: response.content_part.done
-        data: {"type":"response.content_part.done","content_index":0,"item_id":"msg_064a79785874f388016af90b3a555c87d2828baf6a3ee5d02a","output_index":0,"part":{"type":"output_text","annotations":[],"logprobs":[],"text":"Ruby"},"sequence_number":6}
+        data: {"type":"response.content_part.done","sequence_number":6,"item_id":"msg_01f04dc3113c56fc016afd4952d9fc87d29c53edb0759ad810","output_index":0,"content_index":0,"part":{"type":"output_text","text":"Ruby","annotations":[],"logprobs":[]}}
 
         event: response.output_item.done
-        data: {"type":"response.output_item.done","item":{"id":"msg_064a79785874f388016af90b3a555c87d2828baf6a3ee5d02a","type":"message","status":"completed","content":[{"type":"output_text","annotations":[],"logprobs":[],"text":"Ruby"}],"phase":"final_answer","role":"assistant"},"output_index":0,"sequence_number":7}
+        data: {"type":"response.output_item.done","sequence_number":7,"output_index":0,"item":{"type":"message","id":"msg_01f04dc3113c56fc016afd4952d9fc87d29c53edb0759ad810","role":"assistant","status":"completed","content":[{"type":"output_text","text":"Ruby","annotations":[],"logprobs":[]}],"phase":"final_answer"}}
 
         event: response.completed
-        data: {"type":"response.completed","response":{"id":"resp_064a79785874f388016af90b39d1bc87d2a3ed4752dd36b9bb","object":"response","created_at":1794706233,"status":"completed","access_programs":null,"background":false,"completed_at":1794706234,"error":null,"frequency_penalty":0.0,"image":{"context_compression":"disabled"},"incomplete_details":null,"input_transformations":[],"instructions":"You must use tools whenever possible.","max_output_tokens":null,"max_tool_calls":null,"model":"gpt-5.6-luna","moderation":null,"output":[{"id":"msg_064a79785874f388016af90b3a555c87d2828baf6a3ee5d02a","type":"message","status":"completed","content":[{"type":"output_text","annotations":[],"logprobs":[],"text":"Ruby"}],"phase":"final_answer","role":"assistant"}],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":"24h","reasoning":{"context":"all_turns","effort":"medium","mode":"standard","summary":null},"safety_identifier":null,"service_tier":"default","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":"medium"},"tool_choice":"auto","tool_usage":{"image_gen":{"input_tokens":0,"input_tokens_details":{"image_tokens":0,"text_tokens":0},"output_tokens":0,"output_tokens_details":{"image_tokens":0,"text_tokens":0},"total_tokens":0},"web_search":{"num_requests":0}},"tools":[{"type":"function","description":"Gets the best language to learn","name":"best_language_to_learn","output_schema":null,"parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"top_logprobs":0,"top_p":0.98,"truncation":"disabled","usage":{"input_tokens":97,"input_tokens_details":{"cache_write_tokens":0,"cache_write_tokens_details":{"ttl_12h_tokens":0,"ttl_30m_tokens":0},"cached_tokens":0},"output_tokens":5,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":102},"user":null,"metadata":{}},"sequence_number":8}
+        data: {"type":"response.completed","sequence_number":8,"response":{"input_transformations":[],"id":"resp_01f04dc3113c56fc016afd49526c3c87d283d1e273ad0471ec","object":"response","created_at":1794984274,"completed_at":1794984274,"status":"completed","background":false,"frequency_penalty":0.0,"presence_penalty":0.0,"moderation":null,"model":"gpt-5.6-luna","access_programs":null,"previous_response_id":null,"instructions":"You must use tools whenever possible.","output":[{"type":"message","id":"msg_01f04dc3113c56fc016afd4952d9fc87d29c53edb0759ad810","role":"assistant","status":"completed","content":[{"type":"output_text","text":"Ruby","annotations":[],"logprobs":[]}],"phase":"final_answer"}],"error":null,"incomplete_details":null,"tools":[{"type":"function","name":"best_language_to_learn","description":"Gets the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"output_schema":null,"strict":false}],"tool_choice":"auto","parallel_tool_calls":true,"prompt_cache_key":null,"prompt_cache_retention":"24h","text":{"format":{"type":"text"},"verbosity":"medium"},"top_p":0.98,"top_logprobs":0,"temperature":1.0,"reasoning":{"context":"all_turns","effort":"medium","summary":null,"mode":"standard"},"user":null,"usage":{"input_tokens":97,"input_tokens_details":{"cached_tokens":0,"cache_write_tokens":0,"cache_write_tokens_details":{"ttl_30m_tokens":0,"ttl_12h_tokens":0}},"output_tokens":5,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":102},"tool_usage":{"image_gen":{"input_tokens":0,"output_tokens":0,"total_tokens":0,"input_tokens_details":{"text_tokens":0,"image_tokens":0},"output_tokens_details":{"image_tokens":0,"text_tokens":0}},"web_search":{"num_requests":0}},"safety_identifier":null,"store":false,"metadata":{},"max_output_tokens":null,"max_tool_calls":null,"service_tier":"default","truncation":"disabled","image":{"context_compression":"disabled"}}}
 
-  recorded_at: Sun, 15 Nov 2026 01:30:34 GMT
+  recorded_at: Wed, 18 Nov 2026 06:44:35 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
       string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"Call best_language_to_learn
-        and repeat the programming language it returns."},{"type":"function_call","call_id":"call_Pi3ShjZw2Txx8FGRLzJYOfh4","name":"best_language_to_learn","arguments":"{}"},{"type":"function_call_output","call_id":"call_Pi3ShjZw2Txx8FGRLzJYOfh4","output":"Ruby"},{"role":"assistant","content":[{"type":"output_text","text":"Ruby"}],"phase":"final_answer"},{"role":"user","content":"Call
+        and repeat the programming language it returns."},{"type":"function_call","call_id":"call_f7a3b5bac47f41d6911fe9e41a9cb7f9","name":"best_language_to_learn","arguments":"{}"},{"type":"function_call_output","call_id":"call_f7a3b5bac47f41d6911fe9e41a9cb7f9","output":"Ruby"},{"role":"assistant","content":[{"type":"output_text","text":"Ruby"}],"phase":"final_answer"},{"role":"user","content":"Call
         best_language_to_learn again and repeat the programming language it returns."}],"instructions":"You
         must use tools whenever possible.","stream":true,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -229,7 +233,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:30:34 GMT
+      - Wed, 18 Nov 2026 06:44:35 GMT
       Content-Type:
       - text/event-stream; charset=utf-8
       Transfer-Encoding:
@@ -253,7 +257,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '248'
+      - '156'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -280,40 +284,40 @@ http_interactions:
       encoding: UTF-8
       string: |+
         event: response.created
-        data: {"type":"response.created","response":{"id":"resp_07f4d6ba6bb70906016af90b3a9cb487d29f876dff6a60a169","object":"response","created_at":1794706234,"status":"in_progress","access_programs":null,"background":false,"completed_at":null,"error":null,"frequency_penalty":0.0,"image":{"context_compression":"disabled"},"incomplete_details":null,"input_transformations":[],"instructions":"You must use tools whenever possible.","max_output_tokens":null,"max_tool_calls":null,"model":"gpt-5.6-luna","moderation":null,"output":[],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":"24h","reasoning":{"context":"all_turns","effort":"medium","mode":"standard","summary":null},"safety_identifier":null,"service_tier":"auto","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":"medium"},"tool_choice":"auto","tool_usage":{"image_gen":{"input_tokens":0,"input_tokens_details":{"image_tokens":0,"text_tokens":0},"output_tokens":0,"output_tokens_details":{"image_tokens":0,"text_tokens":0},"total_tokens":0},"web_search":{"num_requests":0}},"tools":[{"type":"function","description":"Gets the best language to learn","name":"best_language_to_learn","output_schema":null,"parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"top_logprobs":0,"top_p":0.98,"truncation":"disabled","usage":null,"user":null,"metadata":{}},"sequence_number":0}
+        data: {"type":"response.created","response":{"id":"resp_02531afd4479fa5d016afd495317ac87d2a13db6908df45399","object":"response","created_at":1794984275,"status":"in_progress","access_programs":null,"background":false,"completed_at":null,"error":null,"frequency_penalty":0.0,"image":{"context_compression":"disabled"},"incomplete_details":null,"input_transformations":[],"instructions":"You must use tools whenever possible.","max_output_tokens":null,"max_tool_calls":null,"model":"gpt-5.6-luna","moderation":null,"output":[],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":"24h","reasoning":{"context":"all_turns","effort":"medium","mode":"standard","summary":null},"safety_identifier":null,"service_tier":"auto","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":"medium"},"tool_choice":"auto","tool_usage":{"image_gen":{"input_tokens":0,"input_tokens_details":{"image_tokens":0,"text_tokens":0},"output_tokens":0,"output_tokens_details":{"image_tokens":0,"text_tokens":0},"total_tokens":0},"web_search":{"num_requests":0}},"tools":[{"type":"function","description":"Gets the best language to learn","name":"best_language_to_learn","output_schema":null,"parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"top_logprobs":0,"top_p":0.98,"truncation":"disabled","usage":null,"user":null,"metadata":{}},"sequence_number":0}
 
         event: response.in_progress
-        data: {"type":"response.in_progress","response":{"id":"resp_07f4d6ba6bb70906016af90b3a9cb487d29f876dff6a60a169","object":"response","created_at":1794706234,"status":"in_progress","access_programs":null,"background":false,"completed_at":null,"error":null,"frequency_penalty":0.0,"image":{"context_compression":"disabled"},"incomplete_details":null,"input_transformations":[],"instructions":"You must use tools whenever possible.","max_output_tokens":null,"max_tool_calls":null,"model":"gpt-5.6-luna","moderation":null,"output":[],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":"24h","reasoning":{"context":"all_turns","effort":"medium","mode":"standard","summary":null},"safety_identifier":null,"service_tier":"auto","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":"medium"},"tool_choice":"auto","tool_usage":{"image_gen":{"input_tokens":0,"input_tokens_details":{"image_tokens":0,"text_tokens":0},"output_tokens":0,"output_tokens_details":{"image_tokens":0,"text_tokens":0},"total_tokens":0},"web_search":{"num_requests":0}},"tools":[{"type":"function","description":"Gets the best language to learn","name":"best_language_to_learn","output_schema":null,"parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"top_logprobs":0,"top_p":0.98,"truncation":"disabled","usage":null,"user":null,"metadata":{}},"sequence_number":1}
+        data: {"type":"response.in_progress","response":{"id":"resp_02531afd4479fa5d016afd495317ac87d2a13db6908df45399","object":"response","created_at":1794984275,"status":"in_progress","access_programs":null,"background":false,"completed_at":null,"error":null,"frequency_penalty":0.0,"image":{"context_compression":"disabled"},"incomplete_details":null,"input_transformations":[],"instructions":"You must use tools whenever possible.","max_output_tokens":null,"max_tool_calls":null,"model":"gpt-5.6-luna","moderation":null,"output":[],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":"24h","reasoning":{"context":"all_turns","effort":"medium","mode":"standard","summary":null},"safety_identifier":null,"service_tier":"auto","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":"medium"},"tool_choice":"auto","tool_usage":{"image_gen":{"input_tokens":0,"input_tokens_details":{"image_tokens":0,"text_tokens":0},"output_tokens":0,"output_tokens_details":{"image_tokens":0,"text_tokens":0},"total_tokens":0},"web_search":{"num_requests":0}},"tools":[{"type":"function","description":"Gets the best language to learn","name":"best_language_to_learn","output_schema":null,"parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"top_logprobs":0,"top_p":0.98,"truncation":"disabled","usage":null,"user":null,"metadata":{}},"sequence_number":1}
 
         event: response.output_item.added
-        data: {"type":"response.output_item.added","item":{"id":"fc_07f4d6ba6bb70906016af90b3b38c087d284adaa853eb04323","type":"function_call","status":"in_progress","arguments":"","call_id":"call_2SpVETTBANW9DaAwkIREdd4N","name":"best_language_to_learn"},"output_index":0,"sequence_number":2}
+        data: {"type":"response.output_item.added","item":{"id":"fc_02531afd4479fa5d016afd49538ea887d29a3d561ee9efbd10","type":"function_call","status":"in_progress","arguments":"","call_id":"call_oACGtSASEbpVXzPIoVMwFzGV","name":"best_language_to_learn"},"output_index":0,"sequence_number":2}
 
         event: response.function_call_arguments.delta
-        data: {"type":"response.function_call_arguments.delta","delta":"{}","item_id":"fc_07f4d6ba6bb70906016af90b3b38c087d284adaa853eb04323","obfuscation":"FlSqKojKrcIR2x","output_index":0,"sequence_number":3}
+        data: {"type":"response.function_call_arguments.delta","delta":"{}","item_id":"fc_02531afd4479fa5d016afd49538ea887d29a3d561ee9efbd10","obfuscation":"TIUmEptEKWMSU8","output_index":0,"sequence_number":3}
 
         event: response.function_call_arguments.done
-        data: {"type":"response.function_call_arguments.done","arguments":"{}","item_id":"fc_07f4d6ba6bb70906016af90b3b38c087d284adaa853eb04323","output_index":0,"sequence_number":4}
+        data: {"type":"response.function_call_arguments.done","arguments":"{}","item_id":"fc_02531afd4479fa5d016afd49538ea887d29a3d561ee9efbd10","output_index":0,"sequence_number":4}
 
         event: response.output_item.done
-        data: {"type":"response.output_item.done","item":{"id":"fc_07f4d6ba6bb70906016af90b3b38c087d284adaa853eb04323","type":"function_call","status":"completed","arguments":"{}","call_id":"call_2SpVETTBANW9DaAwkIREdd4N","name":"best_language_to_learn"},"output_index":0,"sequence_number":5}
+        data: {"type":"response.output_item.done","item":{"id":"fc_02531afd4479fa5d016afd49538ea887d29a3d561ee9efbd10","type":"function_call","status":"completed","arguments":"{}","call_id":"call_oACGtSASEbpVXzPIoVMwFzGV","name":"best_language_to_learn"},"output_index":0,"sequence_number":5}
 
         event: response.completed
-        data: {"type":"response.completed","response":{"id":"resp_07f4d6ba6bb70906016af90b3a9cb487d29f876dff6a60a169","object":"response","created_at":1794706234,"status":"completed","access_programs":null,"background":false,"completed_at":1794706235,"error":null,"frequency_penalty":0.0,"image":{"context_compression":"disabled"},"incomplete_details":null,"input_transformations":[],"instructions":"You must use tools whenever possible.","max_output_tokens":null,"max_tool_calls":null,"model":"gpt-5.6-luna","moderation":null,"output":[{"id":"fc_07f4d6ba6bb70906016af90b3b38c087d284adaa853eb04323","type":"function_call","status":"completed","arguments":"{}","call_id":"call_2SpVETTBANW9DaAwkIREdd4N","name":"best_language_to_learn"}],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":"24h","reasoning":{"context":"all_turns","effort":"medium","mode":"standard","summary":null},"safety_identifier":null,"service_tier":"default","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":"medium"},"tool_choice":"auto","tool_usage":{"image_gen":{"input_tokens":0,"input_tokens_details":{"image_tokens":0,"text_tokens":0},"output_tokens":0,"output_tokens_details":{"image_tokens":0,"text_tokens":0},"total_tokens":0},"web_search":{"num_requests":0}},"tools":[{"type":"function","description":"Gets the best language to learn","name":"best_language_to_learn","output_schema":null,"parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"top_logprobs":0,"top_p":0.98,"truncation":"disabled","usage":{"input_tokens":123,"input_tokens_details":{"cache_write_tokens":0,"cache_write_tokens_details":{"ttl_12h_tokens":0,"ttl_30m_tokens":0},"cached_tokens":0},"output_tokens":17,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":140},"user":null,"metadata":{}},"sequence_number":6}
+        data: {"type":"response.completed","response":{"id":"resp_02531afd4479fa5d016afd495317ac87d2a13db6908df45399","object":"response","created_at":1794984275,"status":"completed","access_programs":null,"background":false,"completed_at":1794984275,"error":null,"frequency_penalty":0.0,"image":{"context_compression":"disabled"},"incomplete_details":null,"input_transformations":[],"instructions":"You must use tools whenever possible.","max_output_tokens":null,"max_tool_calls":null,"model":"gpt-5.6-luna","moderation":null,"output":[{"id":"fc_02531afd4479fa5d016afd49538ea887d29a3d561ee9efbd10","type":"function_call","status":"completed","arguments":"{}","call_id":"call_oACGtSASEbpVXzPIoVMwFzGV","name":"best_language_to_learn"}],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":"24h","reasoning":{"context":"all_turns","effort":"medium","mode":"standard","summary":null},"safety_identifier":null,"service_tier":"default","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":"medium"},"tool_choice":"auto","tool_usage":{"image_gen":{"input_tokens":0,"input_tokens_details":{"image_tokens":0,"text_tokens":0},"output_tokens":0,"output_tokens_details":{"image_tokens":0,"text_tokens":0},"total_tokens":0},"web_search":{"num_requests":0}},"tools":[{"type":"function","description":"Gets the best language to learn","name":"best_language_to_learn","output_schema":null,"parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"top_logprobs":0,"top_p":0.98,"truncation":"disabled","usage":{"input_tokens":123,"input_tokens_details":{"cache_write_tokens":0,"cache_write_tokens_details":{"ttl_12h_tokens":0,"ttl_30m_tokens":0},"cached_tokens":0},"output_tokens":17,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":140},"user":null,"metadata":{}},"sequence_number":6}
 
-  recorded_at: Sun, 15 Nov 2026 01:30:35 GMT
+  recorded_at: Wed, 18 Nov 2026 06:44:35 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
       string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"Call best_language_to_learn
-        and repeat the programming language it returns."},{"type":"function_call","call_id":"call_Pi3ShjZw2Txx8FGRLzJYOfh4","name":"best_language_to_learn","arguments":"{}"},{"type":"function_call_output","call_id":"call_Pi3ShjZw2Txx8FGRLzJYOfh4","output":"Ruby"},{"role":"assistant","content":[{"type":"output_text","text":"Ruby"}],"phase":"final_answer"},{"role":"user","content":"Call
-        best_language_to_learn again and repeat the programming language it returns."},{"type":"function_call","call_id":"call_2SpVETTBANW9DaAwkIREdd4N","name":"best_language_to_learn","arguments":"{}"},{"type":"function_call_output","call_id":"call_2SpVETTBANW9DaAwkIREdd4N","output":"Ruby"}],"instructions":"You
+        and repeat the programming language it returns."},{"type":"function_call","call_id":"call_f7a3b5bac47f41d6911fe9e41a9cb7f9","name":"best_language_to_learn","arguments":"{}"},{"type":"function_call_output","call_id":"call_f7a3b5bac47f41d6911fe9e41a9cb7f9","output":"Ruby"},{"role":"assistant","content":[{"type":"output_text","text":"Ruby"}],"phase":"final_answer"},{"role":"user","content":"Call
+        best_language_to_learn again and repeat the programming language it returns."},{"type":"function_call","call_id":"call_oACGtSASEbpVXzPIoVMwFzGV","name":"best_language_to_learn","arguments":"{}"},{"type":"function_call_output","call_id":"call_oACGtSASEbpVXzPIoVMwFzGV","output":"Ruby"}],"instructions":"You
         must use tools whenever possible.","stream":true,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -328,7 +332,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:30:35 GMT
+      - Wed, 18 Nov 2026 06:44:35 GMT
       Content-Type:
       - text/event-stream; charset=utf-8
       Transfer-Encoding:
@@ -352,7 +356,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '186'
+      - '187'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -379,32 +383,32 @@ http_interactions:
       encoding: UTF-8
       string: |+
         event: response.created
-        data: {"type":"response.created","response":{"id":"resp_03eb5a0258d97144016af90b3b735487d2a8e4bc2a28a5f341","object":"response","created_at":1794706235,"status":"in_progress","access_programs":null,"background":false,"completed_at":null,"error":null,"frequency_penalty":0.0,"image":{"context_compression":"disabled"},"incomplete_details":null,"input_transformations":[],"instructions":"You must use tools whenever possible.","max_output_tokens":null,"max_tool_calls":null,"model":"gpt-5.6-luna","moderation":null,"output":[],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":"24h","reasoning":{"context":"all_turns","effort":"medium","mode":"standard","summary":null},"safety_identifier":null,"service_tier":"auto","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":"medium"},"tool_choice":"auto","tool_usage":{"image_gen":{"input_tokens":0,"input_tokens_details":{"image_tokens":0,"text_tokens":0},"output_tokens":0,"output_tokens_details":{"image_tokens":0,"text_tokens":0},"total_tokens":0},"web_search":{"num_requests":0}},"tools":[{"type":"function","description":"Gets the best language to learn","name":"best_language_to_learn","output_schema":null,"parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"top_logprobs":0,"top_p":0.98,"truncation":"disabled","usage":null,"user":null,"metadata":{}},"sequence_number":0}
+        data: {"type":"response.created","response":{"id":"resp_00592f99bbaf34e4016afd4953cb4c87d2a02437de91eb152f","object":"response","created_at":1794984275,"status":"in_progress","access_programs":null,"background":false,"completed_at":null,"error":null,"frequency_penalty":0.0,"image":{"context_compression":"disabled"},"incomplete_details":null,"input_transformations":[],"instructions":"You must use tools whenever possible.","max_output_tokens":null,"max_tool_calls":null,"model":"gpt-5.6-luna","moderation":null,"output":[],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":"24h","reasoning":{"context":"all_turns","effort":"medium","mode":"standard","summary":null},"safety_identifier":null,"service_tier":"auto","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":"medium"},"tool_choice":"auto","tool_usage":{"image_gen":{"input_tokens":0,"input_tokens_details":{"image_tokens":0,"text_tokens":0},"output_tokens":0,"output_tokens_details":{"image_tokens":0,"text_tokens":0},"total_tokens":0},"web_search":{"num_requests":0}},"tools":[{"type":"function","description":"Gets the best language to learn","name":"best_language_to_learn","output_schema":null,"parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"top_logprobs":0,"top_p":0.98,"truncation":"disabled","usage":null,"user":null,"metadata":{}},"sequence_number":0}
 
         event: response.in_progress
-        data: {"type":"response.in_progress","response":{"id":"resp_03eb5a0258d97144016af90b3b735487d2a8e4bc2a28a5f341","object":"response","created_at":1794706235,"status":"in_progress","access_programs":null,"background":false,"completed_at":null,"error":null,"frequency_penalty":0.0,"image":{"context_compression":"disabled"},"incomplete_details":null,"input_transformations":[],"instructions":"You must use tools whenever possible.","max_output_tokens":null,"max_tool_calls":null,"model":"gpt-5.6-luna","moderation":null,"output":[],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":"24h","reasoning":{"context":"all_turns","effort":"medium","mode":"standard","summary":null},"safety_identifier":null,"service_tier":"auto","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":"medium"},"tool_choice":"auto","tool_usage":{"image_gen":{"input_tokens":0,"input_tokens_details":{"image_tokens":0,"text_tokens":0},"output_tokens":0,"output_tokens_details":{"image_tokens":0,"text_tokens":0},"total_tokens":0},"web_search":{"num_requests":0}},"tools":[{"type":"function","description":"Gets the best language to learn","name":"best_language_to_learn","output_schema":null,"parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"top_logprobs":0,"top_p":0.98,"truncation":"disabled","usage":null,"user":null,"metadata":{}},"sequence_number":1}
+        data: {"type":"response.in_progress","response":{"id":"resp_00592f99bbaf34e4016afd4953cb4c87d2a02437de91eb152f","object":"response","created_at":1794984275,"status":"in_progress","access_programs":null,"background":false,"completed_at":null,"error":null,"frequency_penalty":0.0,"image":{"context_compression":"disabled"},"incomplete_details":null,"input_transformations":[],"instructions":"You must use tools whenever possible.","max_output_tokens":null,"max_tool_calls":null,"model":"gpt-5.6-luna","moderation":null,"output":[],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":"24h","reasoning":{"context":"all_turns","effort":"medium","mode":"standard","summary":null},"safety_identifier":null,"service_tier":"auto","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":"medium"},"tool_choice":"auto","tool_usage":{"image_gen":{"input_tokens":0,"input_tokens_details":{"image_tokens":0,"text_tokens":0},"output_tokens":0,"output_tokens_details":{"image_tokens":0,"text_tokens":0},"total_tokens":0},"web_search":{"num_requests":0}},"tools":[{"type":"function","description":"Gets the best language to learn","name":"best_language_to_learn","output_schema":null,"parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"top_logprobs":0,"top_p":0.98,"truncation":"disabled","usage":null,"user":null,"metadata":{}},"sequence_number":1}
 
         event: response.output_item.added
-        data: {"type":"response.output_item.added","item":{"id":"msg_03eb5a0258d97144016af90b3bf38087d290ef2fe1b046c503","type":"message","status":"in_progress","content":[],"phase":"final_answer","role":"assistant"},"output_index":0,"sequence_number":2}
+        data: {"type":"response.output_item.added","item":{"id":"msg_00592f99bbaf34e4016afd495461e887d294f835a71029ecaa","type":"message","status":"in_progress","content":[],"phase":"final_answer","role":"assistant"},"output_index":0,"sequence_number":2}
 
         event: response.content_part.added
-        data: {"type":"response.content_part.added","content_index":0,"item_id":"msg_03eb5a0258d97144016af90b3bf38087d290ef2fe1b046c503","output_index":0,"part":{"type":"output_text","annotations":[],"logprobs":[],"text":""},"sequence_number":3}
+        data: {"type":"response.content_part.added","content_index":0,"item_id":"msg_00592f99bbaf34e4016afd495461e887d294f835a71029ecaa","output_index":0,"part":{"type":"output_text","annotations":[],"logprobs":[],"text":""},"sequence_number":3}
 
         event: response.output_text.delta
-        data: {"type":"response.output_text.delta","content_index":0,"delta":"Ruby","item_id":"msg_03eb5a0258d97144016af90b3bf38087d290ef2fe1b046c503","logprobs":[],"obfuscation":"76yJ4t7uSKPZ","output_index":0,"sequence_number":4}
+        data: {"type":"response.output_text.delta","content_index":0,"delta":"Ruby","item_id":"msg_00592f99bbaf34e4016afd495461e887d294f835a71029ecaa","logprobs":[],"obfuscation":"wQtdSwoWYPFy","output_index":0,"sequence_number":4}
 
         event: response.output_text.done
-        data: {"type":"response.output_text.done","content_index":0,"item_id":"msg_03eb5a0258d97144016af90b3bf38087d290ef2fe1b046c503","logprobs":[],"output_index":0,"sequence_number":5,"text":"Ruby"}
+        data: {"type":"response.output_text.done","content_index":0,"item_id":"msg_00592f99bbaf34e4016afd495461e887d294f835a71029ecaa","logprobs":[],"output_index":0,"sequence_number":5,"text":"Ruby"}
 
         event: response.content_part.done
-        data: {"type":"response.content_part.done","content_index":0,"item_id":"msg_03eb5a0258d97144016af90b3bf38087d290ef2fe1b046c503","output_index":0,"part":{"type":"output_text","annotations":[],"logprobs":[],"text":"Ruby"},"sequence_number":6}
+        data: {"type":"response.content_part.done","content_index":0,"item_id":"msg_00592f99bbaf34e4016afd495461e887d294f835a71029ecaa","output_index":0,"part":{"type":"output_text","annotations":[],"logprobs":[],"text":"Ruby"},"sequence_number":6}
 
         event: response.output_item.done
-        data: {"type":"response.output_item.done","item":{"id":"msg_03eb5a0258d97144016af90b3bf38087d290ef2fe1b046c503","type":"message","status":"completed","content":[{"type":"output_text","annotations":[],"logprobs":[],"text":"Ruby"}],"phase":"final_answer","role":"assistant"},"output_index":0,"sequence_number":7}
+        data: {"type":"response.output_item.done","item":{"id":"msg_00592f99bbaf34e4016afd495461e887d294f835a71029ecaa","type":"message","status":"completed","content":[{"type":"output_text","annotations":[],"logprobs":[],"text":"Ruby"}],"phase":"final_answer","role":"assistant"},"output_index":0,"sequence_number":7}
 
         event: response.completed
-        data: {"type":"response.completed","response":{"id":"resp_03eb5a0258d97144016af90b3b735487d2a8e4bc2a28a5f341","object":"response","created_at":1794706235,"status":"completed","access_programs":null,"background":false,"completed_at":1794706236,"error":null,"frequency_penalty":0.0,"image":{"context_compression":"disabled"},"incomplete_details":null,"input_transformations":[],"instructions":"You must use tools whenever possible.","max_output_tokens":null,"max_tool_calls":null,"model":"gpt-5.6-luna","moderation":null,"output":[{"id":"msg_03eb5a0258d97144016af90b3bf38087d290ef2fe1b046c503","type":"message","status":"completed","content":[{"type":"output_text","annotations":[],"logprobs":[],"text":"Ruby"}],"phase":"final_answer","role":"assistant"}],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":"24h","reasoning":{"context":"all_turns","effort":"medium","mode":"standard","summary":null},"safety_identifier":null,"service_tier":"default","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":"medium"},"tool_choice":"auto","tool_usage":{"image_gen":{"input_tokens":0,"input_tokens_details":{"image_tokens":0,"text_tokens":0},"output_tokens":0,"output_tokens_details":{"image_tokens":0,"text_tokens":0},"total_tokens":0},"web_search":{"num_requests":0}},"tools":[{"type":"function","description":"Gets the best language to learn","name":"best_language_to_learn","output_schema":null,"parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"top_logprobs":0,"top_p":0.98,"truncation":"disabled","usage":{"input_tokens":155,"input_tokens_details":{"cache_write_tokens":0,"cache_write_tokens_details":{"ttl_12h_tokens":0,"ttl_30m_tokens":0},"cached_tokens":0},"output_tokens":5,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":160},"user":null,"metadata":{}},"sequence_number":8}
+        data: {"type":"response.completed","response":{"id":"resp_00592f99bbaf34e4016afd4953cb4c87d2a02437de91eb152f","object":"response","created_at":1794984275,"status":"completed","access_programs":null,"background":false,"completed_at":1794984276,"error":null,"frequency_penalty":0.0,"image":{"context_compression":"disabled"},"incomplete_details":null,"input_transformations":[],"instructions":"You must use tools whenever possible.","max_output_tokens":null,"max_tool_calls":null,"model":"gpt-5.6-luna","moderation":null,"output":[{"id":"msg_00592f99bbaf34e4016afd495461e887d294f835a71029ecaa","type":"message","status":"completed","content":[{"type":"output_text","annotations":[],"logprobs":[],"text":"Ruby"}],"phase":"final_answer","role":"assistant"}],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":"24h","reasoning":{"context":"all_turns","effort":"medium","mode":"standard","summary":null},"safety_identifier":null,"service_tier":"default","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":"medium"},"tool_choice":"auto","tool_usage":{"image_gen":{"input_tokens":0,"input_tokens_details":{"image_tokens":0,"text_tokens":0},"output_tokens":0,"output_tokens_details":{"image_tokens":0,"text_tokens":0},"total_tokens":0},"web_search":{"num_requests":0}},"tools":[{"type":"function","description":"Gets the best language to learn","name":"best_language_to_learn","output_schema":null,"parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"top_logprobs":0,"top_p":0.98,"truncation":"disabled","usage":{"input_tokens":155,"input_tokens_details":{"cache_write_tokens":0,"cache_write_tokens_details":{"ttl_12h_tokens":0,"ttl_30m_tokens":0},"cached_tokens":0},"output_tokens":5,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":160},"user":null,"metadata":{}},"sequence_number":8}
 
-  recorded_at: Sun, 15 Nov 2026 01:30:36 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:44:36 GMT
+recorded_with: VCR 6.4.1
 ...

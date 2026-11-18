@@ -13,7 +13,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}],"tool_choice":"required"}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Http-Referer:
@@ -32,7 +32,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:42:37 GMT
+      - Wed, 18 Nov 2026 06:56:24 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -42,11 +42,11 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       X-Generation-Id:
-      - gen-1794706955-2E8b1yJkogkmdYjtCEQT
+      - gen-1794984983-QtoiEkulN4CTxeIaLAbW
       Access-Control-Expose-Headers:
       - WWW-Authenticate,PAYMENT-REQUIRED,Payment-Receipt,PAYMENT-RESPONSE,Location,X-Generation-Id,x-openrouter-error-origin,x-openrouter-error-tool,X-Provider-Name,request-id,cf-ray
       X-Openrouter-Release:
-      - api;0c306999-2731-41b9-b23f-6294b64a156e
+      - api;552c4bf2-ed6b-4058-b8f6-693241cb446c
       Set-Cookie:
       - "<COOKIE>"
       Permissions-Policy:
@@ -64,10 +64,10 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n{\"id\":\"gen-1794706955-2E8b1yJkogkmdYjtCEQT\",\"object\":\"chat.completion\",\"created\":1794706955,\"model\":\"anthropic/claude-haiku-4.5\",\"provider\":\"Amazon
-        Bedrock\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_use\",\"message\":{\"role\":\"assistant\",\"content\":null,\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"type\":\"function\",\"index\":0,\"id\":\"toolu_bdrk_01VV43FfaghFKzDodRvK1YiK\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":
+      string: "\n         \n{\"id\":\"gen-1794984983-QtoiEkulN4CTxeIaLAbW\",\"object\":\"chat.completion\",\"created\":1794984983,\"model\":\"anthropic/claude-haiku-4.5\",\"provider\":\"Amazon
+        Bedrock\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_use\",\"message\":{\"role\":\"assistant\",\"content\":null,\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"type\":\"function\",\"index\":0,\"id\":\"toolu_bdrk_01A2zNUFvwJbomN7K9gJk9Gy\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":
         \\\"52.5200\\\", \\\"longitude\\\": \\\"13.4050\\\"}\"}}]}}],\"usage\":{\"prompt_tokens\":735,\"completion_tokens\":59,\"total_tokens\":794,\"cost\":0.00103,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.00103,\"upstream_inference_prompt_cost\":0.000735,\"upstream_inference_completions_cost\":0.000295},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
-  recorded_at: Sun, 15 Nov 2026 01:42:37 GMT
+  recorded_at: Wed, 18 Nov 2026 06:56:24 GMT
 - request:
     method: post
     uri: https://openrouter.ai/api/v1/chat/completions
@@ -75,14 +75,14 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"anthropic/claude-haiku-4.5","messages":[{"role":"developer","content":"Your
         location is Berlin, at latitude 52.5200 and longitude 13.4050."},{"role":"user","content":"When
-        was the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"toolu_bdrk_01VV43FfaghFKzDodRvK1YiK","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"toolu_bdrk_01VV43FfaghFKzDodRvK1YiK"}],"stream":false,"max_tokens":4096,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        was the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"toolu_bdrk_01A2zNUFvwJbomN7K9gJk9Gy","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"toolu_bdrk_01A2zNUFvwJbomN7K9gJk9Gy"}],"stream":false,"max_tokens":4096,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Http-Referer:
@@ -101,7 +101,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:42:38 GMT
+      - Wed, 18 Nov 2026 06:56:26 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -111,11 +111,11 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       X-Generation-Id:
-      - gen-1794706957-KTU5ZQgykYegTRW69bOS
+      - gen-1794984984-EoliZfyoJ11C9D8ssWxW
       Access-Control-Expose-Headers:
       - WWW-Authenticate,PAYMENT-REQUIRED,Payment-Receipt,PAYMENT-RESPONSE,Location,X-Generation-Id,x-openrouter-error-origin,x-openrouter-error-tool,X-Provider-Name,request-id,cf-ray
       X-Openrouter-Release:
-      - api;0c306999-2731-41b9-b23f-6294b64a156e
+      - api;552c4bf2-ed6b-4058-b8f6-693241cb446c
       Set-Cookie:
       - "<COOKIE>"
       Permissions-Policy:
@@ -133,22 +133,20 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n{\"id\":\"gen-1794706957-KTU5ZQgykYegTRW69bOS\",\"object\":\"chat.completion\",\"created\":1794706957,\"model\":\"anthropic/claude-haiku-4.5\",\"provider\":\"Amazon
+      string: "\n         \n{\"id\":\"gen-1794984984-EoliZfyoJ11C9D8ssWxW\",\"object\":\"chat.completion\",\"created\":1794984984,\"model\":\"anthropic/claude-haiku-4.5\",\"provider\":\"Amazon
         Bedrock\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"end_turn\",\"message\":{\"role\":\"assistant\",\"content\":\"I
-        notice you've asked about the fall of Rome, which is a historical question
-        not related to the weather tool I have available. Let me answer this directly:\\n\\nThe
-        **fall of Rome** typically refers to the collapse of the **Western Roman Empire**,
-        which occurred in **476 AD**. This is when the last Western Roman Emperor,
-        Romulus Augustulus, was deposed by the Germanic chieftain Odoacer.\\n\\nHowever,
-        it's important to note that:\\n\\n- **The Eastern Roman Empire** (Byzantine
-        Empire) continued to exist for nearly another 1,000 years until 1453 AD\\n-
-        The fall of Rome was a gradual process rather than a single event, with the
-        Western Empire declining over several centuries due to factors like:\\n  -
-        Political instability and civil wars\\n  - Economic decline\\n  - Military
-        pressures from Germanic tribes\\n  - The spread of Christianity\\n  - Administrative
-        overextension\\n\\nSome historians also mark different dates as significant,
-        such as 410 AD (when Visigoth Alaric sacked Rome) or 380 AD (when Theodosius
-        I made Christianity the state religion), depending on how they define \\\"the
-        fall of Rome.\\\"\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":758,\"completion_tokens\":258,\"total_tokens\":1016,\"cost\":0.002048,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.002048,\"upstream_inference_prompt_cost\":0.000758,\"upstream_inference_completions_cost\":0.00129},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
-  recorded_at: Sun, 15 Nov 2026 01:42:39 GMT
-recorded_with: VCR 6.4.0
+        apologize for the confusion in my function call - I don't actually need weather
+        information to answer your question about history!\\n\\n**The fall of Rome**
+        is generally dated to **476 CE**, when the last Western Roman Emperor, Romulus
+        Augustulus, was deposed by the Germanic chieftain Odoacer. This marks the
+        end of the Western Roman Empire.\\n\\nHowever, it's important to note that:\\n-
+        The **Eastern Roman Empire** (Byzantine Empire) continued for another thousand
+        years until 1453 CE\\n- The decline of Rome was gradual, not a sudden event
+        - it involved a series of political, economic, and military challenges that
+        accumulated over several centuries\\n- Some historians point to earlier dates
+        like 410 CE (when Alaric and the Visigoths sacked Rome) or 378 CE (the Battle
+        of Adrianople) as significant turning points\\n\\nSo while 476 CE is the conventional
+        date for the \\\"fall\\\" of the Western Roman Empire, the reality was a complex
+        process of decline rather than a single catastrophic event.\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":758,\"completion_tokens\":232,\"total_tokens\":990,\"cost\":0.001918,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.001918,\"upstream_inference_prompt_cost\":0.000758,\"upstream_inference_completions_cost\":0.00116},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
+  recorded_at: Wed, 18 Nov 2026 06:56:26 GMT
+recorded_with: VCR 6.4.1

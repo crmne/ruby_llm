@@ -9,7 +9,7 @@ http_interactions:
         2 + 2?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -26,7 +26,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 15 Nov 2026 01:19:44 GMT
+      - Wed, 18 Nov 2026 06:35:23 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
@@ -46,13 +46,13 @@ http_interactions:
       X-Watermark:
       - 'false'
       Traceparent:
-      - 00-4094239b460c61f5d44a3aaab8cd65cd-52ad1edd000e970b-00
+      - 00-033b646769a9a858c5f402cf794837d2-989605ba0013c781-00
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Ms-Client-Request-Id:
-      - 61343b00-c3f7-4ec9-be5c-3a5254830583
+      - 0ed46459-a900-4726-901a-afd5db5ed181
       Azureml-Model-Session:
-      - d20261110012600-4baac0fe
+      - d20261110015917-e7d4cb48
       X-Ms-Inference-Retry-History:
       - '{"v":1,"entries":[{"service_id":"mir.frontdoor","layer":"regional","role":"direct","retries":0}]}'
       Azureai-Requested-Tier:
@@ -64,9 +64,9 @@ http_interactions:
       X-Ratelimit-Key:
       - grok-4-1-fast-non-reasoning
       X-Ratelimit-Remaining-Requests:
-      - '48'
+      - '49'
       X-Ratelimit-Reset-Requests:
-      - '2'
+      - '1'
       X-Ratelimit-Limit-Requests:
       - '50'
       X-Ratelimit-Renewalperiod-Requests:
@@ -86,9 +86,9 @@ http_interactions:
       Azureai-Fe-Offer-Type:
       - paygo
       Apim-Request-Id:
-      - 61343b00-c3f7-4ec9-be5c-3a5254830583
+      - 0ed46459-a900-4726-901a-afd5db5ed181
       X-Http2-Stream-Id:
-      - '95'
+      - '65'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -97,6 +97,6 @@ http_interactions:
       - West Europe
     body:
       encoding: UTF-8
-      string: '{"id":"f8633402-fdf0-46f2-b129-ea0392644d58","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"4"},"finish_reason":"stop"}],"usage":{"prompt_tokens":175,"completion_tokens":1,"total_tokens":176,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":163,"audio_tokens":0,"text_tokens":175,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1794705584,"object":"chat.completion","prompt_filter_results":null}'
-  recorded_at: Sun, 15 Nov 2026 01:19:44 GMT
-recorded_with: VCR 6.4.0
+      string: '{"id":"78427aae-ed67-4c4f-ba8b-6ae2911391af","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"4"},"finish_reason":"stop"}],"usage":{"prompt_tokens":175,"completion_tokens":1,"total_tokens":176,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":161,"audio_tokens":0,"text_tokens":175,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1794983723,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Wed, 18 Nov 2026 06:35:23 GMT
+recorded_with: VCR 6.4.1

@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"anthropic/claude-haiku-4.5","messages":[{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"Hi"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Http-Referer:
@@ -27,7 +27,7 @@ http_interactions:
       message: Bad Request
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:24:46 GMT
+      - Wed, 18 Nov 2026 06:40:22 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -39,11 +39,11 @@ http_interactions:
       Access-Control-Expose-Headers:
       - WWW-Authenticate,PAYMENT-REQUIRED,Payment-Receipt,PAYMENT-RESPONSE,Location,X-Generation-Id,x-openrouter-error-origin,x-openrouter-error-tool,X-Provider-Name,request-id,cf-ray
       X-Generation-Id:
-      - gen-1794705886-u8bmHUd4jVB0VNU1PWCY
+      - gen-1794984022-haKIDC65tel0J1hc3mWv
       X-Openrouter-Error-Origin:
       - client
       X-Openrouter-Release:
-      - api;0c306999-2731-41b9-b23f-6294b64a156e
+      - api;552c4bf2-ed6b-4058-b8f6-693241cb446c
       Set-Cookie:
       - "<COOKIE>"
       Permissions-Policy:
@@ -65,5 +65,5 @@ http_interactions:
         tokens. However, you requested about 1500007 tokens (1500007 of text input).
         Please reduce the length of the input, or use the context-compression plugin
         to compress your prompt automatically.","code":400,"metadata":{"provider_name":null}}}'
-  recorded_at: Sun, 15 Nov 2026 01:24:46 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:40:22 GMT
+recorded_with: VCR 6.4.1

@@ -11,7 +11,7 @@ http_interactions:
         a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -26,55 +26,55 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:27:15 GMT
+      - Wed, 18 Nov 2026 06:41:19 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Set-Cookie:
-      - "<COOKIE>"
       Mistral-Correlation-Id:
-      - 01a1dcd0-d1da-785c-83f7-df1f651dc0b9
+      - 01a1ed63-6e7b-750d-9a6c-6d5afc5d7a9f
       X-Kong-Request-Id:
-      - 01a1dcd0-d1da-785c-83f7-df1f651dc0b9
+      - 01a1ed63-6e7b-750d-9a6c-6d5afc5d7a9f
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '98042'
+      - '98272'
       X-Ratelimit-Tokens-Query-Cost:
       - '128'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
-      - '83'
+      - '82'
       X-Envoy-Upstream-Service-Time:
-      - '356'
+      - '297'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '356'
+      - '297'
       X-Kong-Proxy-Latency:
-      - '15'
-      X-Content-Type-Options:
-      - nosniff
+      - '14'
       Cf-Cache-Status:
       - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"4a6e40c2e6cc44d78621381b47c82561","created":1794706035,"model":"mistral-small-latest","usage":{"prompt_tokens":109,"total_tokens":128,"completion_tokens":19,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"9jJ1tSgK9","type":"function","function":{"name":"dice_roll","arguments":"{}"},"index":0},{"id":"1nioIyxsE","type":"function","function":{"name":"dice_roll","arguments":"{}"},"index":1},{"id":"ha2fcKzq9","type":"function","function":{"name":"dice_roll","arguments":"{}"},"index":2}],"content":""}}]}'
-  recorded_at: Sun, 15 Nov 2026 01:27:15 GMT
+      string: '{"id":"e0f1b6410ab34e0aa39604824815fe77","created":1794984079,"model":"mistral-small-latest","usage":{"prompt_tokens":109,"total_tokens":128,"completion_tokens":19,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"guZgXWop3","type":"function","function":{"name":"dice_roll","arguments":"{}"},"index":0},{"id":"4PRozZRCG","type":"function","function":{"name":"dice_roll","arguments":"{}"},"index":1},{"id":"vNesTnKmt","type":"function","function":{"name":"dice_roll","arguments":"{}"},"index":2}],"content":""}}]}'
+  recorded_at: Wed, 18 Nov 2026 06:41:19 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
@@ -82,11 +82,11 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"mistral-small-latest","messages":[{"role":"system","content":"You
         must call the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
-        the dice 3 times"},{"role":"assistant","content":"","tool_calls":[{"id":"9jJ1tSgK9","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"1nioIyxsE","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"ha2fcKzq9","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{\"roll\":1}","tool_call_id":"9jJ1tSgK9"},{"role":"tool","content":"{\"roll\":2}","tool_call_id":"1nioIyxsE"},{"role":"tool","content":"{\"roll\":3}","tool_call_id":"ha2fcKzq9"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
+        the dice 3 times"},{"role":"assistant","content":"","tool_calls":[{"id":"guZgXWop3","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"4PRozZRCG","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"vNesTnKmt","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{\"roll\":1}","tool_call_id":"guZgXWop3"},{"role":"tool","content":"{\"roll\":2}","tool_call_id":"4PRozZRCG"},{"role":"tool","content":"{\"roll\":3}","tool_call_id":"vNesTnKmt"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -101,55 +101,55 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:27:16 GMT
+      - Wed, 18 Nov 2026 06:41:19 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Set-Cookie:
-      - "<COOKIE>"
       Mistral-Correlation-Id:
-      - 01a1dcd0-d397-7d4d-b893-f6fb35aaf62b
+      - 01a1ed63-7000-7bfa-b5fe-44bb48da4811
       X-Kong-Request-Id:
-      - 01a1dcd0-d397-7d4d-b893-f6fb35aaf62b
+      - 01a1ed63-7000-7bfa-b5fe-44bb48da4811
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '97936'
+      - '98166'
       X-Ratelimit-Tokens-Query-Cost:
       - '106'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
-      - '82'
+      - '81'
       X-Envoy-Upstream-Service-Time:
-      - '406'
+      - '339'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '407'
+      - '341'
       X-Kong-Proxy-Latency:
-      - '15'
-      X-Content-Type-Options:
-      - nosniff
+      - '12'
       Cf-Cache-Status:
       - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"27e4e704a92d4d15a4d208d6e99da7cd","created":1794706035,"model":"mistral-small-latest","usage":{"prompt_tokens":149,"total_tokens":186,"completion_tokens":37,"prompt_tokens_details":{"cached_tokens":80},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"Here
+      string: '{"id":"0ffe2ad82f5948ec9c439db67007ccee","created":1794984079,"model":"mistral-small-latest","usage":{"prompt_tokens":149,"total_tokens":186,"completion_tokens":37,"prompt_tokens_details":{"cached_tokens":80},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"Here
         are the results of rolling the dice 3 times:\n\n1. First roll: **1**\n2. Second
         roll: **2**\n3. Third roll: **3**"}}]}'
-  recorded_at: Sun, 15 Nov 2026 01:27:16 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:41:19 GMT
+recorded_with: VCR 6.4.1

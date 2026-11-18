@@ -12,7 +12,7 @@ http_interactions:
         of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:35:08 GMT
+      - Wed, 18 Nov 2026 06:49:25 GMT
       Content-Type:
       - application/json; charset=UTF-8
       Transfer-Encoding:
@@ -39,7 +39,7 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       Ga-Traceid:
-      - a58f8b7bcd5480c5cac4d2c27f3f88dc
+      - 4fcf25ce8f05be55b42013c488ff4964
       Vary:
       - Accept-Encoding
       - Access-Control-Request-Headers
@@ -50,14 +50,15 @@ http_interactions:
       - Origin
       - Origin
       X-Log-Id:
-      - 20261115093503f2f6b966d13440a1
+      - 20261118144919fef456a05cc645f0
       X-Request-Id:
       - "<X_REQUEST_ID>"
     body:
       encoding: ASCII-8BIT
       string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":"","reasoning_content":"The
-        user wants me to call the array_params tool with tags [\"red\",\"blue\"].
-        This is a single tool call, so I''ll make it.","role":"assistant","tool_calls":[{"function":{"arguments":"{\"tags\":[\"red\",
-        \"blue\"]}","name":"array_params"},"id":"call_-7080003517280156558","index":0,"type":"function"}]}}],"created":1794706508,"id":"20261115093503f2f6b966d13440a1","model":"glm-5.3-flash","object":"chat.completion","request_id":"20261115093503f2f6b966d13440a1","usage":{"completion_tokens":47,"completion_tokens_details":{"reasoning_tokens":30},"prompt_tokens":197,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":244}}'
-  recorded_at: Sun, 15 Nov 2026 01:35:08 GMT
-recorded_with: VCR 6.4.0
+        user wants me to call the array_params tool with tags [\"red\",\"blue\"] and
+        then tell them the combined tags. This is a single tool call with a simple
+        array parameter.","role":"assistant","tool_calls":[{"function":{"arguments":"{\"tags\":[\"red\",
+        \"blue\"]}","name":"array_params"},"id":"call_-7065244016786274060","index":0,"type":"function"}]}}],"created":1794984565,"id":"20261118144919fef456a05cc645f0","model":"glm-5.3-flash","object":"chat.completion","request_id":"20261118144919fef456a05cc645f0","usage":{"completion_tokens":54,"completion_tokens_details":{"reasoning_tokens":37},"prompt_tokens":197,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":251}}'
+  recorded_at: Wed, 18 Nov 2026 06:49:25 GMT
+recorded_with: VCR 6.4.1

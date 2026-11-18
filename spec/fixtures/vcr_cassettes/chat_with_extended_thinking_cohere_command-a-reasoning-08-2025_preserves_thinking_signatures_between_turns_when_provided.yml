@@ -9,7 +9,7 @@ http_interactions:
         is 5 + 3?"}]}],"stream":false,"thinking":{"type":"enabled"}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -34,7 +34,7 @@ http_interactions:
       Num-Chars:
       - '6601'
       Num-Tokens:
-      - '1053'
+      - '791'
       Pragma:
       - no-cache
       Vary:
@@ -42,11 +42,11 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 77a4de4e7b0295588be600f03baf0b60
+      - b2d8aa8f31aa8e4c12f168fac7327931
       Date:
-      - Sun, 15 Nov 2026 01:21:19 GMT
+      - Wed, 18 Nov 2026 06:37:18 GMT
       X-Envoy-Upstream-Service-Time:
-      - '8536'
+      - '6104'
       Server:
       - envoy
       Via:
@@ -57,25 +57,60 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6IjYzMTQ1NGNjLTI5ZTAtNGUzNi04MzNmLWIzY2Y5YzAwZGExMiIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOlt7InR5cGUiOiJ0aGlua2luZyIsInRoaW5raW5nIjoiT2theSwgc28gSSBuZWVkIHRvIGZpZ3VyZSBvdXQgd2hhdCA1IHBsdXMgMyBpcy4gTGV0IG1lIHN0YXJ0IGJ5IHJlY2FsbGluZyB3aGF0IGFkZGl0aW9uIG1lYW5zLiBBZGRpdGlvbiBpcyBjb21iaW5pbmcgdHdvIG51bWJlcnMgdG9nZXRoZXIgdG8gZ2V0IGEgdG90YWwuIFNvLCBpZiBJIGhhdmUgNSBvZiBzb21ldGhpbmcgYW5kIHRoZW4gSSBnZXQgMyBtb3JlIG9mIHRoYXQgc2FtZSB0aGluZywgaG93IG1hbnkgZG8gSSBoYXZlIGluIHRvdGFsP1xuXG5MZXQgbWUgdmlzdWFsaXplIHRoaXMuIEltYWdpbmUgSSBoYXZlIDUgYXBwbGVzLiBUaGVuLCBzb21lb25lIGdpdmVzIG1lIDMgbW9yZSBhcHBsZXMuIFRvIGZpbmQgb3V0IGhvdyBtYW55IGFwcGxlcyBJIGhhdmUgbm93LCBJIG5lZWQgdG8gYWRkIHRob3NlIHR3byBhbW91bnRzIHRvZ2V0aGVyLiBTbywgc3RhcnRpbmcgd2l0aCA1IGFwcGxlczogMSwgMiwgMywgNCwgNS4gVGhlbiBhZGRpbmcgMyBtb3JlOiA2LCA3LCA4LiBXYWl0LCB0aGF0IGdpdmVzIG1lIDggYXBwbGVzIGluIHRvdGFsLiBIbW0sIHNvIDUgKyAzIGVxdWFscyA4P1xuXG5XYWl0LCBsZXQgbWUgY2hlY2sgYW5vdGhlciB3YXkgdG8gbWFrZSBzdXJlIEkgZGlkbid0IG1ha2UgYSBtaXN0YWtlLiBNYXliZSB1c2luZyBmaW5nZXJzLiBJZiBJIGhvbGQgdXAgNSBmaW5nZXJzIG9uIG9uZSBoYW5kIGFuZCAzIGZpbmdlcnMgb24gdGhlIG90aGVyIGhhbmQsIGhvdyBtYW55IGZpbmdlcnMgYXJlIHVwIGluIHRvdGFsPyBMZXQncyBzZWU6IGxlZnQgaGFuZCBoYXMgNSBmaW5nZXJzICgxLTUpLCByaWdodCBoYW5kIGhhcyAzICgxLTMpLiBDb3VudGluZyB0aGVtIGFsbDogNSBvbiB0aGUgbGVmdCBwbHVzIDMgb24gdGhlIHJpZ2h0IGlzIDggZmluZ2Vycy4gVGhhdCBzZWVtcyByaWdodC5cblxuQW5vdGhlciBtZXRob2QgY291bGQgYmUgdXNpbmcgbnVtYmVyIGxpbmUuIFN0YXJ0aW5nIGF0IDUgb24gdGhlIG51bWJlciBsaW5lLCBpZiBJIG1vdmUgMyBzdGVwcyB0byB0aGUgcmlnaHQgKHNpbmNlIHdlJ3JlIGFkZGluZyksIHdoZXJlIGRvIEkgbGFuZD8gU3RhcnRpbmcgYXQgNTogZmlyc3Qgc3RlcCB0byA2LCBzZWNvbmQgdG8gNywgdGhpcmQgdG8gOC4gWWVwLCB0aGF0J3MgOCBhZ2Fpbi5cblxuV2FpdCwgbWF5YmUgdXNpbmcgb2JqZWN0cy4gU3VwcG9zZSBJIGhhdmUgNSBwZW5jaWxzIGFuZCAzIGVyYXNlcnMuIElmIEkgd2FudCB0byBrbm93IGhvdyBtYW55IGl0ZW1zIEkgaGF2ZSBhbHRvZ2V0aGVyLCBJIGFkZCB0aGVtLiA1IHBlbmNpbHMgKyAzIGVyYXNlcnMgPSA4IGl0ZW1zLiBUaGF0IGNoZWNrcyBvdXQgdG9vLlxuXG5JcyB0aGVyZSBhIG1hdGhlbWF0aWNhbCB3YXkgdG8gYnJlYWsgaXQgZG93bj8gTGV0J3Mgc2VlLiA1IGNhbiBiZSBicm9rZW4gaW50byA0ICsgMSwgYW5kIDMgY2FuIGJlIGJyb2tlbiBpbnRvIDIgKyAxLiBUaGVuLCBhZGRpbmcgdGhlbTogKDQgKyAxKSArICgyICsgMSkgPSA0ICsgMiArIDEgKyAxID0gNiArIDIgPSA4LiBIbW0sIHNhbWUgcmVzdWx0LlxuXG5BbHRlcm5hdGl2ZWx5LCB1c2luZyB0aGUgY29uY2VwdCBvZiBwbGFjZSB2YWx1ZS4gQnV0IHNpbmNlIGJvdGggbnVtYmVycyBhcmUgc2luZ2xlLWRpZ2l0LCBtYXliZSB0aGF0J3Mgb3ZlcmNvbXBsaWNhdGluZy4gQnV0IGp1c3QgdG8gdHJ5OiA1IGlzIDUgb25lcywgYW5kIDMgaXMgMyBvbmVzLiBBZGRpbmcgdGhlIG9uZXMgdG9nZXRoZXI6IDUgKyAzID0gOCBvbmVzLCB3aGljaCBpcyA4LiBZZXAuXG5cbldhaXQsIG1heWJlIEkgY2FuIHRoaW5rIG9mIGRvdWJsZXMuIDUgKyAzIGlzIHR3byBtb3JlIHRoYW4gNSArIDEgKHdoaWNoIGlzIDYpIHRocmVlIHRpbWVzLiBXYWl0LCB0aGF0IG1pZ2h0IG5vdCBtYWtlIHNlbnNlLiBBbHRlcm5hdGl2ZWx5LCA1ICsgMyBpcyB0aGUgc2FtZSBhcyAzICsgNSBiZWNhdXNlIGFkZGl0aW9uIGlzIGNvbW11dGF0aXZlLiBTbywgMyArIDUgaXMgYWxzbyA4LiBUaGF0IHN0aWxsIHdvcmtzLlxuXG5MZXQgbWUgY2hlY2sgd2l0aCBzdWJ0cmFjdGlvbi4gSWYgNSArIDMgPSA4LCB0aGVuIDggLSAzIHNob3VsZCBiZSA1LiBMZXQncyBzZWU6IDggLSAzIGlzIDUuIENvcnJlY3QuIEFuZCA4IC0gNSBpcyAzLiBTbyB0aGF0IHdvcmtzLiBTbyB0aGUgYWRkaXRpb24gZmFjdCBpcyB2ZXJpZmllZCBieSBzdWJ0cmFjdGlvbi5cblxuQW5vdGhlciBjaGVjazogdXNpbmcgbW9uZXkuIElmIEkgaGF2ZSAkNSBhbmQgc29tZW9uZSBnaXZlcyBtZSAkMywgaG93IG11Y2ggZG8gSSBoYXZlPyAkNSArICQzID0gJDguIFRoYXQgbWFrZXMgc2Vuc2UuIFNvIGluIGRvbGxhcnMsIGl0J3MgOC5cblxuT3IgdGltZS4gSWYgaXQncyA1IG8nY2xvY2sgYW5kIEkgYWRkIDMgaG91cnMsIGl0IGJlY29tZXMgOCBvJ2Nsb2NrLiBTbyA1ICsgMyA9IDguIENvcnJlY3QuXG5cbldhaXQsIG1heWJlIHVzaW5nIGRpY2UuIElmIEkgcm9sbCBhIGRpZSBhbmQgZ2V0IDUsIGFuZCBhbm90aGVyIGRpZSBzaG93cyAzLCB0aGUgdG90YWwgaXMgOC4gU28gNSArIDMgb24gZGljZSBpcyA4LiBZZXAuXG5cbkkgdGhpbmsgYWxsIHRoZXNlIGRpZmZlcmVudCBtZXRob2RzIGNvbmZpcm0gdGhhdCA1IHBsdXMgMyBlcXVhbHMgOC4gSSBjYW4ndCB0aGluayBvZiBhbnkgd2F5IHdoZXJlIGFkZGluZyA1IGFuZCAzIHdvdWxkIHJlc3VsdCBpbiBhIGRpZmZlcmVudCBudW1iZXIuIEFsbCB0aGUgY2hlY2tz4oCUY291bnRpbmcgb2JqZWN0cywgbnVtYmVyIGxpbmUsIGZpbmdlcnMsIG1vbmV5LCB0aW1lLCBzdWJ0cmFjdGlvbuKAlHN1cHBvcnQgdGhhdCB0aGUgYW5zd2VyIGlzIDguIFNvIEknbSBwcmV0dHkgY29uZmlkZW50IHRoYXQgNSArIDMgaXMgaW5kZWVkIDguIn0seyJ0eXBlIjoidGV4dCIsInRleHQiOiJUbyBzb2x2ZSBcXCg1ICsgM1xcKSwgd2UgY29tYmluZSB0aGUgdHdvIG51bWJlcnMgYnkgY291bnRpbmcgc2VxdWVudGlhbGx5IGZyb20gNSB0aHJlZSBtb3JlIHRpbWVzOiAgXG4qKjUg4oaSIDYg4oaSIDcg4oaSIDgqKi4gIFxuXG4qKlZlcmlmaWNhdGlvbiBtZXRob2RzKio6ICBcbi0gKipGaW5nZXJzKio6IDUgZmluZ2VycyBvbiBvbmUgaGFuZCArIDMgb24gdGhlIG90aGVyID0gOCB0b3RhbC4gIFxuLSAqKk51bWJlciBsaW5lKio6IFN0YXJ0IGF0IDUsIG1vdmUgMyBzdGVwcyByaWdodDogbGFuZHMgb24gOC4gIFxuLSAqKlN1YnRyYWN0aW9uIGNoZWNrKio6IFxcKDggLSAzID0gNVxcKSBhbmQgXFwoOCAtIDUgPSAzXFwpLCBjb25maXJtaW5nIGNvcnJlY3RuZXNzLiAgXG5cbioqQW5zd2VyKio6IFxcKFxcYm94ZWR7OH1cXCkifV19LCJmaW5pc2hfcmVhc29uIjoiQ09NUExFVEUiLCJ1c2FnZSI6eyJiaWxsZWRfdW5pdHMiOnsiaW5wdXRfdG9rZW5zIjo4LCJvdXRwdXRfdG9rZW5zIjoxMDQ1fSwidG9rZW5zIjp7ImlucHV0X3Rva2VucyI6MTM5NCwib3V0cHV0X3Rva2VucyI6MTA1MCwicmVhc29uaW5nX3Rva2VucyI6OTEwfSwiY2FjaGVkX3Rva2VucyI6MTM2MH19
-  recorded_at: Sun, 15 Nov 2026 01:21:19 GMT
+      string: '{"id":"c9050fb3-ab0e-4de4-a524-f7ad9f742069","message":{"role":"assistant","content":[{"type":"thinking","thinking":"Okay,
+        so I need to figure out what 5 plus 3 is. Let me start by recalling what addition
+        means. Addition is combining two numbers together to get their sum. So, if
+        I have 5 of something and then I get 3 more of that same thing, how many do
+        I have in total?\n\nLet me visualize this. Imagine I have 5 apples. Then someone
+        gives me 3 more apples. To find out the total number of apples, I add 5 and
+        3 together. Let me count them one by one. Starting with the first apple, then
+        two, three, four, five. That''s the initial 5. Now adding the next three:
+        six, seven, eight. Wait, so after adding three more, I end up at eight? Hmm,
+        that seems right. But let me check another way to make sure I didn''t make
+        a mistake.\n\nAnother method could be using the number line. Starting at 5,
+        if I move 3 steps to the right, where do I land? The first step from 5 is
+        6, the second is 7, and the third is 8. Yep, that also gives me 8. Okay, so
+        both counting the apples and using the number line give me the same result.
+        Maybe I can try another approach to confirm.\n\nWhat if I break down the numbers?
+        The number 3 can be split into 2 and 1. So, 5 plus 3 is the same as 5 plus
+        2 plus 1. Let''s do that step by step. 5 plus 2 is 7, and then 7 plus 1 is
+        8. Still 8. Hmm, consistent again. Maybe using fingers? Let''s see. Hold up
+        5 fingers on one hand and 3 on the other. Counting all the fingers up: 5 plus
+        3 equals 8 fingers. That works too.\n\nWait, but what if I use mathematical
+        symbols? The plus sign is ''+'', so 5 + 3. I remember that in arithmetic,
+        when you add single-digit numbers, you can sometimes just memorize the results.
+        But since I''m just starting out, maybe I should rely on the methods above
+        rather than memorization. But all the different methods are pointing to the
+        same answer. \n\nIs there a way this could be wrong? Let me think. If I miscounted
+        somewhere, maybe. Let me recount the apples. 5 apples plus 3 apples: 5, 6,
+        7, 8. No, that''s correct. On the number line, starting at 5, moving 3 steps:
+        6, 7, 8. Correct again. Breaking it down into 2 and 1: 5+2=7, 7+1=8. Fingers:
+        5 and 3 make 8. All methods converge on 8. \n\nI don''t see any errors in
+        my reasoning. Each approach confirms that 5 plus 3 equals 8. I think that''s
+        the correct answer. Maybe I can check with subtraction later. If 5 + 3 = 8,
+        then 8 - 3 should be 5. Let''s test that. 8 minus 3 is 5. Yes, that checks
+        out. So subtraction is the inverse operation, and it verifies the addition.
+        \n\nTherefore, after multiple methods and checks, I''m confident that 5 plus
+        3 is indeed 8."},{"type":"text","text":"The sum of 5 and 3 is calculated by
+        combining the two numbers. Using various methods such as counting objects,
+        a number line, breaking down numbers, and verifying through subtraction, all
+        approaches confirm the result. \n\n**Answer:** 5 + 3 = \\boxed{8}"}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":8,"output_tokens":783},"tokens":{"input_tokens":1394,"output_tokens":788,"reasoning_tokens":724},"cached_tokens":1360}}'
+  recorded_at: Wed, 18 Nov 2026 06:37:18 GMT
 - request:
     method: post
     uri: https://api.cohere.com/v2/chat
     body:
       encoding: UTF-8
       string: '{"model":"command-a-reasoning-08-2025","messages":[{"role":"user","content":[{"type":"text","text":"What
-        is 5 + 3?"}]},{"role":"assistant","content":[{"type":"text","text":"To solve
-        \\(5 + 3\\), we combine the two numbers by counting sequentially from 5 three
-        more times:  \n**5 → 6 → 7 → 8**.  \n\n**Verification methods**:  \n- **Fingers**:
-        5 fingers on one hand + 3 on the other = 8 total.  \n- **Number line**: Start
-        at 5, move 3 steps right: lands on 8.  \n- **Subtraction check**: \\(8 - 3
-        = 5\\) and \\(8 - 5 = 3\\), confirming correctness.  \n\n**Answer**: \\(\\boxed{8}\\)"}]},{"role":"user","content":[{"type":"text","text":"Now
+        is 5 + 3?"}]},{"role":"assistant","content":[{"type":"text","text":"The sum
+        of 5 and 3 is calculated by combining the two numbers. Using various methods
+        such as counting objects, a number line, breaking down numbers, and verifying
+        through subtraction, all approaches confirm the result. \n\n**Answer:** 5
+        + 3 = \\boxed{8}"}]},{"role":"user","content":[{"type":"text","text":"Now
         multiply that by 2"}]}],"stream":false,"thinking":{"type":"enabled"}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -98,9 +133,9 @@ http_interactions:
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Num-Chars:
-      - '7243'
+      - '7102'
       Num-Tokens:
-      - '334'
+      - '222'
       Pragma:
       - no-cache
       Vary:
@@ -108,11 +143,11 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 3d8b354c2d4ede234310b75ab94e3f2d
+      - a3cc9df55e386c45526627669618708f
       Date:
-      - Sun, 15 Nov 2026 01:21:21 GMT
+      - Wed, 18 Nov 2026 06:37:20 GMT
       X-Envoy-Upstream-Service-Time:
-      - '1427'
+      - '1193'
       Server:
       - envoy
       Via:
@@ -123,15 +158,7 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"9dd63737-a11f-4649-b2ce-c195190ff0f8","message":{"role":"assistant","content":[{"type":"thinking","thinking":"First,
-        I recognize that the user is asking to multiply the previous result by 2.
-        The previous calculation was 5 + 3, which equals 8. Now, the task is to compute
-        8 multiplied by 2. \n\nTo verify, I can break down the multiplication: 8 times
-        2 is the same as adding 8 to itself (8 + 8), which equals 16. Alternatively,
-        doubling 8 directly gives the same result. Both methods confirm that the product
-        is 16. No external tools are needed for this straightforward arithmetic operation."},{"type":"text","text":"To
-        solve \\(8 \\times 2\\), we double the number 8.  \n\n**Verification**:  \n-
-        **Addition**: \\(8 + 8 = 16\\)  \n- **Doubling**: Twice 8 is 16.  \n\n**Answer**:
-        \\(\\boxed{16}\\)"}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":149,"output_tokens":185},"tokens":{"input_tokens":1554,"output_tokens":190,"reasoning_tokens":118},"cached_tokens":1360}}'
-  recorded_at: Sun, 15 Nov 2026 01:21:21 GMT
-recorded_with: VCR 6.4.0
+      string: !binary |-
+        eyJpZCI6IjBlY2Q2ZWIyLThhMTctNGI2Ni1iMzlmLWYyOTg4M2JmODU1ZiIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOlt7InR5cGUiOiJ0aGlua2luZyIsInRoaW5raW5nIjoiRmlyc3QsIEkgbmVlZCB0byByZWNhbGwgdGhlIHByZXZpb3VzIGNhbGN1bGF0aW9uIHdoZXJlIHRoZSB1c2VyIGFza2VkIGZvciA1ICsgMywgd2hpY2ggZXF1YWxzIDguIE5vdywgdGhlIHVzZXIgd2FudHMgdG8gbXVsdGlwbHkgdGhhdCByZXN1bHQgYnkgMi5cblxuVG8gZmluZCB0aGUgYW5zd2VyLCBJJ2xsIHBlcmZvcm0gdGhlIG11bHRpcGxpY2F0aW9uOiA4IMOXIDIuIFRoaXMgY2FuIGJlIGRvbmUgYnkgYWRkaW5nIDggdG8gaXRzZWxmIG9yIGJ5IHVzaW5nIHRoZSBtdWx0aXBsaWNhdGlvbiB0YWJsZS4gQm90aCBtZXRob2RzIGNvbmZpcm0gdGhhdCA4IG11bHRpcGxpZWQgYnkgMiBlcXVhbHMgMTYuIn0seyJ0eXBlIjoidGV4dCIsInRleHQiOiIqKlNvbHV0aW9uOioqXG5cbkZpcnN0LCB3ZSBjYWxjdWxhdGVkOlxuXFxbIDUgKyAzID0gOCBcXF1cblxuTm93LCBtdWx0aXBseWluZyB0aGF0IHJlc3VsdCBieSAyOlxuXFxbIDggXFx0aW1lcyAyID0gMTYgXFxdXG5cbioqQW5zd2VyOioqIFxcKFxcYm94ZWR7MTZ9XFwpIn1dfSwiZmluaXNoX3JlYXNvbiI6IkNPTVBMRVRFIiwidXNhZ2UiOnsiYmlsbGVkX3VuaXRzIjp7ImlucHV0X3Rva2VucyI6NzMsIm91dHB1dF90b2tlbnMiOjE0OX0sInRva2VucyI6eyJpbnB1dF90b2tlbnMiOjE0NzgsIm91dHB1dF90b2tlbnMiOjE1NCwicmVhc29uaW5nX3Rva2VucyI6ODl9LCJjYWNoZWRfdG9rZW5zIjoxMzYwfX0=
+  recorded_at: Wed, 18 Nov 2026 06:37:20 GMT
+recorded_with: VCR 6.4.1

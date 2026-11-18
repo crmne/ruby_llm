@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"Say hi"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -23,7 +23,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:20:37 GMT
+      - Wed, 18 Nov 2026 06:36:03 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -47,7 +47,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '861'
+      - '968'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -74,16 +74,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_06af06fa0e2f9fd6016af908e4f74087d2b05dce2f8eb3bf55",
+          "id": "resp_099690d2594e8cf6016afd47529a4487d2aa82f63c4506596d",
           "object": "response",
-          "created_at": 1794705637,
+          "created_at": 1794983762,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794705637,
+          "completed_at": 1794983763,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
@@ -98,7 +98,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_06af06fa0e2f9fd6016af908e5a14087d2b25e0e7a936c9b29",
+              "id": "msg_099690d2594e8cf6016afd47535fd087d2807a11bd66874e21",
               "type": "message",
               "status": "completed",
               "content": [
@@ -176,5 +176,5 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Sun, 15 Nov 2026 01:20:37 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:36:03 GMT
+recorded_with: VCR 6.4.1

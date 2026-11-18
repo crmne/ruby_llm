@@ -11,7 +11,7 @@ http_interactions:
         to process"}},"required":["query"],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -36,7 +36,7 @@ http_interactions:
       Num-Chars:
       - '6825'
       Num-Tokens:
-      - '64'
+      - '68'
       Pragma:
       - no-cache
       Vary:
@@ -44,39 +44,39 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 796e2d593f19fb9b74e4e48ab49389b5
+      - 8ebde275b63dffc71e0f76d18a9d576d
       Date:
-      - Sun, 15 Nov 2026 01:38:59 GMT
+      - Wed, 18 Nov 2026 06:52:51 GMT
       X-Envoy-Upstream-Service-Time:
-      - '627'
+      - '739'
       Server:
       - envoy
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"69417356-2d02-4a36-aeb1-4bbe52aa7089","message":{"role":"assistant","tool_plan":"I
-        will process the query using the content_returning tool.","tool_calls":[{"id":"content_returning_426zqwysxb55","type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
-        data\"}"}}]},"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":43,"output_tokens":21},"tokens":{"input_tokens":1446,"output_tokens":51},"cached_tokens":1008}}'
-  recorded_at: Sun, 15 Nov 2026 01:39:00 GMT
+      string: '{"id":"2d01d263-56a1-49bf-bc6b-1db45c6ea7f2","message":{"role":"assistant","tool_plan":"I
+        will process the query ''test data'' using the content_returning tool.","tool_calls":[{"id":"content_returning_z1yr5d3c3078","type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
+        data\"}"}}]},"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":43,"output_tokens":25},"tokens":{"input_tokens":1446,"output_tokens":55},"cached_tokens":1008}}'
+  recorded_at: Wed, 18 Nov 2026 06:52:51 GMT
 - request:
     method: post
     uri: https://api.cohere.com/v2/chat
     body:
       encoding: UTF-8
       string: '{"model":"command-a-03-2025","messages":[{"role":"user","content":[{"type":"text","text":"Process
-        this query: test data"}]},{"role":"assistant","content":[{"type":"text","text":""}],"tool_calls":[{"id":"content_returning_426zqwysxb55","type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
-        data\"}"}}]},{"role":"tool","tool_call_id":"content_returning_426zqwysxb55","content":"Processed:
+        this query: test data"}]},{"role":"assistant","content":[{"type":"text","text":""}],"tool_calls":[{"id":"content_returning_z1yr5d3c3078","type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
+        data\"}"}}]},{"role":"tool","tool_call_id":"content_returning_z1yr5d3c3078","content":"Processed:
         test data"}],"stream":false,"tools":[{"type":"function","function":{"name":"content_returning","description":"Returns
         a processed string result","parameters":{"type":"object","properties":{"query":{"type":"string","description":"Query
         to process"}},"required":["query"],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -109,23 +109,23 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 84a0abf683ea65d9c5eaffc1d1f13eb5
+      - 51a0088339d15a265e59b8d3fde90f2a
       Date:
-      - Sun, 15 Nov 2026 01:39:00 GMT
+      - Wed, 18 Nov 2026 06:52:51 GMT
       X-Envoy-Upstream-Service-Time:
-      - '440'
+      - '370'
       Server:
       - envoy
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      - h3=":443"; ma=2592000
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"704f1269-0cc3-4c99-91e3-e6364543a636","message":{"role":"assistant","content":[{"type":"text","text":"Processed:
-        test data"}],"citations":[{"start":0,"end":20,"text":"Processed: test data","sources":[{"type":"tool","id":"content_returning_426zqwysxb55:0","tool_output":{"content":"Processed:
-        test data"}}],"type":"TEXT_CONTENT"}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":50,"output_tokens":4},"tokens":{"input_tokens":1537,"output_tokens":18},"cached_tokens":128}}'
-  recorded_at: Sun, 15 Nov 2026 01:39:00 GMT
-recorded_with: VCR 6.4.0
+      string: '{"id":"1a3a4ecc-a907-4ad6-b107-0fd555e3f2b8","message":{"role":"assistant","content":[{"type":"text","text":"Processed:
+        test data"}],"citations":[{"start":0,"end":20,"text":"Processed: test data","sources":[{"type":"tool","id":"content_returning_z1yr5d3c3078:0","tool_output":{"content":"Processed:
+        test data"}}],"type":"TEXT_CONTENT"}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":50,"output_tokens":4},"tokens":{"input_tokens":1537,"output_tokens":18},"cached_tokens":1008}}'
+  recorded_at: Wed, 18 Nov 2026 06:52:51 GMT
+recorded_with: VCR 6.4.1

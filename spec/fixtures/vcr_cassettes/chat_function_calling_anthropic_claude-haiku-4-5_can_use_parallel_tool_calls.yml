@@ -14,7 +14,7 @@ http_interactions:
         the best language to learn","input_schema":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -31,7 +31,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:20:57 GMT
+      - Wed, 18 Nov 2026 06:36:17 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -43,31 +43,31 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '10000000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-11-15T01:20:57Z'
+      - '2026-11-18T06:36:16Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-11-15T01:20:57Z'
+      - '2026-11-18T06:36:17Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-11-15T01:20:56Z'
+      - '2026-11-18T06:36:16Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-11-15T01:20:57Z'
+      - '2026-11-18T06:36:16Z'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Request-Id:
       - "<REQUEST_ID>"
       Traceresponse:
-      - 00-96ac19b4868c2441061a38b1d4a1e140-2d26d89106fa44c8-01
+      - 00-e0ee81e1eb6026ce217de6881ac589a4-6b2e0e88c46005c1-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
@@ -79,7 +79,7 @@ http_interactions:
       Server:
       - cloudflare
       Server-Timing:
-      - x-originResponse;dur=643
+      - x-originResponse;dur=629
       Cf-Cache-Status:
       - DYNAMIC
       X-Robots-Tag:
@@ -88,8 +88,8 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Ch3qTMNjBpfRtr5b3D5gJ","type":"message","role":"assistant","content":[{"type":"tool_use","id":"toolu_01PankBuKjqsg2ZaHezgpe36","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"},"caller":{"type":"direct"}},{"type":"tool_use","id":"toolu_01DXFenmirV5GrpRVAHGrSEQ","name":"best_language_to_learn","input":{},"caller":{"type":"direct"}}],"container":null,"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":701,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":98,"service_tier":"standard","inference_geo":"not_available","speed":"standard"},"diagnostics":null}'
-  recorded_at: Sun, 15 Nov 2026 01:20:57 GMT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Ch9vvkmFzwdjd8TFLkp4H","type":"message","role":"assistant","content":[{"type":"tool_use","id":"toolu_01GNCTFpcDK5tgcPsbPVFA8V","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"},"caller":{"type":"direct"}},{"type":"tool_use","id":"toolu_012xLuJpAUzRvUpZdZKhqyKo","name":"best_language_to_learn","input":{},"caller":{"type":"direct"}}],"container":null,"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":701,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":98,"service_tier":"standard","inference_geo":"not_available","speed":"standard"},"diagnostics":null}'
+  recorded_at: Wed, 18 Nov 2026 06:36:17 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
@@ -97,15 +97,15 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         the weather in Berlin (52.5200, 13.4050) and what''s the best language to
-        learn?"}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_01PankBuKjqsg2ZaHezgpe36","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}},{"type":"tool_use","id":"toolu_01DXFenmirV5GrpRVAHGrSEQ","name":"best_language_to_learn","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01PankBuKjqsg2ZaHezgpe36","content":[{"type":"text","text":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]},{"type":"tool_result","tool_use_id":"toolu_01DXFenmirV5GrpRVAHGrSEQ","content":[{"type":"text","text":"Ruby"}]}]}],"stream":false,"max_tokens":64000,"tools":[{"name":"weather","description":"Gets
+        learn?"}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_01GNCTFpcDK5tgcPsbPVFA8V","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}},{"type":"tool_use","id":"toolu_012xLuJpAUzRvUpZdZKhqyKo","name":"best_language_to_learn","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01GNCTFpcDK5tgcPsbPVFA8V","content":[{"type":"text","text":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]},{"type":"tool_result","tool_use_id":"toolu_012xLuJpAUzRvUpZdZKhqyKo","content":[{"type":"text","text":"Ruby"}]}]}],"stream":false,"max_tokens":64000,"tools":[{"name":"weather","description":"Gets
         current weather for a location","input_schema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}},{"name":"best_language_to_learn","description":"Gets
         the best language to learn","input_schema":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -122,7 +122,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:20:58 GMT
+      - Wed, 18 Nov 2026 06:36:18 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -134,31 +134,31 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '9999000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-11-15T01:20:57Z'
+      - '2026-11-18T06:36:17Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-11-15T01:20:58Z'
+      - '2026-11-18T06:36:18Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-11-15T01:20:57Z'
+      - '2026-11-18T06:36:17Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '11999000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-11-15T01:20:57Z'
+      - '2026-11-18T06:36:17Z'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Request-Id:
       - "<REQUEST_ID>"
       Traceresponse:
-      - 00-226e633cf881ea587d2b0d99f4703cff-e968c356ab592e94-01
+      - 00-4612be75fdf2727105c723ce00377a0c-b5e620cf58fe7b79-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
@@ -170,7 +170,7 @@ http_interactions:
       Server:
       - cloudflare
       Server-Timing:
-      - x-originResponse;dur=804
+      - x-originResponse;dur=852
       Cf-Cache-Status:
       - DYNAMIC
       X-Robots-Tag:
@@ -180,6 +180,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJtb2RlbCI6ImNsYXVkZS1oYWlrdS00LTUtMjAyNTEwMDEiLCJpZCI6Im1zZ18wMTFDaDNxVFFycWJiUmFTaFJkQXJadGMiLCJ0eXBlIjoibWVzc2FnZSIsInJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjpbeyJ0eXBlIjoidGV4dCIsInRleHQiOiJIZXJlJ3MgdGhlIGluZm9ybWF0aW9uIHlvdSByZXF1ZXN0ZWQ6XG5cbioqV2VhdGhlciBpbiBCZXJsaW46Kipcbi0gVGVtcGVyYXR1cmU6IDE1wrBDXG4tIFdpbmQ6IDEwIGttL2hcblxuKipCZXN0IExhbmd1YWdlIHRvIExlYXJuOioqXG4tIFJ1YnlcblxuSXQgbG9va3MgbGlrZSB0aGUgd2VhdGhlciBpbiBCZXJsaW4gaXMgbWlsZCBhbmQgYnJlZXp5LiBBcyBmb3IgbGFuZ3VhZ2VzLCBSdWJ5IGlzIGEgZ3JlYXQgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UgdG8gbGVhcm4gaWYgeW91J3JlIGludGVyZXN0ZWQgaW4gZGV2ZWxvcG1lbnQhIn1dLCJjb250YWluZXIiOm51bGwsInN0b3BfcmVhc29uIjoiZW5kX3R1cm4iLCJzdG9wX3NlcXVlbmNlIjpudWxsLCJzdG9wX2RldGFpbHMiOm51bGwsInVzYWdlIjp7ImlucHV0X3Rva2VucyI6ODkzLCJjYWNoZV9jcmVhdGlvbl9pbnB1dF90b2tlbnMiOjAsImNhY2hlX3JlYWRfaW5wdXRfdG9rZW5zIjowLCJjYWNoZV9jcmVhdGlvbiI6eyJlcGhlbWVyYWxfNW1faW5wdXRfdG9rZW5zIjowLCJlcGhlbWVyYWxfMWhfaW5wdXRfdG9rZW5zIjowfSwib3V0cHV0X3Rva2VucyI6NzgsInNlcnZpY2VfdGllciI6InN0YW5kYXJkIiwiaW5mZXJlbmNlX2dlbyI6Im5vdF9hdmFpbGFibGUiLCJzcGVlZCI6InN0YW5kYXJkIn0sImRpYWdub3N0aWNzIjpudWxsfQ==
-  recorded_at: Sun, 15 Nov 2026 01:20:58 GMT
-recorded_with: VCR 6.4.0
+        eyJtb2RlbCI6ImNsYXVkZS1oYWlrdS00LTUtMjAyNTEwMDEiLCJpZCI6Im1zZ18wMTFDaDl2dnAzaUJwS2VyNWI4bW5za0YiLCJ0eXBlIjoibWVzc2FnZSIsInJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjpbeyJ0eXBlIjoidGV4dCIsInRleHQiOiJCYXNlZCBvbiB0aGUgcmVzdWx0czpcblxuKipXZWF0aGVyIGluIEJlcmxpbiAoNTIuNTIwMCwgMTMuNDA1MCk6Kipcbi0gVGVtcGVyYXR1cmU6IDE1wrBDXG4tIFdpbmQ6IDEwIGttL2hcblxuKipCZXN0IExhbmd1YWdlIHRvIExlYXJuOioqXG4tIFJ1YnkgKGEgcG9wdWxhciBwcm9ncmFtbWluZyBsYW5ndWFnZSBrbm93biBmb3IgaXRzIGVsZWdhbnQgc3ludGF4IGFuZCBwcm9kdWN0aXZpdHkpXG5cbkl0IGxvb2tzIGxpa2UgaXQncyBhIG1pbGQgZGF5IGluIEJlcmxpbiB3aXRoIG1vZGVyYXRlIHdpbmQuIEFuZCBpZiB5b3UncmUgaW50ZXJlc3RlZCBpbiBsZWFybmluZyBhIHByb2dyYW1taW5nIGxhbmd1YWdlLCBSdWJ5IGlzIHJlY29tbWVuZGVkISJ9XSwiY29udGFpbmVyIjpudWxsLCJzdG9wX3JlYXNvbiI6ImVuZF90dXJuIiwic3RvcF9zZXF1ZW5jZSI6bnVsbCwic3RvcF9kZXRhaWxzIjpudWxsLCJ1c2FnZSI6eyJpbnB1dF90b2tlbnMiOjg5MywiY2FjaGVfY3JlYXRpb25faW5wdXRfdG9rZW5zIjowLCJjYWNoZV9yZWFkX2lucHV0X3Rva2VucyI6MCwiY2FjaGVfY3JlYXRpb24iOnsiZXBoZW1lcmFsXzVtX2lucHV0X3Rva2VucyI6MCwiZXBoZW1lcmFsXzFoX2lucHV0X3Rva2VucyI6MH0sIm91dHB1dF90b2tlbnMiOjk3LCJzZXJ2aWNlX3RpZXIiOiJzdGFuZGFyZCIsImluZmVyZW5jZV9nZW8iOiJub3RfYXZhaWxhYmxlIiwic3BlZWQiOiJzdGFuZGFyZCJ9LCJkaWFnbm9zdGljcyI6bnVsbH0=
+  recorded_at: Wed, 18 Nov 2026 06:36:18 GMT
+recorded_with: VCR 6.4.1

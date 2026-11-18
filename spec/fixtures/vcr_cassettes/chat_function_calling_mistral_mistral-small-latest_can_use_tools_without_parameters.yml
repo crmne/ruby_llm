@@ -10,7 +10,7 @@ http_interactions:
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -25,25 +25,23 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:27:09 GMT
+      - Wed, 18 Nov 2026 06:41:14 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Set-Cookie:
-      - "<COOKIE>"
       Mistral-Correlation-Id:
-      - 01a1dcd0-bb43-7707-9a1a-9f96a24d5833
+      - 01a1ed63-5b69-7806-bc5d-0f2de8acaafd
       X-Kong-Request-Id:
-      - 01a1dcd0-bb43-7707-9a1a-9f96a24d5833
+      - 01a1ed63-5b69-7806-bc5d-0f2de8acaafd
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '98927'
+      - '99027'
       X-Ratelimit-Tokens-Query-Cost:
       - '103'
       X-Ratelimit-Limit-Req-Minute:
@@ -51,40 +49,42 @@ http_interactions:
       X-Ratelimit-Remaining-Req-Minute:
       - '93'
       X-Envoy-Upstream-Service-Time:
-      - '366'
+      - '273'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '368'
+      - '274'
       X-Kong-Proxy-Latency:
-      - '13'
-      X-Content-Type-Options:
-      - nosniff
+      - '15'
       Cf-Cache-Status:
       - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"b7ec5b632ed746c3ab87ee1f6803bcf1","created":1794706029,"model":"mistral-small-latest","usage":{"prompt_tokens":94,"total_tokens":103,"completion_tokens":9,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"ZK60RaUwz","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"},"index":0}],"content":""}}]}'
-  recorded_at: Sun, 15 Nov 2026 01:27:09 GMT
+      string: '{"id":"1434b6a5e88a41e895f9254d4a713f5e","created":1794984074,"model":"mistral-small-latest","usage":{"prompt_tokens":94,"total_tokens":103,"completion_tokens":9,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"oTfnKCWqV","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"},"index":0}],"content":""}}]}'
+  recorded_at: Wed, 18 Nov 2026 06:41:14 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"Use
-        the best_language_to_learn tool to tell me which language to learn."},{"role":"assistant","content":"","tool_calls":[{"id":"ZK60RaUwz","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"ZK60RaUwz"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best_language_to_learn tool to tell me which language to learn."},{"role":"assistant","content":"","tool_calls":[{"id":"oTfnKCWqV","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"oTfnKCWqV"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -99,54 +99,54 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:27:10 GMT
+      - Wed, 18 Nov 2026 06:41:14 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Set-Cookie:
-      - "<COOKIE>"
       Mistral-Correlation-Id:
-      - 01a1dcd0-bd14-7ab4-bb60-323687c11a3e
+      - 01a1ed63-5ce3-72c1-96e6-bb5449509444
       X-Kong-Request-Id:
-      - 01a1dcd0-bd14-7ab4-bb60-323687c11a3e
+      - 01a1ed63-5ce3-72c1-96e6-bb5449509444
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '98866'
+      - '98968'
       X-Ratelimit-Tokens-Query-Cost:
-      - '61'
+      - '59'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
       - '92'
       X-Envoy-Upstream-Service-Time:
-      - '310'
+      - '295'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '311'
+      - '296'
       X-Kong-Proxy-Latency:
-      - '17'
-      X-Content-Type-Options:
-      - nosniff
+      - '14'
       Cf-Cache-Status:
       - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"d755de83b26449f4b2ddfc4af331e341","created":1794706029,"model":"mistral-small-latest","usage":{"prompt_tokens":106,"total_tokens":125,"completion_tokens":19,"prompt_tokens_details":{"cached_tokens":64},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"Based
-        on the analysis, the best language for you to learn right now is **Ruby**."}}]}'
-  recorded_at: Sun, 15 Nov 2026 01:27:10 GMT
-recorded_with: VCR 6.4.0
+      string: '{"id":"118aad98f1134c598f2e05fa3d8bcdd3","created":1794984074,"model":"mistral-small-latest","usage":{"prompt_tokens":106,"total_tokens":123,"completion_tokens":17,"prompt_tokens_details":{"cached_tokens":64},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"Based
+        on the analysis, the best language for you to learn is **Ruby**."}}]}'
+  recorded_at: Wed, 18 Nov 2026 06:41:14 GMT
+recorded_with: VCR 6.4.1

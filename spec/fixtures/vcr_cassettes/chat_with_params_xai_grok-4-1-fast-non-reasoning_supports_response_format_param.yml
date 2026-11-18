@@ -9,7 +9,7 @@ http_interactions:
         square root of 64? Answer with a JSON object with the key `result`."}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"text":{"format":{"type":"json_object"}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:20:29 GMT
+      - Wed, 18 Nov 2026 06:35:28 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -40,11 +40,13 @@ http_interactions:
       X-Ratelimit-Limit-Tokens:
       - '10000000'
       X-Ratelimit-Remaining-Tokens:
-      - '10000000'
+      - '9998616'
       X-Ratelimit-Limit-Requests:
       - '1800'
       X-Ratelimit-Remaining-Requests:
       - '1800'
+      Cf-Cache-Status:
+      - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Zero-Data-Retention:
@@ -52,28 +54,26 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '257.4'
+      - '392.6'
       X-Metrics-E2e-Ms:
-      - '3995.3'
+      - '2919.7'
       Traceparent:
-      - 00-3e6698124cfbdd31c62421d2cedab7e8-bbce803e000a5869-01
+      - 00-b6eef345ac23f048e22a4b3465070109-9875c91800027a00-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
-      Cf-Cache-Status:
-      - DYNAMIC
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1794705625,"completed_at":1794705629,"id":"8a142ab2-5f73-9dcf-acd3-85ac72bc03b2","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_8a142ab2-5f73-9dcf-acd3-85ac72bc03b2","summary":[{"text":"The
-        square root of 64 is 8.\n\nThe response will be a single JSON object: `{\"result\":
-        8}`.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"Exiph4lROYCPMRjzVB4NloTm9FxOcgeaNcJD0bO1NpgO/qprpJEwkUBHy6/Cx+CGTdc06ggNWVxrqBBiIQOzrvk2Yq7usaUZgIWZBY7PJnDnPa0v/UogZF4Ru35Dz8q4hV3lD6hYt4gfMdGWlM0mCSN17DIeWjmvQUBPzPRHGmJfqcY4as60tzPoYs+EgnMdL3zCGtTb0AMlvN+FsKulY4g7oMdL2an5inXZWteTZc5yGvAlC6w+rnBKc0EpJ6XGetzTr14KqzyhN3nDihe7SH8bpQqgPVCr+02KQBK4xxHOeCG7D+/2rvMawtqG26bYl8q244KWppyWKtIHLd1aLla7UugvD/tMmI0yib13xaxAjTt32cyJrEdvx6/HPxRLR6EiMnXW0ybq/YF3kp7XgBLbWawGpbgSg9q5vtAsUtnzpLJid/sK9OZZI7T0qmzWO/K/5D8ERkniLfPFEUZT6s892da3QppeYJQevD0oskx9YUhu9cYYZ/kyEvXfuHVDHKgOX7omghHgguDodXbGOfv4PTdUo1hadGo/SiQBFv6rhBZ2r/gAQDifN4jKpG4SfB22Yw"},{"content":[{"type":"output_text","text":"{\"result\":
-        8}","logprobs":[],"annotations":[]}],"id":"msg_8a142ab2-5f73-9dcf-acd3-85ac72bc03b2","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"json_object"}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":232,"input_tokens_details":{"cached_tokens":128},"output_tokens":219,"output_tokens_details":{"reasoning_tokens":213},"total_tokens":451,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":7031000,"context_details":{"input_tokens":232,"output_tokens":227}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
-  recorded_at: Sun, 15 Nov 2026 01:20:29 GMT
-recorded_with: VCR 6.4.0
+      string: '{"created_at":1794983725,"completed_at":1794983728,"id":"4fba1c68-c7f3-9575-bbc7-e328dd69534c","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_4fba1c68-c7f3-9575-bbc7-e328dd69534c","summary":[{"text":"The
+        square root of 64 is 8.\n\nThe response will be the JSON object `{\"result\":
+        8}`.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"fyFpzJMntHxfoUCW73O0Es8TdGTl2CXjOYfXLIR1PMIdKm8uTWTZwlLaExlH+igYgO+rIFRxdfxHfu3YxSilRJTqFUN8XVHdL/Sq/hu8aOmq9t4RhzWgIY0y+/jE7KwHoq+3vBqGI5ylM0lZg6cFH1PQQ737MOGsHy0mBvq8n6+zV5DOKXCN22ujQgropghqWxH4/9KN3hoptuz6ZuE3a87tGxPUTPoyWJH0BxPlQ+OjBWxDzsja4uYlDHaYeXM/nKFSoXwWrGHg2fKo5SZYQSn37tGFsYi+FQcblsUPVhXzhKxuSO8ooWcnxO5S+d0rTxiS6BOGtAUDV0UQfBPtQ8SPctWmOMe93amvautELJDlhOZSlltjacG4Osg/rfJprAU8NPOu7EafH5W+PRx3nN/m7W0W0qZriSmETAqX5BcirsQH2GjU+FWYK/P6JWJX4OlII1Xg8LLCNh+sd/+O6dw8VuagBu0doN0QzVaK28CY9ilvXG3zBAdo4Sv5XT2n2s4TSyF2DtEhX3Azr0kIU0ACdLmPjEtv1/4IgX3r+lKjNQDygRzg5AdSn5rikpGENIWVLDVTwFQBvMgzjItme2CPKFKumwsnm1v9j4Kv"},{"content":[{"type":"output_text","text":"{\n  \"result\":
+        8\n}","logprobs":[],"annotations":[]}],"id":"msg_4fba1c68-c7f3-9575-bbc7-e328dd69534c","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"json_object"}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":232,"input_tokens_details":{"cached_tokens":128},"output_tokens":215,"output_tokens_details":{"reasoning_tokens":206},"total_tokens":447,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":6931000,"context_details":{"input_tokens":232,"output_tokens":223}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Wed, 18 Nov 2026 06:35:28 GMT
+recorded_with: VCR 6.4.1

@@ -12,7 +12,7 @@ http_interactions:
         description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -26,22 +26,22 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Resp-Start-Time:
-      - '1794705815767'
-      Date:
-      - Sun, 15 Nov 2026 01:23:32 GMT
-      Content-Type:
-      - application/json; charset=utf-8
-      Req-Arrive-Time:
-      - '1794705812941'
-      X-Envoy-Upstream-Service-Time:
-      - '2820'
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
       - ''
       Req-Cost-Time:
-      - '2825'
+      - '1505'
+      Resp-Start-Time:
+      - '1794983924269'
+      X-Envoy-Upstream-Service-Time:
+      - '1503'
+      Date:
+      - Wed, 18 Nov 2026 06:38:42 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Req-Arrive-Time:
+      - '1794983922763'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
@@ -50,16 +50,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"role":"assistant","content":"","reasoning_content":"Okay,
         the user wants me to call the any_of_params function for the task \"Review
-        PR\" with status \"pending\". Let me check the function definition again.
-        The function requires ''task'' and ''status'' parameters. The status can be
-        either \"pending\", \"done\", or null. Since the user specified \"pending\",
-        which is one of the allowed enum values, that''s valid. I need to structure
-        the JSON arguments correctly. The task is \"Review PR\" and status is \"pending\".
-        So the tool call should include these parameters. I''ll make sure the JSON
-        is properly formatted with the name of the function and the arguments. No
-        additional properties are allowed, so I''ll keep it concise. Let me double-check
-        the required fields: both task and status are required. Everything looks good.
-        Time to output the tool call.\n","tool_calls":[{"type":"function","function":{"name":"any_of_params","arguments":"{\"task\":
-        \"Review PR\", \"status\": \"pending\"}"},"id":"tCzOkGJ3uw5SiPaR3btvEc1jWr5uu1gc"}]}}],"created":1794705815,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":200,"prompt_tokens":223,"total_tokens":423,"prompt_tokens_details":{"cached_tokens":222}},"id":"chatcmpl-wzTGCOanuBXIvQYZ0wh6CJ2vmHYVNvFg","timings":{"cache_n":222,"prompt_n":1,"prompt_ms":16.382,"prompt_per_token_ms":16.382,"prompt_per_second":61.042607740202655,"predicted_n":200,"predicted_ms":2737.815,"predicted_per_token_ms":13.757864321608041,"predicted_per_second":72.68570009295733}}'
-  recorded_at: Sun, 15 Nov 2026 01:23:35 GMT
-recorded_with: VCR 6.4.0
+        PR\" with status \"pending\". Let me check the function''s parameters. The
+        function requires ''task'' and ''status''. The ''status'' can be either \"pending\",
+        \"done\", or null. Since the user specified \"pending\", that''s valid. I
+        need to structure the JSON arguments correctly. The task is \"Review PR\",
+        status is \"pending\". So the tool call should have name ''any_of_params''
+        and the arguments as {\"task\": \"Review PR\", \"status\": \"pending\"}. I
+        should make sure there are no extra parameters and that the JSON is properly
+        formatted. Let me double-check the required fields. Both task and status are
+        required, and the status is in the allowed enum. Looks good. Time to output
+        the tool call.\n","tool_calls":[{"type":"function","function":{"name":"any_of_params","arguments":"{\"task\":
+        \"Review PR\", \"status\": \"pending\"}"},"id":"IeoDdIO8SOdg0UWN4DKhxjJomLaUJ2Ho"}]}}],"created":1794983924,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":204,"prompt_tokens":223,"total_tokens":427,"prompt_tokens_details":{"cached_tokens":222}},"id":"chatcmpl-fqrG3LGF99MJ7bR27YkHx1JhGz9i08Kp","timings":{"cache_n":222,"prompt_n":1,"prompt_ms":8.198,"prompt_per_token_ms":8.198,"prompt_per_second":121.98097096852891,"predicted_n":204,"predicted_ms":1448.9,"predicted_per_token_ms":7.137438423645321,"predicted_per_second":140.10628752846986}}'
+  recorded_at: Wed, 18 Nov 2026 06:38:44 GMT
+recorded_with: VCR 6.4.1

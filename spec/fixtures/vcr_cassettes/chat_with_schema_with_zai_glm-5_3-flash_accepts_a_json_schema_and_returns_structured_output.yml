@@ -9,7 +9,7 @@ http_interactions:
         a person named John who is 30 years old"}],"stream":false,"response_format":{"type":"json_schema","json_schema":{"name":"response","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:22:32 GMT
+      - Wed, 18 Nov 2026 06:37:45 GMT
       Content-Type:
       - application/json; charset=UTF-8
       Transfer-Encoding:
@@ -36,7 +36,7 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       Ga-Traceid:
-      - 3213b0acbfde314c24999d0f5a03882e
+      - 78ce586d02ce3f9b8118382676ab8c93
       Vary:
       - Accept-Encoding
       - Access-Control-Request-Headers
@@ -47,54 +47,12 @@ http_interactions:
       - Origin
       - Origin
       X-Log-Id:
-      - 20261115092218b03f35fa5419481d
+      - 2026111814373296797d0561a14fa2
       X-Request-Id:
       - "<X_REQUEST_ID>"
     body:
       encoding: ASCII-8BIT
-      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"{\"name\":
-        \"John\", \"age\": 30}","reasoning_content":"The user is asking me to generate
-        a person named John who is 30 years old. This is a simple creative request
-        - they want me to create a fictional persona/character profile. This is a
-        common request for things like:\n\n- Character creation for writing/fiction\n-
-        Placeholder data for testing software\n- Sample data for demonstrations\n-
-        Creative exercises\n\nThis is completely benign. I should create a character
-        profile for John, 30 years old. Let me think about what would be useful:\n\nThe
-        request is pretty open-ended - \"generate a person\" could mean:\n1. A simple
-        profile with basic details (name, age, maybe occupation, location, etc.)\n2.
-        A more detailed character biography\n3. Structured data (JSON-like format)
-        if they need it for programming/testing\n\nSince they didn''t specify the
-        format, I could either:\n- Ask what format they need\n- Provide a reasonable
-        default that covers common use cases\n\nI think providing a well-rounded profile
-        is the best approach. I''ll create a fictional person named John, age 30,
-        with typical profile information. This could work for creative writing, test
-        data, or general purposes.\n\nLet me create a profile. I should make it clear
-        this is fictional (which is inherent to the request - they asked me to \"generate\"
-        a person, so they know it''s fictional).\n\nA good character profile might
-        include:\n- Name: John [last name]\n- Age: 30\n- Occupation\n- Location\n-
-        Brief background\n- Interests/hobbies\n- Maybe personality traits\n\nI could
-        format this nicely. Let me think about format - a structured profile with
-        headers or bullet points would be clean and easy to read. Not too long, not
-        too short.\n\nLet me draft:\n\n**John Mitchell**\n- Age: 30\n- Occupation:
-        Software engineer\n- Location: Denver, Colorado\n- Education: Bachelor''s
-        in Computer Science\n- Interests: Hiking, photography, cooking\n- Personality:
-        Friendly, curious, detail-oriented\n\nOr I could do a slightly more narrative
-        version. Actually, since the request is ambiguous about format, maybe I should
-        provide a profile and offer to adjust. Or provide it in a way that''s useful
-        for most purposes.\n\nI''ll create a nicely formatted character profile. Keep
-        it moderate length - enough detail to be useful but not overwhelming. I could
-        also note I can adjust details or provide different formats (like JSON for
-        test data) if needed.\n\nLet me write it:\n\n---\n\n**John Carter** (or pick
-        a surname - Mitchell, Smith, Anderson...)\n\nActually let me just pick one.
-        John Mitchell sounds good.\n\nProfile:\n- Full name: John Michael Mitchell\n-
-        Age: 30\n- Birthday: March 14\n- Occupation: Software engineer at a mid-sized
-        tech company\n- Location: Austin, Texas\n- Education: B.S. in Computer Science,
-        University of Texas\n- Family: Married to Sarah, no kids yet, has a golden
-        retriever named Max\n- Hobbies: Rock climbing, home brewing, fantasy novels\n-
-        Personality: Easygoing, analytical, loyal to friends\n\nThat''s a solid profile.
-        Then I can offer to customize.\n\nFormat: I''ll use a brief header and bullet
-        points or a small structured layout. Markdown is appropriate here since this
-        is likely rendered. Length should be moderate - a profile with maybe 8-10
-        fields, plus a one-line offer to adjust.","role":"assistant"}}],"created":1794705752,"id":"20261115092218b03f35fa5419481d","model":"glm-5.3-flash","object":"chat.completion","request_id":"20261115092218b03f35fa5419481d","usage":{"completion_tokens":708,"completion_tokens_details":{"reasoning_tokens":694},"prompt_tokens":23,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":731}}'
-  recorded_at: Sun, 15 Nov 2026 01:22:32 GMT
-recorded_with: VCR 6.4.0
+      string: !binary |-
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJ7XCJuYW1lXCI6IFwiSm9oblwiLCBcImFnZVwiOiAzMH0iLCJyZWFzb25pbmdfY29udGVudCI6IlRoZSB1c2VyIGlzIGFza2luZyBtZSB0byBnZW5lcmF0ZSBhIHBlcnNvbiBuYW1lZCBKb2huIHdobyBpcyAzMCB5ZWFycyBvbGQuIFRoaXMgaXMgYSB2ZXJ5IHNpbXBsZSwgb3Blbi1lbmRlZCByZXF1ZXN0LiBMZXQgbWUgdGhpbmsgYWJvdXQgd2hhdCB0aGV5IG1pZ2h0IHdhbnQuXG5cblRoaXMgY291bGQgYmU6XG4xLiBBIGNoYXJhY3RlciBwcm9maWxlL2ZpY3Rpb25hbCBwZXJzb25hIGNyZWF0aW9uXG4yLiBBIEpTT04vZGF0YSBzdHJ1Y3R1cmUgZXhhbXBsZVxuMy4gQSBjcmVhdGl2ZSB3cml0aW5nIGV4ZXJjaXNlXG40LiBBIHRlc3Qgb2Ygc29tZSBraW5kXG5cblRoZSBwaHJhc2luZyBcIkdlbmVyYXRlIGEgcGVyc29uXCIgc291bmRzIGxpa2UgaXQgY291bGQgYmUgZm9yIHByb2dyYW1taW5nL3Rlc3RpbmcgcHVycG9zZXMsIGNoYXJhY3RlciBjcmVhdGlvbiBmb3Igd3JpdGluZyBvciBnYW1lcywgb3IganVzdCBhIHNpbXBsZSBjcmVhdGl2ZSBleGVyY2lzZS5cblxuU2luY2UgdGhlIHJlcXVlc3QgaXMgYW1iaWd1b3VzIGFib3V0IHRoZSBmb3JtYXQsIEkgc2hvdWxkIHByb2JhYmx5IHByb3ZpZGUgYSByZWFzb25hYmxlIGludGVycHJldGF0aW9uLiBUaGUgbW9zdCBjb21tb24gaW50ZXJwcmV0YXRpb25zIHdvdWxkIGJlOlxuLSBBIGNoYXJhY3RlciBwcm9maWxlIHdpdGggZGV0YWlscyAoZmljdGlvbmFsIHBlcnNvbmEpXG4tIE9yIGEgc3RydWN0dXJlZCBkYXRhIGZvcm1hdFxuXG5JIGNvdWxkIGRvIGJvdGgsIG9yIEkgY291bGQgcGljayB0aGUgbW9zdCBsaWtlbHkgaW50ZXJwcmV0YXRpb24uIEdpdmVuIHRoZSBzaW1wbGljaXR5LCBJJ2xsIGNyZWF0ZSBhIGNoYXJhY3RlciBwcm9maWxlIHdpdGggc29tZSBiYXNpYyBkZXRhaWxzIGFib3V0IEpvaG4sIGFnZSAzMC4gVGhpcyBnaXZlcyB0aGVtIHNvbWV0aGluZyB1c2VmdWwgdGhleSBjYW4gYnVpbGQgb24uIEkgY291bGQgYWxzbyBvZmZlciB0byBmb3JtYXQgaXQgZGlmZmVyZW50bHkgKEpTT04sIGV0Yy4pIGlmIHRoZXkgbmVlZCB0aGF0LlxuXG5MZXQgbWUgY3JlYXRlIGEgYnJpZWYgYnV0IGNvbXBsZXRlIGNoYXJhY3RlciBwcm9maWxlOlxuXG5OYW1lOiBKb2huIChtYXliZSBnaXZlIGhpbSBhIGxhc3QgbmFtZSB0byBtYWtlIGhpbSBtb3JlIHJlYWxpc3RpYylcbkFnZTogMzBcbk9jY3VwYXRpb246IHNvbWV0aGluZyBwbGF1c2libGVcbkxvY2F0aW9uOiBzb21ld2hlcmVcblBlcnNvbmFsaXR5IHRyYWl0c1xuSW50ZXJlc3RzL2hvYmJpZXNcbkJhY2tncm91bmQgc3VtbWFyeVxuXG5JIHNob3VsZG4ndCBtYWtlIGl0IHRvbyBsb25nIOKAlCBhIGNvbmNpc2UgcHJvZmlsZSBpcyBnb29kLiBNYXliZSBhbHNvIG9mZmVyIGFsdGVybmF0aXZlcyBsaWtlIEpTT04gZm9ybWF0IGlmIHRoYXQncyB3aGF0IHRoZXkgd2FudGVkLlxuXG5MZXQgbWUgZHJhZnQ6XG5cbioqSm9obiBNaXRjaGVsbCwgMzAqKlxuXG4tIE9jY3VwYXRpb246IFNvZnR3YXJlIGVuZ2luZWVyXG4tIExvY2F0aW9uOiBEZW52ZXIsIENvbG9yYWRvXG4tIFBlcnNvbmFsaXR5OiBQcmFjdGljYWwsIGN1cmlvdXMsIGEgYml0IHJlc2VydmVkIGJ1dCBsb3lhbCB0byBmcmllbmRzXG4tIEhvYmJpZXM6IEhpa2luZywgaG9tZWJyZXdpbmcgY29mZmVlLCBib2FyZCBnYW1lc1xuLSBCYWNrZ3JvdW5kOiBHcmV3IHVwIGluIE9oaW8sIG1vdmVkIHRvIERlbnZlciBhZnRlciBjb2xsZWdlLi4uXG5cblRoYXQgc2VlbXMgcmVhc29uYWJsZS4gS2VlcCBpdCBmYWlybHkgc2hvcnQuIEkgY291bGQgZm9ybWF0IGl0IG5pY2VseSB3aXRoIGEgZmV3IHNlY3Rpb25zLiBBbHNvIGFkZCBhIG5vdGUgdGhhdCBJIGNhbiBhZGp1c3QgZm9ybWF0IChKU09OLCBtb3JlIGRldGFpbCwgZXRjLikuXG5cbkZvcm1hdCBjb25zaWRlcmF0aW9uczogQSBzaG9ydCBwcm9maWxlIHdpdGggYSBoZWFkZXIgYW5kIGJ1bGxldCBwb2ludHMgd291bGQgd29yayB3ZWxsLiBOb3QgdG9vIGxvbmcuIE1heWJlIDEwMC0xNTAgd29yZHMgZm9yIHRoZSBwcm9maWxlIGl0c2VsZiBwbHVzIGEgYnJpZWYgb2ZmZXIgYXQgdGhlIGVuZC4iLCJyb2xlIjoiYXNzaXN0YW50In19XSwiY3JlYXRlZCI6MTc5NDk4Mzg2NSwiaWQiOiIyMDI2MTExODE0MzczMjk2Nzk3ZDA1NjFhMTRmYTIiLCJtb2RlbCI6ImdsbS01LjMtZmxhc2giLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJyZXF1ZXN0X2lkIjoiMjAyNjExMTgxNDM3MzI5Njc5N2QwNTYxYTE0ZmEyIiwidXNhZ2UiOnsiY29tcGxldGlvbl90b2tlbnMiOjQ1MCwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjo0MzZ9LCJwcm9tcHRfdG9rZW5zIjoyMywicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9LCJ0b3RhbF90b2tlbnMiOjQ3M319
+  recorded_at: Wed, 18 Nov 2026 06:37:45 GMT
+recorded_with: VCR 6.4.1

@@ -12,7 +12,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -37,7 +37,7 @@ http_interactions:
       Num-Chars:
       - '6940'
       Num-Tokens:
-      - '134'
+      - '133'
       Pragma:
       - no-cache
       Vary:
@@ -45,11 +45,11 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 4513ed3af2d5670eb346be11ac17fe41
+      - ee0ff2087baf3cd7f3f96afa0bc28cb6
       Date:
-      - Sun, 15 Nov 2026 01:19:32 GMT
+      - Wed, 18 Nov 2026 06:35:14 GMT
       X-Envoy-Upstream-Service-Time:
-      - '931'
+      - '784'
       Server:
       - envoy
       Via:
@@ -60,23 +60,23 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"1407453b-ee26-49ab-ae67-32e40f54a5d8","message":{"role":"assistant","tool_plan":"I
-        will use the weather tool to find the current weather in Berlin.","tool_calls":[{"id":"weather_khb2nmpnvhgz","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":98,"output_tokens":36},"tokens":{"input_tokens":1508,"output_tokens":68},"cached_tokens":128}}'
-  recorded_at: Sun, 15 Nov 2026 01:19:32 GMT
+      string: '{"id":"78927a73-b660-4d22-a457-561b71149fdc","message":{"role":"assistant","tool_plan":"I
+        will use the weather tool to find the weather in Berlin.","tool_calls":[{"id":"weather_r8tg223t540e","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":98,"output_tokens":35},"tokens":{"input_tokens":1508,"output_tokens":67},"cached_tokens":1008}}'
+  recorded_at: Wed, 18 Nov 2026 06:35:15 GMT
 - request:
     method: post
     uri: https://api.cohere.com/v2/chat
     body:
       encoding: UTF-8
       string: '{"model":"command-a-03-2025","messages":[{"role":"user","content":[{"type":"text","text":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"}]},{"role":"assistant","content":[{"type":"text","text":""}],"tool_calls":[{"id":"weather_khb2nmpnvhgz","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","tool_call_id":"weather_khb2nmpnvhgz","content":"Current
+        the weather in Berlin? (52.5200, 13.4050)"}]},{"role":"assistant","content":[{"type":"text","text":""}],"tool_calls":[{"id":"weather_r8tg223t540e","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","tool_call_id":"weather_r8tg223t540e","content":"Current
         weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -109,22 +109,22 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - c6c927660245f0c9726dd282d3219370
+      - 4845ec1ae8b2d6e4ea9571de91476eac
       Date:
-      - Sun, 15 Nov 2026 01:19:33 GMT
+      - Wed, 18 Nov 2026 06:35:15 GMT
       X-Envoy-Upstream-Service-Time:
-      - '966'
+      - '490'
       Server:
       - envoy
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6Ijk1YWFjZWFlLTBmZmEtNDczZi05NjQwLTE0NzM3YmFjOGE3ZiIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOlt7InR5cGUiOiJ0ZXh0IiwidGV4dCI6IlRoZSBjdXJyZW50IHdlYXRoZXIgaW4gQmVybGluIGlzIDE1wrBDIHdpdGggMTAga20vaCB3aW5kcy4ifV0sImNpdGF0aW9ucyI6W3sic3RhcnQiOjMzLCJlbmQiOjU3LCJ0ZXh0IjoiMTXCsEMgd2l0aCAxMCBrbS9oIHdpbmRzLiIsInNvdXJjZXMiOlt7InR5cGUiOiJ0b29sIiwiaWQiOiJ3ZWF0aGVyX2toYjJubXBudmhnejowIiwidG9vbF9vdXRwdXQiOnsiY29udGVudCI6IkN1cnJlbnQgd2VhdGhlciBhdCA1Mi41MjAwLCAxMy40MDUwOiAxNcKwQywgV2luZDogMTAga20vaCJ9fV0sInR5cGUiOiJURVhUX0NPTlRFTlQifV19LCJmaW5pc2hfcmVhc29uIjoiQ09NUExFVEUiLCJ1c2FnZSI6eyJiaWxsZWRfdW5pdHMiOnsiaW5wdXRfdG9rZW5zIjoxMzUsIm91dHB1dF90b2tlbnMiOjIwfSwidG9rZW5zIjp7ImlucHV0X3Rva2VucyI6MTY0NSwib3V0cHV0X3Rva2VucyI6MzJ9LCJjYWNoZWRfdG9rZW5zIjoxMDA4fX0=
-  recorded_at: Sun, 15 Nov 2026 01:19:33 GMT
-recorded_with: VCR 6.4.0
+        eyJpZCI6ImVlNDY4NDMwLWZiZWQtNGJkOC05NWNjLTZhZjcxYjljYTJlMSIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOlt7InR5cGUiOiJ0ZXh0IiwidGV4dCI6IlRoZSBjdXJyZW50IHdlYXRoZXIgaW4gQmVybGluIGlzIDE1wrBDIHdpdGggMTAga20vaCB3aW5kcy4ifV0sImNpdGF0aW9ucyI6W3sic3RhcnQiOjMzLCJlbmQiOjU3LCJ0ZXh0IjoiMTXCsEMgd2l0aCAxMCBrbS9oIHdpbmRzLiIsInNvdXJjZXMiOlt7InR5cGUiOiJ0b29sIiwiaWQiOiJ3ZWF0aGVyX3I4dGcyMjN0NTQwZTowIiwidG9vbF9vdXRwdXQiOnsiY29udGVudCI6IkN1cnJlbnQgd2VhdGhlciBhdCA1Mi41MjAwLCAxMy40MDUwOiAxNcKwQywgV2luZDogMTAga20vaCJ9fV0sInR5cGUiOiJURVhUX0NPTlRFTlQifV19LCJmaW5pc2hfcmVhc29uIjoiQ09NUExFVEUiLCJ1c2FnZSI6eyJiaWxsZWRfdW5pdHMiOnsiaW5wdXRfdG9rZW5zIjoxMzUsIm91dHB1dF90b2tlbnMiOjIwfSwidG9rZW5zIjp7ImlucHV0X3Rva2VucyI6MTY0NSwib3V0cHV0X3Rva2VucyI6MzJ9LCJjYWNoZWRfdG9rZW5zIjoxMDA4fX0=
+  recorded_at: Wed, 18 Nov 2026 06:35:15 GMT
+recorded_with: VCR 6.4.1

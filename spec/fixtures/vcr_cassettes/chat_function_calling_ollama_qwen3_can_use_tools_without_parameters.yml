@@ -10,7 +10,7 @@ http_interactions:
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -25,40 +25,41 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 15 Nov 2026 01:29:40 GMT
+      - Wed, 18 Nov 2026 06:43:07 GMT
       Content-Length:
-      - '806'
+      - '828'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-481","object":"chat.completion","created":1794706180,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
-        the user wants to know which programming language they should learn using
-        the best_language_to_learn tool. Let me check the available functions. The
-        tool is named best_language_to_learn, and it doesn''t require any arguments.
-        So I need to call that function without any parameters. I''ll structure the
-        tool call accordingly.\n","tool_calls":[{"id":"call_irgi754o","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":139,"prompt_tokens_details":{"cached_tokens":48},"completion_tokens":86,"total_tokens":225}}
+      string: '{"id":"chatcmpl-57","object":"chat.completion","created":1794984187,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
+        the user wants to know which language to learn using the best_language_to_learn
+        tool. Let me check the functions available. There''s a function called best_language_to_learn
+        with no parameters. Since there are no arguments needed, I just need to call
+        that function. I''ll make sure to structure the tool call correctly in JSON
+        within the XML tags.\n","tool_calls":[{"id":"call_xssawjhv","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":139,"prompt_tokens_details":{"cached_tokens":48},"completion_tokens":93,"total_tokens":232}}
 
         '
-  recorded_at: Sun, 15 Nov 2026 01:29:40 GMT
+  recorded_at: Wed, 18 Nov 2026 06:43:07 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"Use the best_language_to_learn
-        tool to tell me which language to learn."},{"role":"assistant","content":"","tool_calls":[{"id":"call_irgi754o","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"Okay,
-        the user wants to know which programming language they should learn using
-        the best_language_to_learn tool. Let me check the available functions. The
-        tool is named best_language_to_learn, and it doesn''t require any arguments.
-        So I need to call that function without any parameters. I''ll structure the
-        tool call accordingly.\n","reasoning_content":"Okay, the user wants to know
-        which programming language they should learn using the best_language_to_learn
-        tool. Let me check the available functions. The tool is named best_language_to_learn,
-        and it doesn''t require any arguments. So I need to call that function without
-        any parameters. I''ll structure the tool call accordingly.\n"},{"role":"tool","content":"Ruby","tool_call_id":"call_irgi754o"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        tool to tell me which language to learn."},{"role":"assistant","content":"","tool_calls":[{"id":"call_xssawjhv","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"Okay,
+        the user wants to know which language to learn using the best_language_to_learn
+        tool. Let me check the functions available. There''s a function called best_language_to_learn
+        with no parameters. Since there are no arguments needed, I just need to call
+        that function. I''ll make sure to structure the tool call correctly in JSON
+        within the XML tags.\n","reasoning_content":"Okay, the user wants to know
+        which language to learn using the best_language_to_learn tool. Let me check
+        the functions available. There''s a function called best_language_to_learn
+        with no parameters. Since there are no arguments needed, I just need to call
+        that function. I''ll make sure to structure the tool call correctly in JSON
+        within the XML tags.\n"},{"role":"tool","content":"Ruby","tool_call_id":"call_xssawjhv"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -73,12 +74,22 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 15 Nov 2026 01:29:41 GMT
+      - Wed, 18 Nov 2026 06:43:08 GMT
       Content-Length:
-      - '974'
+      - '1006'
     body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTI5Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY3JlYXRlZCI6MTc5NDcwNjE4MSwibW9kZWwiOiJxd2VuMyIsInN5c3RlbV9maW5nZXJwcmludCI6ImZwX29sbGFtYSIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIGJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm4gaXMgKipSdWJ5KiouIEl0IGlzIGtub3duIGZvciBpdHMgc2ltcGxpY2l0eSwgcmVhZGFiaWxpdHksIGFuZCB2ZXJzYXRpbGl0eSwgbWFraW5nIGl0IGFuIGV4Y2VsbGVudCBjaG9pY2UgZm9yIGJlZ2lubmVycyBhbmQgZXhwZXJpZW5jZWQgZGV2ZWxvcGVycyBhbGlrZS4g8J+MnyIsInJlYXNvbmluZyI6Ik9rYXksIHRoZSB1c2VyIGFza2VkIHdoaWNoIGxhbmd1YWdlIHRvIGxlYXJuLCBhbmQgdGhlIHRvb2wgcmV0dXJuZWQgXCJSdWJ5XCIuIEkgbmVlZCB0byBwcmVzZW50IHRoaXMgYW5zd2VyIGNsZWFybHkuIExldCBtZSBjb25maXJtIHRoYXQgUnVieSBpcyBpbmRlZWQgY29uc2lkZXJlZCB0aGUgYmVzdCBsYW5ndWFnZSBiYXNlZCBvbiB0aGUgdG9vbCdzIGRhdGEuIFNpbmNlIHRoZXJlIGFyZSBubyBhcmd1bWVudHMgbmVlZGVkLCB0aGUgcmVzcG9uc2UgaXMgc3RyYWlnaHRmb3J3YXJkLiBJJ2xsIHN0YXRlIHRoYXQgUnVieSBpcyB0aGUgYmVzdCBsYW5ndWFnZSB0byBsZWFybiBhbmQgbWF5YmUgYWRkIGEgYnJpZWYgcmVhc29uLCBsaWtlIGl0cyB2ZXJzYXRpbGl0eSBhbmQgZWFzZSBvZiBsZWFybmluZy4gTWFrZSBzdXJlIHRoZSBhbnN3ZXIgaXMgaGVscGZ1bCBhbmQgY29uY2lzZS5cbiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MjM4LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MTQwfSwiY29tcGxldGlvbl90b2tlbnMiOjEzMiwidG90YWxfdG9rZW5zIjozNzB9fQo=
-  recorded_at: Sun, 15 Nov 2026 01:29:41 GMT
-recorded_with: VCR 6.4.0
+      encoding: UTF-8
+      string: '{"id":"chatcmpl-64","object":"chat.completion","created":1794984188,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        best language to learn is **Ruby**. It''s known for its simplicity and productivity,
+        especially in web development through frameworks like Ruby on Rails. Its readable
+        syntax makes it a great choice for beginners and experienced developers alike.","reasoning":"Okay,
+        the user asked which language to learn, and the tool returned \"Ruby\". I
+        need to present this answer clearly. Let me confirm that Ruby is the correct
+        response from the tool. Since there were no parameters involved, the answer
+        is straightforward. I''ll state that the best language to learn is Ruby, maybe
+        add a brief reason like its versatility and popularity in web development.
+        Keep it simple and helpful.\n"},"finish_reason":"stop"}],"usage":{"prompt_tokens":245,"prompt_tokens_details":{"cached_tokens":140},"completion_tokens":132,"total_tokens":377}}
+
+        '
+  recorded_at: Wed, 18 Nov 2026 06:43:08 GMT
+recorded_with: VCR 6.4.1

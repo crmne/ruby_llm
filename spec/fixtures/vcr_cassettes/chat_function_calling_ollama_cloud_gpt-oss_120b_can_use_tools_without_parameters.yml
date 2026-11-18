@@ -10,7 +10,7 @@ http_interactions:
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -27,50 +27,47 @@ http_interactions:
       Content-Type:
       - application/json
       X-Build-Commit:
-      - 9259ed42dedddf2a22abf15e2a28fc3662da6272
+      - cf4922364784346c6f13e06b08149fb1469e06a1
       X-Build-Time:
-      - '2026-11-14T15:25:41-08:00'
+      - '2026-11-17T18:17:32-08:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Content-Length:
-      - '627'
+      - '531'
       Date:
-      - Sun, 15 Nov 2026 01:30:11 GMT
+      - Wed, 18 Nov 2026 06:44:15 GMT
       Server:
       - Google Frontend
-      X-Cloud-Trace-Context:
-      - 0a740be2506f73b66e37028a1e6a6cdd/12940374190884647523
       Traceparent:
-      - 00-0a740be2506f73b66e37028a1e6a6cdd-b39571c3fc4ff263-00
+      - 00-28f36eb7d0a2ec9bcb4613ee8233f9bd-10bcb1ce16a4a418-00
+      X-Cloud-Trace-Context:
+      - 28f36eb7d0a2ec9bcb4613ee8233f9bd/1206034298929718296
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      - h3=":443"; ma=2592000
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-159","object":"chat.completion","created":1794706211,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"The
-        user wants the tool best_language_to_learn to be called. The tool likely returns
-        something like a language name. I should call the function.","tool_calls":[{"id":"call_n6qcy8gm","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":132,"completion_tokens":53,"total_tokens":185,"prompt_tokens_details":{"cached_tokens":64}}}
+      string: '{"id":"chatcmpl-275","object":"chat.completion","created":1794984255,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"We
+        need to call the tool best_language_to_learn.","tool_calls":[{"id":"call_xdcvzkxk","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":132,"completion_tokens":35,"total_tokens":167,"prompt_tokens_details":{"cached_tokens":64}}}
 
         '
-  recorded_at: Sun, 15 Nov 2026 01:30:11 GMT
+  recorded_at: Wed, 18 Nov 2026 06:44:15 GMT
 - request:
     method: post
     uri: https://ollama.com/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"gpt-oss:120b","messages":[{"role":"user","content":"Use the
-        best_language_to_learn tool to tell me which language to learn."},{"role":"assistant","content":"","tool_calls":[{"id":"call_n6qcy8gm","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"The
-        user wants the tool best_language_to_learn to be called. The tool likely returns
-        something like a language name. I should call the function.","reasoning_content":"The
-        user wants the tool best_language_to_learn to be called. The tool likely returns
-        something like a language name. I should call the function."},{"role":"tool","content":"Ruby","tool_call_id":"call_n6qcy8gm"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        best_language_to_learn tool to tell me which language to learn."},{"role":"assistant","content":"","tool_calls":[{"id":"call_xdcvzkxk","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"We
+        need to call the tool best_language_to_learn.","reasoning_content":"We need
+        to call the tool best_language_to_learn."},{"role":"tool","content":"Ruby","tool_call_id":"call_xdcvzkxk"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -87,23 +84,23 @@ http_interactions:
       Content-Type:
       - application/json
       X-Build-Commit:
-      - 9259ed42dedddf2a22abf15e2a28fc3662da6272
+      - cf4922364784346c6f13e06b08149fb1469e06a1
       X-Build-Time:
-      - '2026-11-14T15:25:41-08:00'
+      - '2026-11-17T18:17:32-08:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Content-Length:
-      - '621'
+      - '691'
       Date:
-      - Sun, 15 Nov 2026 01:30:11 GMT
+      - Wed, 18 Nov 2026 06:44:16 GMT
       Server:
       - Google Frontend
       X-Cloud-Trace-Context:
-      - 1b206683d4ab6addff14a286d27c4a8f/7145993867468163511
+      - 415818b1f23a336925a4fefce4b2ebed/14067834747500887798
       Traceparent:
-      - 00-1b206683d4ab6addff14a286d27c4a8f-632bab8fb58f49b7-00
+      - 00-415818b1f23a336925a4fefce4b2ebed-c33afd2b13affef6-00
       Via:
       - 1.1 google
       Alt-Svc:
@@ -111,6 +108,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTUyMiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTQ3MDYyMTEsIm1vZGVsIjoiZ3B0LW9zczoxMjBiIiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfb2xsYW1hIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJCYXNlZCBvbiBjdXJyZW50IHRyZW5kcywgam9iIG1hcmtldCBkZW1hbmQsIGNvbW11bml0eSBzdXBwb3J0LCBhbmQgdmVyc2F0aWxpdHksICoqUnVieSoqIGlzIGEgZ3JlYXQgbGFuZ3VhZ2UgdG8gbGVhcm4gcmlnaHQgbm93LiBJdOKAmXMgZXNwZWNpYWxseSB2YWx1YWJsZSBpZiB5b3XigJlyZSBpbnRlcmVzdGVkIGluIHdlYiBkZXZlbG9wbWVudCB3aXRoIHRoZSBSdWJ5IG9uIFJhaWxzIGZyYW1ld29yaywgc2NyaXB0aW5nLCBvciBidWlsZGluZyByYXBpZCBwcm90b3R5cGVzLiBIYXBweSBjb2RpbmchIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoyMDAsImNvbXBsZXRpb25fdG9rZW5zIjo1OSwidG90YWxfdG9rZW5zIjoyNTksInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoxNjB9fX0K
-  recorded_at: Sun, 15 Nov 2026 01:30:11 GMT
-recorded_with: VCR 6.4.0
+        eyJpZCI6ImNoYXRjbXBsLTk3MSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTQ5ODQyNTYsIm1vZGVsIjoiZ3B0LW9zczoxMjBiIiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfb2xsYW1hIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJUaGUgYmVzdCBsYW5ndWFnZSB0byBsZWFybiByaWdodCBub3cgaXMgKipSdWJ5KiouIEl04oCZcyBrbm93biBmb3IgaXRzIGVsZWdhbnQgc3ludGF4LCBzdHJvbmcgY29tbXVuaXR5IHN1cHBvcnQsIGFuZCBhIHRocml2aW5nIGVjb3N5c3RlbeKAlGVzcGVjaWFsbHkgdGhhbmtzIHRvIFJ1Ynkgb24gUmFpbHMgZm9yIHdlYiBkZXZlbG9wbWVudC4gSWYgeW914oCZcmUgaW50ZXJlc3RlZCBpbiBidWlsZGluZyB3ZWIgYXBwcyBxdWlja2x5LCBhdXRvbWF0aW5nIHRhc2tzLCBvciBleHBsb3JpbmcgYSBsYW5ndWFnZSB0aGF0IGVtcGhhc2l6ZXMgZGV2ZWxvcGVyIGhhcHBpbmVzcywgUnVieSBpcyBhbiBleGNlbGxlbnQgY2hvaWNlLiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MTgyLCJjb21wbGV0aW9uX3Rva2VucyI6NzIsInRvdGFsX3Rva2VucyI6MjU0LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MTQ0fX19Cg==
+  recorded_at: Wed, 18 Nov 2026 06:44:16 GMT
+recorded_with: VCR 6.4.1

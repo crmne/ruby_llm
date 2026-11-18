@@ -5,17 +5,17 @@ http_interactions:
     uri: https://api.minimax.io/v1/files/upload
     body:
       encoding: UTF-8
-      string: "-------------RubyMultipartPost-15819e00e9b7edb7d9b754c622bccab1\r\nContent-Disposition:
-        form-data; name=\"purpose\"\r\n\r\nt2a_async_input\r\n-------------RubyMultipartPost-15819e00e9b7edb7d9b754c622bccab1\r\nContent-Disposition:
+      string: "-------------RubyMultipartPost-33b142be30383838fd202a743ba8f8e1\r\nContent-Disposition:
+        form-data; name=\"purpose\"\r\n\r\nt2a_async_input\r\n-------------RubyMultipartPost-33b142be30383838fd202a743ba8f8e1\r\nContent-Disposition:
         form-data; name=\"file\"; filename=\"ruby.txt\"\r\nContent-Length: 17\r\nContent-Type:
-        text/plain\r\nContent-Transfer-Encoding: binary\r\n\r\nRuby is the best.\r\n-------------RubyMultipartPost-15819e00e9b7edb7d9b754c622bccab1--\r\n"
+        text/plain\r\nContent-Transfer-Encoding: binary\r\n\r\nRuby is the best.\r\n-------------RubyMultipartPost-33b142be30383838fd202a743ba8f8e1--\r\n"
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
-      - multipart/form-data; boundary=-----------RubyMultipartPost-15819e00e9b7edb7d9b754c622bccab1
+      - multipart/form-data; boundary=-----------RubyMultipartPost-33b142be30383838fd202a743ba8f8e1
       Content-Length:
       - '432'
       Accept-Encoding:
@@ -32,21 +32,21 @@ http_interactions:
       Content-Length:
       - '174'
       Trace-Id:
-      - '07483bb5a9d17386295ccea1844947a2'
+      - 074c7a0cdf1f04e4dd467ff59304effc
       Minimax-Request-Id:
-      - 06102a4ab21422872567d80db0af872c
+      - 3ae45e6a221d25965ac241d91fb882bc
       Alb-Receive-Time:
-      - '1794705589.766'
+      - '1794983692.254'
       Alb-Request-Id:
-      - 1d40bf8893b823dac0cfa1f0466d500e14eb36b4
+      - d91ff1d347f85ef917aeceb9105d06fa38df4044
       Expires:
-      - Sun, 15 Nov 2026 01:19:50 GMT
+      - Wed, 18 Nov 2026 06:34:52 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Sun, 15 Nov 2026 01:19:50 GMT
+      - Wed, 18 Nov 2026 06:34:52 GMT
       Connection:
       - keep-alive
       Access-Control-Allow-Origin:
@@ -55,6 +55,6 @@ http_interactions:
       - ak
     body:
       encoding: UTF-8
-      string: '{"file":{"file_id":463465126367481,"bytes":17,"created_at":1794705590,"filename":"ruby.txt","purpose":"t2a_async_input"},"base_resp":{"status_code":0,"status_msg":"success"}}'
-  recorded_at: Sun, 15 Nov 2026 01:19:50 GMT
-recorded_with: VCR 6.4.0
+      string: '{"file":{"file_id":464611016544563,"bytes":17,"created_at":1794983692,"filename":"ruby.txt","purpose":"t2a_async_input"},"base_resp":{"status_code":0,"status_msg":"success"}}'
+  recorded_at: Wed, 18 Nov 2026 06:34:52 GMT
+recorded_with: VCR 6.4.1

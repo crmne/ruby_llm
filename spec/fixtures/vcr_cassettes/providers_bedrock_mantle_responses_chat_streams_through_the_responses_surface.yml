@@ -9,11 +9,11 @@ http_interactions:
         from 1 to 5."}],"stream":true,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261115T012052Z
+      - 20261118T063433Z
       X-Amz-Content-Sha256:
       - cbf3696d10214f5c50a9bca4dcc815b609f32c3d2122a8724949d2e40ceee1fc
       Authorization:
@@ -29,7 +29,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:20:52 GMT
+      - Wed, 18 Nov 2026 06:34:33 GMT
       Content-Type:
       - text/event-stream
       Transfer-Encoding:
@@ -39,7 +39,7 @@ http_interactions:
       Cache-Control:
       - no-cache
       X-Amzn-Requestid:
-      - req_nb6hnezbgznxgwfimtck36vky5irehrcgx7uadt45jaic5bjatpa
+      - req_p6whxxos7o75smm4g7rrd2ioi7yhrulgswd7eduraeuuqromc4ka
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Vary:
@@ -51,36 +51,42 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |+
-        data: {"response":{"background":false,"created_at":1794705652.0,"error":null,"id":"resp_zy3bd7ztghpn3cl4elk7bicmcntl6lrtpgn3cvpftvieeuf64tva","incomplete_details":null,"instructions":null,"metadata":null,"model":"openai.gpt-oss-20b","object":"response","output":[],"parallel_tool_calls":true,"service_tier":"auto","status":"in_progress","temperature":1.0,"tool_choice":"auto","tools":[],"top_p":1.0,"truncation":"disabled"},"sequence_number":0,"type":"response.created"}
+        data: {"response":{"background":false,"created_at":1794983673.0,"error":null,"id":"resp_mnegognachuhoo7b4i2eoej2sqirgl3c42s6jjwerzh4euwu4gta","incomplete_details":null,"instructions":null,"metadata":null,"model":"openai.gpt-oss-20b","object":"response","output":[],"parallel_tool_calls":true,"service_tier":"auto","status":"in_progress","temperature":1.0,"tool_choice":"auto","tools":[],"top_p":1.0,"truncation":"disabled"},"sequence_number":0,"type":"response.created"}
 
-        data: {"response":{"background":false,"created_at":1794705652.0,"error":null,"id":"resp_zy3bd7ztghpn3cl4elk7bicmcntl6lrtpgn3cvpftvieeuf64tva","incomplete_details":null,"instructions":null,"metadata":null,"model":"openai.gpt-oss-20b","object":"response","output":[],"parallel_tool_calls":true,"service_tier":"auto","status":"in_progress","temperature":1.0,"tool_choice":"auto","tools":[],"top_p":1.0,"truncation":"disabled"},"sequence_number":1,"type":"response.in_progress"}
+        data: {"response":{"background":false,"created_at":1794983673.0,"error":null,"id":"resp_mnegognachuhoo7b4i2eoej2sqirgl3c42s6jjwerzh4euwu4gta","incomplete_details":null,"instructions":null,"metadata":null,"model":"openai.gpt-oss-20b","object":"response","output":[],"parallel_tool_calls":true,"service_tier":"auto","status":"in_progress","temperature":1.0,"tool_choice":"auto","tools":[],"top_p":1.0,"truncation":"disabled"},"sequence_number":1,"type":"response.in_progress"}
 
-        data: {"item":{"id":"msg_b2edc7b1e879ff97","status":"in_progress","summary":[],"type":"reasoning"},"output_index":0,"sequence_number":2,"type":"response.output_item.added"}
+        data: {"item":{"id":"msg_b4f10e9446a03008","status":"in_progress","summary":[],"type":"reasoning"},"output_index":0,"sequence_number":2,"type":"response.output_item.added"}
 
-        data: {"content_index":0,"item_id":"msg_b2edc7b1e879ff97","output_index":0,"part":{"text":"","type":"reasoning_text"},"sequence_number":3,"type":"response.reasoning_part.added"}
+        data: {"content_index":0,"item_id":"msg_b4f10e9446a03008","output_index":0,"part":{"text":"","type":"reasoning_text"},"sequence_number":3,"type":"response.reasoning_part.added"}
 
-        data: {"content_index":0,"delta":"User: \"Count from 1 to 5.\" It's a simple instruction: \"Count from 1 to 5.\" Provide a count probably the numbers 1 2 3 4 5 or maybe write each number. I'll comply. It's straightforward.","item_id":"msg_b2edc7b1e879ff97","output_index":0,"sequence_number":4,"type":"response.reasoning_text.delta"}
+        data: {"content_index":0,"delta":"The user says: \"Count from 1 to 5.\" They want me to count presumably aloud: 1, ","item_id":"msg_b4f10e9446a03008","output_index":0,"sequence_number":4,"type":"response.reasoning_text.delta"}
 
-        data: {"content_index":0,"item_id":"msg_b2edc7b1e879ff97","output_index":0,"sequence_number":5,"text":"User: \"Count from 1 to 5.\" It's a simple instruction: \"Count from 1 to 5.\" Provide a count probably the numbers 1 2 3 4 5 or maybe write each number. I'll comply. It's straightforward.","type":"response.reasoning_text.done"}
+        data: {"content_index":0,"delta":"2, 3, 4, 5. So answer: \"1 2 3 4 5\" or","item_id":"msg_b4f10e9446a03008","output_index":0,"sequence_number":5,"type":"response.reasoning_text.delta"}
 
-        data: {"content_index":0,"item_id":"msg_b2edc7b1e879ff97","output_index":0,"part":{"text":"User: \"Count from 1 to 5.\" It's a simple instruction: \"Count from 1 to 5.\" Provide a count probably the numbers 1 2 3 4 5 or maybe write each number. I'll comply. It's straightforward.","type":"reasoning_text"},"sequence_number":6,"type":"response.reasoning_part.done"}
+        data: {"content_index":0,"delta":" maybe \"1, 2, 3, 4, 5\". I'll give them.\n\nShould I answer just","item_id":"msg_b4f10e9446a03008","output_index":0,"sequence_number":6,"type":"response.reasoning_text.delta"}
 
-        data: {"item":{"content":[{"text":"User: \"Count from 1 to 5.\" It's a simple instruction: \"Count from 1 to 5.\" Provide a count probably the numbers 1 2 3 4 5 or maybe write each number. I'll comply. It's straightforward.","type":"reasoning_text"}],"id":"msg_b2edc7b1e879ff97","status":"completed","summary":[],"type":"reasoning"},"output_index":0,"sequence_number":7,"type":"response.output_item.done"}
+        data: {"content_index":0,"delta":" that? Yes.","item_id":"msg_b4f10e9446a03008","output_index":0,"sequence_number":7,"type":"response.reasoning_text.delta"}
 
-        data: {"item":{"content":[],"id":"msg_b367781b26286f5a","role":"assistant","status":"in_progress","type":"message"},"output_index":1,"sequence_number":8,"type":"response.output_item.added"}
+        data: {"content_index":0,"item_id":"msg_b4f10e9446a03008","output_index":0,"sequence_number":8,"text":"The user says: \"Count from 1 to 5.\" They want me to count presumably aloud: 1, 2, 3, 4, 5. So answer: \"1 2 3 4 5\" or maybe \"1, 2, 3, 4, 5\". I'll give them.\n\nShould I answer just that? Yes.","type":"response.reasoning_text.done"}
 
-        data: {"content_index":1,"item_id":"msg_b367781b26286f5a","output_index":1,"part":{"annotations":[],"logprobs":[],"text":"","type":"output_text"},"sequence_number":9,"type":"response.content_part.added"}
+        data: {"content_index":0,"item_id":"msg_b4f10e9446a03008","output_index":0,"part":{"text":"The user says: \"Count from 1 to 5.\" They want me to count presumably aloud: 1, 2, 3, 4, 5. So answer: \"1 2 3 4 5\" or maybe \"1, 2, 3, 4, 5\". I'll give them.\n\nShould I answer just that? Yes.","type":"reasoning_text"},"sequence_number":9,"type":"response.reasoning_part.done"}
 
-        data: {"content_index":1,"delta":"1, 2, 3, 4, 5","item_id":"msg_b367781b26286f5a","logprobs":[],"output_index":1,"sequence_number":10,"type":"response.output_text.delta"}
+        data: {"item":{"content":[{"text":"The user says: \"Count from 1 to 5.\" They want me to count presumably aloud: 1, 2, 3, 4, 5. So answer: \"1 2 3 4 5\" or maybe \"1, 2, 3, 4, 5\". I'll give them.\n\nShould I answer just that? Yes.","type":"reasoning_text"}],"id":"msg_b4f10e9446a03008","status":"completed","summary":[],"type":"reasoning"},"output_index":0,"sequence_number":10,"type":"response.output_item.done"}
 
-        data: {"content_index":1,"item_id":"msg_b367781b26286f5a","logprobs":[],"output_index":1,"sequence_number":11,"text":"1, 2, 3, 4, 5","type":"response.output_text.done"}
+        data: {"item":{"content":[],"id":"msg_9fd860068021c7be","role":"assistant","status":"in_progress","type":"message"},"output_index":1,"sequence_number":11,"type":"response.output_item.added"}
 
-        data: {"content_index":1,"item_id":"msg_b367781b26286f5a","output_index":1,"part":{"annotations":[],"text":"1, 2, 3, 4, 5","type":"output_text"},"sequence_number":12,"type":"response.content_part.done"}
+        data: {"content_index":1,"item_id":"msg_9fd860068021c7be","output_index":1,"part":{"annotations":[],"logprobs":[],"text":"","type":"output_text"},"sequence_number":12,"type":"response.content_part.added"}
 
-        data: {"item":{"content":[{"annotations":[],"text":"1, 2, 3, 4, 5","type":"output_text"}],"id":"msg_b367781b26286f5a","role":"assistant","status":"completed","type":"message"},"output_index":1,"sequence_number":13,"type":"response.output_item.done"}
+        data: {"content_index":1,"delta":"1, 2, 3, 4, 5.","item_id":"msg_9fd860068021c7be","logprobs":[],"output_index":1,"sequence_number":13,"type":"response.output_text.delta"}
 
-        data: {"response":{"background":false,"created_at":1794705652.0,"error":null,"id":"resp_zy3bd7ztghpn3cl4elk7bicmcntl6lrtpgn3cvpftvieeuf64tva","incomplete_details":null,"instructions":null,"metadata":null,"model":"openai.gpt-oss-20b","object":"response","output":[{"content":[{"text":"User: \"Count from 1 to 5.\" It's a simple instruction: \"Count from 1 to 5.\" Provide a count probably the numbers 1 2 3 4 5 or maybe write each number. I'll comply. It's straightforward.","type":"reasoning_text"}],"id":"msg_b2edc7b1e879ff97","status":"completed","summary":[],"type":"reasoning"},{"content":[{"annotations":[],"text":"1, 2, 3, 4, 5","type":"output_text"}],"id":"msg_b367781b26286f5a","role":"assistant","status":"completed","type":"message"}],"parallel_tool_calls":true,"service_tier":"auto","status":"completed","temperature":1.0,"tool_choice":"auto","tools":[],"top_p":1.0,"truncation":"disabled","usage":{"input_tokens":75,"input_tokens_details":{"cached_tokens":0},"output_tokens":76,"output_tokens_details":{"reasoning_tokens":54},"total_tokens":151}},"sequence_number":14,"type":"response.completed"}
+        data: {"content_index":1,"item_id":"msg_9fd860068021c7be","logprobs":[],"output_index":1,"sequence_number":14,"text":"1, 2, 3, 4, 5.","type":"response.output_text.done"}
 
-  recorded_at: Sun, 15 Nov 2026 01:20:52 GMT
-recorded_with: VCR 6.4.0
+        data: {"content_index":1,"item_id":"msg_9fd860068021c7be","output_index":1,"part":{"annotations":[],"text":"1, 2, 3, 4, 5.","type":"output_text"},"sequence_number":15,"type":"response.content_part.done"}
+
+        data: {"item":{"content":[{"annotations":[],"text":"1, 2, 3, 4, 5.","type":"output_text"}],"id":"msg_9fd860068021c7be","role":"assistant","status":"completed","type":"message"},"output_index":1,"sequence_number":16,"type":"response.output_item.done"}
+
+        data: {"response":{"background":false,"created_at":1794983673.0,"error":null,"id":"resp_mnegognachuhoo7b4i2eoej2sqirgl3c42s6jjwerzh4euwu4gta","incomplete_details":null,"instructions":null,"metadata":null,"model":"openai.gpt-oss-20b","object":"response","output":[{"content":[{"text":"The user says: \"Count from 1 to 5.\" They want me to count presumably aloud: 1, 2, 3, 4, 5. So answer: \"1 2 3 4 5\" or maybe \"1, 2, 3, 4, 5\". I'll give them.\n\nShould I answer just that? Yes.","type":"reasoning_text"}],"id":"msg_b4f10e9446a03008","status":"completed","summary":[],"type":"reasoning"},{"content":[{"annotations":[],"text":"1, 2, 3, 4, 5.","type":"output_text"}],"id":"msg_9fd860068021c7be","role":"assistant","status":"completed","type":"message"}],"parallel_tool_calls":true,"service_tier":"auto","status":"completed","temperature":1.0,"tool_choice":"auto","tools":[],"top_p":1.0,"truncation":"disabled","usage":{"input_tokens":75,"input_tokens_details":{"cached_tokens":0},"output_tokens":103,"output_tokens_details":{"reasoning_tokens":80},"total_tokens":178}},"sequence_number":17,"type":"response.completed"}
+
+  recorded_at: Wed, 18 Nov 2026 06:34:35 GMT
+recorded_with: VCR 6.4.1
 ...

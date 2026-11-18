@@ -13,7 +13,7 @@ http_interactions:
         window to schedule"}},"required":["window"],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -30,33 +30,33 @@ http_interactions:
       Content-Type:
       - application/json
       X-Build-Commit:
-      - 9259ed42dedddf2a22abf15e2a28fc3662da6272
+      - cf4922364784346c6f13e06b08149fb1469e06a1
       X-Build-Time:
-      - '2026-11-14T15:25:41-08:00'
+      - '2026-11-17T18:17:32-08:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Content-Length:
-      - '671'
+      - '649'
       Date:
-      - Sun, 15 Nov 2026 01:30:24 GMT
+      - Wed, 18 Nov 2026 06:44:25 GMT
       Server:
       - Google Frontend
-      Traceparent:
-      - 00-c761a0c3a4412c1300f1cbc1bc0152c4-f677107ce96c21a1-00
       X-Cloud-Trace-Context:
-      - c761a0c3a4412c1300f1cbc1bc0152c4/17759681784237007265
+      - bbb8f855f078cc0f880c124ca943b54c/2750668679473917404
+      Traceparent:
+      - 00-bbb8f855f078cc0f880c124ca943b54c-262c56971ed5eddc-00
       Via:
       - 1.1 google
       Alt-Svc:
       - h3=":443"; ma=2592000
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-543","object":"chat.completion","created":1794706224,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"User
-        wants to call object params tool with window start and end dates. We need
-        to invoke functions.object_params with appropriate params.","tool_calls":[{"id":"call_1vxxv65l","index":0,"type":"function","function":{"name":"object_params","arguments":"{\"window\":{\"end\":\"2025-01-02\",\"start\":\"2025-01-01\"}}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":159,"completion_tokens":77,"total_tokens":236,"prompt_tokens_details":{"cached_tokens":64}}}
+      string: '{"id":"chatcmpl-62","object":"chat.completion","created":1794984265,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"We
+        need to call the tool \"functions.object_params\" with window param containing
+        start and end dates. Use the tool.","tool_calls":[{"id":"call_ipdvj9kw","index":0,"type":"function","function":{"name":"object_params","arguments":"{\"window\":{\"end\":\"2025-01-02\",\"start\":\"2025-01-01\"}}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":159,"completion_tokens":76,"total_tokens":235,"prompt_tokens_details":{"cached_tokens":64}}}
 
         '
-  recorded_at: Sun, 15 Nov 2026 01:30:24 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:44:25 GMT
+recorded_with: VCR 6.4.1

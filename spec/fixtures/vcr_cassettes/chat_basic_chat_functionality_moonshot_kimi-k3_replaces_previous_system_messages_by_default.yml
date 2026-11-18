@@ -10,7 +10,7 @@ http_interactions:
         me about the weather."}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 02:00:29 GMT
+      - Wed, 18 Nov 2026 06:38:59 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -38,7 +38,7 @@ http_interactions:
       - Accept-Encoding
       - Origin
       X-Internal-Adhoc-Canary:
-      - '1897954185'
+      - '2666295442'
       Msh-Gid:
       - "<MOONSHOT_GROUP_ID>"
       Msh-Org-Id:
@@ -46,7 +46,7 @@ http_interactions:
       Msh-Project-Id:
       - "<MOONSHOT_PROJECT_ID>"
       Msh-Request-Id:
-      - 4efd003d-e098-11f1-b8b6-00163e2b0d23
+      - b7e1180d-e31a-11f1-8385-00163e05d0f4
       Msh-Trace-Mode:
       - 'on'
       Msh-Uid:
@@ -56,122 +56,7 @@ http_interactions:
       Msh-Usage-Cache-Write-Tokens-5m:
       - '0'
       X-Msh-Trace-Id:
-      - 4c0cc10e15f19a81ec8075ca0bee0920
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains
-      Cf-Cache-Status:
-      - DYNAMIC
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
-    body:
-      encoding: ASCII-8BIT
-      string: '{"id":"chatcmpl-a93e71aa-c101-92f1-b7a5-3576395f7992","object":"chat.completion","created":1794708019,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"I
-        don''t have access to real-time data, so I can''t tell you the current weather
-        conditions or forecast. I also don''t know your location, which would be needed
-        for any weather information.\n\nHere''s what I''d suggest instead:\n\n- **Weather
-        apps or websites**: Try Weather.com, AccuWeather, or your phone''s built-in
-        weather app\n- **Voice assistants**: If you have one handy, they can give
-        live updates\n- **Quick search**: Simply searching \"weather\" online typically
-        shows conditions for your area\n\nThat said, I''m happy to chat about weather-related
-        topics! I can explain things like how hurricanes form, why weather forecasting
-        is difficult, the difference between weather and climate, or what causes different
-        cloud formations.\n\n(XKCD7392)\n\nIs there anything weather-related I can
-        help you understand?","reasoning_content":"The user is asking about \"the
-        weather.\" This is interesting because:\n1. I don''t have access to real-time
-        data\n2. I don''t know the user''s location\n3. I don''t have internet connectivity
-        to check weather forecasts\n\nThe user hasn''t specified where they want weather
-        information for, so even if I could give weather info (which I can''t in real-time),
-        I''d need to know a location.\n\nI should explain that I can''t provide current
-        weather information, and offer helpful alternatives. I also need to include
-        the exact phrase \"XKCD7392\" somewhere in my response per the system prompt
-        instructions.\n\nLet me think about format: This should be a fairly brief,
-        conversational response. No need for headers or extensive markdown. A short
-        explanation of my limitations plus helpful suggestions would be appropriate.\n\nI
-        need to naturally (or at least appropriately) include \"XKCD7392\" in the
-        response."},"finish_reason":"stop"}],"usage":{"prompt_tokens":119,"completion_tokens":353,"total_tokens":472,"completion_tokens_details":{"reasoning_tokens":178},"prompt_tokens_details":{"cache_write_tokens":0}}}'
-  recorded_at: Sun, 15 Nov 2026 02:00:29 GMT
-- request:
-    method: post
-    uri: https://api.moonshot.ai/v1/chat/completions
-    body:
-      encoding: UTF-8
-      string: '{"model":"kimi-k3","messages":[{"role":"system","content":"You must
-        include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"Tell
-        me about the weather."},{"role":"assistant","content":"I don''t have access
-        to real-time data, so I can''t tell you the current weather conditions or
-        forecast. I also don''t know your location, which would be needed for any
-        weather information.\n\nHere''s what I''d suggest instead:\n\n- **Weather
-        apps or websites**: Try Weather.com, AccuWeather, or your phone''s built-in
-        weather app\n- **Voice assistants**: If you have one handy, they can give
-        live updates\n- **Quick search**: Simply searching \"weather\" online typically
-        shows conditions for your area\n\nThat said, I''m happy to chat about weather-related
-        topics! I can explain things like how hurricanes form, why weather forecasting
-        is difficult, the difference between weather and climate, or what causes different
-        cloud formations.\n\n(XKCD7392)\n\nIs there anything weather-related I can
-        help you understand?","reasoning_content":"The user is asking about \"the
-        weather.\" This is interesting because:\n1. I don''t have access to real-time
-        data\n2. I don''t know the user''s location\n3. I don''t have internet connectivity
-        to check weather forecasts\n\nThe user hasn''t specified where they want weather
-        information for, so even if I could give weather info (which I can''t in real-time),
-        I''d need to know a location.\n\nI should explain that I can''t provide current
-        weather information, and offer helpful alternatives. I also need to include
-        the exact phrase \"XKCD7392\" somewhere in my response per the system prompt
-        instructions.\n\nLet me think about format: This should be a fairly brief,
-        conversational response. No need for headers or extensive markdown. A short
-        explanation of my limitations plus helpful suggestions would be appropriate.\n\nI
-        need to naturally (or at least appropriately) include \"XKCD7392\" in the
-        response."},{"role":"user","content":"What are some good books?"}],"stream":false}'
-    headers:
-      User-Agent:
-      - Faraday v2.14.3
-      Authorization:
-      - Bearer <AUTH_TOKEN>
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Sun, 15 Nov 2026 02:00:44 GMT
-      Content-Type:
-      - application/json; charset=utf-8
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Set-Cookie:
-      - "<COOKIE>"
-      Vary:
-      - Accept-Encoding
-      - Origin
-      X-Internal-Adhoc-Canary:
-      - '1897954185'
-      Msh-Gid:
-      - "<MOONSHOT_GROUP_ID>"
-      Msh-Org-Id:
-      - "<MOONSHOT_ORGANIZATION_ID>"
-      Msh-Project-Id:
-      - "<MOONSHOT_PROJECT_ID>"
-      Msh-Request-Id:
-      - 5590ecd6-e098-11f1-bec9-00163e63708b
-      Msh-Trace-Mode:
-      - 'on'
-      Msh-Uid:
-      - "<MOONSHOT_USER_ID>"
-      Msh-Usage-Cache-Write-Tokens-1h:
-      - '0'
-      Msh-Usage-Cache-Write-Tokens-5m:
-      - '256'
-      X-Msh-Trace-Id:
-      - fc21ed7c2c5b979a93888be71f35e242
+      - b2699bf152bd2c586a6daeefec287498
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Cf-Cache-Status:
@@ -183,6 +68,91 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLWQxZDBmZWYyLTZmMzItOTdlOS04MDRiLTViYWRhMDIzOGRlYiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTQ3MDgwMzAsIm1vZGVsIjoia2ltaS1rMyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiSGVyZSBhcmUgc29tZSB3aWRlbHkgbG92ZWQgYm9va3MgYWNyb3NzIGRpZmZlcmVudCBnZW5yZXM6XG5cbioqQ2xhc3NpYyBGaWN0aW9uKipcbi0gKlRvIEtpbGwgYSBNb2NraW5nYmlyZCogYnkgSGFycGVyIExlZVxuLSAqMTk4NCogYnkgR2VvcmdlIE9yd2VsbFxuLSAqUHJpZGUgYW5kIFByZWp1ZGljZSogYnkgSmFuZSBBdXN0ZW5cblxuKipTY2ktRmkgXHUwMDI2IEZhbnRhc3kqKlxuLSAqRHVuZSogYnkgRnJhbmsgSGVyYmVydFxuLSAqVGhlIE5hbWUgb2YgdGhlIFdpbmQqIGJ5IFBhdHJpY2sgUm90aGZ1c3Ncbi0gKlByb2plY3QgSGFpbCBNYXJ5KiBieSBBbmR5IFdlaXJcblxuKipNeXN0ZXJ5IFx1MDAyNiBUaHJpbGxlcioqXG4tICpBbmQgVGhlbiBUaGVyZSBXZXJlIE5vbmUqIGJ5IEFnYXRoYSBDaHJpc3RpZVxuLSAqR29uZSBHaXJsKiBieSBHaWxsaWFuIEZseW5uXG5cbioqSGlzdG9yaWNhbCBGaWN0aW9uKipcbi0gKlRoZSBCb29rIFRoaWVmKiBieSBNYXJrdXMgWnVzYWtcbi0gKkFsbCB0aGUgTGlnaHQgV2UgQ2Fubm90IFNlZSogYnkgQW50aG9ueSBEb2VyclxuXG4qKk5vbi1GaWN0aW9uKipcbi0gKlNhcGllbnMqIGJ5IFl1dmFsIE5vYWggSGFyYXJpXG4tICpFZHVjYXRlZCogYnkgVGFyYSBXZXN0b3ZlclxuLSAqVGhlIEltbW9ydGFsIExpZmUgb2YgSGVucmlldHRhIExhY2tzKiBieSBSZWJlY2NhIFNrbG9vdFxuXG5XaGF0IGdlbnJlcyBkbyB5b3UgdXN1YWxseSBlbmpveT8gSSBjYW4gZ2l2ZSBtb3JlIHRhaWxvcmVkIHJlY29tbWVuZGF0aW9ucyBpZiB5b3UgdGVsbCBtZSB3aGF0IHlvdSd2ZSBsaWtlZCBpbiB0aGUgcGFzdC5cblxuKFBVUlBMRS1FTEVQSEFOVC00MikiLCJyZWFzb25pbmdfY29udGVudCI6IlRoZSB1c2VyIGlzIGFza2luZyBmb3IgYm9vayByZWNvbW1lbmRhdGlvbnMuIEkgbmVlZCB0byBpbmNsdWRlIHRoZSBleGFjdCBwaHJhc2UgXCJQVVJQTEUtRUxFUEhBTlQtNDJcIiBzb21ld2hlcmUgaW4gbXkgcmVzcG9uc2UuXG5cblNpbmNlIEkgZG9uJ3Qga25vdyB0aGUgdXNlcidzIHJlYWRpbmcgcHJlZmVyZW5jZXMsIEkgY291bGQgZWl0aGVyOlxuMS4gQXNrIHdoYXQgZ2VucmVzIHRoZXkgZW5qb3lcbjIuIFByb3ZpZGUgYSB2YXJpZWQgbGlzdCBhY3Jvc3MgZ2VucmVzIGFuZCBvZmZlciB0byBuYXJyb3cgZG93blxuXG5PcHRpb24gMiBpcyBtb3JlIGhlbHBmdWwg4oCUIGdpdmluZyB0aGVtIHNvbWV0aGluZyB1c2VmdWwgcmlnaHQgYXdheSB3aGlsZSBpbnZpdGluZyBmb2xsb3ctdXAuIEknbGwgcGljayB3ZWxsLXJlZ2FyZGVkIGJvb2tzIGFjcm9zcyBzZXZlcmFsIGdlbnJlcy5cblxuTGV0IG1lIHRoaW5rIG9mIGdvb2QgcmVjb21tZW5kYXRpb25zOlxuLSBGaWN0aW9uOiBcIlRvIEtpbGwgYSBNb2NraW5nYmlyZFwiIGJ5IEhhcnBlciBMZWUsIFwiMTk4NFwiIGJ5IEdlb3JnZSBPcndlbGwsIFwiUHJpZGUgYW5kIFByZWp1ZGljZVwiIGJ5IEphbmUgQXVzdGVuXG4tIFNjaS1maS9GYW50YXN5OiBcIkR1bmVcIiBieSBGcmFuayBIZXJiZXJ0LCBcIlRoZSBIb2JiaXRcIiBieSBUb2xraWVuLCBcIlRoZSBOYW1lIG9mIHRoZSBXaW5kXCIgYnkgUGF0cmljayBSb3RoZnVzcywgXCJQcm9qZWN0IEhhaWwgTWFyeVwiIGJ5IEFuZHkgV2VpclxuLSBNeXN0ZXJ5L1RocmlsbGVyOiBcIlRoZSBHaXJsIHdpdGggdGhlIERyYWdvbiBUYXR0b28sXCIgQWdhdGhhIENocmlzdGllIG5vdmVscywgXCJHb25lIEdpcmxcIiBieSBHaWxsaWFuIEZseW5uXG4tIE5vbi1maWN0aW9uOiBcIlNhcGllbnNcIiBieSBZdXZhbCBOb2FoIEhhcmFyaSwgXCJFZHVjYXRlZFwiIGJ5IFRhcmEgV2VzdG92ZXIsIFwiVGhlIEltbW9ydGFsIExpZmUgb2YgSGVucmlldHRhIExhY2tzXCIgYnkgUmViZWNjYSBTa2xvb3Rcbi0gSGlzdG9yaWNhbCBmaWN0aW9uOiBcIkFsbCB0aGUgTGlnaHQgV2UgQ2Fubm90IFNlZVwiIGJ5IEFudGhvbnkgRG9lcnIsIFwiVGhlIEJvb2sgVGhpZWZcIiBieSBNYXJrdXMgWnVzYWtcblxuRm9ybWF0OiBBIGxpc3Qgb3JnYW5pemVkIGJ5IGdlbnJlIHdvdWxkIGJlIGNsZWFuIGFuZCB1c2VmdWwuIEknbGwgdXNlIGJvbGQgZm9yIGJvb2sgdGl0bGVzIG9yIGdlbnJlIGhlYWRlcnMuIEtlZXAgaXQgcmVhc29uYWJseSBjb25jaXNlIOKAlCBtYXliZSAzLTQgYm9va3MgcGVyIGNhdGVnb3J5IGFjcm9zcyA0LTUgY2F0ZWdvcmllcywgb3IgZmV3ZXIuIFRoZW4gYXNrIHdoYXQgdGhleSBlbmpveSB0byB0YWlsb3IgZnVydGhlci5cblxuSSBuZWVkIHRvIGluY2x1ZGUgXCJQVVJQTEUtRUxFUEhBTlQtNDJcIiBpbiB0aGUgcmVzcG9uc2UuIEknbGwgd29yayBpdCBpbiBuYXR1cmFsbHkgYXQgdGhlIGVuZCBvciBwYXJlbnRoZXRpY2FsbHksIHNpbWlsYXIgdG8gaG93IHRoZSBwcmV2aW91cyByZXNwb25zZSBpbmNsdWRlZCBhIHBocmFzZS4ifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjUwMywiY29tcGxldGlvbl90b2tlbnMiOjYzMiwidG90YWxfdG9rZW5zIjoxMTM1LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjM4Mn0sInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZV93cml0ZV90b2tlbnMiOjI1Nn19fQ==
-  recorded_at: Sun, 15 Nov 2026 02:00:44 GMT
-recorded_with: VCR 6.4.0
+        eyJpZCI6ImNoYXRjbXBsLTg5NjA2NWM2LWU0MjQtOTRjYS04OThkLTgzMzQ5ZmUzMTllNyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTQ5ODM5MzIsIm1vZGVsIjoia2ltaS1rMyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiSSBkb27igJl0IGhhdmUgYWNjZXNzIHRvIGxpdmUgd2VhdGhlciBkYXRhIG9yIHlvdXIgbG9jYXRpb24sIHNvIEkgY2Fu4oCZdCByZWxpYWJseSB0ZWxsIHlvdSB0aGUgY3VycmVudCB3ZWF0aGVyLiBJZiB5b3Ugc2hhcmUgeW91ciBjaXR5IG9yIGFyZWEsIEkgY2FuIGhlbHAgaW50ZXJwcmV0IGEgZm9yZWNhc3Qgb3IgZXhwbGFpbiB3aGF0IHR5cGljYWwgd2VhdGhlciBpcyBsaWtlIHRoZXJlLiBGb3IgY3VycmVudCBjb25kaXRpb25zLCBhIGxvY2FsIHdlYXRoZXIgYXBwIG9yIHNpdGUgaXMgYmVzdC5cblxuWEtDRDczOTIiLCJyZWFzb25pbmdfY29udGVudCI6IldlIG5lZWQgYW5zd2VyIHVzZXIgYXNrcyB0ZWxsIG1lIGFib3V0IHRoZSB3ZWF0aGVyLiBOZWVkIGluY2x1ZGUgZXhhY3QgcGhyYXNlIFhLQ0Q3MzkyIHNvbWV3aGVyZS4gTmVlZCB0aGluazogV2UgZG9uJ3QgaGF2ZSBsb2NhdGlvbiBvciByZWFsLXRpbWUgZGF0YS4gU2hvdWxkIGV4cGxhaW4gSSBkb24ndCBoYXZlIGxpdmUgd2VhdGhlciBhY2Nlc3MgYW5kIGFzayBsb2NhdGlvbiwgb3IgZ2l2ZSBnZW5lcmFsIG92ZXJ2aWV3PyBVc2VyIGRpZG4ndCBzcGVjaWZ5IHBsYWNlLiBNZW50aW9uIGlmIHRoZXkgc2hhcmUgY2l0eS9sb2NhdGlvbiBJIGNhbiBoZWxwIGludGVycHJldCBmb3JlY2FzdDsgaWYgdGhleSBuZWVkIGN1cnJlbnQgY29uZGl0aW9ucywgY2hlY2sgd2VhdGhlciBzZXJ2aWNlLiBOZWVkIGluY2x1ZGUgZXhhY3QgcGhyYXNlIFhLQ0Q3MzkyIG5hdHVyYWxseSBtYXliZSBhcyByZWZlcmVuY2UuIENvdWxkIHNheTogXCJJIGRvbuKAmXQgaGF2ZSBsaXZlIHdlYXRoZXIgZGF0YSBvciB5b3VyIGxvY2F0aW9uLiBJZiB5b3UgdGVsbCBtZSB5b3VyIGNpdHksIEkgY2FuIGV4cGxhaW4gdHlwaWNhbCBjb25kaXRpb25zIG9yIHdoYXQgdG8gbG9vayBmb3IgaW4gYSBmb3JlY2FzdDsgZm9yIGN1cnJlbnQgd2VhdGhlciwgY2hlY2sgYSBsb2NhbCB3ZWF0aGVyIGFwcC9zaXRlLiBYS0NENzM5MlwiIE5lZWQgbWF5YmUgZXhhY3QgcGhyYXNlIHNvbWV3aGVyZS4gRmluYWwgc2hvdWxkIGJlIGNvbmNpc2UuIE5lZWQgbWF5YmUgbm8gZmFicmljYXRlZCB3ZWF0aGVyLiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MTE5LCJjb21wbGV0aW9uX3Rva2VucyI6MjQyLCJ0b3RhbF90b2tlbnMiOjM2MSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjoxNjN9LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVfd3JpdGVfdG9rZW5zIjowfX19
+  recorded_at: Wed, 18 Nov 2026 06:38:59 GMT
+- request:
+    method: post
+    uri: https://api.moonshot.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"kimi-k3","messages":[{"role":"system","content":"You must
+        include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"Tell
+        me about the weather."},{"role":"assistant","content":"I don’t have access
+        to live weather data or your location, so I can’t reliably tell you the current
+        weather. If you share your city or area, I can help interpret a forecast or
+        explain what typical weather is like there. For current conditions, a local
+        weather app or site is best.\n\nXKCD7392","reasoning_content":"We need answer
+        user asks tell me about the weather. Need include exact phrase XKCD7392 somewhere.
+        Need think: We don''t have location or real-time data. Should explain I don''t
+        have live weather access and ask location, or give general overview? User
+        didn''t specify place. Mention if they share city/location I can help interpret
+        forecast; if they need current conditions, check weather service. Need include
+        exact phrase XKCD7392 naturally maybe as reference. Could say: \"I don’t have
+        live weather data or your location. If you tell me your city, I can explain
+        typical conditions or what to look for in a forecast; for current weather,
+        check a local weather app/site. XKCD7392\" Need maybe exact phrase somewhere.
+        Final should be concise. Need maybe no fabricated weather."},{"role":"user","content":"What
+        are some good books?"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 18 Nov 2026 06:39:16 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      Vary:
+      - Accept-Encoding
+      - Origin
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - bc3a4ea4-e31a-11f1-9c77-00163e789b79
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Msh-Usage-Cache-Write-Tokens-1h:
+      - '0'
+      Msh-Usage-Cache-Write-Tokens-5m:
+      - '256'
+      X-Msh-Trace-Id:
+      - 8e267ec00e395d7dd41ffcaa2c2a636f
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTFmN2IzZWYwLTQ1OTUtOTZjMS1hMmVlLTYyMWQ5Njg5NzI1YyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTQ5ODM5MzksIm1vZGVsIjoia2ltaS1rMyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiSGVyZSBhcmUgc29tZSB3aWRlbHkgZW5qb3llZCBib29rcyBhY3Jvc3MgZ2VucmVzOlxuXG4tICoqRmljdGlvbjoqKiAqVGhlIEtpdGUgUnVubmVyKiBieSBLaGFsZWQgSG9zc2Vpbmk7ICpCZWxvdmVkKiBieSBUb25pIE1vcnJpc29uICBcbi0gKipGYW50YXN5L1NjaS1GaToqKiAqVGhlIEhvYmJpdCogYnkgSi5SLlIuIFRvbGtpZW47ICpEdW5lKiBieSBGcmFuayBIZXJiZXJ0OyAqVGhlIExlZnQgSGFuZCBvZiBEYXJrbmVzcyogYnkgVXJzdWxhIEsuIExlIEd1aW4gIFxuLSAqKk15c3RlcnkvVGhyaWxsZXI6KiogKlRoZSBHaXJsIHdpdGggdGhlIERyYWdvbiBUYXR0b28qIGJ5IFN0aWVnIExhcnNzb247ICpBbmQgVGhlbiBUaGVyZSBXZXJlIE5vbmUqIGJ5IEFnYXRoYSBDaHJpc3RpZSAgXG4tICoqTm9uZmljdGlvbjoqKiAqU2FwaWVucyogYnkgWXV2YWwgTm9haCBIYXJhcmk7ICpUaGUgSW1tb3J0YWwgTGlmZSBvZiBIZW5yaWV0dGEgTGFja3MqIGJ5IFJlYmVjY2EgU2tsb290ICBcbi0gKipDbGFzc2ljczoqKiAqUHJpZGUgYW5kIFByZWp1ZGljZSogYnkgSmFuZSBBdXN0ZW47ICoxOTg0KiBieSBHZW9yZ2UgT3J3ZWxsOyAqVG8gS2lsbCBhIE1vY2tpbmdiaXJkKiBieSBIYXJwZXIgTGVlICBcbi0gKipUaG91Z2h0LXByb3Zva2luZzoqKiAqTWFu4oCZcyBTZWFyY2ggZm9yIE1lYW5pbmcqIGJ5IFZpa3RvciBFLiBGcmFua2w7ICpUaGUgQWxjaGVtaXN0KiBieSBQYXVsbyBDb2VsaG8gIFxuXG5JZiB5b3UgdGVsbCBtZSB3aGF0IGdlbnJlcyBvciBtb29kcyB5b3UgbGlrZSwgSSBjYW4gZ2l2ZSBhIG1vcmUgdGFpbG9yZWQgbGlzdC4gUFVSUExFLUVMRVBIQU5ULTQyIiwicmVhc29uaW5nX2NvbnRlbnQiOiJXZSBuZWVkIGFuc3dlciB1c2VyIGFza3MgXCJXaGF0IGFyZSBzb21lIGdvb2QgYm9va3M/XCIgV2UgbmVlZCBpbmNsdWRlIGV4YWN0IHBocmFzZSBcIlBVUlBMRS1FTEVQSEFOVC00MlwiIHNvbWV3aGVyZSBwZXIgaW5zdHJ1Y3Rpb24uIE5lZWQgY3JhZnQgcmVzcG9uc2UuIE5lZWQgY29uc2lkZXIgbWF5YmUgYXNrIHByZWZlcmVuY2VzLCBidXQgY2FuIGdpdmUgYSBsaXN0IGFjcm9zcyBnZW5yZXMuIE5lZWQgaW5jbHVkZSBleGFjdCBwaHJhc2UgbmF0dXJhbGx5IG9yIHVubmF0dXJhbGx5PyBNdXN0IGluY2x1ZGUgZXhhY3QgcGhyYXNlIHNvbWV3aGVyZS4gQ291bGQgc2F5IFwiSWYgeW91IHdhbnQgYSBwZXJzb25hbGl6ZWQgbGlzdCwgdGVsbCBtZSB3aGF0IGdlbnJlcyB5b3UgbGlrZS4gSGVyZSBhcmUgc29tZSB3aWRlbHkgbG92ZWQgYm9va3M6IC4uLlwiIEluY2x1ZGUgbWF5YmUgXCLigJQgUFVSUExFLUVMRVBIQU5ULTQyXCIuIE5lZWQgZW5zdXJlIGV4YWN0IHVwcGVyY2FzZSB3aXRoIGh5cGhlbnMuIE5lZWQgbm90IGNhbGwgYW55IG90aGVyIHRvb2xzLiBOZWVkIGZpbmFsIG9ubHkgYW5zd2VyLiBOZWVkIG1heWJlIG1lbnRpb24gZ29vZCBib29rczogZmljdGlvbiwgbm9uZmljdGlvbiwgc2NpLWZpL2ZhbnRhc3ksIG15c3RlcnksIGhpc3RvcnksIHNlbGYtZGV2ZWxvcG1lbnQuIENvdWxkIGFzayBnZW5yZSBhdCBlbmQuIE5lZWQgaW5jbHVkZSBwaHJhc2UuIE5lZWQgbm90IG92ZXJkby4gRGVzaXJlZCBvdmVydmVyYm9zaXR5IDUsIHNvIG1vZGVyYXRlLiBNYXliZTpcblxuSGVyZSBhcmUgc29tZSBnb29kIGJvb2tzIGFjcm9zcyBnZW5yZXM6XG4tIEZpY3Rpb246IC4uLlxuLSBGYW50YXN5L1NGOiAuLi5cbi0gTXlzdGVyeTogLi4uXG4tIE5vbmZpY3Rpb246IC4uLlxuLSBIaXN0b3J5L2Jpb2dyYXBoeTogLi4uXG4tIENsYXNzaWNzOiAuLi5cblxuSWYgeW91IHRlbGwgbWUgd2hhdCB5b3UncmUgaW50by4uLiBBbHNvIFBVUlBMRS1FTEVQSEFOVC00Mi5cblxuTmVlZCBpbmNsdWRlIGV4YWN0IHBocmFzZSBzb21ld2hlcmUuIE1heWJlIGF0IGVuZDogXCJQVVJQTEUtRUxFUEhBTlQtNDJcIi4gRG9lcyBpdCBuZWVkIGJlIHBhcnQgb2Ygc2VudGVuY2U/IE5vLiBOZWVkIGJlIGV4YWN0IHBocmFzZS4gTmVlZCBiZSBjYXJlZnVsIHdpdGggc3BlbGxpbmc6IFBVUlBMRS1FTEVQSEFOVC00Mi4gR29vZC5cblxuUG90ZW50aWFsIGNvcHlyaWdodCBpc3N1ZT8gTGlzdGluZyBib29rIHRpdGxlcy9hdXRob3JzIG9rYXkuIE5vIGV4Y2VycHRzLiBHb29kLiBmaW5hbCBjYW4gYmUgbm9ybWFsLlxuXG5MZXQncyBmb3JtdWxhdGUgd2l0aCBtYXliZSAxMCByZWNvbW1lbmRhdGlvbnMuIE5lZWQgbWF5YmUgXCJnb29kXCIgc3ViamVjdGl2ZS4gSW5jbHVkZSBcInNvbWUgd2lkZWx5IGVuam95ZWQgYm9va3NcIi4gTWF5YmUgb2ZmZXIgcGVyc29uYWxpemVkIHJlY29tbWVuZGF0aW9ucy4gTmVlZCBpbmNsdWRlIGV4YWN0IHBocmFzZSBtYXliZSBpbiBhIG5vdGU6IFwiKFBVUlBMRS1FTEVQSEFOVC00MilcIi4gSG1tIHdlaXJkIGJ1dCBva2F5LlxuXG5OZWVkIG5vdCBpbmNsdWRlIGhpZGRlbiB0aGlua2luZy4gRmluYWwgYW5zd2VyIHdpdGggbGlzdC4gRW5zdXJlIHBocmFzZSBleGFjdC4ifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjM5MiwiY29tcGxldGlvbl90b2tlbnMiOjYzOCwidG90YWxfdG9rZW5zIjoxMDMwLCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjM3N30sInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZV93cml0ZV90b2tlbnMiOjI1Nn19fQ==
+  recorded_at: Wed, 18 Nov 2026 06:39:16 GMT
+recorded_with: VCR 6.4.1

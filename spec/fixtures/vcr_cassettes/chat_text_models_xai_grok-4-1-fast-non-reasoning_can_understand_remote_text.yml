@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -26,42 +26,44 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
+      X-Origin-Cache:
+      - HIT
       Last-Modified:
-      - Tue, 03 Nov 2026 01:08:56 GMT
+      - Tue, 17 Nov 2026 10:38:58 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"6ae93428-9c6"
+      - W/"6afc2ec2-9c6"
       Expires:
-      - Sun, 15 Nov 2026 01:29:24 GMT
+      - Wed, 18 Nov 2026 06:45:29 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 1AA8:148882:4D5DE00:4DD0C30:6AF9089B
+      - FC46:157F:1704236:172B244:6AFD4731
       X-Github-Edge-Region:
       - fra
       Accept-Ranges:
       - bytes
+      Age:
+      - '199'
       Date:
-      - Sun, 15 Nov 2026 01:22:41 GMT
+      - Wed, 18 Nov 2026 06:39:22 GMT
       Via:
       - 1.1 varnish
-      Age:
-      - '162'
       X-Served-By:
-      - cache-ber1080038-BER
+      - cache-ber1080021-BER
       X-Cache:
       - HIT
       X-Cache-Hits:
-      - '1'
+      - '0'
       X-Timer:
-      - S1794705761.120931,VS0,VE1
+      - S1794983962.293492,VS0,VE1
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - 0c4a82e9843894e6fefca036842bfc1fa2c8fd6d
+      - 9c10978ba490a81b68e010c3e5be6f17b383b909
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -97,7 +99,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Sun, 15 Nov 2026 01:22:41 GMT
+  recorded_at: Wed, 18 Nov 2026 06:39:22 GMT
 - request:
     method: post
     uri: https://api.x.ai/v1/responses
@@ -140,7 +142,7 @@ http_interactions:
         A PARTICULAR\n     PURPOSE.\n</file>"}]}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -155,7 +157,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:22:50 GMT
+      - Wed, 18 Nov 2026 06:39:25 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -185,11 +187,9 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '1655.7'
+      - '293.4'
       X-Metrics-E2e-Ms:
-      - '8728.3'
-      Traceparent:
-      - 00-c5bd0bc3d35e1f4044e7c8d49ec18d7b-ddea811500135f44-01
+      - '3262.4'
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
@@ -202,14 +202,14 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1794705761,"completed_at":1794705769,"id":"0851cc73-1743-98f6-9cfc-f4c97fd1c404","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_0851cc73-1743-98f6-9cfc-f4c97fd1c404","summary":[{"text":"The
+      string: '{"created_at":1794983962,"completed_at":1794983965,"id":"42946cf1-6daf-45d0-b63f-e0789246d887","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_42946cf1-6daf-45d0-b63f-e0789246d887","summary":[{"text":"The
         file is the Ruby license. It is free software by Yukihiro Matsumoto. It allows
-        redistribution and modification under either the 2-clause BSDL or the conditions
-        listed. It includes a disclaimer of warranty.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"7iVauG2zeXazhKkOTkuOa3Ne0kp5y+1wEp6mhiU4Mxn2nEyj5+tJS+JxFHMIbakcBjmwiWeaV4lMw3FFul0fGfjd/z3hp0arbMfKz68czgASoHIi1olGzKaxG24suPmITTmffJnCoYnEeixKkxxdu0ndoBWXaoou/rhsgb7b+Q0aHgFSmDVyp/bs4SPhnIEeZg/jNgB64ggZ+g9r3wjMD3SjCcTigI2jtfYa7UMiEZDGf6GQqPF4cg88ImfdqLAPa3bUbw4hiIr3jGdKAzGu3KrbAFen3IHC5PpjYNn1Zd1MDI+TtTM8jkw9WTM0YatPeeqwtzNwuA0++2wfL8fjShfTtRTpB/p2c5c6tewvHKlhVU6qORZS6XGfwEe7PNS42UMwROL5K0bQNb8igChjETWEKZHJnP8PzxkVCNwbRxsN+5bBNhpzuNNx3pJJVlx/OQaAzn+hORCRS4DVqYMgVqBhwZ4fYOoTH1fAOYBDZ9uLb3g49eAgMIIMZe6B4JqLlaNg+/sq0encGWQwkVGlJnm+vrnFjSXH4dA/HEWno3OrYA8Bd9949QUhwCNGUUHqelkFOXOTOu9F1rOCqw+NducqQes8XevsEjUrQN2VjwDT+XKtJ3AKBZomLWOR9Magu6arwtDQistjXOMXpKrhD26LKrPCnCuVVPj4zjyDzWzqkXNPzmj5ZxE+AfKZU9zGXxPmc0R7RtnOxhHsvmSUpd+pp+P2s8dez0ovtrEYcx03RHyp5HFkoXybMpHG+kEIl3pV9qI5tV7tzYsOiU88V5dh4so6lybXyrWjCZOe+H2Xqwwh7RIwxQ21XP6GtCdvB138a/mFnZI+/hgsqRAqvqagCMvOoVmgAFTZtPROnb0YPY9nDJPVzgqei+OzlllZDOGPjGnhejPwO10vM7BkXEXPmdpU34eENVo6ZASMr3rqVXO8CHPade+7I/6HcFz566N0OYtC5A"},{"content":[{"type":"output_text","text":"This
-        is the **Ruby programming language license** (license.txt).\n\nIt states that
-        Ruby is copyrighted free software by Yukihiro Matsumoto and can be redistributed
-        or modified under either the 2-clause BSD License or the specific terms listed
-        in the file (covering verbatim copies, modifications, binary distributions,
-        inclusion in other software, and a standard \"AS IS\" disclaimer with no warranties).","logprobs":[],"annotations":[]}],"id":"msg_0851cc73-1743-98f6-9cfc-f4c97fd1c404","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":716,"input_tokens_details":{"cached_tokens":128},"output_tokens":336,"output_tokens_details":{"reasoning_tokens":262},"total_tokens":1052,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":16006000,"context_details":{"input_tokens":716,"output_tokens":344}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
-  recorded_at: Sun, 15 Nov 2026 01:22:50 GMT
-recorded_with: VCR 6.4.0
+        redistribution and modification under either the 2-clause BSDL or the listed
+        conditions.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"eWbtrqWS/BtKb4wZCvwnu/nIMgHdM+La0Oh3gtVRfDXCEUmy89NadUIhLBdKrTIhtLg//6Yrc6VoWv4ECpcacRLXk3wZ1GhWMXAt/xjuX+wWXoE2lBMIgdNYNuLEnjhMHbSwwNcq6Cbfkt5kD0RNYbsdinpy0pWfsRLBKqOkztHf8vnudCdANXg/xA+J63iMNyekHcsGQcjKB2u1kHG2Unr45PZpsh0BGBaiM4K5fVuSNCJRI4hTKNe2QeJ7hlaasX5TLHpNkQz0oOsajOmhgcuNYevCAq9JL+X2/I+u8ghH59OHFoxsEQKNx5IcCTZVA+0I9YST5/VNJ6YgDPu1ySAUzEOG7ImiKdSldPDSkMpNAMjsWtARxLPB6Du+x4e4gyYTR6MSiHfDiJdqut7MdtnRLEnoZSY4I5LX3G/gAqAhIYL8FrAJzg1uy2yyO4o13Umr0x/sp7EeFJizusOC6We0cldUIqxF8x3yAN9eWovAz3CWdG55EeC4KNiA7FDAkk/Yqak6qmK+JaIFCW+zeUCLfoxtew9/SYRDP6VduxCwctCsuymjZ4DsRpZiG1hLTFMEXBVpJGaDQJk7T7fsWhaNOTBoK13z7t7vq6LGvrXmYlG6atsnbglMBVhFYsl71QM4SBuNOuG5u8fMpM7Aracyjim8QKn/5U4hFB4+MuR8zgcO1YrMN7dnvfDaYuMd5qQ0bxkxUtMTS6+4UkXzwUa8ZdPJ8qIHB92aqG4cE1WjejUmLTR/zX2R2uuLkr1giiRm5h0C/WQOosVwgKbsB/21FF/94P0nUOPk65XSbNldo95bQzbkQNdVbPJxHS2DFj5DeRvREytRUTHswaqt92WzpKLWC6AgqsltVqkbYWdHEdK4omjFkCdmun3nVPL0qbNxjhwzICsu8DC6+oAOGgEdQDg1jxp2tcSApgrwMEw5DCHDwvlwCuSMwqDoD56f8AJFF83HN5ySgsTcPzVtIluct9xM/5wgtdCamDlpxoMxClTwmRZKoXhtPbTv7na4ydYUYt7OmDU5EEsoCx4cfwCYbFkGam5vqqVL4JCfTx5oljdhKd5insXzewKMvyApBT5jSHBxdD7bk713XCRDtjieIYXc28oKpqvYjYjiJABjlC8retJmQmAPIXukrFdB73nRL6/5/nEGT9c5UAXh4ouR+0k2X6HrWvCOq00dTgldd3YUYHgohO6VFhqg8JcYBQLEVluwo5rTGO5WySCL5tj8MJUMm9qB1bgdbQkFIhjaMjSKd7qaEG7c"},{"content":[{"type":"output_text","text":"This
+        is the **Ruby programming language license** (from Yukihiro Matsumoto).\n\nIt
+        allows you to freely redistribute and modify Ruby under either the 2-clause
+        BSD License or the specific terms listed in the file (which cover source modifications,
+        binary distributions, commercial use, etc.). It also includes the standard
+        \"AS IS\" disclaimer with no warranties.","logprobs":[],"annotations":[]}],"id":"msg_42946cf1-6daf-45d0-b63f-e0789246d887","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":716,"input_tokens_details":{"cached_tokens":128},"output_tokens":238,"output_tokens_details":{"reasoning_tokens":170},"total_tokens":954,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":13556000,"context_details":{"input_tokens":716,"output_tokens":245}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Wed, 18 Nov 2026 06:39:25 GMT
+recorded_with: VCR 6.4.1

@@ -9,7 +9,7 @@ http_interactions:
         hi in one word."}],"instructions":"","completion_args":{},"tools":[],"store":false,"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,47 +24,47 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:19:24 GMT
+      - Wed, 18 Nov 2026 06:34:27 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Set-Cookie:
-      - "<COOKIE>"
       Mistral-Correlation-Id:
-      - 01a1dcc9-a391-7a93-8d52-bd5fe577768c
+      - 01a1ed5d-260b-7848-94a3-15302895ad9b
       X-Kong-Request-Id:
-      - 01a1dcc9-a391-7a93-8d52-bd5fe577768c
+      - 01a1ed5d-260b-7848-94a3-15302895ad9b
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
       - '99976'
       X-Envoy-Upstream-Service-Time:
-      - '281'
+      - '249'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '285'
+      - '253'
       X-Kong-Proxy-Latency:
-      - '20'
-      X-Content-Type-Options:
-      - nosniff
+      - '16'
       Cf-Cache-Status:
       - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"object":"conversation.response","conversation_id":"conv_01a1dcc9a3ba71dcb94f8290caace424","outputs":[{"object":"entry","type":"message.output","created_at":"2026-11-15T01:19:24.835724Z","completed_at":"2026-11-15T01:19:24.847768Z","model":"mistral-small-latest","id":"msg_01a1dcc9a4a37059a48b6ccbc0ea9677","role":"assistant","content":"Hi!"}],"usage":{"prompt_tokens":21,"completion_tokens":3,"total_tokens":24},"guardrails":null}'
-  recorded_at: Sun, 15 Nov 2026 01:19:24 GMT
+      string: '{"object":"conversation.response","conversation_id":"conv_01a1ed5d265370a78957ccc012e49131","outputs":[{"object":"entry","type":"message.output","created_at":"2026-11-18T06:34:27.452163Z","completed_at":"2026-11-18T06:34:27.466338Z","model":"mistral-small-latest","id":"msg_01a1ed5d26fc76b58220075f85658bd3","role":"assistant","content":"Hi!"}],"usage":{"prompt_tokens":21,"completion_tokens":3,"total_tokens":24},"guardrails":null}'
+  recorded_at: Wed, 18 Nov 2026 06:34:27 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/responses/input_tokens
@@ -75,7 +75,7 @@ http_interactions:
         again."}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -90,35 +90,35 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:19:26 GMT
+      - Wed, 18 Nov 2026 06:34:28 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Set-Cookie:
-      - "<COOKIE>"
       Mistral-Correlation-Id:
-      - 01a1dcc9-a707-7bfb-b627-2add10952f70
+      - 01a1ed5d-2756-70f7-95fe-7bea918756bf
       X-Kong-Request-Id:
-      - 01a1dcc9-a707-7bfb-b627-2add10952f70
+      - 01a1ed5d-2756-70f7-95fe-7bea918756bf
       X-Envoy-Upstream-Service-Time:
-      - '590'
+      - '634'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '591'
+      - '636'
       X-Kong-Proxy-Latency:
-      - '14'
-      X-Content-Type-Options:
-      - nosniff
+      - '29'
       Cf-Cache-Status:
       - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
@@ -126,5 +126,5 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '{"input_tokens":29,"object":"response.input_tokens"}'
-  recorded_at: Sun, 15 Nov 2026 01:19:26 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:34:28 GMT
+recorded_with: VCR 6.4.1

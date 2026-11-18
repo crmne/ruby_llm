@@ -12,7 +12,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}],"tool_choice":"none"}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -26,22 +26,22 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Resp-Start-Time:
-      - '1794706878610'
-      X-Envoy-Upstream-Service-Time:
-      - '1342'
       Date:
-      - Sun, 15 Nov 2026 01:41:16 GMT
+      - Wed, 18 Nov 2026 06:54:59 GMT
+      Req-Cost-Time:
+      - '1488'
+      Req-Arrive-Time:
+      - '1794984900197'
+      Resp-Start-Time:
+      - '1794984901685'
+      X-Envoy-Upstream-Service-Time:
+      - '1433'
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
       - ''
-      Req-Arrive-Time:
-      - '1794706877264'
       Content-Type:
       - application/json; charset=utf-8
-      Req-Cost-Time:
-      - '1346'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
@@ -57,6 +57,7 @@ http_interactions:
         given those values, so I should format them into the tool call correctly.
         I''ll make sure to include both parameters in the JSON object under the arguments.
         No other properties are needed since the function doesn''t require anything
-        else. Alright, that''s all I need to do here.\n"}}],"created":1794706878,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":170,"prompt_tokens":231,"total_tokens":401,"prompt_tokens_details":{"cached_tokens":230}},"id":"chatcmpl-Qw3Xy94z1SbxeDkwKCaEZsQ4ghbkC0fj","timings":{"cache_n":230,"prompt_n":1,"prompt_ms":8.822,"prompt_per_token_ms":8.822,"prompt_per_second":113.35298118340513,"predicted_n":170,"predicted_ms":1253.73,"predicted_per_token_ms":7.4185207100591715,"predicted_per_second":134.7977634737942}}'
-  recorded_at: Sun, 15 Nov 2026 01:41:18 GMT
-recorded_with: VCR 6.4.0
+        else. Let me structure the tool_call with the name \"weather\" and the provided
+        coordinates.\n"}}],"created":1794984901,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":176,"prompt_tokens":231,"total_tokens":407,"prompt_tokens_details":{"cached_tokens":230}},"id":"chatcmpl-Ugab52cTPLmDOby263eOeLwphZ1DBIrA","timings":{"cache_n":230,"prompt_n":1,"prompt_ms":38.71,"prompt_per_token_ms":38.71,"prompt_per_second":25.833118057349523,"predicted_n":176,"predicted_ms":1308.878,"predicted_per_token_ms":7.479302857142857,"predicted_per_second":133.7023007491913}}'
+  recorded_at: Wed, 18 Nov 2026 06:55:01 GMT
+recorded_with: VCR 6.4.1

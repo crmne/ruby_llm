@@ -9,7 +9,7 @@ http_interactions:
         creator of the programming language Ruby?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:22:51 GMT
+      - Wed, 18 Nov 2026 06:38:33 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -37,7 +37,7 @@ http_interactions:
       - Accept-Encoding
       - Origin
       X-Internal-Adhoc-Canary:
-      - '1897954185'
+      - '2666295442'
       Msh-Gid:
       - "<MOONSHOT_GROUP_ID>"
       Msh-Org-Id:
@@ -45,7 +45,7 @@ http_interactions:
       Msh-Project-Id:
       - "<MOONSHOT_PROJECT_ID>"
       Msh-Request-Id:
-      - 10c587f0-e093-11f1-95dc-00163e7aa8ca
+      - a80677c7-e31a-11f1-9113-00163e2476cb
       Msh-Trace-Mode:
       - 'on'
       Msh-Uid:
@@ -55,7 +55,7 @@ http_interactions:
       Msh-Usage-Cache-Write-Tokens-5m:
       - '0'
       X-Msh-Trace-Id:
-      - 954dd178da39b61be8045591b3456d9a
+      - 0effaade2f1f805a85ee54b8252c9c73
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Cf-Cache-Status:
@@ -66,45 +66,53 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"chatcmpl-b78556ce-f5b4-9fea-ad91-b74b93681104","object":"chat.completion","created":1794705767,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"Ruby
-        was created by **Yukihiro Matsumoto**, often known by his nickname \"Matz.\"
-        He developed the language in Japan and released it in 1995, with a design
-        philosophy focused on programmer happiness and productivity. He drew inspiration
-        from several languages, including Perl, Smalltalk, Eiffel, Ada, and Lisp.","reasoning_content":"The
-        user is asking a simple factual question: who created the Ruby programming
-        language?\n\nThe answer is Yukihiro Matsumoto, commonly known as \"Matz.\"
-        He created Ruby in Japan in the mid-1990s (released in 1995). He designed
-        it with a focus on programmer happiness and productivity, blending elements
-        from Perl, Smalltalk, Eiffel, Ada, and Lisp.\n\nThis is a simple factual question
-        that deserves a direct, concise answer. I don''t need to write an essay here.
-        A short response with the key fact and maybe a bit of context (like his nickname
-        \"Matz\" and when it was created) would be appropriate. No need for headers,
-        bullet points, or lengthy elaboration for such a simple question."},"finish_reason":"stop"}],"usage":{"prompt_tokens":95,"completion_tokens":235,"total_tokens":330,"completion_tokens_details":{"reasoning_tokens":152},"prompt_tokens_details":{"cache_write_tokens":0}}}'
-  recorded_at: Sun, 15 Nov 2026 01:22:51 GMT
+      string: '{"id":"chatcmpl-6c9ae492-eb8d-91b8-8fec-998bd00dbc86","object":"chat.completion","created":1794983905,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        Ruby programming language was created by **Yukihiro Matsumoto**, often known
+        as \"Matz\" in the programming community. He is a Japanese programmer who
+        began developing Ruby in 1993 and released it publicly in 1995.\n\nMatsumoto
+        designed Ruby with a focus on programmer happiness and productivity, drawing
+        inspiration from languages like Perl, Smalltalk, Eiffel, Ada, and Lisp. He
+        famously said he wanted Ruby to make programming enjoyable, a philosophy often
+        summarized as the language being \"optimized for developer happiness.\"","reasoning_content":"The
+        user is asking a simple factual question about the creator of the Ruby programming
+        language.\n\nRuby was created by Yukihiro Matsumoto, who is often known as
+        \"Matz\" in the programming community. He is a Japanese programmer who designed
+        Ruby in the mid-1990s. The first public release of Ruby was in 1995. He famously
+        said he designed Ruby with the principle of \"developer happiness\" in mind
+        - he wanted a language that was fun and productive to use, blending elements
+        from Perl, Smalltalk, Eiffel, Ada, and Lisp.\n\nThis is a straightforward
+        factual question that deserves a concise, direct answer. I don''t need headers
+        or bullet points for such a simple question. A brief answer with perhaps a
+        little context would be ideal."},"finish_reason":"stop"}],"usage":{"prompt_tokens":95,"completion_tokens":278,"total_tokens":373,"completion_tokens_details":{"reasoning_tokens":154},"prompt_tokens_details":{"cache_write_tokens":0}}}'
+  recorded_at: Wed, 18 Nov 2026 06:38:33 GMT
 - request:
     method: post
     uri: https://api.moonshot.ai/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"kimi-k3","messages":[{"role":"user","content":"Who is the
-        creator of the programming language Ruby?"},{"role":"assistant","content":"Ruby
-        was created by **Yukihiro Matsumoto**, often known by his nickname \"Matz.\"
-        He developed the language in Japan and released it in 1995, with a design
-        philosophy focused on programmer happiness and productivity. He drew inspiration
-        from several languages, including Perl, Smalltalk, Eiffel, Ada, and Lisp.","reasoning_content":"The
-        user is asking a simple factual question: who created the Ruby programming
-        language?\n\nThe answer is Yukihiro Matsumoto, commonly known as \"Matz.\"
-        He created Ruby in Japan in the mid-1990s (released in 1995). He designed
-        it with a focus on programmer happiness and productivity, blending elements
-        from Perl, Smalltalk, Eiffel, Ada, and Lisp.\n\nThis is a simple factual question
-        that deserves a direct, concise answer. I don''t need to write an essay here.
-        A short response with the key fact and maybe a bit of context (like his nickname
-        \"Matz\" and when it was created) would be appropriate. No need for headers,
-        bullet points, or lengthy elaboration for such a simple question."},{"role":"user","content":"What
-        year did he create Ruby?"}],"stream":false}'
+        creator of the programming language Ruby?"},{"role":"assistant","content":"The
+        Ruby programming language was created by **Yukihiro Matsumoto**, often known
+        as \"Matz\" in the programming community. He is a Japanese programmer who
+        began developing Ruby in 1993 and released it publicly in 1995.\n\nMatsumoto
+        designed Ruby with a focus on programmer happiness and productivity, drawing
+        inspiration from languages like Perl, Smalltalk, Eiffel, Ada, and Lisp. He
+        famously said he wanted Ruby to make programming enjoyable, a philosophy often
+        summarized as the language being \"optimized for developer happiness.\"","reasoning_content":"The
+        user is asking a simple factual question about the creator of the Ruby programming
+        language.\n\nRuby was created by Yukihiro Matsumoto, who is often known as
+        \"Matz\" in the programming community. He is a Japanese programmer who designed
+        Ruby in the mid-1990s. The first public release of Ruby was in 1995. He famously
+        said he designed Ruby with the principle of \"developer happiness\" in mind
+        - he wanted a language that was fun and productive to use, blending elements
+        from Perl, Smalltalk, Eiffel, Ada, and Lisp.\n\nThis is a straightforward
+        factual question that deserves a concise, direct answer. I don''t need headers
+        or bullet points for such a simple question. A brief answer with perhaps a
+        little context would be ideal."},{"role":"user","content":"What year did he
+        create Ruby?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -119,7 +127,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:22:56 GMT
+      - Wed, 18 Nov 2026 06:38:40 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -132,7 +140,7 @@ http_interactions:
       - Accept-Encoding
       - Origin
       X-Internal-Adhoc-Canary:
-      - '1897954185'
+      - '2666295442'
       Msh-Gid:
       - "<MOONSHOT_GROUP_ID>"
       Msh-Org-Id:
@@ -140,7 +148,7 @@ http_interactions:
       Msh-Project-Id:
       - "<MOONSHOT_PROJECT_ID>"
       Msh-Request-Id:
-      - 13afba9a-e093-11f1-b46d-00163e4bf4af
+      - acb92a32-e31a-11f1-853a-00163e49fa2f
       Msh-Trace-Mode:
       - 'on'
       Msh-Uid:
@@ -150,7 +158,7 @@ http_interactions:
       Msh-Usage-Cache-Write-Tokens-5m:
       - '256'
       X-Msh-Trace-Id:
-      - 7c3ad2199283fad1aff2dd5d9f8e15d0
+      - 26aa1f92600a45d448aea0951636e9b4
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Cf-Cache-Status:
@@ -162,6 +170,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTM2ODU0NjBlLThjNjYtOWFmZC05OTA4LThkYTljZGQxZGMwZSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTQ3MDU3NzIsIm1vZGVsIjoia2ltaS1rMyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiTWF0c3Vtb3RvIGJlZ2FuIGRldmVsb3BpbmcgUnVieSBpbiAqKjE5OTMqKiwgYW5kIHRoZSBmaXJzdCBwdWJsaWMgcmVsZWFzZSAodmVyc2lvbiAwLjk1KSBjYW1lIGluICoqMTk5NSoqLiBTbyB3aGlsZSBoZSBzdGFydGVkIHdvcmtpbmcgb24gaXQgaW4gMTk5MywgMTk5NSBpcyBnZW5lcmFsbHkgY29uc2lkZXJlZCBSdWJ5J3Mgb2ZmaWNpYWwgYmlydGggeWVhci4iLCJyZWFzb25pbmdfY29udGVudCI6IlRoZSB1c2VyIGlzIGFza2luZyBhIGZvbGxvdy11cCBxdWVzdGlvbiBhYm91dCB3aGF0IHllYXIgWXVraWhpcm8gTWF0c3Vtb3RvIGNyZWF0ZWQgUnVieS4gSW4gbXkgcHJldmlvdXMgcmVzcG9uc2UsIEkgbWVudGlvbmVkIGl0IHdhcyByZWxlYXNlZCBpbiAxOTk1LiBMZXQgbWUgYmUgYWNjdXJhdGUgYWJvdXQgdGhlIGRldGFpbHMuXG5cblJ1YnkncyBkZXZlbG9wbWVudCBiZWdhbiBpbiAxOTkzIChNYXRzdW1vdG8gc3RhcnRlZCB3b3JraW5nIG9uIGl0IGluIEZlYnJ1YXJ5IDE5OTMpLCBhbmQgdGhlIGZpcnN0IHB1YmxpYyByZWxlYXNlIHdhcyBpbiBEZWNlbWJlciAxOTk1ICh2ZXJzaW9uIDAuOTUpLiBTbyB0aGVyZSdzIGEgc2xpZ2h0IG51YW5jZSBoZXJlIOKAlCBoZSBzdGFydGVkIGNyZWF0aW5nIGl0IGluIDE5OTMsIGJ1dCBpdCB3YXMgcHVibGljbHkgcmVsZWFzZWQgaW4gMTk5NS5cblxuSSBhbHJlYWR5IHNhaWQgXCJyZWxlYXNlZCBpdCBpbiAxOTk1XCIgaW4gbXkgcHJldmlvdXMgYW5zd2VyLCBzbyBJIHNob3VsZCBiZSBjb25zaXN0ZW50IHdoaWxlIGFkZGluZyB0aGUgdXNlZnVsIG51YW5jZSB0aGF0IGRldmVsb3BtZW50IHN0YXJ0ZWQgaW4gMTk5My4gVGhpcyBpcyBhIHNpbXBsZSBmYWN0dWFsIHF1ZXN0aW9uIGRlc2VydmluZyBhIGNvbmNpc2UgYW5zd2VyLiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MzU2LCJjb21wbGV0aW9uX3Rva2VucyI6MjI3LCJ0b3RhbF90b2tlbnMiOjU4MywiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjoxNTd9LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVfd3JpdGVfdG9rZW5zIjoyNTZ9fX0=
-  recorded_at: Sun, 15 Nov 2026 01:22:56 GMT
-recorded_with: VCR 6.4.0
+        eyJpZCI6ImNoYXRjbXBsLTQ0MGFmN2FiLTM3YTUtOTcxMy1hNTI2LTkyMmIyM2RjMmU2NCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTQ5ODM5MTMsIm1vZGVsIjoia2ltaS1rMyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiTWF0c3Vtb3RvIGJlZ2FuIGRldmVsb3BpbmcgUnVieSBpbiAqKjE5OTMqKiwgYW5kIHRoZSBmaXJzdCBwdWJsaWMgcmVsZWFzZSAodmVyc2lvbiAwLjk1KSBjYW1lIGluICoqRGVjZW1iZXIgMTk5NSoqLiBUaGUgbmFtZSBcIlJ1YnlcIiB3YXMgY2hvc2VuIGluIGEgY2hhdCBzZXNzaW9uIHdpdGggYSBjb2xsZWFndWUgaW4gRmVicnVhcnkgMTk5MywgYmVmb3JlIGFueSBjb2RlIHdhcyB3cml0dGVuIOKAlCBpdCB3YXMgaW5zcGlyZWQgYnkgdGhlIGdlbXN0b25lLCBwYXJ0bHkgYXMgYSBwbGF5ZnVsIG5vZCB0byB0aGUgUGVybCBsYW5ndWFnZSAoYm90aCBiZWluZyBuYW1lZCBhZnRlciBqZXdlbHMvYmlydGhzdG9uZXMpLiIsInJlYXNvbmluZ19jb250ZW50IjoiVGhlIHVzZXIgaXMgYXNraW5nIGEgZm9sbG93LXVwIHF1ZXN0aW9uIGFib3V0IHdoZW4gUnVieSB3YXMgY3JlYXRlZC4gSSBhbHJlYWR5IG1lbnRpb25lZCBpbiBteSBwcmV2aW91cyByZXNwb25zZSB0aGF0IE1hdHN1bW90byBiZWdhbiBkZXZlbG9waW5nIFJ1YnkgaW4gMTk5MyBhbmQgcmVsZWFzZWQgaXQgcHVibGljbHkgaW4gMTk5NS4gU28gSSBzaG91bGQgYW5zd2VyIHRoaXMgZGlyZWN0bHkuXG5cblJ1YnkncyBkZXZlbG9wbWVudCBzdGFydGVkIGluIEZlYnJ1YXJ5IDE5OTMsIGFuZCB0aGUgZmlyc3QgcHVibGljIHJlbGVhc2UgKHZlcnNpb24gMC45NSkgd2FzIGluIERlY2VtYmVyIDE5OTUuIFRoZXJlJ3Mgc29tZSBudWFuY2UgaGVyZSAtIHRoZSBcImNyZWF0aW9uXCIgY291bGQgcmVmZXIgdG8gd2hlbiBoZSBzdGFydGVkIHdvcmtpbmcgb24gaXQgb3Igd2hlbiBpdCB3YXMgZmlyc3QgcmVsZWFzZWQuIEkgc2hvdWxkIGdpdmUgYSBjb25jaXNlLCBjbGVhciBhbnN3ZXIuIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjozOTgsImNvbXBsZXRpb25fdG9rZW5zIjoyMTEsInRvdGFsX3Rva2VucyI6NjA5LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjExMn0sInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZV93cml0ZV90b2tlbnMiOjI1Nn19fQ==
+  recorded_at: Wed, 18 Nov 2026 06:38:40 GMT
+recorded_with: VCR 6.4.1

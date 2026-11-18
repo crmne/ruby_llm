@@ -11,7 +11,7 @@ http_interactions:
         a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:28:44 GMT
+      - Wed, 18 Nov 2026 06:42:32 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -36,7 +36,7 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       X-Internal-Adhoc-Canary:
-      - '1897954185'
+      - '2666295442'
       Msh-Gid:
       - "<MOONSHOT_GROUP_ID>"
       Msh-Org-Id:
@@ -44,7 +44,7 @@ http_interactions:
       Msh-Project-Id:
       - "<MOONSHOT_PROJECT_ID>"
       Msh-Request-Id:
-      - db0b6bf2-e093-11f1-8425-00163e71f1da
+      - 397541aa-e31b-11f1-92cb-00163e2c78de
       Msh-Trace-Mode:
       - 'on'
       Msh-Uid:
@@ -56,7 +56,7 @@ http_interactions:
       Vary:
       - Origin
       X-Msh-Trace-Id:
-      - d804a7655ce3448f0f084a79462dfcaf
+      - 3094194aa6fc0e150d5bffda8d33189c
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Cf-Cache-Status:
@@ -67,10 +67,10 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"chatcmpl-6af90abb7e8aed1c5d02c16b","object":"chat.completion","created":1794706107,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"index":0,"id":"dice_roll_0_66cc55fd","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"index":1,"id":"dice_roll_1_febed5df","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"index":2,"id":"dice_roll_2_a1702de5","type":"function","function":{"name":"dice_roll","arguments":"{}"}}],"reasoning_content":"The
-        user asked to roll dice 3 times. I must call the dice_roll tool exactly 3
-        times. These are independent calls, so I can make them in the same block."},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":207,"completion_tokens":104,"total_tokens":311,"completion_tokens_details":{"reasoning_tokens":37},"prompt_tokens_details":{"cache_write_tokens":0}}}'
-  recorded_at: Sun, 15 Nov 2026 01:28:44 GMT
+      string: '{"id":"chatcmpl-779c7f0b-e77f-93ea-8732-de5e2fed7a9d","object":"chat.completion","created":1794984149,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"index":0,"id":"dice_roll_0_aa446aee","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"index":1,"id":"dice_roll_1_0b480adb","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"index":2,"id":"dice_roll_2_074db2ce","type":"function","function":{"name":"dice_roll","arguments":"{}"}}],"reasoning_content":"The
+        user asked to roll dice 3 times. I must call dice_roll exactly 3 times. I''ll
+        make all three calls in the same block since they''re independent."},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":207,"completion_tokens":103,"total_tokens":310,"completion_tokens_details":{"reasoning_tokens":33},"prompt_tokens_details":{"cache_write_tokens":0}}}'
+  recorded_at: Wed, 18 Nov 2026 06:42:32 GMT
 - request:
     method: post
     uri: https://api.moonshot.ai/v1/chat/completions
@@ -78,13 +78,13 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"kimi-k3","messages":[{"role":"system","content":"You must
         call the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
-        the dice 3 times"},{"role":"assistant","content":"","tool_calls":[{"id":"dice_roll_0_66cc55fd","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"dice_roll_1_febed5df","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"dice_roll_2_a1702de5","type":"function","function":{"name":"dice_roll","arguments":"{}"}}],"reasoning_content":"The
-        user asked to roll dice 3 times. I must call the dice_roll tool exactly 3
-        times. These are independent calls, so I can make them in the same block."},{"role":"tool","content":"{\"roll\":1}","tool_call_id":"dice_roll_0_66cc55fd"},{"role":"tool","content":"{\"roll\":2}","tool_call_id":"dice_roll_1_febed5df"},{"role":"tool","content":"{\"roll\":3}","tool_call_id":"dice_roll_2_a1702de5"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
+        the dice 3 times"},{"role":"assistant","content":"","tool_calls":[{"id":"dice_roll_0_aa446aee","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"dice_roll_1_0b480adb","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"dice_roll_2_074db2ce","type":"function","function":{"name":"dice_roll","arguments":"{}"}}],"reasoning_content":"The
+        user asked to roll dice 3 times. I must call dice_roll exactly 3 times. I''ll
+        make all three calls in the same block since they''re independent."},{"role":"tool","content":"{\"roll\":1}","tool_call_id":"dice_roll_0_aa446aee"},{"role":"tool","content":"{\"roll\":2}","tool_call_id":"dice_roll_1_0b480adb"},{"role":"tool","content":"{\"roll\":3}","tool_call_id":"dice_roll_2_074db2ce"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -99,7 +99,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:28:59 GMT
+      - Wed, 18 Nov 2026 06:42:35 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -109,7 +109,7 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       X-Internal-Adhoc-Canary:
-      - '1897954185'
+      - '2666295442'
       Msh-Gid:
       - "<MOONSHOT_GROUP_ID>"
       Msh-Org-Id:
@@ -117,7 +117,7 @@ http_interactions:
       Msh-Project-Id:
       - "<MOONSHOT_PROJECT_ID>"
       Msh-Request-Id:
-      - e61f5a23-e093-11f1-bec9-00163e63708b
+      - 3b5b2653-e31b-11f1-8b2b-00163e71f1da
       Msh-Trace-Mode:
       - 'on'
       Msh-Uid:
@@ -129,7 +129,7 @@ http_interactions:
       Vary:
       - Origin
       X-Msh-Trace-Id:
-      - 77911a16e43f5318f0b94e6717b4f351
+      - 5e4d573524bbd4a1bbf2537deca59ebc
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Cf-Cache-Status:
@@ -141,6 +141,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTZhZjkwYWNkNTdlMzc2ZDYxMzIyN2Q4NSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTQ3MDYxMjUsIm1vZGVsIjoia2ltaS1rMyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiSGVyZSBhcmUgeW91ciAzIGRpY2Ugcm9sbHM6XG5cbvCfjrIgUm9sbCAxOiAqKjEqKlxu8J+OsiBSb2xsIDI6ICoqMioqXG7wn46yIFJvbGwgMzogKiozKipcblxuVG90YWw6ICoqNioqXG5cbkludGVyZXN0aW5nIOKAlCB5b3Ugcm9sbGVkIGEgc2VxdWVudGlhbCAxLTItMyEgTGV0IG1lIGtub3cgaWYgeW91J2QgbGlrZSB0byByb2xsIGFnYWluLiIsInJlYXNvbmluZ19jb250ZW50IjoiVGhlIHRocmVlIHJvbGxzIGFyZTogMSwgMiwgYW5kIDMuIEknbGwgcHJlc2VudCB0aGVzZSByZXN1bHRzIHRvIHRoZSB1c2VyLiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6Mzk5LCJjb21wbGV0aW9uX3Rva2VucyI6MTAyLCJ0b3RhbF90b2tlbnMiOjUwMSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjoyM30sInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZV93cml0ZV90b2tlbnMiOjI1Nn19fQ==
-  recorded_at: Sun, 15 Nov 2026 01:28:59 GMT
-recorded_with: VCR 6.4.0
+        eyJpZCI6ImNoYXRjbXBsLTI5YTM5ZDBkLTY0YjktOTM1My04OTZiLTcwZTA0ZjM3NWQ0NyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTQ5ODQxNTIsIm1vZGVsIjoia2ltaS1rMyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiSGVyZSBhcmUgeW91ciAzIGRpY2Ugcm9sbHM6XG5cbjEuICoqMSoqXG4yLiAqKjIqKlxuMy4gKiozKipcblxuVG90YWw6ICoqNioqIOKAlCBhbiBpbnRlcmVzdGluZyBhc2NlbmRpbmcgc2VxdWVuY2UhIPCfjrIiLCJyZWFzb25pbmdfY29udGVudCI6Ikkgcm9sbGVkIHRoZSBkaWNlIDMgdGltZXM6IDEsIDIsIDMuIExldCBtZSByZXBvcnQgdGhlIHJlc3VsdHMuIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjozOTUsImNvbXBsZXRpb25fdG9rZW5zIjo3NiwidG90YWxfdG9rZW5zIjo0NzEsImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MjN9LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVfd3JpdGVfdG9rZW5zIjoyNTZ9fX0=
+  recorded_at: Wed, 18 Nov 2026 06:42:35 GMT
+recorded_with: VCR 6.4.1

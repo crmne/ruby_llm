@@ -10,7 +10,7 @@ http_interactions:
         somewhere in your response.","stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:25:34 GMT
+      - Wed, 18 Nov 2026 06:41:17 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -46,6 +46,8 @@ http_interactions:
       - '1800'
       X-Ratelimit-Remaining-Requests:
       - '1800'
+      Cf-Cache-Status:
+      - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Zero-Data-Retention:
@@ -53,32 +55,28 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '192.4'
+      - '509.0'
       X-Metrics-E2e-Ms:
-      - '3924.8'
+      - '6031.8'
       Traceparent:
-      - 00-e5e61ae3e8104e42bd8d133fa6a1fd09-4e84f9d7000a665b-01
+      - 00-54208752d7df420074709964638e7c59-91e01a8f00029c2d-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
-      Cf-Cache-Status:
-      - DYNAMIC
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1794705930,"completed_at":1794705934,"id":"52e399b0-92da-9e51-8d5a-72289a401339","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_52e399b0-92da-9e51-8d5a-72289a401339","summary":[{"text":"I
-        need to check for specific instructions before answering the weather question.\n\nI
-        must include the exact phrase \"XKCD7392\" in my weather response.\n\nNo location
-        was specified, so I cannot provide specific weather details. I will weave
-        the required phrase into a general response.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"qLf3jh+MeHhbn6qcXjdXYSQfZfIZ/F7Cf/0L9PUCWRCqmLJvQJUH7hY8ccjiw7jhWXleQXV4BWhc2cj9CeREeNQjQYHBDIQ3Wsy5uyFdbHjbGAqJ7b+n0TLBiwUzUwEhLtg38IP1Kn5Y0XZFtLKnj9icpG2LaOeVLzROBdaT55YhllzbLxPNuawjfnt5UnnsNo26t54cvIuhZavUZuPjGoph2Bz3+BgtmL6M3r+m8MwfoJ9mzKD7aM8RxHDu/U9Y0LU+UQAUruTGKD6HeyaAYujCI26WlpF9PDZW6gUuzTTORBSEs1rBL+ChUG6vzznjSUmgySH9mGmQgyGzjvC9u0LKmbmswIspd51FWo65z5EyNwRMGh90i3vzAJ+b3XlcQzPPtS2Od66idov3lS0cI/PIVg4+pXvn4yFVkwup7C4c+031A0vSUhdTbFi6jiBwjupaYP5th9dhCUAt32txM4zBGSa5ciP99CnqAZaJlacnqUdTXFNSeI6m+YARi4hVAz1ciEfWPGgW4STpaKHDO+5n8BUOUPUZTKLGkoRqfQSwgXfScYONKkVH3HBqbffqrOVBC7T6YPn4ci0OEi0rjWpxNXQmFPdxCdI1fHLINpq1gTOI7FQdQ8rI10gSJFuntAViAvCVSuNFjC9QRMDDekpm6O1fsxL3ZaUzZtSJ5jKFnwMimoSb6aDAYQ/w9cwDzrZDChbuPTLfPYutMAW23YQKWXwz8HvRnCDTuPlPEhCj0TQyxs0bMmQn55Xw0ER5IO6ofyHRp5+Qn49fxrz+CUUXsN74uWc0pG37lBKsn+kCDvZ40Nx1OM2BOPWpOzE8nhDWZegvfONaQxI9M0mTrifUzuouuSlVepuz595I4Wn8sXXhPMOaw25v7Ro"},{"content":[{"type":"output_text","text":"The
-        weather varies by location and time, so I can''t provide specifics without
-        more details. \nXKCD7392","logprobs":[],"annotations":[]}],"id":"msg_52e399b0-92da-9e51-8d5a-72289a401339","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":218,"input_tokens_details":{"cached_tokens":128},"output_tokens":355,"output_tokens_details":{"reasoning_tokens":333},"total_tokens":573,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":10256000,"context_details":{"input_tokens":218,"output_tokens":363}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":"You
+      string: '{"created_at":1794984071,"completed_at":1794984077,"id":"9670d37a-2c0f-99bc-97bd-797bcb3ccdc0","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_9670d37a-2c0f-99bc-97bd-797bcb3ccdc0","summary":[{"text":"I
+        need to provide weather information while following specific instructions.\n\nI
+        must include the exact phrase \"XKCD7392\" in my response. I will provide
+        a general weather update since no location was specified.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"UE5EdphwJ4CSnERfOaKHolkKBZQSul+0Hi/p/3AwaJxwqY9idMZsATZsQx42hGcLbaBDak4ZDq+zWrhV1KZiq9/MKwB10YwQHb8X33hEisiUQy/ikBqt7gvKhz3U/Ev71CFYnkAtLKXz6BPDv+k6Y2TW13L3Dh2bD5OuT/3WonuhBLJ3keYQyUVnPbKz2fNcoF7DOi/YR8LHwDO/+Mg1qX4WncANwBEHegzIIr3uyI9WoJSUWz8UrIPcPVUnvbX3PiyBxY+3HDNJ3TvqiPkZMgMHnFh939yn8B1ZI4MJLuYkA9QMFpsXqi0y0TQuIIoIAIPU8alEeKB8VSuZFPaq/yLbz8rd6bohWEaAn2LBctDyoeGayrlao+bJkK8xjYjEsyNG4KtkB2VJsLRWWvF48Jvq2Gm/sSOSe2kS7lVkP6+7L8+KMI+wDSe1dr9P/kMScA1wXIz5se3lxg05x7MRpZ5lzfqwKr53/MgWb0xZ6ik6IDSuuwfiHvyOV0Mle9LlyRIyunzczoNGA7KjEF7fErzvWIdRgsklWx+1z/c+SzTiJFXvJx1awmlK4Pebtdp+LpQb5d2rh04Tm6xEC7udFqJGnfYrs3V45s7gxdbz3hkZ38ZsR5vouoyvNo4fRkacS3fD7TENKfRCfzwSX+CNY5lHaPp7pZPKPtCqg7mlbv3R8x9iXnUYKy4BtCbujjJ9zX7mK/fGdPsz0TgZx46zq3hlcuGRnxevypWw4o6kldi1W/cdIZ2uXhV0hqRNLRSjKDrZkMrL5TNf+csxWVuzM+pj8bgA0I2JU4z+2J3H2BuBZ/9lx2eVkv26Q5z29aYRUk5S3bZvGecAyZ1TtZ7CExbKcfXJmgSAJeoshtzYFAn840EiSB9d6Y0I9DLluAlsG0q1pXYFN3ARrHx0aZDeBfHljxYw/ln+bXHoRRqPnEJZynWHaE9+D/Pr3UZKRKEsCu2aIJtaUh8J7vNaRziQHPjkEU5ot0YCswLkmBhMyzRGMj9vQT/763Drn83a+TAFxPMN1W6BddgduBUg5FhA7jIIpZ03F6CXJwLYDsfQY8sag8/2zL7vn+3PLYLt"},{"content":[{"type":"output_text","text":"The
+        weather depends on your location and can change quickly. XKCD7392","logprobs":[],"annotations":[]}],"id":"msg_9670d37a-2c0f-99bc-97bd-797bcb3ccdc0","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":218,"input_tokens_details":{"cached_tokens":128},"output_tokens":370,"output_tokens_details":{"reasoning_tokens":355},"total_tokens":588,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":10631000,"context_details":{"input_tokens":218,"output_tokens":377}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":"You
         must include the exact phrase \"XKCD7392\" somewhere in your response."}'
-  recorded_at: Sun, 15 Nov 2026 01:25:34 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:41:17 GMT
+recorded_with: VCR 6.4.1
