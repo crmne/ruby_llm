@@ -10,14 +10,15 @@ module RubyLLM
 
       # Runs +tool_calls+ in rounds split by the calls +exclusive+ picks
       # out. A round with a result +paused+ picks out stops the rounds
-      # after it, which wait for that call to finish.
-      def run(mode, tool_calls, exclusive: nil, paused: nil, on_result: nil, config: nil, &)
+      # after it, which wait for that call to finish. +workers+ threads or
+      # fibers share a round's calls; without it each call gets its own.
+      def run(mode, tool_calls, exclusive: nil, paused: nil, workers: nil, on_result: nil, config: nil, &)
         rounds = rounds(tool_calls, exclusive)
         case mode
         when :threads
-          run_with_threads(rounds, paused:, on_result:, config:, &)
+          run_with_threads(rounds, paused:, workers:, on_result:, config:, &)
         when :fibers
-          run_with_fibers(rounds, paused:, on_result:, config:, &)
+          run_with_fibers(rounds, paused:, workers:, on_result:, config:, &)
         end
       end
 
@@ -31,7 +32,7 @@ module RubyLLM
         indexed.chunk_while { |(first, _), (second, _)| !exclusive.call(first) && !exclusive.call(second) }.to_a
       end
 
-      def run_with_threads(rounds, paused:, on_result:, config:, &execute)
+      def run_with_threads(rounds, paused:, workers:, on_result:, config:, &execute)
         caller_context = execution_context
         workflow_context = Support::Instrumentation.current_workflow
         instrumentation_context = Support::Instrumentation.capture_context(config:)
@@ -39,18 +40,18 @@ module RubyLLM
         rounds.each do |round|
           queue = Queue.new
           threads = []
-          round.each do |tool_call, index|
+          jobs = jobs(round)
+          pool_size(round, workers).times do
             thread = Thread.new do
-              result = capture_result(index, tool_call, caller_context, execute,
-                                      workflow_context:, instrumentation_context:)
-            ensure
-              queue << (result || Result.new(index:, tool_call:, error: thread_exited_error(tool_call)))
+              work_through(jobs, queue, workers) do |tool_call, index|
+                capture_result(index, tool_call, caller_context, execute, workflow_context:, instrumentation_context:)
+              end
             end
             thread.report_on_exception = false
             threads << thread
           end
 
-          collect_results(queue, threads.size, results, on_result:)
+          collect_results(queue, round.size, results, on_result:)
           break if paused?(round, results, paused)
         ensure
           threads&.each(&:join)
@@ -58,7 +59,7 @@ module RubyLLM
         results
       end
 
-      def run_with_fibers(rounds, paused:, on_result:, config:, &execute)
+      def run_with_fibers(rounds, paused:, workers:, on_result:, config:, &execute)
         require_async
         caller_context = execution_context
         contexts = { workflow_context: Support::Instrumentation.current_workflow,
@@ -69,7 +70,7 @@ module RubyLLM
         Sync do |task|
           isolated(caller_context) do
             rounds.each do |round|
-              run_fiber_round(task, round, results, caller_context, contexts, on_result:, &execute)
+              run_fiber_round(task, round, results, caller_context, contexts, workers:, on_result:, &execute)
               break if paused?(round, results, paused)
             end
           end
@@ -77,20 +78,58 @@ module RubyLLM
         results
       end
 
-      def run_fiber_round(task, round, results, caller_context, contexts, on_result:, &execute)
+      def run_fiber_round(task, round, results, caller_context, contexts, workers:, on_result:, &execute)
         queue = Async::Queue.new
         tasks = []
-        round.each do |tool_call, index|
-          worker = task.async { queue << capture_result(index, tool_call, caller_context, execute, **contexts) }
-          tasks << worker
+        jobs = jobs(round)
+        pool_size(round, workers).times do
+          tasks << task.async do
+            work_through(jobs, queue, workers) do |tool_call, index|
+              capture_result(index, tool_call, caller_context, execute, **contexts)
+            end
+          end
         end
 
-        collect_results(queue, tasks.size, results, on_result:)
+        collect_results(queue, round.size, results, on_result:)
       rescue Async::Stop
         tasks&.each(&:stop)
         raise
       ensure
         tasks&.each(&:wait)
+      end
+
+      def jobs(round)
+        Queue.new.tap do |jobs|
+          round.each { |job| jobs << job }
+          jobs.close
+        end
+      end
+
+      def pool_size(round, workers)
+        [workers || round.size, round.size].min
+      end
+
+      # Takes one call, or with a pool every call it can get. A pool has
+      # nobody left to run the calls behind one that raised or whose thread
+      # exited, so they fail with the same error and the round still ends.
+      def work_through(jobs, queue, pooled)
+        while (job = jobs.pop)
+          result = nil
+          begin
+            result = yield(*job)
+          ensure
+            result ||= Result.new(index: job.last, tool_call: job.first, error: thread_exited_error(job.first))
+            queue << result
+            fail_remaining(jobs, queue, result.error) if pooled && result.error
+          end
+          break unless pooled
+        end
+      end
+
+      def fail_remaining(jobs, queue, error)
+        while (job = jobs.pop)
+          queue << Result.new(index: job.last, tool_call: job.first, error:)
+        end
       end
 
       def require_async
@@ -169,6 +208,7 @@ module RubyLLM
       end
 
       private_class_method :rounds, :paused?, :run_with_threads, :run_with_fibers, :run_fiber_round, :require_async,
+                           :jobs, :pool_size, :work_through, :fail_remaining,
                            :collect_results, :capture_result, :thread_exited_error, :isolated,
                            :execution_context, :rails_executor
     end
