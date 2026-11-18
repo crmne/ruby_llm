@@ -7,14 +7,9 @@ module RubyLLM
       protocol :anthropic, MiniMax::Anthropic
       protocol :media, Protocols::MiniMax
       protocol :files, Protocols::MiniMax::Files
-      protocol :chat_completions, MiniMax::ChatCompletions
       protocol :responses, MiniMax::Responses
 
       MEDIA_OPERATIONS = %i[paint animate speak transcribe].freeze
-
-      # The one MiniMax model that applies a response_format, on Chat
-      # Completion v2. The others ignore every structured output field.
-      STRUCTURED_OUTPUT_MODEL = 'MiniMax-Text-01'
 
       # The HTTP status each MiniMax status code stands for on endpoints that
       # answer 200 and report the failure in base_resp.
@@ -28,7 +23,6 @@ module RubyLLM
       end
 
       def protocol_for(model, schema: nil, thinking: nil, tool_prefs: nil, provider_tools: [], messages: [], **)
-        return protocols[:chat_completions] if schema && model.id == STRUCTURED_OUTPUT_MODEL
         return protocols[:responses] if web_search_route?(schema, thinking, tool_prefs, provider_tools, messages)
 
         super
