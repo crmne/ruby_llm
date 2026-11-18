@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 unless ENV['SKIP_COVERAGE']
+  # Undercover depends on rugged, a C extension, so it is installed on MRI only.
+  require 'undercover/simplecov_formatter' if RUBY_ENGINE == 'ruby'
+
   SimpleCov.start do
     track_files 'lib/**/*.rb'
 
@@ -17,7 +20,8 @@ unless ENV['SKIP_COVERAGE']
     formatter SimpleCov::Formatter::MultiFormatter.new(
       [
         SimpleCov::Formatter::SimpleFormatter,
-        SimpleCov::Formatter::CoberturaFormatter
+        SimpleCov::Formatter::CoberturaFormatter,
+        (SimpleCov::Formatter::Undercover if defined?(SimpleCov::Formatter::Undercover))
       ].compact
     )
   end

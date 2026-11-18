@@ -84,6 +84,32 @@ When a `:live` example fails, the spec suite deletes its cassette. This is on pu
 
 Always check cassettes for leaked API keys before committing.
 
+### Coverage of your changes
+
+[Undercover](https://github.com/grodowski/undercover) reports the methods and blocks your branch changes that no spec runs. It reads `coverage/coverage.json`, which any spec run on MRI writes, and compares with `origin/main`, as `.undercover` sets:
+
+```bash
+bin/rspec-queue
+bundle exec undercover
+```
+
+After a partial run, limit the check to the files those specs load, or every other changed file reports as uncovered:
+
+```bash
+bundle exec rspec spec/ruby_llm/cost_spec.rb
+bundle exec undercover --include-files 'lib/ruby_llm/cost.rb'
+```
+
+`.undercover` passes `--compare origin/main`, so the check covers every commit on your branch as well as uncommitted work. Without `--compare`, undercover checks only uncommitted changes and passes as soon as you commit. When your branch is based on another branch, compare with that one instead:
+
+```bash
+bundle exec undercover --compare my-base-branch
+```
+
+Coding agents can run this loop themselves. In Claude Code, install the [undercover plugin](https://github.com/grodowski/undercover-claude): after each spec run it reads `undercover --format json` and adds specs until no warnings remain.
+
+Undercover finds lines no spec runs; mutation testing finds lines specs run without checking. Fix undercover's warnings first.
+
 ### Mutation testing
 
 [Mutineer](https://github.com/davidteren/mutineer) changes the library one line at a time and runs the specs against each change. A change no spec notices is a surviving mutant: a line your specs execute but do not check. It needs MRI 3.4 or later and runs on your machine, not in CI.
