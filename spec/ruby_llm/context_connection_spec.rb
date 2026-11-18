@@ -12,7 +12,7 @@ RSpec.describe 'Context connection settings' do # rubocop:disable RSpec/Describe
     end
   end
   let(:text_url) { 'https://files.example.test/notes.txt' }
-  let(:model) { instance_double(RubyLLM::Model, id: 'test-model') }
+  let(:model) { instance_double(RubyLLM::Model, id: 'test-model', configured_prices?: false) }
 
   def proxy_and_timeout(config)
     connection = RubyLLM::Transport::Connection.basic(config)
