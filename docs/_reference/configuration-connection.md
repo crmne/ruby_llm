@@ -287,6 +287,7 @@ tenant_b_service = TenantService.new(tenant_b)
 - **Coverage**: Every entry point the context exposes uses it, chat and non-chat alike, including the file downloads those calls make
 - **Thread Safety**: Each context is independent and thread-safe
 - **Connections**: Contexts with the same connection settings share connections, as described in [Connection Reuse](#connection-reuse)
+- **Prices**: [`config.price`]({% link _core_features/cost-and-usage-tracking.md %}#setting-your-own-prices) belongs to the global configuration, and raises on a context
 
 ## All Other Settings
 

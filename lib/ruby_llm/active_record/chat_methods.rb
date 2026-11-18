@@ -1112,7 +1112,7 @@ module RubyLLM
           record.knowledge_cutoff = model_info.knowledge_cutoff
           record.capabilities = model_info.capabilities || []
           record.modalities = model_info.modalities.to_h
-          record.pricing = model_info.pricing.to_h
+          record.pricing = model_info.registry_pricing.to_h
           record.metadata = model_info.metadata || {}
         end
       rescue ::ActiveRecord::RecordInvalid, ::ActiveRecord::RecordNotUnique

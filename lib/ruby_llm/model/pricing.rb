@@ -16,6 +16,52 @@ module RubyLLM
       # The pricing categories a model may define.
       CATEGORIES = %i[text_tokens images audio_tokens embeddings characters audio_seconds search_units].freeze
 
+      # The prices Configuration#price sets, each as the category and the
+      # standard-tier price it replaces.
+      OVERRIDES = {
+        input: %i[text_tokens input_per_million],
+        output: %i[text_tokens output_per_million],
+        cache_read: %i[text_tokens cache_read_input_per_million],
+        cache_write: %i[text_tokens cache_write_input_per_million],
+        characters: %i[characters input_per_million],
+        audio_seconds: %i[audio_seconds input_per_million],
+        search_units: %i[search_units input_per_million]
+      }.freeze
+      private_constant :OVERRIDES
+
+      class << self
+        # Returns +prices+ checked against the prices a configuration can
+        # set.
+        def override(prices) # :nodoc:
+          unknown = prices.keys - OVERRIDES.keys
+          if unknown.any? || prices.empty?
+            raise ArgumentError, "#{unknown.any? ? "Unknown price: #{unknown.join(', ')}" : 'No price given'}. " \
+                                 "Valid prices: #{OVERRIDES.keys.join(', ')}"
+          end
+
+          prices.each do |kind, price|
+            raise ArgumentError, "The #{kind} price must be a number, got #{price.inspect}" unless price.is_a?(Numeric)
+          end
+          prices
+        end
+
+        # Returns pricing +data+ with the standard-tier +prices+ replaced.
+        # A thinking price that equals the output price is the same price,
+        # so it follows a new output price.
+        def overridden(data, prices) # :nodoc:
+          data = RubyLLM::Support::Utils.deep_dup(data)
+          standard = data.dig(:text_tokens, :standard) || {}
+          thinking = standard[:reasoning_output_per_million]
+          follows = prices.key?(:output) && thinking && thinking == standard[:output_per_million]
+          prices.each do |kind, price|
+            category, attribute = OVERRIDES.fetch(kind)
+            ((data[category] ||= {})[:standard] ||= {})[attribute] = price
+          end
+          data[:text_tokens][:standard][:reasoning_output_per_million] = prices[:output] if follows
+          data
+        end
+      end
+
       def initialize(data) # :nodoc:
         @data = {}
 

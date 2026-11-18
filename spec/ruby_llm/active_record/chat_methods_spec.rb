@@ -393,6 +393,20 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       RubyLLM.config.azure_deployments = nil
     end
 
+    it 'stores a new model row with the registry price, and costs it at the configured price' do
+      RubyLLM.config.azure_deployments = { 'gpt-4o-priced' => 'gpt-4o' }
+      listed = RubyLLM.models.find('gpt-4o', provider: :azure).price(:input)
+      RubyLLM.config.price 'gpt-4o', provider: :azure, input: listed * 2
+      chat = Chat.create!(model: model_id)
+
+      chat.with_model('gpt-4o-priced', provider: :azure)
+
+      expect(chat.model.pricing.dig('text_tokens', 'standard', 'input_per_million')).to eq(listed)
+      expect(chat.model.price(:input)).to eq(listed * 2)
+    ensure
+      RubyLLM.config.azure_deployments = nil
+    end
+
     it 'reuses a model row another process inserted after the lookup missed' do
       relation = RubyLLM::ActiveRecord::Model.all
       allow(RubyLLM::ActiveRecord::Model).to receive(:all).and_return(relation)

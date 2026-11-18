@@ -49,8 +49,26 @@ module RubyLLM
     # e.g. <tt>["function_calling", "streaming"]</tt>.
     attr_reader :capabilities
 
-    # The model's pricing as a Model::Pricing object, in USD per million tokens.
-    attr_reader :pricing
+    # The model's pricing as a Model::Pricing object, in USD per million
+    # tokens: the registry's prices, with the ones set through
+    # Configuration#price in their place.
+    def pricing
+      prices = RubyLLM.config.prices
+      return @pricing if prices.empty?
+
+      priced = @priced
+      return priced.last if priced&.first.equal?(prices)
+
+      override = configured_prices(prices)
+      pricing = override.empty? ? @pricing : Pricing.new(Pricing.overridden(@pricing_data, override))
+      @priced = [prices, pricing].freeze
+      pricing
+    end
+
+    # The registry's own pricing, which is what a registry store keeps.
+    def registry_pricing # :nodoc:
+      @pricing
+    end
 
     # Provider-specific metadata as a Hash.
     attr_reader :metadata
@@ -86,7 +104,9 @@ module RubyLLM
       @capabilities = data[:capabilities] || []
       @metadata = data[:metadata]&.dup || {}
       @unlisted_at = Support::Utils.to_time(data[:unlisted_at])&.utc
-      @pricing = Pricing.new(pricing_data_with_long_context(data[:pricing] || {}))
+      @deployed_model_id = data[:deployed_model_id]
+      @pricing_data = pricing_data_with_long_context(data[:pricing] || {})
+      @pricing = Pricing.new(@pricing_data)
       @reasoning_options = normalize_reasoning_options(reasoning_options_from(data))
       store_reasoning_options_metadata
     end
@@ -205,7 +225,7 @@ module RubyLLM
         knowledge_cutoff: knowledge_cutoff,
         modalities: modalities.to_h,
         capabilities: capabilities,
-        pricing: pricing.to_h,
+        pricing: registry_pricing.to_h,
         metadata: metadata
       }
       # A JSON registry drops unlisted models, so the key stays out of it.
@@ -214,6 +234,14 @@ module RubyLLM
     end
 
     private
+
+    # A deployment costs what its model costs, unless it has prices of its
+    # own.
+    def configured_prices(prices)
+      deployed = @deployed_model_id || provider_class&.deployed_model_id(id, RubyLLM.config)
+      keys = [deployed, id].compact.map { |model_id| [provider.to_s, model_id.to_s] }
+      prices.values_at(*keys).compact.reduce({}, :merge)
+    end
 
     def usage_entries_of(source)
       return source.usage_entries if source.respond_to?(:usage_entries)

@@ -155,7 +155,7 @@ module RubyLLM
             knowledge_cutoff: model_info.knowledge_cutoff,
             modalities: model_info.modalities.to_h,
             capabilities: model_info.capabilities,
-            pricing: model_info.pricing.to_h,
+            pricing: model_info.registry_pricing.to_h,
             metadata: model_info.metadata,
             unlisted_at: nil
           }
