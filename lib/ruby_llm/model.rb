@@ -54,14 +54,16 @@ module RubyLLM
     # Configuration#price in their place.
     def pricing
       config = RubyLLM.config
-      return @pricing if config.prices.empty?
+      revision = config.revision
+      prices = config.prices
+      return @pricing if prices.empty?
 
       priced = @priced
-      return priced.last if priced && priced[0].equal?(config) && priced[1] == config.revision
+      return priced.last if priced && priced[0].equal?(config) && priced[1] == revision
 
-      override = configured_prices(config.prices)
+      override = configured_prices(prices)
       pricing = override.empty? ? @pricing : Pricing.new(Pricing.overridden(@pricing_data, override))
-      @priced = [config, config.revision, pricing].freeze
+      @priced = [config, revision, pricing].freeze
       pricing
     end
 

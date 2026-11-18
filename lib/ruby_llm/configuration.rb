@@ -36,8 +36,8 @@ module RubyLLM
         define_method("#{key}=") do |value|
           value = nil if value.is_a?(String) && value.strip.empty?
           value = normalize.call(value) if normalize
-          @revision = @revision.to_i + 1
           instance_variable_set(:"@#{key}", value)
+          @revision = @revision.to_i + 1
         end
 
         option_keys << key
@@ -510,9 +510,9 @@ module RubyLLM
     def price(model, provider:, **prices)
       raise ConfigurationError, 'Set prices in RubyLLM.configure: a context cannot price a model differently' if @copy
 
-      @revision += 1
       key = [provider.to_s, model.to_s]
       @prices = @prices.merge(key => @prices.fetch(key, {}).merge(Model::Pricing.override(prices)).freeze).freeze
+      @revision += 1
     end
 
     # Copies file_converters too, so registering one on a context's copy,
