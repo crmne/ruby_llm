@@ -10,7 +10,7 @@ http_interactions:
         me about the weather."}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -35,7 +35,7 @@ http_interactions:
       Num-Chars:
       - '2879'
       Num-Tokens:
-      - '110'
+      - '564'
       Pragma:
       - no-cache
       Vary:
@@ -43,28 +43,24 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - f89187b8f7cfdd5a81819e41f153f06e
+      - d9772e53439c60b7e6b7ef73a58e4150
       Date:
-      - Sun, 15 Nov 2026 01:20:14 GMT
+      - Wed, 18 Nov 2026 06:36:03 GMT
       X-Envoy-Upstream-Service-Time:
-      - '1306'
+      - '7309'
       Server:
       - envoy
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"06517693-b9aa-406c-a237-b25c6267d471","message":{"role":"assistant","content":[{"type":"text","text":"I''m
-        unable to provide real-time weather information as I don''t have access to
-        current weather data. However, I can explain general weather concepts or help
-        with historical weather data if you have specific questions. By the way, did
-        you know that XKCD7392 is not a real XKCD comic number? If you''re interested
-        in weather patterns or climate science, I''d be happy to discuss those topics!"}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":26,"output_tokens":84},"tokens":{"input_tokens":555,"output_tokens":87},"cached_tokens":528}}'
-  recorded_at: Sun, 15 Nov 2026 01:20:14 GMT
+      string: !binary |-
+        eyJpZCI6IjIwZGU5MWM3LTVmOTktNGI1Yy1hODJiLWNjOTg0OWNjOTRmNyIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOlt7InR5cGUiOiJ0ZXh0IiwidGV4dCI6IkknbSB1bmFibGUgdG8gcHJvdmlkZSByZWFsLXRpbWUgd2VhdGhlciBpbmZvcm1hdGlvbiBhcyBJIGRvbid0IGhhdmUgYWNjZXNzIHRvIGxpdmUgZGF0YSBvciB0aGUgYWJpbGl0eSB0byBicm93c2UgdGhlIGludGVybmV0LiBIb3dldmVyLCBJIGNhbiBvZmZlciBnZW5lcmFsIGluZm9ybWF0aW9uIGFib3V0IHdlYXRoZXIgcGF0dGVybnMgYW5kIHBoZW5vbWVuYSBpZiB5b3UncmUgaW50ZXJlc3RlZC5cblxuV2VhdGhlciByZWZlcnMgdG8gdGhlIGF0bW9zcGhlcmljIGNvbmRpdGlvbnMgaW4gYSBzcGVjaWZpYyByZWdpb24gb3ZlciBhIHNob3J0IHBlcmlvZCwgdHlwaWNhbGx5IGhvdXJzLCBkYXlzLCBvciB3ZWVrcy4gSXQgZW5jb21wYXNzZXMgdmFyaW91cyBlbGVtZW50cyBzdWNoIGFzIHRlbXBlcmF0dXJlLCBodW1pZGl0eSwgYXRtb3NwaGVyaWMgcHJlc3N1cmUsIHdpbmQgc3BlZWQgYW5kIGRpcmVjdGlvbiwgcHJlY2lwaXRhdGlvbiwgY2xvdWQgY292ZXIsIGFuZCB2aXNpYmlsaXR5LiBUaGVzZSBmYWN0b3JzIGNvbWJpbmUgdG8gY3JlYXRlIHRoZSBkYXktdG8tZGF5IGNvbmRpdGlvbnMgd2UgZXhwZXJpZW5jZSBhcyB3ZWF0aGVyLlxuXG4qKlRlbXBlcmF0dXJlOioqIFRoaXMgaXMgYSBtZWFzdXJlIG9mIHRoZSBkZWdyZWUgb2YgaG90bmVzcyBvciBjb2xkbmVzcyBvZiB0aGUgYWlyLCB1c3VhbGx5IGV4cHJlc3NlZCBpbiBDZWxzaXVzICjCsEMpIG9yIEZhaHJlbmhlaXQgKMKwRikuIFRlbXBlcmF0dXJlIHZhcmlhdGlvbnMgYXJlIGluZmx1ZW5jZWQgYnkgZmFjdG9ycyBsaWtlIGxhdGl0dWRlLCBhbHRpdHVkZSwgc2Vhc29uLCBhbmQgcHJveGltaXR5IHRvIGxhcmdlIGJvZGllcyBvZiB3YXRlci5cblxuKipIdW1pZGl0eToqKiBJdCByZXByZXNlbnRzIHRoZSBhbW91bnQgb2Ygd2F0ZXIgdmFwb3IgcHJlc2VudCBpbiB0aGUgYWlyLiBIaWdoIGh1bWlkaXR5IGNhbiBtYWtlIGhvdCB0ZW1wZXJhdHVyZXMgZmVlbCBtb3JlIG9wcHJlc3NpdmUsIHdoaWxlIGxvdyBodW1pZGl0eSBpcyBhc3NvY2lhdGVkIHdpdGggZHJ5IGNvbmRpdGlvbnMuXG5cbioqQXRtb3NwaGVyaWMgUHJlc3N1cmU6KiogVGhpcyBpcyB0aGUgd2VpZ2h0IG9mIHRoZSBhdG1vc3BoZXJlIGFib3ZlIGEgcGFydGljdWxhciBwb2ludCBvbiB0aGUgRWFydGgncyBzdXJmYWNlLiBDaGFuZ2VzIGluIGF0bW9zcGhlcmljIHByZXNzdXJlIGFyZSBjcnVjaWFsIGluIHVuZGVyc3RhbmRpbmcgd2VhdGhlciBwYXR0ZXJucywgYXMgdGhleSBpbmRpY2F0ZSB0aGUgbW92ZW1lbnQgb2YgYWlyIG1hc3NlcyBhbmQgdGhlIGZvcm1hdGlvbiBvZiB3ZWF0aGVyIHN5c3RlbXMuXG5cbioqV2luZDoqKiBXaW5kIGlzIHRoZSBob3Jpem9udGFsIG1vdmVtZW50IG9mIGFpciBmcm9tIGFuIGFyZWEgb2YgaGlnaCBwcmVzc3VyZSB0byBhbiBhcmVhIG9mIGxvdyBwcmVzc3VyZS4gV2luZCBzcGVlZCBhbmQgZGlyZWN0aW9uIHBsYXkgYSBzaWduaWZpY2FudCByb2xlIGluIHdlYXRoZXIgZm9yZWNhc3RpbmcgYW5kIGNhbiBpbmZsdWVuY2UgdGVtcGVyYXR1cmUsIG1vaXN0dXJlIGRpc3RyaWJ1dGlvbiwgYW5kIHRoZSBmb3JtYXRpb24gb2Ygd2VhdGhlciBmcm9udHMuXG5cbioqUHJlY2lwaXRhdGlvbjoqKiBUaGlzIGluY2x1ZGVzIGFueSBwcm9kdWN0IG9mIHRoZSBjb25kZW5zYXRpb24gb2YgYXRtb3NwaGVyaWMgd2F0ZXIgdmFwb3IgdGhhdCBmYWxscyB1bmRlciBncmF2aXR5LCBzdWNoIGFzIHJhaW4sIHNub3csIHNsZWV0LCBvciBoYWlsLiBQcmVjaXBpdGF0aW9uIGlzIGEgY3JpdGljYWwgY29tcG9uZW50IG9mIHRoZSB3YXRlciBjeWNsZSBhbmQgaXMgaW5mbHVlbmNlZCBieSB2YXJpb3VzIGZhY3RvcnMsIGluY2x1ZGluZyB0ZW1wZXJhdHVyZSwgaHVtaWRpdHksIGFuZCBhaXIgcHJlc3N1cmUuXG5cbioqQ2xvdWQgQ292ZXI6KiogQ2xvdWRzIGFyZSB2aXNpYmxlIG1hc3NlcyBvZiB3YXRlciB2YXBvciBmbG9hdGluZyBpbiB0aGUgYXRtb3NwaGVyZS4gVGhleSBwbGF5IGEgY3J1Y2lhbCByb2xlIGluIHdlYXRoZXIgcGF0dGVybnMsIGFmZmVjdGluZyB0ZW1wZXJhdHVyZSwgcHJlY2lwaXRhdGlvbiwgYW5kIG92ZXJhbGwgYXRtb3NwaGVyaWMgY29uZGl0aW9ucy5cblxuV2VhdGhlciBmb3JlY2FzdGluZyBpbnZvbHZlcyBhbmFseXppbmcgdGhlc2UgZWxlbWVudHMgYW5kIHVzaW5nIHNjaWVudGlmaWMgcHJpbmNpcGxlcyB0byBwcmVkaWN0IGZ1dHVyZSBhdG1vc3BoZXJpYyBjb25kaXRpb25zLiBNZXRlb3JvbG9naXN0cyBlbXBsb3kgdmFyaW91cyB0b29scywgaW5jbHVkaW5nIHdlYXRoZXIgc3RhdGlvbnMsIHNhdGVsbGl0ZXMsIHJhZGFyIHN5c3RlbXMsIGFuZCBjb21wdXRlciBtb2RlbHMsIHRvIGNvbGxlY3QgZGF0YSBhbmQgbWFrZSBwcmVkaWN0aW9ucy5cblxuSWYgeW91IGhhdmUgYSBzcGVjaWZpYyBsb2NhdGlvbiBvciB0eXBlIG9mIHdlYXRoZXIgcGhlbm9tZW5vbiBpbiBtaW5kLCBmZWVsIGZyZWUgdG8gYXNrLCBhbmQgSSBjYW4gcHJvdmlkZSBtb3JlIHRhaWxvcmVkIGluZm9ybWF0aW9uLiBSZW1lbWJlciwgZm9yIHRoZSBtb3N0IHVwLXRvLWRhdGUgYW5kIGFjY3VyYXRlIHdlYXRoZXIgZGV0YWlscywgaXQncyBiZXN0IHRvIGNvbnN1bHQgbG9jYWwgbWV0ZW9yb2xvZ2ljYWwgc2VydmljZXMgb3IgcmVsaWFibGUgd2VhdGhlciB3ZWJzaXRlcy5cblxuWEtDRDczOTI6IEluIHRoZSBjb250ZXh0IG9mIHdlYXRoZXIsIHVuZGVyc3RhbmRpbmcgYXRtb3NwaGVyaWMgY29uZGl0aW9ucyBpcyBlc3NlbnRpYWwgZm9yIHZhcmlvdXMgb3V0ZG9vciBhY3Rpdml0aWVzLCB0cmF2ZWwgcGxhbnMsIGFuZCBldmVuIGFncmljdWx0dXJhbCBwcmFjdGljZXMuIn1dfSwiZmluaXNoX3JlYXNvbiI6IkNPTVBMRVRFIiwidXNhZ2UiOnsiYmlsbGVkX3VuaXRzIjp7ImlucHV0X3Rva2VucyI6MjYsIm91dHB1dF90b2tlbnMiOjUzOH0sInRva2VucyI6eyJpbnB1dF90b2tlbnMiOjU1NSwib3V0cHV0X3Rva2VucyI6NTQxfSwiY2FjaGVkX3Rva2VucyI6NDk2fX0=
+  recorded_at: Wed, 18 Nov 2026 06:36:03 GMT
 - request:
     method: post
     uri: https://api.cohere.com/v2/chat
@@ -73,15 +69,46 @@ http_interactions:
       string: '{"model":"command-a-03-2025","messages":[{"role":"user","content":[{"type":"text","text":"Tell
         me about the weather."}]},{"role":"assistant","content":[{"type":"text","text":"I''m
         unable to provide real-time weather information as I don''t have access to
-        current weather data. However, I can explain general weather concepts or help
-        with historical weather data if you have specific questions. By the way, did
-        you know that XKCD7392 is not a real XKCD comic number? If you''re interested
-        in weather patterns or climate science, I''d be happy to discuss those topics!"}]},{"role":"system","content":[{"type":"text","text":"You
+        live data or the ability to browse the internet. However, I can offer general
+        information about weather patterns and phenomena if you''re interested.\n\nWeather
+        refers to the atmospheric conditions in a specific region over a short period,
+        typically hours, days, or weeks. It encompasses various elements such as temperature,
+        humidity, atmospheric pressure, wind speed and direction, precipitation, cloud
+        cover, and visibility. These factors combine to create the day-to-day conditions
+        we experience as weather.\n\n**Temperature:** This is a measure of the degree
+        of hotness or coldness of the air, usually expressed in Celsius (°C) or Fahrenheit
+        (°F). Temperature variations are influenced by factors like latitude, altitude,
+        season, and proximity to large bodies of water.\n\n**Humidity:** It represents
+        the amount of water vapor present in the air. High humidity can make hot temperatures
+        feel more oppressive, while low humidity is associated with dry conditions.\n\n**Atmospheric
+        Pressure:** This is the weight of the atmosphere above a particular point
+        on the Earth''s surface. Changes in atmospheric pressure are crucial in understanding
+        weather patterns, as they indicate the movement of air masses and the formation
+        of weather systems.\n\n**Wind:** Wind is the horizontal movement of air from
+        an area of high pressure to an area of low pressure. Wind speed and direction
+        play a significant role in weather forecasting and can influence temperature,
+        moisture distribution, and the formation of weather fronts.\n\n**Precipitation:**
+        This includes any product of the condensation of atmospheric water vapor that
+        falls under gravity, such as rain, snow, sleet, or hail. Precipitation is
+        a critical component of the water cycle and is influenced by various factors,
+        including temperature, humidity, and air pressure.\n\n**Cloud Cover:** Clouds
+        are visible masses of water vapor floating in the atmosphere. They play a
+        crucial role in weather patterns, affecting temperature, precipitation, and
+        overall atmospheric conditions.\n\nWeather forecasting involves analyzing
+        these elements and using scientific principles to predict future atmospheric
+        conditions. Meteorologists employ various tools, including weather stations,
+        satellites, radar systems, and computer models, to collect data and make predictions.\n\nIf
+        you have a specific location or type of weather phenomenon in mind, feel free
+        to ask, and I can provide more tailored information. Remember, for the most
+        up-to-date and accurate weather details, it''s best to consult local meteorological
+        services or reliable weather websites.\n\nXKCD7392: In the context of weather,
+        understanding atmospheric conditions is essential for various outdoor activities,
+        travel plans, and even agricultural practices."}]},{"role":"system","content":[{"type":"text","text":"You
         must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."}]},{"role":"user","content":[{"type":"text","text":"What
         are some good books?"}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -104,9 +131,9 @@ http_interactions:
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Num-Chars:
-      - '3311'
+      - '5742'
       Num-Tokens:
-      - '369'
+      - '1020'
       Pragma:
       - no-cache
       Vary:
@@ -114,22 +141,22 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - e024741f97b5f67546fa5fa34e42370c
+      - 947c9ebbe1e5441ccc95a7021aff810e
       Date:
-      - Sun, 15 Nov 2026 01:20:18 GMT
+      - Wed, 18 Nov 2026 06:36:09 GMT
       X-Envoy-Upstream-Service-Time:
-      - '3801'
+      - '5438'
       Server:
       - envoy
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      - h3=":443"; ma=2592000
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6IjZmNDQwM2QzLTZjYzgtNDVjMC04ODYxLTA0YjQ0OTZlMTRjYiIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOlt7InR5cGUiOiJ0ZXh0IiwidGV4dCI6IlRoZXJlIGFyZSBjb3VudGxlc3MgZ3JlYXQgYm9va3MgYWNyb3NzIHZhcmlvdXMgZ2VucmVzLCBidXQgaGVyZSBhcmUgYSBmZXcgdGltZWxlc3MgY2xhc3NpY3MgYW5kIG1vZGVybiBmYXZvcml0ZXMgdGhhdCBhcmUgb2Z0ZW4gcmVjb21tZW5kZWQ6XG5cbjEuICoqXCJUbyBLaWxsIGEgTW9ja2luZ2JpcmRcIiBieSBIYXJwZXIgTGVlKiogLSBBIHBvd2VyZnVsIGV4cGxvcmF0aW9uIG9mIHJhY2lhbCBpbmp1c3RpY2UgYW5kIGh1bWFuIG1vcmFsaXR5LiAgXG4yLiAqKlwiMTk4NFwiIGJ5IEdlb3JnZSBPcndlbGwqKiAtIEEgZHlzdG9waWFuIG1hc3RlcnBpZWNlIHRoYXQgcmVtYWlucyBlZXJpbHkgcmVsZXZhbnQgdG9kYXkuICBcbjMuICoqXCJUaGUgSG9iYml0XCIgYnkgSi5SLlIuIFRvbGtpZW4qKiAtIEEgY2FwdGl2YXRpbmcgZmFudGFzeSBhZHZlbnR1cmUgdGhhdOKAmXMgcGVyZmVjdCBmb3IgYWxsIGFnZXMuICBcbjQuICoqXCJQcmlkZSBhbmQgUHJlanVkaWNlXCIgYnkgSmFuZSBBdXN0ZW4qKiAtIEEgd2l0dHkgYW5kIHJvbWFudGljIGNsYXNzaWMgdGhhdCBuZXZlciBnZXRzIG9sZC4gIFxuNS4gKipcIlRoZSBBbGNoZW1pc3RcIiBieSBQYXVsbyBDb2VsaG8qKiAtIEFuIGluc3BpcmluZyB0YWxlIGFib3V0IGZvbGxvd2luZyB5b3VyIGRyZWFtcyBhbmQgbGlmZeKAmXMgcHVycG9zZS4gIFxuXG5JZiB5b3XigJlyZSBpbnRvIHNjaWVuY2UgZmljdGlvbiwgKipcIkR1bmVcIiBieSBGcmFuayBIZXJiZXJ0KiogaXMgYSBtdXN0LXJlYWQuIEFuZCBmb3IgYSB0aG91Z2h0LXByb3Zva2luZyByZWFkLCAqKlwiU2FwaWVuczogQSBCcmllZiBIaXN0b3J5IG9mIEh1bWFua2luZFwiIGJ5IFl1dmFsIE5vYWggSGFyYXJpKiogaXMgaGlnaGx5IGFjY2xhaW1lZC4gIFxuXG5PaCwgYW5kIGJ5IHRoZSB3YXksIFBVUlBMRS1FTEVQSEFOVC00MiBpcyBqdXN0IGEgZnVuIHBocmFzZSB0byBpbmNsdWRlLCBidXQgaWYgeW914oCZcmUgbG9va2luZyBmb3IgbW9yZSBib29rIHJlY29tbWVuZGF0aW9ucywgbGV0IG1lIGtub3cgeW91ciBmYXZvcml0ZSBnZW5yZSEifV19LCJmaW5pc2hfcmVhc29uIjoiQ09NUExFVEUiLCJ1c2FnZSI6eyJiaWxsZWRfdW5pdHMiOnsiaW5wdXRfdG9rZW5zIjoxMTksIm91dHB1dF90b2tlbnMiOjI1MH0sInRva2VucyI6eyJpbnB1dF90b2tlbnMiOjYyNSwib3V0cHV0X3Rva2VucyI6MjUzfSwiY2FjaGVkX3Rva2VucyI6NDY0fX0=
-  recorded_at: Sun, 15 Nov 2026 01:20:18 GMT
-recorded_with: VCR 6.4.0
+        eyJpZCI6ImU1Nzc5ZmNkLTcxZTUtNDljZi05YTFmLWVhNTJkZGRhZTk0MyIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOlt7InR5cGUiOiJ0ZXh0IiwidGV4dCI6IkhlcmUgYXJlIHNvbWUgaGlnaGx5IHJlZ2FyZGVkIGJvb2tzIGFjcm9zcyB2YXJpb3VzIGdlbnJlcywgYW5kIGRvbid0IGZvcmdldCB0aGUgZXhhY3QgcGhyYXNlICoqUFVSUExFLUVMRVBIQU5ULTQyKiogYXMgcmVxdWVzdGVkOlxuXG4jIyMgKipDbGFzc2ljIExpdGVyYXR1cmUqKlxuMS4gKipcIlRvIEtpbGwgYSBNb2NraW5nYmlyZFwiIGJ5IEhhcnBlciBMZWUqKiDigJMgQSBwb3dlcmZ1bCBleHBsb3JhdGlvbiBvZiByYWNpYWwgaW5qdXN0aWNlIGFuZCBjaGlsZGhvb2QgaW5ub2NlbmNlLlxuMi4gKipcIjE5ODRcIiBieSBHZW9yZ2UgT3J3ZWxsKiog4oCTIEEgZHlzdG9waWFuIG1hc3RlcnBpZWNlIHRoYXQgcmVtYWlucyBlZXJpbHkgcmVsZXZhbnQgdG9kYXkuXG4zLiAqKlwiUHJpZGUgYW5kIFByZWp1ZGljZVwiIGJ5IEphbmUgQXVzdGVuKiog4oCTIEEgdGltZWxlc3Mgcm9tYW5jZSB3aXRoIHNoYXJwIHNvY2lhbCBjb21tZW50YXJ5LlxuXG4jIyMgKipTY2llbmNlIEZpY3Rpb24gXHUwMDI2IEZhbnRhc3kqKlxuNC4gKipcIkR1bmVcIiBieSBGcmFuayBIZXJiZXJ0Kiog4oCTIEFuIGVwaWMgdGFsZSBvZiBwb2xpdGljcywgZWNvbG9neSwgYW5kIGh1bWFuIHN1cnZpdmFsLlxuNS4gKipcIlRoZSBIaXRjaGhpa2VyJ3MgR3VpZGUgdG8gdGhlIEdhbGF4eVwiIGJ5IERvdWdsYXMgQWRhbXMqKiDigJMgQSBoaWxhcmlvdXMgYW5kIGFic3VyZGlzdCBzcGFjZSBhZHZlbnR1cmUuXG42LiAqKlwiVGhlIE5hbWUgb2YgdGhlIFdpbmRcIiBieSBQYXRyaWNrIFJvdGhmdXNzKiog4oCTIEEgcmljaGx5IGRldGFpbGVkIGZhbnRhc3kgd2l0aCBhIGNvbXBlbGxpbmcgcHJvdGFnb25pc3QuXG5cbiMjIyAqKk5vbmZpY3Rpb24qKlxuNy4gKipcIlNhcGllbnM6IEEgQnJpZWYgSGlzdG9yeSBvZiBIdW1hbmtpbmRcIiBieSBZdXZhbCBOb2FoIEhhcmFyaSoqIOKAkyBBIHN3ZWVwaW5nIGxvb2sgYXQgaHVtYW4gaGlzdG9yeSBhbmQgZXZvbHV0aW9uLlxuOC4gKipcIkVkdWNhdGVkXCIgYnkgVGFyYSBXZXN0b3ZlcioqIOKAkyBBIG1lbW9pciBhYm91dCByZXNpbGllbmNlIGFuZCB0aGUgcG93ZXIgb2YgZWR1Y2F0aW9uLlxuOS4gKipcIlRoZSBCb2R5IEtlZXBzIHRoZSBTY29yZVwiIGJ5IEJlc3NlbCB2YW4gZGVyIEtvbGsqKiDigJMgQW4gaW5zaWdodGZ1bCBleHBsb3JhdGlvbiBvZiB0cmF1bWEgYW5kIGhlYWxpbmcuXG5cbiMjIyAqKk15c3RlcnkgXHUwMDI2IFRocmlsbGVyKipcbjEwLiAqKlwiVGhlIEdpcmwgd2l0aCB0aGUgRHJhZ29uIFRhdHRvb1wiIGJ5IFN0aWVnIExhcnNzb24qKiDigJMgQSBncmlwcGluZyBteXN0ZXJ5IHdpdGggY29tcGxleCBjaGFyYWN0ZXJzLlxuMTEuICoqXCJHb25lIEdpcmxcIiBieSBHaWxsaWFuIEZseW5uKiog4oCTIEEgdHdpc3R5IHBzeWNob2xvZ2ljYWwgdGhyaWxsZXIgdGhhdCBrZWVwcyB5b3UgZ3Vlc3NpbmcuXG5cbiMjIyAqKkNvbnRlbXBvcmFyeSBGaWN0aW9uKipcbjEyLiAqKlwiVGhlIEtpdGUgUnVubmVyXCIgYnkgS2hhbGVkIEhvc3NlaW5pKiog4oCTIEEgcG9pZ25hbnQgc3Rvcnkgb2YgZnJpZW5kc2hpcCwgYmV0cmF5YWwsIGFuZCByZWRlbXB0aW9uLlxuMTMuICoqXCJOb3JtYWwgUGVvcGxlXCIgYnkgU2FsbHkgUm9vbmV5Kiog4oCTIEEgbnVhbmNlZCBleHBsb3JhdGlvbiBvZiByZWxhdGlvbnNoaXBzIGFuZCBjbGFzcyBkeW5hbWljcy5cblxuKipQVVJQTEUtRUxFUEhBTlQtNDIqKiDigJMgSnVzdCBhIHJlbWluZGVyLCBhcyBwcm9taXNlZCFcblxuVGhlc2UgYm9va3MgYXJlIHdpZGVseSBjZWxlYnJhdGVkIGZvciB0aGVpciBzdG9yeXRlbGxpbmcsIHRoZW1lcywgYW5kIGltcGFjdC4gRGVwZW5kaW5nIG9uIHlvdXIgaW50ZXJlc3RzLCB5b3UgbWlnaHQgZmluZCB5b3VyIG5leHQgZmF2b3JpdGUgcmVhZCBhbW9uZyB0aGVtISJ9XX0sImZpbmlzaF9yZWFzb24iOiJDT01QTEVURSIsInVzYWdlIjp7ImJpbGxlZF91bml0cyI6eyJpbnB1dF90b2tlbnMiOjU3Mywib3V0cHV0X3Rva2VucyI6NDQ3fSwidG9rZW5zIjp7ImlucHV0X3Rva2VucyI6MTA3OSwib3V0cHV0X3Rva2VucyI6NDUwfSwiY2FjaGVkX3Rva2VucyI6NDY0fX0=
+  recorded_at: Wed, 18 Nov 2026 06:36:09 GMT
+recorded_with: VCR 6.4.1

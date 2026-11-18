@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"grok-4.3","input":[{"role":"user","content":"Hello"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -23,7 +23,7 @@ http_interactions:
       message: Bad Request
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:19:47 GMT
+      - Wed, 18 Nov 2026 06:35:29 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -38,10 +38,10 @@ http_interactions:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
-      Cf-Cache-Status:
-      - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
+      Cf-Cache-Status:
+      - DYNAMIC
       Server:
       - cloudflare
       Cf-Ray:
@@ -50,5 +50,5 @@ http_interactions:
       encoding: UTF-8
       string: '{"code":"invalid-argument","error":"Incorrect API key provided. You
         can obtain an API key from https://console.x.ai."}'
-  recorded_at: Sun, 15 Nov 2026 01:19:47 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:35:29 GMT
+recorded_with: VCR 6.4.1

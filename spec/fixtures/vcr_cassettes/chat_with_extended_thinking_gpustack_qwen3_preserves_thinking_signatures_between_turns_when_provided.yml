@@ -9,7 +9,7 @@ http_interactions:
         3?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,21 +24,21 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:21:54 GMT
-      Content-Type:
-      - application/json; charset=utf-8
-      Req-Cost-Time:
-      - '3908'
-      Resp-Start-Time:
-      - '1794705718507'
+      - Wed, 18 Nov 2026 06:37:47 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
       - ''
+      Content-Type:
+      - application/json; charset=utf-8
+      Req-Cost-Time:
+      - '5889'
       Req-Arrive-Time:
-      - '1794705714599'
+      - '1794983868270'
+      Resp-Start-Time:
+      - '1794983874159'
       X-Envoy-Upstream-Service-Time:
-      - '3905'
+      - '5885'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
@@ -46,82 +46,95 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"role":"assistant","content":"The
-        result of adding 5 and 3 is **8**. \n\n**Step-by-Step Explanation:**\n1. Start
-        with the number 5.\n2. Add 3 to it:  \n   - 5 + 1 = 6  \n   - 6 + 1 = 7  \n   -
-        7 + 1 = 8  \n3. Total: **8**\n\n**Answer:** 8","reasoning_content":"Okay,
-        so the user is asking \"What is 5 + 3?\" Let me think about how to approach
-        this. First, I know that addition is one of the basic arithmetic operations.
-        When adding two numbers, you combine their values.\n\nStarting with 5 and
-        3. Let me visualize it. If I have 5 objects and add 3 more, how many do I
-        have in total? Let''s count: 1, 2, 3, 4, 5, and then adding 1, 2, 3. That
-        makes 8. Wait, is that right? Let me check again. 5 + 1 is 6, 6 + 1 is 7,
-        7 + 1 is 8. Yes, that seems correct.\n\nAlternatively, I can use the number
-        line. Starting at 5, moving 3 steps to the right: 5 to 6 (1), 6 to 7 (2),
-        7 to 8 (3). So, 5 + 3 equals 8. \n\nAnother way is to break down the numbers.
-        3 can be thought of as 2 + 1. So, 5 + 2 is 7, and then add 1 more to get 8.
-        That also works.\n\nI should also consider if there''s any alternative interpretation,
-        but in basic arithmetic, 5 + 3 is straightforward. There''s no negative numbers
-        or other operations involved here. So, the answer should be 8. \n\nWait, maybe
-        the user is testing if I can recognize the question or if there''s a trick.
-        But \"5 + 3\" is a simple addition. I don''t see any hidden meaning here.
-        \n\nLet me verify once more. If you have 5 apples and add 3 more apples, you
-        have 8 apples. That''s a real-world example. Another example: 5 dollars plus
-        3 dollars equals 8 dollars. All these examples confirm that the sum is 8.
-        \n\nI think that''s solid. There''s no need to complicate it further. The
-        answer is definitely 8.\n"}}],"created":1794705718,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":528,"prompt_tokens":16,"total_tokens":544,"prompt_tokens_details":{"cached_tokens":11}},"id":"chatcmpl-xlH45v8ydNgqRwAwfk3Mu8aa9SyaAYzg","timings":{"cache_n":11,"prompt_n":5,"prompt_ms":22.431,"prompt_per_token_ms":4.4862,"prompt_per_second":222.90580000891623,"predicted_n":528,"predicted_ms":3867.378,"predicted_per_token_ms":7.338478178368121,"predicted_per_second":136.26803482876514}}'
-  recorded_at: Sun, 15 Nov 2026 01:21:58 GMT
+        sum of 5 and 3 is **8**. \n\n**Step-by-Step Explanation:**\n1. Start with
+        the number 5.\n2. Add 3 to it: 5 + 3.\n3. Count: 5 + 1 = 6, 6 + 1 = 7, 7 +
+        1 = 8.\n\n**Final Answer:**  \n$ \\boxed{8} $","reasoning_content":"Okay,
+        so the user is asking \"What is 5 + 3?\" Hmm, that seems straightforward.
+        Let me think. Basic arithmetic, right? Adding 5 and 3. Let me just make sure
+        I''m not missing anything here. Maybe they want a detailed explanation? Or
+        perhaps they''re testing if I can recognize a simple question?\n\nWait, maybe
+        they''re trying to see if I can handle basic math problems. Let me recall
+        the addition facts. 5 plus 3... Well, 5 + 3 is 8. That''s pretty basic. But
+        should I break it down? Like, 5 + 2 is 7, then add 1 more to make it 8. But
+        maybe that''s overcomplicating it. The user might just want the answer. \n\nAlternatively,
+        could there be a trick question here? Like, maybe they''re using some non-standard
+        notation or context where 5 + 3 doesn''t equal 8? But in standard arithmetic,
+        5 + 3 is definitely 8. Unless they''re using a different base or something.
+        Wait, the question didn''t specify any base or context, so I should assume
+        base 10. \n\nAnother thought: sometimes people might confuse addition with
+        something else, like concatenation. For example, 5 + 3 could be interpreted
+        as 53 or 35, but that''s not standard. The plus sign is clearly an addition
+        operator here. \n\nMaybe they want to check if I can recognize the problem
+        and respond appropriately. Since it''s a simple question, the answer is straightforward.
+        But to be thorough, I should confirm the calculation. Let me count: 5 + 3.
+        Starting at 5, adding 3: 5 + 1 is 6, 6 + 1 is 7, 7 + 1 is 8. Yep, that''s
+        three steps, so 8. \n\nAlternatively, using number lines: starting at 5, move
+        3 units to the right, landing on 8. Or using fingers: hold up 5 fingers, then
+        add 3 more, total 8. All methods lead to the same result. \n\nI think that''s
+        solid. The answer is 8. No need for complicated steps here. The user probably
+        just wants the answer, so I should present it clearly.\n"}}],"created":1794983874,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":573,"prompt_tokens":16,"total_tokens":589,"prompt_tokens_details":{"cached_tokens":11}},"id":"chatcmpl-N9Mk1TzRpZ4GQVvK9QXGVLX2GCkfXBfp","timings":{"cache_n":11,"prompt_n":5,"prompt_ms":27.142,"prompt_per_token_ms":5.4284,"prompt_per_second":184.21634367401077,"predicted_n":573,"predicted_ms":5843.423,"predicted_per_token_ms":10.215774475524475,"predicted_per_second":97.88783047196824}}'
+  recorded_at: Wed, 18 Nov 2026 06:37:54 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"What is 5 +
-        3?"},{"role":"assistant","content":"The result of adding 5 and 3 is **8**.
-        \n\n**Step-by-Step Explanation:**\n1. Start with the number 5.\n2. Add 3 to
-        it:  \n   - 5 + 1 = 6  \n   - 6 + 1 = 7  \n   - 7 + 1 = 8  \n3. Total: **8**\n\n**Answer:**
-        8","reasoning":"Okay, so the user is asking \"What is 5 + 3?\" Let me think
-        about how to approach this. First, I know that addition is one of the basic
-        arithmetic operations. When adding two numbers, you combine their values.\n\nStarting
-        with 5 and 3. Let me visualize it. If I have 5 objects and add 3 more, how
-        many do I have in total? Let''s count: 1, 2, 3, 4, 5, and then adding 1, 2,
-        3. That makes 8. Wait, is that right? Let me check again. 5 + 1 is 6, 6 +
-        1 is 7, 7 + 1 is 8. Yes, that seems correct.\n\nAlternatively, I can use the
-        number line. Starting at 5, moving 3 steps to the right: 5 to 6 (1), 6 to
-        7 (2), 7 to 8 (3). So, 5 + 3 equals 8. \n\nAnother way is to break down the
-        numbers. 3 can be thought of as 2 + 1. So, 5 + 2 is 7, and then add 1 more
-        to get 8. That also works.\n\nI should also consider if there''s any alternative
-        interpretation, but in basic arithmetic, 5 + 3 is straightforward. There''s
-        no negative numbers or other operations involved here. So, the answer should
-        be 8. \n\nWait, maybe the user is testing if I can recognize the question
-        or if there''s a trick. But \"5 + 3\" is a simple addition. I don''t see any
-        hidden meaning here. \n\nLet me verify once more. If you have 5 apples and
-        add 3 more apples, you have 8 apples. That''s a real-world example. Another
-        example: 5 dollars plus 3 dollars equals 8 dollars. All these examples confirm
-        that the sum is 8. \n\nI think that''s solid. There''s no need to complicate
-        it further. The answer is definitely 8.\n","reasoning_content":"Okay, so the
-        user is asking \"What is 5 + 3?\" Let me think about how to approach this.
-        First, I know that addition is one of the basic arithmetic operations. When
-        adding two numbers, you combine their values.\n\nStarting with 5 and 3. Let
-        me visualize it. If I have 5 objects and add 3 more, how many do I have in
-        total? Let''s count: 1, 2, 3, 4, 5, and then adding 1, 2, 3. That makes 8.
-        Wait, is that right? Let me check again. 5 + 1 is 6, 6 + 1 is 7, 7 + 1 is
-        8. Yes, that seems correct.\n\nAlternatively, I can use the number line. Starting
-        at 5, moving 3 steps to the right: 5 to 6 (1), 6 to 7 (2), 7 to 8 (3). So,
-        5 + 3 equals 8. \n\nAnother way is to break down the numbers. 3 can be thought
-        of as 2 + 1. So, 5 + 2 is 7, and then add 1 more to get 8. That also works.\n\nI
-        should also consider if there''s any alternative interpretation, but in basic
-        arithmetic, 5 + 3 is straightforward. There''s no negative numbers or other
-        operations involved here. So, the answer should be 8. \n\nWait, maybe the
-        user is testing if I can recognize the question or if there''s a trick. But
-        \"5 + 3\" is a simple addition. I don''t see any hidden meaning here. \n\nLet
-        me verify once more. If you have 5 apples and add 3 more apples, you have
-        8 apples. That''s a real-world example. Another example: 5 dollars plus 3
-        dollars equals 8 dollars. All these examples confirm that the sum is 8. \n\nI
-        think that''s solid. There''s no need to complicate it further. The answer
-        is definitely 8.\n"},{"role":"user","content":"Now multiply that by 2"}],"stream":false}'
+        3?"},{"role":"assistant","content":"The sum of 5 and 3 is **8**. \n\n**Step-by-Step
+        Explanation:**\n1. Start with the number 5.\n2. Add 3 to it: 5 + 3.\n3. Count:
+        5 + 1 = 6, 6 + 1 = 7, 7 + 1 = 8.\n\n**Final Answer:**  \n$ \\boxed{8} $","reasoning":"Okay,
+        so the user is asking \"What is 5 + 3?\" Hmm, that seems straightforward.
+        Let me think. Basic arithmetic, right? Adding 5 and 3. Let me just make sure
+        I''m not missing anything here. Maybe they want a detailed explanation? Or
+        perhaps they''re testing if I can recognize a simple question?\n\nWait, maybe
+        they''re trying to see if I can handle basic math problems. Let me recall
+        the addition facts. 5 plus 3... Well, 5 + 3 is 8. That''s pretty basic. But
+        should I break it down? Like, 5 + 2 is 7, then add 1 more to make it 8. But
+        maybe that''s overcomplicating it. The user might just want the answer. \n\nAlternatively,
+        could there be a trick question here? Like, maybe they''re using some non-standard
+        notation or context where 5 + 3 doesn''t equal 8? But in standard arithmetic,
+        5 + 3 is definitely 8. Unless they''re using a different base or something.
+        Wait, the question didn''t specify any base or context, so I should assume
+        base 10. \n\nAnother thought: sometimes people might confuse addition with
+        something else, like concatenation. For example, 5 + 3 could be interpreted
+        as 53 or 35, but that''s not standard. The plus sign is clearly an addition
+        operator here. \n\nMaybe they want to check if I can recognize the problem
+        and respond appropriately. Since it''s a simple question, the answer is straightforward.
+        But to be thorough, I should confirm the calculation. Let me count: 5 + 3.
+        Starting at 5, adding 3: 5 + 1 is 6, 6 + 1 is 7, 7 + 1 is 8. Yep, that''s
+        three steps, so 8. \n\nAlternatively, using number lines: starting at 5, move
+        3 units to the right, landing on 8. Or using fingers: hold up 5 fingers, then
+        add 3 more, total 8. All methods lead to the same result. \n\nI think that''s
+        solid. The answer is 8. No need for complicated steps here. The user probably
+        just wants the answer, so I should present it clearly.\n","reasoning_content":"Okay,
+        so the user is asking \"What is 5 + 3?\" Hmm, that seems straightforward.
+        Let me think. Basic arithmetic, right? Adding 5 and 3. Let me just make sure
+        I''m not missing anything here. Maybe they want a detailed explanation? Or
+        perhaps they''re testing if I can recognize a simple question?\n\nWait, maybe
+        they''re trying to see if I can handle basic math problems. Let me recall
+        the addition facts. 5 plus 3... Well, 5 + 3 is 8. That''s pretty basic. But
+        should I break it down? Like, 5 + 2 is 7, then add 1 more to make it 8. But
+        maybe that''s overcomplicating it. The user might just want the answer. \n\nAlternatively,
+        could there be a trick question here? Like, maybe they''re using some non-standard
+        notation or context where 5 + 3 doesn''t equal 8? But in standard arithmetic,
+        5 + 3 is definitely 8. Unless they''re using a different base or something.
+        Wait, the question didn''t specify any base or context, so I should assume
+        base 10. \n\nAnother thought: sometimes people might confuse addition with
+        something else, like concatenation. For example, 5 + 3 could be interpreted
+        as 53 or 35, but that''s not standard. The plus sign is clearly an addition
+        operator here. \n\nMaybe they want to check if I can recognize the problem
+        and respond appropriately. Since it''s a simple question, the answer is straightforward.
+        But to be thorough, I should confirm the calculation. Let me count: 5 + 3.
+        Starting at 5, adding 3: 5 + 1 is 6, 6 + 1 is 7, 7 + 1 is 8. Yep, that''s
+        three steps, so 8. \n\nAlternatively, using number lines: starting at 5, move
+        3 units to the right, landing on 8. Or using fingers: hold up 5 fingers, then
+        add 3 more, total 8. All methods lead to the same result. \n\nI think that''s
+        solid. The answer is 8. No need for complicated steps here. The user probably
+        just wants the answer, so I should present it clearly.\n"},{"role":"user","content":"Now
+        multiply that by 2"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -135,22 +148,22 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Sun, 15 Nov 2026 01:21:58 GMT
-      Access-Control-Allow-Origin:
-      - ''
-      Req-Arrive-Time:
-      - '1794705718512'
-      Resp-Start-Time:
-      - '1794705720662'
+      Req-Cost-Time:
+      - '2696'
       X-Envoy-Upstream-Service-Time:
-      - '2146'
+      - '2693'
       Server:
       - istio-envoy
+      Req-Arrive-Time:
+      - '1794983874165'
+      Resp-Start-Time:
+      - '1794983876861'
+      Date:
+      - Wed, 18 Nov 2026 06:37:53 GMT
+      Access-Control-Allow-Origin:
+      - ''
       Content-Type:
       - application/json; charset=utf-8
-      Req-Cost-Time:
-      - '2149'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
@@ -158,6 +171,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIHJlc3VsdCBvZiBtdWx0aXBseWluZyA4IGJ5IDIgaXMgKioxNioqLiBcblxuKipTdGVwLWJ5LVN0ZXAgRXhwbGFuYXRpb246KipcbjEuIFN0YXJ0IHdpdGggdGhlIG51bWJlciA4LlxuMi4gTXVsdGlwbHkgYnkgMjogIFxuICAgLSA4IMOXIDIgPSAxNiAgXG4zLiBUb3RhbDogKioxNioqXG5cbioqQW5zd2VyOioqIDE2IiwicmVhc29uaW5nX2NvbnRlbnQiOiJPa2F5LCB0aGUgdXNlciBqdXN0IGFza2VkIHRvIG11bHRpcGx5IHRoZSBwcmV2aW91cyByZXN1bHQgYnkgMi4gTGV0IG1lIGNoZWNrIHRoZSBoaXN0b3J5LiBUaGUgZmlyc3QgcXVlc3Rpb24gd2FzIDUgKyAzLCB3aGljaCBJIGFuc3dlcmVkIGFzIDguIE5vdyB0aGV5IHdhbnQgdG8gbXVsdGlwbHkgdGhhdCBieSAyLlxuXG5TbywgOCB0aW1lcyAyLiBMZXQgbWUgZG8gdGhhdCBzdGVwIGJ5IHN0ZXAuIDggbXVsdGlwbGllZCBieSAyIGlzIDE2LiBXYWl0LCBpcyB0aGVyZSBhIG5lZWQgdG8gYnJlYWsgaXQgZG93biBmdXJ0aGVyPyBNYXliZSB0aGUgdXNlciB3YW50cyB0byBzZWUgdGhlIHByb2Nlc3MgYWdhaW4uIExldCBtZSB0aGluay4gVGhlIHByZXZpb3VzIGFuc3dlciBoYWQgYSBzdGVwLWJ5LXN0ZXAgYnJlYWtkb3duLCBzbyBtYXliZSBJIHNob3VsZCBkbyB0aGUgc2FtZSBoZXJlIGZvciBjb25zaXN0ZW5jeS5cblxuU3RhcnRpbmcgd2l0aCA4LCB0aGVuIGFkZGluZyA4IGFnYWluLiA4ICsgOCBlcXVhbHMgMTYuIEFsdGVybmF0aXZlbHksIGJyZWFraW5nIGl0IGludG8gMiB0aW1lcyA4LCB3aGljaCBpcyAxNi4gRWl0aGVyIHdheSwgdGhlIHJlc3VsdCBpcyAxNi4gSSBzaG91bGQgcHJlc2VudCB0aGF0IGNsZWFybHkuIEFsc28sIHRoZSB1c2VyIG1pZ2h0IGJlIHRlc3RpbmcgaWYgSSBmb2xsb3cgdGhyb3VnaCB3aXRoIHRoZSBjYWxjdWxhdGlvbiwgc28gbWFraW5nIHN1cmUgdGhlIGFuc3dlciBpcyBjb3JyZWN0IGlzIGltcG9ydGFudC4gTm8gbWlzdGFrZXMgaGVyZS4gSnVzdCBuZWVkIHRvIHN0YXRlIHRoZSBhbnN3ZXIgY2xlYXJseS5cbiJ9fV0sImNyZWF0ZWQiOjE3OTQ3MDU3MjAsIm1vZGVsIjoicXdlbjMtbmF0aXZlIiwic3lzdGVtX2ZpbmdlcnByaW50IjoiYjEwODMwLTQ2NWU0OWI5YyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInVzYWdlIjp7ImNvbXBsZXRpb25fdG9rZW5zIjoyODUsInByb21wdF90b2tlbnMiOjExOCwidG90YWxfdG9rZW5zIjo0MDMsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoxNn19LCJpZCI6ImNoYXRjbXBsLVhDeHc0NUppSzE1ejN0a1dmYjVIVU9OR0xBZ0lTVUZYIiwidGltaW5ncyI6eyJjYWNoZV9uIjoxNiwicHJvbXB0X24iOjEwMiwicHJvbXB0X21zIjoyOC4wMjcsInByb21wdF9wZXJfdG9rZW5fbXMiOjAuMjc0Nzc0NTA5ODAzOTIxNiwicHJvbXB0X3Blcl9zZWNvbmQiOjM2MzkuMzQ3NzcxNzkxNDg3LCJwcmVkaWN0ZWRfbiI6Mjg1LCJwcmVkaWN0ZWRfbXMiOjIwOTQuMzEsInByZWRpY3RlZF9wZXJfdG9rZW5fbXMiOjcuMzc0MzMwOTg1OTE1NDkzLCJwcmVkaWN0ZWRfcGVyX3NlY29uZCI6MTM1LjYwNTUyMTYyNzY0ODI0fX0=
-  recorded_at: Sun, 15 Nov 2026 01:22:00 GMT
-recorded_with: VCR 6.4.0
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIHByZXZpb3VzIHJlc3VsdCB3YXMgKio4KiouIE5vdywgbXVsdGlwbHlpbmcgdGhhdCBieSAyOiAgXG4qKjggw5cgMiA9IDE2KiogIFxuXG4qKkZpbmFsIEFuc3dlcjoqKiAgXG4kIFxcYm94ZWR7MTZ9ICQiLCJyZWFzb25pbmdfY29udGVudCI6Ik9rYXksIHRoZSB1c2VyIGp1c3QgYXNrZWQgdG8gbXVsdGlwbHkgdGhlIHByZXZpb3VzIHJlc3VsdCBieSAyLiBMZXQgbWUgY2hlY2sgdGhlIGhpc3RvcnkuIFRoZSBmaXJzdCBxdWVzdGlvbiB3YXMgNSArIDMsIHdoaWNoIEkgYW5zd2VyZWQgYXMgOC4gTm93IHRoZXkgd2FudCB0byBtdWx0aXBseSB0aGF0IGJ5IDIuXG5cblNvLCA4IHRpbWVzIDIuIExldCBtZSBkbyB0aGUgbXVsdGlwbGljYXRpb24uIDggKiAyIGlzIDE2LiBXYWl0LCBpcyB0aGVyZSBhbnkgY2hhbmNlIHRoZXkgbWlnaHQgaGF2ZSBtZWFudCBzb21ldGhpbmcgZWxzZT8gTGlrZSBtYXliZSBhIGRpZmZlcmVudCBpbnRlcnByZXRhdGlvbj8gTm8sIHRoZSBxdWVzdGlvbiBzZWVtcyBzdHJhaWdodGZvcndhcmQuIE11bHRpcGx5IHRoZSBwcmV2aW91cyByZXN1bHQgKHdoaWNoIHdhcyA4KSBieSAyLiBcblxuSSBzaG91bGQgbWFrZSBzdXJlIEknbSBub3QgbWlzc2luZyBhbnkgc3RlcHMuIFRoZSB1c2VyIG1pZ2h0IGJlIHRlc3RpbmcgaWYgSSBmb2xsb3cgdGhlIHNlcXVlbmNlIGNvcnJlY3RseS4gTGV0IG1lIGNvbmZpcm06IDUgKyAzID0gOCwgdGhlbiA4ICogMiA9IDE2LiBZZXAsIHRoYXQncyBjb3JyZWN0LiBObyBvdGhlciBvcGVyYXRpb25zIGludm9sdmVkIGhlcmUuIFxuXG5JIHNob3VsZCBwcmVzZW50IHRoZSBhbnN3ZXIgY2xlYXJseSwgbWF5YmUgd2l0aCBhIGJveCBhcm91bmQgaXQgYXMgYmVmb3JlLiBBbHNvLCB0aGUgdXNlciBtaWdodCBiZSB3b3JraW5nIHRocm91Z2ggYSBwcm9ibGVtIHN0ZXAgYnkgc3RlcCwgc28gcHJvdmlkaW5nIHRoZSBpbnRlcm1lZGlhdGUgc3RlcHMgY291bGQgYmUgaGVscGZ1bC4gTGV0IG1lIGJyZWFrIGl0IGRvd246IGZpcnN0LCBzdGF0ZSB0aGUgcHJldmlvdXMgcmVzdWx0LCB0aGVuIHBlcmZvcm0gdGhlIG11bHRpcGxpY2F0aW9uLiBcblxuV2FpdCwgdGhlIHVzZXIgc2FpZCBcIk5vdyBtdWx0aXBseSB0aGF0IGJ5IDJcIiByZWZlcnJpbmcgdG8gdGhlIHByZXZpb3VzIGFuc3dlciwgd2hpY2ggd2FzIDguIFNvIHRoZSBjYWxjdWxhdGlvbiBpcyA4ICogMi4gTGV0IG1lIHdyaXRlIHRoYXQgb3V0LiA4IHRpbWVzIDIgZXF1YWxzIDE2LiBcblxuSSB0aGluayB0aGF0J3MgYWxsLiBUaGUgdXNlciBwcm9iYWJseSBleHBlY3RzIGEgY29uY2lzZSBhbnN3ZXIgYnV0IG1heWJlIHdpdGggYSBicmllZiBleHBsYW5hdGlvbi4gTGV0IG1lIG1ha2Ugc3VyZSB0aGUgZm9ybWF0dGluZyBpcyBjb3JyZWN0LCB1c2luZyB0aGUgYm94IGZvciB0aGUgZmluYWwgYW5zd2VyLiBBbHJpZ2h0LCByZWFkeSB0byByZXNwb25kLlxuIn19XSwiY3JlYXRlZCI6MTc5NDk4Mzg3NiwibW9kZWwiOiJxd2VuMy1uYXRpdmUiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJiMTA4MzAtNDY1ZTQ5YjljIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwidXNhZ2UiOnsiY29tcGxldGlvbl90b2tlbnMiOjM3MSwicHJvbXB0X3Rva2VucyI6MTIwLCJ0b3RhbF90b2tlbnMiOjQ5MSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjE2fX0sImlkIjoiY2hhdGNtcGwtemdEdm5ZbWtVc2xDZWZqTnpWQW5rYkplSkxzTjlvSWQiLCJ0aW1pbmdzIjp7ImNhY2hlX24iOjE2LCJwcm9tcHRfbiI6MTA0LCJwcm9tcHRfbXMiOjI4LjM1OSwicHJvbXB0X3Blcl90b2tlbl9tcyI6MC4yNzI2ODI2OTIzMDc2OTIzLCJwcm9tcHRfcGVyX3NlY29uZCI6MzY2Ny4yNjYxMjM2MjkxODI0LCJwcmVkaWN0ZWRfbiI6MzcxLCJwcmVkaWN0ZWRfbXMiOjI2MzcuMzIzLCJwcmVkaWN0ZWRfcGVyX3Rva2VuX21zIjo3LjEyNzg5OTk5OTk5OTk5OTUsInByZWRpY3RlZF9wZXJfc2Vjb25kIjoxNDAuMjkzNzc1MTY1MTk1OTR9fQ==
+  recorded_at: Wed, 18 Nov 2026 06:37:56 GMT
+recorded_with: VCR 6.4.1

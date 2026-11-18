@@ -9,7 +9,7 @@ http_interactions:
         is the capital of France?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:25:39 GMT
+      - Wed, 18 Nov 2026 06:41:23 GMT
       Content-Type:
       - application/json; charset=UTF-8
       Transfer-Encoding:
@@ -36,7 +36,7 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       Ga-Traceid:
-      - dd5a8a7d88efaa8393b6f1fe8ea38e38
+      - da064fa066f487838b96a2186c35b521
       Vary:
       - Accept-Encoding
       - Access-Control-Request-Headers
@@ -47,17 +47,18 @@ http_interactions:
       - Origin
       - Origin
       X-Log-Id:
-      - 202611150925376f86b08a6ff844c0
+      - 202611181441206e10ded85c5b45f7
       X-Request-Id:
       - "<X_REQUEST_ID>"
     body:
       encoding: ASCII-8BIT
       string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"The
-        capital of France is Paris.","reasoning_content":"The user is asking a simple
-        factual question: What is the capital of France?\n\nThe answer is Paris. This
-        is a very simple, straightforward factual question. I should give a concise,
-        direct answer. There''s no need for elaboration, caveats, or extended discussion.
-        Just answer the question directly.\n\nFormat: A short sentence is appropriate.
-        No need for headers, bullet points, or anything elaborate.","role":"assistant"}}],"created":1794705939,"id":"202611150925376f86b08a6ff844c0","model":"glm-5.3-flash","object":"chat.completion","request_id":"202611150925376f86b08a6ff844c0","usage":{"completion_tokens":90,"completion_tokens_details":{"reasoning_tokens":81},"prompt_tokens":19,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":109}}'
-  recorded_at: Sun, 15 Nov 2026 01:25:39 GMT
-recorded_with: VCR 6.4.0
+        capital of France is **Paris**.","reasoning_content":"The user is asking a
+        simple factual question: \"What is the capital of France?\"\n\nThis is a straightforward
+        factual question with a clear, well-known answer: Paris.\n\nFormat considerations:
+        This should be a very brief response. The question is simple and direct, so
+        the answer should be too. No need for headers, bullet points, or lengthy explanations.
+        Just answer the question directly. I could add a tiny bit of context if useful,
+        but honestly, for a question this simple, one sentence is perfect.","role":"assistant"}}],"created":1794984083,"id":"202611181441206e10ded85c5b45f7","model":"glm-5.3-flash","object":"chat.completion","request_id":"202611181441206e10ded85c5b45f7","usage":{"completion_tokens":112,"completion_tokens_details":{"reasoning_tokens":101},"prompt_tokens":19,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":131}}'
+  recorded_at: Wed, 18 Nov 2026 06:41:23 GMT
+recorded_with: VCR 6.4.1

@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      Date:
-      - Sun, 15 Nov 2026 01:20:22 GMT
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
       Pragma:
       - no-cache
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
+      Date:
+      - Wed, 18 Nov 2026 06:34:26 GMT
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform openid https://www.googleapis.com/auth/userinfo.email",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Sun, 15 Nov 2026 01:20:22 GMT
+  recorded_at: Wed, 18 Nov 2026 06:34:26 GMT
 - request:
     method: post
     uri: https://eu-texttospeech.googleapis.com/v1/text:synthesize
@@ -65,7 +65,7 @@ http_interactions:
       string: '{"input":{"text":"Hello"},"voice":{"languageCode":"en-US","name":"en-US-Chirp3-HD-Nobody"},"audioConfig":{"audioEncoding":"MP3"}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       X-Goog-User-Project:
       - "<GOOGLE_CLOUD_PROJECT>"
       Authorization:
@@ -88,7 +88,7 @@ http_interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Sun, 15 Nov 2026 01:20:23 GMT
+      - Wed, 18 Nov 2026 06:34:26 GMT
       Server:
       - ESF
       X-Xss-Protection:
@@ -111,5 +111,5 @@ http_interactions:
             "status": "INVALID_ARGUMENT"
           }
         }
-  recorded_at: Sun, 15 Nov 2026 01:20:23 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:34:26 GMT
+recorded_with: VCR 6.4.1

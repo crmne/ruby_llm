@@ -11,7 +11,7 @@ http_interactions:
         to process"}},"required":["query"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:40:14 GMT
+      - Wed, 18 Nov 2026 06:53:53 GMT
       Content-Type:
       - application/json; charset=UTF-8
       Transfer-Encoding:
@@ -38,7 +38,7 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       Ga-Traceid:
-      - d22760359596c0d7f4fb8f31d645ff55
+      - 8fe23109f74db6d06a23e876aa035330
       Vary:
       - Accept-Encoding
       - Access-Control-Request-Headers
@@ -49,33 +49,31 @@ http_interactions:
       - Origin
       - Origin
       X-Log-Id:
-      - 2026111509400966387ce3dcd04afc
+      - 202611181453438cc71b461ca145c6
       X-Request-Id:
       - "<X_REQUEST_ID>"
     body:
       encoding: ASCII-8BIT
       string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":"","reasoning_content":"The
         user wants me to process the query \"test data\" using the content_returning
-        function. This is a straightforward request - I should call the tool with
-        that query.","role":"assistant","tool_calls":[{"function":{"arguments":"{\"query\":\"test
-        data\"}","name":"content_returning"},"id":"call_-7080002486488005310","index":0,"type":"function"}]}}],"created":1794706814,"id":"2026111509400966387ce3dcd04afc","model":"glm-5.3-flash","object":"chat.completion","request_id":"2026111509400966387ce3dcd04afc","usage":{"completion_tokens":48,"completion_tokens_details":{"reasoning_tokens":34},"prompt_tokens":179,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":227}}'
-  recorded_at: Sun, 15 Nov 2026 01:40:14 GMT
+        tool. Let me call it.","role":"assistant","tool_calls":[{"function":{"arguments":"{\"query\":\"test
+        data\"}","name":"content_returning"},"id":"call_-7065246078370572274","index":0,"type":"function"}]}}],"created":1794984833,"id":"202611181453438cc71b461ca145c6","model":"glm-5.3-flash","object":"chat.completion","request_id":"202611181453438cc71b461ca145c6","usage":{"completion_tokens":38,"completion_tokens_details":{"reasoning_tokens":24},"prompt_tokens":179,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":217}}'
+  recorded_at: Wed, 18 Nov 2026 06:53:53 GMT
 - request:
     method: post
     uri: https://api.z.ai/api/paas/v4/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"glm-5.3-flash","messages":[{"role":"user","content":"Process
-        this query: test data"},{"role":"assistant","content":"","tool_calls":[{"id":"call_-7080002486488005310","type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
+        this query: test data"},{"role":"assistant","content":"","tool_calls":[{"id":"call_-7065246078370572274","type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
         data\"}"}}],"reasoning_content":"The user wants me to process the query \"test
-        data\" using the content_returning function. This is a straightforward request
-        - I should call the tool with that query."},{"role":"tool","content":"Processed:
-        test data","tool_call_id":"call_-7080002486488005310"}],"stream":false,"tools":[{"type":"function","function":{"name":"content_returning","description":"Returns
+        data\" using the content_returning tool. Let me call it."},{"role":"tool","content":"Processed:
+        test data","tool_call_id":"call_-7065246078370572274"}],"stream":false,"tools":[{"type":"function","function":{"name":"content_returning","description":"Returns
         a processed string result","parameters":{"type":"object","properties":{"query":{"type":"string","description":"Query
         to process"}},"required":["query"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -90,7 +88,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:40:20 GMT
+      - Wed, 18 Nov 2026 06:54:07 GMT
       Content-Type:
       - application/json; charset=UTF-8
       Transfer-Encoding:
@@ -102,7 +100,7 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       Ga-Traceid:
-      - 0feb2fde8854dcef595e6a9eb78b92ac
+      - 8924489d98a42deb42fd392cd1651671
       Vary:
       - Accept-Encoding
       - Access-Control-Request-Headers
@@ -113,14 +111,13 @@ http_interactions:
       - Origin
       - Origin
       X-Log-Id:
-      - 202611150940143b9c0674044e445b
+      - 20261118145353a6b89bd2baaa45fd
       X-Request-Id:
       - "<X_REQUEST_ID>"
     body:
       encoding: ASCII-8BIT
       string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"The
-        query has been processed. Result: **Processed: test data**\n\nIs there anything
-        else you''d like me to process?","reasoning_content":"The tool returned \"Processed:
-        test data\" as the result. I should report this back to the user.","role":"assistant"}}],"created":1794706820,"id":"202611150940143b9c0674044e445b","model":"glm-5.3-flash","object":"chat.completion","request_id":"202611150940143b9c0674044e445b","usage":{"completion_tokens":49,"completion_tokens_details":{"reasoning_tokens":22},"prompt_tokens":235,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":284}}'
-  recorded_at: Sun, 15 Nov 2026 01:40:20 GMT
-recorded_with: VCR 6.4.0
+        query has been processed successfully. Result: **\"Processed: test data\"**","reasoning_content":"The
+        tool returned \"Processed: test data\". I''ll report the result to the user.","role":"assistant"}}],"created":1794984847,"id":"20261118145353a6b89bd2baaa45fd","model":"glm-5.3-flash","object":"chat.completion","request_id":"20261118145353a6b89bd2baaa45fd","usage":{"completion_tokens":37,"completion_tokens_details":{"reasoning_tokens":18},"prompt_tokens":225,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":262}}'
+  recorded_at: Wed, 18 Nov 2026 06:54:07 GMT
+recorded_with: VCR 6.4.1

@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -21,13 +21,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:21:30 GMT
+      - Wed, 18 Nov 2026 06:37:18 GMT
+      Pragma:
+      - no-cache
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
-      Pragma:
-      - no-cache
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
+          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/cloud-platform",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Sun, 15 Nov 2026 01:21:30 GMT
+  recorded_at: Wed, 18 Nov 2026 06:37:18 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:streamGenerateContent?alt=sse
@@ -66,7 +66,7 @@ http_interactions:
         is the latest stable Ruby version? Cite your source."}]}],"generationConfig":{},"tools":[{"google_search":{}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -91,7 +91,7 @@ http_interactions:
       Transfer-Encoding:
       - chunked
       Date:
-      - Sun, 15 Nov 2026 01:21:34 GMT
+      - Wed, 18 Nov 2026 06:37:22 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -107,10 +107,10 @@ http_interactions:
       string: "data: {\"candidates\": [{\"content\": {\"role\": \"model\",\"parts\":
         [{\"text\": \"The latest stable Ruby version is 4.0.9.\"}]}}],\"usageMetadata\":
         {\"trafficType\": \"ON_DEMAND\"},\"modelVersion\": \"gemini-2.5-flash\",\"createTime\":
-        \"2026-11-15T01:21:31.068405Z\",\"responseId\": \"Gwn5arWWBMrmtfAPury7kAU\"}\r\n\r\ndata:
+        \"2026-11-18T06:37:18.163945Z\",\"responseId\": \"nkf9aumACsGzmNAPr_7EEQ\"}\r\n\r\ndata:
         {\"candidates\": [{\"content\": {\"role\": \"model\",\"parts\": [{\"text\":
         \"\"}]},\"finishReason\": \"STOP\",\"groundingMetadata\": {\"webSearchQueries\":
-        [\"latest stable Ruby version\"],\"searchEntryPoint\": {\"renderedContent\":
+        [\"latest stable Ruby version\",\"Ruby releases\"],\"searchEntryPoint\": {\"renderedContent\":
         \"\\u003cstyle\\u003e\\n.container {\\n  align-items: center;\\n  border-radius:
         8px;\\n  display: flex;\\n  font-family: Google Sans, Roboto, sans-serif;\\n
         \ font-size: 14px;\\n  line-height: 20px;\\n  padding: 8px 12px;\\n}\\n.chip
@@ -173,15 +173,18 @@ http_interactions:
         \   \\u003c/svg\\u003e\\n    \\u003cdiv class=\\\"gradient-container\\\"\\u003e\\u003cdiv
         class=\\\"gradient\\\"\\u003e\\u003c/div\\u003e\\u003c/div\\u003e\\n  \\u003c/div\\u003e\\n
         \ \\u003cdiv class=\\\"carousel\\\"\\u003e\\n\\u003ca class=\\\"chip\\\" href=\\\"https://www.google.com/search?q=latest+stable+Ruby+version&client=app-vertex-grounding&safesearch=active\\\"\\u003elatest
-        stable Ruby version\\u003c/a\\u003e\\n  \\u003c/div\\u003e\\n\\u003c/div\\u003e\"},\"groundingChunks\":
-        [{\"web\": {\"uri\": \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHlEmXhrSxTMNlo1inIj93t3LL1ncGxwqc575Ts1QJ8U06m2icrf3wgpoonL3PLvcGXOymBGJ--gt7sCKcLSeVytsYcb5rK8pCziuucG7rJCRMNDqHvj_LCL4QrNyg1SJxzWg==\",\"title\":
-        \"ruby-lang.org\",\"domain\": \"ruby-lang.org\"}}],\"groundingSupports\":
+        stable Ruby version\\u003c/a\\u003e\\n\\u003ca class=\\\"chip\\\" href=\\\"https://www.google.com/search?q=Ruby+releases&client=app-vertex-grounding&safesearch=active\\\"\\u003eRuby
+        releases\\u003c/a\\u003e\\n  \\u003c/div\\u003e\\n\\u003c/div\\u003e\"},\"groundingChunks\":
+        [{\"web\": {\"uri\": \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHH2vhJ2eCnnYSsN_Nr9NZvainF_dpE9m0XsCqhpDfWNfyH-GnyBep23AaP0uwrgy7G9HSX_dVDQmEiPOtYXKxghoS4TGGPSyZLJj0-loSkK0eAaqDq6iiLxJ3tzmy7AWiQxA==\",\"title\":
+        \"ruby-lang.org\",\"domain\": \"ruby-lang.org\"}},{\"web\": {\"uri\": \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG2RGvrAOTRnoy7lP0QIHqFZeoFjURQ8FclpKqW0nypP6R_R4QInwkfwJ_HSonXsr3o23AOoDPTIRP1JO71fmshmUYm_oauoiT8AbsZuj00c7Ao3MpBiAj01u03JVciqoZIPM5z3pKScbcKazs9R6XneRg810Xh_vJKiPFB\",\"title\":
+        \"ruby-lang.org\",\"domain\": \"ruby-lang.org\"}},{\"web\": {\"uri\": \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG573biHusb9ZIHpNyTgd-cfJjt8kn2CKg1dGCGCVSYsKnT8svBGn98MFybl4hUI9nIOy1xTq5LSD5767BIEvwQvX7uQRAjfLzdlp99jyghIMisKkY6TcvggsDJUgMR\",\"title\":
+        \"aurateria.com\",\"domain\": \"aurateria.com\"}}],\"groundingSupports\":
         [{\"segment\": {\"endIndex\": 40,\"text\": \"The latest stable Ruby version
-        is 4.0.9.\"},\"groundingChunkIndices\": [0]}]}}],\"usageMetadata\": {\"promptTokenCount\":
-        16,\"candidatesTokenCount\": 19,\"totalTokenCount\": 363,\"trafficType\":
+        is 4.0.9.\"},\"groundingChunkIndices\": [0,1,2]}]}}],\"usageMetadata\": {\"promptTokenCount\":
+        16,\"candidatesTokenCount\": 25,\"totalTokenCount\": 168,\"trafficType\":
         \"ON_DEMAND\",\"promptTokensDetails\": [{\"modality\": \"TEXT\",\"tokenCount\":
         16}],\"candidatesTokensDetails\": [{\"modality\": \"TEXT\",\"tokenCount\":
-        19}],\"thoughtsTokenCount\": 328},\"modelVersion\": \"gemini-2.5-flash\",\"createTime\":
-        \"2026-11-15T01:21:31.068405Z\",\"responseId\": \"Gwn5arWWBMrmtfAPury7kAU\"}\r\n\r\n"
-  recorded_at: Sun, 15 Nov 2026 01:21:34 GMT
-recorded_with: VCR 6.4.0
+        25}],\"thoughtsTokenCount\": 127},\"modelVersion\": \"gemini-2.5-flash\",\"createTime\":
+        \"2026-11-18T06:37:18.163945Z\",\"responseId\": \"nkf9aumACsGzmNAPr_7EEQ\"}\r\n\r\n"
+  recorded_at: Wed, 18 Nov 2026 06:37:22 GMT
+recorded_with: VCR 6.4.1

@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"gpt-5.4-nano","input":[{"role":"user","content":"hello"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"max_output_tokens":-1}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -23,7 +23,7 @@ http_interactions:
       message: Bad Request
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:19:53 GMT
+      - Wed, 18 Nov 2026 06:34:53 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -47,7 +47,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '13'
+      - '14'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -69,5 +69,5 @@ http_interactions:
             "code": "integer_below_min_value"
           }
         }
-  recorded_at: Sun, 15 Nov 2026 01:19:53 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:34:53 GMT
+recorded_with: VCR 6.4.1

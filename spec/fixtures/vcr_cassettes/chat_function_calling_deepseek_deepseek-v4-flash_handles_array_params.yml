@@ -12,7 +12,7 @@ http_interactions:
         of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -33,7 +33,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Sun, 15 Nov 2026 01:22:51 GMT
+      - Wed, 18 Nov 2026 06:37:58 GMT
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -43,21 +43,22 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - bb4adc5aba6ce946a2d83f60c97c7283
+      - 0b015aa069c37e3e5234e8f8746b1819
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 36e42f052a24feab91529d442c70cf34.cloudfront.net (CloudFront)
+      - 1.1 fd53ce1b66d79eef4809fa7eb2f761aa.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL50-P1
+      - TXL50-P2
       X-Amz-Cf-Id:
-      - UEy1TYjk9mJsnn0OKmPjsbbFbXNN9j0aMjawjShjMitnY3-mnULY-Q==
+      - yFrqAuoxQwrJ7vzHdUZZVIj8vtgbiCGwFxdMQu_lwODzkuf8dHD0AQ==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"bda5c591-45c6-40d0-8426-04ddc4f270dc","object":"chat.completion","created":1794705771,"model":"deepseek-flash","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
-        call the tool with those tags.","reasoning_content":"","tool_calls":[{"index":0,"id":"call_00_ET_52tsfklFpdJizqmSurUM3649","type":"function","function":{"name":"array_params","arguments":"{\"tags\":
-        [\"red\", \"blue\"]}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":332,"completion_tokens":51,"total_tokens":383,"prompt_tokens_details":{"cached_tokens":128},"completion_tokens_details":{"reasoning_tokens":0},"prompt_cache_hit_tokens":128,"prompt_cache_miss_tokens":204},"system_fingerprint":"bc19ba97cbe016479903222bb1578db6"}'
-  recorded_at: Sun, 15 Nov 2026 01:22:52 GMT
-recorded_with: VCR 6.4.0
+      string: '{"id":"0705a9e4-6d18-4542-885b-49dd2eeee226","object":"chat.completion","created":1794983878,"model":"deepseek-flash","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning_content":"The
+        user wants me to call the array params tool with tags [\"red\",\"blue\"].
+        Let me do that.","tool_calls":[{"index":0,"id":"call_00_PWUJ1kkjmggVTSo7sB399946","type":"function","function":{"name":"array_params","arguments":"{\"tags\":
+        [\"red\", \"blue\"]}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":332,"completion_tokens":65,"total_tokens":397,"prompt_tokens_details":{"cached_tokens":128},"completion_tokens_details":{"reasoning_tokens":22},"prompt_cache_hit_tokens":128,"prompt_cache_miss_tokens":204},"system_fingerprint":"bc19ba97cbe016479903222bb1578db6"}'
+  recorded_at: Wed, 18 Nov 2026 06:37:59 GMT
+recorded_with: VCR 6.4.1

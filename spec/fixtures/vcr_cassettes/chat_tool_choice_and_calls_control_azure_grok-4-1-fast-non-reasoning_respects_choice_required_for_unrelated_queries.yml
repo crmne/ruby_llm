@@ -13,7 +13,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}],"tool_choice":"required"}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -30,7 +30,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 15 Nov 2026 01:40:33 GMT
+      - Wed, 18 Nov 2026 06:54:20 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
@@ -50,13 +50,13 @@ http_interactions:
       X-Watermark:
       - 'false'
       Traceparent:
-      - 00-3dfb1a75238ffa76f3eee0f4e15a46b8-b97ab2b9000f594b-00
+      - 00-7c8d28f971ddaec5ac680bddf7ef38ad-162878a8001726ec-00
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Ms-Client-Request-Id:
-      - ce9c3e33-e013-4630-8fa0-c98eb016fe8f
+      - a1619e6c-847b-4e29-82d2-7d9df6ec05e4
       Azureml-Model-Session:
-      - d20261110012600-4baac0fe
+      - d20261110015917-e7d4cb48
       X-Ms-Inference-Retry-History:
       - '{"v":1,"entries":[{"service_id":"mir.frontdoor","layer":"regional","role":"direct","retries":0}]}'
       Azureai-Requested-Tier:
@@ -90,9 +90,9 @@ http_interactions:
       Azureai-Fe-Offer-Type:
       - paygo
       Apim-Request-Id:
-      - ce9c3e33-e013-4630-8fa0-c98eb016fe8f
+      - a1619e6c-847b-4e29-82d2-7d9df6ec05e4
       X-Http2-Stream-Id:
-      - '987'
+      - '935'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -101,8 +101,8 @@ http_interactions:
       - West Europe
     body:
       encoding: UTF-8
-      string: '{"id":"7be4c7f1-9875-4f35-87c8-683bef5122c0","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_99627454","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":427,"completion_tokens":40,"total_tokens":467,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":158,"audio_tokens":0,"text_tokens":427,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1794706834,"object":"chat.completion","prompt_filter_results":null}'
-  recorded_at: Sun, 15 Nov 2026 01:40:34 GMT
+      string: '{"id":"85cdd17a-041c-499a-b974-4d8ebb9f01b0","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_59732215","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":427,"completion_tokens":40,"total_tokens":467,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":157,"audio_tokens":0,"text_tokens":427,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1794984860,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Wed, 18 Nov 2026 06:54:20 GMT
 - request:
     method: post
     uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
@@ -110,14 +110,14 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"system","content":"Your
         location is Berlin, at latitude 52.5200 and longitude 13.4050."},{"role":"user","content":"When
-        was the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_99627454","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},{"role":"tool","content":"Current
-        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h","tool_call_id":"call_99627454"}],"stream":false,"max_completion_tokens":4096,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        was the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_59732215","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},{"role":"tool","content":"Current
+        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h","tool_call_id":"call_59732215"}],"stream":false,"max_completion_tokens":4096,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -134,7 +134,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 15 Nov 2026 01:40:35 GMT
+      - Wed, 18 Nov 2026 06:54:21 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
@@ -154,13 +154,13 @@ http_interactions:
       X-Watermark:
       - 'false'
       Traceparent:
-      - 00-3bc3bad74ccaf09784330663426c946d-b97ab2b9000f597b-00
+      - 00-34139bb5d516e67bbceffb587ced4208-23413c76000bbf39-00
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Ms-Client-Request-Id:
-      - 529403b0-69ff-4798-a114-83cad4255d32
+      - 8eb13c34-48c7-4a72-bb49-d14aa5faa8fe
       Azureml-Model-Session:
-      - d20261110012600-4baac0fe
+      - d20261110015917-e7d4cb48
       X-Ms-Inference-Retry-History:
       - '{"v":1,"entries":[{"service_id":"mir.frontdoor","layer":"regional","role":"direct","retries":0}]}'
       Azureai-Requested-Tier:
@@ -194,9 +194,9 @@ http_interactions:
       Azureai-Fe-Offer-Type:
       - paygo
       Apim-Request-Id:
-      - 529403b0-69ff-4798-a114-83cad4255d32
+      - 8eb13c34-48c7-4a72-bb49-d14aa5faa8fe
       X-Http2-Stream-Id:
-      - '425'
+      - '321'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -205,14 +205,14 @@ http_interactions:
       - West Europe
     body:
       encoding: UTF-8
-      string: '{"id":"8b781650-da06-4a87-b2b2-c063736b4261","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        fall of Rome is traditionally dated to **September 4, 476 CE**, when the Germanic
-        chieftain Odoacer deposed Romulus Augustulus, the last Western Roman emperor,
-        in the city of Ravenna (near Rome). This marked the conventional end of the
-        Western Roman Empire.\n\nHistorians debate the exact \"fall,\" as it was a
-        gradual process over centuries involving economic decline, barbarian invasions,
-        military overextension, and internal corruption. Key precursors include the
-        sack of Rome by the Visigoths in 410 CE and by the Vandals in 455 CE. The
-        Eastern Roman (Byzantine) Empire continued until 1453."},"finish_reason":"stop"}],"usage":{"prompt_tokens":502,"completion_tokens":130,"total_tokens":632,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":312,"audio_tokens":0,"text_tokens":502,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1794706835,"object":"chat.completion","prompt_filter_results":null}'
-  recorded_at: Sun, 15 Nov 2026 01:40:36 GMT
-recorded_with: VCR 6.4.0
+      string: '{"id":"15d05ef9-b1cb-477a-94a2-06c6518542fa","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        \"fall of Rome\" is traditionally dated to **September 4, 476 CE**, when the
+        Germanic chieftain Odoacer deposed Romulus Augustulus, the last Western Roman
+        emperor, in Ravenna (the de facto capital). This event marks the conventional
+        end of the Western Roman Empire.\n\nHistorians debate the exact \"fall,\"
+        as it was a gradual process over centuries involving economic decline, barbarian
+        invasions, military overstretch, and internal strife. The Eastern Roman (Byzantine)
+        Empire continued until 1453. Key precursors include the Visigoths'' sack of
+        Rome in 410 CE and the Vandals'' in 455 CE."},"finish_reason":"stop"}],"usage":{"prompt_tokens":502,"completion_tokens":131,"total_tokens":633,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":312,"audio_tokens":0,"text_tokens":502,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1794984861,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Wed, 18 Nov 2026 06:54:22 GMT
+recorded_with: VCR 6.4.1

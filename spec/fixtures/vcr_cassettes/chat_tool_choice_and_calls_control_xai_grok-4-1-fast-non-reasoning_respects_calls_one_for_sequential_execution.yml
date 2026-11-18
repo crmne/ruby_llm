@@ -15,7 +15,7 @@ http_interactions:
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"parallel_tool_calls":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -30,7 +30,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:43:20 GMT
+      - Wed, 18 Nov 2026 06:57:36 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -50,7 +50,9 @@ http_interactions:
       X-Ratelimit-Limit-Requests:
       - '1800'
       X-Ratelimit-Remaining-Requests:
-      - '1800'
+      - '1799'
+      Cf-Cache-Status:
+      - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Zero-Data-Retention:
@@ -58,34 +60,33 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '226.6'
+      - '348.6'
       X-Metrics-E2e-Ms:
-      - '1857.2'
+      - '5955.0'
       Traceparent:
-      - 00-189abd6b16beeb1d90bafc862078d64c-03b98825000a8042-01
+      - 00-eaf4c738961f8d0397afce41ccdc1f57-37789ae400029394-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
-      Cf-Cache-Status:
-      - DYNAMIC
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1794706998,"completed_at":1794706999,"id":"e8c0fd03-ed7c-93ca-9729-e7cd2ada1f3b","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_e8c0fd03-ed7c-93ca-9729-e7cd2ada1f3b","summary":[{"text":"The
-        user asked about Berlin weather and the best programming language.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"rVt7YGY/BZo+9XBxQ1BRAJ6GHpl0uAfc5uO7Kv92RXME3TMFlu6206E7Fom6crY8v9EoBvgmZaW2FhofIyXpA/LL1SyYAKfxlASQGOjFoRpzDT0jGqa1JE0dJ1OPa+Zsfv9ie6/vqJDNqbDJpgeMJoaVR1SQf2qbc+TMbc9QxBhPpN8zbQZTiXADUMj/t3kQseYSX9yem40iEIHj+rWatUlLMJ+XiDevHwzvBdwQmmUsMUqLx6f1W3hq5Hl6un0vb0Eu/2MhucWjPP+LTk7qyy9rg9j7JCFsxffl4SZTDCXkU6f9iQJV3f5zebtgvvmHn7uWkwXOUWhXiSW7YPVkQso6T6fnPZeUEVAByPj/czlinjZFHehf7LWc/g98Q71IyzN9qBk8LO//3NdCLitM+uyK4m4XBaisys5/NGexjz6IodFm+ZkqvOe1Xgx2BMF/K6Kz3COD8oiT1Hnqa20e8YFyagqis5sVy0O5TdEm9bP9EzqboO0laEEBo68J6ec0LaMS1RusC0zk"},{"arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}","call_id":"call-7413df39-d0cd-4fb4-a09e-bdc18befe5ca-0","name":"weather","type":"function_call","id":"fc_e8c0fd03-ed7c-93ca-9729-e7cd2ada1f3b_0","status":"completed"}],"parallel_tool_calls":false,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Gets
+      string: '{"created_at":1794985050,"completed_at":1794985056,"id":"260c40b8-098e-912a-987e-e6bc3f586fb9","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_260c40b8-098e-912a-987e-e6bc3f586fb9","summary":[{"text":"The
+        user asked about Berlin weather and the best programming language.\n\nI''ll
+        call the weather tool for Berlin first, then the best language tool.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"MwOJvNTwQiVt0+yr5ItC4b4yHHfAmJrGX60t87anaMxuDW21Fw74vJULC9hJ/XW4JoyGMxE3jtTn0aEIzLfJFdvxNjRyEaLXWs+Tl8+j6FwPzS9L3xBvitfWCJphaKIIgjpf6eLgxZS42kfaOucSMiC+IJ7ML/ATST8Gx3nGGdYJcikcNwfZrEqQ10MM1rBCXyWfWR6xHjAtjuV9B1FHu0oncOZKHFqcxEhXmEa5ccFYYQ2JnkMYZCItj9Qq6hrRtVWhoIzehVYFIKAKDUF12uBpbg46pfvpN5izs7qOUVj3MiENVDJOXzIaYR+QcoShAebW2AbDKIHe3mfIM4loJHIx+/ZHH2NJIWZQJNYfzq0gtmnjsQ/mZ8unYmyzWFS/ZeYmbIYAVWTD8qZpUZz+Ygal6Zt4sy1Hn2vCjYLioQXLSmcx90gAfiXghMP2/c+RlZAyoW76DsukGm1jMhlw2PXLzgoTj6el2uNrH9mUiIGbKIyfjsd+f95HYGrvph8/csFc4uvPBwtUsW9o9czrFNclHPAieFZiw6aOy6JOj2qKNA+K7+1blYnp1Io+hrFCI40PM3ISBybuh06DYFlDTW7hhWMyEJ+30jlMWcYtJHn4mHdIDW/ldfaVTvfORANSWDLSFW5O4d54P55/HOcwokpcsS1QSC5v9nQlItYW+8yiss+6PfGJqxjaZPOpppwMpOvafv4e8E61XQmpxe+wI2MedYdzLnRO/YNWcX+l0sPBKt4joe06UJw/FBiYjPJLTlr4ch6kvxjpRqWdlIlJXdKV4WjxHj04CO03cS4MzgBtJ5aDBRxTvmAX1IUp"},{"arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}","call_id":"call-f84f08d6-d367-464e-af9d-10904d23cd83-0","name":"weather","type":"function_call","id":"fc_260c40b8-098e-912a-987e-e6bc3f586fb9_0","status":"completed"}],"parallel_tool_calls":false,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Gets
         current weather for a location","name":"weather","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true},"strict":false},{"type":"function","description":"Gets
-        the best language to learn","name":"best_language_to_learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"top_p":0.95,"usage":{"input_tokens":411,"input_tokens_details":{"cached_tokens":128},"output_tokens":194,"output_tokens_details":{"reasoning_tokens":175},"total_tokens":605,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":8643500,"context_details":{"input_tokens":411,"output_tokens":197}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":"You
+        the best language to learn","name":"best_language_to_learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"top_p":0.95,"usage":{"input_tokens":411,"input_tokens_details":{"cached_tokens":128},"output_tokens":328,"output_tokens_details":{"reasoning_tokens":309},"total_tokens":739,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":11993500,"context_details":{"input_tokens":411,"output_tokens":332}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":"You
         must use both the weather tool for Berlin (52.5200, 13.4050) and the best
         language tool."}'
-  recorded_at: Sun, 15 Nov 2026 01:43:20 GMT
+  recorded_at: Wed, 18 Nov 2026 06:57:36 GMT
 - request:
     method: post
     uri: https://api.x.ai/v1/responses
@@ -93,7 +94,8 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"grok-4.3","input":[{"role":"user","content":"What''s the
         weather in Berlin and what''s the best programming language?"},{"type":"reasoning","summary":[{"type":"summary_text","text":"The
-        user asked about Berlin weather and the best programming language."}],"encrypted_content":"rVt7YGY/BZo+9XBxQ1BRAJ6GHpl0uAfc5uO7Kv92RXME3TMFlu6206E7Fom6crY8v9EoBvgmZaW2FhofIyXpA/LL1SyYAKfxlASQGOjFoRpzDT0jGqa1JE0dJ1OPa+Zsfv9ie6/vqJDNqbDJpgeMJoaVR1SQf2qbc+TMbc9QxBhPpN8zbQZTiXADUMj/t3kQseYSX9yem40iEIHj+rWatUlLMJ+XiDevHwzvBdwQmmUsMUqLx6f1W3hq5Hl6un0vb0Eu/2MhucWjPP+LTk7qyy9rg9j7JCFsxffl4SZTDCXkU6f9iQJV3f5zebtgvvmHn7uWkwXOUWhXiSW7YPVkQso6T6fnPZeUEVAByPj/czlinjZFHehf7LWc/g98Q71IyzN9qBk8LO//3NdCLitM+uyK4m4XBaisys5/NGexjz6IodFm+ZkqvOe1Xgx2BMF/K6Kz3COD8oiT1Hnqa20e8YFyagqis5sVy0O5TdEm9bP9EzqboO0laEEBo68J6ec0LaMS1RusC0zk"},{"type":"function_call","call_id":"call-7413df39-d0cd-4fb4-a09e-bdc18befe5ca-0","name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"},{"type":"function_call_output","call_id":"call-7413df39-d0cd-4fb4-a09e-bdc18befe5ca-0","output":"Current
+        user asked about Berlin weather and the best programming language.\n\nI''ll
+        call the weather tool for Berlin first, then the best language tool."}],"encrypted_content":"MwOJvNTwQiVt0+yr5ItC4b4yHHfAmJrGX60t87anaMxuDW21Fw74vJULC9hJ/XW4JoyGMxE3jtTn0aEIzLfJFdvxNjRyEaLXWs+Tl8+j6FwPzS9L3xBvitfWCJphaKIIgjpf6eLgxZS42kfaOucSMiC+IJ7ML/ATST8Gx3nGGdYJcikcNwfZrEqQ10MM1rBCXyWfWR6xHjAtjuV9B1FHu0oncOZKHFqcxEhXmEa5ccFYYQ2JnkMYZCItj9Qq6hrRtVWhoIzehVYFIKAKDUF12uBpbg46pfvpN5izs7qOUVj3MiENVDJOXzIaYR+QcoShAebW2AbDKIHe3mfIM4loJHIx+/ZHH2NJIWZQJNYfzq0gtmnjsQ/mZ8unYmyzWFS/ZeYmbIYAVWTD8qZpUZz+Ygal6Zt4sy1Hn2vCjYLioQXLSmcx90gAfiXghMP2/c+RlZAyoW76DsukGm1jMhlw2PXLzgoTj6el2uNrH9mUiIGbKIyfjsd+f95HYGrvph8/csFc4uvPBwtUsW9o9czrFNclHPAieFZiw6aOy6JOj2qKNA+K7+1blYnp1Io+hrFCI40PM3ISBybuh06DYFlDTW7hhWMyEJ+30jlMWcYtJHn4mHdIDW/ldfaVTvfORANSWDLSFW5O4d54P55/HOcwokpcsS1QSC5v9nQlItYW+8yiss+6PfGJqxjaZPOpppwMpOvafv4e8E61XQmpxe+wI2MedYdzLnRO/YNWcX+l0sPBKt4joe06UJw/FBiYjPJLTlr4ch6kvxjpRqWdlIlJXdKV4WjxHj04CO03cS4MzgBtJ5aDBRxTvmAX1IUp"},{"type":"function_call","call_id":"call-f84f08d6-d367-464e-af9d-10904d23cd83-0","name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"},{"type":"function_call_output","call_id":"call-f84f08d6-d367-464e-af9d-10904d23cd83-0","output":"Current
         weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}],"instructions":"You must
         use both the weather tool for Berlin (52.5200, 13.4050) and the best language
         tool.","stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"weather","description":"Gets
@@ -103,7 +105,7 @@ http_interactions:
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"parallel_tool_calls":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -118,7 +120,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:43:21 GMT
+      - Wed, 18 Nov 2026 06:57:37 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -134,13 +136,11 @@ http_interactions:
       X-Ratelimit-Limit-Tokens:
       - '10000000'
       X-Ratelimit-Remaining-Tokens:
-      - '10000000'
+      - '9999015'
       X-Ratelimit-Limit-Requests:
       - '1800'
       X-Ratelimit-Remaining-Requests:
-      - '1800'
-      Cf-Cache-Status:
-      - DYNAMIC
+      - '1799'
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Zero-Data-Retention:
@@ -148,31 +148,26 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '336.9'
+      - '274.4'
       X-Metrics-E2e-Ms:
-      - '850.5'
-      Traceparent:
-      - 00-6e0d4c4fd6077a428fcdb08eb11141d9-4bf89f9d0013ca49-01
+      - '1299.5'
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1794707000,"completed_at":1794707001,"id":"971732e4-d157-9026-8735-5e6603a2f1d2","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_971732e4-d157-9026-8735-5e6603a2f1d2","summary":[],"type":"reasoning","status":"completed","encrypted_content":"0tCvYlTAy0z/Rf9aem3sG/KLQuINw3RJWxQxVLVX2hTHdmaBp85/AN63TY66I6+EPR7v/nyo8ckOYeEp45x06IL5kEqxHiGhguIIYadSqX8KN+mxMtzriIQO2neeSFylWgVYIFlJ7H/nEk8tzOmkCGExdo3eJ9A+NMnoSCVkLz7TVw"},{"arguments":"{}","call_id":"call-aaf81a38-200e-4eb6-aea8-421459dd0f7a-1","name":"best_language_to_learn","type":"function_call","id":"fc_971732e4-d157-9026-8735-5e6603a2f1d2_0","status":"completed"}],"parallel_tool_calls":false,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Gets
-        current weather for a location","name":"weather","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
-        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true},"strict":false},{"type":"function","description":"Gets
-        the best language to learn","name":"best_language_to_learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"top_p":0.95,"usage":{"input_tokens":638,"input_tokens_details":{"cached_tokens":128},"output_tokens":40,"output_tokens_details":{"reasoning_tokens":31},"total_tokens":678,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":7631000,"context_details":{"input_tokens":638,"output_tokens":44}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":"You
-        must use both the weather tool for Berlin (52.5200, 13.4050) and the best
-        language tool."}'
-  recorded_at: Sun, 15 Nov 2026 01:43:21 GMT
+      string: !binary |-
+        eyJjcmVhdGVkX2F0IjoxNzk0OTg1MDU2LCJjb21wbGV0ZWRfYXQiOjE3OTQ5ODUwNTcsImlkIjoiZWM1NjA3OTItN2E2NC00ZmYwLTlhMTAtYjQxNjFiYWU3ZmFhIiwibWF4X291dHB1dF90b2tlbnMiOm51bGwsIm1vZGVsIjoiZ3Jvay00LjMiLCJvYmplY3QiOiJyZXNwb25zZSIsIm91dHB1dCI6W3siaWQiOiJyc19lYzU2MDc5Mi03YTY0LTRmZjAtOWExMC1iNDE2MWJhZTdmYWEiLCJzdW1tYXJ5IjpbeyJ0ZXh0IjoiQmVybGluIGlzIDE1wrBDIHdpdGggMTAga20vaCB3aW5kLiIsInR5cGUiOiJzdW1tYXJ5X3RleHQifV0sInR5cGUiOiJyZWFzb25pbmciLCJzdGF0dXMiOiJjb21wbGV0ZWQiLCJlbmNyeXB0ZWRfY29udGVudCI6IjdXeW95Z3U4QUlncG1XS0lOK2l1UUlKMlJpamNEa2s1WUM5Y1BLNyt5REtVWk9FcmRxS0xPU0NIVlFCaG8ydEd2R3l4SmdDa0JjR3ZyMnMwYURja3JucXBCaTlmMVdMYVIxWURhNXdmc0drZ3V0WlJzc2d2VS9ta2hraDV4WFcyUS8zWEZaWm5SWmRJYURjNFoyM0Y2RlZ1QVA3b0pLejJJTzdDb1pYM1EwU2FvS1VkaGMvaEx3Vmp0Q1JldWJYOXUxNzNpT0FpSE1BQmRibi80eEpXT2RRMFgySG4zY0pJK2dZWU9JajcxMXdkUEVKVmVLYVlRV3p0R0QyNlNSL2dNaE9xZVprbm53MU04TEFnYXJBcEJ0UXI4ZndpODdKSmduRERzdyJ9LHsiYXJndW1lbnRzIjoie30iLCJjYWxsX2lkIjoiY2FsbC0zMjU0MDRkYy0zZWQ2LTRjN2YtYjc0ZS0zNjdjM2ZhYjdhMTYtMSIsIm5hbWUiOiJiZXN0X2xhbmd1YWdlX3RvX2xlYXJuIiwidHlwZSI6ImZ1bmN0aW9uX2NhbGwiLCJpZCI6ImZjX2VjNTYwNzkyLTdhNjQtNGZmMC05YTEwLWI0MTYxYmFlN2ZhYV8wIiwic3RhdHVzIjoiY29tcGxldGVkIn1dLCJwYXJhbGxlbF90b29sX2NhbGxzIjpmYWxzZSwicHJldmlvdXNfcmVzcG9uc2VfaWQiOm51bGwsInJlYXNvbmluZyI6eyJlZmZvcnQiOiJsb3ciLCJzdW1tYXJ5IjoiZGV0YWlsZWQifSwidGVtcGVyYXR1cmUiOjAuNywidGV4dCI6eyJmb3JtYXQiOnsidHlwZSI6InRleHQifX0sInRvb2xfY2hvaWNlIjoiYXV0byIsInRvb2xzIjpbeyJ0eXBlIjoiZnVuY3Rpb24iLCJkZXNjcmlwdGlvbiI6IkdldHMgY3VycmVudCB3ZWF0aGVyIGZvciBhIGxvY2F0aW9uIiwibmFtZSI6IndlYXRoZXIiLCJwYXJhbWV0ZXJzIjp7InR5cGUiOiJvYmplY3QiLCJwcm9wZXJ0aWVzIjp7ImxhdGl0dWRlIjp7InR5cGUiOiJzdHJpbmciLCJkZXNjcmlwdGlvbiI6IkxhdGl0dWRlIChlLmcuLCA1Mi41MjAwKSJ9LCJsb25naXR1ZGUiOnsidHlwZSI6InN0cmluZyIsImRlc2NyaXB0aW9uIjoiTG9uZ2l0dWRlIChlLmcuLCAxMy40MDUwKSJ9fSwicmVxdWlyZWQiOlsibGF0aXR1ZGUiLCJsb25naXR1ZGUiXSwiYWRkaXRpb25hbFByb3BlcnRpZXMiOmZhbHNlLCJzdHJpY3QiOnRydWV9LCJzdHJpY3QiOmZhbHNlfSx7InR5cGUiOiJmdW5jdGlvbiIsImRlc2NyaXB0aW9uIjoiR2V0cyB0aGUgYmVzdCBsYW5ndWFnZSB0byBsZWFybiIsIm5hbWUiOiJiZXN0X2xhbmd1YWdlX3RvX2xlYXJuIiwicGFyYW1ldGVycyI6eyJ0eXBlIjoib2JqZWN0IiwicHJvcGVydGllcyI6e30sInJlcXVpcmVkIjpbXSwiYWRkaXRpb25hbFByb3BlcnRpZXMiOmZhbHNlLCJzdHJpY3QiOnRydWV9LCJzdHJpY3QiOmZhbHNlfV0sInRvcF9wIjowLjk1LCJ1c2FnZSI6eyJpbnB1dF90b2tlbnMiOjc3MiwiaW5wdXRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MTI4fSwib3V0cHV0X3Rva2VucyI6NTksIm91dHB1dF90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjo1MH0sInRvdGFsX3Rva2VucyI6ODMxLCJudW1fc291cmNlc191c2VkIjowLCJudW1fc2VydmVyX3NpZGVfdG9vbHNfdXNlZCI6MCwiY29zdF9pbl91c2RfdGlja3MiOjk3ODEwMDAsImNvbnRleHRfZGV0YWlscyI6eyJpbnB1dF90b2tlbnMiOjc3Miwib3V0cHV0X3Rva2VucyI6NjJ9fSwidXNlciI6bnVsbCwiaW5jb21wbGV0ZV9kZXRhaWxzIjpudWxsLCJzdGF0dXMiOiJjb21wbGV0ZWQiLCJzdG9yZSI6ZmFsc2UsIm1ldGFkYXRhIjp7InN5c3RlbV9maW5nZXJwcmludCI6ImZwX2ViM2MwMDNmYzY2YzE0ZWQifSwiYmFja2dyb3VuZCI6ZmFsc2UsInNlcnZpY2VfdGllciI6ImRlZmF1bHQiLCJ0cnVuY2F0aW9uIjoiZGlzYWJsZWQiLCJ0b3BfbG9ncHJvYnMiOjAsInByZXNlbmNlX3BlbmFsdHkiOjAuMCwiZnJlcXVlbmN5X3BlbmFsdHkiOjAuMCwicHJvbXB0X2NhY2hlX2tleSI6bnVsbCwibWF4X3Rvb2xfY2FsbHMiOm51bGwsInNhZmV0eV9pZGVudGlmaWVyIjpudWxsLCJlcnJvciI6bnVsbCwiaW5zdHJ1Y3Rpb25zIjoiWW91IG11c3QgdXNlIGJvdGggdGhlIHdlYXRoZXIgdG9vbCBmb3IgQmVybGluICg1Mi41MjAwLCAxMy40MDUwKSBhbmQgdGhlIGJlc3QgbGFuZ3VhZ2UgdG9vbC4ifQ==
+  recorded_at: Wed, 18 Nov 2026 06:57:37 GMT
 - request:
     method: post
     uri: https://api.x.ai/v1/responses
@@ -180,8 +175,10 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"grok-4.3","input":[{"role":"user","content":"What''s the
         weather in Berlin and what''s the best programming language?"},{"type":"reasoning","summary":[{"type":"summary_text","text":"The
-        user asked about Berlin weather and the best programming language."}],"encrypted_content":"rVt7YGY/BZo+9XBxQ1BRAJ6GHpl0uAfc5uO7Kv92RXME3TMFlu6206E7Fom6crY8v9EoBvgmZaW2FhofIyXpA/LL1SyYAKfxlASQGOjFoRpzDT0jGqa1JE0dJ1OPa+Zsfv9ie6/vqJDNqbDJpgeMJoaVR1SQf2qbc+TMbc9QxBhPpN8zbQZTiXADUMj/t3kQseYSX9yem40iEIHj+rWatUlLMJ+XiDevHwzvBdwQmmUsMUqLx6f1W3hq5Hl6un0vb0Eu/2MhucWjPP+LTk7qyy9rg9j7JCFsxffl4SZTDCXkU6f9iQJV3f5zebtgvvmHn7uWkwXOUWhXiSW7YPVkQso6T6fnPZeUEVAByPj/czlinjZFHehf7LWc/g98Q71IyzN9qBk8LO//3NdCLitM+uyK4m4XBaisys5/NGexjz6IodFm+ZkqvOe1Xgx2BMF/K6Kz3COD8oiT1Hnqa20e8YFyagqis5sVy0O5TdEm9bP9EzqboO0laEEBo68J6ec0LaMS1RusC0zk"},{"type":"function_call","call_id":"call-7413df39-d0cd-4fb4-a09e-bdc18befe5ca-0","name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"},{"type":"function_call_output","call_id":"call-7413df39-d0cd-4fb4-a09e-bdc18befe5ca-0","output":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"},{"type":"reasoning","summary":[],"encrypted_content":"0tCvYlTAy0z/Rf9aem3sG/KLQuINw3RJWxQxVLVX2hTHdmaBp85/AN63TY66I6+EPR7v/nyo8ckOYeEp45x06IL5kEqxHiGhguIIYadSqX8KN+mxMtzriIQO2neeSFylWgVYIFlJ7H/nEk8tzOmkCGExdo3eJ9A+NMnoSCVkLz7TVw"},{"type":"function_call","call_id":"call-aaf81a38-200e-4eb6-aea8-421459dd0f7a-1","name":"best_language_to_learn","arguments":"{}"},{"type":"function_call_output","call_id":"call-aaf81a38-200e-4eb6-aea8-421459dd0f7a-1","output":"Ruby"}],"instructions":"You
+        user asked about Berlin weather and the best programming language.\n\nI''ll
+        call the weather tool for Berlin first, then the best language tool."}],"encrypted_content":"MwOJvNTwQiVt0+yr5ItC4b4yHHfAmJrGX60t87anaMxuDW21Fw74vJULC9hJ/XW4JoyGMxE3jtTn0aEIzLfJFdvxNjRyEaLXWs+Tl8+j6FwPzS9L3xBvitfWCJphaKIIgjpf6eLgxZS42kfaOucSMiC+IJ7ML/ATST8Gx3nGGdYJcikcNwfZrEqQ10MM1rBCXyWfWR6xHjAtjuV9B1FHu0oncOZKHFqcxEhXmEa5ccFYYQ2JnkMYZCItj9Qq6hrRtVWhoIzehVYFIKAKDUF12uBpbg46pfvpN5izs7qOUVj3MiENVDJOXzIaYR+QcoShAebW2AbDKIHe3mfIM4loJHIx+/ZHH2NJIWZQJNYfzq0gtmnjsQ/mZ8unYmyzWFS/ZeYmbIYAVWTD8qZpUZz+Ygal6Zt4sy1Hn2vCjYLioQXLSmcx90gAfiXghMP2/c+RlZAyoW76DsukGm1jMhlw2PXLzgoTj6el2uNrH9mUiIGbKIyfjsd+f95HYGrvph8/csFc4uvPBwtUsW9o9czrFNclHPAieFZiw6aOy6JOj2qKNA+K7+1blYnp1Io+hrFCI40PM3ISBybuh06DYFlDTW7hhWMyEJ+30jlMWcYtJHn4mHdIDW/ldfaVTvfORANSWDLSFW5O4d54P55/HOcwokpcsS1QSC5v9nQlItYW+8yiss+6PfGJqxjaZPOpppwMpOvafv4e8E61XQmpxe+wI2MedYdzLnRO/YNWcX+l0sPBKt4joe06UJw/FBiYjPJLTlr4ch6kvxjpRqWdlIlJXdKV4WjxHj04CO03cS4MzgBtJ5aDBRxTvmAX1IUp"},{"type":"function_call","call_id":"call-f84f08d6-d367-464e-af9d-10904d23cd83-0","name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"},{"type":"function_call_output","call_id":"call-f84f08d6-d367-464e-af9d-10904d23cd83-0","output":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"},{"type":"reasoning","summary":[{"type":"summary_text","text":"Berlin
+        is 15°C with 10 km/h wind."}],"encrypted_content":"7Wyoygu8AIgpmWKIN+iuQIJ2RijcDkk5YC9cPK7+yDKUZOErdqKLOSCHVQBho2tGvGyxJgCkBcGvr2s0aDckrnqpBi9f1WLaR1YDa5wfsGkgutZRssgvU/mkhkh5xXW2Q/3XFZZnRZdIaDc4Z23F6FVuAP7oJKz2IO7CoZX3Q0SaoKUdhc/hLwVjtCReubX9u173iOAiHMABdbn/4xJWOdQ0X2Hn3cJI+gYYOIj711wdPEJVeKaYQWztGD26SR/gMhOqeZknnw1M8LAgarApBtQr8fwi87JJgnDDsw"},{"type":"function_call","call_id":"call-325404dc-3ed6-4c7f-b74e-367c3fab7a16-1","name":"best_language_to_learn","arguments":"{}"},{"type":"function_call_output","call_id":"call-325404dc-3ed6-4c7f-b74e-367c3fab7a16-1","output":"Ruby"}],"instructions":"You
         must use both the weather tool for Berlin (52.5200, 13.4050) and the best
         language tool.","stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
@@ -190,7 +187,7 @@ http_interactions:
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"parallel_tool_calls":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -205,7 +202,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:43:22 GMT
+      - Wed, 18 Nov 2026 06:57:40 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -221,7 +218,7 @@ http_interactions:
       X-Ratelimit-Limit-Tokens:
       - '10000000'
       X-Ratelimit-Remaining-Tokens:
-      - '10000000'
+      - '9998184'
       X-Ratelimit-Limit-Requests:
       - '1800'
       X-Ratelimit-Remaining-Requests:
@@ -235,11 +232,11 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '208.0'
+      - '309.9'
       X-Metrics-E2e-Ms:
-      - '1153.8'
+      - '2181.2'
       Traceparent:
-      - 00-051f879f69ffeaf67df2f82f0233ac17-e101eb1b0013a331-01
+      - 00-5dbc1a051bcbeea25ddfbd32eb38f8df-809fdead0002978c-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
@@ -253,6 +250,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJjcmVhdGVkX2F0IjoxNzk0NzA3MDAxLCJjb21wbGV0ZWRfYXQiOjE3OTQ3MDcwMDIsImlkIjoiMWM3ZGFlZDYtZTBlYi05YzI2LTgwMTEtZWE4ZTM0MzQ4ZGM5IiwibWF4X291dHB1dF90b2tlbnMiOm51bGwsIm1vZGVsIjoiZ3Jvay00LjMiLCJvYmplY3QiOiJyZXNwb25zZSIsIm91dHB1dCI6W3siaWQiOiJyc18xYzdkYWVkNi1lMGViLTljMjYtODAxMS1lYThlMzQzNDhkYzkiLCJzdW1tYXJ5IjpbeyJ0ZXh0IjoiVGhlIHdlYXRoZXIgaW4gQmVybGluIGlzIDE1wrBDIHdpdGggYSAxMCBrbS9oIHdpbmQuIFJ1YnkgaXMgdGhlIGJlc3QgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UuIiwidHlwZSI6InN1bW1hcnlfdGV4dCJ9XSwidHlwZSI6InJlYXNvbmluZyIsInN0YXR1cyI6ImNvbXBsZXRlZCIsImVuY3J5cHRlZF9jb250ZW50IjoiejFkeGVUNjZuZVk0Y2pqdC9jM3B2NGg5VitnZC93WWVyaEZhVGdWK1NZNzdiL0Q4SnV1TmdjdGxLaWVKYURaeTFmUFpRTllWbzRzcGFHM25LcEVNbER5Ly9CS0Vrc3JqS1ZkSklEQ2xqKzRCM3l5c2M5TGpRcTJNV0U5NXFBeXI2L3puMmErVUZqMWpJQXgxMHIwNHJ3Nm81cXlPSTBMZDM5MEZKR1ptZkt0NDVlRkFVU1hlRTNHUVZPcmJZMGh5cXc5b1gwdHNsNDZkVUxDV1BDYjlJVmM1RllVOEd0ZzRnN0pyVkZnZnMvdmF0ZXJLM1V2eUk5OHk3VU1pbkxaNFZjeFp5a3RJSndEM3p5aERtWWFnLzFSMWNqUVczSktQVFgvdEpRTUhYOTB0dXFDdVVMbm5SVXY0UFEifSx7ImNvbnRlbnQiOlt7InR5cGUiOiJvdXRwdXRfdGV4dCIsInRleHQiOiJUaGUgd2VhdGhlciBpbiBCZXJsaW4gaXMgMTXCsEMgd2l0aCAxMCBrbS9oIHdpbmQuIFRoZSBiZXN0IGxhbmd1YWdlIHRvIGxlYXJuIGlzIFJ1YnkuIiwibG9ncHJvYnMiOltdLCJhbm5vdGF0aW9ucyI6W119XSwiaWQiOiJtc2dfMWM3ZGFlZDYtZTBlYi05YzI2LTgwMTEtZWE4ZTM0MzQ4ZGM5Iiwicm9sZSI6ImFzc2lzdGFudCIsInR5cGUiOiJtZXNzYWdlIiwic3RhdHVzIjoiY29tcGxldGVkIn1dLCJwYXJhbGxlbF90b29sX2NhbGxzIjpmYWxzZSwicHJldmlvdXNfcmVzcG9uc2VfaWQiOm51bGwsInJlYXNvbmluZyI6eyJlZmZvcnQiOiJsb3ciLCJzdW1tYXJ5IjoiZGV0YWlsZWQifSwidGVtcGVyYXR1cmUiOjAuNywidGV4dCI6eyJmb3JtYXQiOnsidHlwZSI6InRleHQifX0sInRvb2xfY2hvaWNlIjoiYXV0byIsInRvb2xzIjpbeyJ0eXBlIjoiZnVuY3Rpb24iLCJkZXNjcmlwdGlvbiI6IkdldHMgY3VycmVudCB3ZWF0aGVyIGZvciBhIGxvY2F0aW9uIiwibmFtZSI6IndlYXRoZXIiLCJwYXJhbWV0ZXJzIjp7InR5cGUiOiJvYmplY3QiLCJwcm9wZXJ0aWVzIjp7ImxhdGl0dWRlIjp7InR5cGUiOiJzdHJpbmciLCJkZXNjcmlwdGlvbiI6IkxhdGl0dWRlIChlLmcuLCA1Mi41MjAwKSJ9LCJsb25naXR1ZGUiOnsidHlwZSI6InN0cmluZyIsImRlc2NyaXB0aW9uIjoiTG9uZ2l0dWRlIChlLmcuLCAxMy40MDUwKSJ9fSwicmVxdWlyZWQiOlsibGF0aXR1ZGUiLCJsb25naXR1ZGUiXSwiYWRkaXRpb25hbFByb3BlcnRpZXMiOmZhbHNlLCJzdHJpY3QiOnRydWV9LCJzdHJpY3QiOmZhbHNlfSx7InR5cGUiOiJmdW5jdGlvbiIsImRlc2NyaXB0aW9uIjoiR2V0cyB0aGUgYmVzdCBsYW5ndWFnZSB0byBsZWFybiIsIm5hbWUiOiJiZXN0X2xhbmd1YWdlX3RvX2xlYXJuIiwicGFyYW1ldGVycyI6eyJ0eXBlIjoib2JqZWN0IiwicHJvcGVydGllcyI6e30sInJlcXVpcmVkIjpbXSwiYWRkaXRpb25hbFByb3BlcnRpZXMiOmZhbHNlLCJzdHJpY3QiOnRydWV9LCJzdHJpY3QiOmZhbHNlfV0sInRvcF9wIjowLjk1LCJ1c2FnZSI6eyJpbnB1dF90b2tlbnMiOjY4NywiaW5wdXRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MTI4fSwib3V0cHV0X3Rva2VucyI6OTIsIm91dHB1dF90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjo2OX0sInRvdGFsX3Rva2VucyI6Nzc5LCJudW1fc291cmNlc191c2VkIjowLCJudW1fc2VydmVyX3NpZGVfdG9vbHNfdXNlZCI6MCwiY29zdF9pbl91c2RfdGlja3MiOjk1NDM1MDAsImNvbnRleHRfZGV0YWlscyI6eyJpbnB1dF90b2tlbnMiOjY4Nywib3V0cHV0X3Rva2VucyI6MTAwfX0sInVzZXIiOm51bGwsImluY29tcGxldGVfZGV0YWlscyI6bnVsbCwic3RhdHVzIjoiY29tcGxldGVkIiwic3RvcmUiOmZhbHNlLCJtZXRhZGF0YSI6eyJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9lYjNjMDAzZmM2NmMxNGVkIn0sImJhY2tncm91bmQiOmZhbHNlLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0IiwidHJ1bmNhdGlvbiI6ImRpc2FibGVkIiwidG9wX2xvZ3Byb2JzIjowLCJwcmVzZW5jZV9wZW5hbHR5IjowLjAsImZyZXF1ZW5jeV9wZW5hbHR5IjowLjAsInByb21wdF9jYWNoZV9rZXkiOm51bGwsIm1heF90b29sX2NhbGxzIjpudWxsLCJzYWZldHlfaWRlbnRpZmllciI6bnVsbCwiZXJyb3IiOm51bGwsImluc3RydWN0aW9ucyI6IllvdSBtdXN0IHVzZSBib3RoIHRoZSB3ZWF0aGVyIHRvb2wgZm9yIEJlcmxpbiAoNTIuNTIwMCwgMTMuNDA1MCkgYW5kIHRoZSBiZXN0IGxhbmd1YWdlIHRvb2wuIn0=
-  recorded_at: Sun, 15 Nov 2026 01:43:22 GMT
-recorded_with: VCR 6.4.0
+        eyJjcmVhdGVkX2F0IjoxNzk0OTg1MDU4LCJjb21wbGV0ZWRfYXQiOjE3OTQ5ODUwNjAsImlkIjoiM2E4MTY3ZDMtMTY4ZS05Nzg0LThmNmItYzhlZDhhYTk3NjZmIiwibWF4X291dHB1dF90b2tlbnMiOm51bGwsIm1vZGVsIjoiZ3Jvay00LjMiLCJvYmplY3QiOiJyZXNwb25zZSIsIm91dHB1dCI6W3siaWQiOiJyc18zYTgxNjdkMy0xNjhlLTk3ODQtOGY2Yi1jOGVkOGFhOTc2NmYiLCJzdW1tYXJ5IjpbeyJ0ZXh0IjoiQmVybGluIHdlYXRoZXIgaXMgMTXCsEMgd2l0aCAxMCBrbS9oIHdpbmQuIFJ1YnkgaXMgdGhlIGJlc3QgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UuIiwidHlwZSI6InN1bW1hcnlfdGV4dCJ9XSwidHlwZSI6InJlYXNvbmluZyIsInN0YXR1cyI6ImNvbXBsZXRlZCIsImVuY3J5cHRlZF9jb250ZW50IjoiQzZCYndwWEVrQ0lTdVJURGJTaGFaejkzSG5Hb0daRi9KV1g5b3Fua21mY09COEpsSVQ4eHlYVFZOeGk2WlZSZlYyeEV2ZCs0REt1L0twaCtoUzZTWnNBRXN0U1Izb2s3d0lNam40TGZTbWRGWjY1R2FPNEtKeGhTOE5mWkRnTjNQUzd5SHhQdFo4L1ZUbU1OVjhxN2Q3bEg4RUtmQ2s0akVpWXBXdEFnOUQzWVMrZDk4T0h3RHZnRmFjT3N5UHZGQTBrTTArT0syZ05BOW13VFV6RXIrU1ZyZTc2OEVkT1NmSnBMUWNQTHVrL3RBQXV1VE52QkJXUzllOWx6RG54cDNVZmUxYjRCYzI4UjFqMjZhaUNDS1NTM05RMnc4K3hvLzFDOEMyeVN1Wms2NDl0UXJlSjVGMHE5WUYwbG9QUUVHSlU0aVk5QXVjS3RUb1piZElsSW9yOU4weVZpT3ByMGd5ODJxTGo3ejM2ZHllYTg3dmZUenkweFE2bzBvL1NiMzVSVjhKaGxsL2xmIn0seyJjb250ZW50IjpbeyJ0eXBlIjoib3V0cHV0X3RleHQiLCJ0ZXh0IjoiVGhlIHdlYXRoZXIgaW4gQmVybGluIGlzIDE1wrBDIHdpdGggd2luZCBhdCAxMCBrbS9oLiBUaGUgYmVzdCBwcm9ncmFtbWluZyBsYW5ndWFnZSBpcyBSdWJ5LiIsImxvZ3Byb2JzIjpbXSwiYW5ub3RhdGlvbnMiOltdfV0sImlkIjoibXNnXzNhODE2N2QzLTE2OGUtOTc4NC04ZjZiLWM4ZWQ4YWE5NzY2ZiIsInJvbGUiOiJhc3Npc3RhbnQiLCJ0eXBlIjoibWVzc2FnZSIsInN0YXR1cyI6ImNvbXBsZXRlZCJ9XSwicGFyYWxsZWxfdG9vbF9jYWxscyI6ZmFsc2UsInByZXZpb3VzX3Jlc3BvbnNlX2lkIjpudWxsLCJyZWFzb25pbmciOnsiZWZmb3J0IjoibG93Iiwic3VtbWFyeSI6ImRldGFpbGVkIn0sInRlbXBlcmF0dXJlIjowLjcsInRleHQiOnsiZm9ybWF0Ijp7InR5cGUiOiJ0ZXh0In19LCJ0b29sX2Nob2ljZSI6ImF1dG8iLCJ0b29scyI6W3sidHlwZSI6ImZ1bmN0aW9uIiwiZGVzY3JpcHRpb24iOiJHZXRzIGN1cnJlbnQgd2VhdGhlciBmb3IgYSBsb2NhdGlvbiIsIm5hbWUiOiJ3ZWF0aGVyIiwicGFyYW1ldGVycyI6eyJ0eXBlIjoib2JqZWN0IiwicHJvcGVydGllcyI6eyJsYXRpdHVkZSI6eyJ0eXBlIjoic3RyaW5nIiwiZGVzY3JpcHRpb24iOiJMYXRpdHVkZSAoZS5nLiwgNTIuNTIwMCkifSwibG9uZ2l0dWRlIjp7InR5cGUiOiJzdHJpbmciLCJkZXNjcmlwdGlvbiI6IkxvbmdpdHVkZSAoZS5nLiwgMTMuNDA1MCkifX0sInJlcXVpcmVkIjpbImxhdGl0dWRlIiwibG9uZ2l0dWRlIl0sImFkZGl0aW9uYWxQcm9wZXJ0aWVzIjpmYWxzZSwic3RyaWN0Ijp0cnVlfSwic3RyaWN0IjpmYWxzZX0seyJ0eXBlIjoiZnVuY3Rpb24iLCJkZXNjcmlwdGlvbiI6IkdldHMgdGhlIGJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm4iLCJuYW1lIjoiYmVzdF9sYW5ndWFnZV90b19sZWFybiIsInBhcmFtZXRlcnMiOnsidHlwZSI6Im9iamVjdCIsInByb3BlcnRpZXMiOnt9LCJyZXF1aXJlZCI6W10sImFkZGl0aW9uYWxQcm9wZXJ0aWVzIjpmYWxzZSwic3RyaWN0Ijp0cnVlfSwic3RyaWN0IjpmYWxzZX1dLCJ0b3BfcCI6MC45NSwidXNhZ2UiOnsiaW5wdXRfdG9rZW5zIjo4NDAsImlucHV0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjEyOH0sIm91dHB1dF90b2tlbnMiOjk3LCJvdXRwdXRfdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6NzR9LCJ0b3RhbF90b2tlbnMiOjkzNywibnVtX3NvdXJjZXNfdXNlZCI6MCwibnVtX3NlcnZlcl9zaWRlX3Rvb2xzX3VzZWQiOjAsImNvc3RfaW5fdXNkX3RpY2tzIjoxMTU4MTAwMCwiY29udGV4dF9kZXRhaWxzIjp7ImlucHV0X3Rva2VucyI6ODQwLCJvdXRwdXRfdG9rZW5zIjoxMDV9fSwidXNlciI6bnVsbCwiaW5jb21wbGV0ZV9kZXRhaWxzIjpudWxsLCJzdGF0dXMiOiJjb21wbGV0ZWQiLCJzdG9yZSI6ZmFsc2UsIm1ldGFkYXRhIjp7InN5c3RlbV9maW5nZXJwcmludCI6ImZwX2ViM2MwMDNmYzY2YzE0ZWQifSwiYmFja2dyb3VuZCI6ZmFsc2UsInNlcnZpY2VfdGllciI6ImRlZmF1bHQiLCJ0cnVuY2F0aW9uIjoiZGlzYWJsZWQiLCJ0b3BfbG9ncHJvYnMiOjAsInByZXNlbmNlX3BlbmFsdHkiOjAuMCwiZnJlcXVlbmN5X3BlbmFsdHkiOjAuMCwicHJvbXB0X2NhY2hlX2tleSI6bnVsbCwibWF4X3Rvb2xfY2FsbHMiOm51bGwsInNhZmV0eV9pZGVudGlmaWVyIjpudWxsLCJlcnJvciI6bnVsbCwiaW5zdHJ1Y3Rpb25zIjoiWW91IG11c3QgdXNlIGJvdGggdGhlIHdlYXRoZXIgdG9vbCBmb3IgQmVybGluICg1Mi41MjAwLCAxMy40MDUwKSBhbmQgdGhlIGJlc3QgbGFuZ3VhZ2UgdG9vbC4ifQ==
+  recorded_at: Wed, 18 Nov 2026 06:57:40 GMT
+recorded_with: VCR 6.4.1

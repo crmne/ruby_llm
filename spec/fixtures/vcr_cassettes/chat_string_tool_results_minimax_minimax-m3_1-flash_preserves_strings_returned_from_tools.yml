@@ -11,7 +11,7 @@ http_interactions:
         to process"}},"required":["query"],"additionalProperties":false,"strict":true}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -28,27 +28,27 @@ http_interactions:
       Content-Type:
       - application/json; charset=utf-8
       Content-Length:
-      - '483'
+      - '803'
       Trace-Id:
-      - '07484043b1711082e453f3497f11c45c'
+      - 074c7e4fc94610fefd6224694d5ec5f5
       X-Session-Id:
       - 3432a588321cfbca2858a09fe80c6d0c
       X-Mm-Request-Id:
-      - 2092934004998157135_1794706755x6fdtj
+      - 2092934004998157135_1794984783tu1vzf
       Minimax-Request-Id:
-      - f015c512fd4e077e943f7a0bd8f2c054
+      - d05d6f799a12539b2f2ac2ce3878f60a
       Alb-Receive-Time:
-      - '1794706755.146'
+      - '1794984783.8'
       Alb-Request-Id:
-      - 6302cf03bf257e17e126f6dcbb70f8c8a06d9dce
+      - 534683673540aa61560ca4031e6e256543a17c4f
       Expires:
-      - Sun, 15 Nov 2026 01:39:16 GMT
+      - Wed, 18 Nov 2026 06:53:10 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Sun, 15 Nov 2026 01:39:16 GMT
+      - Wed, 18 Nov 2026 06:53:10 GMT
       Connection:
       - keep-alive
       Access-Control-Allow-Origin:
@@ -57,25 +57,29 @@ http_interactions:
       - ak
     body:
       encoding: UTF-8
-      string: '{"id":"07484043b1711082e453f3497f11c45c","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"text":"I''ll
-        process that query for you.","type":"text"},{"type":"tool_use","id":"call-0a8ede81-9908-42cc-9f47-14f3a1e03eef","name":"content_returning","input":{"query":"test
-        data"}}],"usage":{"input_tokens":324,"output_tokens":37,"cache_creation_input_tokens":0,"cache_read_input_tokens":128},"stop_reason":"tool_use","base_resp":{"status_code":0,"status_msg":""}}'
-  recorded_at: Sun, 15 Nov 2026 01:39:16 GMT
+      string: '{"id":"074c7e4fc94610fefd6224694d5ec5f5","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"thinking":"The
+        user says \"Process this query: test data\". There''s a tool called content_returning
+        that takes a query and returns a processed string result. I should call it
+        with the query \"test data\".\n\nLet me make the call.","signature":"5e1a98df81461e93fae1004fc84637d0507439f53db05ed0156686aae3a9b08e","type":"thinking"},{"type":"tool_use","id":"call-02b579b0-131a-4be9-89fd-cbc66f60ec95","name":"content_returning","input":{"query":"test
+        data"}}],"usage":{"input_tokens":324,"output_tokens":77,"cache_creation_input_tokens":0,"cache_read_input_tokens":128,"output_tokens_details":{"thinking_tokens":48}},"stop_reason":"tool_use","base_resp":{"status_code":0,"status_msg":""}}'
+  recorded_at: Wed, 18 Nov 2026 06:53:10 GMT
 - request:
     method: post
     uri: https://api.minimax.io/anthropic/v1/messages
     body:
       encoding: UTF-8
       string: '{"model":"MiniMax-M3.1-Flash","messages":[{"role":"user","content":[{"type":"text","text":"Process
-        this query: test data"}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
-        process that query for you."},{"type":"tool_use","id":"call-0a8ede81-9908-42cc-9f47-14f3a1e03eef","name":"content_returning","input":{"query":"test
-        data"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"call-0a8ede81-9908-42cc-9f47-14f3a1e03eef","content":[{"type":"text","text":"Processed:
+        this query: test data"}]},{"role":"assistant","content":[{"thinking":"The
+        user says \"Process this query: test data\". There''s a tool called content_returning
+        that takes a query and returns a processed string result. I should call it
+        with the query \"test data\".\n\nLet me make the call.","signature":"5e1a98df81461e93fae1004fc84637d0507439f53db05ed0156686aae3a9b08e","type":"thinking"},{"type":"tool_use","id":"call-02b579b0-131a-4be9-89fd-cbc66f60ec95","name":"content_returning","input":{"query":"test
+        data"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"call-02b579b0-131a-4be9-89fd-cbc66f60ec95","content":[{"type":"text","text":"Processed:
         test data"}]}]}],"stream":false,"max_tokens":524288,"tools":[{"name":"content_returning","description":"Returns
         a processed string result","input_schema":{"type":"object","properties":{"query":{"type":"string","description":"Query
         to process"}},"required":["query"],"additionalProperties":false,"strict":true}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -92,27 +96,27 @@ http_interactions:
       Content-Type:
       - application/json; charset=utf-8
       Content-Length:
-      - '628'
+      - '616'
       Trace-Id:
-      - '07484044113ae7991eb060095d87f6cb'
+      - 074c7e5646501704607f97096ef91edb
       X-Session-Id:
       - 3432a588321cfbca2858a09fe80c6d0c
       X-Mm-Request-Id:
-      - 2092934004998157135_17947067560t2mil
+      - 2092934004998157135_1794984790ays0js
       Minimax-Request-Id:
-      - b84c8b935ba0f61a10468b05cce89691
+      - 351b5b7000330bcdc2c024c78a33695f
       Alb-Receive-Time:
-      - '1794706756.221'
+      - '1794984790.813'
       Alb-Request-Id:
-      - 604f92695150951ab4422359add76a55848283ac
+      - 2d7d14400bd88a777d8d54606efeb1b6ca6bd55a
       Expires:
-      - Sun, 15 Nov 2026 01:39:17 GMT
+      - Wed, 18 Nov 2026 06:53:11 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Sun, 15 Nov 2026 01:39:17 GMT
+      - Wed, 18 Nov 2026 06:53:11 GMT
       Connection:
       - keep-alive
       Access-Control-Allow-Origin:
@@ -121,10 +125,10 @@ http_interactions:
       - ak
     body:
       encoding: UTF-8
-      string: '{"id":"07484044113ae7991eb060095d87f6cb","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"text":"The
-        query has been processed successfully.\n\n**Query:** `test data`\n**Result:**
-        `Processed: test data`\n\nThe tool returned the query string with a \"Processed:\"
-        prefix, confirming it went through without errors. Let me know if you''d like
-        to test something more specific or process a different query.","type":"text"}],"usage":{"input_tokens":124,"output_tokens":62,"cache_creation_input_tokens":0,"cache_read_input_tokens":384},"stop_reason":"end_turn","base_resp":{"status_code":0,"status_msg":""}}'
-  recorded_at: Sun, 15 Nov 2026 01:39:17 GMT
-recorded_with: VCR 6.4.0
+      string: '{"id":"074c7e5646501704607f97096ef91edb","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"text":"The
+        query has been processed successfully.\n\n**Result:** `Processed: test data`\n\nThe
+        input `test data` was passed through the content processing tool, which echoed
+        it back with the `Processed: ` prefix applied. No special handling, transformation,
+        or filtering was required for this input.","type":"text"}],"usage":{"input_tokens":36,"output_tokens":59,"cache_creation_input_tokens":0,"cache_read_input_tokens":512},"stop_reason":"end_turn","base_resp":{"status_code":0,"status_msg":""}}'
+  recorded_at: Wed, 18 Nov 2026 06:53:11 GMT
+recorded_with: VCR 6.4.1

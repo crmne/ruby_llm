@@ -9,7 +9,7 @@ http_interactions:
         is 3 + 3? Just the number."}]}],"stream":false,"max_tokens":64000}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:48:02 GMT
+      - Wed, 18 Nov 2026 07:14:28 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -52,7 +52,7 @@ http_interactions:
       Content-Security-Policy:
       - default-src 'none'; frame-ancestors 'none'
       Server-Timing:
-      - x-originResponse;dur=452
+      - x-originResponse;dur=716
       Cf-Cache-Status:
       - DYNAMIC
       X-Robots-Tag:
@@ -61,17 +61,17 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"msgbatch_01EHw3yNRS83fdB4S2hzc7uc","type":"message_batch","processing_status":"in_progress","request_counts":{"processing":1,"succeeded":0,"errored":0,"canceled":0,"expired":0},"ended_at":null,"created_at":"2026-11-15T01:48:02.100455+00:00","expires_at":"2026-11-16T01:48:02.100455+00:00","archived_at":null,"cancel_initiated_at":null,"results_url":null}'
-  recorded_at: Sun, 15 Nov 2026 01:48:02 GMT
+      string: '{"id":"msgbatch_01NbsJ8hjSgQBxNfLN6wtGWQ","type":"message_batch","processing_status":"in_progress","request_counts":{"processing":1,"succeeded":0,"errored":0,"canceled":0,"expired":0},"ended_at":null,"created_at":"2026-11-18T07:14:28.483712+00:00","expires_at":"2026-11-19T07:14:28.483712+00:00","archived_at":null,"cancel_initiated_at":null,"results_url":null}'
+  recorded_at: Wed, 18 Nov 2026 07:14:28 GMT
 - request:
     method: get
-    uri: https://api.anthropic.com/v1/messages/batches/msgbatch_01EHw3yNRS83fdB4S2hzc7uc
+    uri: https://api.anthropic.com/v1/messages/batches/msgbatch_01NbsJ8hjSgQBxNfLN6wtGWQ
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -86,187 +86,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:48:17 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Retry-After:
-      - '10'
-      Request-Id:
-      - "<REQUEST_ID>"
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      Anthropic-Organization-Id:
-      - "<ANTHROPIC_ORGANIZATION_ID>"
-      Anthropic-Workspace-Id:
-      - "<ANTHROPIC_WORKSPACE_ID>"
-      Cache-Control:
-      - private, no-store
-      Server:
-      - cloudflare
-      Vary:
-      - Accept-Encoding
-      Content-Security-Policy:
-      - default-src 'none'; frame-ancestors 'none'
-      Server-Timing:
-      - x-originResponse;dur=79
-      Cf-Cache-Status:
-      - DYNAMIC
-      X-Robots-Tag:
-      - none
-      Cf-Ray:
-      - "<CF_RAY>"
-    body:
-      encoding: ASCII-8BIT
-      string: '{"id":"msgbatch_01EHw3yNRS83fdB4S2hzc7uc","type":"message_batch","processing_status":"in_progress","request_counts":{"processing":1,"succeeded":0,"errored":0,"canceled":0,"expired":0},"ended_at":null,"created_at":"2026-11-15T01:48:02.100455+00:00","expires_at":"2026-11-16T01:48:02.100455+00:00","archived_at":null,"cancel_initiated_at":null,"results_url":null}'
-  recorded_at: Sun, 15 Nov 2026 01:48:17 GMT
-- request:
-    method: get
-    uri: https://api.anthropic.com/v1/messages/batches/msgbatch_01EHw3yNRS83fdB4S2hzc7uc
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v2.14.3
-      X-Api-Key:
-      - "<ANTHROPIC_API_KEY>"
-      Anthropic-Version:
-      - '2023-06-01'
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Sun, 15 Nov 2026 01:48:33 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Retry-After:
-      - '10'
-      Request-Id:
-      - "<REQUEST_ID>"
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      Anthropic-Organization-Id:
-      - "<ANTHROPIC_ORGANIZATION_ID>"
-      Anthropic-Workspace-Id:
-      - "<ANTHROPIC_WORKSPACE_ID>"
-      Cache-Control:
-      - private, no-store
-      Server:
-      - cloudflare
-      Vary:
-      - Accept-Encoding
-      Content-Security-Policy:
-      - default-src 'none'; frame-ancestors 'none'
-      Server-Timing:
-      - x-originResponse;dur=488
-      Cf-Cache-Status:
-      - DYNAMIC
-      X-Robots-Tag:
-      - none
-      Cf-Ray:
-      - "<CF_RAY>"
-    body:
-      encoding: ASCII-8BIT
-      string: '{"id":"msgbatch_01EHw3yNRS83fdB4S2hzc7uc","type":"message_batch","processing_status":"in_progress","request_counts":{"processing":1,"succeeded":0,"errored":0,"canceled":0,"expired":0},"ended_at":null,"created_at":"2026-11-15T01:48:02.100455+00:00","expires_at":"2026-11-16T01:48:02.100455+00:00","archived_at":null,"cancel_initiated_at":null,"results_url":null}'
-  recorded_at: Sun, 15 Nov 2026 01:48:33 GMT
-- request:
-    method: get
-    uri: https://api.anthropic.com/v1/messages/batches/msgbatch_01EHw3yNRS83fdB4S2hzc7uc
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v2.14.3
-      X-Api-Key:
-      - "<ANTHROPIC_API_KEY>"
-      Anthropic-Version:
-      - '2023-06-01'
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Sun, 15 Nov 2026 01:48:48 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Retry-After:
-      - '10'
-      Request-Id:
-      - "<REQUEST_ID>"
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      Anthropic-Organization-Id:
-      - "<ANTHROPIC_ORGANIZATION_ID>"
-      Anthropic-Workspace-Id:
-      - "<ANTHROPIC_WORKSPACE_ID>"
-      Cache-Control:
-      - private, no-store
-      Server:
-      - cloudflare
-      Vary:
-      - Accept-Encoding
-      Content-Security-Policy:
-      - default-src 'none'; frame-ancestors 'none'
-      Server-Timing:
-      - x-originResponse;dur=100
-      Cf-Cache-Status:
-      - DYNAMIC
-      X-Robots-Tag:
-      - none
-      Cf-Ray:
-      - "<CF_RAY>"
-    body:
-      encoding: ASCII-8BIT
-      string: '{"id":"msgbatch_01EHw3yNRS83fdB4S2hzc7uc","type":"message_batch","processing_status":"in_progress","request_counts":{"processing":1,"succeeded":0,"errored":0,"canceled":0,"expired":0},"ended_at":null,"created_at":"2026-11-15T01:48:02.100455+00:00","expires_at":"2026-11-16T01:48:02.100455+00:00","archived_at":null,"cancel_initiated_at":null,"results_url":null}'
-  recorded_at: Sun, 15 Nov 2026 01:48:48 GMT
-- request:
-    method: get
-    uri: https://api.anthropic.com/v1/messages/batches/msgbatch_01EHw3yNRS83fdB4S2hzc7uc
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v2.14.3
-      X-Api-Key:
-      - "<ANTHROPIC_API_KEY>"
-      Anthropic-Version:
-      - '2023-06-01'
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Sun, 15 Nov 2026 01:49:03 GMT
+      - Wed, 18 Nov 2026 07:14:43 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -301,17 +121,17 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"msgbatch_01EHw3yNRS83fdB4S2hzc7uc","type":"message_batch","processing_status":"in_progress","request_counts":{"processing":1,"succeeded":0,"errored":0,"canceled":0,"expired":0},"ended_at":null,"created_at":"2026-11-15T01:48:02.100455+00:00","expires_at":"2026-11-16T01:48:02.100455+00:00","archived_at":null,"cancel_initiated_at":null,"results_url":null}'
-  recorded_at: Sun, 15 Nov 2026 01:49:03 GMT
+      string: '{"id":"msgbatch_01NbsJ8hjSgQBxNfLN6wtGWQ","type":"message_batch","processing_status":"in_progress","request_counts":{"processing":1,"succeeded":0,"errored":0,"canceled":0,"expired":0},"ended_at":null,"created_at":"2026-11-18T07:14:28.483712+00:00","expires_at":"2026-11-19T07:14:28.483712+00:00","archived_at":null,"cancel_initiated_at":null,"results_url":null}'
+  recorded_at: Wed, 18 Nov 2026 07:14:43 GMT
 - request:
     method: get
-    uri: https://api.anthropic.com/v1/messages/batches/msgbatch_01EHw3yNRS83fdB4S2hzc7uc
+    uri: https://api.anthropic.com/v1/messages/batches/msgbatch_01NbsJ8hjSgQBxNfLN6wtGWQ
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -326,7 +146,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:49:18 GMT
+      - Wed, 18 Nov 2026 07:14:59 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -352,7 +172,7 @@ http_interactions:
       Content-Security-Policy:
       - default-src 'none'; frame-ancestors 'none'
       Server-Timing:
-      - x-originResponse;dur=94
+      - x-originResponse;dur=96
       Cf-Cache-Status:
       - DYNAMIC
       X-Robots-Tag:
@@ -361,17 +181,17 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"msgbatch_01EHw3yNRS83fdB4S2hzc7uc","type":"message_batch","processing_status":"in_progress","request_counts":{"processing":1,"succeeded":0,"errored":0,"canceled":0,"expired":0},"ended_at":null,"created_at":"2026-11-15T01:48:02.100455+00:00","expires_at":"2026-11-16T01:48:02.100455+00:00","archived_at":null,"cancel_initiated_at":null,"results_url":null}'
-  recorded_at: Sun, 15 Nov 2026 01:49:18 GMT
+      string: '{"id":"msgbatch_01NbsJ8hjSgQBxNfLN6wtGWQ","type":"message_batch","processing_status":"in_progress","request_counts":{"processing":1,"succeeded":0,"errored":0,"canceled":0,"expired":0},"ended_at":null,"created_at":"2026-11-18T07:14:28.483712+00:00","expires_at":"2026-11-19T07:14:28.483712+00:00","archived_at":null,"cancel_initiated_at":null,"results_url":null}'
+  recorded_at: Wed, 18 Nov 2026 07:14:59 GMT
 - request:
     method: get
-    uri: https://api.anthropic.com/v1/messages/batches/msgbatch_01EHw3yNRS83fdB4S2hzc7uc
+    uri: https://api.anthropic.com/v1/messages/batches/msgbatch_01NbsJ8hjSgQBxNfLN6wtGWQ
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -386,7 +206,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:49:34 GMT
+      - Wed, 18 Nov 2026 07:15:14 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -412,7 +232,7 @@ http_interactions:
       Content-Security-Policy:
       - default-src 'none'; frame-ancestors 'none'
       Server-Timing:
-      - x-originResponse;dur=72
+      - x-originResponse;dur=124
       Cf-Cache-Status:
       - DYNAMIC
       X-Robots-Tag:
@@ -421,17 +241,17 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"msgbatch_01EHw3yNRS83fdB4S2hzc7uc","type":"message_batch","processing_status":"in_progress","request_counts":{"processing":1,"succeeded":0,"errored":0,"canceled":0,"expired":0},"ended_at":null,"created_at":"2026-11-15T01:48:02.100455+00:00","expires_at":"2026-11-16T01:48:02.100455+00:00","archived_at":null,"cancel_initiated_at":null,"results_url":null}'
-  recorded_at: Sun, 15 Nov 2026 01:49:34 GMT
+      string: '{"id":"msgbatch_01NbsJ8hjSgQBxNfLN6wtGWQ","type":"message_batch","processing_status":"in_progress","request_counts":{"processing":1,"succeeded":0,"errored":0,"canceled":0,"expired":0},"ended_at":null,"created_at":"2026-11-18T07:14:28.483712+00:00","expires_at":"2026-11-19T07:14:28.483712+00:00","archived_at":null,"cancel_initiated_at":null,"results_url":null}'
+  recorded_at: Wed, 18 Nov 2026 07:15:14 GMT
 - request:
     method: get
-    uri: https://api.anthropic.com/v1/messages/batches/msgbatch_01EHw3yNRS83fdB4S2hzc7uc
+    uri: https://api.anthropic.com/v1/messages/batches/msgbatch_01NbsJ8hjSgQBxNfLN6wtGWQ
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -446,7 +266,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:49:49 GMT
+      - Wed, 18 Nov 2026 07:15:29 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -472,7 +292,7 @@ http_interactions:
       Content-Security-Policy:
       - default-src 'none'; frame-ancestors 'none'
       Server-Timing:
-      - x-originResponse;dur=100
+      - x-originResponse;dur=104
       Cf-Cache-Status:
       - DYNAMIC
       X-Robots-Tag:
@@ -481,17 +301,17 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"msgbatch_01EHw3yNRS83fdB4S2hzc7uc","type":"message_batch","processing_status":"in_progress","request_counts":{"processing":1,"succeeded":0,"errored":0,"canceled":0,"expired":0},"ended_at":null,"created_at":"2026-11-15T01:48:02.100455+00:00","expires_at":"2026-11-16T01:48:02.100455+00:00","archived_at":null,"cancel_initiated_at":null,"results_url":null}'
-  recorded_at: Sun, 15 Nov 2026 01:49:49 GMT
+      string: '{"id":"msgbatch_01NbsJ8hjSgQBxNfLN6wtGWQ","type":"message_batch","processing_status":"in_progress","request_counts":{"processing":1,"succeeded":0,"errored":0,"canceled":0,"expired":0},"ended_at":null,"created_at":"2026-11-18T07:14:28.483712+00:00","expires_at":"2026-11-19T07:14:28.483712+00:00","archived_at":null,"cancel_initiated_at":null,"results_url":null}'
+  recorded_at: Wed, 18 Nov 2026 07:15:29 GMT
 - request:
     method: get
-    uri: https://api.anthropic.com/v1/messages/batches/msgbatch_01EHw3yNRS83fdB4S2hzc7uc
+    uri: https://api.anthropic.com/v1/messages/batches/msgbatch_01NbsJ8hjSgQBxNfLN6wtGWQ
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -506,7 +326,187 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:50:04 GMT
+      - Wed, 18 Nov 2026 07:15:44 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Retry-After:
+      - '10'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Anthropic-Organization-Id:
+      - "<ANTHROPIC_ORGANIZATION_ID>"
+      Anthropic-Workspace-Id:
+      - "<ANTHROPIC_WORKSPACE_ID>"
+      Cache-Control:
+      - private, no-store
+      Server:
+      - cloudflare
+      Vary:
+      - Accept-Encoding
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
+      Server-Timing:
+      - x-originResponse;dur=104
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"msgbatch_01NbsJ8hjSgQBxNfLN6wtGWQ","type":"message_batch","processing_status":"in_progress","request_counts":{"processing":1,"succeeded":0,"errored":0,"canceled":0,"expired":0},"ended_at":null,"created_at":"2026-11-18T07:14:28.483712+00:00","expires_at":"2026-11-19T07:14:28.483712+00:00","archived_at":null,"cancel_initiated_at":null,"results_url":null}'
+  recorded_at: Wed, 18 Nov 2026 07:15:44 GMT
+- request:
+    method: get
+    uri: https://api.anthropic.com/v1/messages/batches/msgbatch_01NbsJ8hjSgQBxNfLN6wtGWQ
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 18 Nov 2026 07:16:00 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Retry-After:
+      - '10'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Anthropic-Organization-Id:
+      - "<ANTHROPIC_ORGANIZATION_ID>"
+      Anthropic-Workspace-Id:
+      - "<ANTHROPIC_WORKSPACE_ID>"
+      Cache-Control:
+      - private, no-store
+      Server:
+      - cloudflare
+      Vary:
+      - Accept-Encoding
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
+      Server-Timing:
+      - x-originResponse;dur=166
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"msgbatch_01NbsJ8hjSgQBxNfLN6wtGWQ","type":"message_batch","processing_status":"in_progress","request_counts":{"processing":1,"succeeded":0,"errored":0,"canceled":0,"expired":0},"ended_at":null,"created_at":"2026-11-18T07:14:28.483712+00:00","expires_at":"2026-11-19T07:14:28.483712+00:00","archived_at":null,"cancel_initiated_at":null,"results_url":null}'
+  recorded_at: Wed, 18 Nov 2026 07:16:00 GMT
+- request:
+    method: get
+    uri: https://api.anthropic.com/v1/messages/batches/msgbatch_01NbsJ8hjSgQBxNfLN6wtGWQ
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 18 Nov 2026 07:16:15 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Retry-After:
+      - '10'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Anthropic-Organization-Id:
+      - "<ANTHROPIC_ORGANIZATION_ID>"
+      Anthropic-Workspace-Id:
+      - "<ANTHROPIC_WORKSPACE_ID>"
+      Cache-Control:
+      - private, no-store
+      Server:
+      - cloudflare
+      Vary:
+      - Accept-Encoding
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
+      Server-Timing:
+      - x-originResponse;dur=122
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"msgbatch_01NbsJ8hjSgQBxNfLN6wtGWQ","type":"message_batch","processing_status":"in_progress","request_counts":{"processing":1,"succeeded":0,"errored":0,"canceled":0,"expired":0},"ended_at":null,"created_at":"2026-11-18T07:14:28.483712+00:00","expires_at":"2026-11-19T07:14:28.483712+00:00","archived_at":null,"cancel_initiated_at":null,"results_url":null}'
+  recorded_at: Wed, 18 Nov 2026 07:16:15 GMT
+- request:
+    method: get
+    uri: https://api.anthropic.com/v1/messages/batches/msgbatch_01NbsJ8hjSgQBxNfLN6wtGWQ
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 18 Nov 2026 07:16:30 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -530,7 +530,7 @@ http_interactions:
       Content-Security-Policy:
       - default-src 'none'; frame-ancestors 'none'
       Server-Timing:
-      - x-originResponse;dur=85
+      - x-originResponse;dur=136
       Cf-Cache-Status:
       - DYNAMIC
       X-Robots-Tag:
@@ -539,17 +539,17 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"msgbatch_01EHw3yNRS83fdB4S2hzc7uc","type":"message_batch","processing_status":"ended","request_counts":{"processing":0,"succeeded":1,"errored":0,"canceled":0,"expired":0},"ended_at":"2026-11-15T01:49:49.468310+00:00","created_at":"2026-11-15T01:48:02.100455+00:00","expires_at":"2026-11-16T01:48:02.100455+00:00","archived_at":null,"cancel_initiated_at":null,"results_url":"https://api.anthropic.com/v1/messages/batches/msgbatch_01EHw3yNRS83fdB4S2hzc7uc/results"}'
-  recorded_at: Sun, 15 Nov 2026 01:50:04 GMT
+      string: '{"id":"msgbatch_01NbsJ8hjSgQBxNfLN6wtGWQ","type":"message_batch","processing_status":"ended","request_counts":{"processing":0,"succeeded":1,"errored":0,"canceled":0,"expired":0},"ended_at":"2026-11-18T07:16:20.857477+00:00","created_at":"2026-11-18T07:14:28.483712+00:00","expires_at":"2026-11-19T07:14:28.483712+00:00","archived_at":null,"cancel_initiated_at":null,"results_url":"https://api.anthropic.com/v1/messages/batches/msgbatch_01NbsJ8hjSgQBxNfLN6wtGWQ/results"}'
+  recorded_at: Wed, 18 Nov 2026 07:16:30 GMT
 - request:
     method: get
-    uri: https://api.anthropic.com/v1/messages/batches/msgbatch_01EHw3yNRS83fdB4S2hzc7uc
+    uri: https://api.anthropic.com/v1/messages/batches/msgbatch_01NbsJ8hjSgQBxNfLN6wtGWQ
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -564,7 +564,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:50:04 GMT
+      - Wed, 18 Nov 2026 07:16:30 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -588,7 +588,7 @@ http_interactions:
       Content-Security-Policy:
       - default-src 'none'; frame-ancestors 'none'
       Server-Timing:
-      - x-originResponse;dur=88
+      - x-originResponse;dur=99
       Cf-Cache-Status:
       - DYNAMIC
       X-Robots-Tag:
@@ -597,17 +597,17 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"msgbatch_01EHw3yNRS83fdB4S2hzc7uc","type":"message_batch","processing_status":"ended","request_counts":{"processing":0,"succeeded":1,"errored":0,"canceled":0,"expired":0},"ended_at":"2026-11-15T01:49:49.468310+00:00","created_at":"2026-11-15T01:48:02.100455+00:00","expires_at":"2026-11-16T01:48:02.100455+00:00","archived_at":null,"cancel_initiated_at":null,"results_url":"https://api.anthropic.com/v1/messages/batches/msgbatch_01EHw3yNRS83fdB4S2hzc7uc/results"}'
-  recorded_at: Sun, 15 Nov 2026 01:50:04 GMT
+      string: '{"id":"msgbatch_01NbsJ8hjSgQBxNfLN6wtGWQ","type":"message_batch","processing_status":"ended","request_counts":{"processing":0,"succeeded":1,"errored":0,"canceled":0,"expired":0},"ended_at":"2026-11-18T07:16:20.857477+00:00","created_at":"2026-11-18T07:14:28.483712+00:00","expires_at":"2026-11-19T07:14:28.483712+00:00","archived_at":null,"cancel_initiated_at":null,"results_url":"https://api.anthropic.com/v1/messages/batches/msgbatch_01NbsJ8hjSgQBxNfLN6wtGWQ/results"}'
+  recorded_at: Wed, 18 Nov 2026 07:16:30 GMT
 - request:
     method: get
-    uri: https://api.anthropic.com/v1/messages/batches/msgbatch_01EHw3yNRS83fdB4S2hzc7uc/results
+    uri: https://api.anthropic.com/v1/messages/batches/msgbatch_01NbsJ8hjSgQBxNfLN6wtGWQ/results
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -622,7 +622,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:50:05 GMT
+      - Wed, 18 Nov 2026 07:16:31 GMT
       Content-Type:
       - application/x-jsonl
       Transfer-Encoding:
@@ -630,7 +630,7 @@ http_interactions:
       Connection:
       - keep-alive
       Content-Disposition:
-      - attachment; filename*=utf-8''msgbatch_01EHw3yNRS83fdB4S2hzc7uc_results.jsonl
+      - attachment; filename*=utf-8''msgbatch_01NbsJ8hjSgQBxNfLN6wtGWQ_results.jsonl
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
@@ -648,7 +648,7 @@ http_interactions:
       Content-Security-Policy:
       - default-src 'none'; frame-ancestors 'none'
       Server-Timing:
-      - x-originResponse;dur=144
+      - x-originResponse;dur=259
       Cf-Cache-Status:
       - DYNAMIC
       X-Robots-Tag:
@@ -657,8 +657,8 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: UTF-8
-      string: '{"custom_id":"0","result":{"type":"succeeded","message":{"model":"claude-haiku-4-5-20251001","id":"msg_011Ch3sZRsFcqsydtwW42mGM","type":"message","role":"assistant","content":[{"type":"text","text":"6"}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":20,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":5,"service_tier":"batch","inference_geo":"not_available","speed":"standard"},"diagnostics":null}}}
+      string: '{"custom_id":"0","result":{"type":"succeeded","message":{"model":"claude-haiku-4-5-20251001","id":"msg_011Ch9yrmRCM2oUL45YuQTPQ","type":"message","role":"assistant","content":[{"type":"text","text":"6"}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":20,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":5,"service_tier":"batch","inference_geo":"not_available","speed":"standard"},"diagnostics":null}}}
 
         '
-  recorded_at: Sun, 15 Nov 2026 01:50:05 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 07:16:31 GMT
+recorded_with: VCR 6.4.1

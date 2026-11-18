@@ -10,7 +10,7 @@ http_interactions:
         me about the weather."}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -27,7 +27,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 15 Nov 2026 01:19:49 GMT
+      - Wed, 18 Nov 2026 06:35:27 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
@@ -47,13 +47,13 @@ http_interactions:
       X-Watermark:
       - 'false'
       Traceparent:
-      - 00-6f05390d7fefe89bb03bb1678fc291e1-a676ba98000d7773-00
+      - 00-0e1877d41e76c9bbfced999b6084f606-23413c76000ba849-00
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Ms-Client-Request-Id:
-      - 8171c7a4-f5bb-4813-9411-ac6f73777388
+      - 849f0673-bdc6-493e-b934-c21184db1a9c
       Azureml-Model-Session:
-      - d20261110012600-4baac0fe
+      - d20261110015917-e7d4cb48
       X-Ms-Inference-Retry-History:
       - '{"v":1,"entries":[{"service_id":"mir.frontdoor","layer":"regional","role":"direct","retries":0}]}'
       Azureai-Requested-Tier:
@@ -65,7 +65,7 @@ http_interactions:
       X-Ratelimit-Key:
       - grok-4-1-fast-non-reasoning
       X-Ratelimit-Remaining-Requests:
-      - '46'
+      - '47'
       X-Ratelimit-Reset-Requests:
       - '4'
       X-Ratelimit-Limit-Requests:
@@ -87,9 +87,9 @@ http_interactions:
       Azureai-Fe-Offer-Type:
       - paygo
       Apim-Request-Id:
-      - 8171c7a4-f5bb-4813-9411-ac6f73777388
+      - 849f0673-bdc6-493e-b934-c21184db1a9c
       X-Http2-Stream-Id:
-      - '431'
+      - '467'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -97,8 +97,11 @@ http_interactions:
       X-Ms-Region:
       - West Europe
     body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6ImMxMzJiYzdjLTJkNzAtNDkyYS05ZjdhLTZhM2ZjMWRjZDUzZiIsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJJJ20gYWZyYWlkIEkgZG9uJ3QgaGF2ZSByZWFsLXRpbWUgYWNjZXNzIHRvIHdlYXRoZXIgZGF0YSByaWdodCBub3figJRjb3VsZCB5b3UgdGVsbCBtZSB5b3VyIGxvY2F0aW9uIGZvciBhIG1vcmUgYWNjdXJhdGUgZm9yZWNhc3Q/IEluIHRoZSBtZWFudGltZSwgaGVyZSdzIGEgcXVpY2sgWEtDRDczOTItc3R5bGUgc3VtbWFyeTogd2hlcmV2ZXIgeW91IGFyZSwgaXQncyBwcm9iYWJseSA3MiUgY2hhbmNlIG9mIFwiY2hlY2tpbmcgeW91ciBwaG9uZSBhZ2FpbiBpbiA1IG1pbnV0ZXMuXCIgV2hhdCdzIHRoZSBzcG90PyJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MTkxLCJjb21wbGV0aW9uX3Rva2VucyI6NjUsInRvdGFsX3Rva2VucyI6MjU2LCJhdWRpb19wcm9tcHRfdG9rZW5zIjowLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MTU4LCJhdWRpb190b2tlbnMiOjAsInRleHRfdG9rZW5zIjoxOTEsImltYWdlX3Rva2VucyI6MH0sImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MCwiYXVkaW9fdG9rZW5zIjowLCJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6MCwicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjB9LCJudW1fc291cmNlc191c2VkIjowfSwiY3JlYXRlZCI6MTc5NDcwNTU4OSwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwicHJvbXB0X2ZpbHRlcl9yZXN1bHRzIjpudWxsfQ==
-  recorded_at: Sun, 15 Nov 2026 01:19:50 GMT
-recorded_with: VCR 6.4.0
+      encoding: UTF-8
+      string: '{"id":"9c27cd82-c12d-4e8f-b104-1459f75b9735","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"I''m
+        afraid I don''t have real-time access to weather data, so I can''t give you
+        a current forecast for a specific location. If you tell me your city or region,
+        I can share general info or point you to reliable sources like weather.com
+        or your local meteorological service!\n\nXKCD7392"},"finish_reason":"stop"}],"usage":{"prompt_tokens":191,"completion_tokens":58,"total_tokens":249,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":158,"audio_tokens":0,"text_tokens":191,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1794983727,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Wed, 18 Nov 2026 06:35:28 GMT
+recorded_with: VCR 6.4.1

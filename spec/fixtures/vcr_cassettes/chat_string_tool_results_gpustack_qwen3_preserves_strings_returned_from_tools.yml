@@ -11,7 +11,7 @@ http_interactions:
         to process"}},"required":["query"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -25,22 +25,22 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Req-Cost-Time:
-      - '1202'
-      Req-Arrive-Time:
-      - '1794706744356'
-      Resp-Start-Time:
-      - '1794706745558'
       Server:
       - istio-envoy
+      X-Envoy-Upstream-Service-Time:
+      - '1050'
+      Date:
+      - Wed, 18 Nov 2026 06:52:55 GMT
       Access-Control-Allow-Origin:
       - ''
       Content-Type:
       - application/json; charset=utf-8
-      X-Envoy-Upstream-Service-Time:
-      - '1197'
-      Date:
-      - Sun, 15 Nov 2026 01:39:03 GMT
+      Req-Cost-Time:
+      - '1068'
+      Req-Arrive-Time:
+      - '1794984775724'
+      Resp-Start-Time:
+      - '1794984776792'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
@@ -53,40 +53,36 @@ http_interactions:
         The description says it returns a processed string result. Since the user
         provided the query \"test data\", I should call this function with that exact
         query. I need to make sure the arguments are correctly formatted as JSON.
-        No other tools are available, so I just need to use this one. Alright, the
-        tool call should include the name \"content_returning\" and the arguments
-        as {\"query\": \"test data\"}.\n","tool_calls":[{"type":"function","function":{"name":"content_returning","arguments":"{\"query\":
-        \"test data\"}"},"id":"jWhOoxdPJT8hM5ur0oipnL5RlohOTAUX"}]}}],"created":1794706745,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":145,"prompt_tokens":171,"total_tokens":316,"prompt_tokens_details":{"cached_tokens":170}},"id":"chatcmpl-22cBzkSOa7Mxu3QEOFzplbVAv0ef0lso","timings":{"cache_n":170,"prompt_n":1,"prompt_ms":9.273,"prompt_per_token_ms":9.273,"prompt_per_second":107.83996549121105,"predicted_n":145,"predicted_ms":1066.362,"predicted_per_token_ms":7.405291666666667,"predicted_per_second":135.03857039166812}}'
-  recorded_at: Sun, 15 Nov 2026 01:39:05 GMT
+        No other tools are available, so I just use this one. Alright, the tool call
+        should be straightforward.\n","tool_calls":[{"type":"function","function":{"name":"content_returning","arguments":"{\"query\":
+        \"test data\"}"},"id":"3biDBuI506gL0JaoYcTPBzA7NzcZkAgx"}]}}],"created":1794984776,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":126,"prompt_tokens":171,"total_tokens":297,"prompt_tokens_details":{"cached_tokens":170}},"id":"chatcmpl-XtrE57DUFoiy6RJrJ5xMwDb94t2AbVS2","timings":{"cache_n":170,"prompt_n":1,"prompt_ms":9.958,"prompt_per_token_ms":9.958,"prompt_per_second":100.4217714400482,"predicted_n":126,"predicted_ms":936.047,"predicted_per_token_ms":7.488376000000001,"predicted_per_second":133.5403029976059}}'
+  recorded_at: Wed, 18 Nov 2026 06:52:56 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"Process this
-        query: test data"},{"role":"assistant","content":"","tool_calls":[{"id":"jWhOoxdPJT8hM5ur0oipnL5RlohOTAUX","type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
+        query: test data"},{"role":"assistant","content":"","tool_calls":[{"id":"3biDBuI506gL0JaoYcTPBzA7NzcZkAgx","type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
         data\"}"}}],"reasoning":"Okay, the user wants me to process the query \"test
         data\". Let me check the available tools. There''s a function called content_returning
         that takes a query parameter. The description says it returns a processed
         string result. Since the user provided the query \"test data\", I should call
         this function with that exact query. I need to make sure the arguments are
-        correctly formatted as JSON. No other tools are available, so I just need
-        to use this one. Alright, the tool call should include the name \"content_returning\"
-        and the arguments as {\"query\": \"test data\"}.\n","reasoning_content":"Okay,
+        correctly formatted as JSON. No other tools are available, so I just use this
+        one. Alright, the tool call should be straightforward.\n","reasoning_content":"Okay,
         the user wants me to process the query \"test data\". Let me check the available
         tools. There''s a function called content_returning that takes a query parameter.
         The description says it returns a processed string result. Since the user
         provided the query \"test data\", I should call this function with that exact
         query. I need to make sure the arguments are correctly formatted as JSON.
-        No other tools are available, so I just need to use this one. Alright, the
-        tool call should include the name \"content_returning\" and the arguments
-        as {\"query\": \"test data\"}.\n"},{"role":"tool","content":"Processed: test
-        data","tool_call_id":"jWhOoxdPJT8hM5ur0oipnL5RlohOTAUX"}],"stream":false,"tools":[{"type":"function","function":{"name":"content_returning","description":"Returns
+        No other tools are available, so I just use this one. Alright, the tool call
+        should be straightforward.\n"},{"role":"tool","content":"Processed: test data","tool_call_id":"3biDBuI506gL0JaoYcTPBzA7NzcZkAgx"}],"stream":false,"tools":[{"type":"function","function":{"name":"content_returning","description":"Returns
         a processed string result","parameters":{"type":"object","properties":{"query":{"type":"string","description":"Query
         to process"}},"required":["query"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -100,22 +96,22 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Access-Control-Allow-Origin:
-      - ''
-      Content-Type:
-      - application/json; charset=utf-8
-      Req-Arrive-Time:
-      - '1794706745563'
-      Resp-Start-Time:
-      - '1794706745784'
       Date:
-      - Sun, 15 Nov 2026 01:39:05 GMT
+      - Wed, 18 Nov 2026 06:52:56 GMT
       Server:
       - istio-envoy
+      Access-Control-Allow-Origin:
+      - ''
+      Req-Arrive-Time:
+      - '1794984776809'
+      Content-Type:
+      - application/json; charset=utf-8
       Req-Cost-Time:
-      - '221'
+      - '280'
+      Resp-Start-Time:
+      - '1794984777089'
       X-Envoy-Upstream-Service-Time:
-      - '216'
+      - '265'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
@@ -123,6 +119,7 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"role":"assistant","content":"The
-        processed result for the query \"test data\" is:  \n**Processed: test data**"}}],"created":1794706745,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":24,"prompt_tokens":333,"total_tokens":357,"prompt_tokens_details":{"cached_tokens":315}},"id":"chatcmpl-Ddblw8GtC489uQloLFrFQbyvMxzf03Bo","timings":{"cache_n":315,"prompt_n":18,"prompt_ms":21.02,"prompt_per_token_ms":1.1677777777777778,"prompt_per_second":856.3273073263558,"predicted_n":24,"predicted_ms":179.55,"predicted_per_token_ms":7.806521739130435,"predicted_per_second":128.09802283486493}}'
-  recorded_at: Sun, 15 Nov 2026 01:39:05 GMT
-recorded_with: VCR 6.4.0
+        processed result for the query \"test data\" is: **test data**. Let me know
+        if you need further assistance!"}}],"created":1794984777,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":31,"prompt_tokens":314,"total_tokens":345,"prompt_tokens_details":{"cached_tokens":296}},"id":"chatcmpl-ADceOsPnZ28aZrtgmdCKczmYlk9C1Nco","timings":{"cache_n":296,"prompt_n":18,"prompt_ms":24.134,"prompt_per_token_ms":1.3407777777777778,"prompt_per_second":745.8357503936355,"predicted_n":31,"predicted_ms":225.164,"predicted_per_token_ms":7.505466666666666,"predicted_per_second":133.23621893375494}}'
+  recorded_at: Wed, 18 Nov 2026 06:52:57 GMT
+recorded_with: VCR 6.4.1

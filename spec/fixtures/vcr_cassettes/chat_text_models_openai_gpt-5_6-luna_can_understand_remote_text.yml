@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -26,42 +26,44 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
+      X-Origin-Cache:
+      - HIT
       Last-Modified:
-      - Tue, 03 Nov 2026 01:08:56 GMT
+      - Tue, 17 Nov 2026 10:38:58 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"6ae93428-9c6"
+      - W/"6afc2ec2-9c6"
       Expires:
-      - Sun, 15 Nov 2026 01:29:24 GMT
+      - Wed, 18 Nov 2026 06:45:29 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 1AA8:148882:4D5DE00:4DD0C30:6AF9089B
+      - FC46:157F:1704236:172B244:6AFD4731
       X-Github-Edge-Region:
       - fra
       Accept-Ranges:
       - bytes
       Date:
-      - Sun, 15 Nov 2026 01:22:01 GMT
+      - Wed, 18 Nov 2026 06:37:57 GMT
       Via:
       - 1.1 varnish
       Age:
-      - '122'
+      - '114'
       X-Served-By:
-      - cache-ber1080044-BER
+      - cache-ber1080037-BER
       X-Cache:
       - HIT
       X-Cache-Hits:
       - '1'
       X-Timer:
-      - S1794705722.696539,VS0,VE1
+      - S1794983878.830861,VS0,VE1
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - 1b7731910a6b76e8b3349dbdfd9ff73f3232afe7
+      - 19d1199fbe3a94203f293c14d6f52b168233b249
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -97,7 +99,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Sun, 15 Nov 2026 01:22:01 GMT
+  recorded_at: Wed, 18 Nov 2026 06:37:57 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/responses
@@ -140,7 +142,7 @@ http_interactions:
         A PARTICULAR\n     PURPOSE.\n</file>"}]}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -155,7 +157,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:22:04 GMT
+      - Wed, 18 Nov 2026 06:38:00 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -179,7 +181,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '3014'
+      - '3063'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -191,11 +193,11 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '4999'
       X-Ratelimit-Remaining-Tokens:
-      - '1999842'
+      - '1999927'
       X-Ratelimit-Reset-Requests:
       - 12ms
       X-Ratelimit-Reset-Tokens:
-      - 4ms
+      - 2ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Set-Cookie:
@@ -206,16 +208,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_063e90be3e0709ea016af90939d1b487d2b12a64fe0c820f8e",
+          "id": "resp_04259923bc356b76016afd47c5e70487d2b6894dca01307d42",
           "object": "response",
-          "created_at": 1794705721,
+          "created_at": 1794983877,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794705724,
+          "completed_at": 1794983880,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
@@ -230,14 +232,14 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "rs_063e90be3e0709ea016af9093a44fc87d2a7778c03cef8675c",
+              "id": "rs_04259923bc356b76016afd47c6699887d29921757588bcd821",
               "type": "reasoning",
               "content": [],
-              "encrypted_content": "gAAAAABq-Qk83EihY3C69ddG_YE-k9cvlKK0QygfDl7djc8bFHHd_D6LTJNJnCBnyJsVMp-NMcLu4f16kUBn2eFqQMP55mpE77wrUuyxGiVO4994cgbVOF4tJm7opeXhdORd5o-tbGB_oHmJCFOqk_mGr7JVjRKJB4gWTYkE9zHliHApN_SbVMpi0tDAA-GVk-kVNKcSRBMZ8_3-VjIUGO9oPlFMniZtDzf34-QyROl_WGRabMiMcmzpjkunqFYgYzRO_VuJBLmCThhenPpbi365dTwAt7h-LSdTflOMXCsiruHts7Zg4k8E25xVSUoMxKVP8-CM_hBLT5U5Hll8fnrSUdL5UgC-1iP8OUvBsSzwShUHf0tKx6Hq1OgOSgCpQJze3wsEoxqx_DuGQ0ufazWFIyR6pjLYrWNoUadVNYryJGz2RrhD-chLrRu1omfexknygECt89aNEYP2TIVIDIcLa2N_yseN5vD9P_jbyvu8dJXeMh9QHo0zLUTZdSfuBYxNKdXiiDXOTaByfx6kS2cSq7kvNXahWL2ndEUaT1P_3TPfR0dWYQoYDyH4lpQXRjESKTYfSL2eZ99Wl64jk4gBQwlMfEpe_QVydSmt6UM9IbWGWuv9P_eGpJg6H4KD0_GU3dc8ncuHwHmOhkv2F5knf3L6eyfTaO6of3Ci-Iu5xBArGelqLzhLz1yxqJdGJOooESY80s5t8BN0-wDnWvjeWt6Vy4cBUJ7vQVF3WZPZ6m4z0JThe1A73uunL5TBjLGfXONtLHQiY1D3kUnGRWHDFG26wdX6uBW6gkNhMgeOhZ2d9fr1LXjhnjQYEfk3Dn9z_OIchNx1oAhPij8pAXXfEl0tMklbf5GbYbUNBXPcRUk43HtcQIet_6ZNuwMMNJL62T3E_Xh7up2BdPxBLcFD87-YHvN2pqEPT-3ZFucw0hDBTQEbPi3-n0rMyh80x5gDihjN7rEfsBx_tncV2NVeG3Gj2wPDHw5vgnrh-0eu4C-s_ldMxCvyZCFjn5grzK6465LPk_6xNCPuvuPQpqvjCYr3t2Y5hmKVnvk9rM5_hx8VpKp4uNv06UMTRBhmCb2LVwEyjXxGqgiuCQtF6NS55eqpiWdkoVD0jxZAEN7sYf9IoIlFGSepjeo9DlTwIZ7DFBPIlco82xChIj9DXBpcE93UmT9ISYOGDJFUhKLGIm8QvOUMpfOY7pmVXPvEQtRFTRsiQWQ06LezXnQYD3-ePyEk6WHB1GZ_aEJP-h7KWH2JbXLXGHOMKJAXbpfJOjXQ0vo1bdtn-cCAMu8adR1k6-k6y0mOVZJIczWCfsJ26OGAyhoj_tT2c4PrKL7kx2owCyHmcK0h9V-hz6xWiO6fCC3nZcPoS7O5Atr5NrqM2uIgfxKc3jsdb6wDqx1lwLFpy9Blnj2JsPIIj1RVImWszRxpJma_eRRYoHGOZ_7bnvWLfsXKavxyxjxuVaV5nwnDcFRi-hz6BRErt7FgPMHqwFClhnJ-1rsb2u2YQ55u2BLNU7p50BMsTpK86_9ioSyZjG5cBg4EAvMUYeWZXMnfR4xSTJfjMD0dkOnWKnW1koYOeNinpM9n_MHbcuICIr1e_z9mcl1hbOsYZuYd7S4vcUnGW5TIeBPGbyzRJ_zxHErPctOdH3NQYffCQVe37DlOV16R-aeZr-yc3-3n8eYK2agvPVZIj3Tlb7i4Zrw7Q6bgi4OGA9iHdK_Yha_q94PwQt1kEJJx9mp64cxWuoW1ee-tFpzEDHlkSgIMgsLW7dJs5L3cXnRFeLlbhEshCDwKaFgj26WIo8uYnn6uDQPxwaS-P5a5DkU1Mf1MFZbOSV224CLMuojVYUhtKa7gMlbvsnHNtZGLzVKCpi9fGCz665DWQ5KxBRQMgryuNsYNALa6BM9CwbPkg5ol3WRrAx7uIKoOq9vVPpCPDxjBgqWeyz2btMXHOqDRiyvHWmYpRfx8SoK4tSQ4OFqMI6SbDh629ZtXBwuZbZMYDlYJwFokUy5q7x4ldBKJp9AHdG_uJSubVsTc8orPtugt30XpmRqfqzggjgKjj8T_YJQVKrkYDIfTdVanlk976W4p1gKEhE98H1UcPWkDYOb93x-qxK-GMDpZidWD8A6IrPR4qzriJLKJOaCEyCmouZvK-loxKYsl9lSSoWqdUwnSdy4mlMVJDLNc7TiveR7IE3micUqO5L3DlZFQ5dfBTE0egN8w54sFUvoyfthXn1W-1R96CRP9HjvAn7QUiKw_MzWyLbLdMix8kXLU8g==",
+              "encrypted_content": "gAAAAABq_UfIfuT-HQf51dWagGAVzbBK6McUJK6gAjXVZqqnfddyNkz6ctY2ohqZX8cq7pqfNi7s16DJ4LCeh5eFIrExnBlA99XqFDcHXoY1juZEDA0FQHruQMiJtZp_eAv-gm6m9thHzFQDvfyFm-DjHBbidfbEbYMe_CWdhxY9RgOvCcqtf8Wp1NhMypiLGE4nIKGMIFGGxYXUcX6VF7fkaM-czsCRTEWNqT3LCkMRESgpXnuSqFVn8JZXv6rc0pMMcKQ2ddBdYKFIgjH9XzDzGwRnt-YVaNiJSrNShEtDzypSVx8_a_3NNLZdvI0-9XTFvYUfVWPnazfJDlQT4fbZaPnjJBgnrcTAhD-vLF9tQIXg-Vk1_7MEklBPQWi7YflMp620C7hXZwiU-DWb77RCkwl4iPb9mXGgFNTaQqXWvwAy8Zg9GscgStdlvcfwbZxGH-4-i5_U_R7AoDpPCuhHtZNlyfZKeUrhYU2dEzjz-TUDo0v7ZgcgQK6icDpUSK4bclEz4V6yBVsSUE-PWqnxK0YInxTQRbocXnbC6IPeqxvu22o7t4vZuHnJljhokwdNKwZjF8zTvVMFqxycXfq8PnScIMV_BWhjBLtx2qUsU7hlDY3bu4aez3mxAVjy8xCchXLhs_Cz4TQ6aNxxKd0ikCj17G2hKro4w9qqxEy_mrV27Qvqyi-aR9wK8mvh96mR6_gKydg5i7YqkdJxTymnoZlHnxEQhDve_lUArnf8ADFHxWUMu5OTDDQsj387KFwyfeYyaDdBR_HQTBzjJ6HRQoC_MxTu6vg8UTJL2phGIu3mnIRU7iJQ9yD1yQ9ErFln3ez8_BuJPUVZKAMUJO4XZK13wDFCSrifpS7jbp6lbiBs7P4SsCj0-6fCuQ9mHLRoUykY2jG1IzJdWSqh46KJ5_C5STGkELGxQozLDNAW58jMuocpnPy_-X0P6Ly0alGuVDKWZ72nuM258n2txZbX6n-P_PqNPwnvC8L7wnW_b_BQPGGzBkQqx6grll6z9SDcPYNhtUepU0moQ5jfzytDZNJTV2QhjHiI-22B3-qrUQn2i1PdY4r53BXa-w5C6zTOfncWiw5FYNtEfPPCZcPtOACn7l2HPlNayZ54FnWFE4OgE4D7VCTFQAWCI51IEPcXVSbJV8m6b2Uhzc2MlOycdscZHShXiBFYOC3bxYb3M6XydLfksVWgFh_v2YZaKmBebyLUhesjKAZsyeFIuHZawjQcGtDnb21qIs8nuLRmBWsp9pE_SczHIq6_a2XCn1fXJc3PbAYLawKclmu6bXDTzBo5YoucUZAPGXwrg_vJ8GJ-chkCj8FhSZ3m9kgTaj1m42ZuN9iTsHIzI2MkZwv7qVsq0be50QEz4MyQrpIHG6gm-jkKji1poUe2BOaZxMOXyWeMCODNfd-4WbQ-GUzKZ88xzsnRK6dd8pEPD8TJijDhicZ143qrOmaYbTyUoBYnFUeqgtL2lRCc-IdLnRsDny6SKnWAVVttdHadcWsli03MMMjo3owZDIRj3b8rxI0_8en9bwO4UDsLH2NFick42mo9OCoWu2VzkMMkCSn2wfYImc5eLWC2W445tiu6tTfvk_Fkn_K7BwY5Yp1XMkmizuv5GUj1A3NB-2kjX78VSqZiPRsvn4_YTITyMxNyjYMug4udGE-GjfQF_ccp2Z6FWNRzfyTm3u8UBBhmb7T_mzJwma_ZPNfEn0rmNdDb7mgQ5gthcUfAGJYp4mS3RW7DdS_1C2rhm3n4H3ldHiQEoiF3zN3Af8W7r5_d7zDWR1RAeFvgf_7APtOYsD-qVhap43bkTAk3VxxQEmo89rHD0ugJPZQcmpjjd5H5TP2im37hKHo8BJdrrbLXNj9Sn-TZ6LUs9otMSOSvpVZqjzBlkHXJYBW-I_qXMPYCgPRDraOUDodxgWZxZ5BE3UmaDMKsnaYLMiBu9X6MAchYWJ695CpkN8ST-GIpycn95eykfed0i6UqHVHJ33vG460ByNfgrmV8b6cFdKCLNxyt_J2oV4r_pqmu2-8=",
               "summary": []
             },
             {
-              "id": "msg_063e90be3e0709ea016af9093ac1c087d29a5283b0960631d0",
+              "id": "msg_04259923bc356b76016afd47c6b91887d2b75a238179319170",
               "type": "message",
               "status": "completed",
               "content": [
@@ -245,7 +247,7 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "This file is the license for the Ruby programming language, copyrighted by Yukihiro Matsumoto (\u201cMatz\u201d).\n\nIt allows:\n\n- Redistribution of unchanged source code, provided copyright notices and disclaimers are retained.\n- Modification of the software, if at least one condition is met:\n  - The changes are released freely or placed in the public domain.\n  - The modified software is used only within an organization.\n  - Modified binaries use distinct names and point users to the original distribution.\n  - Other distribution terms are agreed upon with the author.\n- Distribution of binaries, provided similar conditions are met, such as including source code, providing access to the original source, or using distinct binary names.\n- Incorporation of parts of Ruby into other software, including commercial software, except for components identified separately in the `LEGAL` file.\n- Commercial use and aggregation of scripts or library files supplied to or generated by Ruby; those files belong to their respective creators.\n\nThe license also states that the software is provided **\u201cas is,\u201d without warranties**, including implied warranties of merchantability or fitness for a particular purpose. It offers a choice between these conditions and the terms of the accompanying 2-clause BSD-style license (`BSDL`)."
+                  "text": "This file contains the copyright and licensing terms for Ruby, credited to Yukihiro Matsumoto.\n\nKey points:\n\n- Ruby is free software and may be redistributed or modified under either:\n  - The 2-clause BSD License (\u201cBSDL\u201d), or\n  - The conditions listed in this file.\n- Source copies may be distributed freely if copyright notices and disclaimers are retained.\n- Modified versions must either be publicly released, used only internally, given distinct names with directions to the original distribution, or covered by a separate arrangement with the author.\n- Binary distributions require accompanying source, instructions for obtaining the source, distinct naming, or another arrangement.\n- Some included files may have different licenses; their details are in `LEGAL`.\n- Scripts and libraries supplied to or generated by Ruby generally remain the property of their creators and may be used commercially.\n- The software is provided \u201cas is,\u201d without warranties."
                 }
               ],
               "phase": "final_answer",
@@ -306,14 +308,14 @@ http_interactions:
               },
               "cached_tokens": 0
             },
-            "output_tokens": 301,
+            "output_tokens": 216,
             "output_tokens_details": {
-              "reasoning_tokens": 50
+              "reasoning_tokens": 29
             },
-            "total_tokens": 840
+            "total_tokens": 755
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Sun, 15 Nov 2026 01:22:04 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:38:00 GMT
+recorded_with: VCR 6.4.1

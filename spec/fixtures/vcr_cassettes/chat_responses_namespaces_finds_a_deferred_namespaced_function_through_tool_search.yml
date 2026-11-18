@@ -12,7 +12,7 @@ http_interactions:
         email"}},"required":["email"],"additionalProperties":false,"strict":true},"strict":false,"defer_loading":true}]},{"type":"tool_search"}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:20:41 GMT
+      - Wed, 18 Nov 2026 06:35:23 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -51,7 +51,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1146'
+      - '1168'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -78,16 +78,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_03b07ffa3f446da7016af908e8284887d2ae34d704633db573",
+          "id": "resp_066e3a7bb45d7e70016afd4729eed887d2a5b18d7e6b4737af",
           "object": "response",
-          "created_at": 1794705640,
+          "created_at": 1794983721,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794705641,
+          "completed_at": 1794983723,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
@@ -102,7 +102,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "tsc_03b07ffa3f446da7016af908e8afe087d2a02d1aaf251afaf4",
+              "id": "tsc_066e3a7bb45d7e70016afd472a81f887d2829e3f26cc76b07f",
               "type": "tool_search_call",
               "status": "completed",
               "arguments": {
@@ -114,7 +114,7 @@ http_interactions:
               "execution": "server"
             },
             {
-              "id": "tso_03b07ffa3f446da7016af908e8cddc87d2becc87a9584cd204",
+              "id": "tso_066e3a7bb45d7e70016afd472aa32087d286e2dc5783a48e95",
               "type": "tool_search_output",
               "status": "completed",
               "call_id": null,
@@ -152,11 +152,11 @@ http_interactions:
               ]
             },
             {
-              "id": "fc_03b07ffa3f446da7016af908e9191887d2a31a39193f90b1bc",
+              "id": "fc_066e3a7bb45d7e70016afd472af33487d2a50f8fbb1643b48e",
               "type": "function_call",
               "status": "completed",
               "arguments": "{\"email\":\"ada@example.com\"}",
-              "call_id": "call_LcN17YUsfByzUVUOsnfqzsyY",
+              "call_id": "call_0PIhnxsY78wDqcIXtAMOaOPL",
               "name": "customer_lookup",
               "namespace": "crm"
             }
@@ -259,24 +259,24 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Sun, 15 Nov 2026 01:20:41 GMT
+  recorded_at: Wed, 18 Nov 2026 06:35:23 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
       string: '{"model":"gpt-5.4","input":[{"role":"user","content":"Which plan is
-        the customer ada@example.com on? Use your tools."},{"id":"tsc_03b07ffa3f446da7016af908e8afe087d2a02d1aaf251afaf4","type":"tool_search_call","status":"completed","arguments":{"paths":["crm"]},"call_id":null,"execution":"server"},{"id":"tso_03b07ffa3f446da7016af908e8cddc87d2becc87a9584cd204","type":"tool_search_output","status":"completed","call_id":null,"execution":"server","tools":[{"type":"namespace","description":"Customer
+        the customer ada@example.com on? Use your tools."},{"id":"tsc_066e3a7bb45d7e70016afd472a81f887d2829e3f26cc76b07f","type":"tool_search_call","status":"completed","arguments":{"paths":["crm"]},"call_id":null,"execution":"server"},{"id":"tso_066e3a7bb45d7e70016afd472aa32087d286e2dc5783a48e95","type":"tool_search_output","status":"completed","call_id":null,"execution":"server","tools":[{"type":"namespace","description":"Customer
         records","name":"crm","tools":[{"type":"function","defer_loading":true,"description":"Finds
         a customer by email","name":"customer_lookup","output_schema":null,"parameters":{"type":"object","properties":{"email":{"type":"string","description":"Customer
-        email"}},"required":["email"],"additionalProperties":false,"strict":true},"strict":false}]}]},{"id":"fc_03b07ffa3f446da7016af908e9191887d2a31a39193f90b1bc","type":"function_call","status":"completed","arguments":"{\"email\":\"ada@example.com\"}","call_id":"call_LcN17YUsfByzUVUOsnfqzsyY","name":"customer_lookup","namespace":"crm"},{"type":"function_call_output","call_id":"call_LcN17YUsfByzUVUOsnfqzsyY","output":"{\"email\":\"ada@example.com\",\"name\":\"Ada
+        email"}},"required":["email"],"additionalProperties":false,"strict":true},"strict":false}]}]},{"id":"fc_066e3a7bb45d7e70016afd472af33487d2a50f8fbb1643b48e","type":"function_call","status":"completed","arguments":"{\"email\":\"ada@example.com\"}","call_id":"call_0PIhnxsY78wDqcIXtAMOaOPL","name":"customer_lookup","namespace":"crm"},{"type":"function_call_output","call_id":"call_0PIhnxsY78wDqcIXtAMOaOPL","output":"{\"email\":\"ada@example.com\",\"name\":\"Ada
         Lovelace\",\"plan\":\"Pro\"}"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"namespace","name":"crm","description":"Customer
         records","tools":[{"type":"function","name":"customer_lookup","description":"Finds
         a customer by email","parameters":{"type":"object","properties":{"email":{"type":"string","description":"Customer
         email"}},"required":["email"],"additionalProperties":false,"strict":true},"strict":false,"defer_loading":true}]},{"type":"tool_search"}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -291,7 +291,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:20:42 GMT
+      - Wed, 18 Nov 2026 06:35:23 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -315,7 +315,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '654'
+      - '700'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -342,16 +342,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_03b07ffa3f446da7016af908e9631087d2a6cb02c32656d53f",
+          "id": "resp_066e3a7bb45d7e70016afd472b32c487d2a6a48ed73339eae2",
           "object": "response",
-          "created_at": 1794705641,
+          "created_at": 1794983723,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794705641,
+          "completed_at": 1794983723,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
@@ -366,7 +366,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_03b07ffa3f446da7016af908e9d0c487d2a1bfe28f9354e5b4",
+              "id": "msg_066e3a7bb45d7e70016afd472ba84087d2a23b1bb08b4c7856",
               "type": "message",
               "status": "completed",
               "content": [
@@ -478,5 +478,5 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Sun, 15 Nov 2026 01:20:42 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:35:23 GMT
+recorded_with: VCR 6.4.1

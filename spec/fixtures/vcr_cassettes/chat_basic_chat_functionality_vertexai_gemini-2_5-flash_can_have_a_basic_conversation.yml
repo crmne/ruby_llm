@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      Date:
-      - Sun, 15 Nov 2026 01:24:50 GMT
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
       Pragma:
       - no-cache
+      Date:
+      - Wed, 18 Nov 2026 06:40:24 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -56,7 +56,7 @@ http_interactions:
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Sun, 15 Nov 2026 01:24:50 GMT
+  recorded_at: Wed, 18 Nov 2026 06:40:24 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -65,7 +65,7 @@ http_interactions:
       string: '{"contents":[{"role":"user","parts":[{"text":"What''s 2 + 2?"}]}],"generationConfig":{}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -80,7 +80,7 @@ http_interactions:
       message: OK
     headers:
       X-Goog-Request-Id:
-      - 4gn5atK_OtjAxdQPtfLv4AQ
+      - WUj9arfKAfWRu_EPybiM4AU
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -88,7 +88,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 15 Nov 2026 01:24:51 GMT
+      - Wed, 18 Nov 2026 06:40:26 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -120,8 +120,8 @@ http_interactions:
           ],
           "usageMetadata": {
             "promptTokenCount": 9,
-            "candidatesTokenCount": 7,
-            "totalTokenCount": 37,
+            "candidatesTokenCount": 6,
+            "totalTokenCount": 108,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -132,14 +132,14 @@ http_interactions:
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 7
+                "tokenCount": 6
               }
             ],
-            "thoughtsTokenCount": 21
+            "thoughtsTokenCount": 93
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-11-15T01:24:50.958418Z",
-          "responseId": "4gn5atK_OtjAxdQPtfLv4AQ"
+          "createTime": "2026-11-18T06:40:25.025911Z",
+          "responseId": "WUj9arfKAfWRu_EPybiM4AU"
         }
-  recorded_at: Sun, 15 Nov 2026 01:24:51 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:40:26 GMT
+recorded_with: VCR 6.4.1

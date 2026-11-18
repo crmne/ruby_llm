@@ -1008,7 +1008,7 @@ http_interactions:
         context context context context context context context context "},{"role":"user","content":"Hi"}],"stream":false,"max_tokens":1}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -1023,7 +1023,7 @@ http_interactions:
       message: Bad Request
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:20:24 GMT
+      - Wed, 18 Nov 2026 06:36:00 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
@@ -1031,13 +1031,13 @@ http_interactions:
       Content-Type:
       - application/json; charset=utf-8
       Req-Cost-Time:
-      - '1124'
+      - '37'
       Req-Arrive-Time:
-      - '1794705625330'
+      - '1794983761109'
       Resp-Start-Time:
-      - '1794705626454'
+      - '1794983761147'
       X-Envoy-Upstream-Service-Time:
-      - '1117'
+      - '23'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
@@ -1046,5 +1046,5 @@ http_interactions:
       encoding: ASCII-8BIT
       string: '{"error":{"code":400,"message":"request (10015 tokens) exceeds the
         available context size (8192 tokens), try increasing it","type":"exceed_context_size_error","n_prompt_tokens":10015,"n_ctx":8192}}'
-  recorded_at: Sun, 15 Nov 2026 01:20:26 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:36:01 GMT
+recorded_with: VCR 6.4.1

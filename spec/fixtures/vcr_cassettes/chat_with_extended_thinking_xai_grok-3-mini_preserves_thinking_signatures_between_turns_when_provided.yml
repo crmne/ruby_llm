@@ -9,7 +9,7 @@ http_interactions:
         3?"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"reasoning":{"effort":"medium"}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:34:15 GMT
+      - Wed, 18 Nov 2026 06:47:07 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -54,9 +54,11 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '231.5'
+      - '188.6'
       X-Metrics-E2e-Ms:
-      - '3180.6'
+      - '2039.7'
+      Traceparent:
+      - 00-25446d35e7473cfe9fe4066c4de68212-1c8f19d6000291d2-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
@@ -69,10 +71,9 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1794706452,"completed_at":1794706455,"id":"0efe41fe-23c4-4a17-866b-45b5a5219a99","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_0efe41fe-23c4-4a17-866b-45b5a5219a99","summary":[{"text":"This
-        is a simple arithmetic question.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"p51L0GRjlbG/PWQLDm1hE5Coad8tnEI2tnt10yBHqDam9c3rEpCgEhFw6F5pMjr/DOB7MZQKN/RygdklA9peTTxpgrB8jYxgwWoiNFIzHBpNyTNC+UHhI3fJVepDw63j+I0QPwFtKCa7osAOJYWsIdUgHOy0iY5sCiRHURb0joaSY2PxYhguj44jaJLzW2xQ0ydMrdewslwO5IGJH4/N1WGE1aFCvamRggJ15ojuHofKHjtEM8KK4rTzyt2NntvQzYfLZmebyb9+kjfX5hGlnPhO+2rYeVi5t5369MLElSmT5rOrS5GMCdzrCueXpJrT11werUqFBF+uY7bkU2bg2zusADSckWFvoYtIDBPLuW1mp5mEE4Bkuw1ET9Bs6ysUHS0cphJNtt2CtccOaR59pVlpse2ozPopwyfYyekwq9g7erfr5SDvSoaYe13YDdLIwEsO/OYvs+FB+e9AVjE70YqnEESfg3fmxrg+gB1HjDr9uLKhHb5D1zXJPNpqiB8wgM3QnMTyWEYCt7/EFZy7L4OpMl18zjL7YW5YZkIwyoRa1iydBSr3q1esRHGKENrB6tar8jhhP9zl/50gXLyhhLQsvi7CyB12yqT8YkyAXVxHgBPIUZ4imnvz2dc4A6bDf/gCrfU9M9Axqh2l4sGAkQENosJZyu48SXNA1VqIbUnjzqECsqpc8o0htQ78R2EzBS7qk8TWcDdTnbeMymLAvadmaHhFxV+zy3079H9g3JqhCiue0nFL1gJZLjxExHnRR26A/kM7kT6AODy1lWtPkJGaQKpa9IMYBE5vRS8py8yv0hZAt7z9x9LFPCc0Ly4Y2/C1rIMXKzXNFS1yyfN8q9/3Jeu8felFO7x3YqADIEah9ReNTZEPKJmHv4LU6XYu8bO+pznom27xX39JbCCvvWz5HoF5ZvsGlEoRss1wBEoBRwBaYKBj3Ik"},{"content":[{"type":"output_text","text":"5
-        + 3 = 8.","logprobs":[],"annotations":[]}],"id":"msg_0efe41fe-23c4-4a17-866b-45b5a5219a99","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"medium","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":200,"input_tokens_details":{"cached_tokens":128},"output_tokens":177,"output_tokens_details":{"reasoning_tokens":169},"total_tokens":377,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":5581000,"context_details":{"input_tokens":200,"output_tokens":185}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
-  recorded_at: Sun, 15 Nov 2026 01:34:15 GMT
+      string: '{"created_at":1794984425,"completed_at":1794984427,"id":"ff37647b-81c9-9461-a18b-e42ee72c929e","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_ff37647b-81c9-9461-a18b-e42ee72c929e","summary":[{"text":"This
+        is a simple arithmetic question.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"Nrp+WnazpolYfj6CDaEN+qzEJYP7/+nKPqqSjA88DQNuN/ZtBaQYc//pEyr4vHpOEDEab1sknrwHFume0IisTR/Fc2m11R4mK3WOW7H+P80RZBHwPr+VyNt8DKgTkGW01TGyjDeD8vro4dvgTlIdqDZ4JvlptLZ6Ra/T/ka+Jn8rXDLUAJoBRlqNVo+OZyRRCt4kqB9jsFH3seKpzILamWrKdNdeMdPDtdgiuYpoOu8Sn397+o6mU2YbDe1/ElrWFLtPWgR7DjtCMJkBUnbszArsoqaQ+xPFBs5zg5Soe9AhNqBNOp+jpgumhKGNkHZqXX3DjYWAvJz3SLI2i6gy4NfiY/LG5NdbYhgMoukZjbp7pPShxToIC7NAYdBeExH6ABBA2QB33VOzcueRTjkvTUoFtanFFwZz9MVVNMXj87siNVZZ2YJnRmQl9j7tpMLyLVfPlQ89+rWYtZv7XW3UD1mVB9pP4SMx0n1dJ+PkCFhf7s5e0vhsDtm/GNxLs8i3VeNOuSAji57BGhwYn93rKAxZylLI68uRRjcOcdR2Rvj04J1EKikt3tNxHR+WL9+4G3Cem5F7QHtZcNk"},{"content":[{"type":"output_text","text":"**8**","logprobs":[],"annotations":[]}],"id":"msg_ff37647b-81c9-9461-a18b-e42ee72c929e","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"medium","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":200,"input_tokens_details":{"cached_tokens":128},"output_tokens":132,"output_tokens_details":{"reasoning_tokens":129},"total_tokens":332,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":4456000,"context_details":{"input_tokens":200,"output_tokens":140}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Wed, 18 Nov 2026 06:47:07 GMT
 - request:
     method: post
     uri: https://api.x.ai/v1/responses
@@ -80,11 +81,11 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"grok-4.3","input":[{"role":"user","content":"What is 5 +
         3?"},{"type":"reasoning","summary":[{"type":"summary_text","text":"This is
-        a simple arithmetic question."}],"encrypted_content":"p51L0GRjlbG/PWQLDm1hE5Coad8tnEI2tnt10yBHqDam9c3rEpCgEhFw6F5pMjr/DOB7MZQKN/RygdklA9peTTxpgrB8jYxgwWoiNFIzHBpNyTNC+UHhI3fJVepDw63j+I0QPwFtKCa7osAOJYWsIdUgHOy0iY5sCiRHURb0joaSY2PxYhguj44jaJLzW2xQ0ydMrdewslwO5IGJH4/N1WGE1aFCvamRggJ15ojuHofKHjtEM8KK4rTzyt2NntvQzYfLZmebyb9+kjfX5hGlnPhO+2rYeVi5t5369MLElSmT5rOrS5GMCdzrCueXpJrT11werUqFBF+uY7bkU2bg2zusADSckWFvoYtIDBPLuW1mp5mEE4Bkuw1ET9Bs6ysUHS0cphJNtt2CtccOaR59pVlpse2ozPopwyfYyekwq9g7erfr5SDvSoaYe13YDdLIwEsO/OYvs+FB+e9AVjE70YqnEESfg3fmxrg+gB1HjDr9uLKhHb5D1zXJPNpqiB8wgM3QnMTyWEYCt7/EFZy7L4OpMl18zjL7YW5YZkIwyoRa1iydBSr3q1esRHGKENrB6tar8jhhP9zl/50gXLyhhLQsvi7CyB12yqT8YkyAXVxHgBPIUZ4imnvz2dc4A6bDf/gCrfU9M9Axqh2l4sGAkQENosJZyu48SXNA1VqIbUnjzqECsqpc8o0htQ78R2EzBS7qk8TWcDdTnbeMymLAvadmaHhFxV+zy3079H9g3JqhCiue0nFL1gJZLjxExHnRR26A/kM7kT6AODy1lWtPkJGaQKpa9IMYBE5vRS8py8yv0hZAt7z9x9LFPCc0Ly4Y2/C1rIMXKzXNFS1yyfN8q9/3Jeu8felFO7x3YqADIEah9ReNTZEPKJmHv4LU6XYu8bO+pznom27xX39JbCCvvWz5HoF5ZvsGlEoRss1wBEoBRwBaYKBj3Ik"},{"role":"assistant","content":[{"type":"output_text","text":"5
-        + 3 = 8."}]},{"role":"user","content":"Now multiply that by 2"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"reasoning":{"effort":"medium"}}'
+        a simple arithmetic question."}],"encrypted_content":"Nrp+WnazpolYfj6CDaEN+qzEJYP7/+nKPqqSjA88DQNuN/ZtBaQYc//pEyr4vHpOEDEab1sknrwHFume0IisTR/Fc2m11R4mK3WOW7H+P80RZBHwPr+VyNt8DKgTkGW01TGyjDeD8vro4dvgTlIdqDZ4JvlptLZ6Ra/T/ka+Jn8rXDLUAJoBRlqNVo+OZyRRCt4kqB9jsFH3seKpzILamWrKdNdeMdPDtdgiuYpoOu8Sn397+o6mU2YbDe1/ElrWFLtPWgR7DjtCMJkBUnbszArsoqaQ+xPFBs5zg5Soe9AhNqBNOp+jpgumhKGNkHZqXX3DjYWAvJz3SLI2i6gy4NfiY/LG5NdbYhgMoukZjbp7pPShxToIC7NAYdBeExH6ABBA2QB33VOzcueRTjkvTUoFtanFFwZz9MVVNMXj87siNVZZ2YJnRmQl9j7tpMLyLVfPlQ89+rWYtZv7XW3UD1mVB9pP4SMx0n1dJ+PkCFhf7s5e0vhsDtm/GNxLs8i3VeNOuSAji57BGhwYn93rKAxZylLI68uRRjcOcdR2Rvj04J1EKikt3tNxHR+WL9+4G3Cem5F7QHtZcNk"},{"role":"assistant","content":[{"type":"output_text","text":"**8**"}]},{"role":"user","content":"Now
+        multiply that by 2"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"reasoning":{"effort":"medium"}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -99,7 +100,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:34:18 GMT
+      - Wed, 18 Nov 2026 06:47:10 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -119,7 +120,9 @@ http_interactions:
       X-Ratelimit-Limit-Requests:
       - '1800'
       X-Ratelimit-Remaining-Requests:
-      - '1800'
+      - '1795'
+      Cf-Cache-Status:
+      - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Zero-Data-Retention:
@@ -127,27 +130,25 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '220.0'
+      - '312.5'
       X-Metrics-E2e-Ms:
-      - '2561.3'
+      - '2139.9'
       Traceparent:
-      - 00-4d1d2173cbdd276e36aed3e99a4a181e-7b37fe42000a5c99-01
+      - 00-dec304ae4fd1fcf8e9b22fa390bd7f36-2a6619190002a824-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
-      Cf-Cache-Status:
-      - DYNAMIC
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1794706455,"completed_at":1794706458,"id":"174058df-aa3e-920a-96a3-07d04d2e71f3","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_174058df-aa3e-920a-96a3-07d04d2e71f3","summary":[{"text":"The
-        previous answer was 8. That result is now being multiplied by 2.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"SfoRfozcBGwvHoGu9qTlxFYuAcWs/OXbFRFiZUVwY5HzBxf8ewZ8HOVGH76XbBxZvz4vIag6HGY795IET9d51Dni6REZomxSr7+rnfhp1asZOrjbHpkB+nx1QvDRCUjjQbCPngaGF8+tVbYqg5mYE3jggFS+iY3k6Wpno+7jD7ich645lTokyjIqF+m90qXdgZqBPUF6HNIVha6UFg6m8EdwJQI+osf/wQPqSEuy8P6M8PWg7y1sQUyfS4O1KXKKAennMd2Gq9XYOhT02aNDrshv8siTGYnJrtoM4ZVTlKSU/HWvvseM4lv2jWmujU/8diaPfoka/WzlMJfMUupws8vw1qiUjSOa4m8EdWpexE85Wg8Ac5bA/aX3gQgsxVY7W/L1DEn2L10PUP0Hzbkp4xjz76PaAzqCRFcyj4fj+10kK0zE/f0UukIcTJ/b6gDQJWQvmRpVLnIHefADEXETV2TU3VjNBgsd05P6oUnpEsclw/O/0jocpvqmMXvXHCkKNiGb3Q"},{"content":[{"type":"output_text","text":"8
-        multiplied by 2 is 16.","logprobs":[],"annotations":[]}],"id":"msg_174058df-aa3e-920a-96a3-07d04d2e71f3","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"medium","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":394,"input_tokens_details":{"cached_tokens":128},"output_tokens":144,"output_tokens_details":{"reasoning_tokens":135},"total_tokens":538,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":7181000,"context_details":{"input_tokens":394,"output_tokens":151}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
-  recorded_at: Sun, 15 Nov 2026 01:34:18 GMT
-recorded_with: VCR 6.4.0
+      string: '{"created_at":1794984428,"completed_at":1794984430,"id":"cfdd16ee-3cd6-9b28-ad18-9a03e3d46801","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_cfdd16ee-3cd6-9b28-ad18-9a03e3d46801","summary":[{"text":"The
+        user previously asked what 5 plus 3 is.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"Xx3JCwzvvV/qDtcoewu0KeWvzys3vFn8obDHl/V3scK9nvxwYbHwYm7RF0Ske6HVAAezbJ1HC5XZTG4MCgKQan7hpx+ScS8AJLFAC5/UG+azzKDCKifEo71Dstw66OBU/qSiGjwOsg+ohdpZw5CO5STnOyd/TMqJuqcWP2/KHydfBXudNtLUCUlrf9Eey57yZDDvT+9y1jc2/HBrmREN0Ze/UioVjpI4+JuPo6aJZ3CDZh8e9f/NtRQeiIdRCWMiNS14UQkFhkmw3EfKMzA+fGIDahl55ii6AO1W2dtmcrY8lOe+EkedKK+NamFpeUZAmLbpsVzmoTRMgOz4nzSFesSok8XzUVryWIKF+RIvgMZyNj25Op6JA4pdpYsom5Pw/1e0MzJYjXsF1lWcoOIzW4KyvShqx9rQLTncK+2UqeYOfGGBY7E6hllzJQC5UxKUTYvQUKjEh89cLDsGkv7WqbzUrA3GlavyDBoGDgIugw"},{"content":[{"type":"output_text","text":"8
+        multiplied by 2 is **16**.","logprobs":[],"annotations":[]}],"id":"msg_cfdd16ee-3cd6-9b28-ad18-9a03e3d46801","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"medium","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":349,"input_tokens_details":{"cached_tokens":128},"output_tokens":128,"output_tokens_details":{"reasoning_tokens":119},"total_tokens":477,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":6218500,"context_details":{"input_tokens":349,"output_tokens":135}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Wed, 18 Nov 2026 06:47:10 GMT
+recorded_with: VCR 6.4.1

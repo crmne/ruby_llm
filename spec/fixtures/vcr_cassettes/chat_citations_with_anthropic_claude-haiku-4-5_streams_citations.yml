@@ -15,7 +15,7 @@ http_interactions:
       Accept-Encoding:
       - identity
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -30,7 +30,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:19:50 GMT
+      - Wed, 18 Nov 2026 06:35:34 GMT
       Content-Type:
       - text/event-stream; charset=utf-8
       Transfer-Encoding:
@@ -44,31 +44,31 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '10000000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-11-15T01:19:50Z'
+      - '2026-11-18T06:35:34Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-11-15T01:19:50Z'
+      - '2026-11-18T06:35:34Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-11-15T01:19:50Z'
+      - '2026-11-18T06:35:34Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-11-15T01:19:50Z'
+      - '2026-11-18T06:35:34Z'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Request-Id:
       - "<REQUEST_ID>"
       Traceresponse:
-      - 00-b0c87c10b3ec04fd53704b09247b3459-4bb13403b3bb0f44-01
+      - 00-5fad20cd378b42039b151099dfcbeff7-aeacec22023a4549-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
@@ -80,7 +80,7 @@ http_interactions:
       Server:
       - cloudflare
       Server-Timing:
-      - x-originResponse;dur=48
+      - x-originResponse;dur=33
       Cf-Cache-Status:
       - DYNAMIC
       X-Robots-Tag:
@@ -91,38 +91,38 @@ http_interactions:
       encoding: UTF-8
       string: |+
         event: message_start
-        data: {"type":"message_start","message":{"model":"claude-haiku-4-5-20251001","id":"msg_011Ch3qNRjHHZFEd9UuYr9DR","type":"message","role":"assistant","content":[],"container":null,"stop_reason":null,"stop_sequence":null,"stop_details":null,"usage":{"input_tokens":672,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":1,"service_tier":"standard","inference_geo":"not_available","speed":"standard"},"diagnostics":null}  }
+        data: {"type":"message_start","message":{"model":"claude-haiku-4-5-20251001","id":"msg_011Ch9vsedLAt4duAZBNJxEh","type":"message","role":"assistant","content":[],"container":null,"stop_reason":null,"stop_sequence":null,"stop_details":null,"usage":{"input_tokens":672,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":1,"service_tier":"standard","inference_geo":"not_available","speed":"standard"},"diagnostics":null}   }
 
         event: content_block_start
-        data: {"type":"content_block_start","index":0,"content_block":{"citations":[],"type":"text","text":""}               }
+        data: {"type":"content_block_start","index":0,"content_block":{"citations":[],"type":"text","text":""}     }
 
         event: ping
         data: {"type": "ping"}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"citations_delta","citation":{"type":"char_location","cited_text":"The Ruby programming language was created by Yukihiro Matsumoto in 1993. ","document_index":0,"document_title":"facts.txt","start_char_index":0,"end_char_index":73}}              }
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"citations_delta","citation":{"type":"char_location","cited_text":"The Ruby programming language was created by Yukihiro Matsumoto in 1993. ","document_index":0,"document_title":"facts.txt","start_char_index":0,"end_char_index":73}}  }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"The Ruby programming language was created"}           }
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"The Ruby programming language was created"}        }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" by Yukihiro"}           }
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" by Yukihiro"}       }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" Matsumoto in 1"}              }
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" Matsumoto in 1"}           }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"993."}             }
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"993."} }
 
         event: content_block_stop
-        data: {"type":"content_block_stop","index":0        }
+        data: {"type":"content_block_stop","index":0}
 
         event: message_delta
-        data: {"type":"message_delta","delta":{"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"container":null},"usage":{"input_tokens":672,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":39}    }
+        data: {"type":"message_delta","delta":{"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"container":null},"usage":{"input_tokens":672,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":39}          }
 
         event: message_stop
-        data: {"type":"message_stop" }
+        data: {"type":"message_stop"}
 
-  recorded_at: Sun, 15 Nov 2026 01:19:50 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:35:34 GMT
+recorded_with: VCR 6.4.1
 ...

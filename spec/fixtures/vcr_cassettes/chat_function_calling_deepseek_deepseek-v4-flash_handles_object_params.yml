@@ -13,7 +13,7 @@ http_interactions:
         window to schedule"}},"required":["window"],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -34,7 +34,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Sun, 15 Nov 2026 01:22:53 GMT
+      - Wed, 18 Nov 2026 06:38:00 GMT
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -44,23 +44,27 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 9b2e80a1f45b3dbf600a228dd2d8e668
+      - 306b851469678c7f773913069686731b
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 7b78620285c9c4062375088b85834112.cloudfront.net (CloudFront)
+      - 1.1 8fdb14e1ad1a4456ee2ac8fb035bc20c.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL50-P1
+      - TXL52-P3
       X-Amz-Cf-Id:
-      - qI884horr8c33x5EcPYiDr0qZ0ic3n-PpSjsb_yqZWPrHO1F5jFZaA==
+      - UqC9Jqi9Iixvnz0MGGxV60EWjn2ONMrt_uZfLyAtnfXE6LhNOik9zg==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"76f15f60-e3e4-4923-b8c7-f6629eaf1ff5","object":"chat.completion","created":1794705773,"model":"deepseek-flash","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning_content":"We
-        need to call tool with params DSL object support. Need window start ISO \"2025-01-01\"
-        maybe date accepted as ISO? likely should be full ISO? They said start 2025-01-01.
-        We''ll call.","tool_calls":[{"index":0,"id":"call_00_kcOpudvvj42QQRzVzjD01527","type":"function","function":{"name":"object_params","arguments":"{\"window\":
-        {\"start\": \"2025-01-01\", \"end\": \"2025-01-02\"}}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":382,"completion_tokens":109,"total_tokens":491,"prompt_tokens_details":{"cached_tokens":128},"completion_tokens_details":{"reasoning_tokens":50},"prompt_cache_hit_tokens":128,"prompt_cache_miss_tokens":254},"system_fingerprint":"bc19ba97cbe016479903222bb1578db6"}'
-  recorded_at: Sun, 15 Nov 2026 01:22:54 GMT
-recorded_with: VCR 6.4.0
+      string: '{"id":"7b5eadfb-fbb5-458f-ae1f-716c18f0b25c","object":"chat.completion","created":1794983880,"model":"deepseek-flash","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning_content":"The
+        user wants me to call the object_params tool with a window start 2025-01-01
+        and end 2025-01-02, and include the result.\n\nLet me call the tool.\n\nThe
+        window needs ISO start and end. Start 2025-01-01, end 2025-01-02.\n\nLet me
+        use ISO format: \"2025-01-01T00:00:00Z\" and \"2025-01-02T00:00:00Z\". Or
+        maybe just \"2025-01-01\" and \"2025-01-02\". ISO 8601 dates are valid ISO.
+        I''ll use the date-only form as given, since that''s what the user said.\n\nLet
+        me call.","tool_calls":[{"index":0,"id":"call_00_cgyhg8V4gBlqM0RzA0CY4666","type":"function","function":{"name":"object_params","arguments":"{\"window\":
+        {\"start\": \"2025-01-01\", \"end\": \"2025-01-02\"}}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":382,"completion_tokens":215,"total_tokens":597,"prompt_tokens_details":{"cached_tokens":128},"completion_tokens_details":{"reasoning_tokens":156},"prompt_cache_hit_tokens":128,"prompt_cache_miss_tokens":254},"system_fingerprint":"bc19ba97cbe016479903222bb1578db6"}'
+  recorded_at: Wed, 18 Nov 2026 06:38:01 GMT
+recorded_with: VCR 6.4.1

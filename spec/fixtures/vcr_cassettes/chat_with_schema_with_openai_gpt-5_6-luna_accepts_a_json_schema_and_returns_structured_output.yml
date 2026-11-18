@@ -9,7 +9,7 @@ http_interactions:
         a person named John who is 30 years old"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"text":{"format":{"type":"json_schema","name":"response","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:21:21 GMT
+      - Wed, 18 Nov 2026 06:36:49 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -48,7 +48,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1222'
+      - '902'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -75,16 +75,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_030ed168f4f733b6016af90910470487d2abee89ff168a4e53",
+          "id": "resp_0984e937a4b68517016afd478053ac87d2aac89d78cc8e50dd",
           "object": "response",
-          "created_at": 1794705680,
+          "created_at": 1794983808,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794705681,
+          "completed_at": 1794983809,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
@@ -99,7 +99,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_030ed168f4f733b6016af90911067087d29e08c873c5bec55f",
+              "id": "msg_0984e937a4b68517016afd4780e74887d29c2aaa9e37a76e0a",
               "type": "message",
               "status": "completed",
               "content": [
@@ -196,5 +196,5 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Sun, 15 Nov 2026 01:21:21 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:36:49 GMT
+recorded_with: VCR 6.4.1

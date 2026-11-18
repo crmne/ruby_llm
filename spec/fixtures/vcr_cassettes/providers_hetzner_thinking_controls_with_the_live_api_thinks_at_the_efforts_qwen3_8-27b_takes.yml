@@ -9,7 +9,7 @@ http_interactions:
         17 times 23? Reply with the number."}],"stream":false,"reasoning_effort":"xhigh"}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,19 +24,21 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:21:10 GMT
+      - Wed, 18 Nov 2026 06:34:29 GMT
       X-Llm-D-Flow-Queue-Duration-Ms:
       - '0'
       Vary:
       - Origin
       Content-Type:
       - application/json
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
       Transfer-Encoding:
       - chunked
     body:
       encoding: UTF-8
-      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":67,"completion_tokens":50,"total_tokens":117,"completion_tokens_details":{"reasoning_tokens":44},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"content":"\n\n391","role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"reasoning":"We
-        need answer user: \"What is 17 times 23? Reply with the number.\" Need final
-        only number. Compute 17*23 = 391. Ensure no extra.\n"},"index":0,"logprobs":null,"finish_reason":"stop","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-baeb424a-cae9-49cc-b705-d4e3c656e528","object":"chat.completion","created":1794705670,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
-  recorded_at: Sun, 15 Nov 2026 01:21:11 GMT
-recorded_with: VCR 6.4.0
+      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":67,"completion_tokens":45,"total_tokens":112,"completion_tokens_details":{"reasoning_tokens":39},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"content":"\n\n391","role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"reasoning":"User
+        asks: \"What is 17 times 23? Reply with the number.\" Need compute 17*23 =
+        391. Final should just number.\n"},"index":0,"logprobs":null,"finish_reason":"stop","stop_reason":null,"token_ids":null,"routed_experts":null,"weight_versions":null}],"id":"chatcmpl-67c55bf8-1c92-457c-84ad-0a754fc06ec3","object":"chat.completion","created":1794983669,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
+  recorded_at: Wed, 18 Nov 2026 06:34:31 GMT
+recorded_with: VCR 6.4.1

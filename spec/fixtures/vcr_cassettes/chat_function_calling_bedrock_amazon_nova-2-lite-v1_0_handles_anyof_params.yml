@@ -11,11 +11,11 @@ http_interactions:
         description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false}}}}]}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261115T012211Z
+      - 20261118T063716Z
       X-Amz-Content-Sha256:
       - 6d9b66b67a5a8311f4d7632767ddeb29bbbcd2d91c2e160af91e7a52a5a0ca3b
       Authorization:
@@ -31,7 +31,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:22:12 GMT
+      - Wed, 18 Nov 2026 06:37:17 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -39,10 +39,10 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - ed03f180-5378-4f30-a069-6f8f778fb173
+      - 5fd2da9e-814e-40b7-9ef7-4c4b89548b2e
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":436},"output":{"message":{"content":[{"toolUse":{"input":{"task":"Review
-        PR","status":"pending"},"name":"any_of_params","toolUseId":"tooluse_U46BrDRXkhRkjNCPWIlVua"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"inputTokens":978,"outputTokens":38,"serverToolUsage":{},"totalTokens":1016}}'
-  recorded_at: Sun, 15 Nov 2026 01:22:12 GMT
-recorded_with: VCR 6.4.0
+      string: '{"metrics":{"latencyMs":574},"output":{"message":{"content":[{"toolUse":{"input":{"task":"Review
+        PR","status":"pending"},"name":"any_of_params","toolUseId":"tooluse_zLUbPT4GnP3YHwIsehoc2p"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"inputTokens":978,"outputTokens":38,"serverToolUsage":{},"totalTokens":1016}}'
+  recorded_at: Wed, 18 Nov 2026 06:37:17 GMT
+recorded_with: VCR 6.4.1

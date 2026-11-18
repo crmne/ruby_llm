@@ -9,7 +9,7 @@ http_interactions:
         your favorite Ruby feature?"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:19:48 GMT
+      - Wed, 18 Nov 2026 06:35:45 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -48,7 +48,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1331'
+      - '1212'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -75,16 +75,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0b65dbd2366007db016af908b3840087d2a8969c18758b2b0d",
+          "id": "resp_004acd53303ec4ba016afd473ffb1087d28e8c021582fc3a53",
           "object": "response",
-          "created_at": 1794705587,
+          "created_at": 1794983744,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794705588,
+          "completed_at": 1794983745,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
@@ -99,7 +99,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_0b65dbd2366007db016af908b3ebc087d2aa104e4c4ec2eb6f",
+              "id": "msg_004acd53303ec4ba016afd474056bc87d28b1badce697dea5a",
               "type": "message",
               "status": "completed",
               "content": [
@@ -107,7 +107,7 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "My favorite Ruby feature is **blocks + iterators** (and the whole `yield`/`Enumerable` vibe).\n\nRuby makes it feel natural to express \u201cdo this for each item\u201d or \u201cwrap this behavior around something\u201d:\n\n```ruby\n[1, 2, 3].map { |n| n * 2 }\n```\n\n\u2026and you can also write your own reusable control flow with blocks:\n\n```ruby\ndef with_logging\n  puts \"start\"\n  yield\n  puts \"done\"\nend\n```\n\nIt\u2019s small, expressive, and kind of the glue that makes Ruby feel Ruby."
+                  "text": "My favorite Ruby feature is **blocks** (especially how they\u2019re used with methods like `each`, `map`, and custom iterators).\n\nThe combination of **blocks + yield-style APIs** makes Ruby feel expressive and \u201cbuilt for intent.\u201d For example:\n\n```ruby\n[1, 2, 3].map { |n| n * 2 }  # clear, compact, and flexible\n```\n\nIt\u2019s one of the things that makes Ruby code feel both readable and fun to write."
                 }
               ],
               "phase": "final_answer",
@@ -168,14 +168,14 @@ http_interactions:
               },
               "cached_tokens": 0
             },
-            "output_tokens": 129,
+            "output_tokens": 106,
             "output_tokens_details": {
               "reasoning_tokens": 0
             },
-            "total_tokens": 141
+            "total_tokens": 118
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Sun, 15 Nov 2026 01:19:48 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:35:45 GMT
+recorded_with: VCR 6.4.1

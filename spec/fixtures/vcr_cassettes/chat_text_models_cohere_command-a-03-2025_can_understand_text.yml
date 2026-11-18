@@ -10,7 +10,7 @@ http_interactions:
         is the best.</file>"}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -43,26 +43,26 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - a33001bc8103c35d7091957c4fec2fc8
+      - 27bccd05d5eaa317f265a8a574890a36
       Date:
-      - Sun, 15 Nov 2026 01:19:43 GMT
+      - Wed, 18 Nov 2026 06:35:47 GMT
       X-Envoy-Upstream-Service-Time:
-      - '763'
+      - '778'
       Server:
       - envoy
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      - h3=":443"; ma=2592000
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"976f01f0-7972-423e-8755-f39635e92c3b","message":{"role":"assistant","content":[{"type":"text","text":"The
+      string: '{"id":"2481fc06-ebc7-4575-95a2-2fb1fe487d05","message":{"role":"assistant","content":[{"type":"text","text":"The
         file `ruby.txt` contains the following text:\n\n**Ruby is the best.**\n\nIt''s
         a plain text file (as indicated by the `text/plain` MIME type) with a simple
         statement expressing enthusiasm for the Ruby programming language."}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":30,"output_tokens":53},"tokens":{"input_tokens":525,"output_tokens":56},"cached_tokens":464}}'
-  recorded_at: Sun, 15 Nov 2026 01:19:43 GMT
+  recorded_at: Wed, 18 Nov 2026 06:35:47 GMT
 - request:
     method: post
     uri: https://api.cohere.com/v2/chat
@@ -78,7 +78,7 @@ http_interactions:
         is the best</truism></file>"}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -103,7 +103,7 @@ http_interactions:
       Num-Chars:
       - '3149'
       Num-Tokens:
-      - '219'
+      - '216'
       Pragma:
       - no-cache
       Vary:
@@ -111,27 +111,27 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 3d0e454ef9eac7e1b0766bb334281754
+      - ac701993ad8e2fdb38b44f6daad2bc56
       Date:
-      - Sun, 15 Nov 2026 01:19:46 GMT
+      - Wed, 18 Nov 2026 06:35:48 GMT
       X-Envoy-Upstream-Service-Time:
-      - '1956'
+      - '1175'
       Server:
       - envoy
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"92d0e2db-3003-4382-b9e4-da0f3a1adc51","message":{"role":"assistant","content":[{"type":"text","text":"The
-        file `ruby.xml` contains the following XML content:\n\n```xml\n\u003ctruism\u003eRuby
-        is the best\u003c/truism\u003e\n```\n\nIt''s an XML file (as indicated by
-        the `application/xml` MIME type) with a single element `\u003ctruism\u003e`
-        that contains the text \"Ruby is the best\". This structure suggests that
-        the content is being marked up as a statement of truth or a widely accepted
-        fact, as implied by the tag name `\u003ctruism\u003e`."}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":118,"output_tokens":101},"tokens":{"input_tokens":621,"output_tokens":104},"cached_tokens":464}}'
-  recorded_at: Sun, 15 Nov 2026 01:19:46 GMT
-recorded_with: VCR 6.4.0
+      string: '{"id":"b1b1b957-ee56-4dfa-8a10-0109f8b90e86","message":{"role":"assistant","content":[{"type":"text","text":"The
+        file `ruby.xml` is an XML file (as indicated by the `application/xml` MIME
+        type) and contains the following structured data:\n\n```xml\n\u003ctruism\u003eRuby
+        is the best\u003c/truism\u003e\n```\n\nHere, the text \"Ruby is the best\"
+        is enclosed within a custom XML tag `\u003ctruism\u003e`. This suggests that
+        the statement is being treated as a truism or a widely accepted truth within
+        the context of the XML document."}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":118,"output_tokens":98},"tokens":{"input_tokens":621,"output_tokens":101},"cached_tokens":464}}'
+  recorded_at: Wed, 18 Nov 2026 06:35:48 GMT
+recorded_with: VCR 6.4.1

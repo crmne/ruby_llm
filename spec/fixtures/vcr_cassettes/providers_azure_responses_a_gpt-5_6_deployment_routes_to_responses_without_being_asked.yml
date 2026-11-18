@@ -9,7 +9,7 @@ http_interactions:
         nothing else."}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -28,7 +28,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 15 Nov 2026 01:20:50 GMT
+      - Wed, 18 Nov 2026 06:34:31 GMT
       Server:
       - istio-envoy
       Vary:
@@ -68,9 +68,9 @@ http_interactions:
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Apim-Request-Id:
-      - 9b5ee6bb-fca9-46aa-82d6-c60656db12ff
+      - 14374c3e-4098-4d80-b930-2bf59b4b1a65
       X-Http2-Stream-Id:
-      - '123'
+      - '991'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -81,13 +81,13 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "resp_09acc23d99526de8016af908f2f3c48195af7fd4c8bd1b1126",
+          "id": "resp_0cd5dd04f7c7acdb016afd46f8219c819599df541c7b350486",
           "object": "response",
-          "created_at": 1794705650,
+          "created_at": 1794983672,
           "status": "completed",
           "access_programs": null,
           "background": false,
-          "completed_at": 1794705652,
+          "completed_at": 1794983673,
           "content_filters": [
             {
               "blocked": false,
@@ -126,11 +126,11 @@ http_interactions:
               "source_type": "completion",
               "content_filter_raw": [],
               "content_filter_results": {
-                "protected_material_code": {
+                "protected_material_text": {
                   "detected": false,
                   "filtered": false
                 },
-                "protected_material_text": {
+                "protected_material_code": {
                   "detected": false,
                   "filtered": false
                 },
@@ -168,7 +168,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_09acc23d99526de8016af908f3c28c8195860367b502db3442",
+              "id": "msg_0cd5dd04f7c7acdb016afd46f8b73881958737408e7f711d51",
               "type": "message",
               "status": "completed",
               "content": [
@@ -242,5 +242,5 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Sun, 15 Nov 2026 01:20:52 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:34:33 GMT
+recorded_with: VCR 6.4.1

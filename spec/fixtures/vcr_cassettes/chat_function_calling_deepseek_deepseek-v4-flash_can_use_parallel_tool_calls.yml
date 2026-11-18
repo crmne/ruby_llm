@@ -14,7 +14,7 @@ http_interactions:
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -35,7 +35,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Sun, 15 Nov 2026 01:22:31 GMT
+      - Wed, 18 Nov 2026 06:37:36 GMT
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -45,24 +45,25 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 365b333cf6b1b6f7d4b39645a2d69771
+      - 919e3e06f4129e16ad1abb61539b44c9
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 0996579236e052d74cb05219740670d6.cloudfront.net (CloudFront)
+      - 1.1 18c99202a876b8ae23bbc9b72c14bd14.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL52-P3
+      - TXL50-P6
       X-Amz-Cf-Id:
-      - rYwtO417A_RvLIpCrkHuhfCZEKS7CSkvJiHk6ad7R-9RI4orc5uqTg==
+      - puVz2_lKxffmnxJJ9Z8E4LHD_moB6F7R8USpWzHTvPKCnAnTHnvRjw==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"a12d0355-e09d-4afc-b899-edb4e6a8929d","object":"chat.completion","created":1794705751,"model":"deepseek-flash","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
-        look up both pieces of information for you.","reasoning_content":"The user
-        asks two independent questions. I should call both tools in parallel.","tool_calls":[{"index":0,"id":"call_00_yMKGorJBVeJyp3oMOrqw1279","type":"function","function":{"name":"weather","arguments":"{\"latitude\":
-        \"52.5200\", \"longitude\": \"13.4050\"}"}},{"index":1,"id":"call_01_0R3nDZXokupsLpwHMU0C2202","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":423,"completion_tokens":101,"total_tokens":524,"prompt_tokens_details":{"cached_tokens":256},"completion_tokens_details":{"reasoning_tokens":15},"prompt_cache_hit_tokens":256,"prompt_cache_miss_tokens":167},"system_fingerprint":"bc19ba97cbe016479903222bb1578db6"}'
-  recorded_at: Sun, 15 Nov 2026 01:22:32 GMT
+      string: '{"id":"f44737ae-d711-4523-8a43-05ef101fc827","object":"chat.completion","created":1794983856,"model":"deepseek-flash","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
+        get both of those for you at once.","reasoning_content":"The user wants two
+        independent pieces of information: weather in Berlin and the best language
+        to learn. I should make both tool calls in the same block.","tool_calls":[{"index":0,"id":"call_00_D1IVF1N8ZigcVNPYp2U84143","type":"function","function":{"name":"weather","arguments":"{\"latitude\":
+        \"52.5200\", \"longitude\": \"13.4050\"}"}},{"index":1,"id":"call_01_5qR9FwIOujyzcx5Z71Xn9248","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":423,"completion_tokens":116,"total_tokens":539,"prompt_tokens_details":{"cached_tokens":256},"completion_tokens_details":{"reasoning_tokens":30},"prompt_cache_hit_tokens":256,"prompt_cache_miss_tokens":167},"system_fingerprint":"bc19ba97cbe016479903222bb1578db6"}'
+  recorded_at: Wed, 18 Nov 2026 06:37:37 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
@@ -70,18 +71,20 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"deepseek-v4-flash","messages":[{"role":"user","content":"What''s
         the weather in Berlin (52.5200, 13.4050) and what''s the best language to
-        learn?"},{"role":"assistant","content":"I''ll look up both pieces of information
-        for you.","tool_calls":[{"id":"call_00_yMKGorJBVeJyp3oMOrqw1279","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}},{"id":"call_01_0R3nDZXokupsLpwHMU0C2202","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning_content":"The
-        user asks two independent questions. I should call both tools in parallel.","reasoning":"The
-        user asks two independent questions. I should call both tools in parallel."},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_00_yMKGorJBVeJyp3oMOrqw1279"},{"role":"tool","content":"Ruby","tool_call_id":"call_01_0R3nDZXokupsLpwHMU0C2202"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        learn?"},{"role":"assistant","content":"I''ll get both of those for you at
+        once.","tool_calls":[{"id":"call_00_D1IVF1N8ZigcVNPYp2U84143","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}},{"id":"call_01_5qR9FwIOujyzcx5Z71Xn9248","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning_content":"The
+        user wants two independent pieces of information: weather in Berlin and the
+        best language to learn. I should make both tool calls in the same block.","reasoning":"The
+        user wants two independent pieces of information: weather in Berlin and the
+        best language to learn. I should make both tool calls in the same block."},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_00_D1IVF1N8ZigcVNPYp2U84143"},{"role":"tool","content":"Ruby","tool_call_id":"call_01_5qR9FwIOujyzcx5Z71Xn9248"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}},{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -102,7 +105,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Sun, 15 Nov 2026 01:22:33 GMT
+      - Wed, 18 Nov 2026 06:37:37 GMT
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -112,20 +115,20 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 704384f7d27f4bcf84157c642ec89120
+      - ab906d6737eaac18f21ade6fe8be1ecd
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 3ee0a52a6fdc977d833d7647d462c266.cloudfront.net (CloudFront)
+      - 1.1 9d937ef309c5fb8866889024c0d5a0be.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL52-P2
+      - TXL52-P4
       X-Amz-Cf-Id:
-      - kcjLVstzYBrS5ASo1dZR6ao-CJN6Sarg4s0DRBwnz_fRWfNv4dHPXw==
+      - zVqxNvbiYvfLzKxwtpIOjM3-hR0Ion6rKMMTDnhq4495mtFf-x9mTw==
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImYyZTNhMmYyLWU2ZGUtNDUxMi04ZmQzLTcxMGJmNjFjNTYyOCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTQ3MDU3NTIsIm1vZGVsIjoiZGVlcHNlZWstZmxhc2giLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IkhlcmUncyB3aGF0IEkgZm91bmQ6XG5cbioqV2VhdGhlciBpbiBCZXJsaW4gKDUyLjUyMDAsIDEzLjQwNTApOioqXG4tIFRlbXBlcmF0dXJlOiAxNcKwQ1xuLSBXaW5kOiAxMCBrbS9oXG5cblRoYXQncyBhIG1pbGQsIHBsZWFzYW50IGRheSDigJQgYSBsaWdodCBqYWNrZXQgd291bGQgcHJvYmFibHkgZG8gaXQuXG5cbioqQmVzdCBsYW5ndWFnZSB0byBsZWFybjoqKiBSdWJ5XG5cblRoYXQncyB0aGUgcmVzdWx0IGZyb20gdGhlIHRvb2wg4oCUIHdvcnRoIG5vdGluZyBpdCdzIGEgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UsIG5vdCBhIHNwb2tlbiBvbmUuIElmIHlvdSB3ZXJlIGFza2luZyBhYm91dCBzcG9rZW4gbGFuZ3VhZ2VzLCB0aGF0J3MgYSBkaWZmZXJlbnQga2luZCBvZiBxdWVzdGlvbiAoYW5kIG9uZSB0aGF0IGRlcGVuZHMgYSBsb3Qgb24geW91ciBnb2FscyDigJQgdHJhdmVsLCBjYXJlZXIsIGZhbWlseSB0aWVzLCBldGMuKS4gSGFwcHkgdG8gZGlzY3VzcyB0aGF0IGlmIHlvdSdkIGxpa2UuIiwicmVhc29uaW5nX2NvbnRlbnQiOiIifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo1NzEsImNvbXBsZXRpb25fdG9rZW5zIjoxMjksInRvdGFsX3Rva2VucyI6NzAwLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6Mzg0fSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjowfSwicHJvbXB0X2NhY2hlX2hpdF90b2tlbnMiOjM4NCwicHJvbXB0X2NhY2hlX21pc3NfdG9rZW5zIjoxODd9LCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJiYzE5YmE5N2NiZTAxNjQ3OTkwMzIyMmJiMTU3OGRiNiJ9
-  recorded_at: Sun, 15 Nov 2026 01:22:34 GMT
-recorded_with: VCR 6.4.0
+        eyJpZCI6ImNiOTQ3MWFkLTBiMjMtNGI4Yy05MzRjLWI5NzVlN2JjMjNlYyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTQ5ODM4NTcsIm1vZGVsIjoiZGVlcHNlZWstZmxhc2giLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IkhlcmUncyB3aGF0IEkgZm91bmQ6XG5cbioqV2VhdGhlciBpbiBCZXJsaW4gKDUyLjUyMDAsIDEzLjQwNTApKipcbi0g8J+MpO+4jyAxNcKwQ1xuLSDwn5KoIFdpbmQ6IDEwIGttL2hcblxuUHJldHR5IG1pbGQg4oCUIGEgbGlnaHQgamFja2V0IHdvdWxkIHByb2JhYmx5IGRvIGl0LlxuXG4qKkJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm4qKlxuLSDwn5KOICoqUnVieSoqXG5cbkknbGwgbm90ZSB0aGF0IHRoZSBcImJlc3QgbGFuZ3VhZ2VcIiByZXN1bHQgY29tZXMgc3RyYWlnaHQgZnJvbSB0aGUgdG9vbCB3aXRob3V0IGFueSByZWFzb25pbmcgYXR0YWNoZWQsIHNvIGl0J3Mgd29ydGggdHJlYXRpbmcgYXMgYSBmdW4gc3VnZ2VzdGlvbiByYXRoZXIgdGhhbiBhIGRlZmluaXRpdmUgdmVyZGljdCDigJQgdGhlIGJlc3QgbGFuZ3VhZ2UgcmVhbGx5IGRlcGVuZHMgb24gd2hhdCB5b3Ugd2FudCB0byBidWlsZCBvciBkbyB3aXRoIGl0LiIsInJlYXNvbmluZ19jb250ZW50IjoiIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NTg2LCJjb21wbGV0aW9uX3Rva2VucyI6MTE3LCJ0b3RhbF90b2tlbnMiOjcwMywicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjM4NH0sImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MH0sInByb21wdF9jYWNoZV9oaXRfdG9rZW5zIjozODQsInByb21wdF9jYWNoZV9taXNzX3Rva2VucyI6MjAyfSwic3lzdGVtX2ZpbmdlcnByaW50IjoiYmMxOWJhOTdjYmUwMTY0Nzk5MDMyMjJiYjE1NzhkYjYifQ==
+  recorded_at: Wed, 18 Nov 2026 06:37:39 GMT
+recorded_with: VCR 6.4.1

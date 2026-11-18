@@ -10,7 +10,7 @@ http_interactions:
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:30:31 GMT
+      - Wed, 18 Nov 2026 06:44:32 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -49,7 +49,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '763'
+      - '550'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -76,16 +76,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_02342bba33ed76b3016af90b3715cc87d285386d837cc3ee4d",
+          "id": "resp_0ee827d0254ff582016afd494fdccc87d2beb2eec58a252e6f",
           "object": "response",
-          "created_at": 1794706231,
+          "created_at": 1794984271,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794706231,
+          "completed_at": 1794984272,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
@@ -100,11 +100,11 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "fc_02342bba33ed76b3016af90b37ba6887d2ae047bac35d05b40",
+              "id": "fc_0ee827d0254ff582016afd49504fcc87d284d92e683db8d41b",
               "type": "function_call",
               "status": "completed",
               "arguments": "{}",
-              "call_id": "call_Hqkvr1bK7DE8B2UQ1ZjBQVEV",
+              "call_id": "call_2SuuuUF7pnQs57yTS1t1JE57",
               "name": "best_language_to_learn"
             }
           ],
@@ -186,18 +186,18 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Sun, 15 Nov 2026 01:30:31 GMT
+  recorded_at: Wed, 18 Nov 2026 06:44:32 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
       string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"Use the
-        best_language_to_learn tool to tell me which language to learn."},{"type":"function_call","call_id":"call_Hqkvr1bK7DE8B2UQ1ZjBQVEV","name":"best_language_to_learn","arguments":"{}"},{"type":"function_call_output","call_id":"call_Hqkvr1bK7DE8B2UQ1ZjBQVEV","output":"Ruby"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"best_language_to_learn","description":"Gets
+        best_language_to_learn tool to tell me which language to learn."},{"type":"function_call","call_id":"call_2SuuuUF7pnQs57yTS1t1JE57","name":"best_language_to_learn","arguments":"{}"},{"type":"function_call_output","call_id":"call_2SuuuUF7pnQs57yTS1t1JE57","output":"Ruby"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -212,7 +212,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:30:32 GMT
+      - Wed, 18 Nov 2026 06:44:33 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -236,7 +236,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '855'
+      - '544'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -263,16 +263,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_03b32b12a7989064016af90b37f86087d29d04fe24273f7183",
+          "id": "resp_0cb5bdbdbdd0167f016afd49507fb887d296c876af50eb3d68",
           "object": "response",
-          "created_at": 1794706232,
+          "created_at": 1794984272,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794706232,
+          "completed_at": 1794984273,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
@@ -287,7 +287,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_03b32b12a7989064016af90b38718c87d28f159c90cd882949",
+              "id": "msg_0cb5bdbdbdd0167f016afd4950e40087d2971836a14e357307",
               "type": "message",
               "status": "completed",
               "content": [
@@ -380,5 +380,5 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Sun, 15 Nov 2026 01:30:32 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:44:33 GMT
+recorded_with: VCR 6.4.1

@@ -13,7 +13,7 @@ http_interactions:
         the current synthetic store return policy.","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"text":{"format":{"type":"json_schema","name":"response","schema":{"type":"object","properties":{"policy":{"type":"object","properties":{"verdict":{"type":"string","enum":["pass","fail","unknown"]},"reason":{"type":"string"}},"required":["verdict","reason"],"additionalProperties":false}},"required":["policy"],"additionalProperties":false},"strict":true}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -28,7 +28,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:20:22 GMT
+      - Wed, 18 Nov 2026 06:35:36 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -52,7 +52,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1187'
+      - '733'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -79,18 +79,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0f7af1f12cabf97b016af908d58f2c87d2bc084120beb739bf",
-          "object": "response",
-          "created_at": 1794705621,
-          "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794705622,
+          "completed_at": 1794983736,
+          "created_at": 1794983735,
           "error": null,
           "frequency_penalty": 0.0,
+          "id": "resp_07025a47e963a65b016afd473792c087d2b68c54616f387134",
           "image": {
             "context_compression": "disabled"
           },
@@ -101,21 +99,22 @@ http_interactions:
           "max_tool_calls": null,
           "model": "gpt-5.6-luna",
           "moderation": null,
+          "object": "response",
           "output": [
             {
-              "id": "rs_0f7af1f12cabf97b016af908d67e2487d29aceca7694ca050d",
-              "type": "reasoning",
               "content": [],
-              "encrypted_content": "gAAAAABq-QjW__kYhq3YdESqjkrrMt09EpWcu1ry171VcRXcUSFrEeApmjjhU1xJW97JeDNXFIUoJs4JWpTSR4C9aEm2vmiJ30_wFJ2c-zVR7mzBURWmVvnCKp85yUs3OG66fUkfHRtZsqPiflGuljcvepTN8fnH3eAxDSVGERZYwsles_KsZvWjI9ts8nPyneVnPi6gswlIF6kgSgzJRDkexhxXTiAhdxhtvSX5QEBK4S4r0eEIAUA4nuIdGldkj4obOsyw3cDxmPbp-Bx8E0xEqZVsUTJBBXXIGFQNlT_SglLncoba8oyGPtN6OMsPDL2_Jaof95Ync8c4kFK4oCAs7PUaPG7BH8nDktue1eZK8Sq3c0KIlW9sltPQSAYYqmCHHkbyZtvnNEE2YUBxMAR-77G7HUAHoON2ZbYXlB_aSBRW_rycNR3aMyAnXACRoaO4a3y_Rb1ppFd218G1Wr7f3lJgDeP_azYSThzniJdsEDseJ-ho32jKjvc-E2KBYbxnQeutejwT9z3eBbkboKSVpRuyd66o5mvlxWBodyQ3BYovAnboqW6qJt8MPzlOccjRtCfJ7zWZJWyKWx6GZ0nzhwaUR0zObjGQ_kteiOm9OOAGblXE9Z-HMlyWyY1V5bH2bgSPOGvFL7E8_Hm3L7CkebctAq3w9ujYMqkNBRt4-Jz13I0Pd_V3jPueZT_L3_RuTn4C4Wjcn5ZToei8hpu_akqJAf2z-rEC6MU5ASezQR6f9EPPdIStEZN3PFAo-gIvhUeZJf9mFmsKyDuicoT3PBhAjA86mkvdtobLB1RYsw8rSgngZwMWz_8LLJv3tPiP9nbpQjb2yXUIKKuZGAsffxiCu0BSqHIjmL48axpAM4giFlapf_6wyhC0zTR2l6DMhGP5YB1bG833woEkpHc6xZW_w006ppy-Ohd3P7Nsdb6cpg8kNHsQP0jtzHDdxZovF4Y-2CRRytzKSoA1kYrbjgQhvrRs_5s1m2SucYMo9fZ6A0UE8LbM_-5jUeR2QDBanJ6tpcT_GzAp7T7hDKtSiiNFv3N5yOyaWBezBQ9pBJnI8PqEMM_-KtprCbXx0x2VNuz7CTknx0ONVhN2tEtBhteAgsKk7gnBSDBV33g6J8_-3eRXV-8qkTR2-Q4Qki742VqKrB4BJfUk-cW6DPSWiaCleQekqz9iBgjvYNmhfB7ozGkZVVhK1bTc2kXaF2h7Gu-nOHboWUnXxC9GJPYXqm3NvfRYwtPTRohvsU4CRx5MM8iMXcW0wS1mzLp6CGdMyKJ2GLDCVVy8Kmz_m8DLQANy_UNYW94IVbiaBUyXujBu-8nJ9snq-DFkGgHQntGi8c9xp7mbyKDztTAk3bqTl_zOe2sIT11Aaho4LvNk5HJ2iOD940lgaleVm-h6FtG27Ikj4a3R5g0FaCBx-WC2gmhR2aX2Zd8TeYlhFyiyLNxSLFcrPJKWcgRg4Dq21b9ZMxkC5F8-gLNi4iE7RlMffGTcvyrCsxg1j6E_xxdMVUNJp9OLmzBBfbat3PlblPvYqyPJm-UtUJeNPSA65EqaSp6WjWybV2XfBEYIYUqJG5qyskgIXtAyNi9p8ayNzgs-o2mLUbxEkiZMH-UgSEhTG0mVOadUcjNSA9knK2oPUYtt9mvSRVtLgntTBi1eShpE5DNzKzVm3P04CmgDbz1z4r4JC0Yo32gU0jqg6Tlx4wV2qjqDqT2XytdaDxL_3ITxONg8B0VCMwS15j2y18mlBGVaz9A0pw==",
-              "summary": []
+              "encrypted_content": "gAAAAABq_Uc4tFTr82IqVNkKLhcXYJo1QSQSd1l4uYjiYuoBTWqBdVU2HuUlFrca5ElnjVaxOR5JM_dltapg96DGPesXBkAsne0FIOV8VOwbfFrxklx54c0EW0n3WNAWrbn3L9uEUbBfz890xDwmWbHk-CkgG4h64K7wN0b2laHSWZNzdzFPYKoK1Os2nO-OdmLknU8Nuz7VWfxs79x4RZAeKR2-Qm-7OgYzcOsidw4fIaevELM7OFiYqMTt6l3ahlkyOlsJmwuVPNMaV2w2z8jFFO8zsES_YNM2QWGhsFeRrR8IoOd-MVAYPhBscE3fHtzGySP8yp48PyEEDr5P1HR8B23w4Omf8AN6NF4dC39s_gzIbaxWjw78lakMHz8x20rI84JOLlcBxJjk6Aysi74ojkYfCVHhaZtUfpVITRAvn274X0I0XFUkKuXW3FsE2JTtRw3x8eCvaH45dCB50QBpGBOxWW3Qo9VNXNAK3HqqEUmA6-cuFQmWhm8n_dT_Zb7UX0U86nz0tOa24WyU0SEl9snVgI07NMy5Y9dD34qu9EWlee7SD_-vGL8R07QNSYaswyLwSms_fIk6iBwYD1hngmG2_cReGWMiH_8pW4kTCFJ4hxOWdI6d6SYNYPLT63sBcY4lqIYk_aQaRhOdu1nyzMOZj232kGUoNcgQyu1A3SOaxsisPG-uCWLleXD6LF_krBczEqtmt4XFL2nyBRot_KpWl4WcHFFCDAoVVQKNesmPSsGXF-gVPb5ub9uP17thl3rPwc_RIhTvya98fPJygtJB7IGhFSrwHGurRNk1XHlnlc2nzbD_QIyAo0xBum8DsjHqISuLRJoYWz9W5Xhwklb_MAOIOYsnWetN_TqrjFteOFDkSy8YVfezhz-ICIB0wsCQ6hSwobF_wjfoy2JybTS35rC3e2ffNwxK9J54WkxzuSh_s4fQRplnv8rrJhCZEP0oEsSnM50sZcesTpScCSIhBZEOo8VJi-baChirSzPt5EdnP2iOUu_LTvWN7BvAt_GcqxLz5iw5JsecUMCJiv_-8a9VD2oJqkNF1iFte9-gVFbM7roGX1XPxciK6LW75Ag3NSNtwOLXhG-zSzzSCQB38x00GFG9b2fgUYvz0EAqO5Sf6P-jXisPYcfiMqDk8YmlgnVUxtdVmDykO3YYoxeaEnS2ChZFPY-KDV5vp8g3Dc3pitk7Nw7kRR4Y6CliZD9b15JcK3YyLbrcPFOoTQq2nw84fntHC2f9-DX6qSN9YYmclRiHHrG3LzpsqhH3h0y7tffyZpIejTuOWWaKUZEQUXvJpRH0CrBwv_ZNxy61MZbYzaJ4o7bDyav6eJ2fbujZ4ZnsA8-JQ8T5X3P9hzQyL4JGAqGTXsnuoInTHzX11lfLjPzXtQKqd5a6K8o1N-T32pAKL67S3DPhpxPjpE-BbwDrg7B2HF2rvpAl85gstZhs21iBQy9kjCbgJux91h940HKMd7QlaKcjZHS41BJes5ZIeiGLhxo2hy04-94SJgCBJMrmbxvREWKdAk6rpB_kSM8tZeFguoiDZC4PLOTelff3kau-OkoZyQXXlkOhf891fNQ6G49dqYopLj66GZiY7ZdROf5qwgc5ZHu3DIH0tbpmAQIrrK_Xi2a6kuNFu3NFdhcT_KI1tCfrpxOG2m8FhEIdnjNwOZqOSNgxyTmpHpO3exj64PgZGzq5DLPg57Lo5IU=",
+              "id": "rs_07025a47e963a65b016afd4738161487d28dc668748526dcaf",
+              "summary": [],
+              "type": "reasoning"
             },
             {
-              "id": "fc_0f7af1f12cabf97b016af908d6a4d087d2b563a6ae1d9f21bf",
-              "type": "function_call",
-              "status": "completed",
               "arguments": "{}",
-              "call_id": "call_P7pm7eN2jpORz1mrnwWvufXV",
-              "name": "evaluation_policy"
+              "call_id": "call_95a7c29014e34f0796082c061b342143",
+              "id": "fc_07025a47e963a65b016afd4738322c87d2a4e4a5ffef9fb4af",
+              "name": "evaluation_policy",
+              "status": "completed",
+              "type": "function_call"
             }
           ],
           "parallel_tool_calls": true,
@@ -131,28 +130,28 @@ http_interactions:
           },
           "safety_identifier": null,
           "service_tier": "default",
+          "status": "completed",
           "store": false,
           "temperature": 1.0,
           "text": {
             "format": {
-              "type": "json_schema",
               "description": null,
               "name": "response",
               "schema": {
-                "type": "object",
+                "additionalProperties": false,
                 "properties": {
                   "policy": {
-                    "type": "object",
+                    "additionalProperties": false,
                     "properties": {
+                      "reason": {
+                        "type": "string"
+                      },
                       "verdict": {
-                        "type": "string",
                         "enum": [
                           "pass",
                           "fail",
                           "unknown"
-                        ]
-                      },
-                      "reason": {
+                        ],
                         "type": "string"
                       }
                     },
@@ -160,15 +159,16 @@ http_interactions:
                       "verdict",
                       "reason"
                     ],
-                    "additionalProperties": false
+                    "type": "object"
                   }
                 },
                 "required": [
                   "policy"
                 ],
-                "additionalProperties": false
+                "type": "object"
               },
-              "strict": true
+              "strict": true,
+              "type": "json_schema"
             },
             "verbosity": "medium"
           },
@@ -193,18 +193,18 @@ http_interactions:
           },
           "tools": [
             {
-              "type": "function",
               "description": "Read the current synthetic store return policy.",
               "name": "evaluation_policy",
               "output_schema": null,
               "parameters": {
-                "type": "object",
+                "additionalProperties": false,
                 "properties": {},
                 "required": [],
-                "additionalProperties": false,
-                "strict": true
+                "strict": true,
+                "type": "object"
               },
-              "strict": false
+              "strict": false,
+              "type": "function"
             }
           ],
           "top_logprobs": 0,
@@ -220,23 +220,23 @@ http_interactions:
               },
               "cached_tokens": 0
             },
-            "output_tokens": 27,
+            "output_tokens": 26,
             "output_tokens_details": {
-              "reasoning_tokens": 10
+              "reasoning_tokens": 9
             },
-            "total_tokens": 171
+            "total_tokens": 170
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Sun, 15 Nov 2026 01:20:22 GMT
+  recorded_at: Wed, 18 Nov 2026 06:35:36 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
       string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"{\"inputs\":\"Sale
-        items are refundable.\",\"metadata\":{},\"actual\":\"Sale items are refundable.\"}"},{"type":"reasoning","summary":[],"encrypted_content":"gAAAAABq-QjW__kYhq3YdESqjkrrMt09EpWcu1ry171VcRXcUSFrEeApmjjhU1xJW97JeDNXFIUoJs4JWpTSR4C9aEm2vmiJ30_wFJ2c-zVR7mzBURWmVvnCKp85yUs3OG66fUkfHRtZsqPiflGuljcvepTN8fnH3eAxDSVGERZYwsles_KsZvWjI9ts8nPyneVnPi6gswlIF6kgSgzJRDkexhxXTiAhdxhtvSX5QEBK4S4r0eEIAUA4nuIdGldkj4obOsyw3cDxmPbp-Bx8E0xEqZVsUTJBBXXIGFQNlT_SglLncoba8oyGPtN6OMsPDL2_Jaof95Ync8c4kFK4oCAs7PUaPG7BH8nDktue1eZK8Sq3c0KIlW9sltPQSAYYqmCHHkbyZtvnNEE2YUBxMAR-77G7HUAHoON2ZbYXlB_aSBRW_rycNR3aMyAnXACRoaO4a3y_Rb1ppFd218G1Wr7f3lJgDeP_azYSThzniJdsEDseJ-ho32jKjvc-E2KBYbxnQeutejwT9z3eBbkboKSVpRuyd66o5mvlxWBodyQ3BYovAnboqW6qJt8MPzlOccjRtCfJ7zWZJWyKWx6GZ0nzhwaUR0zObjGQ_kteiOm9OOAGblXE9Z-HMlyWyY1V5bH2bgSPOGvFL7E8_Hm3L7CkebctAq3w9ujYMqkNBRt4-Jz13I0Pd_V3jPueZT_L3_RuTn4C4Wjcn5ZToei8hpu_akqJAf2z-rEC6MU5ASezQR6f9EPPdIStEZN3PFAo-gIvhUeZJf9mFmsKyDuicoT3PBhAjA86mkvdtobLB1RYsw8rSgngZwMWz_8LLJv3tPiP9nbpQjb2yXUIKKuZGAsffxiCu0BSqHIjmL48axpAM4giFlapf_6wyhC0zTR2l6DMhGP5YB1bG833woEkpHc6xZW_w006ppy-Ohd3P7Nsdb6cpg8kNHsQP0jtzHDdxZovF4Y-2CRRytzKSoA1kYrbjgQhvrRs_5s1m2SucYMo9fZ6A0UE8LbM_-5jUeR2QDBanJ6tpcT_GzAp7T7hDKtSiiNFv3N5yOyaWBezBQ9pBJnI8PqEMM_-KtprCbXx0x2VNuz7CTknx0ONVhN2tEtBhteAgsKk7gnBSDBV33g6J8_-3eRXV-8qkTR2-Q4Qki742VqKrB4BJfUk-cW6DPSWiaCleQekqz9iBgjvYNmhfB7ozGkZVVhK1bTc2kXaF2h7Gu-nOHboWUnXxC9GJPYXqm3NvfRYwtPTRohvsU4CRx5MM8iMXcW0wS1mzLp6CGdMyKJ2GLDCVVy8Kmz_m8DLQANy_UNYW94IVbiaBUyXujBu-8nJ9snq-DFkGgHQntGi8c9xp7mbyKDztTAk3bqTl_zOe2sIT11Aaho4LvNk5HJ2iOD940lgaleVm-h6FtG27Ikj4a3R5g0FaCBx-WC2gmhR2aX2Zd8TeYlhFyiyLNxSLFcrPJKWcgRg4Dq21b9ZMxkC5F8-gLNi4iE7RlMffGTcvyrCsxg1j6E_xxdMVUNJp9OLmzBBfbat3PlblPvYqyPJm-UtUJeNPSA65EqaSp6WjWybV2XfBEYIYUqJG5qyskgIXtAyNi9p8ayNzgs-o2mLUbxEkiZMH-UgSEhTG0mVOadUcjNSA9knK2oPUYtt9mvSRVtLgntTBi1eShpE5DNzKzVm3P04CmgDbz1z4r4JC0Yo32gU0jqg6Tlx4wV2qjqDqT2XytdaDxL_3ITxONg8B0VCMwS15j2y18mlBGVaz9A0pw=="},{"type":"function_call","call_id":"call_P7pm7eN2jpORz1mrnwWvufXV","name":"evaluation_policy","arguments":"{}"},{"type":"function_call_output","call_id":"call_P7pm7eN2jpORz1mrnwWvufXV","output":"Sale
+        items are refundable.\",\"metadata\":{},\"actual\":\"Sale items are refundable.\"}"},{"type":"reasoning","summary":[],"encrypted_content":"gAAAAABq_Uc4tFTr82IqVNkKLhcXYJo1QSQSd1l4uYjiYuoBTWqBdVU2HuUlFrca5ElnjVaxOR5JM_dltapg96DGPesXBkAsne0FIOV8VOwbfFrxklx54c0EW0n3WNAWrbn3L9uEUbBfz890xDwmWbHk-CkgG4h64K7wN0b2laHSWZNzdzFPYKoK1Os2nO-OdmLknU8Nuz7VWfxs79x4RZAeKR2-Qm-7OgYzcOsidw4fIaevELM7OFiYqMTt6l3ahlkyOlsJmwuVPNMaV2w2z8jFFO8zsES_YNM2QWGhsFeRrR8IoOd-MVAYPhBscE3fHtzGySP8yp48PyEEDr5P1HR8B23w4Omf8AN6NF4dC39s_gzIbaxWjw78lakMHz8x20rI84JOLlcBxJjk6Aysi74ojkYfCVHhaZtUfpVITRAvn274X0I0XFUkKuXW3FsE2JTtRw3x8eCvaH45dCB50QBpGBOxWW3Qo9VNXNAK3HqqEUmA6-cuFQmWhm8n_dT_Zb7UX0U86nz0tOa24WyU0SEl9snVgI07NMy5Y9dD34qu9EWlee7SD_-vGL8R07QNSYaswyLwSms_fIk6iBwYD1hngmG2_cReGWMiH_8pW4kTCFJ4hxOWdI6d6SYNYPLT63sBcY4lqIYk_aQaRhOdu1nyzMOZj232kGUoNcgQyu1A3SOaxsisPG-uCWLleXD6LF_krBczEqtmt4XFL2nyBRot_KpWl4WcHFFCDAoVVQKNesmPSsGXF-gVPb5ub9uP17thl3rPwc_RIhTvya98fPJygtJB7IGhFSrwHGurRNk1XHlnlc2nzbD_QIyAo0xBum8DsjHqISuLRJoYWz9W5Xhwklb_MAOIOYsnWetN_TqrjFteOFDkSy8YVfezhz-ICIB0wsCQ6hSwobF_wjfoy2JybTS35rC3e2ffNwxK9J54WkxzuSh_s4fQRplnv8rrJhCZEP0oEsSnM50sZcesTpScCSIhBZEOo8VJi-baChirSzPt5EdnP2iOUu_LTvWN7BvAt_GcqxLz5iw5JsecUMCJiv_-8a9VD2oJqkNF1iFte9-gVFbM7roGX1XPxciK6LW75Ag3NSNtwOLXhG-zSzzSCQB38x00GFG9b2fgUYvz0EAqO5Sf6P-jXisPYcfiMqDk8YmlgnVUxtdVmDykO3YYoxeaEnS2ChZFPY-KDV5vp8g3Dc3pitk7Nw7kRR4Y6CliZD9b15JcK3YyLbrcPFOoTQq2nw84fntHC2f9-DX6qSN9YYmclRiHHrG3LzpsqhH3h0y7tffyZpIejTuOWWaKUZEQUXvJpRH0CrBwv_ZNxy61MZbYzaJ4o7bDyav6eJ2fbujZ4ZnsA8-JQ8T5X3P9hzQyL4JGAqGTXsnuoInTHzX11lfLjPzXtQKqd5a6K8o1N-T32pAKL67S3DPhpxPjpE-BbwDrg7B2HF2rvpAl85gstZhs21iBQy9kjCbgJux91h940HKMd7QlaKcjZHS41BJes5ZIeiGLhxo2hy04-94SJgCBJMrmbxvREWKdAk6rpB_kSM8tZeFguoiDZC4PLOTelff3kau-OkoZyQXXlkOhf891fNQ6G49dqYopLj66GZiY7ZdROf5qwgc5ZHu3DIH0tbpmAQIrrK_Xi2a6kuNFu3NFdhcT_KI1tCfrpxOG2m8FhEIdnjNwOZqOSNgxyTmpHpO3exj64PgZGzq5DLPg57Lo5IU="},{"type":"function_call","call_id":"call_95a7c29014e34f0796082c061b342143","name":"evaluation_policy","arguments":"{}"},{"type":"function_call_output","call_id":"call_95a7c29014e34f0796082c061b342143","output":"Sale
         items cannot be returned. Unopened full-price items can be returned within
         30 days."}],"instructions":"Always call evaluation_policy before assessing
         policy compliance. Judge only against the policy returned by that tool.\n\nAssess
@@ -245,7 +245,7 @@ http_interactions:
         the current synthetic store return policy.","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"text":{"format":{"type":"json_schema","name":"response","schema":{"type":"object","properties":{"policy":{"type":"object","properties":{"verdict":{"type":"string","enum":["pass","fail","unknown"]},"reason":{"type":"string"}},"required":["verdict","reason"],"additionalProperties":false}},"required":["policy"],"additionalProperties":false},"strict":true}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -260,7 +260,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:20:24 GMT
+      - Wed, 18 Nov 2026 06:35:37 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -284,7 +284,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1371'
+      - '1249'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -311,16 +311,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0bcadac109b08a69016af908d723d087d2b02dd2c101df9d0d",
+          "id": "resp_08b8ccdbe4da7bd4016afd47385afc87d2a536d73fef6483e8",
           "object": "response",
-          "created_at": 1794705623,
+          "created_at": 1794983736,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794705624,
+          "completed_at": 1794983737,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
@@ -335,14 +335,14 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "rs_0bcadac109b08a69016af908d7e9fc87d299aa6955b9edeea0",
+              "id": "rs_08b8ccdbe4da7bd4016afd4738e12887d286e97c643a2c2e91",
               "type": "reasoning",
               "content": [],
-              "encrypted_content": "gAAAAABq-QjYmudYeY-AnauTsXW1MqO1UEb1nVO67i6foeKjAcG39M-SJ0X_XFkkI8ymnbhG0GYKfN6sw7yUiC7asgfS69BmMUTtbq2ivsTcjuk6JEKPULCUPJ1b5rIPPhBbkAK5DY7gB3ocKMz_MgZdljPNSWOOTMWdJW5Ei0OQ0W14yQeb6G5X8SeaX9T_7aSkkE6kjVthu_WJNoc9WfyP4XaWjGIDonu4Uahv20L3wldfRpXWJqKUjqqXbpxlZPnpW-bdBt6HrVWBX0GycyO3cC4tRPkdshCN4AQZ4ME-hIX-zHaFh3Kjfu3iDDrxLGuk2_uwRONPMI3ra_YpIxwJ8vLEfSVt1L19YhsEvFNeXAvsThAMaAObPgINhSGc2KBsdD9TTDpGaPYUr0LDFJvku0yc4uP4TwD1Bv4Z-KVE__V3md1vp_HEMudKHzp_meqfiRPMujd5sgqc5benRGkcfbo9FlqHYKU4EWEIQKmVA_-vNCdoGU-SmoxFP1KpzInwMOs7dOXNAicq_lFu5gWtiZF3LY5mtUkne8mDl0udjrP7hrQZ7qfKFlo6sdBNEMQ6QV7WpzJ4_mI5AyIbh7gAHp7jeh94B2Ttn3Fs2mc3nCJztvAVOUQplAdq3cC1XHul0GcdTSI6UX5cqv1vnuL-D1GC_ExCPZuflZwURLc2H6He0t-ius3F8UR_PAVsm5Zk1E-pTTV0KZfs0xZz_5aG12l0Jkhua7ICtrPMwhwn1LaPkSB6WZ8tuWxnePOMixnGmIb3rilZSUxeOiOfZRy35Z2ewTjGu6p2BCQucFiuG8CUcYc4V34LJson4YvnNUOfOl9aGMtXie3R5A0lEIiC45QEkJwAXYujOpe2etmcpp2-RFLZcP7pd2tjjBJOGIM9959Fs83JMVOAXSj4PnvQ552Pt-jANyft52D9sofm-4bdfjp3VMQs_2MEWLZJHb0IU3wRGPlxRqsNQO6osLkRzC_HDeR6ntmKbg6hiP33TdZe9SZEXfm8kL6WRbzR8_dc1DtZnOcrbvZ667dBsEC7RgsQG2VbB_Rg2AVFFjCT-Stz89YocNEASHLoCc_iNMsf6XR6jUyS1ODTRNrmr7_Z1Hnoqb54z7YuyYlPwr22g8lRW4H51GyNQXMGLnTAWapIQORInm7lf3l7c8uOToZflHEi7J6KzE777AFJRoRHc_Q73W---Pkw94jdDDS81AWGwYjA8PfLGXx3PSCa6S_DQTMwJDQCEE8yxro6MnLwyhtQDHeTDUXmz75fI_wEfJf9Ldh_xc3exVnthOiob8b6TkBRXScY9JGtC58jw6UA-ktW5YXT8oXgOJwsEBPR9GpGrA9uHlZY2w1BhzAdAW_GndILaM2uovoo08qMc-2ujMwN-JTOYPdYVtqfmPpjlEjdrV4P2AAIQD0IWSnpTXAQTO7inXaHfMncDbZykeLxtGGJCgcwtyipXgxiUlfbAkm4CXv6Km3ofpoo7W_wsd_32-v4MEybJHfnqnwgXKKR9bGI2vYYPU9s7E4_9TnWbSyExAB8DgM-L3CFy1RRNpqJNm1SfZF2lF8owVvmpMvhQLH4HRglFq9VO0zbZCXuGw75JoZgi0KXnoSpEz3qxbJ8tTor1f_k03jaLGnxsp2dGpiZn1qwmBNQl1CdkWSKGFiyag0ftlaXMWB6eSP1vUFnekW0qv2p_UBmVwkzbhxVFmFtPODtttuiNDiN4ZJcQxv00Zj5bmdRnb3excl_TRh7n5skbTy2RAB-CcrlWKCmW8kvjdjUTIJUoE9ARhzwqu7qb3jA-9jSx0B_XvoRnUr4XSwIbECG6O-y-Ln6f3DPXZeGokbaSc3r4iBodba8HsDMPj36C0AM1oFgOM2PQ0UjL9EpQqch5E_1aNaZ0Do0sex97h0L1_vGXc2Qsvyt_SSo9kLp4-DontUnjNs08OtXJr8IFfPzNwJnbQ176XgJo4NArspAO0g=",
+              "encrypted_content": "gAAAAABq_Uc5CqZnBHSoH7G541khTzqzjJzTCSaqIURgaiNBoGRfj0ubYSVz99LzTTUPNQhqla2piviq7KTKEBWfyxTrdvUu-JmymVN0syJmqTlRP21E9QYGwzIYJSQuKapswwTYqNv-Nx1BaR99rhpsXaY_hMcDyb21Qxj0YVpo5YTIq24blgsVXps5EV1X7pvSko02nmgpYdjZGUux9IArXVYQ9iNQ8FpsZWDh14RMRxEi-K2Qyan4cn-XEeARxsSIYOC3Bo8264ans1znBQ9220euomYubpu_LBQA1Xnq7tJZW4C1JEqYuVgCHVLSMhYx19G4wE0-WNFGol-5qzhiu_KxrW_T_DigdJhbdI-ZFWr86del1xVfsGPbu0FiKHUBsA1NhLELP9l9fvrCKceZQEN2TN48BYfzKfU7K17_9KGznG5yoixuo8Fwd74JgJ_ipjJTAUcsllvjwJJWl0IALwkbbRMkqvXTKYCkDKvEdciT2Ts01gieQZrTU1b5MSbkk5IgO1vTbVeYBJ5gMUd7ysOPR94xrBx6pGwZcPBtSOaZl_EzDa1SozzC1cucKd5YcchTj7_NjgynwA3eL631wn2pkwqz4fxnruQW3qjSMv1j52xchnpZ1gSjdU5LCFj2RUFuW4eVY3AO-mJlIObC2MIu9x7jrO1SEozyBxuNTJPbeVDqznzxuwlmP-tqz1weSSrbAPenbbYtn734MBKhwStMkpzZRkawEi6OYFMnw0DaewaIh2o319Lyw2TtVWQO0_LyUXEMfFj6FhX-4yy6MWnwTwmzNtK2yDGqpHpNo0a5493iZHiMq7TcJSyyVpE0zKqAnp7ryYJX22ib2zbZ1KgSf9Q8rpUbGqGvIpvdI3fpNUTbCTZuKODhHKGTZKZjB04TLXJKL__oAm1aeXyGRjwVh_WH-cb7SLNXIx4ow_bVaRaGBuwUPju__OY29n3GQSrHqrRsKD1liSEku_uOhm3_tALhZ6J6W-NMxNhhhdQTQpTmlnHoCX1Oq0RZlYt-JLnZbPAuqI_kjWvBkPwSLodWuHVn56V04GSLyMXCQhX7jbNfU6kV0uiZsv2_QsWLXX6257n29MSzjF3rSiijg3PyUJ7a3OyeCHCR63sawf9pnZ37hbUsNBGAGLoy0ZO2XDXT5v6blkR0kw6HsRYPGJnSXEpPDbmqIswe59K212gmDKr2UDF7yASkiZ6cKH7mLw2yvrbYKnT5A-oQsslAcGYDRAdAPo56x9tHRgXaNqJgz2ANhMw3z-2VTnBHLh1fQPGPsrT3YBwENT-z48cA0yrWhsyDD2vMcav3Dxpea3i8JOhBIXS3sw5BFhwULV2cqL9C80PhCBjB9YoO0jFtMCFGOgdr6DSRUUI4eSrX3WtxmmvhHKKZ4A-72sEjLpEHLnOzymQlG2v0fEiMUe9tdxVhH01Oe2VFk2G6fNXgKnSTKDDMCYMQgW4m-znt1wVkAEvrXFwGBaFAx-e7QaKEw7x2wZ4EkAG3Kzrqos9-9UGo1xRHDy1CqNkKphVLaepjuy9x93TzHPhwZ8WbU4N-w9Y_KrXtWW6DqXaQaRiZWb5upTMAKE_2qTXaH1DZKwrhe_V9whjoNGFN-yGy3OYNgxZ8z35sR7ri33Djvh8HBI2qqr5PFhNIMtGpxUvHwmMrybLmrLU_HgCk_4WMPvb5UZrUy-8p6Eb0DNEfDiUTqK1tlvlIZBGZy0vyrUtzPdwTm9Nxx_pJdl3bntMiCRGY4IU_3Hzxrs5Kdwn-XNKOQ2vc7SzOwaei0loFRmbux0HSi2DuiNc9frISg7d5YKgjZTuI95hDBPzf3EMngp2HGZn7gY4bVXwWpuV08RyiNNQm_fVWQ2d4dFwrenSGJw0vxJVokvgWcA==",
               "summary": []
             },
             {
-              "id": "msg_0bcadac109b08a69016af908d827fc87d2865d2a825105d420",
+              "id": "msg_08b8ccdbe4da7bd4016afd47392ca887d2a9a42c7123bc79af",
               "type": "message",
               "status": "completed",
               "content": [
@@ -350,7 +350,7 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "{\"policy\":{\"verdict\":\"fail\",\"reason\":\"The statement says sale items are refundable, but the policy states that sale items cannot be returned.\"}}"
+                  "text": "{\"policy\":{\"verdict\":\"fail\",\"reason\":\"The statement says sale items are refundable, but the store policy says sale items cannot be returned.\"}}"
                 }
               ],
               "phase": "final_answer",
@@ -450,7 +450,7 @@ http_interactions:
           "top_p": 0.98,
           "truncation": "disabled",
           "usage": {
-            "input_tokens": 202,
+            "input_tokens": 201,
             "input_tokens_details": {
               "cache_write_tokens": 0,
               "cache_write_tokens_details": {
@@ -459,14 +459,14 @@ http_interactions:
               },
               "cached_tokens": 0
             },
-            "output_tokens": 64,
+            "output_tokens": 57,
             "output_tokens_details": {
-              "reasoning_tokens": 25
+              "reasoning_tokens": 18
             },
-            "total_tokens": 266
+            "total_tokens": 258
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Sun, 15 Nov 2026 01:20:24 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:35:37 GMT
+recorded_with: VCR 6.4.1

@@ -9,7 +9,7 @@ http_interactions:
         a person named Alice who is 28 years old"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"text":{"format":{"type":"json_schema","name":"PersonSchemaClass","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"number"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:21:26 GMT
+      - Wed, 18 Nov 2026 06:36:52 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -48,7 +48,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '755'
+      - '747'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -75,16 +75,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0eb5838e3115845e016af9091542b087d2af513c15ced477a0",
+          "id": "resp_03a68bcb87ae30ef016afd4784207c87d2a246b57e58e24fb9",
           "object": "response",
-          "created_at": 1794705685,
+          "created_at": 1794983812,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794705685,
+          "completed_at": 1794983812,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
@@ -99,7 +99,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_0eb5838e3115845e016af90915ca5087d2bf3ad9613ff08ff1",
+              "id": "msg_03a68bcb87ae30ef016afd4784aed887d2a3ed397aec91eb9e",
               "type": "message",
               "status": "completed",
               "content": [
@@ -196,5 +196,5 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Sun, 15 Nov 2026 01:21:26 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:36:52 GMT
+recorded_with: VCR 6.4.1

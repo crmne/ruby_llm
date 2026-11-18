@@ -9,7 +9,7 @@ http_interactions:
         2?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -23,29 +23,36 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Sun, 15 Nov 2026 01:20:50 GMT
       Access-Control-Allow-Origin:
       - ''
-      Req-Cost-Time:
-      - '1679'
       Req-Arrive-Time:
-      - '1794705650444'
-      Resp-Start-Time:
-      - '1794705652124'
-      X-Envoy-Upstream-Service-Time:
-      - '1674'
+      - '1794983803640'
+      Date:
+      - Wed, 18 Nov 2026 06:36:43 GMT
       Server:
       - istio-envoy
       Content-Type:
       - application/json; charset=utf-8
+      Req-Cost-Time:
+      - '1339'
+      Resp-Start-Time:
+      - '1794983804980'
+      X-Envoy-Upstream-Service-Time:
+      - '1335'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiMiArIDIgZXF1YWxzICoqNCoqISDwn5iKICBcblRoYXTigJlzIG9uZSBvZiB0aGUgc2ltcGxlc3QgbWF0aCBwcm9ibGVtcywgYnV0IGl04oCZcyBhbHdheXMgZ29vZCB0byBjb25maXJtIHRoZSBiYXNpY3MhIExldCBtZSBrbm93IGlmIHlvdSBoYXZlIG1vcmUgcXVlc3Rpb25zISIsInJlYXNvbmluZ19jb250ZW50IjoiT2theSwgdGhlIHVzZXIgYXNrZWQsIFwiV2hhdCdzIDIgKyAyP1wiIExldCBtZSB0aGluayBhYm91dCBob3cgdG8gYXBwcm9hY2ggdGhpcy4gRmlyc3QsIEkgc2hvdWxkIGNvbmZpcm0gdGhlIGJhc2ljIGFyaXRobWV0aWMuIDIgcGx1cyAyIGlzIHN0cmFpZ2h0Zm9yd2FyZC4gVGhlIGFuc3dlciBpcyA0LiBCdXQgbWF5YmUgdGhlIHVzZXIgaXMgdGVzdGluZyBpZiBJIGtub3cgdGhlIGJhc2ljcy4gTGV0IG1lIG1ha2Ugc3VyZSB0aGVyZSdzIG5vIHRyaWNrIGhlcmUuIFNvbWV0aW1lcyBwZW9wbGUgbWlnaHQgYXNrIHNpbXBsZSBxdWVzdGlvbnMgdG8gY2hlY2sgaWYgdGhlIEFJIGlzIGZ1bmN0aW9uaW5nIHByb3Blcmx5LiBTbywgdGhlIGFuc3dlciBpcyBkZWZpbml0ZWx5IDQuIEkgc2hvdWxkIHByZXNlbnQgaXQgY2xlYXJseS4gTWF5YmUgYWRkIGEgZnJpZW5kbHkgbm90ZSB0byBrZWVwIHRoZSByZXNwb25zZSBlbmdhZ2luZy4gTGV0IG1lIGNoZWNrIGlmIHRoZXJlJ3MgYW55IGFsdGVybmF0aXZlIGludGVycHJldGF0aW9uLCBsaWtlIGluIGRpZmZlcmVudCBudW1iZXIgYmFzZXMuIElmIGl0J3MgYmFzZSAxMCwgdGhlbiB5ZXMsIDQuIEJ1dCBpZiBpdCdzIGFub3RoZXIgYmFzZSwgdGhlIGFuc3dlciB3b3VsZCBjaGFuZ2UuIEhvd2V2ZXIsIHRoZSBxdWVzdGlvbiBkb2Vzbid0IHNwZWNpZnksIHNvIGFzc3VtaW5nIGJhc2UgMTAgaXMgc2FmZS4gQWxyaWdodCwgcmVzcG9uZCB3aXRoIHRoZSBhbnN3ZXIgYW5kIGEgYml0IG9mIGVudGh1c2lhc20uXG4ifX1dLCJjcmVhdGVkIjoxNzk0NzA1NjUyLCJtb2RlbCI6InF3ZW4zLW5hdGl2ZSIsInN5c3RlbV9maW5nZXJwcmludCI6ImIxMDgzMC00NjVlNDliOWMiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJ1c2FnZSI6eyJjb21wbGV0aW9uX3Rva2VucyI6MjI2LCJwcm9tcHRfdG9rZW5zIjoxNiwidG90YWxfdG9rZW5zIjoyNDIsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjo1fX0sImlkIjoiY2hhdGNtcGwtWG5KQVV4MVZaTjNIdlpaWHV0TU54ZGZUNmpVeGV0eXUiLCJ0aW1pbmdzIjp7ImNhY2hlX24iOjUsInByb21wdF9uIjoxMSwicHJvbXB0X21zIjoyMS43NCwicHJvbXB0X3Blcl90b2tlbl9tcyI6MS45NzYzNjM2MzYzNjM2MzYzLCJwcm9tcHRfcGVyX3NlY29uZCI6NTA1Ljk3OTc2MDgwOTU2NzYsInByZWRpY3RlZF9uIjoyMjYsInByZWRpY3RlZF9tcyI6MTY0Ni44NjgsInByZWRpY3RlZF9wZXJfdG9rZW5fbXMiOjcuMzE5NDEzMzMzMzMzMzMzLCJwcmVkaWN0ZWRfcGVyX3NlY29uZCI6MTM2LjYyMjk3MTYwNDI4MTZ9fQ==
-  recorded_at: Sun, 15 Nov 2026 01:20:52 GMT
-recorded_with: VCR 6.4.0
+      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"role":"assistant","content":"2
+        + 2 equals **4**.","reasoning_content":"Okay, the user is asking \"What''s
+        2 + 2?\" That''s a basic arithmetic question. Let me think. I know that 2
+        + 2 is 4. But wait, maybe I should double-check to be sure. Let''s count:
+        2 plus 2. Starting at 2, adding 1 makes 3, then adding another 1 makes 4.
+        Yep, that''s correct. I remember from basic math that 2 + 2 equals 4. There''s
+        no trick here, right? The user might just be testing if I know the answer
+        or maybe they want a more detailed explanation. But since it''s a straightforward
+        question, the answer is 4. I should present it clearly.\n"}}],"created":1794983804,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":164,"prompt_tokens":16,"total_tokens":180,"prompt_tokens_details":{"cached_tokens":5}},"id":"chatcmpl-ES7fKa9PSIJeXWhVgbX4aesGG1nBBTgX","timings":{"cache_n":5,"prompt_n":11,"prompt_ms":21.275,"prompt_per_token_ms":1.9340909090909089,"prompt_per_second":517.0387779083431,"predicted_n":164,"predicted_ms":1168.779,"predicted_per_token_ms":7.170423312883435,"predicted_per_second":139.46178019967846}}'
+  recorded_at: Wed, 18 Nov 2026 06:36:44 GMT
+recorded_with: VCR 6.4.1

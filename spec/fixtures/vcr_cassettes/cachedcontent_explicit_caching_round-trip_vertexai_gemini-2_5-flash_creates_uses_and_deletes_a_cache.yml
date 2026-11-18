@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
+      Date:
+      - Wed, 18 Nov 2026 06:35:40 GMT
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
-      Date:
-      - Sun, 15 Nov 2026 01:20:47 GMT
       Pragma:
       - no-cache
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
+          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/cloud-platform openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Sun, 15 Nov 2026 01:20:47 GMT
+  recorded_at: Wed, 18 Nov 2026 06:35:40 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/cachedContents
@@ -866,7 +866,7 @@ http_interactions:
         "}]}],"ttl":"300s"}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -887,7 +887,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 15 Nov 2026 01:20:49 GMT
+      - Wed, 18 Nov 2026 06:35:42 GMT
       Server:
       - ESF
       X-Xss-Protection:
@@ -904,26 +904,26 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "name": "projects/56641835022/locations/<GOOGLE_CLOUD_LOCATION>/cachedContents/1279630749305143296",
+          "name": "projects/56641835022/locations/<GOOGLE_CLOUD_LOCATION>/cachedContents/4396355818702766080",
           "model": "projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash",
-          "createTime": "2026-11-15T01:20:48.481871Z",
-          "updateTime": "2026-11-15T01:20:48.481871Z",
-          "expireTime": "2026-11-15T01:25:48.431030Z",
+          "createTime": "2026-11-18T06:35:41.767583Z",
+          "updateTime": "2026-11-18T06:35:41.767583Z",
+          "expireTime": "2026-11-18T06:40:41.716597Z",
           "usageMetadata": {
             "totalTokenCount": 9601
           }
         }
-  recorded_at: Sun, 15 Nov 2026 01:20:49 GMT
+  recorded_at: Wed, 18 Nov 2026 06:35:42 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"In one short sentence,
-        what does the cached handbook describe?"}]}],"generationConfig":{},"cachedContent":"projects/56641835022/locations/<GOOGLE_CLOUD_LOCATION>/cachedContents/1279630749305143296"}'
+        what does the cached handbook describe?"}]}],"generationConfig":{},"cachedContent":"projects/56641835022/locations/<GOOGLE_CLOUD_LOCATION>/cachedContents/4396355818702766080"}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -938,7 +938,7 @@ http_interactions:
       message: OK
     headers:
       X-Goog-Request-Id:
-      - 8Qj5asqJMbuu-eQPoLbtkQc
+      - Pkf9ari4OPqSmNAPg8jUkQ0
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -946,7 +946,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 15 Nov 2026 01:21:00 GMT
+      - Wed, 18 Nov 2026 06:35:43 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -961,61 +961,18 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: |
-        {
-          "candidates": [
-            {
-              "content": {
-                "role": "model",
-                "parts": [
-                  {
-                    "text": "The RubyLLM release engineering handbook describes the mandatory pre-release checks for every change, including cassette hygiene, provider wire format drift, backwards compatibility, and documentation accuracy reviews."
-                  }
-                ]
-              },
-              "finishReason": "STOP"
-            }
-          ],
-          "usageMetadata": {
-            "promptTokenCount": 9612,
-            "candidatesTokenCount": 35,
-            "totalTokenCount": 11581,
-            "cachedContentTokenCount": 9601,
-            "trafficType": "ON_DEMAND",
-            "promptTokensDetails": [
-              {
-                "modality": "TEXT",
-                "tokenCount": 9612
-              }
-            ],
-            "cacheTokensDetails": [
-              {
-                "modality": "TEXT",
-                "tokenCount": 9601
-              }
-            ],
-            "candidatesTokensDetails": [
-              {
-                "modality": "TEXT",
-                "tokenCount": 35
-              }
-            ],
-            "thoughtsTokenCount": 1934
-          },
-          "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-11-15T01:20:49.804042Z",
-          "responseId": "8Qj5asqJMbuu-eQPoLbtkQc"
-        }
-  recorded_at: Sun, 15 Nov 2026 01:21:00 GMT
+      string: !binary |-
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICJUaGUgUnVieUxMTSByZWxlYXNlIGVuZ2luZWVyaW5nIGhhbmRib29rIG91dGxpbmVzIHRoZSBuZWNlc3NhcnkgY2hlY2tz4oCUaW5jbHVkaW5nIGNhc3NldHRlIGh5Z2llbmUsIHByb3ZpZGVyIHdpcmUgZm9ybWF0IGRyaWZ0LCBiYWNrd2FyZHMgY29tcGF0aWJpbGl0eSwgYW5kIGRvY3VtZW50YXRpb24gYWNjdXJhY3nigJR0aGF0IGVhY2ggY2hhbmdlIG11c3QgdW5kZXJnbyBiZWZvcmUgcmVsZWFzZS4iCiAgICAgICAgICB9CiAgICAgICAgXQogICAgICB9LAogICAgICAiZmluaXNoUmVhc29uIjogIlNUT1AiCiAgICB9CiAgXSwKICAidXNhZ2VNZXRhZGF0YSI6IHsKICAgICJwcm9tcHRUb2tlbkNvdW50IjogOTYxMiwKICAgICJjYW5kaWRhdGVzVG9rZW5Db3VudCI6IDM2LAogICAgInRvdGFsVG9rZW5Db3VudCI6IDk2ODEsCiAgICAiY2FjaGVkQ29udGVudFRva2VuQ291bnQiOiA5NjAxLAogICAgInRyYWZmaWNUeXBlIjogIk9OX0RFTUFORCIsCiAgICAicHJvbXB0VG9rZW5zRGV0YWlscyI6IFsKICAgICAgewogICAgICAgICJtb2RhbGl0eSI6ICJURVhUIiwKICAgICAgICAidG9rZW5Db3VudCI6IDk2MTIKICAgICAgfQogICAgXSwKICAgICJjYWNoZVRva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiA5NjAxCiAgICAgIH0KICAgIF0sCiAgICAiY2FuZGlkYXRlc1Rva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiAzNgogICAgICB9CiAgICBdLAogICAgInRob3VnaHRzVG9rZW5Db3VudCI6IDMzCiAgfSwKICAibW9kZWxWZXJzaW9uIjogImdlbWluaS0yLjUtZmxhc2giLAogICJjcmVhdGVUaW1lIjogIjIwMjYtMTEtMThUMDY6MzU6NDIuOTI0NzI4WiIsCiAgInJlc3BvbnNlSWQiOiAiUGtmOWFyaTRPUHFTbU5BUGc4alVrUTAiCn0K
+  recorded_at: Wed, 18 Nov 2026 06:35:43 GMT
 - request:
     method: delete
-    uri: https://aiplatform.googleapis.com/v1beta1/projects/56641835022/locations/<GOOGLE_CLOUD_LOCATION>/cachedContents/1279630749305143296
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/56641835022/locations/<GOOGLE_CLOUD_LOCATION>/cachedContents/4396355818702766080
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Accept-Encoding:
@@ -1034,7 +991,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 15 Nov 2026 01:21:01 GMT
+      - Wed, 18 Nov 2026 06:35:44 GMT
       Server:
       - ESF
       X-Xss-Protection:
@@ -1050,5 +1007,5 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: "{}\n"
-  recorded_at: Sun, 15 Nov 2026 01:21:01 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:35:44 GMT
+recorded_with: VCR 6.4.1

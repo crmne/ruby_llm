@@ -12,7 +12,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}],"tool_choice":{"type":"function","function":{"name":"weather"}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Http-Referer:
@@ -31,7 +31,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:42:40 GMT
+      - Wed, 18 Nov 2026 06:56:27 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -41,11 +41,11 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       X-Generation-Id:
-      - gen-1794706959-chLdkdDCFoUjI6RdqSBM
+      - gen-1794984986-xyfs9vzfcdSWi0ayfBPL
       Access-Control-Expose-Headers:
       - WWW-Authenticate,PAYMENT-REQUIRED,Payment-Receipt,PAYMENT-RESPONSE,Location,X-Generation-Id,x-openrouter-error-origin,x-openrouter-error-tool,X-Provider-Name,request-id,cf-ray
       X-Openrouter-Release:
-      - api;0c306999-2731-41b9-b23f-6294b64a156e
+      - api;552c4bf2-ed6b-4058-b8f6-693241cb446c
       Set-Cookie:
       - "<COOKIE>"
       Permissions-Policy:
@@ -63,24 +63,24 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n{\"id\":\"gen-1794706959-chLdkdDCFoUjI6RdqSBM\",\"object\":\"chat.completion\",\"created\":1794706959,\"model\":\"anthropic/claude-haiku-4.5\",\"provider\":\"Amazon
-        Bedrock\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_use\",\"message\":{\"role\":\"assistant\",\"content\":null,\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"type\":\"function\",\"index\":0,\"id\":\"toolu_bdrk_01RMeeYysrkGYqpfSmy8EM4P\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":
+      string: "\n         \n{\"id\":\"gen-1794984986-xyfs9vzfcdSWi0ayfBPL\",\"object\":\"chat.completion\",\"created\":1794984986,\"model\":\"anthropic/claude-haiku-4.5\",\"provider\":\"Amazon
+        Bedrock\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_use\",\"message\":{\"role\":\"assistant\",\"content\":null,\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"type\":\"function\",\"index\":0,\"id\":\"toolu_bdrk_019xfFU3Uk7qvK9UrhJ4mVPM\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":
         \\\"41.9028\\\", \\\"longitude\\\": \\\"12.4964\\\"}\"}}]}}],\"usage\":{\"prompt_tokens\":716,\"completion_tokens\":56,\"total_tokens\":772,\"cost\":0.000996,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.000996,\"upstream_inference_prompt_cost\":0.000716,\"upstream_inference_completions_cost\":0.00028},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
-  recorded_at: Sun, 15 Nov 2026 01:42:40 GMT
+  recorded_at: Wed, 18 Nov 2026 06:56:27 GMT
 - request:
     method: post
     uri: https://openrouter.ai/api/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"anthropic/claude-haiku-4.5","messages":[{"role":"user","content":"What''s
-        the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"toolu_bdrk_01RMeeYysrkGYqpfSmy8EM4P","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},{"role":"tool","content":"Current
-        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h","tool_call_id":"toolu_bdrk_01RMeeYysrkGYqpfSmy8EM4P"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"toolu_bdrk_019xfFU3Uk7qvK9UrhJ4mVPM","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},{"role":"tool","content":"Current
+        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h","tool_call_id":"toolu_bdrk_019xfFU3Uk7qvK9UrhJ4mVPM"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Http-Referer:
@@ -99,7 +99,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:42:40 GMT
+      - Wed, 18 Nov 2026 06:56:30 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -109,11 +109,11 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       X-Generation-Id:
-      - gen-1794706960-10y2Ss0e999PtfLof4m3
+      - gen-1794984987-9rDMVTSRiueYpIPODeT8
       Access-Control-Expose-Headers:
       - WWW-Authenticate,PAYMENT-REQUIRED,Payment-Receipt,PAYMENT-RESPONSE,Location,X-Generation-Id,x-openrouter-error-origin,x-openrouter-error-tool,X-Provider-Name,request-id,cf-ray
       X-Openrouter-Release:
-      - api;0c306999-2731-41b9-b23f-6294b64a156e
+      - api;552c4bf2-ed6b-4058-b8f6-693241cb446c
       Set-Cookie:
       - "<COOKIE>"
       Permissions-Policy:
@@ -131,27 +131,7 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n{\"id\":\"gen-1794706960-10y2Ss0e999PtfLof4m3\",\"object\":\"chat.completion\",\"created\":1794706960,\"model\":\"anthropic/claude-haiku-4.5\",\"provider\":\"Amazon
-        Bedrock\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"end_turn\",\"message\":{\"role\":\"assistant\",\"content\":\"I
-        apologize for the confusion with that function call! You're asking about a
-        historical event, not the weather. Let me provide you with information about
-        the Fall of Rome instead:\\n\\n## The Fall of Rome\\n\\nThe **Fall of Rome**
-        refers to the collapse of the Western Roman Empire, which occurred gradually
-        over several centuries and culminated around **476 AD**, when the last Western
-        Roman Emperor (Romulus Augustulus) was deposed.\\n\\n### Key Causes:\\n\\n1.
-        **Political Instability**: Frequent power struggles, civil wars, and succession
-        crises weakened central authority\\n\\n2. **Economic Decline**: \\n   - Debasement
-        of currency leading to inflation\\n   - Disruption of trade routes\\n   -
-        Heavy taxation and military spending\\n\\n3. **Military Pressure**: \\n   -
-        Invasions by Germanic tribes (Visigoths, Vandals, Ostrogoths)\\n   - Overstretched
-        military forces defending vast borders\\n   - Recruitment of barbarian soldiers\\n\\n4.
-        **Administrative Problems**: \\n   - The empire became too large to govern
-        effectively\\n   - Corruption and bureaucratic inefficiency\\n\\n5. **Social
-        Changes**: \\n   - Rise of feudalism\\n   - Decline of urban centers\\n   -
-        Loss of Roman cultural identity\\n\\n### Important Note:\\nThe fall of the
-        Western Roman Empire didn't mean the end of Roman civilization. The **Eastern
-        Roman Empire (Byzantine Empire)** continued to flourish for another thousand
-        years until 1453.\\n\\nIs there a specific aspect of Rome's fall you'd like
-        to know more about?\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":736,\"completion_tokens\":344,\"total_tokens\":1080,\"cost\":0.002456,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.002456,\"upstream_inference_prompt_cost\":0.000736,\"upstream_inference_completions_cost\":0.00172},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
-  recorded_at: Sun, 15 Nov 2026 01:42:42 GMT
-recorded_with: VCR 6.4.0
+      string: !binary |-
+        CiAgICAgICAgIAp7ImlkIjoiZ2VuLTE3OTQ5ODQ5ODctOXJETVZUU1JpdWVZcElQT0RlVDgiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjcmVhdGVkIjoxNzk0OTg0OTg3LCJtb2RlbCI6ImFudGhyb3BpYy9jbGF1ZGUtaGFpa3UtNC41IiwicHJvdmlkZXIiOiJBbWF6b24gQmVkcm9jayIsInN5c3RlbV9maW5nZXJwcmludCI6bnVsbCwic2VydmljZV90aWVyIjoiZGVmYXVsdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJuYXRpdmVfZmluaXNoX3JlYXNvbiI6ImVuZF90dXJuIiwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IkkgYXBvbG9naXplIGZvciB0aGF04oCUSSBtaXN0YWtlbmx5IGNhbGxlZCB0aGUgd2VhdGhlciBmdW5jdGlvbiwgd2hpY2ggaXNuJ3Qgd2hhdCB5b3UgbmVlZGVkISBMZXQgbWUgcHJvdmlkZSB5b3Ugd2l0aCBhIHByb3BlciBoaXN0b3JpY2FsIGFuc3dlciBpbnN0ZWFkLlxuXG4jIyBUaGUgRmFsbCBvZiBSb21lXG5cblRoZSBcIkZhbGwgb2YgUm9tZVwiIHJlZmVycyB0byB0aGUgY29sbGFwc2Ugb2YgdGhlICoqV2VzdGVybiBSb21hbiBFbXBpcmUqKiwgd2hpY2ggb2NjdXJyZWQgZ3JhZHVhbGx5IG92ZXIgc2V2ZXJhbCBjZW50dXJpZXMsIHR5cGljYWxseSBkYXRlZCB0byAqKjQ3NiBDRSoqIHdoZW4gdGhlIGxhc3QgV2VzdGVybiBSb21hbiBFbXBlcm9yIHdhcyBkZXBvc2VkLlxuXG4jIyMgS2V5IGNhdXNlcyBhbmQgZmFjdG9yczpcblxuKipQb2xpdGljYWwgSW5zdGFiaWxpdHkqKlxuLSBGcmVxdWVudCBjaXZpbCB3YXJzIGFuZCBzdWNjZXNzaW9uIGRpc3B1dGVzXG4tIFdlYWssIGluZWZmZWN0aXZlIGxlYWRlcnNoaXAgaW4gbGF0ZXIgZW1wZXJvcnNcbi0gQ29ycnVwdGlvbiBhbmQgYnVyZWF1Y3JhdGljIGluZWZmaWNpZW5jeVxuXG4qKkVjb25vbWljIERlY2xpbmUqKlxuLSBEZWJhc2VtZW50IG9mIGN1cnJlbmN5IGxlYWRpbmcgdG8gaW5mbGF0aW9uXG4tIERpc3J1cHRpb24gb2YgdHJhZGUgbmV0d29ya3Ncbi0gT3ZlcnRheGF0aW9uIGRyaXZpbmcgcGVvcGxlIGludG8gcG92ZXJ0eVxuLSBEZWNsaW5lIGluIGFncmljdWx0dXJlIGFuZCBwcm9kdWN0aXZpdHlcblxuKipNaWxpdGFyeSBQcmVzc3VyZSoqXG4tIEludmFzaW9ucyBieSBHZXJtYW5pYyB0cmliZXMgKFZpc2lnb3RocywgVmFuZGFscywgT3N0cm9nb3Rocylcbi0gU3RyZXRjaGVkIG1pbGl0YXJ5IHJlc291cmNlcyBhY3Jvc3MgdmFzdCBib3JkZXJzXG4tIFJlbGlhbmNlIG9uIFwiYmFyYmFyaWFuXCIgbWVyY2VuYXJpZXMgd2hvIGV2ZW50dWFsbHkgdHVybmVkIGFnYWluc3QgUm9tZVxuXG4qKlNvY2lhbCBhbmQgQ3VsdHVyYWwgQ2hhbmdlcyoqXG4tIFJpc2Ugb2YgQ2hyaXN0aWFuaXR5IGNoYW5naW5nIFJvbWFuIHZhbHVlc1xuLSBCcmFpbiBkcmFpbiBhcyB0YWxlbnRlZCBwZW9wbGUgbW92ZWQgb3Igd2VyZSBlbnNsYXZlZFxuLSBMb3NzIG9mIGNpdmljIGVuZ2FnZW1lbnQgYW5kIHVuaXR5XG5cbioqSW5mcmFzdHJ1Y3R1cmUgQ29sbGFwc2UqKlxuLSBCcmVha2Rvd24gb2Ygcm9hZHMgYW5kIGNvbW11bmljYXRpb24gc3lzdGVtc1xuLSBEZWNsaW5lIG9mIGNpdGllcyBhcyBhZG1pbmlzdHJhdGl2ZSBjZW50ZXJzXG4tIExvc3Mgb2YgdGVjaG5vbG9naWNhbCBrbm93bGVkZ2VcblxuIyMjIFRoZSBFbmQgUG9pbnQ6XG5JbiAqKjQ3NiBDRSoqLCB0aGUgR2VybWFuaWMgY2hpZWZ0YWluIE9kb2FjZXIgZGVwb3NlZCB0aGUgbGFzdCBXZXN0ZXJuIFJvbWFuIEVtcGVyb3IsIFJvbXVsdXMgQXVndXN0dWx1cywgdGhvdWdoIHRoZSAqKkVhc3Rlcm4gUm9tYW4gRW1waXJlKiogKEJ5emFudGluZSBFbXBpcmUpIGNvbnRpbnVlZCBmb3IgYW5vdGhlciB0aG91c2FuZCB5ZWFycyB1bnRpbCAxNDUzLlxuXG5UaGUgZmFsbCB3YXNuJ3Qgc3VkZGVuIGJ1dCByYXRoZXIgYSBncmFkdWFsIHRyYW5zZm9ybWF0aW9uIHRoYXQgZ2F2ZSB3YXkgdG8gdGhlIE1lZGlldmFsIHBlcmlvZCBpbiBFdXJvcGUuIiwicmVmdXNhbCI6bnVsbCwicmVhc29uaW5nIjpudWxsfX1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo3MzYsImNvbXBsZXRpb25fdG9rZW5zIjozNzUsInRvdGFsX3Rva2VucyI6MTExMSwiY29zdCI6MC4wMDI2MTEsImlzX2J5b2siOmZhbHNlLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MCwiY2FjaGVfd3JpdGVfdG9rZW5zIjowLCJhdWRpb190b2tlbnMiOjAsInZpZGVvX3Rva2VucyI6MH0sImNvc3RfZGV0YWlscyI6eyJ1cHN0cmVhbV9pbmZlcmVuY2VfY29zdCI6MC4wMDI2MTEsInVwc3RyZWFtX2luZmVyZW5jZV9wcm9tcHRfY29zdCI6MC4wMDA3MzYsInVwc3RyZWFtX2luZmVyZW5jZV9jb21wbGV0aW9uc19jb3N0IjowLjAwMTg3NX0sImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MCwiaW1hZ2VfdG9rZW5zIjowLCJhdWRpb190b2tlbnMiOjB9fX0=
+  recorded_at: Wed, 18 Nov 2026 06:56:30 GMT
+recorded_with: VCR 6.4.1

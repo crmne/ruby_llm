@@ -11,7 +11,7 @@ http_interactions:
         a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Http-Referer:
@@ -30,7 +30,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:31:11 GMT
+      - Wed, 18 Nov 2026 06:45:07 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -40,11 +40,11 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       X-Generation-Id:
-      - gen-1794706269-lSE5t8DyOgoA6cBt38Ox
+      - gen-1794984306-rVJ6hXWoPgIjbs5MxoCV
       Access-Control-Expose-Headers:
       - WWW-Authenticate,PAYMENT-REQUIRED,Payment-Receipt,PAYMENT-RESPONSE,Location,X-Generation-Id,x-openrouter-error-origin,x-openrouter-error-tool,X-Provider-Name,request-id,cf-ray
       X-Openrouter-Release:
-      - api;0c306999-2731-41b9-b23f-6294b64a156e
+      - api;552c4bf2-ed6b-4058-b8f6-693241cb446c
       Set-Cookie:
       - "<COOKIE>"
       Permissions-Policy:
@@ -62,9 +62,9 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n{\"id\":\"gen-1794706269-lSE5t8DyOgoA6cBt38Ox\",\"object\":\"chat.completion\",\"created\":1794706269,\"model\":\"anthropic/claude-haiku-4.5\",\"provider\":\"Amazon
-        Bedrock\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_use\",\"message\":{\"role\":\"assistant\",\"content\":null,\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"type\":\"function\",\"index\":0,\"id\":\"toolu_bdrk_01CqSmYQjfZMvEkr5fKkqxFX\",\"function\":{\"name\":\"dice_roll\",\"arguments\":\"{}\"}},{\"type\":\"function\",\"index\":1,\"id\":\"toolu_bdrk_01XRVdLBPApEuDaUJH7p6Ax9\",\"function\":{\"name\":\"dice_roll\",\"arguments\":\"{}\"}},{\"type\":\"function\",\"index\":2,\"id\":\"toolu_bdrk_01QC7ZzCLJkPeEX7QLw7uVCk\",\"function\":{\"name\":\"dice_roll\",\"arguments\":\"{}\"}}]}}],\"usage\":{\"prompt_tokens\":596,\"completion_tokens\":75,\"total_tokens\":671,\"cost\":0.000971,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.000971,\"upstream_inference_prompt_cost\":0.000596,\"upstream_inference_completions_cost\":0.000375},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
-  recorded_at: Sun, 15 Nov 2026 01:31:11 GMT
+      string: "\n         \n{\"id\":\"gen-1794984306-rVJ6hXWoPgIjbs5MxoCV\",\"object\":\"chat.completion\",\"created\":1794984306,\"model\":\"anthropic/claude-haiku-4.5\",\"provider\":\"Amazon
+        Bedrock\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_use\",\"message\":{\"role\":\"assistant\",\"content\":null,\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"type\":\"function\",\"index\":0,\"id\":\"toolu_bdrk_01QNSSFTCn1dfewejqt6FyMH\",\"function\":{\"name\":\"dice_roll\",\"arguments\":\"{}\"}},{\"type\":\"function\",\"index\":1,\"id\":\"toolu_bdrk_01LKbASi7U4LActu2Pu8kaQs\",\"function\":{\"name\":\"dice_roll\",\"arguments\":\"{}\"}},{\"type\":\"function\",\"index\":2,\"id\":\"toolu_bdrk_01K9TeJFCxjAwdXo8QHYTQU5\",\"function\":{\"name\":\"dice_roll\",\"arguments\":\"{}\"}}]}}],\"usage\":{\"prompt_tokens\":596,\"completion_tokens\":75,\"total_tokens\":671,\"cost\":0.000971,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.000971,\"upstream_inference_prompt_cost\":0.000596,\"upstream_inference_completions_cost\":0.000375},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
+  recorded_at: Wed, 18 Nov 2026 06:45:07 GMT
 - request:
     method: post
     uri: https://openrouter.ai/api/v1/chat/completions
@@ -72,11 +72,11 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"anthropic/claude-haiku-4.5","messages":[{"role":"developer","content":"You
         must call the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
-        the dice 3 times"},{"role":"assistant","content":"","tool_calls":[{"id":"toolu_bdrk_01CqSmYQjfZMvEkr5fKkqxFX","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"toolu_bdrk_01XRVdLBPApEuDaUJH7p6Ax9","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"toolu_bdrk_01QC7ZzCLJkPeEX7QLw7uVCk","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{\"roll\":1}","tool_call_id":"toolu_bdrk_01CqSmYQjfZMvEkr5fKkqxFX"},{"role":"tool","content":"{\"roll\":2}","tool_call_id":"toolu_bdrk_01XRVdLBPApEuDaUJH7p6Ax9"},{"role":"tool","content":"{\"roll\":3}","tool_call_id":"toolu_bdrk_01QC7ZzCLJkPeEX7QLw7uVCk"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
+        the dice 3 times"},{"role":"assistant","content":"","tool_calls":[{"id":"toolu_bdrk_01QNSSFTCn1dfewejqt6FyMH","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"toolu_bdrk_01LKbASi7U4LActu2Pu8kaQs","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"toolu_bdrk_01K9TeJFCxjAwdXo8QHYTQU5","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{\"roll\":1}","tool_call_id":"toolu_bdrk_01QNSSFTCn1dfewejqt6FyMH"},{"role":"tool","content":"{\"roll\":2}","tool_call_id":"toolu_bdrk_01LKbASi7U4LActu2Pu8kaQs"},{"role":"tool","content":"{\"roll\":3}","tool_call_id":"toolu_bdrk_01K9TeJFCxjAwdXo8QHYTQU5"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Http-Referer:
@@ -95,7 +95,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:31:12 GMT
+      - Wed, 18 Nov 2026 06:45:08 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -105,11 +105,11 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       X-Generation-Id:
-      - gen-1794706271-HcU2n2ohOGT9a1AraG52
+      - gen-1794984307-pkIMHqccmxgHAzp5VuWN
       Access-Control-Expose-Headers:
       - WWW-Authenticate,PAYMENT-REQUIRED,Payment-Receipt,PAYMENT-RESPONSE,Location,X-Generation-Id,x-openrouter-error-origin,x-openrouter-error-tool,X-Provider-Name,request-id,cf-ray
       X-Openrouter-Release:
-      - api;0c306999-2731-41b9-b23f-6294b64a156e
+      - api;552c4bf2-ed6b-4058-b8f6-693241cb446c
       Set-Cookie:
       - "<COOKIE>"
       Permissions-Policy:
@@ -127,9 +127,9 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n{\"id\":\"gen-1794706271-HcU2n2ohOGT9a1AraG52\",\"object\":\"chat.completion\",\"created\":1794706271,\"model\":\"anthropic/claude-haiku-4.5\",\"provider\":\"Amazon
+      string: "\n         \n{\"id\":\"gen-1794984307-pkIMHqccmxgHAzp5VuWN\",\"object\":\"chat.completion\",\"created\":1794984307,\"model\":\"anthropic/claude-haiku-4.5\",\"provider\":\"Amazon
         Bedrock\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"end_turn\",\"message\":{\"role\":\"assistant\",\"content\":\"Here
-        are your three dice rolls:\\n\\n1. **First roll:** 1\\n2. **Second roll:**
-        2\\n3. **Third roll:** 3\\n\\n**Total:** 6\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":771,\"completion_tokens\":43,\"total_tokens\":814,\"cost\":0.000986,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.000986,\"upstream_inference_prompt_cost\":0.000771,\"upstream_inference_completions_cost\":0.000215},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
-  recorded_at: Sun, 15 Nov 2026 01:31:12 GMT
-recorded_with: VCR 6.4.0
+        are your three dice rolls:\\n\\n1. **Roll 1:** 1\\n2. **Roll 2:** 2\\n3. **Roll
+        3:** 3\\n\\n**Total:** 6\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":771,\"completion_tokens\":46,\"total_tokens\":817,\"cost\":0.001001,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.001001,\"upstream_inference_prompt_cost\":0.000771,\"upstream_inference_completions_cost\":0.00023},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
+  recorded_at: Wed, 18 Nov 2026 06:45:08 GMT
+recorded_with: VCR 6.4.1

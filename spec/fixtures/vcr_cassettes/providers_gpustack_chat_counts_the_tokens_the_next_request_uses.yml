@@ -9,7 +9,7 @@ http_interactions:
         terse."},{"role":"user","content":"Name one colour."}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,19 +24,19 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 02:01:54 GMT
+      - Wed, 18 Nov 2026 06:34:30 GMT
+      Resp-Start-Time:
+      - '1794983670403'
       Server:
       - istio-envoy
-      Req-Cost-Time:
-      - '12'
-      Resp-Start-Time:
-      - '1794708114935'
-      X-Envoy-Upstream-Service-Time:
-      - '4'
       Content-Type:
       - application/json
+      Req-Cost-Time:
+      - '243'
       Req-Arrive-Time:
-      - '1794708114922'
+      - '1794983670160'
+      X-Envoy-Upstream-Service-Time:
+      - '126'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
@@ -44,7 +44,7 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '{"count":22,"max_model_len":2048,"tokens":[1,9690,198,6077,1733,313,30,2,198,1,4093,198,5820,582,7302,30,2,198,1,520,9531,198],"token_strs":null}'
-  recorded_at: Sun, 15 Nov 2026 02:01:54 GMT
+  recorded_at: Wed, 18 Nov 2026 06:34:30 GMT
 - request:
     method: post
     uri: http://localhost:11444/model/proxy/4/v1/chat/completions
@@ -54,7 +54,7 @@ http_interactions:
         terse."},{"role":"user","content":"Name one colour."}],"stream":false,"max_tokens":8}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -68,27 +68,27 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Date:
+      - Wed, 18 Nov 2026 06:34:30 GMT
       Server:
       - istio-envoy
       Content-Type:
       - application/json
-      Req-Cost-Time:
-      - '67'
       Req-Arrive-Time:
-      - '1794708114939'
-      Date:
-      - Sun, 15 Nov 2026 02:01:54 GMT
-      Resp-Start-Time:
-      - '1794708115007'
+      - '1794983670412'
       X-Envoy-Upstream-Service-Time:
-      - '51'
+      - '740'
+      Req-Cost-Time:
+      - '761'
+      Resp-Start-Time:
+      - '1794983671174'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"chatcmpl-55370c4f-751f-42d9-9fd1-11081a4f5ef2","object":"chat.completion","created":1794708114,"model":"smollm2-135m","choices":[{"index":0,"message":{"role":"assistant","content":"That
-        color is being sung in an outdoors","refusal":null,"annotations":null,"audio":null,"function_call":null,"reasoning":null},"logprobs":null,"finish_reason":"length","stop_reason":null,"token_ids":null,"routed_experts":null}],"service_tier":null,"system_fingerprint":"vllm-0.25.1-019fab29","usage":{"prompt_tokens":22,"total_tokens":30,"completion_tokens":8,"prompt_tokens_details":{"cached_tokens":16,"multimodal_tokens":null}},"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"metrics":null}'
-  recorded_at: Sun, 15 Nov 2026 02:01:55 GMT
-recorded_with: VCR 6.4.0
+      string: '{"id":"chatcmpl-a232db48-c69e-4994-9c0c-a377d7667a45","object":"chat.completion","created":1794983670,"model":"smollm2-135m","choices":[{"index":0,"message":{"role":"assistant","content":"That''s
+        a tricky one, since the","refusal":null,"annotations":null,"audio":null,"function_call":null,"reasoning":null},"logprobs":null,"finish_reason":"length","stop_reason":null,"token_ids":null,"routed_experts":null}],"service_tier":null,"system_fingerprint":"vllm-0.25.1-019fab29","usage":{"prompt_tokens":22,"total_tokens":30,"completion_tokens":8,"prompt_tokens_details":{"cached_tokens":16,"multimodal_tokens":null}},"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"metrics":null}'
+  recorded_at: Wed, 18 Nov 2026 06:34:31 GMT
+recorded_with: VCR 6.4.1

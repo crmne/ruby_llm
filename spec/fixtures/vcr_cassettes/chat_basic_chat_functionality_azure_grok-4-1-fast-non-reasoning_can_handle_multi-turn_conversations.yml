@@ -9,7 +9,7 @@ http_interactions:
         is the creator of the programming language Ruby?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -26,7 +26,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 15 Nov 2026 01:19:45 GMT
+      - Wed, 18 Nov 2026 06:35:24 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
@@ -46,13 +46,13 @@ http_interactions:
       X-Watermark:
       - 'false'
       Traceparent:
-      - 00-ae34d4cdf93a6653fa9272c88baeb7fe-635fa640001096d9-00
+      - 00-f2b86ed4cfb544841cdd62eb2da7da05-af2290ea00095cb0-00
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Ms-Client-Request-Id:
-      - 2e9d2405-7d02-479a-ae41-90460448f087
+      - 7839ba72-4c9c-4645-bcd0-faaa7e102dc4
       Azureml-Model-Session:
-      - d20261110012600-4baac0fe
+      - d20261110015917-e7d4cb48
       X-Ms-Inference-Retry-History:
       - '{"v":1,"entries":[{"service_id":"mir.frontdoor","layer":"regional","role":"direct","retries":0}]}'
       Azureai-Requested-Tier:
@@ -86,9 +86,9 @@ http_interactions:
       Azureai-Fe-Offer-Type:
       - paygo
       Apim-Request-Id:
-      - 2e9d2405-7d02-479a-ae41-90460448f087
+      - 7839ba72-4c9c-4645-bcd0-faaa7e102dc4
       X-Http2-Stream-Id:
-      - '35'
+      - '947'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -96,35 +96,29 @@ http_interactions:
       X-Ms-Region:
       - West Europe
     body:
-      encoding: UTF-8
-      string: '{"id":"16e62107-779f-47e7-b5a9-ad65fea92609","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"**Matzuda
-        Yukihiro** (commonly known as **Matz**) is the creator of the Ruby programming
-        language.\n\nHe designed and developed Ruby in the mid-1990s in Japan, first
-        releasing it in 1995. Matz aimed to create a language that was fun, expressive,
-        and developer-friendly, prioritizing human happiness (\"Happy Ruby, Happy
-        Programmer\"). This is confirmed by official Ruby documentation (ruby-lang.org),
-        Matz''s own writings, and historical records from the language''s development.
-        Ruby has since become popular for web development (e.g., via Ruby on Rails)
-        and scripting."},"finish_reason":"stop"}],"usage":{"prompt_tokens":178,"completion_tokens":121,"total_tokens":299,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":161,"audio_tokens":0,"text_tokens":178,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1794705586,"object":"chat.completion","prompt_filter_results":null}'
-  recorded_at: Sun, 15 Nov 2026 01:19:47 GMT
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjY1YjYxNGVmLWU3NDQtNDViNC1hYTQzLWIzMjY4ZDUxZWQ5ZiIsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiIqKk1hdHp1cm8gWXVraWhpcm8gTWF0c3Vtb3RvKiosIGNvbW1vbmx5IGtub3duIGFzICoqTWF0eioqLCBjcmVhdGVkIHRoZSBSdWJ5IHByb2dyYW1taW5nIGxhbmd1YWdlLlxuXG5IZSBkZXNpZ25lZCBpdCBpbiAxOTkzIGluIEphcGFuLCBmaXJzdCByZWxlYXNpbmcgaXQgaW4gMTk5NS4gTWF0eiBhaW1lZCBmb3IgYSBsYW5ndWFnZSB0aGF0IGJhbGFuY2VkIHByb2dyYW1tZXIgaGFwcGluZXNzIGFuZCBwcm9kdWN0aXZpdHksIHdpdGggaW5mbHVlbmNlcyBmcm9tIFBlcmwsIFNtYWxsdGFsaywgRWlmZmVsLCBhbmQgTGlzcOKAlGV2aWRlbnQgaW4gUnVieSdzIGVsZWdhbnQgc3ludGF4LCBkeW5hbWljIHR5cGluZywgYW5kIG9iamVjdC1vcmllbnRlZCBmZWF0dXJlcy5cblxuVGhpcyBpcyBjb25maXJtZWQgYnkgb2ZmaWNpYWwgc291cmNlcyBsaWtlIHRoZSBSdWJ5IHdlYnNpdGUgKHJ1YnktbGFuZy5vcmcpLCB3aGVyZSBNYXR6IGlzIGNyZWRpdGVkIGFzIHRoZSBjcmVhdG9yLCBhbmQgaGlzIG93biB3cml0aW5ncywgc3VjaCBhcyB0aGUgYm9vayAqVGhlIFJ1YnkgUHJvZ3JhbW1pbmcgTGFuZ3VhZ2UqLiBSdWJ5IHBvd2VycyBmcmFtZXdvcmtzIGxpa2UgUnVieSBvbiBSYWlscywgY3JlYXRlZCBieSBEYXZpZCBIZWluZW1laWVyIEhhbnNzb24gaW4gMjAwNC4ifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjE3OCwiY29tcGxldGlvbl90b2tlbnMiOjE0MSwidG90YWxfdG9rZW5zIjozMTksImF1ZGlvX3Byb21wdF90b2tlbnMiOjAsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoxNjEsImF1ZGlvX3Rva2VucyI6MCwidGV4dF90b2tlbnMiOjE3OCwiaW1hZ2VfdG9rZW5zIjowfSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjowLCJhdWRpb190b2tlbnMiOjAsImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6MH0sIm51bV9zb3VyY2VzX3VzZWQiOjB9LCJjcmVhdGVkIjoxNzk0OTgzNzI0LCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJwcm9tcHRfZmlsdGVyX3Jlc3VsdHMiOm51bGx9
+  recorded_at: Wed, 18 Nov 2026 06:35:26 GMT
 - request:
     method: post
     uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
     body:
       encoding: UTF-8
       string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":"Who
-        is the creator of the programming language Ruby?"},{"role":"assistant","content":"**Matzuda
-        Yukihiro** (commonly known as **Matz**) is the creator of the Ruby programming
-        language.\n\nHe designed and developed Ruby in the mid-1990s in Japan, first
-        releasing it in 1995. Matz aimed to create a language that was fun, expressive,
-        and developer-friendly, prioritizing human happiness (\"Happy Ruby, Happy
-        Programmer\"). This is confirmed by official Ruby documentation (ruby-lang.org),
-        Matz''s own writings, and historical records from the language''s development.
-        Ruby has since become popular for web development (e.g., via Ruby on Rails)
-        and scripting."},{"role":"user","content":"What year did he create Ruby?"}],"stream":false}'
+        is the creator of the programming language Ruby?"},{"role":"assistant","content":"**Matzuro
+        Yukihiro Matsumoto**, commonly known as **Matz**, created the Ruby programming
+        language.\n\nHe designed it in 1993 in Japan, first releasing it in 1995.
+        Matz aimed for a language that balanced programmer happiness and productivity,
+        with influences from Perl, Smalltalk, Eiffel, and Lisp—evident in Ruby''s
+        elegant syntax, dynamic typing, and object-oriented features.\n\nThis is confirmed
+        by official sources like the Ruby website (ruby-lang.org), where Matz is credited
+        as the creator, and his own writings, such as the book *The Ruby Programming
+        Language*. Ruby powers frameworks like Ruby on Rails, created by David Heinemeier
+        Hansson in 2004."},{"role":"user","content":"What year did he create Ruby?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -141,7 +135,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 15 Nov 2026 01:19:47 GMT
+      - Wed, 18 Nov 2026 06:35:26 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
@@ -161,13 +155,13 @@ http_interactions:
       X-Watermark:
       - 'false'
       Traceparent:
-      - 00-59038d540ded81e2ef082cd537ad75fe-30b59498000c26ec-00
+      - 00-78cd96a04ce44c6984042bfb306288fd-a0a45f89e64f8c4a-01
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Ms-Client-Request-Id:
-      - 62911722-1e7d-4833-afd9-aaf440e9a795
+      - 78cd96a0-4ce4-4c69-8404-2bfb306288fd
       Azureml-Model-Session:
-      - d20261110012600-4baac0fe
+      - d20261110015917-e7d4cb48
       X-Ms-Inference-Retry-History:
       - '{"v":1,"entries":[{"service_id":"mir.frontdoor","layer":"regional","role":"direct","retries":0}]}'
       Azureai-Requested-Tier:
@@ -179,9 +173,9 @@ http_interactions:
       X-Ratelimit-Key:
       - grok-4-1-fast-non-reasoning
       X-Ratelimit-Remaining-Requests:
-      - '48'
+      - '47'
       X-Ratelimit-Reset-Requests:
-      - '2'
+      - '4'
       X-Ratelimit-Limit-Requests:
       - '50'
       X-Ratelimit-Renewalperiod-Requests:
@@ -189,7 +183,7 @@ http_interactions:
       X-Ratelimit-Abusepenalty-Active:
       - 'False'
       X-Ratelimit-Remaining-Tokens:
-      - '49798'
+      - '49777'
       X-Ratelimit-Reset-Tokens:
       - '0'
       X-Ratelimit-Limit-Tokens:
@@ -201,9 +195,9 @@ http_interactions:
       Azureai-Fe-Offer-Type:
       - paygo
       Apim-Request-Id:
-      - 62911722-1e7d-4833-afd9-aaf440e9a795
+      - 78cd96a0-4ce4-4c69-8404-2bfb306288fd
       X-Http2-Stream-Id:
-      - '493'
+      - '515'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -212,12 +206,11 @@ http_interactions:
       - West Europe
     body:
       encoding: UTF-8
-      string: '{"id":"6c2838d2-4701-4c4a-b6d0-f2b08267776e","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"**Ruby
-        was first released in 1995.**\n\nMatz (Yukihiro Matsumoto) began developing
-        Ruby in 1993, but the initial public release (version 0.95) occurred on December
-        21, 1995. This is documented in the official Ruby history on ruby-lang.org,
-        the language''s release announcements, and Matz''s interviews (e.g., in \"The
-        Ruby Way\" and IEEE Spectrum). Version 1.0 followed in 1999, solidifying its
-        foundation."},"finish_reason":"stop"}],"usage":{"prompt_tokens":317,"completion_tokens":102,"total_tokens":419,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":178,"audio_tokens":0,"text_tokens":317,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1794705587,"object":"chat.completion","prompt_filter_results":null}'
-  recorded_at: Sun, 15 Nov 2026 01:19:48 GMT
-recorded_with: VCR 6.4.0
+      string: '{"id":"59049d06-2133-4029-9d52-9727cff6179c","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"**1993**\n\nMatz
+        (Yukihiro Matsumoto) began designing Ruby in 1993 while working at a Japanese
+        software company. The first alpha version was released in December 1995, with
+        Ruby 1.0 stable in 1996.\n\nThis timeline is documented on the official Ruby
+        website (ruby-lang.org/en/about/) and in Matz''s interviews, such as in *Programming
+        Ruby: The Pragmatic Programmer''s Guide*."},"finish_reason":"stop"}],"usage":{"prompt_tokens":337,"completion_tokens":88,"total_tokens":425,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":178,"audio_tokens":0,"text_tokens":337,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1794983726,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Wed, 18 Nov 2026 06:35:27 GMT
+recorded_with: VCR 6.4.1

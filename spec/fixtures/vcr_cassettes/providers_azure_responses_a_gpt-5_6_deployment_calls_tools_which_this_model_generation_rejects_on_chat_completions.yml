@@ -11,7 +11,7 @@ http_interactions:
         name"}},"required":["city"],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -30,7 +30,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 15 Nov 2026 01:20:51 GMT
+      - Wed, 18 Nov 2026 06:34:32 GMT
       Server:
       - istio-envoy
       Vary:
@@ -70,9 +70,9 @@ http_interactions:
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Apim-Request-Id:
-      - b93d21ee-f3f9-47c8-860e-ecec6838960b
+      - a43de94b-3aba-4576-892c-60694a2d5fc3
       X-Http2-Stream-Id:
-      - '581'
+      - '147'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -83,13 +83,13 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "resp_07646a325d15ec2e016af908f44f64819389bfbefe05ef6d21",
+          "id": "resp_02e183a0cb6d3080016afd46f9b81c81958f8cb7730bc0384a",
           "object": "response",
-          "created_at": 1794705652,
+          "created_at": 1794983673,
           "status": "completed",
           "access_programs": null,
           "background": false,
-          "completed_at": 1794705653,
+          "completed_at": 1794983674,
           "content_filters": [
             {
               "blocked": false,
@@ -170,11 +170,11 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "fc_07646a325d15ec2e016af908f516ac819382918044623bbc8c",
+              "id": "fc_02e183a0cb6d3080016afd46fa3dbc8195bcf52b9bbfc44739",
               "type": "function_call",
               "status": "completed",
               "arguments": "{\"city\":\"Berlin\"}",
-              "call_id": "call_QzFULeR5Hsg9tPDUrqX2uYa7",
+              "call_id": "call_SEZndiWGa1lXOwQYIhACRNAK",
               "name": "azure_weather"
             }
           ],
@@ -259,20 +259,20 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Sun, 15 Nov 2026 01:20:53 GMT
+  recorded_at: Wed, 18 Nov 2026 06:34:34 GMT
 - request:
     method: post
     uri: https://rubyllm.services.ai.azure.com/openai/v1/responses
     body:
       encoding: UTF-8
       string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"What''s
-        the weather in Berlin? Use the tool."},{"type":"function_call","call_id":"call_QzFULeR5Hsg9tPDUrqX2uYa7","name":"azure_weather","arguments":"{\"city\":\"Berlin\"}"},{"type":"function_call_output","call_id":"call_QzFULeR5Hsg9tPDUrqX2uYa7","output":"Current
+        the weather in Berlin? Use the tool."},{"type":"function_call","call_id":"call_SEZndiWGa1lXOwQYIhACRNAK","name":"azure_weather","arguments":"{\"city\":\"Berlin\"}"},{"type":"function_call_output","call_id":"call_SEZndiWGa1lXOwQYIhACRNAK","output":"Current
         weather in Berlin: 15C, wind 10 km/h"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"azure_weather","description":"Gets
         current weather for a city","parameters":{"type":"object","properties":{"city":{"type":"string","description":"City
         name"}},"required":["city"],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -291,7 +291,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 15 Nov 2026 01:20:52 GMT
+      - Wed, 18 Nov 2026 06:34:34 GMT
       Server:
       - istio-envoy
       Vary:
@@ -331,9 +331,9 @@ http_interactions:
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Apim-Request-Id:
-      - fece2570-0b93-4a9d-8fd8-72507b405292
+      - 50c24207-93d7-40a6-863a-67c0ac2bd9f5
       X-Http2-Stream-Id:
-      - '897'
+      - '221'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -344,13 +344,13 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "resp_017b0a36262a63be016af908f57a84819091296eec989f6048",
+          "id": "resp_0d2a18125ea81ae2016afd46fad2ac8197867d385dba399324",
           "object": "response",
-          "created_at": 1794705653,
+          "created_at": 1794983674,
           "status": "completed",
           "access_programs": null,
           "background": false,
-          "completed_at": 1794705654,
+          "completed_at": 1794983675,
           "content_filters": [
             {
               "blocked": false,
@@ -389,11 +389,11 @@ http_interactions:
               "source_type": "completion",
               "content_filter_raw": [],
               "content_filter_results": {
-                "protected_material_text": {
+                "protected_material_code": {
                   "detected": false,
                   "filtered": false
                 },
-                "protected_material_code": {
+                "protected_material_text": {
                   "detected": false,
                   "filtered": false
                 },
@@ -431,7 +431,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_017b0a36262a63be016af908f6265481908a8e72574a61bd11",
+              "id": "msg_0d2a18125ea81ae2016afd46fb33208197ba3b8d8e4afc66ae",
               "type": "message",
               "status": "completed",
               "content": [
@@ -527,5 +527,5 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Sun, 15 Nov 2026 01:20:54 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:34:35 GMT
+recorded_with: VCR 6.4.1

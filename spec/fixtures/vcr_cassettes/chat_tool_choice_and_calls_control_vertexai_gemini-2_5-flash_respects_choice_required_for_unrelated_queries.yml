@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Pragma:
-      - no-cache
-      Date:
-      - Sun, 15 Nov 2026 01:42:51 GMT
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
+      Date:
+      - Wed, 18 Nov 2026 06:56:44 GMT
+      Pragma:
+      - no-cache
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login openid",
+          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform openid https://www.googleapis.com/auth/userinfo.email",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Sun, 15 Nov 2026 01:42:51 GMT
+  recorded_at: Wed, 18 Nov 2026 06:56:44 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -70,7 +70,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}]}],"toolConfig":{"functionCallingConfig":{"mode":"any"}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -85,7 +85,7 @@ http_interactions:
       message: OK
     headers:
       X-Goog-Request-Id:
-      - Gw75avrIHvGAz_IPuNut8A4
+      - LEz9at2iI67J3PQPupDEuAw
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -93,7 +93,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 15 Nov 2026 01:42:52 GMT
+      - Wed, 18 Nov 2026 06:56:45 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -119,11 +119,11 @@ http_interactions:
                     "functionCall": {
                       "name": "weather",
                       "args": {
-                        "longitude": "13.4050",
-                        "latitude": "52.5200"
+                        "latitude": "52.5200",
+                        "longitude": "13.4050"
                       }
                     },
-                    "thoughtSignature": "AY89a19/EuY4vElXX3cdO3Q1h3wWYdbnZMcf5WyP8UyhkhKscGrEW4EhTh7OMulWCdTbwiaXHjw9B6CbBmbi9NDGYjqZPf7jFtSk9k9n0I1g9OfOzAPociUBVeQD3kqfJ2bKdX0nteuO2ucfVWVI7woWRtxF2ixNGjYrs6mXljfZ8RTKAndyNfYaXsZAdiZ0+ETtmb8OoQWdyCmtfyERvG9CHUk3EtAnkwNJLbcAI7Nwk4M6fq2UJg9sSoSqEC7vtp+oh4ZMj9n8RcLe5qIgpJ+48evH54Rpdemxo6cwqBbnvyLBeyORzkQKo0jABuekEtiWNvgnPIQ1JYjkADjSRMhe8aKVkDfxFTy9RVoMKUCCtxLLIvrEX+k5BYZD10hjvbFDosk4tCzZqa5lguQ8tIZWjz82PHHlzql1Y9bWAXELZS60diSYuxZxbv4HgheOQcbS3RHlyjYtjmrwGMaAYDH7+jzaRpDUsfxoMUDZ2zVL7ft4lqFqUs4BPHPPSLQoZDzWrs1lJwcuQS56rMY9UDI9x9BCuy5pJzWbong+7Y+OlLgVNiVtBsyAOPfQZXWvWUaF81cCqK6K5f0pnDrrxRO0d3kcXLwAwNNIQXQdeuajMsnkyXkQrjGqvnAIDNgl9SEHzXMYdFULzqTdTFGm2wNST5j6CwwfigSbSpOjXuQu0NZ1MfNmbhIoJxKMRhQzAvp735yRwqxOYm4+Qw0="
+                    "thoughtSignature": "AY89a1+NhJnE++HbVsxkunv9EyIpLWMMVOYHCJ7ASIWlP6ExVMj/Xc1QOOdWxKqf6MfaK52ivW0a1BAKZDQlAGUTfuRk4S4lWDwVdWzXUQCieTh/iT6ZOTINXs5kxAP/Z9gZ7F6AzcNZhDQzrgjrlCAY0v3FBfdEFocvRRTwdOSMRMGpqdgH71iGENL3FOKpeJFC2EqxKmUhPQP42N+bx42CI1kvubOryrHWKOVOiWQOIRGaHra3kVTBtIaPiMcF1lctVwtcm03ymdfb1lpZjqlJQyvH8onAJJRzA0LJkvp8UJ4hVyOk0If6JYAM7JaDZV9wkbRejm+mKycK3XcgbmpHb/S2qrdpytuAxy85HzvrcvLYimyuhmmMZCiYywtIGsRDmnRS5qvV6mzIxlhSsZ0G/5P6AcORRtw+bhhfy+tyn6R63khIJgUuj6anxKwwktpjBs4ZJTIDJc/JXxnKL4ZUc6ZwarugCIaIj//tbFPQkbTJ8oH0eEpOIQIyuWV2yw0JWHbbbBHwK+6gmlVBxDYrNB7yeLklX8r+c/49wWjd2j7lEPGVvXCZ5Tr7tAUTcIGDGAImTPbErmBNWi3jGNtFKoV9n3apvBcc0tcc5oEnMO/kICpQN6LQudZAAsOtdxATH44lgYoxubyiqBV1iRQFbtERb0bMj05msTBG"
                   }
                 ]
               },
@@ -133,7 +133,7 @@ http_interactions:
           "usageMetadata": {
             "promptTokenCount": 40,
             "candidatesTokenCount": 28,
-            "totalTokenCount": 151,
+            "totalTokenCount": 160,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -147,20 +147,20 @@ http_interactions:
                 "tokenCount": 28
               }
             ],
-            "thoughtsTokenCount": 83
+            "thoughtsTokenCount": 92
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-11-15T01:42:51.500858Z",
-          "responseId": "Gw75avrIHvGAz_IPuNut8A4"
+          "createTime": "2026-11-18T06:56:44.577885Z",
+          "responseId": "LEz9at2iI67J3PQPupDEuAw"
         }
-  recorded_at: Sun, 15 Nov 2026 01:42:52 GMT
+  recorded_at: Wed, 18 Nov 2026 06:56:45 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"When was the fall of
-        Rome?"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"52.5200","longitude":"13.4050"}},"thoughtSignature":"AY89a19/EuY4vElXX3cdO3Q1h3wWYdbnZMcf5WyP8UyhkhKscGrEW4EhTh7OMulWCdTbwiaXHjw9B6CbBmbi9NDGYjqZPf7jFtSk9k9n0I1g9OfOzAPociUBVeQD3kqfJ2bKdX0nteuO2ucfVWVI7woWRtxF2ixNGjYrs6mXljfZ8RTKAndyNfYaXsZAdiZ0+ETtmb8OoQWdyCmtfyERvG9CHUk3EtAnkwNJLbcAI7Nwk4M6fq2UJg9sSoSqEC7vtp+oh4ZMj9n8RcLe5qIgpJ+48evH54Rpdemxo6cwqBbnvyLBeyORzkQKo0jABuekEtiWNvgnPIQ1JYjkADjSRMhe8aKVkDfxFTy9RVoMKUCCtxLLIvrEX+k5BYZD10hjvbFDosk4tCzZqa5lguQ8tIZWjz82PHHlzql1Y9bWAXELZS60diSYuxZxbv4HgheOQcbS3RHlyjYtjmrwGMaAYDH7+jzaRpDUsfxoMUDZ2zVL7ft4lqFqUs4BPHPPSLQoZDzWrs1lJwcuQS56rMY9UDI9x9BCuy5pJzWbong+7Y+OlLgVNiVtBsyAOPfQZXWvWUaF81cCqK6K5f0pnDrrxRO0d3kcXLwAwNNIQXQdeuajMsnkyXkQrjGqvnAIDNgl9SEHzXMYdFULzqTdTFGm2wNST5j6CwwfigSbSpOjXuQu0NZ1MfNmbhIoJxKMRhQzAvp735yRwqxOYm4+Qw0="}]},{"role":"user","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
+        Rome?"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"52.5200","longitude":"13.4050"}},"thoughtSignature":"AY89a1+NhJnE++HbVsxkunv9EyIpLWMMVOYHCJ7ASIWlP6ExVMj/Xc1QOOdWxKqf6MfaK52ivW0a1BAKZDQlAGUTfuRk4S4lWDwVdWzXUQCieTh/iT6ZOTINXs5kxAP/Z9gZ7F6AzcNZhDQzrgjrlCAY0v3FBfdEFocvRRTwdOSMRMGpqdgH71iGENL3FOKpeJFC2EqxKmUhPQP42N+bx42CI1kvubOryrHWKOVOiWQOIRGaHra3kVTBtIaPiMcF1lctVwtcm03ymdfb1lpZjqlJQyvH8onAJJRzA0LJkvp8UJ4hVyOk0If6JYAM7JaDZV9wkbRejm+mKycK3XcgbmpHb/S2qrdpytuAxy85HzvrcvLYimyuhmmMZCiYywtIGsRDmnRS5qvV6mzIxlhSsZ0G/5P6AcORRtw+bhhfy+tyn6R63khIJgUuj6anxKwwktpjBs4ZJTIDJc/JXxnKL4ZUc6ZwarugCIaIj//tbFPQkbTJ8oH0eEpOIQIyuWV2yw0JWHbbbBHwK+6gmlVBxDYrNB7yeLklX8r+c/49wWjd2j7lEPGVvXCZ5Tr7tAUTcIGDGAImTPbErmBNWi3jGNtFKoV9n3apvBcc0tcc5oEnMO/kICpQN6LQudZAAsOtdxATH44lgYoxubyiqBV1iRQFbtERb0bMj05msTBG"}]},{"role":"user","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
         weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}}]}],"generationConfig":{"maxOutputTokens":4096},"systemInstruction":{"parts":[{"text":"Your
         location is Berlin, at latitude 52.5200 and longitude 13.4050."}]},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
         current weather for a location","parametersJsonSchema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
@@ -168,7 +168,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}]}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -183,7 +183,7 @@ http_interactions:
       message: OK
     headers:
       X-Goog-Request-Id:
-      - HA75ar_rMLb2mLAP4-bdgAM
+      - LUz9ap_PKYjqhcIPuNqbsQw
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -191,7 +191,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 15 Nov 2026 01:42:53 GMT
+      - Wed, 18 Nov 2026 06:56:46 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -214,7 +214,7 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "The fall of the Western Roman Empire is traditionally dated to 476 CE, when the last Western Roman Emperor, Romulus Augustulus, was deposed by the Germanic chieftain Odoacer. However, the Eastern Roman Empire, also known as the Byzantine Empire, continued to thrive for many centuries after this date, finally falling in 1453 CE with the Ottoman conquest of Constantinople."
+                    "text": "I can't answer that question. My knowledge is limited to my training data, and I don't have access to real-time information or historical databases."
                   }
                 ]
               },
@@ -222,26 +222,26 @@ http_interactions:
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 180,
-            "candidatesTokenCount": 79,
-            "totalTokenCount": 259,
+            "promptTokenCount": 189,
+            "candidatesTokenCount": 33,
+            "totalTokenCount": 222,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 180
+                "tokenCount": 189
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 79
+                "tokenCount": 33
               }
             ]
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-11-15T01:42:52.800191Z",
-          "responseId": "HA75ar_rMLb2mLAP4-bdgAM"
+          "createTime": "2026-11-18T06:56:45.681887Z",
+          "responseId": "LUz9ap_PKYjqhcIPuNqbsQw"
         }
-  recorded_at: Sun, 15 Nov 2026 01:42:53 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:56:46 GMT
+recorded_with: VCR 6.4.1

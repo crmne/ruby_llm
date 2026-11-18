@@ -9,11 +9,11 @@ http_interactions:
         a person named Bob"}]}],"max_tokens":64000,"output_config":{"format":{"type":"json_schema","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false}}},"anthropic_version":"bedrock-2023-05-31"}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261115T011950Z
+      - 20261118T063526Z
       X-Amz-Content-Sha256:
       - d8b33b56a805b4fb8d30b33360104e9cda9996d7fd37796c75cedf678ef5143d
       Authorization:
@@ -29,7 +29,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:19:52 GMT
+      - Wed, 18 Nov 2026 06:35:27 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -37,9 +37,9 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - dd89843e-c770-4c79-b073-2ce50e9158e9
+      - d4f281c6-c5d1-4085-9e90-05ed27b86e6b
       X-Amzn-Bedrock-Invocation-Latency:
-      - '436'
+      - '468'
       X-Amzn-Bedrock-Cache-Write-Input-Token-Count:
       - '0'
       X-Amzn-Bedrock-Cache-Read-Input-Token-Count:
@@ -50,8 +50,8 @@ http_interactions:
       - '174'
     body:
       encoding: UTF-8
-      string: '{"model":"anthropic.claude-haiku-4-5-20251001-v1:0","id":"msg_bdrk_4tf24n434vvv2bamiqlammd5q6ntfwdy2f6gktfhqz2tl2ki266q","type":"message","role":"assistant","content":[{"type":"text","text":"{\"name\":\"Bob\",\"age\":30}"}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":174,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":12,"service_tier":"standard"}}'
-  recorded_at: Sun, 15 Nov 2026 01:19:52 GMT
+      string: '{"model":"anthropic.claude-haiku-4-5-20251001-v1:0","id":"msg_bdrk_brtsg5wd4hod5462p3dz6qcd7cmaebscpn2lgrz75aoe2oedezca","type":"message","role":"assistant","content":[{"type":"text","text":"{\"name\":\"Bob\",\"age\":30}"}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":174,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":12,"service_tier":"standard"}}'
+  recorded_at: Wed, 18 Nov 2026 06:35:27 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/invoke
@@ -62,11 +62,11 @@ http_interactions:
         just tell me about Ruby"}]}],"max_tokens":64000,"anthropic_version":"bedrock-2023-05-31"}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261115T011952Z
+      - 20261118T063527Z
       X-Amz-Content-Sha256:
       - 1d0a754ebebabd7bd3f5720e220524ce26db8d164fdf9ca4b45bd452803bd2ce
       Authorization:
@@ -82,41 +82,42 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:19:57 GMT
+      - Wed, 18 Nov 2026 06:35:29 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '1606'
+      - '1635'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - b531a1f9-d61f-41ec-987c-dc037a57ff42
+      - 4653ebf7-7c40-4ee7-9ab5-a1b9e7790ec9
       X-Amzn-Bedrock-Invocation-Latency:
-      - '1625'
+      - '1795'
       X-Amzn-Bedrock-Cache-Write-Input-Token-Count:
       - '0'
       X-Amzn-Bedrock-Cache-Read-Input-Token-Count:
       - '0'
       X-Amzn-Bedrock-Output-Token-Count:
-      - '247'
+      - '263'
       X-Amzn-Bedrock-Input-Token-Count:
       - '33'
     body:
       encoding: UTF-8
-      string: '{"model":"anthropic.claude-haiku-4-5-20251001-v1:0","id":"msg_bdrk_qo2vhfidlsndhjftutiv6jbkt2kqaxuu3u4d472pvfeaernmh6ka","type":"message","role":"assistant","content":[{"type":"text","text":"Ruby
-        is a dynamic, open-source programming language known for its simplicity and
-        elegance. Here are some key features:\n\n**Characteristics:**\n- **Easy to
-        learn** - Clean, readable syntax that resembles natural language\n- **Object-oriented**
-        - Everything in Ruby is an object\n- **Dynamically typed** - Types are determined
-        at runtime\n- **Interpreted** - Code is executed directly without compilation\n\n**Common
-        Uses:**\n- Web development (especially with Ruby on Rails framework)\n- Scripting
-        and automation\n- Data analysis\n- DevOps tools\n\n**Popular Frameworks:**\n-
-        **Ruby on Rails** - The most popular web framework\n- Sinatra - Lightweight
-        web framework\n- Jekyll - Static site generator\n\n**Strengths:**\n- Highly
-        productive and fast to develop with\n- Strong community and extensive libraries
-        (gems)\n- Great for rapid prototyping\n\n**Weaknesses:**\n- Slower execution
-        speed compared to compiled languages\n- Less suitable for performance-critical
-        applications\n- Smaller job market than some other languages\n\nRuby remains
-        popular among startups and is widely used in the web development industry."}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":33,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":247,"service_tier":"standard"}}'
-  recorded_at: Sun, 15 Nov 2026 01:19:57 GMT
-recorded_with: VCR 6.4.0
+      string: '{"model":"anthropic.claude-haiku-4-5-20251001-v1:0","id":"msg_bdrk_erhwcaxs5nnwzby7ecvx7k3erzuqmswlzpcnkefqcfswjuotrd2a","type":"message","role":"assistant","content":[{"type":"text","text":"Ruby
+        is a dynamic, interpreted programming language known for its simplicity and
+        readability. Here are some key points about it:\n\n**Key Features:**\n- **Easy
+        to learn** - Clean, intuitive syntax that emphasizes programmer happiness\n-
+        **Object-oriented** - Everything is an object\n- **Dynamic typing** - Variables
+        can hold any type of data\n- **Flexible** - Allows multiple programming paradigms
+        (OOP, functional, procedural)\n\n**Common Uses:**\n- Web development (especially
+        with Ruby on Rails framework)\n- Scripting and automation\n- Data processing\n-
+        DevOps tools\n\n**Popular Frameworks:**\n- **Ruby on Rails** - Most popular
+        web framework\n- **Sinatra** - Lightweight web framework\n- **Hanami** - Modern
+        web framework\n\n**Strengths:**\n- Rapid development\n- Strong community\n-
+        Extensive libraries (gems)\n- Great for startups and MVPs\n\n**Considerations:**\n-
+        Slower than compiled languages like Java or C++\n- Less suitable for performance-critical
+        applications\n- Smaller job market compared to Python or JavaScript\n\nRuby
+        remains popular, especially in web development, though Python has grown more
+        dominant in recent years."}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":33,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":263,"service_tier":"standard"}}'
+  recorded_at: Wed, 18 Nov 2026 06:35:29 GMT
+recorded_with: VCR 6.4.1

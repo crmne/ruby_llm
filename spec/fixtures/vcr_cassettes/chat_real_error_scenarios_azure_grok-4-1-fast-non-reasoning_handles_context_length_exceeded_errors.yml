@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"Hi"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -25,7 +25,7 @@ http_interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Sun, 15 Nov 2026 01:19:58 GMT
+      - Wed, 18 Nov 2026 06:35:34 GMT
       Server:
       - istio-envoy
       Retry-After:
@@ -45,9 +45,9 @@ http_interactions:
       X-Ratelimit-Key:
       - grok-4-1-fast-non-reasoning
       X-Ratelimit-Remaining-Requests:
-      - '49'
+      - '47'
       X-Ratelimit-Reset-Requests:
-      - '1'
+      - '3'
       X-Ratelimit-Limit-Requests:
       - '50'
       X-Ratelimit-Renewalperiod-Requests:
@@ -71,9 +71,9 @@ http_interactions:
       X-Ms-Fe-Rate-Limit-Status:
       - '429'
       X-Http2-Stream-Id:
-      - '421'
+      - '449'
       Apim-Request-Id:
-      - 864ecca8-e0ff-4b8d-a274-2a72a9dbf150
+      - 1d960eb4-368d-4bd2-b2cf-2002022941b6
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -86,5 +86,5 @@ http_interactions:
         for grok-4-1-fast-non-reasoning in westeurope have exceeded token rate limit.","details":"Your
         requests to grok-4-1-fast-non-reasoning for grok-4-1-fast-non-reasoning in
         westeurope have exceeded token rate limit."}}'
-  recorded_at: Sun, 15 Nov 2026 01:19:59 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:35:35 GMT
+recorded_with: VCR 6.4.1

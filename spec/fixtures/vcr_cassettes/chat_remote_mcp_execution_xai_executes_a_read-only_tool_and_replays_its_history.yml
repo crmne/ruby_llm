@@ -11,7 +11,7 @@ http_interactions:
         use only those results.","stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"mcp","allowed_tools":["microsoft_docs_search"],"server_url":"https://learn.microsoft.com/api/mcp","server_label":"docs"}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:21:03 GMT
+      - Wed, 18 Nov 2026 06:36:24 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -42,13 +42,11 @@ http_interactions:
       X-Ratelimit-Limit-Tokens:
       - '10000000'
       X-Ratelimit-Remaining-Tokens:
-      - '9998464'
+      - '10000000'
       X-Ratelimit-Limit-Requests:
       - '1800'
       X-Ratelimit-Remaining-Requests:
       - '1800'
-      Cf-Cache-Status:
-      - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Zero-Data-Retention:
@@ -56,24 +54,27 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '228.2'
+      - '210.0'
       X-Metrics-E2e-Ms:
-      - '10651.9'
+      - '9011.1'
+      Traceparent:
+      - 00-66ab3e01ecf9f56d8075d8f4eb8f4fec-359b4f0a000293b7-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1794705655,"completed_at":1794705663,"id":"c5c46786-dbf2-4682-b789-3669e0cffc0b","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_c5c46786-dbf2-4682-b789-3669e0cffc0b","summary":[{"text":"I
-        will search Microsoft documentation for Azure Blob Storage and summarize it
-        in one sentence.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"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"},{"id":"mcp_c5c46786-dbf2-4682-b789-3669e0cffc0b_call-a88a5374-6b6f-4587-9db0-8557279d02f5-0","type":"mcp_call","status":"completed","name":"microsoft_docs_search","server_label":"docs","error":"","arguments":"{\"query\":\"Azure
+      string: '{"created_at":1794983775,"completed_at":1794983784,"id":"4b02ff3b-397d-90b6-a299-c1fa9fa7f7ec","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_4b02ff3b-397d-90b6-a299-c1fa9fa7f7ec","summary":[{"text":"Searching
+        Microsoft documentation for Azure Blob Storage to provide a one-sentence summary.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"8NbJlKJrhWL5Nla+j07HSzFs4MhCNwSOdyw7RIDJEyI3IkXM2zjRsSnEpzCLpsKXiintnoLIyrMaKXR49yGbUHskXl7Dc2r5kHex+2Pt8s6/KVyXE1nTUZ7SAWLWT9+lZAGS8Mvszio6Rv3Qlep6bHWMvm6QxehH3NjXK1pzpxzOmJ6ZhAG4vK1vOTyi9wXneYWrotG00ej1SwLv6dZJmYGOKXdfFH9AuqCDvMwhExh3c3BZNJqQs64Oyp5AGlzbFLGF9GKJaDFEuNJcDwnPghiyLsMeBtiKSdwHk/CK3HLnphIKU+xxAyZj+yCPakvz5tmt9DVha8gJewRVk7kuA8P4PDVPhv5mjz5QeghrqNVm4Rz6HfPklJKTWjN1uRG/5RQMeb5uqxsviLkhvZy43ksW1Fkvsi7guzRPoRT6gqklx3Lm2QlGOn7/4mUUNuM4p3iWauyfsPqXb8CSEqyu7mzZZX0gakKdIes7nM8qX3umfjKJNnltDzTHLaI1qjjb/Grj6RdhrukbJzJx/j2Lupem3UIrR9qgRuKtoOGKPVaRIkzVQim7mfnXnMG7xVkc1GoUTeXUL5/ky3+bOAZ28NcU2l5L1PUreo8j53kuLgi6CdIQAptRsubEqpnPS4zM2Kdp9R/A8tWaH54L5m3WvR0Oy4zbuFL4mI6mSiZNPvywvKUqrSXIJOYpPRU3ubgU7c/q6MrwTRw9IHrxyoWZx0yNZusUOevjPKtRe6i4EP3YhHPZasrqxeaAr23PBq+0+0vTwj8pWqUQe/h/Y7Lz60a69WbIucymm7PTMJm0BrIVj8w"},{"id":"mcp_4b02ff3b-397d-90b6-a299-c1fa9fa7f7ec_call-e32f202c-04be-47bf-b2e0-045f631373b9-0","type":"mcp_call","status":"completed","name":"microsoft_docs_search","server_label":"docs","error":"","arguments":"{\"query\":\"Azure
         Blob Storage\"}","output":"{\"content\":[{\"type\":\"text\",\"text\":\"{\\\"results\\\":[{\\\"title\\\":\\\"What
         is Azure Blob storage?\\\",\\\"content\\\":\\\"# What is Azure Blob storage?\\\\nAzure
         Blob Storage is Microsoft\\\\u0027s object storage solution for the cloud.
@@ -254,7 +255,31 @@ http_interactions:
         them back to Microsoft to be uploaded into Blob Storage.\\\\n6. The **Azure
         Import/Export service** provides a way to import or export large amounts of
         data to and from your storage account by using hard drives that you provide.
-        For more information, see [What is Azure Import/Export service?](https://learn.microsoft.com/azure/import-export/storage-import-export-service)\\\",\\\"contentUrl\\\":\\\"https://learn.microsoft.com/azure/storage/blobs/storage-blobs-introduction#move-data-to-blob-storage\\\"},{\\\"title\\\":\\\"Introduction
+        For more information, see [What is Azure Import/Export service?](https://learn.microsoft.com/azure/import-export/storage-import-export-service)\\\",\\\"contentUrl\\\":\\\"https://learn.microsoft.com/azure/storage/blobs/storage-blobs-introduction#move-data-to-blob-storage\\\"},{\\\"title\\\":\\\"Reliability
+        in Azure Blob Storage\\\",\\\"content\\\":\\\"# Reliability in Azure Blob
+        Storage\\\\n[Azure Blob Storage](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blobs-overview)
+        is an object storage solution for the cloud from Microsoft. It\\\\u0027s designed
+        to store massive amounts of unstructured data such as text, binary data, documents,
+        media files, and application backups. As a foundational Azure storage service,
+        Blob Storage provides multiple reliability features to ensure that your data
+        remains available and durable during both planned and unplanned events.\\\\nWhen
+        you use Azure, [reliability is a shared responsibility](https://learn.microsoft.com/en-us/azure/reliability/concept-shared-responsibility).
+        Microsoft provides a range of capabilities to support resiliency and recovery.
+        You\\\\u0027re responsible for understanding how those capabilities work within
+        all of the services you use, and selecting the capabilities you need to meet
+        your business objectives and uptime goals.\\\\nThis article describes how
+        to make Blob Storage resilient to a variety of potential outages and problems,
+        including transient faults, availability zone outages, and region outages.
+        It also describes how you can use backups to recover from other types of problems,
+        and highlights some key information about the Blob Storage service level agreement
+        (SLA).\\\\nNote\\\\nBlob Storage is part of the Azure Storage platform. Some
+        of the capabilities of Blob Storage are common across many Azure Storage services.
+        In this article, we use *Azure Storage* to refer to these features.\\\\n##
+        Production deployment recommendations\\\\nTo learn about how to deploy Blob
+        Storage to support your solution\\\\u0027s reliability requirements, and how
+        reliability affects other aspects of your architecture, see [Architecture
+        best practices for Blob Storage](https://learn.microsoft.com/en-us/azure/well-architected/service-guides/azure-blob-storage)
+        in the Azure Well-Architected Framework.\\\",\\\"contentUrl\\\":\\\"https://learn.microsoft.com/azure/reliability/reliability-storage-blob\\\"},{\\\"title\\\":\\\"Introduction
         to Azure Blob Storage\\\",\\\"content\\\":\\\"# Introduction to Azure Blob
         Storage\\\\n## Blob Storage resources\\\\nA container name must be a valid
         DNS name, as it forms part of the unique URI (Uniform resource identifier)
@@ -282,31 +307,7 @@ http_interactions:
         of characters.\\\\n2. A blob name must be at least one character long and
         can\\\\u0027t be more than 1,024 characters long, for blobs in Azure Storage.\\\\n3.
         Blob names are case-sensitive.\\\\n4. Reserved URL characters must be properly
-        escaped.\\\",\\\"contentUrl\\\":\\\"https://learn.microsoft.com/azure/storage/blobs/storage-blobs-introduction#blob-storage-resources\\\"},{\\\"title\\\":\\\"Reliability
-        in Azure Blob Storage\\\",\\\"content\\\":\\\"# Reliability in Azure Blob
-        Storage\\\\n[Azure Blob Storage](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blobs-overview)
-        is an object storage solution for the cloud from Microsoft. It\\\\u0027s designed
-        to store massive amounts of unstructured data such as text, binary data, documents,
-        media files, and application backups. As a foundational Azure storage service,
-        Blob Storage provides multiple reliability features to ensure that your data
-        remains available and durable during both planned and unplanned events.\\\\nWhen
-        you use Azure, [reliability is a shared responsibility](https://learn.microsoft.com/en-us/azure/reliability/concept-shared-responsibility).
-        Microsoft provides a range of capabilities to support resiliency and recovery.
-        You\\\\u0027re responsible for understanding how those capabilities work within
-        all of the services you use, and selecting the capabilities you need to meet
-        your business objectives and uptime goals.\\\\nThis article describes how
-        to make Blob Storage resilient to a variety of potential outages and problems,
-        including transient faults, availability zone outages, and region outages.
-        It also describes how you can use backups to recover from other types of problems,
-        and highlights some key information about the Blob Storage service level agreement
-        (SLA).\\\\nNote\\\\nBlob Storage is part of the Azure Storage platform. Some
-        of the capabilities of Blob Storage are common across many Azure Storage services.
-        In this article, we use *Azure Storage* to refer to these features.\\\\n##
-        Production deployment recommendations\\\\nTo learn about how to deploy Blob
-        Storage to support your solution\\\\u0027s reliability requirements, and how
-        reliability affects other aspects of your architecture, see [Architecture
-        best practices for Blob Storage](https://learn.microsoft.com/en-us/azure/well-architected/service-guides/azure-blob-storage)
-        in the Azure Well-Architected Framework.\\\",\\\"contentUrl\\\":\\\"https://learn.microsoft.com/azure/reliability/reliability-storage-blob\\\"},{\\\"title\\\":\\\"Azure
+        escaped.\\\",\\\"contentUrl\\\":\\\"https://learn.microsoft.com/azure/storage/blobs/storage-blobs-introduction#blob-storage-resources\\\"},{\\\"title\\\":\\\"Azure
         Blob Storage REST API\\\",\\\"content\\\":\\\"# Azure Blob Storage REST API\\\\nAzure
         Blob Storage stores text and binary data as objects in the cloud. Blob Storage
         offers the following resources: the storage account, containers, and blobs.
@@ -337,31 +338,37 @@ http_interactions:
         |\\\\n| [Get User Delegation Key](https://learn.microsoft.com/rest/api/storageservices/get-user-delegation-key)
         | Account | Gets a key that can be used to sign a user delegation shared access
         signature. This signature grants access to resources in Blob Storage by using
-        Microsoft Entra credentials. |\\\",\\\"contentUrl\\\":\\\"https://learn.microsoft.com/rest/api/storageservices/blob-service-rest-api\\\"},{\\\"title\\\":\\\"Get
-        started with Azure Blob Storage using F\\\",\\\"content\\\":\\\"# Get started
-        with Azure Blob Storage using F\\\\nAzure Blob Storage is a service that stores
-        unstructured data in the cloud as objects/blobs. Blob storage can store any
-        type of text or binary data, such as a document, media file, or application
-        installer. Blob storage is also referred to as object storage.\\\\nThis article
-        shows you how to perform common tasks using Blob storage. The samples are
-        written using F# with the \\\\u0060Azure.Storage.Blobs\\\\u0060 package. The
-        tasks covered include how to upload, list, download, and delete blobs.\\\\nFor
-        a conceptual overview of blob storage, see [the .NET guide for blob storage](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-dotnet).
-        For ease, these tutorials use [connection strings](https://learn.microsoft.com/en-us/azure/storage/storage-configure-connection-string)
-        to authenticate with Azure. For production applications, you should use Microsoft
-        Entra ID with [managed identities](https://learn.microsoft.com/en-us/entra/identity/managed-identities-azure-resources/)
-        or the [Azure.Identity library](https://learn.microsoft.com/en-us/dotnet/api/overview/azure/identity-readme)
-        for enhanced security.\\\\nImportant\\\\nThis article uses the modern \\\\u0060Azure.Storage.Blobs\\\\u0060
-        package. If you\\\\u0027re updating from older code that used the deprecated
-        \\\\u0060WindowsAzure.Storage\\\\u0060 or \\\\u0060Microsoft.Azure.Storage.Blob\\\\u0060
-        packages, you need to update your package references and namespace declarations.
-        For migration guidance, see [Migrate to Azure.Storage.Blobs](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-dotnet).\\\\nNote\\\\nF#
-        developers might consider the [FSharp.Azure.Blob](https://github.com/random82/FSharp.Azure.Blob)
-        library, which provides a more idiomatic F# API for working with Azure Blob
-        Storage. This community library offers idiomatic F# functions and patterns
-        that make blob operations more natural in F#.\\\\n## Prerequisites\\\\nTo
-        use this guide, you must first [create an Azure storage account](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-create).
-        You also need your storage access key for this account.\\\",\\\"contentUrl\\\":\\\"https://learn.microsoft.com/dotnet/fsharp/using-fsharp-on-azure/blob-storage\\\"}]}\"}],\"structuredContent\":{\"results\":[{\"title\":\"What
+        Microsoft Entra credentials. |\\\",\\\"contentUrl\\\":\\\"https://learn.microsoft.com/rest/api/storageservices/blob-service-rest-api\\\"},{\\\"title\\\":\\\"Azure
+        Storage blob inventory\\\",\\\"content\\\":\\\"# Azure Storage blob inventory\\\\nAzure
+        Storage blob inventory lists the containers, blobs, blob versions, snapshots,
+        and associated properties in your storage account. The service generates reports
+        daily or weekly in comma-separated values (CSV) or Apache Parquet format.\\\\nUse
+        inventory reports to audit the retention, legal hold, or encryption status
+        of your storage account contents. You can also analyze the total size, age,
+        tier distribution, and other attributes of your data.\\\\nBlob inventory can
+        simplify business workflows and speed up data processing jobs. It provides
+        scheduled automation of the [List Containers](https://learn.microsoft.com/en-us/rest/api/storageservices/list-containers2)
+        and [List Blobs](https://learn.microsoft.com/en-us/rest/api/storageservices/list-blobs)
+        APIs. Inventory rules filter report contents by blob type, prefix, or selected
+        blob properties.\\\\nAzure Storage blob inventory is available for the following
+        types of storage accounts:\\\\n1. Standard general-purpose v2\\\\n2. Premium
+        block blob storage\\\\n3. Blob storage\\\\n## Inventory features\\\\nAzure
+        Storage blob inventory supports the following features and capabilities.\\\\n1.
+        **Inventory reports for blobs and containers**\\\\n  You can generate inventory
+        reports for blobs and containers. A report for blobs can contain base blobs,
+        snapshots, content length, blob versions, and their associated properties
+        such as creation time and last modified time. The report doesn\\\\u0027t list
+        empty containers. A report for containers describes containers and their associated
+        properties such as immutability policy status and legal hold status.\\\\n2.
+        **Custom schema**\\\\n  You can choose which fields appear in reports. Choose
+        from a list of supported fields. That list appears later in this article.\\\\n3.
+        **CSV and Apache Parquet output format**\\\\n  You can generate an inventory
+        report in either CSV or Apache Parquet output format.\\\\n4. **Manifest file
+        and Azure Event Grid event per inventory report**\\\\n  The service generates
+        a manifest file and an Azure Event Grid event for each inventory report. The
+        article describes these items later.\\\\n## Enabling inventory reports\\\\nEnable
+        blob inventory reports by adding a policy with one or more rules to your storage
+        account. For guidance, see [Enable Azure Storage blob inventory reports](https://learn.microsoft.com/azure/storage/blobs/blob-inventory-how-to).\\\",\\\"contentUrl\\\":\\\"https://learn.microsoft.com/azure/storage/blobs/blob-inventory\\\"}]}\"}],\"structuredContent\":{\"results\":[{\"title\":\"What
         is Azure Blob storage?\",\"content\":\"# What is Azure Blob storage?\\nAzure
         Blob Storage is Microsoft''s object storage solution for the cloud. Blob Storage
         is optimized for storing massive amounts of unstructured data. Unstructured
@@ -536,7 +543,30 @@ http_interactions:
         them back to Microsoft to be uploaded into Blob Storage.\\n6. The **Azure
         Import/Export service** provides a way to import or export large amounts of
         data to and from your storage account by using hard drives that you provide.
-        For more information, see [What is Azure Import/Export service?](https://learn.microsoft.com/azure/import-export/storage-import-export-service)\",\"contentUrl\":\"https://learn.microsoft.com/azure/storage/blobs/storage-blobs-introduction#move-data-to-blob-storage\"},{\"title\":\"Introduction
+        For more information, see [What is Azure Import/Export service?](https://learn.microsoft.com/azure/import-export/storage-import-export-service)\",\"contentUrl\":\"https://learn.microsoft.com/azure/storage/blobs/storage-blobs-introduction#move-data-to-blob-storage\"},{\"title\":\"Reliability
+        in Azure Blob Storage\",\"content\":\"# Reliability in Azure Blob Storage\\n[Azure
+        Blob Storage](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blobs-overview)
+        is an object storage solution for the cloud from Microsoft. It''s designed
+        to store massive amounts of unstructured data such as text, binary data, documents,
+        media files, and application backups. As a foundational Azure storage service,
+        Blob Storage provides multiple reliability features to ensure that your data
+        remains available and durable during both planned and unplanned events.\\nWhen
+        you use Azure, [reliability is a shared responsibility](https://learn.microsoft.com/en-us/azure/reliability/concept-shared-responsibility).
+        Microsoft provides a range of capabilities to support resiliency and recovery.
+        You''re responsible for understanding how those capabilities work within all
+        of the services you use, and selecting the capabilities you need to meet your
+        business objectives and uptime goals.\\nThis article describes how to make
+        Blob Storage resilient to a variety of potential outages and problems, including
+        transient faults, availability zone outages, and region outages. It also describes
+        how you can use backups to recover from other types of problems, and highlights
+        some key information about the Blob Storage service level agreement (SLA).\\nNote\\nBlob
+        Storage is part of the Azure Storage platform. Some of the capabilities of
+        Blob Storage are common across many Azure Storage services. In this article,
+        we use *Azure Storage* to refer to these features.\\n## Production deployment
+        recommendations\\nTo learn about how to deploy Blob Storage to support your
+        solution''s reliability requirements, and how reliability affects other aspects
+        of your architecture, see [Architecture best practices for Blob Storage](https://learn.microsoft.com/en-us/azure/well-architected/service-guides/azure-blob-storage)
+        in the Azure Well-Architected Framework.\",\"contentUrl\":\"https://learn.microsoft.com/azure/reliability/reliability-storage-blob\"},{\"title\":\"Introduction
         to Azure Blob Storage\",\"content\":\"# Introduction to Azure Blob Storage\\n##
         Blob Storage resources\\nA container name must be a valid DNS name, as it
         forms part of the unique URI (Uniform resource identifier) used to address
@@ -563,30 +593,7 @@ http_interactions:
         these rules when naming a blob:\\n1. A blob name can contain any combination
         of characters.\\n2. A blob name must be at least one character long and can''t
         be more than 1,024 characters long, for blobs in Azure Storage.\\n3. Blob
-        names are case-sensitive.\\n4. Reserved URL characters must be properly escaped.\",\"contentUrl\":\"https://learn.microsoft.com/azure/storage/blobs/storage-blobs-introduction#blob-storage-resources\"},{\"title\":\"Reliability
-        in Azure Blob Storage\",\"content\":\"# Reliability in Azure Blob Storage\\n[Azure
-        Blob Storage](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blobs-overview)
-        is an object storage solution for the cloud from Microsoft. It''s designed
-        to store massive amounts of unstructured data such as text, binary data, documents,
-        media files, and application backups. As a foundational Azure storage service,
-        Blob Storage provides multiple reliability features to ensure that your data
-        remains available and durable during both planned and unplanned events.\\nWhen
-        you use Azure, [reliability is a shared responsibility](https://learn.microsoft.com/en-us/azure/reliability/concept-shared-responsibility).
-        Microsoft provides a range of capabilities to support resiliency and recovery.
-        You''re responsible for understanding how those capabilities work within all
-        of the services you use, and selecting the capabilities you need to meet your
-        business objectives and uptime goals.\\nThis article describes how to make
-        Blob Storage resilient to a variety of potential outages and problems, including
-        transient faults, availability zone outages, and region outages. It also describes
-        how you can use backups to recover from other types of problems, and highlights
-        some key information about the Blob Storage service level agreement (SLA).\\nNote\\nBlob
-        Storage is part of the Azure Storage platform. Some of the capabilities of
-        Blob Storage are common across many Azure Storage services. In this article,
-        we use *Azure Storage* to refer to these features.\\n## Production deployment
-        recommendations\\nTo learn about how to deploy Blob Storage to support your
-        solution''s reliability requirements, and how reliability affects other aspects
-        of your architecture, see [Architecture best practices for Blob Storage](https://learn.microsoft.com/en-us/azure/well-architected/service-guides/azure-blob-storage)
-        in the Azure Well-Architected Framework.\",\"contentUrl\":\"https://learn.microsoft.com/azure/reliability/reliability-storage-blob\"},{\"title\":\"Azure
+        names are case-sensitive.\\n4. Reserved URL characters must be properly escaped.\",\"contentUrl\":\"https://learn.microsoft.com/azure/storage/blobs/storage-blobs-introduction#blob-storage-resources\"},{\"title\":\"Azure
         Blob Storage REST API\",\"content\":\"# Azure Blob Storage REST API\\nAzure
         Blob Storage stores text and binary data as objects in the cloud. Blob Storage
         offers the following resources: the storage account, containers, and blobs.
@@ -617,46 +624,52 @@ http_interactions:
         |\\n| [Get User Delegation Key](https://learn.microsoft.com/rest/api/storageservices/get-user-delegation-key)
         | Account | Gets a key that can be used to sign a user delegation shared access
         signature. This signature grants access to resources in Blob Storage by using
-        Microsoft Entra credentials. |\",\"contentUrl\":\"https://learn.microsoft.com/rest/api/storageservices/blob-service-rest-api\"},{\"title\":\"Get
-        started with Azure Blob Storage using F\",\"content\":\"# Get started with
-        Azure Blob Storage using F\\nAzure Blob Storage is a service that stores unstructured
-        data in the cloud as objects/blobs. Blob storage can store any type of text
-        or binary data, such as a document, media file, or application installer.
-        Blob storage is also referred to as object storage.\\nThis article shows you
-        how to perform common tasks using Blob storage. The samples are written using
-        F# with the `Azure.Storage.Blobs` package. The tasks covered include how to
-        upload, list, download, and delete blobs.\\nFor a conceptual overview of blob
-        storage, see [the .NET guide for blob storage](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-dotnet).
-        For ease, these tutorials use [connection strings](https://learn.microsoft.com/en-us/azure/storage/storage-configure-connection-string)
-        to authenticate with Azure. For production applications, you should use Microsoft
-        Entra ID with [managed identities](https://learn.microsoft.com/en-us/entra/identity/managed-identities-azure-resources/)
-        or the [Azure.Identity library](https://learn.microsoft.com/en-us/dotnet/api/overview/azure/identity-readme)
-        for enhanced security.\\nImportant\\nThis article uses the modern `Azure.Storage.Blobs`
-        package. If you''re updating from older code that used the deprecated `WindowsAzure.Storage`
-        or `Microsoft.Azure.Storage.Blob` packages, you need to update your package
-        references and namespace declarations. For migration guidance, see [Migrate
-        to Azure.Storage.Blobs](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-dotnet).\\nNote\\nF#
-        developers might consider the [FSharp.Azure.Blob](https://github.com/random82/FSharp.Azure.Blob)
-        library, which provides a more idiomatic F# API for working with Azure Blob
-        Storage. This community library offers idiomatic F# functions and patterns
-        that make blob operations more natural in F#.\\n## Prerequisites\\nTo use
-        this guide, you must first [create an Azure storage account](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-create).
-        You also need your storage access key for this account.\",\"contentUrl\":\"https://learn.microsoft.com/dotnet/fsharp/using-fsharp-on-azure/blob-storage\"}]}}"},{"id":"rs_c5c46786-dbf2-4682-b789-3669e0cffc0b","summary":[],"type":"reasoning","status":"completed","encrypted_content":"8sNnJspYr5vmAP8/yXxXUHgEWv/xKCH6O3wdyBZxgtog4qU2NivPeofxQmVUkzmdmgU86i9+Z0gx26pe/Ot5AD4kYjaL1250RE1Y7LSk6PvGiv4JY2Qnf2NcBgbP+1Q/fReYOuiUBz9BIwNyFrxsDxuBns2AVhLSl6txPb3ieV15izaeq2sRZQJGmDu0ms8NeInTqqlnkjoNG/p6Ft8xeNd/UslYCfQv1jsBFJ0KnOMPEQbmDIrNtEDyWtbijTUAJ4BZD9scIZBqIKaezPZCtDhIs9WNC5pqTCA2nCtDtEFELMvPlqj+NjANaYCdGuC9dVsd1ett+IARIwYi3RKM/GACmbWvGXKji8m8rlMo6oGJ6CLxv+uQD6P+/GwuDIBuNrHDK8o1N5H1dr671OyjgGcK3+U+wQJS8gl9n9rjPKNX8BfGEMIAaWXBkFvsmlo3Ws70ZVTb+dIjLp9yPWnxf9JGtI2jhw1UJ/Vzh7TxPsHtVG88fcg5vkq+jItzuGCr4Vachy+5CLMelCzFujf1CSN3gSsAmYsdmTaDB9s1OJyJSv54shZW+c0BWccjl9sosMcYcIcFAHYeS+IZejcwH99SGixly5ueTYzWOMgYNOh7jTZbSgSZvf/hKvvZv8+QAdvN2ALMQG9UNHzYTi9pRkiJqi4vx1F8RkZki0xLFfebdvuLjhaq52ZpGgdLgBr+HKCSk7F6vR82pBc/fHUisbJnA38HTu4NgnRFIQohFNl84w4GZEJWLs184s6c2UBWV6GZBcLiekj7Dqnv0sTQCDl+fLCBNRARLuD26L2KYM9vTv5hNCXQHqeConktq/l7uvgQOQe3hkLoh7e7ljIMIRwGwMYnaZMdpbx+y+CGxYawWOseDVgvVDh8KAO6cbdAMvZ1MaLOtvs0dhn7vvdtVevHYSFohrEnMinry3pelWgt681wH3nbbQFd/jwiAhaMoCgq4wtpilDyvnYcgC1DTsUBrpr0goFb0MIzMMw1YpNsnf8UtZuZuRo1GldpZhQZ/vB7UnBf55mlqYzV/Td/EUg/kbmZH9xGiZoxjPUQWRlCsc0ah/Naf4NJaAVsBymjFxYzSvSvww2FRdnXN/xVE6LOdVy3WpePOUtNFVJfEpItGuRf0Yk7jl8Z87qSJdoqAzlviRpCp0TVrEHuk+5phpcz6RNKZ/JhkfoVCyea8zRc+/coaz8E7L6HLz4yuUjWomxGpoFy2He6p2vxgwUgiBIn2d17wNgWZvK47tQsgdiuQlXHnDT2Zc+RcK8CaRJmoq3NtMOe82U"},{"content":[{"type":"output_text","text":"Azure
+        Microsoft Entra credentials. |\",\"contentUrl\":\"https://learn.microsoft.com/rest/api/storageservices/blob-service-rest-api\"},{\"title\":\"Azure
+        Storage blob inventory\",\"content\":\"# Azure Storage blob inventory\\nAzure
+        Storage blob inventory lists the containers, blobs, blob versions, snapshots,
+        and associated properties in your storage account. The service generates reports
+        daily or weekly in comma-separated values (CSV) or Apache Parquet format.\\nUse
+        inventory reports to audit the retention, legal hold, or encryption status
+        of your storage account contents. You can also analyze the total size, age,
+        tier distribution, and other attributes of your data.\\nBlob inventory can
+        simplify business workflows and speed up data processing jobs. It provides
+        scheduled automation of the [List Containers](https://learn.microsoft.com/en-us/rest/api/storageservices/list-containers2)
+        and [List Blobs](https://learn.microsoft.com/en-us/rest/api/storageservices/list-blobs)
+        APIs. Inventory rules filter report contents by blob type, prefix, or selected
+        blob properties.\\nAzure Storage blob inventory is available for the following
+        types of storage accounts:\\n1. Standard general-purpose v2\\n2. Premium block
+        blob storage\\n3. Blob storage\\n## Inventory features\\nAzure Storage blob
+        inventory supports the following features and capabilities.\\n1. **Inventory
+        reports for blobs and containers**\\n  You can generate inventory reports
+        for blobs and containers. A report for blobs can contain base blobs, snapshots,
+        content length, blob versions, and their associated properties such as creation
+        time and last modified time. The report doesn''t list empty containers. A
+        report for containers describes containers and their associated properties
+        such as immutability policy status and legal hold status.\\n2. **Custom schema**\\n  You
+        can choose which fields appear in reports. Choose from a list of supported
+        fields. That list appears later in this article.\\n3. **CSV and Apache Parquet
+        output format**\\n  You can generate an inventory report in either CSV or
+        Apache Parquet output format.\\n4. **Manifest file and Azure Event Grid event
+        per inventory report**\\n  The service generates a manifest file and an Azure
+        Event Grid event for each inventory report. The article describes these items
+        later.\\n## Enabling inventory reports\\nEnable blob inventory reports by
+        adding a policy with one or more rules to your storage account. For guidance,
+        see [Enable Azure Storage blob inventory reports](https://learn.microsoft.com/azure/storage/blobs/blob-inventory-how-to).\",\"contentUrl\":\"https://learn.microsoft.com/azure/storage/blobs/blob-inventory\"}]}}"},{"id":"rs_4b02ff3b-397d-90b6-a299-c1fa9fa7f7ec","summary":[],"type":"reasoning","status":"completed","encrypted_content":"LIncajGNzu4Zi1c5PmS98iVmOYyBWF6vt1oKVU1VHNkrF2/P1qWKSm9+dfLOEmsnuUrugVS2nvkmw0l4p6ctF1rCSIXRuLzC9hiCU5yqcx9C/my9m3nAq99frzrlAHICA7TPqGugVHTVk6OwTELFdYpzO1aCh8L5yKMYIosDzSH+tZ1OBxRflutLwyc1MGMZwm5wRT2GGcuwDga2OQVuEl1rBsHzEtksoMLDsw3lJY/UNZ2JnDB8pSMxriw0GFfLG10pwj33GR6lfVGnmF8cZ4hANda7lWuXDRQLjxLEBuGNN7k1dATrq3igy1RqgVTIfaOYeibDhGAE/An9ALRBPKmlaAM3q8dZnMHOy3Zn/Yvo3qqTWEzOKf10hQrnPjyW2mhWfRgzL1ySW8BAEdX4o6wy/UM5WMr0XdvHLAWXF6HSeue3JC+VkPUBjzxHOAgzM5BVM9sPst4IWxaJbK+afeAzOr44aBJOMARfwKdN/B5QBMhJm4Ruhvuhf8T9kKw3Ilv0AVwrER8EWrx0tr5WsVQ1eli4ewc1gDeO6QK1j+tDjq8DtLBwVYy2zMzOjbFGUqt++D0y416kXkT4utTkVcV0RDy/UGAzWos0ybnXu3a15MgZKCjbE4tSm5BgusjRq//UUCB5He/IU9hxXg3eOz6cnyynQC5SryJNXpqCj01t5vh/7k/Z664aZ3t4urD2O8dYrRVAGygZffgR7QIjlG6/7HPHPGoKyhctHihVjCeb3/KOxJbC9V1LcGgOLag5xA/w3KiNXgOlGgkiM7xqgYAxpKg1Hc7Q3LZTakmYFvX4qRn3hQr0lVCBJ2yqsdZPXpgygae2NHflGr+31hMbxF1KsUzikpjlsUfz50UFO3vXAPv/R5BTTt8xt/b1EhV8"},{"content":[{"type":"output_text","text":"Azure
         Blob Storage is Microsoft''s object storage solution for the cloud, optimized
-        for storing massive amounts of unstructured data such as text or binary files
-        for uses like serving images, streaming media, backups, and analytics.","logprobs":[],"annotations":[]}],"id":"msg_c5c46786-dbf2-4682-b789-3669e0cffc0b","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"mcp","server_label":"docs","server_url":"https://learn.microsoft.com/api/mcp","allowed_tools":["microsoft_docs_search"],"headers":{},"server_description":""}],"top_p":0.95,"usage":{"input_tokens":7357,"input_tokens_details":{"cached_tokens":896},"output_tokens":560,"output_tokens_details":{"reasoning_tokens":505},"total_tokens":7917,"num_sources_used":0,"num_server_side_tools_used":1,"cost_in_usd_ticks":96554500,"server_side_tool_usage_details":{"web_search_calls":0,"x_search_calls":0,"x_posts_fetched":0,"x_users_fetched":0,"code_interpreter_calls":0,"file_search_calls":0,"mcp_calls":1,"document_search_calls":0,"image_generation_calls":0},"context_details":{"input_tokens":6566,"output_tokens":227}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":"Call
+        for storing massive amounts of unstructured data like text or binary files
+        and designed for uses such as serving images, streaming media, backups, and
+        analytics.","logprobs":[],"annotations":[]}],"id":"msg_4b02ff3b-397d-90b6-a299-c1fa9fa7f7ec","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"mcp","server_label":"docs","server_url":"https://learn.microsoft.com/api/mcp","allowed_tools":["microsoft_docs_search"],"headers":{},"server_description":""}],"top_p":0.95,"usage":{"input_tokens":7284,"input_tokens_details":{"cached_tokens":896},"output_tokens":561,"output_tokens_details":{"reasoning_tokens":504},"total_tokens":7845,"num_sources_used":0,"num_server_side_tools_used":1,"cost_in_usd_ticks":95667000,"server_side_tool_usage_details":{"web_search_calls":0,"x_search_calls":0,"x_posts_fetched":0,"x_users_fetched":0,"code_interpreter_calls":0,"file_search_calls":0,"mcp_calls":1,"document_search_calls":0,"image_generation_calls":0},"context_details":{"input_tokens":6493,"output_tokens":301}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":"Call
         microsoft_docs_search once to answer the first question. For later questions
         use only those results."}'
-  recorded_at: Sun, 15 Nov 2026 01:21:04 GMT
+  recorded_at: Wed, 18 Nov 2026 06:36:24 GMT
 - request:
     method: post
     uri: https://api.x.ai/v1/responses
     body:
       encoding: UTF-8
       string: '{"model":"grok-4.3","input":[{"role":"user","content":"Search Microsoft
-        documentation for Azure Blob Storage, then summarize it in one sentence."},{"id":"rs_c5c46786-dbf2-4682-b789-3669e0cffc0b","summary":[{"text":"I
-        will search Microsoft documentation for Azure Blob Storage and summarize it
-        in one sentence.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"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"},{"id":"mcp_c5c46786-dbf2-4682-b789-3669e0cffc0b_call-a88a5374-6b6f-4587-9db0-8557279d02f5-0","type":"mcp_call","status":"completed","name":"microsoft_docs_search","server_label":"docs","error":"","arguments":"{\"query\":\"Azure
+        documentation for Azure Blob Storage, then summarize it in one sentence."},{"id":"rs_4b02ff3b-397d-90b6-a299-c1fa9fa7f7ec","summary":[{"text":"Searching
+        Microsoft documentation for Azure Blob Storage to provide a one-sentence summary.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"8NbJlKJrhWL5Nla+j07HSzFs4MhCNwSOdyw7RIDJEyI3IkXM2zjRsSnEpzCLpsKXiintnoLIyrMaKXR49yGbUHskXl7Dc2r5kHex+2Pt8s6/KVyXE1nTUZ7SAWLWT9+lZAGS8Mvszio6Rv3Qlep6bHWMvm6QxehH3NjXK1pzpxzOmJ6ZhAG4vK1vOTyi9wXneYWrotG00ej1SwLv6dZJmYGOKXdfFH9AuqCDvMwhExh3c3BZNJqQs64Oyp5AGlzbFLGF9GKJaDFEuNJcDwnPghiyLsMeBtiKSdwHk/CK3HLnphIKU+xxAyZj+yCPakvz5tmt9DVha8gJewRVk7kuA8P4PDVPhv5mjz5QeghrqNVm4Rz6HfPklJKTWjN1uRG/5RQMeb5uqxsviLkhvZy43ksW1Fkvsi7guzRPoRT6gqklx3Lm2QlGOn7/4mUUNuM4p3iWauyfsPqXb8CSEqyu7mzZZX0gakKdIes7nM8qX3umfjKJNnltDzTHLaI1qjjb/Grj6RdhrukbJzJx/j2Lupem3UIrR9qgRuKtoOGKPVaRIkzVQim7mfnXnMG7xVkc1GoUTeXUL5/ky3+bOAZ28NcU2l5L1PUreo8j53kuLgi6CdIQAptRsubEqpnPS4zM2Kdp9R/A8tWaH54L5m3WvR0Oy4zbuFL4mI6mSiZNPvywvKUqrSXIJOYpPRU3ubgU7c/q6MrwTRw9IHrxyoWZx0yNZusUOevjPKtRe6i4EP3YhHPZasrqxeaAr23PBq+0+0vTwj8pWqUQe/h/Y7Lz60a69WbIucymm7PTMJm0BrIVj8w"},{"id":"mcp_4b02ff3b-397d-90b6-a299-c1fa9fa7f7ec_call-e32f202c-04be-47bf-b2e0-045f631373b9-0","type":"mcp_call","status":"completed","name":"microsoft_docs_search","server_label":"docs","error":"","arguments":"{\"query\":\"Azure
         Blob Storage\"}","output":"{\"content\":[{\"type\":\"text\",\"text\":\"{\\\"results\\\":[{\\\"title\\\":\\\"What
         is Azure Blob storage?\\\",\\\"content\\\":\\\"# What is Azure Blob storage?\\\\nAzure
         Blob Storage is Microsoft\\\\u0027s object storage solution for the cloud.
@@ -837,7 +850,31 @@ http_interactions:
         them back to Microsoft to be uploaded into Blob Storage.\\\\n6. The **Azure
         Import/Export service** provides a way to import or export large amounts of
         data to and from your storage account by using hard drives that you provide.
-        For more information, see [What is Azure Import/Export service?](https://learn.microsoft.com/azure/import-export/storage-import-export-service)\\\",\\\"contentUrl\\\":\\\"https://learn.microsoft.com/azure/storage/blobs/storage-blobs-introduction#move-data-to-blob-storage\\\"},{\\\"title\\\":\\\"Introduction
+        For more information, see [What is Azure Import/Export service?](https://learn.microsoft.com/azure/import-export/storage-import-export-service)\\\",\\\"contentUrl\\\":\\\"https://learn.microsoft.com/azure/storage/blobs/storage-blobs-introduction#move-data-to-blob-storage\\\"},{\\\"title\\\":\\\"Reliability
+        in Azure Blob Storage\\\",\\\"content\\\":\\\"# Reliability in Azure Blob
+        Storage\\\\n[Azure Blob Storage](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blobs-overview)
+        is an object storage solution for the cloud from Microsoft. It\\\\u0027s designed
+        to store massive amounts of unstructured data such as text, binary data, documents,
+        media files, and application backups. As a foundational Azure storage service,
+        Blob Storage provides multiple reliability features to ensure that your data
+        remains available and durable during both planned and unplanned events.\\\\nWhen
+        you use Azure, [reliability is a shared responsibility](https://learn.microsoft.com/en-us/azure/reliability/concept-shared-responsibility).
+        Microsoft provides a range of capabilities to support resiliency and recovery.
+        You\\\\u0027re responsible for understanding how those capabilities work within
+        all of the services you use, and selecting the capabilities you need to meet
+        your business objectives and uptime goals.\\\\nThis article describes how
+        to make Blob Storage resilient to a variety of potential outages and problems,
+        including transient faults, availability zone outages, and region outages.
+        It also describes how you can use backups to recover from other types of problems,
+        and highlights some key information about the Blob Storage service level agreement
+        (SLA).\\\\nNote\\\\nBlob Storage is part of the Azure Storage platform. Some
+        of the capabilities of Blob Storage are common across many Azure Storage services.
+        In this article, we use *Azure Storage* to refer to these features.\\\\n##
+        Production deployment recommendations\\\\nTo learn about how to deploy Blob
+        Storage to support your solution\\\\u0027s reliability requirements, and how
+        reliability affects other aspects of your architecture, see [Architecture
+        best practices for Blob Storage](https://learn.microsoft.com/en-us/azure/well-architected/service-guides/azure-blob-storage)
+        in the Azure Well-Architected Framework.\\\",\\\"contentUrl\\\":\\\"https://learn.microsoft.com/azure/reliability/reliability-storage-blob\\\"},{\\\"title\\\":\\\"Introduction
         to Azure Blob Storage\\\",\\\"content\\\":\\\"# Introduction to Azure Blob
         Storage\\\\n## Blob Storage resources\\\\nA container name must be a valid
         DNS name, as it forms part of the unique URI (Uniform resource identifier)
@@ -865,31 +902,7 @@ http_interactions:
         of characters.\\\\n2. A blob name must be at least one character long and
         can\\\\u0027t be more than 1,024 characters long, for blobs in Azure Storage.\\\\n3.
         Blob names are case-sensitive.\\\\n4. Reserved URL characters must be properly
-        escaped.\\\",\\\"contentUrl\\\":\\\"https://learn.microsoft.com/azure/storage/blobs/storage-blobs-introduction#blob-storage-resources\\\"},{\\\"title\\\":\\\"Reliability
-        in Azure Blob Storage\\\",\\\"content\\\":\\\"# Reliability in Azure Blob
-        Storage\\\\n[Azure Blob Storage](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blobs-overview)
-        is an object storage solution for the cloud from Microsoft. It\\\\u0027s designed
-        to store massive amounts of unstructured data such as text, binary data, documents,
-        media files, and application backups. As a foundational Azure storage service,
-        Blob Storage provides multiple reliability features to ensure that your data
-        remains available and durable during both planned and unplanned events.\\\\nWhen
-        you use Azure, [reliability is a shared responsibility](https://learn.microsoft.com/en-us/azure/reliability/concept-shared-responsibility).
-        Microsoft provides a range of capabilities to support resiliency and recovery.
-        You\\\\u0027re responsible for understanding how those capabilities work within
-        all of the services you use, and selecting the capabilities you need to meet
-        your business objectives and uptime goals.\\\\nThis article describes how
-        to make Blob Storage resilient to a variety of potential outages and problems,
-        including transient faults, availability zone outages, and region outages.
-        It also describes how you can use backups to recover from other types of problems,
-        and highlights some key information about the Blob Storage service level agreement
-        (SLA).\\\\nNote\\\\nBlob Storage is part of the Azure Storage platform. Some
-        of the capabilities of Blob Storage are common across many Azure Storage services.
-        In this article, we use *Azure Storage* to refer to these features.\\\\n##
-        Production deployment recommendations\\\\nTo learn about how to deploy Blob
-        Storage to support your solution\\\\u0027s reliability requirements, and how
-        reliability affects other aspects of your architecture, see [Architecture
-        best practices for Blob Storage](https://learn.microsoft.com/en-us/azure/well-architected/service-guides/azure-blob-storage)
-        in the Azure Well-Architected Framework.\\\",\\\"contentUrl\\\":\\\"https://learn.microsoft.com/azure/reliability/reliability-storage-blob\\\"},{\\\"title\\\":\\\"Azure
+        escaped.\\\",\\\"contentUrl\\\":\\\"https://learn.microsoft.com/azure/storage/blobs/storage-blobs-introduction#blob-storage-resources\\\"},{\\\"title\\\":\\\"Azure
         Blob Storage REST API\\\",\\\"content\\\":\\\"# Azure Blob Storage REST API\\\\nAzure
         Blob Storage stores text and binary data as objects in the cloud. Blob Storage
         offers the following resources: the storage account, containers, and blobs.
@@ -920,31 +933,37 @@ http_interactions:
         |\\\\n| [Get User Delegation Key](https://learn.microsoft.com/rest/api/storageservices/get-user-delegation-key)
         | Account | Gets a key that can be used to sign a user delegation shared access
         signature. This signature grants access to resources in Blob Storage by using
-        Microsoft Entra credentials. |\\\",\\\"contentUrl\\\":\\\"https://learn.microsoft.com/rest/api/storageservices/blob-service-rest-api\\\"},{\\\"title\\\":\\\"Get
-        started with Azure Blob Storage using F\\\",\\\"content\\\":\\\"# Get started
-        with Azure Blob Storage using F\\\\nAzure Blob Storage is a service that stores
-        unstructured data in the cloud as objects/blobs. Blob storage can store any
-        type of text or binary data, such as a document, media file, or application
-        installer. Blob storage is also referred to as object storage.\\\\nThis article
-        shows you how to perform common tasks using Blob storage. The samples are
-        written using F# with the \\\\u0060Azure.Storage.Blobs\\\\u0060 package. The
-        tasks covered include how to upload, list, download, and delete blobs.\\\\nFor
-        a conceptual overview of blob storage, see [the .NET guide for blob storage](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-dotnet).
-        For ease, these tutorials use [connection strings](https://learn.microsoft.com/en-us/azure/storage/storage-configure-connection-string)
-        to authenticate with Azure. For production applications, you should use Microsoft
-        Entra ID with [managed identities](https://learn.microsoft.com/en-us/entra/identity/managed-identities-azure-resources/)
-        or the [Azure.Identity library](https://learn.microsoft.com/en-us/dotnet/api/overview/azure/identity-readme)
-        for enhanced security.\\\\nImportant\\\\nThis article uses the modern \\\\u0060Azure.Storage.Blobs\\\\u0060
-        package. If you\\\\u0027re updating from older code that used the deprecated
-        \\\\u0060WindowsAzure.Storage\\\\u0060 or \\\\u0060Microsoft.Azure.Storage.Blob\\\\u0060
-        packages, you need to update your package references and namespace declarations.
-        For migration guidance, see [Migrate to Azure.Storage.Blobs](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-dotnet).\\\\nNote\\\\nF#
-        developers might consider the [FSharp.Azure.Blob](https://github.com/random82/FSharp.Azure.Blob)
-        library, which provides a more idiomatic F# API for working with Azure Blob
-        Storage. This community library offers idiomatic F# functions and patterns
-        that make blob operations more natural in F#.\\\\n## Prerequisites\\\\nTo
-        use this guide, you must first [create an Azure storage account](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-create).
-        You also need your storage access key for this account.\\\",\\\"contentUrl\\\":\\\"https://learn.microsoft.com/dotnet/fsharp/using-fsharp-on-azure/blob-storage\\\"}]}\"}],\"structuredContent\":{\"results\":[{\"title\":\"What
+        Microsoft Entra credentials. |\\\",\\\"contentUrl\\\":\\\"https://learn.microsoft.com/rest/api/storageservices/blob-service-rest-api\\\"},{\\\"title\\\":\\\"Azure
+        Storage blob inventory\\\",\\\"content\\\":\\\"# Azure Storage blob inventory\\\\nAzure
+        Storage blob inventory lists the containers, blobs, blob versions, snapshots,
+        and associated properties in your storage account. The service generates reports
+        daily or weekly in comma-separated values (CSV) or Apache Parquet format.\\\\nUse
+        inventory reports to audit the retention, legal hold, or encryption status
+        of your storage account contents. You can also analyze the total size, age,
+        tier distribution, and other attributes of your data.\\\\nBlob inventory can
+        simplify business workflows and speed up data processing jobs. It provides
+        scheduled automation of the [List Containers](https://learn.microsoft.com/en-us/rest/api/storageservices/list-containers2)
+        and [List Blobs](https://learn.microsoft.com/en-us/rest/api/storageservices/list-blobs)
+        APIs. Inventory rules filter report contents by blob type, prefix, or selected
+        blob properties.\\\\nAzure Storage blob inventory is available for the following
+        types of storage accounts:\\\\n1. Standard general-purpose v2\\\\n2. Premium
+        block blob storage\\\\n3. Blob storage\\\\n## Inventory features\\\\nAzure
+        Storage blob inventory supports the following features and capabilities.\\\\n1.
+        **Inventory reports for blobs and containers**\\\\n  You can generate inventory
+        reports for blobs and containers. A report for blobs can contain base blobs,
+        snapshots, content length, blob versions, and their associated properties
+        such as creation time and last modified time. The report doesn\\\\u0027t list
+        empty containers. A report for containers describes containers and their associated
+        properties such as immutability policy status and legal hold status.\\\\n2.
+        **Custom schema**\\\\n  You can choose which fields appear in reports. Choose
+        from a list of supported fields. That list appears later in this article.\\\\n3.
+        **CSV and Apache Parquet output format**\\\\n  You can generate an inventory
+        report in either CSV or Apache Parquet output format.\\\\n4. **Manifest file
+        and Azure Event Grid event per inventory report**\\\\n  The service generates
+        a manifest file and an Azure Event Grid event for each inventory report. The
+        article describes these items later.\\\\n## Enabling inventory reports\\\\nEnable
+        blob inventory reports by adding a policy with one or more rules to your storage
+        account. For guidance, see [Enable Azure Storage blob inventory reports](https://learn.microsoft.com/azure/storage/blobs/blob-inventory-how-to).\\\",\\\"contentUrl\\\":\\\"https://learn.microsoft.com/azure/storage/blobs/blob-inventory\\\"}]}\"}],\"structuredContent\":{\"results\":[{\"title\":\"What
         is Azure Blob storage?\",\"content\":\"# What is Azure Blob storage?\\nAzure
         Blob Storage is Microsoft''s object storage solution for the cloud. Blob Storage
         is optimized for storing massive amounts of unstructured data. Unstructured
@@ -1119,7 +1138,30 @@ http_interactions:
         them back to Microsoft to be uploaded into Blob Storage.\\n6. The **Azure
         Import/Export service** provides a way to import or export large amounts of
         data to and from your storage account by using hard drives that you provide.
-        For more information, see [What is Azure Import/Export service?](https://learn.microsoft.com/azure/import-export/storage-import-export-service)\",\"contentUrl\":\"https://learn.microsoft.com/azure/storage/blobs/storage-blobs-introduction#move-data-to-blob-storage\"},{\"title\":\"Introduction
+        For more information, see [What is Azure Import/Export service?](https://learn.microsoft.com/azure/import-export/storage-import-export-service)\",\"contentUrl\":\"https://learn.microsoft.com/azure/storage/blobs/storage-blobs-introduction#move-data-to-blob-storage\"},{\"title\":\"Reliability
+        in Azure Blob Storage\",\"content\":\"# Reliability in Azure Blob Storage\\n[Azure
+        Blob Storage](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blobs-overview)
+        is an object storage solution for the cloud from Microsoft. It''s designed
+        to store massive amounts of unstructured data such as text, binary data, documents,
+        media files, and application backups. As a foundational Azure storage service,
+        Blob Storage provides multiple reliability features to ensure that your data
+        remains available and durable during both planned and unplanned events.\\nWhen
+        you use Azure, [reliability is a shared responsibility](https://learn.microsoft.com/en-us/azure/reliability/concept-shared-responsibility).
+        Microsoft provides a range of capabilities to support resiliency and recovery.
+        You''re responsible for understanding how those capabilities work within all
+        of the services you use, and selecting the capabilities you need to meet your
+        business objectives and uptime goals.\\nThis article describes how to make
+        Blob Storage resilient to a variety of potential outages and problems, including
+        transient faults, availability zone outages, and region outages. It also describes
+        how you can use backups to recover from other types of problems, and highlights
+        some key information about the Blob Storage service level agreement (SLA).\\nNote\\nBlob
+        Storage is part of the Azure Storage platform. Some of the capabilities of
+        Blob Storage are common across many Azure Storage services. In this article,
+        we use *Azure Storage* to refer to these features.\\n## Production deployment
+        recommendations\\nTo learn about how to deploy Blob Storage to support your
+        solution''s reliability requirements, and how reliability affects other aspects
+        of your architecture, see [Architecture best practices for Blob Storage](https://learn.microsoft.com/en-us/azure/well-architected/service-guides/azure-blob-storage)
+        in the Azure Well-Architected Framework.\",\"contentUrl\":\"https://learn.microsoft.com/azure/reliability/reliability-storage-blob\"},{\"title\":\"Introduction
         to Azure Blob Storage\",\"content\":\"# Introduction to Azure Blob Storage\\n##
         Blob Storage resources\\nA container name must be a valid DNS name, as it
         forms part of the unique URI (Uniform resource identifier) used to address
@@ -1146,30 +1188,7 @@ http_interactions:
         these rules when naming a blob:\\n1. A blob name can contain any combination
         of characters.\\n2. A blob name must be at least one character long and can''t
         be more than 1,024 characters long, for blobs in Azure Storage.\\n3. Blob
-        names are case-sensitive.\\n4. Reserved URL characters must be properly escaped.\",\"contentUrl\":\"https://learn.microsoft.com/azure/storage/blobs/storage-blobs-introduction#blob-storage-resources\"},{\"title\":\"Reliability
-        in Azure Blob Storage\",\"content\":\"# Reliability in Azure Blob Storage\\n[Azure
-        Blob Storage](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blobs-overview)
-        is an object storage solution for the cloud from Microsoft. It''s designed
-        to store massive amounts of unstructured data such as text, binary data, documents,
-        media files, and application backups. As a foundational Azure storage service,
-        Blob Storage provides multiple reliability features to ensure that your data
-        remains available and durable during both planned and unplanned events.\\nWhen
-        you use Azure, [reliability is a shared responsibility](https://learn.microsoft.com/en-us/azure/reliability/concept-shared-responsibility).
-        Microsoft provides a range of capabilities to support resiliency and recovery.
-        You''re responsible for understanding how those capabilities work within all
-        of the services you use, and selecting the capabilities you need to meet your
-        business objectives and uptime goals.\\nThis article describes how to make
-        Blob Storage resilient to a variety of potential outages and problems, including
-        transient faults, availability zone outages, and region outages. It also describes
-        how you can use backups to recover from other types of problems, and highlights
-        some key information about the Blob Storage service level agreement (SLA).\\nNote\\nBlob
-        Storage is part of the Azure Storage platform. Some of the capabilities of
-        Blob Storage are common across many Azure Storage services. In this article,
-        we use *Azure Storage* to refer to these features.\\n## Production deployment
-        recommendations\\nTo learn about how to deploy Blob Storage to support your
-        solution''s reliability requirements, and how reliability affects other aspects
-        of your architecture, see [Architecture best practices for Blob Storage](https://learn.microsoft.com/en-us/azure/well-architected/service-guides/azure-blob-storage)
-        in the Azure Well-Architected Framework.\",\"contentUrl\":\"https://learn.microsoft.com/azure/reliability/reliability-storage-blob\"},{\"title\":\"Azure
+        names are case-sensitive.\\n4. Reserved URL characters must be properly escaped.\",\"contentUrl\":\"https://learn.microsoft.com/azure/storage/blobs/storage-blobs-introduction#blob-storage-resources\"},{\"title\":\"Azure
         Blob Storage REST API\",\"content\":\"# Azure Blob Storage REST API\\nAzure
         Blob Storage stores text and binary data as objects in the cloud. Blob Storage
         offers the following resources: the storage account, containers, and blobs.
@@ -1200,39 +1219,46 @@ http_interactions:
         |\\n| [Get User Delegation Key](https://learn.microsoft.com/rest/api/storageservices/get-user-delegation-key)
         | Account | Gets a key that can be used to sign a user delegation shared access
         signature. This signature grants access to resources in Blob Storage by using
-        Microsoft Entra credentials. |\",\"contentUrl\":\"https://learn.microsoft.com/rest/api/storageservices/blob-service-rest-api\"},{\"title\":\"Get
-        started with Azure Blob Storage using F\",\"content\":\"# Get started with
-        Azure Blob Storage using F\\nAzure Blob Storage is a service that stores unstructured
-        data in the cloud as objects/blobs. Blob storage can store any type of text
-        or binary data, such as a document, media file, or application installer.
-        Blob storage is also referred to as object storage.\\nThis article shows you
-        how to perform common tasks using Blob storage. The samples are written using
-        F# with the `Azure.Storage.Blobs` package. The tasks covered include how to
-        upload, list, download, and delete blobs.\\nFor a conceptual overview of blob
-        storage, see [the .NET guide for blob storage](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-dotnet).
-        For ease, these tutorials use [connection strings](https://learn.microsoft.com/en-us/azure/storage/storage-configure-connection-string)
-        to authenticate with Azure. For production applications, you should use Microsoft
-        Entra ID with [managed identities](https://learn.microsoft.com/en-us/entra/identity/managed-identities-azure-resources/)
-        or the [Azure.Identity library](https://learn.microsoft.com/en-us/dotnet/api/overview/azure/identity-readme)
-        for enhanced security.\\nImportant\\nThis article uses the modern `Azure.Storage.Blobs`
-        package. If you''re updating from older code that used the deprecated `WindowsAzure.Storage`
-        or `Microsoft.Azure.Storage.Blob` packages, you need to update your package
-        references and namespace declarations. For migration guidance, see [Migrate
-        to Azure.Storage.Blobs](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-dotnet).\\nNote\\nF#
-        developers might consider the [FSharp.Azure.Blob](https://github.com/random82/FSharp.Azure.Blob)
-        library, which provides a more idiomatic F# API for working with Azure Blob
-        Storage. This community library offers idiomatic F# functions and patterns
-        that make blob operations more natural in F#.\\n## Prerequisites\\nTo use
-        this guide, you must first [create an Azure storage account](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-create).
-        You also need your storage access key for this account.\",\"contentUrl\":\"https://learn.microsoft.com/dotnet/fsharp/using-fsharp-on-azure/blob-storage\"}]}}"},{"id":"rs_c5c46786-dbf2-4682-b789-3669e0cffc0b","summary":[],"type":"reasoning","status":"completed","encrypted_content":"8sNnJspYr5vmAP8/yXxXUHgEWv/xKCH6O3wdyBZxgtog4qU2NivPeofxQmVUkzmdmgU86i9+Z0gx26pe/Ot5AD4kYjaL1250RE1Y7LSk6PvGiv4JY2Qnf2NcBgbP+1Q/fReYOuiUBz9BIwNyFrxsDxuBns2AVhLSl6txPb3ieV15izaeq2sRZQJGmDu0ms8NeInTqqlnkjoNG/p6Ft8xeNd/UslYCfQv1jsBFJ0KnOMPEQbmDIrNtEDyWtbijTUAJ4BZD9scIZBqIKaezPZCtDhIs9WNC5pqTCA2nCtDtEFELMvPlqj+NjANaYCdGuC9dVsd1ett+IARIwYi3RKM/GACmbWvGXKji8m8rlMo6oGJ6CLxv+uQD6P+/GwuDIBuNrHDK8o1N5H1dr671OyjgGcK3+U+wQJS8gl9n9rjPKNX8BfGEMIAaWXBkFvsmlo3Ws70ZVTb+dIjLp9yPWnxf9JGtI2jhw1UJ/Vzh7TxPsHtVG88fcg5vkq+jItzuGCr4Vachy+5CLMelCzFujf1CSN3gSsAmYsdmTaDB9s1OJyJSv54shZW+c0BWccjl9sosMcYcIcFAHYeS+IZejcwH99SGixly5ueTYzWOMgYNOh7jTZbSgSZvf/hKvvZv8+QAdvN2ALMQG9UNHzYTi9pRkiJqi4vx1F8RkZki0xLFfebdvuLjhaq52ZpGgdLgBr+HKCSk7F6vR82pBc/fHUisbJnA38HTu4NgnRFIQohFNl84w4GZEJWLs184s6c2UBWV6GZBcLiekj7Dqnv0sTQCDl+fLCBNRARLuD26L2KYM9vTv5hNCXQHqeConktq/l7uvgQOQe3hkLoh7e7ljIMIRwGwMYnaZMdpbx+y+CGxYawWOseDVgvVDh8KAO6cbdAMvZ1MaLOtvs0dhn7vvdtVevHYSFohrEnMinry3pelWgt681wH3nbbQFd/jwiAhaMoCgq4wtpilDyvnYcgC1DTsUBrpr0goFb0MIzMMw1YpNsnf8UtZuZuRo1GldpZhQZ/vB7UnBf55mlqYzV/Td/EUg/kbmZH9xGiZoxjPUQWRlCsc0ah/Naf4NJaAVsBymjFxYzSvSvww2FRdnXN/xVE6LOdVy3WpePOUtNFVJfEpItGuRf0Yk7jl8Z87qSJdoqAzlviRpCp0TVrEHuk+5phpcz6RNKZ/JhkfoVCyea8zRc+/coaz8E7L6HLz4yuUjWomxGpoFy2He6p2vxgwUgiBIn2d17wNgWZvK47tQsgdiuQlXHnDT2Zc+RcK8CaRJmoq3NtMOe82U"},{"content":[{"type":"output_text","text":"Azure
+        Microsoft Entra credentials. |\",\"contentUrl\":\"https://learn.microsoft.com/rest/api/storageservices/blob-service-rest-api\"},{\"title\":\"Azure
+        Storage blob inventory\",\"content\":\"# Azure Storage blob inventory\\nAzure
+        Storage blob inventory lists the containers, blobs, blob versions, snapshots,
+        and associated properties in your storage account. The service generates reports
+        daily or weekly in comma-separated values (CSV) or Apache Parquet format.\\nUse
+        inventory reports to audit the retention, legal hold, or encryption status
+        of your storage account contents. You can also analyze the total size, age,
+        tier distribution, and other attributes of your data.\\nBlob inventory can
+        simplify business workflows and speed up data processing jobs. It provides
+        scheduled automation of the [List Containers](https://learn.microsoft.com/en-us/rest/api/storageservices/list-containers2)
+        and [List Blobs](https://learn.microsoft.com/en-us/rest/api/storageservices/list-blobs)
+        APIs. Inventory rules filter report contents by blob type, prefix, or selected
+        blob properties.\\nAzure Storage blob inventory is available for the following
+        types of storage accounts:\\n1. Standard general-purpose v2\\n2. Premium block
+        blob storage\\n3. Blob storage\\n## Inventory features\\nAzure Storage blob
+        inventory supports the following features and capabilities.\\n1. **Inventory
+        reports for blobs and containers**\\n  You can generate inventory reports
+        for blobs and containers. A report for blobs can contain base blobs, snapshots,
+        content length, blob versions, and their associated properties such as creation
+        time and last modified time. The report doesn''t list empty containers. A
+        report for containers describes containers and their associated properties
+        such as immutability policy status and legal hold status.\\n2. **Custom schema**\\n  You
+        can choose which fields appear in reports. Choose from a list of supported
+        fields. That list appears later in this article.\\n3. **CSV and Apache Parquet
+        output format**\\n  You can generate an inventory report in either CSV or
+        Apache Parquet output format.\\n4. **Manifest file and Azure Event Grid event
+        per inventory report**\\n  The service generates a manifest file and an Azure
+        Event Grid event for each inventory report. The article describes these items
+        later.\\n## Enabling inventory reports\\nEnable blob inventory reports by
+        adding a policy with one or more rules to your storage account. For guidance,
+        see [Enable Azure Storage blob inventory reports](https://learn.microsoft.com/azure/storage/blobs/blob-inventory-how-to).\",\"contentUrl\":\"https://learn.microsoft.com/azure/storage/blobs/blob-inventory\"}]}}"},{"id":"rs_4b02ff3b-397d-90b6-a299-c1fa9fa7f7ec","summary":[],"type":"reasoning","status":"completed","encrypted_content":"LIncajGNzu4Zi1c5PmS98iVmOYyBWF6vt1oKVU1VHNkrF2/P1qWKSm9+dfLOEmsnuUrugVS2nvkmw0l4p6ctF1rCSIXRuLzC9hiCU5yqcx9C/my9m3nAq99frzrlAHICA7TPqGugVHTVk6OwTELFdYpzO1aCh8L5yKMYIosDzSH+tZ1OBxRflutLwyc1MGMZwm5wRT2GGcuwDga2OQVuEl1rBsHzEtksoMLDsw3lJY/UNZ2JnDB8pSMxriw0GFfLG10pwj33GR6lfVGnmF8cZ4hANda7lWuXDRQLjxLEBuGNN7k1dATrq3igy1RqgVTIfaOYeibDhGAE/An9ALRBPKmlaAM3q8dZnMHOy3Zn/Yvo3qqTWEzOKf10hQrnPjyW2mhWfRgzL1ySW8BAEdX4o6wy/UM5WMr0XdvHLAWXF6HSeue3JC+VkPUBjzxHOAgzM5BVM9sPst4IWxaJbK+afeAzOr44aBJOMARfwKdN/B5QBMhJm4Ruhvuhf8T9kKw3Ilv0AVwrER8EWrx0tr5WsVQ1eli4ewc1gDeO6QK1j+tDjq8DtLBwVYy2zMzOjbFGUqt++D0y416kXkT4utTkVcV0RDy/UGAzWos0ybnXu3a15MgZKCjbE4tSm5BgusjRq//UUCB5He/IU9hxXg3eOz6cnyynQC5SryJNXpqCj01t5vh/7k/Z664aZ3t4urD2O8dYrRVAGygZffgR7QIjlG6/7HPHPGoKyhctHihVjCeb3/KOxJbC9V1LcGgOLag5xA/w3KiNXgOlGgkiM7xqgYAxpKg1Hc7Q3LZTakmYFvX4qRn3hQr0lVCBJ2yqsdZPXpgygae2NHflGr+31hMbxF1KsUzikpjlsUfz50UFO3vXAPv/R5BTTt8xt/b1EhV8"},{"content":[{"type":"output_text","text":"Azure
         Blob Storage is Microsoft''s object storage solution for the cloud, optimized
-        for storing massive amounts of unstructured data such as text or binary files
-        for uses like serving images, streaming media, backups, and analytics.","logprobs":[],"annotations":[]}],"id":"msg_c5c46786-dbf2-4682-b789-3669e0cffc0b","role":"assistant","type":"message","status":"completed"},{"role":"user","content":"Which
+        for storing massive amounts of unstructured data like text or binary files
+        and designed for uses such as serving images, streaming media, backups, and
+        analytics.","logprobs":[],"annotations":[]}],"id":"msg_4b02ff3b-397d-90b6-a299-c1fa9fa7f7ec","role":"assistant","type":"message","status":"completed"},{"role":"user","content":"Which
         cloud service did you just look up?"}],"instructions":"Call microsoft_docs_search
         once to answer the first question. For later questions use only those results.","stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"mcp","allowed_tools":["microsoft_docs_search"],"server_url":"https://learn.microsoft.com/api/mcp","server_label":"docs"}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -1247,7 +1273,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:21:06 GMT
+      - Wed, 18 Nov 2026 06:36:29 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -1267,7 +1293,9 @@ http_interactions:
       X-Ratelimit-Limit-Requests:
       - '1800'
       X-Ratelimit-Remaining-Requests:
-      - '1797'
+      - '1799'
+      Cf-Cache-Status:
+      - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Zero-Data-Retention:
@@ -1275,29 +1303,25 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '359.4'
+      - '420.4'
       X-Metrics-E2e-Ms:
-      - '1850.7'
-      Traceparent:
-      - 00-a97ddcf21a78e79e842546716ce09b26-5899dde1000a2f11-01
+      - '4087.0'
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
-      Cf-Cache-Status:
-      - DYNAMIC
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1794705664,"completed_at":1794705666,"id":"2f5fdd9f-17e8-9f9d-aefa-029289c695ff","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_2f5fdd9f-17e8-9f9d-aefa-029289c695ff","summary":[{"text":"The
-        user asks which cloud service was just looked up.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"8vi+ViF8umE9u3FQ5oTW5DqMQtRQmRd+ZsjUzWAA3+NoAa98IdRtxzXR1YGPEL5VyFGK7tcIZp1DjwaHlV5s9aFBWszUvycAqKZ6NDIkVPYJFSYmTKODW0XS9E2jkfULyC+ASgD9382Rq/D9Ut1huUBODluIULLZ6Da8Fomq+h4Su2mrCMhAEB5+Zd0Vqqjlv28uBGWoqPOWywWaIWT8asM6FlB/dcz7wb48eniaajuEICdcBV6DzqnwiGrxYYqizgF/FAMXoi/7W5vbX5XVXDtBR2JToq85iHTwPWmNTlQ1gSNnlRsO8DWxEy2aNg0V/ra/3SwkS4QhoqrsEHG2+s3gFNv82ktx7PlYCMM+DRXfdU7KlrosaWvNHRQVhvxoXPRTHzRSpA6qnGLYgYCd7gyiLQ/EhDbu0gwK85Kvyri6p28gado1kpLpifPsThWFoBK9IjYQkr5b"},{"content":[{"type":"output_text","text":"Azure
-        Blob Storage.","logprobs":[],"annotations":[]}],"id":"msg_2f5fdd9f-17e8-9f9d-aefa-029289c695ff","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"mcp","server_label":"docs","server_url":"https://learn.microsoft.com/api/mcp","allowed_tools":["microsoft_docs_search"],"headers":{},"server_description":""}],"top_p":0.95,"usage":{"input_tokens":12286,"input_tokens_details":{"cached_tokens":128},"output_tokens":119,"output_tokens_details":{"reasoning_tokens":115},"total_tokens":12405,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":155206000,"context_details":{"input_tokens":12286,"output_tokens":127}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":"Call
+      string: '{"created_at":1794983786,"completed_at":1794983789,"id":"d8aba875-bd9b-43f6-8f93-ae3507cbab73","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_d8aba875-bd9b-43f6-8f93-ae3507cbab73","summary":[{"text":"The
+        user is asking which cloud service was just looked up.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"QOVwiUBGrHh1FBpl9235/fkI2uFAOKUdae/mETGeU4ICntUzE3Ca/BVVXMpD9x9cBlOuNjeC15NvRiM4QtF4Akx7EfWyAjKBex0lPsRUDQqdXE8Ab/aiTv9Ubt7mwokm9PsQL7e2Q8mrjjgXGcZb2rHKBom+N8CrdJ68G7JfMe2bVnghkJc/RvIMT85g4r3UuKXvOtFQ0ampDm3wIr5zTUOfxvcpWFZoMkV5VdBTUkhjBYWJKLGawhnmt8qrgBuwVwuWxaeCbRGKO/As9Uf+VI5ysIXAQqJHuF69r87KNtfNck7xJ6wMPnyXiXwCTq+SNHIWRMuZcXB+a5V+Ul49AWHbs8glrWgkooOdnn/EI0Kq3V+O/yHWx4ex4lwL4H6YlhUjZvaW4FZMTSyX+/24W0GXRhPVxF7iFT0iaUnYuS70rloMw3mVxTtnAX+q6bGLaaTQZtRFPDixEhyWFrr4T2hEISwedkurQUbvWE9JTsxNdXhjpJrOCEWL3n6QeB8AbejM2X708bIf7PMJy8ww3LE8vjl19Kwmd8i6l5pCODcXgyxwqMLJ12fYgsjsLL3CHMxw/nDQ+F9LieTh/LGGnT0jKyof8YRjWkzg7VfZtVoGewpD8VuopMSwqRkvJNLvjFe9yfdg0yekbXxuCoA7dyKsJIHlr1xx/CccH/+8JtYwaPQ3Z1nd1OIA6y2muQecVHse0ZyrGoImcODiN8ICRjLqmDC6U9A1m2biK6mOkitaTTvPjqAo0cmXYIfCzptYi+A1pDKT2ptnVFDoN3B7cZYyVu2RWP7WcALw/hhAh+WGyD0kcF8EPUD6z2fHhlKuIP143n2pPWi25S9wQlttJgm77H9P7Yb22jQ"},{"content":[{"type":"output_text","text":"Azure
+        Blob Storage.","logprobs":[],"annotations":[]}],"id":"msg_d8aba875-bd9b-43f6-8f93-ae3507cbab73","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"mcp","server_label":"docs","server_url":"https://learn.microsoft.com/api/mcp","allowed_tools":["microsoft_docs_search"],"headers":{},"server_description":""}],"top_p":0.95,"usage":{"input_tokens":12306,"input_tokens_details":{"cached_tokens":128},"output_tokens":131,"output_tokens_details":{"reasoning_tokens":127},"total_tokens":12437,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":155756000,"context_details":{"input_tokens":12306,"output_tokens":138}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":"Call
         microsoft_docs_search once to answer the first question. For later questions
         use only those results."}'
-  recorded_at: Sun, 15 Nov 2026 01:21:06 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:36:29 GMT
+recorded_with: VCR 6.4.1

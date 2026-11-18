@@ -11,7 +11,7 @@ http_interactions:
         to process"}},"required":["query"],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:40:08 GMT
+      - Wed, 18 Nov 2026 06:53:40 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -47,6 +47,8 @@ http_interactions:
       - '1800'
       X-Ratelimit-Remaining-Requests:
       - '1800'
+      Cf-Cache-Status:
+      - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Zero-Data-Retention:
@@ -54,32 +56,30 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '196.4'
+      - '195.7'
       X-Metrics-E2e-Ms:
-      - '2061.8'
+      - '3078.8'
       Traceparent:
-      - 00-e4c79148fde101b654817753a6870473-61d80be1000a51ed-01
+      - 00-e15133945c79c727631ff18140eac7c0-0f77d47e000290d0-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
-      Cf-Cache-Status:
-      - DYNAMIC
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1794706806,"completed_at":1794706808,"id":"246370d2-f1d7-966d-be89-17c3d7582f95","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_246370d2-f1d7-966d-be89-17c3d7582f95","summary":[{"text":"The
-        user provided test data to process.\n\nI will use the content_returning tool
-        with the query \"test data\".","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"tXqTscWbXiHWu9rIUiSg+msXb8QigF6Cr2QfYe1RgBC1jDRxxEZerIrCVrhljj32DG1Itcnj/R+B/PWQu0RhapSpRF2DHU0L6wVjdi3uhsTje26+QG74ifYVPB4lUrps6AJX16jcWSzBQZ+wpvlip13SlFgjPDtHlJtlsPz4fX93OR/GUrAG8prCTjB7IteR1h4NYOTalda0KwKLJDjdMWRarHPMDgE4Mc75H93GgnFL52ozz6Qn/CKQI6cv6UgYxtt7UZU2bGnAUw0RfDxveDomxrLn9JHXCkqz2Yck3yc6eL3iAbkcPQDd7R9tkECmcWvlVweE8UZSN+rbz+OtEz1PgpcT/MYb+Brh0p/MP2eR8Ir7OkWQ/wAM0etJirAkPoKoHTqWnKjN7TvXJ9R2D1LnKxm6RgXGnhiyVchVEuyBiw0USGd9BTkCmzb5EbVE9CcHzf6DfKb5dLGvM8Qr62BFk4fqKL4Cbdqp7xA3v5wc2CWDJXhQ0GzVsJgyl51hiL4DbIhKeMy4rigv5spjgWQ8MW5hGgRYHF8CVQ9NJX+SFHPrwmZ/zQqHWhTOJ9RwIVMpTGDqvMQSL4jlWk69KtucHM0thnO+3hD51RGEusEu3i5/WqPLOaVQw5HyFZFZOwa8z16Eds3UPA"},{"arguments":"{\"query\":\"test
-        data\"}","call_id":"call-08de251e-7c37-4041-a8fd-dc0d5342cde7-0","name":"content_returning","type":"function_call","id":"fc_246370d2-f1d7-966d-be89-17c3d7582f95_0","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Returns
+      string: '{"created_at":1794984817,"completed_at":1794984820,"id":"1647ad0d-bb5b-913d-9103-58dd1bf2bdb0","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_1647ad0d-bb5b-913d-9103-58dd1bf2bdb0","summary":[{"text":"The
+        user provided test data to process.\n\nI will call the content_returning tool
+        with \"test data\" as the query.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"3dFpGthy43ZqApVnIf9laEgEQv5ba7dZhfyWd/uP3NHMxbzkDYvyb0Au5UVBWPlBP6+F8thZBVspejTElkdEaFqFHuVsNarynyOPG8kan7H52UQl89cQUcC0qnPmP/FNrUwVeLnocboWD8hrgs7ILoXb3pdOLfJpR0W8Y4l2QvK7wXYgtqNOZoQKQyiy+rQVQMGErp/LbPoaEMrtBIgwnaPf7Gga18gpb6esfs5Fhac83sz42lTicnMn9P6NlR6vaV/hC5k9ucmZbIk4ajpcOHbVVPLxvxkJ5PrsvA4XxGBQ3Hx/3D1fGHLoHJLLqBBEtz1BKZeOPVtN3ZEGb2j2ge7k8dG7iAamOC3Rm2EVP1icO3qMCEQslJmPwWc5+/CRiGZfdPU8xHEWwSTisADCy/lvEsJrXdAgXnEyVRxdKked//Ph6iF60b5Hp4MTVf5JfTJsHgYxQAhN2a7gg2TiH0pJCfQF999ice0cxZdrerLNMd3veDo7TNERxG/P5RpjGHjgJGzOy958Jq3rwM3IcfU7K08mobHZZpNsBSp1tyP/vRl0dKH49yXGpq4UI5cvLFolC/A1cFxvjwtwHuPry6vV7jHvjDCnp8oYdYtJJF2Sf5GLXzIFFc2MTaPzlNDuiJbHCZnfl29cFFo"},{"arguments":"{\"query\":\"test
+        data\"}","call_id":"call-e5efc8a7-8f04-453b-a994-b6decda58f5b-0","name":"content_returning","type":"function_call","id":"fc_1647ad0d-bb5b-913d-9103-58dd1bf2bdb0_0","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Returns
         a processed string result","name":"content_returning","parameters":{"type":"object","properties":{"query":{"type":"string","description":"Query
-        to process"}},"required":["query"],"additionalProperties":false,"strict":true},"strict":false}],"top_p":0.95,"usage":{"input_tokens":293,"input_tokens_details":{"cached_tokens":128},"output_tokens":239,"output_tokens_details":{"reasoning_tokens":227},"total_tokens":532,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":8293500,"context_details":{"input_tokens":293,"output_tokens":243}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
-  recorded_at: Sun, 15 Nov 2026 01:40:08 GMT
+        to process"}},"required":["query"],"additionalProperties":false,"strict":true},"strict":false}],"top_p":0.95,"usage":{"input_tokens":293,"input_tokens_details":{"cached_tokens":128},"output_tokens":211,"output_tokens_details":{"reasoning_tokens":199},"total_tokens":504,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":7593500,"context_details":{"input_tokens":293,"output_tokens":215}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Wed, 18 Nov 2026 06:53:40 GMT
 - request:
     method: post
     uri: https://api.x.ai/v1/responses
@@ -87,15 +87,15 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"grok-4.3","input":[{"role":"user","content":"Process this
         query: test data"},{"type":"reasoning","summary":[{"type":"summary_text","text":"The
-        user provided test data to process.\n\nI will use the content_returning tool
-        with the query \"test data\"."}],"encrypted_content":"tXqTscWbXiHWu9rIUiSg+msXb8QigF6Cr2QfYe1RgBC1jDRxxEZerIrCVrhljj32DG1Itcnj/R+B/PWQu0RhapSpRF2DHU0L6wVjdi3uhsTje26+QG74ifYVPB4lUrps6AJX16jcWSzBQZ+wpvlip13SlFgjPDtHlJtlsPz4fX93OR/GUrAG8prCTjB7IteR1h4NYOTalda0KwKLJDjdMWRarHPMDgE4Mc75H93GgnFL52ozz6Qn/CKQI6cv6UgYxtt7UZU2bGnAUw0RfDxveDomxrLn9JHXCkqz2Yck3yc6eL3iAbkcPQDd7R9tkECmcWvlVweE8UZSN+rbz+OtEz1PgpcT/MYb+Brh0p/MP2eR8Ir7OkWQ/wAM0etJirAkPoKoHTqWnKjN7TvXJ9R2D1LnKxm6RgXGnhiyVchVEuyBiw0USGd9BTkCmzb5EbVE9CcHzf6DfKb5dLGvM8Qr62BFk4fqKL4Cbdqp7xA3v5wc2CWDJXhQ0GzVsJgyl51hiL4DbIhKeMy4rigv5spjgWQ8MW5hGgRYHF8CVQ9NJX+SFHPrwmZ/zQqHWhTOJ9RwIVMpTGDqvMQSL4jlWk69KtucHM0thnO+3hD51RGEusEu3i5/WqPLOaVQw5HyFZFZOwa8z16Eds3UPA"},{"type":"function_call","call_id":"call-08de251e-7c37-4041-a8fd-dc0d5342cde7-0","name":"content_returning","arguments":"{\"query\":\"test
-        data\"}"},{"type":"function_call_output","call_id":"call-08de251e-7c37-4041-a8fd-dc0d5342cde7-0","output":"Processed:
+        user provided test data to process.\n\nI will call the content_returning tool
+        with \"test data\" as the query."}],"encrypted_content":"3dFpGthy43ZqApVnIf9laEgEQv5ba7dZhfyWd/uP3NHMxbzkDYvyb0Au5UVBWPlBP6+F8thZBVspejTElkdEaFqFHuVsNarynyOPG8kan7H52UQl89cQUcC0qnPmP/FNrUwVeLnocboWD8hrgs7ILoXb3pdOLfJpR0W8Y4l2QvK7wXYgtqNOZoQKQyiy+rQVQMGErp/LbPoaEMrtBIgwnaPf7Gga18gpb6esfs5Fhac83sz42lTicnMn9P6NlR6vaV/hC5k9ucmZbIk4ajpcOHbVVPLxvxkJ5PrsvA4XxGBQ3Hx/3D1fGHLoHJLLqBBEtz1BKZeOPVtN3ZEGb2j2ge7k8dG7iAamOC3Rm2EVP1icO3qMCEQslJmPwWc5+/CRiGZfdPU8xHEWwSTisADCy/lvEsJrXdAgXnEyVRxdKked//Ph6iF60b5Hp4MTVf5JfTJsHgYxQAhN2a7gg2TiH0pJCfQF999ice0cxZdrerLNMd3veDo7TNERxG/P5RpjGHjgJGzOy958Jq3rwM3IcfU7K08mobHZZpNsBSp1tyP/vRl0dKH49yXGpq4UI5cvLFolC/A1cFxvjwtwHuPry6vV7jHvjDCnp8oYdYtJJF2Sf5GLXzIFFc2MTaPzlNDuiJbHCZnfl29cFFo"},{"type":"function_call","call_id":"call-e5efc8a7-8f04-453b-a994-b6decda58f5b-0","name":"content_returning","arguments":"{\"query\":\"test
+        data\"}"},{"type":"function_call_output","call_id":"call-e5efc8a7-8f04-453b-a994-b6decda58f5b-0","output":"Processed:
         test data"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"content_returning","description":"Returns
         a processed string result","parameters":{"type":"object","properties":{"query":{"type":"string","description":"Query
         to process"}},"required":["query"],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -110,7 +110,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:40:09 GMT
+      - Wed, 18 Nov 2026 06:53:43 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -131,6 +131,8 @@ http_interactions:
       - '1800'
       X-Ratelimit-Remaining-Requests:
       - '1800'
+      Cf-Cache-Status:
+      - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Zero-Data-Retention:
@@ -138,29 +140,27 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '223.8'
+      - '351.7'
       X-Metrics-E2e-Ms:
-      - '1220.4'
+      - '2083.3'
       Traceparent:
-      - 00-7277d528dd3961e0ef139d91519c5e31-349ff16a000a9839-01
+      - 00-8bfe2edc3230b8d3f6ee4fa7b55e9a00-9936b852000286bd-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
-      Cf-Cache-Status:
-      - DYNAMIC
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1794706808,"completed_at":1794706809,"id":"c99d9915-7cc2-992d-862d-82e7fbbdcc70","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_c99d9915-7cc2-992d-862d-82e7fbbdcc70","summary":[{"text":"The
-        tool processed the query \"test data\".","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"FZakEA8FrBJbnFMzZ/7zGNCHYn1gVi36pzKz7vf8m1LfIkIhWBZ+bYIQvyFEYNrquteAUcgMwANtPCAjspQOWLbc88pQbz9iSc2KznZx1mJVTpRYZhOu6dWSRjXDlJDrYwZe2Lf9W7y0RgF/+mmSMco4lRrOIX1+8QR3gAS3RrcCJLqLdRaIBXwQUp5QllczCTM6OvgV+prdRr9lpqFY57SESsTNH3ekum3gkQLYZBggm2Ovj4ZapaBj23BW2TEpCyfGpzURyqUTOBvMPtQ4vsfej6M+LzsY197UeUOoCQZRgg07X5MOwOOSqHXhLycK60OGE+ubRF4TWSIWOtr5fUGSvMqrcqOVXJcN6tE5l/lXy1RT5ukEUQ"},{"content":[{"type":"output_text","text":"Processed:
-        test data","logprobs":[],"annotations":[]}],"id":"msg_c99d9915-7cc2-992d-862d-82e7fbbdcc70","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Returns
+      string: '{"created_at":1794984821,"completed_at":1794984823,"id":"ce5ffca6-f2c5-95cd-99b6-d51c82ae9355","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_ce5ffca6-f2c5-95cd-99b6-d51c82ae9355","summary":[{"text":"The
+        tool processed the test data.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"1SjpNy4u/FtVQNXakp6m2dagH2SZ8+HWZhPDqzix+GWfzKFrU+nA022kpvFMfRf6aRKiJyjN0U52KKmYrv5KwdCypI1gK/w5t3uiyuFbuC2ECHUiDrjWYlEMeMzgEkgIANPJd1ED1B/deuUb9M7cV6HNU8800OBqt9NjEOj/WZUFvQ2gsjaOt8fOenftYJtpZmf+I3oyBj+ENnF7B71ue9gMfQiCR+PuBOyy+fWMeHt53T5jXbfSbUuQCNKwRrjdw5X+xpH3rHT/DrGApS08qhOGVaqVvLn3ZeCv7kNC08czz57+RhFJtMS9KN3XCqCB8y82THiQGBW3tI/dXxRSp/kFKIqibDqDxFZbWa7yr24xtHLQ+B9Bvyu8Ksf+dQC3e9Zw0Hj8BxDjkMuwnXxacygIhRYLSQwN0PGCm8i0nNIs5TupU9AyEYC/9QruuJwN/xfMTrBGyciglD/Ushqbsl/4ZKfSazveGfEudLLGrSH1Ng"},{"content":[{"type":"output_text","text":"Processed:
+        test data","logprobs":[],"annotations":[]}],"id":"msg_ce5ffca6-f2c5-95cd-99b6-d51c82ae9355","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Returns
         a processed string result","name":"content_returning","parameters":{"type":"object","properties":{"query":{"type":"string","description":"Query
-        to process"}},"required":["query"],"additionalProperties":false,"strict":true},"strict":false}],"top_p":0.95,"usage":{"input_tokens":544,"input_tokens_details":{"cached_tokens":128},"output_tokens":91,"output_tokens_details":{"reasoning_tokens":87},"total_tokens":635,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":7731000,"context_details":{"input_tokens":544,"output_tokens":98}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
-  recorded_at: Sun, 15 Nov 2026 01:40:09 GMT
-recorded_with: VCR 6.4.0
+        to process"}},"required":["query"],"additionalProperties":false,"strict":true},"strict":false}],"top_p":0.95,"usage":{"input_tokens":516,"input_tokens_details":{"cached_tokens":256},"output_tokens":108,"output_tokens_details":{"reasoning_tokens":104},"total_tokens":624,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":6462000,"context_details":{"input_tokens":516,"output_tokens":116}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Wed, 18 Nov 2026 06:53:43 GMT
+recorded_with: VCR 6.4.1

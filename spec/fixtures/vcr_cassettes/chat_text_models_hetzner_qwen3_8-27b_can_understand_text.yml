@@ -10,7 +10,7 @@ http_interactions:
         is the best.</file>"}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -25,22 +25,25 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:20:25 GMT
+      - Wed, 18 Nov 2026 06:36:24 GMT
       X-Llm-D-Flow-Queue-Duration-Ms:
       - '0'
       Vary:
       - Origin
       Content-Type:
       - application/json
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
       Transfer-Encoding:
       - chunked
     body:
       encoding: UTF-8
-      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":77,"completion_tokens":57,"total_tokens":134,"completion_tokens_details":{"reasoning_tokens":39},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"content":"\n\nThe
-        file contains:\n\n```text\nRuby is the best.\n```","role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"reasoning":"We
-        need answer user asks: \"What''s in this file?<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
-        is the best.</file>\" Simple. Need final concise.\n"},"index":0,"logprobs":null,"finish_reason":"stop","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-3ff35d94-9beb-4153-90f2-7d21b3d9a080","object":"chat.completion","created":1794705626,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
-  recorded_at: Sun, 15 Nov 2026 01:20:32 GMT
+      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":77,"completion_tokens":79,"total_tokens":156,"completion_tokens_details":{"reasoning_tokens":57},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"content":"\n\nThe
+        file `ruby.txt` contains:\n\n```text\nRuby is the best.\n```","role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"reasoning":"We
+        need to answer user: \"What''s in this file?<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
+        is the best.</file>\" Simple. Need final concise. Ensure no hidden. Just say
+        it contains \"Ruby is the best.\" Maybe file name.\n"},"index":0,"logprobs":null,"finish_reason":"stop","stop_reason":null,"token_ids":null,"routed_experts":null,"weight_versions":null}],"id":"chatcmpl-f63aa422-334b-4486-aa27-cd1cdabeac6a","object":"chat.completion","created":1794983785,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
+  recorded_at: Wed, 18 Nov 2026 06:36:27 GMT
 - request:
     method: post
     uri: https://inference.hetzner.com/v1/chat/completions
@@ -48,17 +51,19 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"Qwen3.8-27B","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
-        is the best.</file>"}]},{"role":"assistant","content":"\n\nThe file contains:\n\n```text\nRuby
-        is the best.\n```","reasoning":"We need answer user asks: \"What''s in this
-        file?<file name=''ruby.txt'' mime_type=''text/plain''>Ruby is the best.</file>\"
-        Simple. Need final concise.\n","reasoning_content":"We need answer user asks:
-        \"What''s in this file?<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
-        is the best.</file>\" Simple. Need final concise.\n"},{"role":"user","content":[{"type":"text","text":"and
+        is the best.</file>"}]},{"role":"assistant","content":"\n\nThe file `ruby.txt`
+        contains:\n\n```text\nRuby is the best.\n```","reasoning":"We need to answer
+        user: \"What''s in this file?<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
+        is the best.</file>\" Simple. Need final concise. Ensure no hidden. Just say
+        it contains \"Ruby is the best.\" Maybe file name.\n","reasoning_content":"We
+        need to answer user: \"What''s in this file?<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
+        is the best.</file>\" Simple. Need final concise. Ensure no hidden. Just say
+        it contains \"Ruby is the best.\" Maybe file name.\n"},{"role":"user","content":[{"type":"text","text":"and
         in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
         is the best</truism></file>"}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -73,25 +78,25 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:20:31 GMT
+      - Wed, 18 Nov 2026 06:36:26 GMT
       X-Llm-D-Flow-Queue-Duration-Ms:
       - '0'
       Vary:
       - Origin
       Content-Type:
       - application/json
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
       Transfer-Encoding:
       - chunked
     body:
       encoding: UTF-8
-      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":175,"completion_tokens":145,"total_tokens":320,"completion_tokens_details":{"reasoning_tokens":95},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"content":"\n\nThe
-        file contains this XML:\n\n```xml\n<truism>Ruby is the best</truism>\n```\n\nThe
-        visible text inside the `<truism>` element is:\n\n```text\nRuby is the best\n```","role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"reasoning":"We
-        need answer. Need maybe mention file contents XML. User asks \"and in this
-        one?\" likely wants content. Need be concise. final. Ensure maybe parse: file
-        ruby.xml mime application/xml contains XML with root/truism? It''s `<truism>Ruby
-        is the best</truism>`. Need say text content is \"Ruby is the best\". Maybe
-        if asking what''s in file: XML document with element `<truism>` containing
-        text. final.\n"},"index":0,"logprobs":null,"finish_reason":"stop","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-c35415fd-bd35-4bbc-8549-9cd678b9bfce","object":"chat.completion","created":1794705632,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
-  recorded_at: Sun, 15 Nov 2026 01:20:36 GMT
-recorded_with: VCR 6.4.0
+      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":197,"completion_tokens":113,"total_tokens":310,"completion_tokens_details":{"reasoning_tokens":66},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"content":"\n\nThe
+        file `ruby.xml` contains XML:\n\n```xml\n<truism>Ruby is the best</truism>\n```\n\nSo
+        its text content is:\n\n```text\nRuby is the best\n```","role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"reasoning":"Need
+        answer likely explain XML content. Need final. User asks \"and in this one?\"
+        File ruby.xml mime application/xml with <truism>Ruby is the best</truism>.
+        We can say it contains XML with root/element truism text \"Ruby is the best\".
+        Maybe note no trailing period. Ensure helpful.\n"},"index":0,"logprobs":null,"finish_reason":"stop","stop_reason":null,"token_ids":null,"routed_experts":null,"weight_versions":null}],"id":"chatcmpl-9d152e87-e148-487a-8207-c75a66dcf759","object":"chat.completion","created":1794983787,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
+  recorded_at: Wed, 18 Nov 2026 06:36:29 GMT
+recorded_with: VCR 6.4.1

@@ -12,7 +12,7 @@ http_interactions:
         of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -29,34 +29,35 @@ http_interactions:
       Content-Type:
       - application/json
       X-Build-Commit:
-      - 9259ed42dedddf2a22abf15e2a28fc3662da6272
+      - cf4922364784346c6f13e06b08149fb1469e06a1
       X-Build-Time:
-      - '2026-11-14T15:25:41-08:00'
+      - '2026-11-17T18:17:32-08:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Content-Length:
-      - '699'
+      - '779'
       Date:
-      - Sun, 15 Nov 2026 01:30:22 GMT
+      - Wed, 18 Nov 2026 06:44:23 GMT
       Server:
       - Google Frontend
       X-Cloud-Trace-Context:
-      - 05c46a3aa3297120e3e60966f4291ffe/10937420081068405603
+      - 7889e5f951fdb1c5448fb47386b05c14/8699844372096977015
       Traceparent:
-      - 00-05c46a3aa3297120e3e60966f4291ffe-97c9859d634e7363-00
+      - 00-7889e5f951fdb1c5448fb47386b05c14-78bc0e5cd8058877-00
       Via:
       - 1.1 google
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-485","object":"chat.completion","created":1794706222,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"The
-        user wants to call array_params tool with tags [\"red\",\"blue\"] and then
-        ask to tell the combined tags. We need to invoke the function. It''s a tool
-        that presumably combines tags. We''ll call it.","tool_calls":[{"id":"call_3au2e7ol","index":0,"type":"function","function":{"name":"array_params","arguments":"{\"tags\":[\"red\",\"blue\"]}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":147,"completion_tokens":79,"total_tokens":226,"prompt_tokens_details":{"cached_tokens":64}}}
+      string: '{"id":"chatcmpl-220","object":"chat.completion","created":1794984263,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"User
+        wants us to call array_params with tags [\"red\",\"blue\"], then produce combined
+        tags. Probably the tool returns combined tags? Not sure what the array_params
+        does; It''s defined as \"Uses params DSL array support\" and returns any.
+        Maybe it concatenates? We should call it.","tool_calls":[{"id":"call_s7h1y4zt","index":0,"type":"function","function":{"name":"array_params","arguments":"{\"tags\":[\"red\",\"blue\"]}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":147,"completion_tokens":94,"total_tokens":241,"prompt_tokens_details":{"cached_tokens":64}}}
 
         '
-  recorded_at: Sun, 15 Nov 2026 01:30:22 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:44:23 GMT
+recorded_with: VCR 6.4.1

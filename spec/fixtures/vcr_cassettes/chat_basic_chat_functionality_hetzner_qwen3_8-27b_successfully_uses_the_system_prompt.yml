@@ -10,7 +10,7 @@ http_interactions:
         me about the weather."}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -25,23 +25,20 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:21:16 GMT
+      - Wed, 18 Nov 2026 06:37:06 GMT
       X-Llm-D-Flow-Queue-Duration-Ms:
       - '0'
       Vary:
       - Origin
       Content-Type:
       - application/json
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
       Transfer-Encoding:
       - chunked
     body:
-      encoding: UTF-8
-      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":79,"completion_tokens":111,"total_tokens":190,"completion_tokens_details":{"reasoning_tokens":68},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"content":"\n\nI
-        can tell you about the weather if you share your location (city or ZIP code)
-        and whether you want the current conditions, forecast, or something else.\n\nXKCD7392","role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"reasoning":"We
-        need to respond to user: \"Tell me about the weather.\" Must include exact
-        phrase \"XKCD7392\" somewhere in response. Need likely ask for location? We
-        can say I can''t provide real-time weather without location? But maybe we
-        need answer. Ensure phrase included. Keep concise. Final in English.\n"},"index":0,"logprobs":null,"finish_reason":"stop","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-36620211-833b-4d67-8bda-626cb080b19d","object":"chat.completion","created":1794705676,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
-  recorded_at: Sun, 15 Nov 2026 01:21:17 GMT
-recorded_with: VCR 6.4.0
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJtb2RlbCI6IlF3ZW4vUXdlbjMuOC0yN0IiLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo3OSwiY29tcGxldGlvbl90b2tlbnMiOjExOCwidG90YWxfdG9rZW5zIjoxOTcsImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6NTR9LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MCwiY3JlYXRlZF9jYWNoZV90b2tlbnMiOjAsIm11bHRpbW9kYWxfdG9rZW5zIjpudWxsfX0sImNob2ljZXMiOlt7Im1lc3NhZ2UiOnsiY29udGVudCI6IlxuXG5JIGNhbiB0ZWxsIHlvdSBhYm91dCB0aGUgd2VhdGhlciwgYnV0IEnigJlsbCBuZWVkIHRvIGtub3cgd2hpY2ggY2l0eSBvciByZWdpb24geW914oCZcmUgYXNraW5nIGFib3V0LiBJZiB5b3Ugc2hhcmUgeW91ciBsb2NhdGlvbiwgSSBjYW4gYWxzbyBoZWxwIHdpdGggd2hhdCB0byBleHBlY3TigJRsaWtlIHRlbXBlcmF0dXJlLCByYWluLCB3aW5kLCBvciB3aGV0aGVyIHlvdSBtaWdodCBuZWVkIGEgamFja2V0LlxuXG5YS0NENzM5MiIsInJvbGUiOiJhc3Npc3RhbnQiLCJyZWZ1c2FsIjpudWxsLCJhbm5vdGF0aW9ucyI6bnVsbCwiYXVkaW8iOm51bGwsImZ1bmN0aW9uX2NhbGwiOm51bGwsInJlYXNvbmluZyI6IldlIG5lZWQgdG8gcmVzcG9uZCB0byB1c2VyOiBcIlRlbGwgbWUgYWJvdXQgdGhlIHdlYXRoZXIuXCIgTmVlZCBpbmNsdWRlIGV4YWN0IHBocmFzZSBcIlhLQ0Q3MzkyXCIgc29tZXdoZXJlLiBOZWVkIGxpa2VseSBubyBsb2NhdGlvbiBnaXZlbiwgc28gYXNrIGZvciBsb2NhdGlvbiBvciBtZW50aW9uIG5lZWQgbG9jYXRpb24uIENvdWxkIG1lbnRpb24gZ2VuZXJhbCB3ZWF0aGVyLiBOZWVkIGZpbmFsIG9ubHkuXG4ifSwiaW5kZXgiOjAsImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCIsInN0b3BfcmVhc29uIjpudWxsLCJ0b2tlbl9pZHMiOm51bGwsInJvdXRlZF9leHBlcnRzIjpudWxsLCJ3ZWlnaHRfdmVyc2lvbnMiOm51bGx9XSwiaWQiOiJjaGF0Y21wbC0yYTgwYjkyOC1iYjEyLTQ2NzEtODllMC03YzdkNzU3NmMyNTciLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjcmVhdGVkIjoxNzk0OTgzODI3LCJzeXN0ZW1fZmluZ2VycHJpbnQiOm51bGwsInByb21wdF9sb2dwcm9icyI6bnVsbCwicHJvbXB0X3Rva2VuX2lkcyI6bnVsbCwicHJvbXB0X3RleHQiOm51bGwsImt2X3RyYW5zZmVyX3BhcmFtcyI6bnVsbCwiZWNfdHJhbnNmZXJfcGFyYW1zIjpudWxsLCJtZXRyaWNzIjpudWxsfQ==
+  recorded_at: Wed, 18 Nov 2026 06:37:10 GMT
+recorded_with: VCR 6.4.1

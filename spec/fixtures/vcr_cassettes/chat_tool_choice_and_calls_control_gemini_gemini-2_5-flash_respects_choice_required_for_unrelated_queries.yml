@@ -13,7 +13,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}]}],"toolConfig":{"functionCallingConfig":{"mode":"any"}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -36,7 +36,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 15 Nov 2026 01:41:13 GMT
+      - Wed, 18 Nov 2026 06:54:56 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -46,7 +46,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=884
+      - gfet4t7; dur=918
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -63,11 +63,11 @@ http_interactions:
                     "functionCall": {
                       "name": "weather",
                       "args": {
-                        "latitude": "52.5200",
-                        "longitude": "13.4050"
+                        "longitude": "13.4050",
+                        "latitude": "52.5200"
                       }
                     },
-                    "thoughtSignature": "CtYCAWkUfRPuo/jZ1+sVPV59719shTFC82u9MeHc6Z2XZZH/LV0fRUihhKCEfcF8ZtPT8Q8BC5MJ5SS238Gmm2Zf1ZxLTY5u1LGtcdn2n3FMYyrzv5KqY0v7YJ0EZRd9nhsOVtajOteUjobgAH9VM7XBZrPM0G0EcXLjNPtlFdEheJ7Vl36YL3FyLYC6W6ecCgNT6wqOAn8vYFIM4FvsTE950Q9sIExmiO4qdYAjL2eTXYShUmGO9DTDAsXwGulAlVH9MisGO/6SiJyJ7QOjbXjgTItshUi1257223Uf5th675rs4vjMNYfi4KI/x8wp0G2i4kdVsU0Igd7g92lM+jmtxFm6w+Pl+sYNgw+Ammjd9p4CYzGLubfQQEnD/DPLoQsPglVhXjfaEHfDoB4hRP1rF2p2mmg3bGC/3zTVGuGtxE1H337Z7xpL41I83Hp9P9p89WjI3rks"
+                    "thoughtSignature": "CoUDAWkUfRP0C7zLiE23sU1CGiGc4TcU/12K9imxY2IWK8WlwNayirSK70ffXQ8KGXYtORyVVc2fXerGQiPiczQD8dt12Kn2v2oLTy7H6nTdXcLN391CDcOxkWTp/Ch+3jXQGSHt53+iopcNIrxRbPYVPjixECPNCyQ0RrjWzb/iIZ46ro7io3Nvq7UdrBZ3hc7JLM2jPEkytpRIKGHZfi2CLYxSunYeim+r8tHSBWekLL6OeDREpnr9o2pmy88+A4Ew/y9GRvFD/Y5m0zym+2AwzHMymIfapRNpaVIkVWuiDmfCRq66/uBQidEHiOoYaPhI1E7+W6EfvUr4K6KF8Cpu4Qmop+qTLm8R4TTohZd8MJ7UIFK+4HKbUqKVrdxVZNFAzyE9p+ocO/yVXnRU3OoMZDiCk6+P9RzDSRtxSxtQXzyMf7bNG84aA1xsM85z3+10jy79yl3N7X9R6mINubvUXfGCt1zmTeUmMoXpqBKeNhzY1KJ336Q1IZySx+n9xnBOzK9Rnqk="
                   }
                 ],
                 "role": "model"
@@ -80,27 +80,27 @@ http_interactions:
           "usageMetadata": {
             "promptTokenCount": 110,
             "candidatesTokenCount": 30,
-            "totalTokenCount": 200,
+            "totalTokenCount": 210,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
                 "tokenCount": 110
               }
             ],
-            "thoughtsTokenCount": 60,
+            "thoughtsTokenCount": 70,
             "serviceTier": "standard"
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "uQ35ao_-E-P8vdIP97qQsAg"
+          "responseId": "v0v9avfGPJz9vdIPut_v-AU"
         }
-  recorded_at: Sun, 15 Nov 2026 01:41:13 GMT
+  recorded_at: Wed, 18 Nov 2026 06:54:56 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"When was the fall of
-        Rome?"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"52.5200","longitude":"13.4050"}},"thoughtSignature":"CtYCAWkUfRPuo/jZ1+sVPV59719shTFC82u9MeHc6Z2XZZH/LV0fRUihhKCEfcF8ZtPT8Q8BC5MJ5SS238Gmm2Zf1ZxLTY5u1LGtcdn2n3FMYyrzv5KqY0v7YJ0EZRd9nhsOVtajOteUjobgAH9VM7XBZrPM0G0EcXLjNPtlFdEheJ7Vl36YL3FyLYC6W6ecCgNT6wqOAn8vYFIM4FvsTE950Q9sIExmiO4qdYAjL2eTXYShUmGO9DTDAsXwGulAlVH9MisGO/6SiJyJ7QOjbXjgTItshUi1257223Uf5th675rs4vjMNYfi4KI/x8wp0G2i4kdVsU0Igd7g92lM+jmtxFm6w+Pl+sYNgw+Ammjd9p4CYzGLubfQQEnD/DPLoQsPglVhXjfaEHfDoB4hRP1rF2p2mmg3bGC/3zTVGuGtxE1H337Z7xpL41I83Hp9P9p89WjI3rks"}]},{"role":"user","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
+        Rome?"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"52.5200","longitude":"13.4050"}},"thoughtSignature":"CoUDAWkUfRP0C7zLiE23sU1CGiGc4TcU/12K9imxY2IWK8WlwNayirSK70ffXQ8KGXYtORyVVc2fXerGQiPiczQD8dt12Kn2v2oLTy7H6nTdXcLN391CDcOxkWTp/Ch+3jXQGSHt53+iopcNIrxRbPYVPjixECPNCyQ0RrjWzb/iIZ46ro7io3Nvq7UdrBZ3hc7JLM2jPEkytpRIKGHZfi2CLYxSunYeim+r8tHSBWekLL6OeDREpnr9o2pmy88+A4Ew/y9GRvFD/Y5m0zym+2AwzHMymIfapRNpaVIkVWuiDmfCRq66/uBQidEHiOoYaPhI1E7+W6EfvUr4K6KF8Cpu4Qmop+qTLm8R4TTohZd8MJ7UIFK+4HKbUqKVrdxVZNFAzyE9p+ocO/yVXnRU3OoMZDiCk6+P9RzDSRtxSxtQXzyMf7bNG84aA1xsM85z3+10jy79yl3N7X9R6mINubvUXfGCt1zmTeUmMoXpqBKeNhzY1KJ336Q1IZySx+n9xnBOzK9Rnqk="}]},{"role":"user","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
         weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}}]}],"generationConfig":{"maxOutputTokens":4096},"systemInstruction":{"parts":[{"text":"Your
         location is Berlin, at latitude 52.5200 and longitude 13.4050."}]},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
         current weather for a location","parametersJsonSchema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
@@ -108,7 +108,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}]}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -131,7 +131,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 15 Nov 2026 01:41:14 GMT
+      - Wed, 18 Nov 2026 06:54:57 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -141,7 +141,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=453
+      - gfet4t7; dur=519
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -155,7 +155,7 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "The fall of Rome is generally considered to have occurred in 476 CE. Unfortunately, I cannot provide any information about historical events. I can only fetch current weather information.\n"
+                    "text": "The fall of the Western Roman Empire traditionally occurred in 476 CE when the last Western Roman Emperor, Romulus Augustulus, was deposed by the Germanic chieftain Odoacer."
                   }
                 ],
                 "role": "model"
@@ -166,8 +166,8 @@ http_interactions:
           ],
           "usageMetadata": {
             "promptTokenCount": 197,
-            "candidatesTokenCount": 36,
-            "totalTokenCount": 233,
+            "candidatesTokenCount": 37,
+            "totalTokenCount": 234,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
@@ -177,7 +177,7 @@ http_interactions:
             "serviceTier": "standard"
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "ug35atn_BJHMkdUPrdOS8As"
+          "responseId": "wEv9at-IPP-_vdIPwKbA4Qw"
         }
-  recorded_at: Sun, 15 Nov 2026 01:41:14 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:54:57 GMT
+recorded_with: VCR 6.4.1

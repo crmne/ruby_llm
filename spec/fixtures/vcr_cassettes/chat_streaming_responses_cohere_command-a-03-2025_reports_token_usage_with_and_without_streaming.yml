@@ -9,7 +9,7 @@ http_interactions:
         with exactly: 1, 2, 3"}]}],"stream":true,"temperature":0.0}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -38,24 +38,24 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - c1be745bc6d403762a40f3d916013e82
+      - f3c1434458c15061ee1f6ef66dd85a7c
       Date:
-      - Sun, 15 Nov 2026 01:19:48 GMT
+      - Wed, 18 Nov 2026 06:35:18 GMT
       X-Envoy-Upstream-Service-Time:
-      - '896'
+      - '121'
       Server:
       - envoy
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      - h3=":443"; ma=2592000
       Transfer-Encoding:
       - chunked
     body:
       encoding: UTF-8
       string: |+
         event: message-start
-        data: {"id":"044e72d6-6472-4d7a-9bba-5b94b3538cad","type":"message-start","delta":{"message":{"role":"assistant","content":[],"tool_plan":"","tool_calls":[],"citations":[]}}}
+        data: {"id":"653e1158-2cdb-4004-b623-d5e92a980285","type":"message-start","delta":{"message":{"role":"assistant","content":[],"tool_plan":"","tool_calls":[],"citations":[]}}}
 
         event: content-start
         data: {"type":"content-start","index":0,"delta":{"message":{"content":{"type":"text","text":""}}}}
@@ -83,7 +83,7 @@ http_interactions:
 
         data: [DONE]
 
-  recorded_at: Sun, 15 Nov 2026 01:19:48 GMT
+  recorded_at: Wed, 18 Nov 2026 06:35:18 GMT
 - request:
     method: post
     uri: https://api.cohere.com/v2/chat
@@ -93,7 +93,7 @@ http_interactions:
         with exactly: 1, 2, 3"}]}],"stream":false,"temperature":0.0}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -126,11 +126,11 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - f093e7cebec430b687b4d5df7b6a5ac6
+      - 66c5ab041f598a3caead0ffbd08fe4a4
       Date:
-      - Sun, 15 Nov 2026 01:19:49 GMT
+      - Wed, 18 Nov 2026 06:35:18 GMT
       X-Envoy-Upstream-Service-Time:
-      - '234'
+      - '206'
       Server:
       - envoy
       Via:
@@ -141,8 +141,8 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"11395555-c7ce-4253-b0f5-c02193b8fc2d","message":{"role":"assistant","content":[{"type":"text","text":"1,
-        2, 3"}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":12,"output_tokens":7},"tokens":{"input_tokens":507,"output_tokens":11},"cached_tokens":464}}'
-  recorded_at: Sun, 15 Nov 2026 01:19:49 GMT
-recorded_with: VCR 6.4.0
+      string: '{"id":"7eb4b2bd-ec77-4388-91a2-b5814928373d","message":{"role":"assistant","content":[{"type":"text","text":"1,
+        2, 3"}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":12,"output_tokens":7},"tokens":{"input_tokens":507,"output_tokens":11},"cached_tokens":480}}'
+  recorded_at: Wed, 18 Nov 2026 06:35:18 GMT
+recorded_with: VCR 6.4.1
 ...

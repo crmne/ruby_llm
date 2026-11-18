@@ -9,7 +9,7 @@ http_interactions:
         from 1 to 3"}]}],"stream":true}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -38,63 +38,30 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 3ee7cf52752b0817028dd92c5f263aa8
+      - d681f62563cdca1aa0aceacfd96aa4c4
       Date:
-      - Sun, 15 Nov 2026 01:19:46 GMT
+      - Wed, 18 Nov 2026 06:35:17 GMT
       X-Envoy-Upstream-Service-Time:
-      - '142'
+      - '122'
       Server:
       - envoy
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      - h3=":443"; ma=2592000
       Transfer-Encoding:
       - chunked
     body:
       encoding: UTF-8
       string: |+
         event: message-start
-        data: {"id":"046a81d3-785d-4149-95c9-01ab11cb789c","type":"message-start","delta":{"message":{"role":"assistant","content":[],"tool_plan":"","tool_calls":[],"citations":[]}}}
+        data: {"id":"55dfaf65-3f49-4ecd-bb2d-79eb2df66c0a","type":"message-start","delta":{"message":{"role":"assistant","content":[],"tool_plan":"","tool_calls":[],"citations":[]}}}
 
         event: content-start
         data: {"type":"content-start","index":0,"delta":{"message":{"content":{"type":"text","text":""}}}}
 
         event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"Sure"}}}}
-
-        event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"!"}}}}
-
-        event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" Here"}}}}
-
-        event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"'s"}}}}
-
-        event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" the"}}}}
-
-        event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" count"}}}}
-
-        event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" from"}}}}
-
-        event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" 1"}}}}
-
-        event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" to"}}}}
-
-        event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" 3"}}}}
-
-        event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":":"}}}}
-
-        event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"\n\n1"}}}}
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"1"}}}}
 
         event: content-delta
         data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":","}}}}
@@ -115,10 +82,10 @@ http_interactions:
         data: {"type":"content-end","index":0}
 
         event: message-end
-        data: {"type":"message-end","delta":{"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":7,"output_tokens":22},"tokens":{"input_tokens":502,"output_tokens":25},"cached_tokens":464}}}
+        data: {"type":"message-end","delta":{"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":7,"output_tokens":8},"tokens":{"input_tokens":502,"output_tokens":11},"cached_tokens":464}}}
 
         data: [DONE]
 
-  recorded_at: Sun, 15 Nov 2026 01:19:47 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:35:17 GMT
+recorded_with: VCR 6.4.1
 ...

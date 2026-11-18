@@ -9,7 +9,7 @@ http_interactions:
         this document in one sentence."},{"type":"input_file","file_url":"https://pdfobject.com/pdf/sample.pdf"}]}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -28,7 +28,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 15 Nov 2026 01:39:07 GMT
+      - Wed, 18 Nov 2026 06:52:21 GMT
       Server:
       - istio-envoy
       Vary:
@@ -68,9 +68,9 @@ http_interactions:
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Apim-Request-Id:
-      - 78fbf36c-3b75-4a5a-92bc-7b0effb708eb
+      - 85c363fe-65de-4eaa-aa25-5022c33afce1
       X-Http2-Stream-Id:
-      - '35'
+      - '3'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -81,13 +81,13 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "resp_0e8edda955156a76016af90d3c7f508196b63f73367756745d",
+          "id": "resp_0ba4b4e099abfcd6016afd4b25b8088197acfbf886e04f21a4",
           "object": "response",
-          "created_at": 1794706748,
+          "created_at": 1794984741,
           "status": "completed",
           "access_programs": null,
           "background": false,
-          "completed_at": 1794706749,
+          "completed_at": 1794984743,
           "content_filters": [
             {
               "blocked": false,
@@ -126,11 +126,11 @@ http_interactions:
               "source_type": "completion",
               "content_filter_raw": [],
               "content_filter_results": {
-                "protected_material_code": {
+                "protected_material_text": {
                   "detected": false,
                   "filtered": false
                 },
-                "protected_material_text": {
+                "protected_material_code": {
                   "detected": false,
                   "filtered": false
                 },
@@ -168,7 +168,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_0e8edda955156a76016af90d3d58048196ad0e6e52473d34c5",
+              "id": "msg_0ba4b4e099abfcd6016afd4b26d4c8819798c3c003dd21e8f5",
               "type": "message",
               "status": "completed",
               "content": [
@@ -242,5 +242,5 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Sun, 15 Nov 2026 01:39:09 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:52:23 GMT
+recorded_with: VCR 6.4.1

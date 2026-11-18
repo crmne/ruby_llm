@@ -9,7 +9,7 @@ http_interactions:
         this image a logo?"}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -28,7 +28,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 15 Nov 2026 01:19:27 GMT
+      - Wed, 18 Nov 2026 06:34:32 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
@@ -38,13 +38,13 @@ http_interactions:
       Vary:
       - access-control-request-headers
       Server-Timing-Total:
-      - '532.845'
+      - '256.496'
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Apim-Request-Id:
-      - cf2028d7-08f4-4537-ab8c-4173a65b771d
+      - 4a35b603-0141-4b71-a699-0623e541d57d
       X-Http2-Stream-Id:
-      - '59'
+      - '3'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Ms-Deployment-Name:
@@ -56,5 +56,5 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"model":"gpt-6-luna","answers":[{"type":"predicate","name":"logo","probability":0.93}],"usage":{"input_tokens":172,"input_tokens_details":{"cached_tokens":0,"cache_write_tokens":0,"cache_write_tokens_details":{"ttl_30m_tokens":0,"ttl_12h_tokens":0}},"output_tokens":0,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":172}}'
-  recorded_at: Sun, 15 Nov 2026 01:19:27 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:34:32 GMT
+recorded_with: VCR 6.4.1

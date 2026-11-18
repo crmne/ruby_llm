@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"command-a-03-2025","text":"Ruby makes AI useful."}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -39,9 +39,9 @@ http_interactions:
       X-Api-Warning:
       - 'unknown field: parameter ''model'' is not a valid field'
       X-Debug-Trace-Id:
-      - fd98698be0626c4fdef4053e591b5ebb
+      - 43dad76b7ac76983b203a778ae86c03e
       Date:
-      - Sun, 15 Nov 2026 01:21:05 GMT
+      - Wed, 18 Nov 2026 06:34:22 GMT
       X-Envoy-Upstream-Service-Time:
       - '5'
       Server:
@@ -49,12 +49,12 @@ http_interactions:
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
       string: '{"tokens":[99506,6644,21024,12765,21],"token_strings":["Ruby"," makes","
         AI"," useful","."],"meta":{"api_version":{"version":"1"}}}'
-  recorded_at: Sun, 15 Nov 2026 01:21:05 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:34:22 GMT
+recorded_with: VCR 6.4.1

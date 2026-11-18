@@ -9,7 +9,7 @@ http_interactions:
         3? Think briefly before answering."}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -23,36 +23,33 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Req-Arrive-Time:
-      - '1794705707141'
-      Resp-Start-Time:
-      - '1794705710403'
+      Date:
+      - Wed, 18 Nov 2026 06:37:43 GMT
       Server:
       - istio-envoy
-      X-Envoy-Upstream-Service-Time:
-      - '3257'
-      Date:
-      - Sun, 15 Nov 2026 01:21:47 GMT
+      Req-Cost-Time:
+      - '1991'
+      Req-Arrive-Time:
+      - '1794983863632'
+      Resp-Start-Time:
+      - '1794983865624'
       Access-Control-Allow-Origin:
       - ''
       Content-Type:
       - application/json; charset=utf-8
-      Req-Cost-Time:
-      - '3262'
+      X-Envoy-Upstream-Service-Time:
+      - '1988'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"role":"assistant","content":"5
-        + 3 = **8**.","reasoning_content":"Okay, so the user is asking what 5 plus
-        3 is. Let me think. I know that addition is combining two numbers. So 5 and
-        3. Let me count: 5, 6, 7, 8. Wait, 5 plus 3 is 8? No, wait, 5 plus 3 is 8?
-        Let me check again. 5 plus 1 is 6, plus 2 is 7, plus 3 is 8. Yeah, that''s
-        right. But maybe I should verify. Like, 5+3 is the same as 3+5 because addition
-        is commutative. 3+5 is 8. So yes, the answer is 8. I should make sure not
-        to mix up with 5+4, which is 9. So 5+3 is definitely 8. Alright, confident
-        now.\n"}}],"created":1794705710,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":201,"prompt_tokens":21,"total_tokens":222,"prompt_tokens_details":{"cached_tokens":1}},"id":"chatcmpl-n1hlYnOF3JsAewvGEJNeBsW50gcxDAgm","timings":{"cache_n":1,"prompt_n":20,"prompt_ms":20.437,"prompt_per_token_ms":1.0218500000000001,"prompt_per_second":978.6172138767921,"predicted_n":201,"predicted_ms":3204.44,"predicted_per_token_ms":16.0222,"predicted_per_second":62.4134014055498}}'
-  recorded_at: Sun, 15 Nov 2026 01:21:50 GMT
-recorded_with: VCR 6.4.0
+      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"role":"assistant","content":"8.","reasoning_content":"Okay,
+        the user is asking 5 + 3. Let me make sure I add correctly. 5 plus 3 is 8.
+        Wait, no, that''s not right. Wait, 5 + 3... 5 plus 2 is 7, so 5 plus 3 is
+        8. Yeah, that''s correct. I should just answer 8. Maybe they want a quick
+        answer. Let me confirm once more. 5 + 3 equals 8. Yep, that''s right. No need
+        to overthink. Just give the answer.\n"}}],"created":1794983865,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":124,"prompt_tokens":21,"total_tokens":145,"prompt_tokens_details":{"cached_tokens":1}},"id":"chatcmpl-6o358ARNPOD4MAJnzekgwvXUlSGy00Jg","timings":{"cache_n":1,"prompt_n":20,"prompt_ms":29.11,"prompt_per_token_ms":1.4555,"prompt_per_second":687.0491240123669,"predicted_n":124,"predicted_ms":1919.9,"predicted_per_token_ms":15.608943089430895,"predicted_per_second":64.06583676233137}}'
+  recorded_at: Wed, 18 Nov 2026 06:37:45 GMT
+recorded_with: VCR 6.4.1

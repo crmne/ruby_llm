@@ -12,7 +12,7 @@ http_interactions:
         description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -33,7 +33,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Sun, 15 Nov 2026 01:22:52 GMT
+      - Wed, 18 Nov 2026 06:37:59 GMT
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -43,21 +43,21 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 8a04f72bb089cfceb8b39fcd6656ea89
+      - 01a897913119e404b14a0c9042d2f27d
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 d478b9a820d52f4705130f24b8ab6b94.cloudfront.net (CloudFront)
+      - 1.1 9d937ef309c5fb8866889024c0d5a0be.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL50-P6
+      - TXL52-P4
       X-Amz-Cf-Id:
-      - "-EIw-gwUFyR2SGENQhuuOqcs4Fni5QY0Jmv_CroWBlpn8eiNt2oa6Q=="
+      - R31jMcrIvzVgra0OQRXGbd-qvDdTaf-3PL6TZVYCnwZiZJkvY83tdQ==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"983f4fc5-1df1-49fd-8c43-eaa252330fbc","object":"chat.completion","created":1794705772,"model":"deepseek-flash","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
-        call the tool with the requested arguments.","reasoning_content":"","tool_calls":[{"index":0,"id":"call_00_ET_T8M1FkmSdtiD5d9FLSKh2056","type":"function","function":{"name":"any_of_params","arguments":"{\"task\":
+      string: '{"id":"236fe193-12c2-4a86-8f2f-b65f9c1cfde0","object":"chat.completion","created":1794983879,"model":"deepseek-flash","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
+        call that tool with the requested parameters.","reasoning_content":"","tool_calls":[{"index":0,"id":"call_00_ET_b2OAU7CtsS08HUc1Wdy11968","type":"function","function":{"name":"any_of_params","arguments":"{\"task\":
         \"Review PR\", \"status\": \"pending\"}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":366,"completion_tokens":65,"total_tokens":431,"prompt_tokens_details":{"cached_tokens":128},"completion_tokens_details":{"reasoning_tokens":0},"prompt_cache_hit_tokens":128,"prompt_cache_miss_tokens":238},"system_fingerprint":"bc19ba97cbe016479903222bb1578db6"}'
-  recorded_at: Sun, 15 Nov 2026 01:22:53 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:38:00 GMT
+recorded_with: VCR 6.4.1

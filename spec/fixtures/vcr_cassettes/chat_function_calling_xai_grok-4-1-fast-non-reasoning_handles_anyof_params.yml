@@ -12,7 +12,7 @@ http_interactions:
         description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:33:17 GMT
+      - Wed, 18 Nov 2026 06:47:06 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -48,6 +48,8 @@ http_interactions:
       - '1800'
       X-Ratelimit-Remaining-Requests:
       - '1800'
+      Cf-Cache-Status:
+      - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Zero-Data-Retention:
@@ -55,30 +57,28 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '223.2'
+      - '215.4'
       X-Metrics-E2e-Ms:
-      - '2743.7'
+      - '2444.2'
       Traceparent:
-      - 00-88feba4a8d5bc3634ad2b0d2cb18024c-9fb3c59a000a48f3-01
+      - 00-20b9cd11c2c1f8ef06612fcaf9924896-32fa9a6200027c34-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
-      Cf-Cache-Status:
-      - DYNAMIC
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1794706394,"completed_at":1794706396,"id":"d4692613-84a9-9653-b8e7-e40ba85b827c","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_d4692613-84a9-9653-b8e7-e40ba85b827c","summary":[{"text":"I
-        will call the any-of params tool for the \"Review PR\" task with status \"pending\"
-        and report the result.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"vU5Vqa4dhlnLflKj3xZuQ1KMnv6fo1/Eoj9K7yYlg5rS+180WrGQ8vtECqc0sl3PX9g3QtciIuyUdivuMqja028oWVxgj1pbq+v8mJH0MaPu5s6hBYcr4mGazcfyOW/k+5D9SwIQLFuiGIVhX6q7yN8JyLH7mnJD7tnvTjNMA9n1l8wG1BLuVog3bN5WMD1KGHrArME8Lz9Gyiv2HUztvksZo2Joi21v415bpm2T1UvNSpVUZYd2QxgBTCDAsViGeo2KaM+sXA/A0u1u3pTx+Nf5XED3PWj1HmyUnKkVdWqaF1PzuJTKr+OsUCMVCUsJJjbtjFm5/lH4tTaTKHRTND8N9sa6Ebv1in12jA5RUHGdKHSJIXM5HcGe1O5N8SX6hMX9Yu0vXVLiWfHoXeja/CzaMjPvjPzjaccKbNhQmUAC6vYlh0Ibx0ivFodKtCgSkUAtAMobi2+SP65QjohH2t/KyNwf8A9jc5C5Tyzrb8ByxUtFxcXvCAcQlrK2PyE7Hq7NChdwVTb3r+IjfD6dkdijt8cHR9VPsJPyz43+3psw92j8BF+Wr10CPINa0CTwHq2HOObeDi0bw+eKyQW8iCz/dhp4FtyJTVJ1xhbSE/DIa76IyChyX/wgAGX15LZ2Dfq4+QfH36eI74IseykNM3BN3vt6v2nYHekon/xeGq1c+MTAPrvDNuKR/d5sOq1kaavdR2igFEiicVzLZXztdwzlgWsvK7gTGr+yT8sacqCQxWxqTChFSrR+JpGmOHtZ+vaDGzL5EZjD2RUMgwTMQf6MbA"},{"arguments":"{\"task\":\"Review
-        PR\",\"status\":\"pending\"}","call_id":"call-0bd6eb9b-f65b-411c-b81d-b33f1a10a4cb-0","name":"any_of_params","type":"function_call","id":"fc_d4692613-84a9-9653-b8e7-e40ba85b827c_0","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Uses
+      string: '{"created_at":1794984424,"completed_at":1794984426,"id":"871a85c4-8368-9834-80a4-eb5594ee2d62","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_871a85c4-8368-9834-80a4-eb5594ee2d62","summary":[{"text":"Calling
+        the any-of params tool for the \"Review PR\" task with status \"pending\"
+        and reporting the result.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"nGmQelFfRNDmJbP++zDsTvKSkbARRgHJP+nbItE4iIQBKUKwOaU0Tzv3nJgUea3NKiYXXeMrBM5Q8tBbmxCgLChdu62e8U3jMaYW7WPcfiAWkXB4tvzQ3+TH2a7r9EQ6MvRx3L/leSYZ11dKGJEMN7hGcF+NojUEd8KUZGnJTh6EAeGhak3pDK6MXXyhp5yF3pzZVUFS3cn//9K8Y9slx4hrChNXRq0vPeFp3dO1TM7NBIxnOYBF1BC+Zyoy5vOM0uCrGkiZtqZWRwGm364gdF1l1SIUlMLxXYu6J8hUwHxjDicxe7ei3Qqx+cs8xyy+SWLVs5ZLjyT8br2E4veE8+0VDizaU7/dI2TsxOK+ACUddz0Ay+dkrl0Wg/ZkOk8HH9k289qsI7oEocRdz5tGn4KSU6rqYAyhY1sOkhEe3zS2LqqJLtCcEpo7ZCvdbuFhWhF8wZqlTstWNNdm9vS1/WfQNEKsDKuirD1qAuE+RxvoujK9EX9ne4dvmAge6vj+C0RS6vFv6rRDglU2S0fyJni1GSer3eMdUJzlwped5S1d9IWyaLaypAYsZOuX4E36wyPyxcF205GyhuOAltLDb8RFnmF/ZqSI0OCb2rfYpVMV5W9b5UqnWJ0Uqd4pepoVuWvbAnZCbEC+xTrn/vmsRC+2GTqYfrDLxKYw6jIv2FeXBlDOHg69qSAYDA"},{"arguments":"{\"task\":\"Review
+        PR\",\"status\":\"pending\"}","call_id":"call-7348e9e3-99d8-4f70-a393-5ad27f258a92-0","name":"any_of_params","type":"function_call","id":"fc_871a85c4-8368-9834-80a4-eb5594ee2d62_0","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Uses
         params DSL any_of support","name":"any_of_params","parameters":{"type":"object","properties":{"task":{"type":"string","description":"Task
-        description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false},"strict":false}],"top_p":0.95,"usage":{"input_tokens":337,"input_tokens_details":{"cached_tokens":128},"output_tokens":279,"output_tokens_details":{"reasoning_tokens":263},"total_tokens":616,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":9843500,"context_details":{"input_tokens":337,"output_tokens":283}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
-  recorded_at: Sun, 15 Nov 2026 01:33:17 GMT
-recorded_with: VCR 6.4.0
+        description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false},"strict":false}],"top_p":0.95,"usage":{"input_tokens":337,"input_tokens_details":{"cached_tokens":128},"output_tokens":216,"output_tokens_details":{"reasoning_tokens":200},"total_tokens":553,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":8268500,"context_details":{"input_tokens":337,"output_tokens":220}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Wed, 18 Nov 2026 06:47:06 GMT
+recorded_with: VCR 6.4.1

@@ -9,7 +9,7 @@ http_interactions:
         2 + 2?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:25:37 GMT
+      - Wed, 18 Nov 2026 06:41:20 GMT
       Content-Type:
       - application/json; charset=UTF-8
       Transfer-Encoding:
@@ -36,7 +36,7 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       Ga-Traceid:
-      - dbce23d8e95da88dc675f35b36a1d21a
+      - 5ab63f377e94b3908416bf986f2a6859
       Vary:
       - Accept-Encoding
       - Access-Control-Request-Headers
@@ -47,15 +47,15 @@ http_interactions:
       - Origin
       - Origin
       X-Log-Id:
-      - 20261115092534e0bece3f61804ec1
+      - 20261118144117cd27626179e64bbf
       X-Request-Id:
       - "<X_REQUEST_ID>"
     body:
       encoding: ASCII-8BIT
       string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"2
-        + 2 = 4","reasoning_content":"This is a very simple math question. The answer
-        is 4. The person is asking a basic arithmetic question. I should just answer
-        directly and simply. No need for lengthy explanations, headers, or bullet
-        points. A brief, friendly answer is appropriate.","role":"assistant"}}],"created":1794705937,"id":"20261115092534e0bece3f61804ec1","model":"glm-5.3-flash","object":"chat.completion","request_id":"20261115092534e0bece3f61804ec1","usage":{"completion_tokens":60,"completion_tokens_details":{"reasoning_tokens":51},"prompt_tokens":20,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":80}}'
-  recorded_at: Sun, 15 Nov 2026 01:25:37 GMT
-recorded_with: VCR 6.4.0
+        + 2 = 4","reasoning_content":"The user is asking a simple arithmetic question:
+        2 + 2 = 4. This is a straightforward question that requires no deep analysis
+        or hedging. I should just answer directly and concisely. No need for markdown,
+        headers, or elaboration. Just the answer.","role":"assistant"}}],"created":1794984080,"id":"20261118144117cd27626179e64bbf","model":"glm-5.3-flash","object":"chat.completion","request_id":"20261118144117cd27626179e64bbf","usage":{"completion_tokens":66,"completion_tokens_details":{"reasoning_tokens":57},"prompt_tokens":20,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":86}}'
+  recorded_at: Wed, 18 Nov 2026 06:41:20 GMT
+recorded_with: VCR 6.4.1

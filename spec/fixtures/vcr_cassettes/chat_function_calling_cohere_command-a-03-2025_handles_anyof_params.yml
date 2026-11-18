@@ -12,7 +12,7 @@ http_interactions:
         description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -37,7 +37,7 @@ http_interactions:
       Num-Chars:
       - '7019'
       Num-Tokens:
-      - '132'
+      - '126'
       Pragma:
       - no-cache
       Vary:
@@ -45,11 +45,11 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 7d8236a1b4eb31ac14e4fe157466bda8
+      - 643c5d1b24bc26fc603f67b1592e5178
       Date:
-      - Sun, 15 Nov 2026 01:22:30 GMT
+      - Wed, 18 Nov 2026 06:37:35 GMT
       X-Envoy-Upstream-Service-Time:
-      - '955'
+      - '685'
       Server:
       - envoy
       Via:
@@ -60,9 +60,8 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"92b4e345-200b-460f-813f-8d81fa15089d","message":{"role":"assistant","tool_plan":"I
-        will use the any_of_params tool to find the result for the task \"Review PR\"
-        with status \"pending\".","tool_calls":[{"id":"any_of_params_yvvr7hxjaq3x","type":"function","function":{"name":"any_of_params","arguments":"{\"task\":\"Review
-        PR\",\"status\":\"pending\"}"}}]},"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":91,"output_tokens":41},"tokens":{"input_tokens":1508,"output_tokens":73},"cached_tokens":1008}}'
-  recorded_at: Sun, 15 Nov 2026 01:22:30 GMT
-recorded_with: VCR 6.4.0
+      string: '{"id":"96872d82-7e15-478f-9e39-8f0fa368218d","message":{"role":"assistant","tool_plan":"I
+        will call the any-of params tool for task \"Review PR\" with status \"pending\".","tool_calls":[{"id":"any_of_params_wzz6gbrxyrsf","type":"function","function":{"name":"any_of_params","arguments":"{\"task\":\"Review
+        PR\",\"status\":\"pending\"}"}}]},"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":91,"output_tokens":35},"tokens":{"input_tokens":1508,"output_tokens":67},"cached_tokens":1008}}'
+  recorded_at: Wed, 18 Nov 2026 06:37:35 GMT
+recorded_with: VCR 6.4.1

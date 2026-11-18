@@ -9,7 +9,7 @@ http_interactions:
         six times seven?"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"text":{"format":{"type":"json_schema","name":"response","schema":{"type":"object","properties":{"answer":{"type":"integer"}},"required":["answer"],"additionalProperties":false},"strict":true}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:19:52 GMT
+      - Wed, 18 Nov 2026 06:34:52 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -48,7 +48,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '873'
+      - '700'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -75,16 +75,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_01384a9b519d0e94016af908b80ef887d29db1f4f5cbc54d12",
+          "id": "resp_03b1b85f44dcc682016afd470c27d887d2961ae4cb0339425e",
           "object": "response",
-          "created_at": 1794705592,
+          "created_at": 1794983692,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794705592,
+          "completed_at": 1794983692,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
@@ -99,7 +99,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_01384a9b519d0e94016af908b8933487d2923d3e412e61eade",
+              "id": "msg_03b1b85f44dcc682016afd470c951c87d2a168e3d68d29fa06",
               "type": "message",
               "status": "completed",
               "content": [
@@ -192,5 +192,5 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Sun, 15 Nov 2026 01:19:52 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:34:52 GMT
+recorded_with: VCR 6.4.1

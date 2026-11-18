@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -26,42 +26,44 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
+      X-Origin-Cache:
+      - HIT
       Last-Modified:
-      - Tue, 03 Nov 2026 01:08:56 GMT
+      - Tue, 17 Nov 2026 10:38:58 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"6ae93428-9c6"
+      - W/"6afc2ec2-9c6"
       Expires:
-      - Sun, 15 Nov 2026 01:29:24 GMT
+      - Wed, 18 Nov 2026 06:45:29 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 1AA8:148882:4D5DE00:4DD0C30:6AF9089B
+      - FC46:157F:1704236:172B244:6AFD4731
       X-Github-Edge-Region:
       - fra
       Accept-Ranges:
       - bytes
+      Age:
+      - '0'
       Date:
-      - Sun, 15 Nov 2026 01:22:26 GMT
+      - Wed, 18 Nov 2026 07:38:44 GMT
       Via:
       - 1.1 varnish
-      Age:
-      - '146'
       X-Served-By:
-      - cache-ber1080020-BER
+      - cache-ber1080055-BER
       X-Cache:
       - HIT
       X-Cache-Hits:
-      - '2'
+      - '0'
       X-Timer:
-      - S1794705746.019101,VS0,VE0
+      - S1794987524.892426,VS0,VE314
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - cf9a299fdc3556e5a4cceb2506408a7adde193b9
+      - '0581a60b814b9524bd4198799d6c9bd55bffd2d1'
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -97,7 +99,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Sun, 15 Nov 2026 01:22:26 GMT
+  recorded_at: Wed, 18 Nov 2026 07:38:44 GMT
 - request:
     method: post
     uri: https://oauth2.googleapis.com/token
@@ -106,7 +108,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -118,14 +120,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      Date:
-      - Sun, 15 Nov 2026 01:22:26 GMT
       Pragma:
       - no-cache
+      Date:
+      - Wed, 18 Nov 2026 07:38:45 GMT
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -154,7 +156,7 @@ http_interactions:
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Sun, 15 Nov 2026 01:22:26 GMT
+  recorded_at: Wed, 18 Nov 2026 07:38:45 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -196,7 +198,7 @@ http_interactions:
         MERCHANTABILITY AND FITNESS FOR A PARTICULAR\n     PURPOSE.\n</file>"}]}],"generationConfig":{}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -211,7 +213,7 @@ http_interactions:
       message: OK
     headers:
       X-Goog-Request-Id:
-      - Ugn5asT_Opz53PQPhMbLyAw
+      - BVb9atSfH962i9oPxriMsAo
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -219,7 +221,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 15 Nov 2026 01:22:36 GMT
+      - Wed, 18 Nov 2026 07:38:50 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -242,7 +244,7 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "This file named `license.txt` contains the **license terms for the Ruby programming language**, authored and copyrighted by **Yukihiro Matsumoto (matz)**.\n\nHere's a breakdown of its content:\n\n1.  **Copyright and Authorship**: Ruby is copyrighted free software by Yukihiro Matsumoto.\n2.  **Dual Licensing**: Users can redistribute and/or modify Ruby under *either* the terms of the **2-clause BSDL** (if a `BSDL` file exists) *or* the **specific conditions detailed within this `license.txt` file**.\n\nThe specific conditions detailed in this file are:\n\n*   **Verbatim Copies (Source)**: You can freely copy and distribute the source code as long as all original copyright notices and disclaimers are kept intact.\n*   **Modifications**: If you modify the software, you must do at least one of the following:\n    *   Place your modifications in the Public Domain or make them Freely Available (e.g., online, or by allowing the author to include them).\n    *   Use the modified software only within your own organization.\n    *   Give non-standard binaries non-standard names and provide instructions on where to get the original software.\n    *   Make other distribution arrangements with the author.\n*   **Binary Distribution**: If you distribute the software in object code or binary form, you must do at least one of the following:\n    *   Distribute binaries and libraries with instructions on where to get the original source.\n    *   Accompany the distribution with the machine-readable source code.\n    *   Give non-standard binaries non-standard names and provide instructions on where to get the original software.\n    *   Make other distribution arrangements with the author.\n*   **Inclusion in Other Software**: You can modify and include parts of Ruby into any other software (including commercial software).\n    *   **Important Caveat**: Some files within the Ruby distribution are *not* written by matz and may have different copying conditions. Users are directed to consult the file `LEGAL` for a list of these files and their specific terms.\n*   **User-Generated Content**: Scripts and library files that are input to or produced as output from Ruby do not automatically fall under Ruby's copyright. They belong to whoever generated them, can be sold commercially, and can be aggregated with Ruby.\n*   **Warranty Disclaimer**: The software is provided \"AS IS,\" without any express or implied warranties, including but not limited to, the implied warranties of merchantability and fitness for a particular purpose.\n\nIn essence, it's a permissive open-source license that grants significant freedom for use, modification, and distribution, with standard requirements for acknowledging the original work and providing access to source code when distributing binaries, and a crucial note about third-party components."
+                    "text": "This file, `license.txt`, contains the licensing terms for the **Ruby** software, copyrighted by **Yukihiro Matsumoto (Matz)**.\n\nIt states that Ruby can be redistributed and/or modified under either:\n1.  The terms of the **2-clause BSDL** (if the file `BSDL` exists).\n2.  The specific conditions detailed within this file.\n\nThe key conditions for modification and redistribution include:\n\n*   **Verbatim Copies**: Allowed without restriction, provided original copyright notices and disclaimers are duplicated.\n*   **Modifications**: Require one of the following actions:\n    *   Place modifications in the Public Domain or make them freely available.\n    *   Use modified software only within a corporation or organization.\n    *   Give non-standard binaries non-standard names with instructions for the original distribution.\n    *   Make other distribution arrangements with the author.\n*   **Distribution of Object Code or Binary Form**: Requires one of the following:\n    *   Distribute binaries with instructions on where to get the original distribution.\n    *   Accompany the distribution with machine-readable source code.\n    *   Give non-standard binaries non-standard names with instructions for the original distribution.\n    *   Make other distribution arrangements with the author.\n*   **Inclusion in Other Software (e.g., commercial)**: Allowed, but notes that some files in the distribution are not under these terms and refers to the `LEGAL` file for their conditions.\n*   **Scripts and Library Files (Input/Output)**: These do not automatically fall under Ruby's copyright; they belong to whoever generated them and can be sold commercially.\n*   **Warranty Disclaimer**: The software is provided \"AS IS\" without any express or implied warranties, including merchantability or fitness for a particular purpose."
                   }
                 ]
               },
@@ -251,8 +253,8 @@ http_interactions:
           ],
           "usageMetadata": {
             "promptTokenCount": 567,
-            "candidatesTokenCount": 597,
-            "totalTokenCount": 2467,
+            "candidatesTokenCount": 387,
+            "totalTokenCount": 1255,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -263,14 +265,14 @@ http_interactions:
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 597
+                "tokenCount": 387
               }
             ],
-            "thoughtsTokenCount": 1303
+            "thoughtsTokenCount": 301
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-11-15T01:22:26.966596Z",
-          "responseId": "Ugn5asT_Opz53PQPhMbLyAw"
+          "createTime": "2026-11-18T07:38:45.511956Z",
+          "responseId": "BVb9atSfH962i9oPxriMsAo"
         }
-  recorded_at: Sun, 15 Nov 2026 01:22:36 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 07:38:50 GMT
+recorded_with: VCR 6.4.1

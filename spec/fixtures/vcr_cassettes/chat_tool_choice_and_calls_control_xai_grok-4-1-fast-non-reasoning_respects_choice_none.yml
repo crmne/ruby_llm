@@ -12,7 +12,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true},"strict":false}],"tool_choice":"none"}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:43:02 GMT
+      - Wed, 18 Nov 2026 06:57:03 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -48,6 +48,8 @@ http_interactions:
       - '1800'
       X-Ratelimit-Remaining-Requests:
       - '1800'
+      Cf-Cache-Status:
+      - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Zero-Data-Retention:
@@ -55,31 +57,31 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '197.7'
+      - '1003.4'
       X-Metrics-E2e-Ms:
-      - '5706.6'
+      - '11132.1'
       Traceparent:
-      - 00-540cd4f703c3391a09c79026fab02dc6-65b2ab4a000a7ae3-01
+      - 00-19e3c63ba79a526bb6cff018b0c29190-2c0a1b1a00028e74-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
-      Cf-Cache-Status:
-      - DYNAMIC
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1794706976,"completed_at":1794706982,"id":"8b3deb71-31bf-96e3-85d0-a4b65412303a","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_8b3deb71-31bf-96e3-85d0-a4b65412303a","summary":[{"text":"Checking
-        the weather in Berlin at the provided coordinates.\n\nThe system instructions
-        forbid using tools. I will answer directly in plain text.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"GQQG67y+QWcyAxSc/gu81JiSpSvsv8geVCAXhWPyZ+5kbhyheW48SpaOFoj/7/UshCDU9PiGtQOLHWxidR3Umerrp5QWovxMxN9o9yvX51fp4B8itVm/r0ddKbcKMB8v1NttE/F8apoNQYPqW7eepMBKXqS7ToGRSlhpHrzUfZmaG1ggOhmgpamDy9BAbNln7m0B72OVT9kmMP9leU+LUYrZoUUUfLirSsY/2bK1o9sx+CSwtHpVdOfScrHnQPcHpTD9pdofT/bGW/TJr6Li+wLbNn0X8b9o1K+GrDsxTpVmKTiuJP9nurYlrf6cr5JgiRXW3b5zaw3b8w4KV5Bat+6UnoP6CvRLfLiAQYwbwf9XRmJxHITEpBg3eddQl9FLeSf7pWqa7e4t2uZ3sCjjoK5zt7EIwsdAe1IdlUuN926RQLuHc1KYTU5ErhCSNyg0ijj14ThDmJ4v6IUMnVEVCS71hsuDS0lLNZGiqpmhUlHClx3dRri0uMQ+bSDuplPD91YZggjYK8A04Az2IzACgROYPsV7kUmBIEBbmYILau4i08IjEURCp+hsWGw+Ykh6hQ/oNI8V3nAlhBnjGl6bRqVmf1VDRsYYdnkjxGbg4hPJ+6C+oToSrndTwGjALimNj8909YENf0ehNPBEm/lHU8HhQ7hhuS14GPQjFNXb5S/HfDFJBwmjZh5mK3LZdS2q8JygdCHyvABFTxpSxhMW5XMk6yuSbJoZkQGiF/+njhqtMrF2AOJQuHCbrwhzmo7XYpm7dCNoyeJix3fifN75uq/7I6gdH1Wv3dnvuf8VV4QA9T7W/CeDk9+GBGWfkrhvADCE7TNKnYKp06HpqeXzAE1j/5heBEfnTQ+aJMKArhyJe3fXVqubsdHFegObzu9EivyAgCj2yL82RMGOwmZcXIFMSsFGqadF8yqX//dOhRlwhnQSK0qi7Gj4uhyqalB5FAEBlDrf9pFjNNQmKgxttpn+NjhUdnpZbmuPQy6eug86dzVRz2rDyu/qIWa1OipVCwcL4ddMZynOmQBzAInSQpAp4DCqZ9UzjiUZgZUzmnT1bGngHLns1snDbLkPH66cLGxVOyhh1CJaYEYvrWG+ZGgI6ycV68m3qJTFT5cUfzscwCpUpmRpCm47mTeFaGa6k8FrYd60vS6R6V89LAw9whhUxZoeAyh6VmG39rpIQ6CkqziK87Wac/I7f1dvmDMJxhnRB2GQE1a4c4aePYcnzHhu+8cil/vYhaEw11p15s1nTeiGBYkacZKE6u7PojkzW45jMP2vHeCNb6LW4sJ7504dKZKCOvt/TKGqSlHhyugP5r5plaabr8d/iuRCNJjDYq6bkrwxhmf2icqN8VPGMUwMt5ohjM43i/iNPryxoByzcApD4uGqgt8dNq2YVrIRFV+5Qjf6Ooz9mmqDO1Dv"},{"content":[{"type":"output_text","text":"I''m
-        unable to provide current weather information at this time.","logprobs":[],"annotations":[]}],"id":"msg_8b3deb71-31bf-96e3-85d0-a4b65412303a","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"none","tools":[{"type":"function","description":"Gets
+      string: '{"created_at":1794985012,"completed_at":1794985023,"id":"9dcc84b0-7bc2-98a8-a573-9e0951f90be4","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_9dcc84b0-7bc2-98a8-a573-9e0951f90be4","summary":[{"text":"The
+        user asked about the weather in Berlin.\n\nThere is a conflict between the
+        instructions. One section says to use the weather tool. Another section forbids
+        calling any tools. I must answer directly without using tools.\n\nI will answer
+        directly without calling any tools. I cannot provide real-time weather data.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"UJhWNyC26uJO6ImTTXxbiuIlkP9nMYnGl5Ofkukpyztyypa7cPZU5sCMGG8EnRFzCYlwiXKmxKYDUTt54j+SbSc5D4xX+6Qtr/thDe2fbTE6IRYaBJAv4WOFzu5oZEqlkleKUxNAdCh6dLQHVo9CoLy7Q8n/b4xDbcgMVYcZ17APpYi8bIdXoDz/Mrjk2m+xCFmsEyvTunoWEMuXeMhZblcXA2Xr2M5qBJJAz4O3NHFDJmWiubWhEsuKLeUDGdNfS3yAHJTHM2zZeGVlSmArQquWO4CiuUDh7WzqZPVxj9pBlT0YptNFBxNhiSrprdBMEDZhFvyfQJlzYxFY6pqMjLhBBxNUtwMt6SqUoXKehBx/jMxhS5az2dObCMn2Cvmd4OLfmqybEfaQ2KK3zYDcTGMtCUg9cLRJIEesrwFA4QsmjsgtEERnQ56UrTpsbZzHTKlaVy7dN2I4vV1d2ozJ/O8p5V4FUWE0yhFhiRrvajMpnMeDbNuLb3Igu7yzP/9ozbUTetMMlDS420SfQoDpod+uAfDdiv0tJQ9jk/PjH73hPY5xxx/oO+vTVWnemmleO6H8iGrG9LWiB+G856NWG/1c+lVdWe+1QTYo7puMSVQE749pU4qCRO8qjM6zMZNQs8RI2BuYXLkqWQEQW7CcJO33WhBbzZVMbw8UU+zi2K4IorOQZY5hPBWrt9DlZj3xsqzNbuAieeanrB1/TKVuCeKfJE3ZQX3xaLIIwy1IeqCZHRVpHKCRlShAcd5xYyDhyxaD170mL1KnGhcJaTz97M+1gLWbxP1ZO1QmI6jnQdeQe2qE6Qucwbx/p/22HnAqNY7LK17yYm71BhID3H0LcdJvxGaroVJczszbrrw4u96q3DIM23J2GNMOGFalKxXWX0M3ND5b/jqzm9Tzw0sdxhY0BMFAM4oiCLAHuRXOErDlknqRZ9UEhhv2o9V5hK498fDYTAhYEHk6I1I/4HN9KMFor8dsgDwh4x1egaolQVYLRApXfDQfJILjN0NqIt3Bfwtz4KU9t+FVYDfsJxxh1u3JoRS+riRglOrJC2LUzSuWJ6h+7EOwwUpg+hsc5Iu50TFpbCebTJCFH3uW53FAwU7vOEYN2MH3ravyMX5WRo1X86GNm8KftD8v1PbMrZPzUbupSZ4ZzAvXBoogwG1ke2t52RUrVeSHFAj5ugLuoWBlaQZPYn5hSme9WMJL8n4H8PC3MrlYHNLxTFCGgGa6xF/4EKIcog2u0z8dYS8F4wUX9h5Qe1/JbTFw/gdYeslnKc2+JgpiSUXkIw5AIBFBfFZHbOMRdEuoX9Vh7C9IceWOmLgujuXfMj0PKLfRZG6EwHiJuc2QgO6T+GtmMp7cII0FbkK4XL3c8sY/YqgKcnWYcjKrgRM+w42MEQKs4FxWbrt7tytr911C46pr"},{"content":[{"type":"output_text","text":"I''m
+        sorry, but I don''t have access to real-time weather data.","logprobs":[],"annotations":[]}],"id":"msg_9dcc84b0-7bc2-98a8-a573-9e0951f90be4","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"none","tools":[{"type":"function","description":"Gets
         current weather for a location","name":"weather","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true},"strict":false}],"top_p":0.95,"usage":{"input_tokens":359,"input_tokens_details":{"cached_tokens":256},"output_tokens":611,"output_tokens_details":{"reasoning_tokens":600},"total_tokens":970,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":17074500,"context_details":{"input_tokens":359,"output_tokens":618}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
-  recorded_at: Sun, 15 Nov 2026 01:43:02 GMT
-recorded_with: VCR 6.4.0
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true},"strict":false}],"top_p":0.95,"usage":{"input_tokens":359,"input_tokens_details":{"cached_tokens":128},"output_tokens":578,"output_tokens_details":{"reasoning_tokens":564},"total_tokens":937,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":17593500,"context_details":{"input_tokens":359,"output_tokens":585}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Wed, 18 Nov 2026 06:57:03 GMT
+recorded_with: VCR 6.4.1

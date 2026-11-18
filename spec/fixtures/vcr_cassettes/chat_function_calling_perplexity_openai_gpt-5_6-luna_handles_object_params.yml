@@ -13,7 +13,7 @@ http_interactions:
         window to schedule"}},"required":["window"],"additionalProperties":false},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -28,16 +28,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:31:48 GMT
+      - Wed, 18 Nov 2026 06:45:47 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Set-Cookie:
-      - "<COOKIE>"
-      - "<COOKIE>"
       Server:
       - cloudflare
       X-Ratelimit-Limit:
@@ -45,28 +42,31 @@ http_interactions:
       X-Ratelimit-Remaining:
       - '0'
       X-Ratelimit-Reset:
-      - '1794706309'
+      - '1794984348'
       X-Ratelimit-Used:
       - '1'
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Access-Control-Allow-Origin:
       - "*"
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
       Cf-Cache-Status:
       - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"background":false,"completed_at":1794706306,"created_at":1794706306,"error":null,"frequency_penalty":0,"id":"resp_08f3d24f-9a01-4874-9887-d9173141a29d","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5.6-luna","object":"response","output":[{"arguments":"{\"window\":{\"start\":\"2025-01-01T00:00:00Z\",\"end\":\"2025-01-02T00:00:00Z\"}}","call_id":"call_SLpF5E8162uhEfded7pn6yGB","id":"fc_31c37f4c-946f-49e0-961b-9f040f6dd5b3","name":"object_params","status":"completed","type":"function_call"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"object_params","description":"Uses
+      string: '{"background":false,"completed_at":1794984345,"created_at":1794984345,"error":null,"frequency_penalty":0,"id":"resp_a2e5808b-9f3f-48f9-9744-40912679f67b","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5.6-luna","object":"response","output":[{"arguments":"{\"window\":{\"start\":\"2025-01-01\",\"end\":\"2025-01-02\"}}","call_id":"call_45b9f477dd5d447f8cdfed994b2b758e","id":"fc_2d1294e2-7789-4df3-a5aa-b24a9c61c325","name":"object_params","status":"completed","type":"function_call"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"object_params","description":"Uses
         params DSL object support","parameters":{"additionalProperties":false,"properties":{"window":{"additionalProperties":false,"description":"Time
         window to schedule","properties":{"end":{"description":"ISO end","type":"string"},"start":{"description":"ISO
-        start","type":"string"}},"required":["start","end"],"type":"object"}},"required":["window"],"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0.00002,"output_cost":0.00012,"total_cost":0.00014},"input_tokens":110,"input_tokens_details":{"cached_tokens":0},"output_tokens":104,"output_tokens_details":{"reasoning_tokens":54},"total_tokens":214},"user":null}
+        start","type":"string"}},"required":["start","end"],"type":"object"}},"required":["window"],"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0.00002,"output_cost":0.00006,"total_cost":0.00008},"input_tokens":110,"input_tokens_details":{"cached_tokens":0},"output_tokens":49,"output_tokens_details":{"reasoning_tokens":13},"total_tokens":159},"user":null}
 
         '
-  recorded_at: Sun, 15 Nov 2026 01:31:48 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:45:47 GMT
+recorded_with: VCR 6.4.1

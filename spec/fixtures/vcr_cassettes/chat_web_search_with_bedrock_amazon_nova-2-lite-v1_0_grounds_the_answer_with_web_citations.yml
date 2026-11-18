@@ -9,11 +9,11 @@ http_interactions:
         is the latest stable Ruby version? Cite your source."}]}],"inferenceConfig":{"maxTokens":65535},"toolConfig":{"tools":[{"systemTool":{"name":"nova_grounding"}}]}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261115T012214Z
+      - 20261118T063816Z
       X-Amz-Content-Sha256:
       - f578e390438ad8efc48a215c32b1870d5711c48b86afb3bbd9cbef2ddaf81490
       Authorization:
@@ -29,29 +29,22 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:22:18 GMT
+      - Wed, 18 Nov 2026 06:38:19 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '1969'
+      - '1639'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - c70bf1c3-d108-4ecf-a624-0e11d1842c99
+      - fd495c75-2202-4eb6-abdc-fdf29b72e9c5
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":3001},"output":{"message":{"content":[{"toolUse":{"input":{"query":"latest
-        stable Ruby version"},"name":"nova_grounding","toolUseId":"tooluse_rKLQuPgcp_n8aw7IRdiz6w","type":"server_tool_use"}},{"toolResult":{"content":[{"text":"[HIDDEN]"}],"status":"success","toolUseId":"tooluse_rKLQuPgcp_n8aw7IRdiz6w","type":"nova_grounding_result"}},{"text":"The
-        latest stable Ruby version is **4.0.9**, released on October 23, 2026. This
-        version includes several bug fixes and security patches, addressing vulnerabilities
-        such as CVE-2026-89078, CVE-2026-93577, CVE-2026-97229, and CVE-2026-110264,
-        which were related to Ruby''s Onigmo regex engine and could potentially allow
-        remote code execution"},{"citationsContent":{"citations":[{"location":{"web":{"domain":"ruby-lang.org","url":"https://www.ruby-lang.org/en/downloads/releases/"}}}]}},{"citationsContent":{"citations":[{"location":{"web":{"domain":"versio.io","url":"https://www.versio.io/en/product-release-end-of-life-eol-red-hat-ruby.html"}}}]}},{"text":".\n\nRuby
-        follows a regular release schedule, with new major versions typically introduced
-        every year around December 25th. The current stable branches include Ruby
-        4.0, 3.4, and 3.3, with Ruby 4.0 being the latest major release"},{"citationsContent":{"citations":[{"location":{"web":{"domain":"endoflife.date","url":"https://endoflife.date/ruby"}}}]}},{"text":".\n\nFor
-        projects requiring long-term support, Ruby 3.4 is currently in normal maintenance,
-        meaning it receives regular bug fixes and security updates. Ruby 3.3 has moved
-        to security-only maintenance and will be supported until March 31, 2027"},{"citationsContent":{"citations":[{"location":{"web":{"domain":"dev.to","url":"https://dev.to/hsbt/is-your-ruby-version-still-supported-a-maintainers-guide-to-rubys-release-cycle-799"}}}]}},{"text":"."}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":141,"outputTokens":237,"serverToolUsage":{},"totalTokens":378}}'
-  recorded_at: Sun, 15 Nov 2026 01:22:18 GMT
-recorded_with: VCR 6.4.0
+      string: '{"metrics":{"latencyMs":2250},"output":{"message":{"content":[{"toolUse":{"input":{"query":"latest
+        stable Ruby version"},"name":"nova_grounding","toolUseId":"tooluse_0Hvi0ehWkah-lttGHk_Wpw","type":"server_tool_use"}},{"toolResult":{"content":[{"text":"[HIDDEN]"}],"status":"success","toolUseId":"tooluse_0Hvi0ehWkah-lttGHk_Wpw","type":"nova_grounding_result"}},{"text":"The
+        latest stable Ruby version is **4.0.9**, released on October 23, 2026"},{"citationsContent":{"citations":[{"location":{"web":{"domain":"ruby-lang.org","url":"https://www.ruby-lang.org/en/downloads/releases/"}}}]}},{"citationsContent":{"citations":[{"location":{"web":{"domain":"versio.io","url":"https://www.versio.io/de/product-release-end-of-life-eol-ruby-community-ruby.html"}}}]}},{"citationsContent":{"citations":[{"location":{"web":{"domain":"versio.io","url":"https://www.versio.io/en/product-release-end-of-life-eol-alpine-linux-ruby.html"}}}]}},{"citationsContent":{"citations":[{"location":{"web":{"domain":"gentrust-freelance.com","url":"https://gentrust-freelance.com/articles/detail/42"}}}]}},{"text":".\n\nThis
+        release includes fixes for several critical vulnerabilities (CVE-2026-89078,
+        CVE-2026-93577, CVE-2026-97229, and CVE-2026-110264) in Ruby''s Onigmo regex
+        engine, which could potentially be exploited for remote code execution"},{"citationsContent":{"citations":[{"location":{"web":{"domain":"versio.io","url":"https://www.versio.io/en/product-release-end-of-life-eol-alpine-linux-ruby.html"}}}]}},{"text":"."}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":141,"outputTokens":122,"serverToolUsage":{},"totalTokens":263}}'
+  recorded_at: Wed, 18 Nov 2026 06:38:19 GMT
+recorded_with: VCR 6.4.1

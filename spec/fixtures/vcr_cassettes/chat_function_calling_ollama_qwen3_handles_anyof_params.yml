@@ -12,7 +12,7 @@ http_interactions:
         description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -27,28 +27,40 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 15 Nov 2026 01:29:59 GMT
-      Content-Length:
-      - '1560'
+      - Wed, 18 Nov 2026 06:44:09 GMT
+      Transfer-Encoding:
+      - chunked
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-913","object":"chat.completion","created":1794706199,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
-        the user wants me to call the any-of params tool for the task \"Review PR\"
-        with status \"pending\" and report the result. Let me check the tools provided.\n\nThe
-        available tool has a function that takes a task and a status. The status uses
-        anyOf, which allows either a string from the enum [\"pending\", \"done\"]
-        or null. Since the user specified \"pending\", that''s valid. The task is
-        \"Review PR\". \n\nSo I need to structure the tool call with the name of the
-        function, which is \"any_of_params\", and the arguments as a JSON object with
-        \"task\" and \"status\". The task is a string, and the status is \"pending\".
-        \n\nWait, the function''s parameters are described as any_of_params with parameters
-        task and status. The status is optional, but in this case, the user provided
-        it. So the arguments should include both. \n\nLet me make sure the JSON is
-        correctly formatted. The name is \"any_of_params\", and the arguments are
-        {\"task\": \"Review PR\", \"status\": \"pending\"}. That should work. I''ll
-        return that in the tool_call tags.\n","tool_calls":[{"id":"call_kw4gap6u","index":0,"type":"function","function":{"name":"any_of_params","arguments":"{\"status\":\"pending\",\"task\":\"Review
-        PR\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":186,"prompt_tokens_details":{"cached_tokens":48},"completion_tokens":267,"total_tokens":453}}
+      string: '{"id":"chatcmpl-221","object":"chat.completion","created":1794984249,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
+        let me see. The user wants me to call the any-of params tool for the task
+        \"Review PR\" with status \"pending\" and report the result.\n\nFirst, I need
+        to understand the function structure. The tool provided has a function that
+        uses anyOf parameters. The parameters include ''status'' which can be a string
+        from the enum [\"pending\", \"done\"] or null, and ''task'' which is a string.
+        \n\nThe user specified the task as \"Review PR\" and the status as \"pending\".
+        Since \"pending\" is one of the allowed values in the enum, this should work.
+        The function expects either the status or the task, but here both are provided.
+        Wait, looking at the anyOf, each item in the anyOf array is a separate condition.
+        So the status can be either \"pending\" or \"done\", or null. But the task
+        is a separate parameter. Wait, maybe the function is structured such that
+        the ''status'' field is part of the anyOf, and the ''task'' is a separate
+        parameter. \n\nWait, the function''s parameters are structured as any_of_params,
+        which uses the params DSL. The anyOf is for the ''status'' field, meaning
+        that ''status'' can be either \"pending\", \"done\", or null. The ''task''
+        is a required parameter. So when calling the function, I need to provide both
+        ''task'' and ''status'' where ''status'' is one of the allowed values. \n\nIn
+        this case, the user provided both task \"Review PR\" and status \"pending\",
+        which is valid. So the correct function call would include both parameters.
+        The function''s JSON structure would have \"task\" as \"Review PR\" and \"status\"
+        as \"pending\". \n\nI should structure the tool_call with these arguments.
+        Let me make sure there''s no mistake. The anyOf applies to the status field,
+        so as long as status is one of the allowed values, it''s okay. The task is
+        required, so including it is necessary. \n\nYes, that''s correct. So the tool_call
+        should be a JSON object with name as the function name (probably \"any_of_params\")
+        and arguments including both task and status.\n","tool_calls":[{"id":"call_ujbq0mvp","index":0,"type":"function","function":{"name":"any_of_params","arguments":"{\"status\":\"pending\",\"task\":\"Review
+        PR\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":186,"prompt_tokens_details":{"cached_tokens":1},"completion_tokens":482,"total_tokens":668}}
 
         '
-  recorded_at: Sun, 15 Nov 2026 01:29:59 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:44:09 GMT
+recorded_with: VCR 6.4.1

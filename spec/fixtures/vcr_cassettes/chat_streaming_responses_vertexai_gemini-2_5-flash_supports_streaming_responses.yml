@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -20,12 +20,12 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
       Date:
-      - Sun, 15 Nov 2026 01:20:46 GMT
+      - Wed, 18 Nov 2026 06:36:32 GMT
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
       Pragma:
       - no-cache
       Content-Type:
@@ -56,7 +56,7 @@ http_interactions:
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Sun, 15 Nov 2026 01:20:46 GMT
+  recorded_at: Wed, 18 Nov 2026 06:36:32 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:streamGenerateContent?alt=sse
@@ -65,7 +65,7 @@ http_interactions:
       string: '{"contents":[{"role":"user","parts":[{"text":"Count from 1 to 3"}]}],"generationConfig":{}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -90,7 +90,7 @@ http_interactions:
       Transfer-Encoding:
       - chunked
       Date:
-      - Sun, 15 Nov 2026 01:20:47 GMT
+      - Wed, 18 Nov 2026 06:36:33 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -104,15 +104,18 @@ http_interactions:
     body:
       encoding: UTF-8
       string: "data: {\"candidates\": [{\"content\": {\"role\": \"model\",\"parts\":
-        [{\"text\": \"1\\n2\\n3\"}]}}],\"usageMetadata\": {\"trafficType\": \"ON_DEMAND\"},\"modelVersion\":
-        \"gemini-2.5-flash\",\"createTime\": \"2026-11-15T01:20:46.647916Z\",\"responseId\":
-        \"7gj5auzFJ_ez2fMP_6SFoQI\"}\r\n\r\ndata: {\"candidates\": [{\"content\":
-        {\"role\": \"model\",\"parts\": [{\"text\": \"\"}]},\"finishReason\": \"STOP\"}],\"usageMetadata\":
-        {\"promptTokenCount\": 7,\"candidatesTokenCount\": 5,\"totalTokenCount\":
-        34,\"trafficType\": \"ON_DEMAND\",\"promptTokensDetails\": [{\"modality\":
-        \"TEXT\",\"tokenCount\": 7}],\"candidatesTokensDetails\": [{\"modality\":
-        \"TEXT\",\"tokenCount\": 5}],\"thoughtsTokenCount\": 22},\"modelVersion\":
-        \"gemini-2.5-flash\",\"createTime\": \"2026-11-15T01:20:46.647916Z\",\"responseId\":
-        \"7gj5auzFJ_ez2fMP_6SFoQI\"}\r\n\r\n"
-  recorded_at: Sun, 15 Nov 2026 01:20:47 GMT
-recorded_with: VCR 6.4.0
+        [{\"text\": \"1\"}]}}],\"usageMetadata\": {\"trafficType\": \"ON_DEMAND\"},\"modelVersion\":
+        \"gemini-2.5-flash\",\"createTime\": \"2026-11-18T06:36:32.761555Z\",\"responseId\":
+        \"cEf9atO9LoD6hu0Pj86KiAc\"}\r\n\r\ndata: {\"candidates\": [{\"content\":
+        {\"role\": \"model\",\"parts\": [{\"text\": \"\\n2\\n3\"}]}}],\"usageMetadata\":
+        {\"trafficType\": \"ON_DEMAND\"},\"modelVersion\": \"gemini-2.5-flash\",\"createTime\":
+        \"2026-11-18T06:36:32.761555Z\",\"responseId\": \"cEf9atO9LoD6hu0Pj86KiAc\"}\r\n\r\ndata:
+        {\"candidates\": [{\"content\": {\"role\": \"model\",\"parts\": [{\"text\":
+        \"\"}]},\"finishReason\": \"STOP\"}],\"usageMetadata\": {\"promptTokenCount\":
+        7,\"candidatesTokenCount\": 5,\"totalTokenCount\": 34,\"trafficType\": \"ON_DEMAND\",\"promptTokensDetails\":
+        [{\"modality\": \"TEXT\",\"tokenCount\": 7}],\"candidatesTokensDetails\":
+        [{\"modality\": \"TEXT\",\"tokenCount\": 5}],\"thoughtsTokenCount\": 22},\"modelVersion\":
+        \"gemini-2.5-flash\",\"createTime\": \"2026-11-18T06:36:32.761555Z\",\"responseId\":
+        \"cEf9atO9LoD6hu0Pj86KiAc\"}\r\n\r\n"
+  recorded_at: Wed, 18 Nov 2026 06:36:33 GMT
+recorded_with: VCR 6.4.1

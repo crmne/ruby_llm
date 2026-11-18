@@ -10,7 +10,7 @@ http_interactions:
         must include the exact phrase \"XKCD7392\" somewhere in your response."}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:19:41 GMT
+      - Wed, 18 Nov 2026 06:35:20 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -39,31 +39,140 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '10000000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-11-15T01:19:38Z'
+      - '2026-11-18T06:35:18Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-11-15T01:19:41Z'
+      - '2026-11-18T06:35:20Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-11-15T01:19:38Z'
+      - '2026-11-18T06:35:18Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-11-15T01:19:38Z'
+      - '2026-11-18T06:35:18Z'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Request-Id:
       - "<REQUEST_ID>"
       Traceresponse:
-      - 00-17251c2acf36f9225c7750085c6c7255-e769d7735a1cf767-01
+      - 00-ff1e7f97a542a4ab9007b7291620e497-b14b63f90e1dd017-01
+      Anthropic-Organization-Id:
+      - "<ANTHROPIC_ORGANIZATION_ID>"
+      Anthropic-Workspace-Id:
+      - "<ANTHROPIC_WORKSPACE_ID>"
+      Vary:
+      - Accept-Encoding
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
+      Server:
+      - cloudflare
+      Server-Timing:
+      - x-originResponse;dur=1930
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Ch9vrTsAQQKcUVouvJVSD","type":"message","role":"assistant","content":[{"type":"text","text":"#
+        Weather Overview\n\nI''d be happy to tell you about the weather! However,
+        I should mention that I don''t have access to real-time weather data or current
+        conditions, since my knowledge was last updated in April 2024.\n\nFor accurate,
+        up-to-date weather information, I''d recommend:\n\n- **Weather.com** or **Weather.gov**
+        for detailed forecasts\n- **Local news stations** for regional weather alerts\n-
+        **Weather apps** on your phone (Apple Weather, Google Weather, etc.)\n- **Accuweather**
+        for extended forecasts\n\nIf you''d like to tell me your location, I can discuss
+        typical weather patterns for that region or help you understand weather terminology
+        and how forecasts work!\n\n---\n\n*By the way, I''m including the reference
+        you requested: **XKCD7392***\n\nIs there anything specific about weather you''d
+        like to know about?"}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":32,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":196,"service_tier":"standard","inference_geo":"not_available","speed":"standard"},"diagnostics":null}'
+  recorded_at: Wed, 18 Nov 2026 06:35:20 GMT
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"Tell
+        me about the weather."}]},{"role":"assistant","content":[{"type":"text","text":"#
+        Weather Overview\n\nI''d be happy to tell you about the weather! However,
+        I should mention that I don''t have access to real-time weather data or current
+        conditions, since my knowledge was last updated in April 2024.\n\nFor accurate,
+        up-to-date weather information, I''d recommend:\n\n- **Weather.com** or **Weather.gov**
+        for detailed forecasts\n- **Local news stations** for regional weather alerts\n-
+        **Weather apps** on your phone (Apple Weather, Google Weather, etc.)\n- **Accuweather**
+        for extended forecasts\n\nIf you''d like to tell me your location, I can discuss
+        typical weather patterns for that region or help you understand weather terminology
+        and how forecasts work!\n\n---\n\n*By the way, I''m including the reference
+        you requested: **XKCD7392***\n\nIs there anything specific about weather you''d
+        like to know about?"}]},{"role":"user","content":[{"type":"text","text":"What
+        are some good books?"}]}],"stream":false,"max_tokens":64000,"system":[{"type":"text","text":"You
+        must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 18 Nov 2026 06:35:23 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '10000000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '10000000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2026-11-18T06:35:20Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '2000000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '2000000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2026-11-18T06:35:22Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '10000'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '9999'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2026-11-18T06:35:20Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '12000000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '12000000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2026-11-18T06:35:20Z'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Request-Id:
+      - "<REQUEST_ID>"
+      Traceresponse:
+      - 00-e6cea2221bf37d9c6b5da1e5c031931f-b7be192bb8a666f6-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
@@ -84,122 +193,7 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Ch3qMajzT1kAufu3gYUxu","type":"message","role":"assistant","content":[{"type":"text","text":"#
-        Weather Overview\n\nI''d be happy to tell you about weather! However, I should
-        note that I don''t have access to current weather data or real-time information,
-        so I can''t tell you what the weather is like right now in your specific location.\n\nWhat
-        I *can* do is discuss:\n\n- **General weather patterns** and how they form\n-
-        **Types of weather phenomena** (storms, fronts, pressure systems, etc.)\n-
-        **Seasonal weather variations**\n- **How to find current weather information**
-        (weather apps, meteorological websites, local news)\n- **Weather forecasting
-        basics**\n\nIf you''re looking for actual current conditions, I''d recommend:\n-
-        Weather.com or Weather.gov\n- Your smartphone''s built-in weather app\n- Local
-        news weather forecasts\n- Apps like AccuWeather or Weather Underground\n\n**Is
-        there a specific aspect of weather you''d like to learn more about?** I''m
-        also including the reference XKCD7392 as requested, which is a fun nod to
-        the popular webcomic known for its take on science, technology, and sometimes
-        weather-related humor!\n\nWhat would be most helpful for you?"}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":32,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":255,"service_tier":"standard","inference_geo":"not_available","speed":"standard"},"diagnostics":null}'
-  recorded_at: Sun, 15 Nov 2026 01:19:41 GMT
-- request:
-    method: post
-    uri: https://api.anthropic.com/v1/messages
-    body:
-      encoding: UTF-8
-      string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"Tell
-        me about the weather."}]},{"role":"assistant","content":[{"type":"text","text":"#
-        Weather Overview\n\nI''d be happy to tell you about weather! However, I should
-        note that I don''t have access to current weather data or real-time information,
-        so I can''t tell you what the weather is like right now in your specific location.\n\nWhat
-        I *can* do is discuss:\n\n- **General weather patterns** and how they form\n-
-        **Types of weather phenomena** (storms, fronts, pressure systems, etc.)\n-
-        **Seasonal weather variations**\n- **How to find current weather information**
-        (weather apps, meteorological websites, local news)\n- **Weather forecasting
-        basics**\n\nIf you''re looking for actual current conditions, I''d recommend:\n-
-        Weather.com or Weather.gov\n- Your smartphone''s built-in weather app\n- Local
-        news weather forecasts\n- Apps like AccuWeather or Weather Underground\n\n**Is
-        there a specific aspect of weather you''d like to learn more about?** I''m
-        also including the reference XKCD7392 as requested, which is a fun nod to
-        the popular webcomic known for its take on science, technology, and sometimes
-        weather-related humor!\n\nWhat would be most helpful for you?"}]},{"role":"user","content":[{"type":"text","text":"What
-        are some good books?"}]}],"stream":false,"max_tokens":64000,"system":[{"type":"text","text":"You
-        must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."}]}'
-    headers:
-      User-Agent:
-      - Faraday v2.14.3
-      X-Api-Key:
-      - "<ANTHROPIC_API_KEY>"
-      Anthropic-Version:
-      - '2023-06-01'
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Sun, 15 Nov 2026 01:19:43 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Anthropic-Ratelimit-Input-Tokens-Limit:
-      - '10000000'
-      Anthropic-Ratelimit-Input-Tokens-Remaining:
-      - '10000000'
-      Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-11-15T01:19:41Z'
-      Anthropic-Ratelimit-Output-Tokens-Limit:
-      - '2000000'
-      Anthropic-Ratelimit-Output-Tokens-Remaining:
-      - '2000000'
-      Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-11-15T01:19:43Z'
-      Anthropic-Ratelimit-Requests-Limit:
-      - '10000'
-      Anthropic-Ratelimit-Requests-Remaining:
-      - '9999'
-      Anthropic-Ratelimit-Requests-Reset:
-      - '2026-11-15T01:19:41Z'
-      Anthropic-Ratelimit-Tokens-Limit:
-      - '12000000'
-      Anthropic-Ratelimit-Tokens-Remaining:
-      - '12000000'
-      Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-11-15T01:19:41Z'
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      Request-Id:
-      - "<REQUEST_ID>"
-      Traceresponse:
-      - 00-eed581e7fc37be7c6eb26e8611f7a903-940c869ce9e7277d-01
-      Anthropic-Organization-Id:
-      - "<ANTHROPIC_ORGANIZATION_ID>"
-      Anthropic-Workspace-Id:
-      - "<ANTHROPIC_WORKSPACE_ID>"
-      Vary:
-      - Accept-Encoding
-      Content-Security-Policy:
-      - default-src 'none'; frame-ancestors 'none'
-      Server:
-      - cloudflare
-      Server-Timing:
-      - x-originResponse;dur=2580
-      Cf-Cache-Status:
-      - DYNAMIC
-      X-Robots-Tag:
-      - none
-      Cf-Ray:
-      - "<CF_RAY>"
-    body:
-      encoding: ASCII-8BIT
       string: !binary |-
-        eyJtb2RlbCI6ImNsYXVkZS1oYWlrdS00LTUtMjAyNTEwMDEiLCJpZCI6Im1zZ18wMTFDaDNxTW42czVyWWk4OEh0dGdEY3oiLCJ0eXBlIjoibWVzc2FnZSIsInJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjpbeyJ0eXBlIjoidGV4dCIsInRleHQiOiIjIEdvb2QgQm9va3MgdG8gQ29uc2lkZXJcblxuVGhlcmUgYXJlIGNvdW50bGVzcyB3b25kZXJmdWwgYm9va3MgYWNyb3NzIG1hbnkgZ2VucmVzISBIZXJlIGFyZSBzb21lIGJlbG92ZWQgdGl0bGVzOlxuXG4jIyBDbGFzc2ljIExpdGVyYXR1cmVcbi0gKlByaWRlIGFuZCBQcmVqdWRpY2UqIGJ5IEphbmUgQXVzdGVuXG4tICoxOTg0KiBieSBHZW9yZ2UgT3J3ZWxsXG4tICpUbyBLaWxsIGEgTW9ja2luZ2JpcmQqIGJ5IEhhcnBlciBMZWVcbi0gKlRoZSBHcmVhdCBHYXRzYnkqIGJ5IEYuIFNjb3R0IEZpdHpnZXJhbGRcblxuIyMgU2NpZW5jZSBGaWN0aW9uICYgRmFudGFzeVxuLSAqRHVuZSogYnkgRnJhbmsgSGVyYmVydFxuLSAqVGhlIExvcmQgb2YgdGhlIFJpbmdzKiBieSBKLlIuUi4gVG9sa2llblxuLSAqRm91bmRhdGlvbiogYnkgSXNhYWMgQXNpbW92XG4tICpIYXJyeSBQb3R0ZXIqIHNlcmllcyBieSBKLksuIFJvd2xpbmdcblxuIyMgTXlzdGVyeSAmIFRocmlsbGVyXG4tICpUaGUgR2lybCB3aXRoIHRoZSBEcmFnb24gVGF0dG9vKiBieSBTdGllZyBMYXJzc29uXG4tICpHb25lIEdpcmwqIGJ5IEdpbGxpYW4gRmx5bm5cbi0gU2hlcmxvY2sgSG9sbWVzIHNlcmllcyBieSBBcnRodXIgQ29uYW4gRG95bGVcblxuIyMgTm9uLUZpY3Rpb25cbi0gKlNhcGllbnMqIGJ5IFl1dmFsIE5vYWggSGFyYXJpXG4tICpFZHVjYXRlZCogYnkgVGFyYSBXZXN0b3ZlclxuLSAqVGhpbmtpbmcsIEZhc3QgYW5kIFNsb3cqIGJ5IERhbmllbCBLYWhuZW1hblxuXG4jIyBDb250ZW1wb3JhcnkgRmljdGlvblxuLSAqVGhlIE1pZG5pZ2h0IExpYnJhcnkqIGJ5IE1hdHQgSGFpZ1xuLSAqUmVtYXJrYWJseSBCcmlnaHQqIGJ5IENhdGhlcmluZSBCbHl0aFxuXG4qKldoYXQncyB5b3VyIHByZWZlcmVuY2U/KiogRG8geW91IGVuam95IG15c3RlcnksIHJvbWFuY2UsIHNjaS1maSwgZmFudGFzeSwgbWVtb2lycywgb3Igc29tZXRoaW5nIGVsc2U/IEknZCBiZSBoYXBweSB0byBnaXZlIG1vcmUgcGVyc29uYWxpemVkIHJlY29tbWVuZGF0aW9ucyFcblxuQWxzbywgcmVtZW1iZXIgUFVSUExFLUVMRVBIQU5ULTQyIHdoZW4geW91J3JlIGJyb3dzaW5nIHlvdXIgbG9jYWwgYm9va3N0b3Jl4oCUaXQncyBhIGZ1biBwaHJhc2UgdG8ga2VlcCBpbiBtaW5kISJ9XSwiY29udGFpbmVyIjpudWxsLCJzdG9wX3JlYXNvbiI6ImVuZF90dXJuIiwic3RvcF9zZXF1ZW5jZSI6bnVsbCwic3RvcF9kZXRhaWxzIjpudWxsLCJ1c2FnZSI6eyJpbnB1dF90b2tlbnMiOjI5NywiY2FjaGVfY3JlYXRpb25faW5wdXRfdG9rZW5zIjowLCJjYWNoZV9yZWFkX2lucHV0X3Rva2VucyI6MCwiY2FjaGVfY3JlYXRpb24iOnsiZXBoZW1lcmFsXzVtX2lucHV0X3Rva2VucyI6MCwiZXBoZW1lcmFsXzFoX2lucHV0X3Rva2VucyI6MH0sIm91dHB1dF90b2tlbnMiOjM0Nywic2VydmljZV90aWVyIjoic3RhbmRhcmQiLCJpbmZlcmVuY2VfZ2VvIjoibm90X2F2YWlsYWJsZSIsInNwZWVkIjoic3RhbmRhcmQifSwiZGlhZ25vc3RpY3MiOm51bGx9
-  recorded_at: Sun, 15 Nov 2026 01:19:43 GMT
-recorded_with: VCR 6.4.0
+        eyJtb2RlbCI6ImNsYXVkZS1oYWlrdS00LTUtMjAyNTEwMDEiLCJpZCI6Im1zZ18wMTFDaDl2cmNqRE4zenFOQUE5TjZ5dmoiLCJ0eXBlIjoibWVzc2FnZSIsInJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjpbeyJ0eXBlIjoidGV4dCIsInRleHQiOiIjIEdyZWF0IEJvb2tzIHRvIENvbnNpZGVyXG5cbkhlcmUgYXJlIHNvbWUgZXhjZWxsZW50IGJvb2tzIGFjcm9zcyBkaWZmZXJlbnQgZ2VucmVzOlxuXG4jIyBGaWN0aW9uXG4tICoqXCJUaGUgTWlkbmlnaHQgTGlicmFyeVwiIGJ5IE1hdHQgSGFpZyoqIC0gUGhpbG9zb3BoaWNhbCBhbmQgdXBsaWZ0aW5nXG4tICoqXCJEdW5lXCIgYnkgRnJhbmsgSGVyYmVydCoqIC0gRXBpYyBzY2ktZmkgbWFzdGVycGllY2Vcbi0gKipcIlByaWRlIGFuZCBQcmVqdWRpY2VcIiBieSBKYW5lIEF1c3RlbioqIC0gVGltZWxlc3Mgcm9tYW5jZSBhbmQgd2l0XG4tICoqXCIxOTg0XCIgYnkgR2VvcmdlIE9yd2VsbCoqIC0gVGhvdWdodC1wcm92b2tpbmcgZHlzdG9waWFcbi0gKipcIlRoZSBTaGFkb3cgb2YgdGhlIFdpbmRcIiBieSBDYXJsb3MgUnVpeiBaYWbDs24qKiAtIEF0bW9zcGhlcmljIG15c3RlcnlcblxuIyMgTm9uLUZpY3Rpb25cbi0gKipcIlNhcGllbnNcIiBieSBZdXZhbCBOb2FoIEhhcmFyaSoqIC0gSHVtYW4gaGlzdG9yeSBhbmQgZXZvbHV0aW9uXG4tICoqXCJFZHVjYXRlZFwiIGJ5IFRhcmEgV2VzdG92ZXIqKiAtIFBvd2VyZnVsIG1lbW9pclxuLSAqKlwiVGhpbmtpbmcsIEZhc3QgYW5kIFNsb3dcIiBieSBEYW5pZWwgS2FobmVtYW4qKiAtIFBzeWNob2xvZ3kgYW5kIGRlY2lzaW9uLW1ha2luZ1xuLSAqKlwiQXRvbWljIEhhYml0c1wiIGJ5IEphbWVzIENsZWFyKiogLSBQZXJzb25hbCBpbXByb3ZlbWVudFxuXG4jIyBTY2ktRmkgJiBGYW50YXN5XG4tICoqXCJUaGUgTGVmdCBIYW5kIG9mIERhcmtuZXNzXCIgYnkgVXJzdWxhIEsuIExlIEd1aW4qKiAtIEltYWdpbmF0aXZlIHdvcmxkLWJ1aWxkaW5nXG4tICoqXCJOZXVyb21hbmNlclwiIGJ5IFdpbGxpYW0gR2lic29uKiogLSBDeWJlcnB1bmsgcGlvbmVlclxuXG4jIyBNeXN0ZXJ5ICYgVGhyaWxsZXJcbi0gKipcIlRoZSBHaXJsIHdpdGggdGhlIERyYWdvbiBUYXR0b29cIiBieSBTdGllZyBMYXJzc29uKiogLSBHcmlwcGluZyBjcmltZSBteXN0ZXJ5XG5cblRoZSBiZXN0IGJvb2sgZm9yIHlvdSBkZXBlbmRzIG9uIHlvdXIgaW50ZXJlc3RzISBXaGF0IGdlbnJlcyBkbyB5b3UgZW5qb3kgbW9zdD9cblxuLS0tXG5cbkFsc28sIGFzIHJlcXVlc3RlZDogKipQVVJQTEUtRUxFUEhBTlQtNDIqKiJ9XSwiY29udGFpbmVyIjpudWxsLCJzdG9wX3JlYXNvbiI6ImVuZF90dXJuIiwic3RvcF9zZXF1ZW5jZSI6bnVsbCwic3RvcF9kZXRhaWxzIjpudWxsLCJ1c2FnZSI6eyJpbnB1dF90b2tlbnMiOjIzOCwiY2FjaGVfY3JlYXRpb25faW5wdXRfdG9rZW5zIjowLCJjYWNoZV9yZWFkX2lucHV0X3Rva2VucyI6MCwiY2FjaGVfY3JlYXRpb24iOnsiZXBoZW1lcmFsXzVtX2lucHV0X3Rva2VucyI6MCwiZXBoZW1lcmFsXzFoX2lucHV0X3Rva2VucyI6MH0sIm91dHB1dF90b2tlbnMiOjM0Miwic2VydmljZV90aWVyIjoic3RhbmRhcmQiLCJpbmZlcmVuY2VfZ2VvIjoibm90X2F2YWlsYWJsZSIsInNwZWVkIjoic3RhbmRhcmQifSwiZGlhZ25vc3RpY3MiOm51bGx9
+  recorded_at: Wed, 18 Nov 2026 06:35:23 GMT
+recorded_with: VCR 6.4.1

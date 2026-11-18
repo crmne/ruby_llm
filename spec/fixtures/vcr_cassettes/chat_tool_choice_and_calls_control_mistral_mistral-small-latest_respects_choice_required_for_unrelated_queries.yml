@@ -13,7 +13,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}],"tool_choice":{"type":"function","function":{"name":"weather"}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -28,25 +28,23 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:41:20 GMT
+      - Wed, 18 Nov 2026 06:55:03 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Set-Cookie:
-      - "<COOKIE>"
       Mistral-Correlation-Id:
-      - 01a1dcdd-b565-7868-a8f9-f6582f0b6504
+      - 01a1ed70-005d-713d-9ff1-46fa47d02f3d
       X-Kong-Request-Id:
-      - 01a1dcdd-b565-7868-a8f9-f6582f0b6504
+      - 01a1ed70-005d-713d-9ff1-46fa47d02f3d
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '99628'
+      - '99633'
       X-Ratelimit-Tokens-Query-Cost:
       - '197'
       X-Ratelimit-Limit-Req-Minute:
@@ -54,30 +52,32 @@ http_interactions:
       X-Ratelimit-Remaining-Req-Minute:
       - '98'
       X-Envoy-Upstream-Service-Time:
-      - '315'
+      - '424'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '318'
+      - '425'
       X-Kong-Proxy-Latency:
-      - '17'
-      X-Content-Type-Options:
-      - nosniff
+      - '23'
       Cf-Cache-Status:
       - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"c3f8dfd30c1a417b8dd191b854231f3e","created":1794706879,"model":"mistral-small-latest","usage":{"prompt_tokens":169,"total_tokens":197,"completion_tokens":28,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"P1M4kD8xe","type":"function","function":{"name":"weather","arguments":"{\"latitude\":
+      string: '{"id":"0361e56b59a5450fbe29eefd8d6d0909","created":1794984902,"model":"mistral-small-latest","usage":{"prompt_tokens":169,"total_tokens":197,"completion_tokens":28,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"bTkP5zfoV","type":"function","function":{"name":"weather","arguments":"{\"latitude\":
         \"52.5200\", \"longitude\": \"13.4050\"}"},"index":0}],"content":""}}]}'
-  recorded_at: Sun, 15 Nov 2026 01:41:20 GMT
+  recorded_at: Wed, 18 Nov 2026 06:55:03 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
@@ -85,14 +85,14 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"mistral-small-latest","messages":[{"role":"system","content":"Your
         location is Berlin, at latitude 52.5200 and longitude 13.4050."},{"role":"user","content":"When
-        was the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"P1M4kD8xe","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"P1M4kD8xe"}],"stream":false,"max_tokens":4096,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        was the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"bTkP5zfoV","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"bTkP5zfoV"}],"stream":false,"max_tokens":4096,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -107,61 +107,61 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:41:21 GMT
+      - Wed, 18 Nov 2026 06:55:04 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Set-Cookie:
-      - "<COOKIE>"
       Mistral-Correlation-Id:
-      - 01a1dcdd-b6f3-7b52-84d7-993b94fa9839
+      - 01a1ed70-026a-7a96-8f13-458653484b1f
       X-Kong-Request-Id:
-      - 01a1dcdd-b6f3-7b52-84d7-993b94fa9839
+      - 01a1ed70-026a-7a96-8f13-458653484b1f
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '99389'
+      - '99408'
       X-Ratelimit-Tokens-Query-Cost:
-      - '239'
+      - '225'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
       - '97'
       X-Envoy-Upstream-Service-Time:
-      - '1110'
+      - '1054'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '1121'
+      - '1056'
       X-Kong-Proxy-Latency:
-      - '23'
-      X-Content-Type-Options:
-      - nosniff
+      - '20'
       Cf-Cache-Status:
       - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"31adbc719d5a4adb88bbd7507407bae7","created":1794706880,"model":"mistral-small-latest","usage":{"prompt_tokens":232,"total_tokens":383,"completion_tokens":151,"prompt_tokens_details":{"cached_tokens":144},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+      string: '{"id":"8a04935f06914618bbea374f1e96f85a","created":1794984903,"model":"mistral-small-latest","usage":{"prompt_tokens":232,"total_tokens":369,"completion_tokens":137,"prompt_tokens_details":{"cached_tokens":144},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
         **fall of Rome** typically refers to the **Western Roman Empire**, which is
         traditionally dated to **476 AD**. This is when the last Western Roman Emperor,
         **Romulus Augustulus**, was deposed by the Germanic chieftain **Odoacer**,
         who declared himself King of Italy.\n\nHowever, the **Eastern Roman Empire
         (Byzantine Empire)** continued to exist until **1453 AD**, when Constantinople
-        fell to the Ottoman Turks.\n\nSo, depending on the context, the \"fall of
-        Rome\" could refer to either **476 AD** (Western Empire) or **1453 AD** (Eastern
-        Empire). Would you like more details on a specific aspect of Rome''s fall?"}}]}'
-  recorded_at: Sun, 15 Nov 2026 01:41:21 GMT
-recorded_with: VCR 6.4.0
+        fell to the Ottoman Turks.\n\nSo, depending on which \"Rome\" you''re referring
+        to, the answer could be **476 AD** (Western Rome) or **1453 AD** (Eastern
+        Rome)."}}]}'
+  recorded_at: Wed, 18 Nov 2026 06:55:04 GMT
+recorded_with: VCR 6.4.1

@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -26,42 +26,44 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
+      X-Origin-Cache:
+      - HIT
       Last-Modified:
-      - Tue, 03 Nov 2026 01:08:56 GMT
+      - Tue, 17 Nov 2026 10:38:58 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"6ae93428-9c6"
+      - W/"6afc2ec2-9c6"
       Expires:
-      - Sun, 15 Nov 2026 01:29:24 GMT
+      - Wed, 18 Nov 2026 06:45:29 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 1AA8:148882:4D5DE00:4DD0C30:6AF9089B
+      - FC46:157F:1704236:172B244:6AFD4731
       X-Github-Edge-Region:
       - fra
       Accept-Ranges:
       - bytes
       Date:
-      - Sun, 15 Nov 2026 01:19:30 GMT
+      - Wed, 18 Nov 2026 06:35:34 GMT
       Via:
       - 1.1 varnish
       Age:
-      - '6'
+      - '5'
       X-Served-By:
-      - cache-ber1080049-BER
+      - cache-ber1080056-BER
       X-Cache:
       - HIT
       X-Cache-Hits:
       - '1'
       X-Timer:
-      - S1794705570.226665,VS0,VE1
+      - S1794983735.587472,VS0,VE1
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - d27a80a3f8045d43e06fe9338b83a249c349663d
+      - 4096564c8eee99cdf05d0d846de4edfc506ce990
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -97,7 +99,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Sun, 15 Nov 2026 01:19:30 GMT
+  recorded_at: Wed, 18 Nov 2026 06:35:34 GMT
 - request:
     method: post
     uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
@@ -140,7 +142,7 @@ http_interactions:
         A PARTICULAR\n     PURPOSE.\n</file>"}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -157,7 +159,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 15 Nov 2026 01:19:30 GMT
+      - Wed, 18 Nov 2026 06:35:34 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
@@ -177,11 +179,11 @@ http_interactions:
       X-Watermark:
       - 'false'
       Traceparent:
-      - 00-0e1e544ecc0d8b30862ab09cfb846592-94b9ac280011e00f-00
+      - 00-3a8c9a56f16c40ceeb46d25f72dd5073-bd1eb70600084e59-00
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Ms-Client-Request-Id:
-      - 5b17dcfb-feed-4dcd-8f07-fa13287c22d2
+      - 0d89a159-aec4-4d2b-9394-d2d402828798
       Azureml-Model-Session:
       - d20261110015917-e7d4cb48
       X-Ms-Inference-Retry-History:
@@ -195,9 +197,9 @@ http_interactions:
       X-Ratelimit-Key:
       - grok-4-1-fast-non-reasoning
       X-Ratelimit-Remaining-Requests:
-      - '49'
+      - '48'
       X-Ratelimit-Reset-Requests:
-      - '1'
+      - '2'
       X-Ratelimit-Limit-Requests:
       - '50'
       X-Ratelimit-Renewalperiod-Requests:
@@ -217,9 +219,9 @@ http_interactions:
       Azureai-Fe-Offer-Type:
       - paygo
       Apim-Request-Id:
-      - 5b17dcfb-feed-4dcd-8f07-fa13287c22d2
+      - 0d89a159-aec4-4d2b-9394-d2d402828798
       X-Http2-Stream-Id:
-      - '803'
+      - '273'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -227,23 +229,8 @@ http_interactions:
       X-Ms-Region:
       - West Europe
     body:
-      encoding: UTF-8
-      string: '{"id":"8287cf80-16c4-488b-aece-449ce6fcca3c","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"This
-        is the **Ruby License** (also known as the Ruby BSDL or 2-clause BSD-like
-        license), a permissive open-source license for the Ruby programming language,
-        authored by Yukihiro Matsumoto (Matz).\n\n### Key Permissions:\n- **Redistribution**:
-        Free to copy and distribute verbatim source code (with copyright notices intact).\n-
-        **Modification**: Allowed, as long as you either:\n  - Make mods public domain/freely
-        available, or\n  - Limit use to your organization, or\n  - Use non-standard
-        names for binaries with pointers to originals, or\n  - Arrange directly with
-        the author.\n- **Binary Distribution**: Permitted with source availability
-        or instructions to obtain originals.\n- **Embedding**: Can modify and include
-        in other software (even commercial), but check `LEGAL` file for exceptions.\n-
-        **Scripts/Output**: Not covered by this license; belong to their creators.\n\n###
-        Notable Terms:\n- **No Warranty**: Provided \"AS IS\" with no guarantees of
-        merchantability or fitness for purpose.\n- **Alternative**: Also allows use
-        under the 2-clause BSD license (see `BSDL` file).\n\nThis is a very liberal
-        license, similar to MIT/BSD, enabling broad commercial and non-commercial
-        use. Full text is in the file you provided."},"finish_reason":"stop"}],"usage":{"prompt_tokens":692,"completion_tokens":256,"total_tokens":948,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":161,"audio_tokens":0,"text_tokens":692,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1794705570,"object":"chat.completion","prompt_filter_results":null}'
-  recorded_at: Sun, 15 Nov 2026 01:19:33 GMT
-recorded_with: VCR 6.4.0
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjYwNTdkMTA3LTFmYjAtNGFiNy1hODk2LWQ1MTRlOGY0YjZjMSIsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJUaGlzIGlzIHRoZSAqKlJ1YnkgTGljZW5zZSoqIChhbHNvIGtub3duIGFzIHRoZSBSdWJ5IExpY2Vuc2Ugb3IgbWF0eidzIGxpY2Vuc2UpLCBhIHBlcm1pc3NpdmUgb3Blbi1zb3VyY2UgbGljZW5zZSBmb3IgdGhlIFJ1YnkgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UsIGF1dGhvcmVkIGJ5IFl1a2loaXJvIE1hdHN1bW90byAobWF0eikuXG5cbiMjIyBLZXkgUG9pbnRzOlxuLSAqKkNvcHlyaWdodCoqOiBIZWxkIGJ5IFl1a2loaXJvIE1hdHN1bW90by5cbi0gKipQZXJtaXNzaW9ucyoqOlxuICAtIEZyZWUgcmVkaXN0cmlidXRpb24gb2YgdmVyYmF0aW0gc291cmNlIGNvcGllcyAod2l0aCBub3RpY2VzIHByZXNlcnZlZCkuXG4gIC0gTW9kaWZpY2F0aW9uIGFsbG93ZWQsIGJ1dCB3aXRoIHNwZWNpZmljIGNvbmRpdGlvbnMgKGUuZy4sIG1ha2UgbW9kcyBwdWJsaWMgZG9tYWluLCByZXN0cmljdCB0byBpbnRlcm5hbCB1c2UsIG9yIHJlbmFtZSBub24tc3RhbmRhcmQgYmluYXJpZXMpLlxuICAtIEJpbmFyeSBkaXN0cmlidXRpb24gYWxsb3dlZCB3aXRoIHNvdXJjZSBhdmFpbGFiaWxpdHkgb3IgaW5zdHJ1Y3Rpb25zIHRvIG9idGFpbiBvcmlnaW5hbHMuXG4gIC0gQ2FuIGJlIGVtYmVkZGVkL21vZGlmaWVkIGludG8gb3RoZXIgc29mdHdhcmUgKGluY2x1ZGluZyBjb21tZXJjaWFsKSwgYnV0IHNvbWUgdGhpcmQtcGFydHkgZmlsZXMgaGF2ZSBzZXBhcmF0ZSB0ZXJtcyAoc2VlIGBMRUdBTGAgZmlsZSkuXG4tICoqTm8gV2FycmFudHkqKjogUHJvdmlkZWQgXCJBUyBJU1wiIHdpdGhvdXQgYW55IGd1YXJhbnRlZXMuXG4tICoqQWx0ZXJuYXRpdmUqKjogUnVieSBjYW4gYWxzbyBiZSBsaWNlbnNlZCB1bmRlciB0aGUgMi1jbGF1c2UgQlNEIExpY2Vuc2UgKEJTREwpLlxuXG5JdCdzIHNpbWlsYXIgdG8gdGhlIEJTRC9NSVQgbGljZW5zZXMgYnV0IGhhcyB1bmlxdWUgY2xhdXNlcyBmb3IgbW9kaWZpY2F0aW9ucyBhbmQgYmluYXJpZXMgdG8gZW5jb3VyYWdlIHNoYXJpbmcgY2hhbmdlcyB3aGlsZSBhbGxvd2luZyBwcm9wcmlldGFyeSB1c2UuIFRoaXMgZmlsZSBpcyBjb21tb25seSBmb3VuZCBpbiBSdWJ5IGRpc3RyaWJ1dGlvbnMgKGUuZy4sIGluIFJ1YnkgMS444oCTMi54IHNvdXJjZSB0YXJiYWxscykuIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo2OTIsImNvbXBsZXRpb25fdG9rZW5zIjoyMjcsInRvdGFsX3Rva2VucyI6OTE5LCJhdWRpb19wcm9tcHRfdG9rZW5zIjowLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MTY5LCJhdWRpb190b2tlbnMiOjAsInRleHRfdG9rZW5zIjo2OTIsImltYWdlX3Rva2VucyI6MH0sImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MCwiYXVkaW9fdG9rZW5zIjowLCJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6MCwicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjB9LCJudW1fc291cmNlc191c2VkIjowfSwiY3JlYXRlZCI6MTc5NDk4MzczNSwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwicHJvbXB0X2ZpbHRlcl9yZXN1bHRzIjpudWxsfQ==
+  recorded_at: Wed, 18 Nov 2026 06:35:36 GMT
+recorded_with: VCR 6.4.1

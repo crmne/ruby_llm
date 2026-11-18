@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"Qwen3.8-27B","messages":[{"role":"user","content":"Say ok"}],"stream":false,"reasoning_effort":"high"}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -23,18 +23,20 @@ http_interactions:
       message: Bad Request
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:21:11 GMT
+      - Wed, 18 Nov 2026 06:34:31 GMT
       X-Llm-D-Flow-Queue-Duration-Ms:
       - '0'
       Vary:
       - Origin
       Content-Type:
       - application/json
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
       Transfer-Encoding:
       - chunked
     body:
       encoding: UTF-8
       string: '{"error":{"message":"Unexpected reasoning effort high. Supported types
         are xhigh (default), medium, and low.","type":"BadRequestError","param":null,"code":400}}'
-  recorded_at: Sun, 15 Nov 2026 01:21:11 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:34:31 GMT
+recorded_with: VCR 6.4.1

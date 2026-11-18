@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -20,10 +20,10 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Date:
+      - Wed, 18 Nov 2026 06:35:27 GMT
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
-      Date:
-      - Sun, 15 Nov 2026 01:20:14 GMT
       Pragma:
       - no-cache
       Cache-Control:
@@ -56,7 +56,7 @@ http_interactions:
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Sun, 15 Nov 2026 01:20:14 GMT
+  recorded_at: Wed, 18 Nov 2026 06:35:27 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/text-embedding-004:predict
@@ -65,7 +65,7 @@ http_interactions:
       string: '{"instances":[{"content":"Ruby is a programmer''s best friend"}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -86,7 +86,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 15 Nov 2026 01:20:15 GMT
+      - Wed, 18 Nov 2026 06:35:27 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -887,5 +887,5 @@ http_interactions:
             "billableCharacterCount": 29
           }
         }
-  recorded_at: Sun, 15 Nov 2026 01:20:15 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:35:27 GMT
+recorded_with: VCR 6.4.1

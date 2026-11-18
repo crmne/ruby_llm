@@ -12,7 +12,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:20:51 GMT
+      - Wed, 18 Nov 2026 06:36:09 GMT
       Content-Type:
       - application/json; charset=UTF-8
       Transfer-Encoding:
@@ -39,7 +39,7 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       Ga-Traceid:
-      - 6279975266f76b5425d249718943e631
+      - 34f6a63059d6c0efcc3d0b1cb636b161
       Vary:
       - Accept-Encoding
       - Access-Control-Request-Headers
@@ -50,31 +50,31 @@ http_interactions:
       - Origin
       - Origin
       X-Log-Id:
-      - 20261115092047769f14599af04e85
+      - 202611181436028ac5ed525e0646f3
       X-Request-Id:
       - "<X_REQUEST_ID>"
     body:
       encoding: ASCII-8BIT
       string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":"","reasoning_content":"The
-        user wants the weather in Berlin at coordinates 52.5200, 13.4050. I''ll call
-        the weather function with these coordinates.","role":"assistant","tool_calls":[{"function":{"arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}","name":"weather"},"id":"call_-7080009049198029043","index":0,"type":"function"}]}}],"created":1794705651,"id":"20261115092047769f14599af04e85","model":"glm-5.3-flash","object":"chat.completion","request_id":"20261115092047769f14599af04e85","usage":{"completion_tokens":56,"completion_tokens_details":{"reasoning_tokens":32},"prompt_tokens":229,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":285}}'
-  recorded_at: Sun, 15 Nov 2026 01:20:51 GMT
+        user wants the weather in Berlin with coordinates 52.5200, 13.4050. I have
+        the weather tool available. Let me call it.","role":"assistant","tool_calls":[{"function":{"arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}","name":"weather"},"id":"call_-7065241164927989157","index":0,"type":"function"}]}}],"created":1794983769,"id":"202611181436028ac5ed525e0646f3","model":"glm-5.3-flash","object":"chat.completion","request_id":"202611181436028ac5ed525e0646f3","usage":{"completion_tokens":58,"completion_tokens_details":{"reasoning_tokens":34},"prompt_tokens":229,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":287}}'
+  recorded_at: Wed, 18 Nov 2026 06:36:09 GMT
 - request:
     method: post
     uri: https://api.z.ai/api/paas/v4/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"glm-5.3-flash","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"call_-7080009049198029043","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}],"reasoning_content":"The
-        user wants the weather in Berlin at coordinates 52.5200, 13.4050. I''ll call
-        the weather function with these coordinates."},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_-7080009049198029043"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"call_-7065241164927989157","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}],"reasoning_content":"The
+        user wants the weather in Berlin with coordinates 52.5200, 13.4050. I have
+        the weather tool available. Let me call it."},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_-7065241164927989157"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -89,7 +89,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:20:56 GMT
+      - Wed, 18 Nov 2026 06:36:16 GMT
       Content-Type:
       - application/json; charset=UTF-8
       Transfer-Encoding:
@@ -101,7 +101,7 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       Ga-Traceid:
-      - f77eeca3304c52ffc553105da0c11728
+      - b7fcbff1f54c1843a1d0b994281b6745
       Vary:
       - Accept-Encoding
       - Access-Control-Request-Headers
@@ -112,12 +112,12 @@ http_interactions:
       - Origin
       - Origin
       X-Log-Id:
-      - 20261115092051d8c31a445bf74861
+      - 20261118143609a1a0080449e6414e
       X-Request-Id:
       - "<X_REQUEST_ID>"
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJIZXJlJ3MgdGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW4gKDUyLjUyMDAsIDEzLjQwNTApOlxuXG4tICoqVGVtcGVyYXR1cmU6KiogMTXCsENcbi0gKipXaW5kOioqIDEwIGttL2hcblxuSXQncyBhIG1pbGQgZGF5IHdpdGggYSBsaWdodCBicmVlemUg4oCUIGEgamFja2V0IG1pZ2h0IGJlIG5pY2UgaWYgeW91J3JlIGhlYWRpbmcgb3V0ISIsInJvbGUiOiJhc3Npc3RhbnQifX1dLCJjcmVhdGVkIjoxNzk0NzA1NjU2LCJpZCI6IjIwMjYxMTE1MDkyMDUxZDhjMzFhNDQ1YmY3NDg2MSIsIm1vZGVsIjoiZ2xtLTUuMy1mbGFzaCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInJlcXVlc3RfaWQiOiIyMDI2MTExNTA5MjA1MWQ4YzMxYTQ0NWJmNzQ4NjEiLCJ1c2FnZSI6eyJjb21wbGV0aW9uX3Rva2VucyI6NjAsImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MH0sInByb21wdF90b2tlbnMiOjMxNSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9LCJ0b3RhbF90b2tlbnMiOjM3NX19
-  recorded_at: Sun, 15 Nov 2026 01:20:56 GMT
-recorded_with: VCR 6.4.0
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJIZXJlJ3MgdGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW46XG5cbi0gKipUZW1wZXJhdHVyZToqKiAxNcKwQ1xuLSAqKldpbmQ6KiogMTAga20vaFxuXG5JdCdzIGEgbWlsZCBkYXkgd2l0aCBhIGxpZ2h0IGJyZWV6ZSDigJQgYSBsaWdodCBqYWNrZXQgd291bGQgcHJvYmFibHkgYmUgY29tZm9ydGFibGUuIExldCBtZSBrbm93IGlmIHlvdSdkIGxpa2UgYW55dGhpbmcgZWxzZSEiLCJyb2xlIjoiYXNzaXN0YW50In19XSwiY3JlYXRlZCI6MTc5NDk4Mzc3NiwiaWQiOiIyMDI2MTExODE0MzYwOWExYTAwODA0NDllNjQxNGUiLCJtb2RlbCI6ImdsbS01LjMtZmxhc2giLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJyZXF1ZXN0X2lkIjoiMjAyNjExMTgxNDM2MDlhMWEwMDgwNDQ5ZTY0MTRlIiwidXNhZ2UiOnsiY29tcGxldGlvbl90b2tlbnMiOjU1LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjB9LCJwcm9tcHRfdG9rZW5zIjozMTcsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowfSwidG90YWxfdG9rZW5zIjozNzJ9fQ==
+  recorded_at: Wed, 18 Nov 2026 06:36:16 GMT
+recorded_with: VCR 6.4.1

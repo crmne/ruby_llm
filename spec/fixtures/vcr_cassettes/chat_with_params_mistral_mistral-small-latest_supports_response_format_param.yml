@@ -9,7 +9,7 @@ http_interactions:
         is the square root of 64? Answer with a JSON object with the key `result`."}],"stream":false,"response_format":{"type":"json_object"}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,25 +24,23 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:20:18 GMT
+      - Wed, 18 Nov 2026 06:35:21 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Set-Cookie:
-      - "<COOKIE>"
       Mistral-Correlation-Id:
-      - 01a1dcca-759e-719b-9586-93bb8c2af637
+      - 01a1ed5d-f758-7932-8e4f-beaa49a4e735
       X-Kong-Request-Id:
-      - 01a1dcca-759e-719b-9586-93bb8c2af637
+      - 01a1ed5d-f758-7932-8e4f-beaa49a4e735
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '90388'
+      - '83363'
       X-Ratelimit-Tokens-Query-Cost:
       - '43'
       X-Ratelimit-Limit-Req-Minute:
@@ -50,28 +48,30 @@ http_interactions:
       X-Ratelimit-Remaining-Req-Minute:
       - '99'
       X-Envoy-Upstream-Service-Time:
-      - '298'
+      - '281'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '299'
+      - '282'
       X-Kong-Proxy-Latency:
-      - '12'
-      X-Content-Type-Options:
-      - nosniff
+      - '13'
       Cf-Cache-Status:
       - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"e15d0177027840ccaa8e7bd11e0bac27","created":1794705618,"model":"mistral-small-latest","usage":{"prompt_tokens":36,"total_tokens":43,"completion_tokens":7,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"{\"result\":
+      string: '{"id":"75ce35a47f7841bcb42716e691e35e86","created":1794983720,"model":"mistral-small-latest","usage":{"prompt_tokens":36,"total_tokens":43,"completion_tokens":7,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"{\"result\":
         8}"}}]}'
-  recorded_at: Sun, 15 Nov 2026 01:20:18 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:35:21 GMT
+recorded_with: VCR 6.4.1

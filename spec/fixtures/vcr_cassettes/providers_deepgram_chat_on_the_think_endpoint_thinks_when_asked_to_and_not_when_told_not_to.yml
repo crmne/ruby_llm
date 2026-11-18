@@ -9,7 +9,7 @@ http_interactions:
         sells pens at 3 for 4 euros. How many euros do 27 pens cost?"}],"stream":false,"reasoning_effort":"low"}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Token <DEEPGRAM_API_KEY>
       Content-Type:
@@ -35,16 +35,45 @@ http_interactions:
       Access-Control-Expose-Headers:
       - dg-model-name,dg-model-uuid,dg-additional-model-uuids,dg-char-count,dg-request-id,dg-project-id,dg-error,dg-breaks-applied,dg-pronunciations-applied,dg-pronunciation-warnings,dg-engine-instance
       Dg-Request-Id:
-      - 01a1dcca-30ae-71b5-9bc6-5bac11c58a13
+      - 01a1ed5d-5852-72a4-8c0f-03b0f30a2e7c
       Transfer-Encoding:
       - chunked
       Date:
-      - Sun, 15 Nov 2026 01:20:03 GMT
+      - Wed, 18 Nov 2026 06:34:44 GMT
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTIwNmI3MDZhLTM4NmItNDQyNy1iMGQyLTQ1OWNjNjU0OTdhNCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuMjcgcGVucyBjb3N0ICoqMzYgZXVyb3MqKi4gXG5cbihTaW5jZSAyNyBpcyA5IHNldHMgb2YgMyBwZW5zLCBhbmQgZWFjaCBzZXQgY29zdHMgNCBldXJvcywgOSDDlyA0ID0gMzYuKSIsInJlZnVzYWwiOm51bGwsInJvbGUiOiJhc3Npc3RhbnQiLCJyZWFzb25pbmdfY29udGVudCI6IkhlcmUncyBhIHRoaW5raW5nIHByb2Nlc3M6XG5cbjEuICAqKkFuYWx5emUgdGhlIFVzZXIgSW5wdXQ6KipcbiAgIC0gSXRlbTogUGVuc1xuICAgLSBQcmljZTogMyBwZW5zIGZvciA0IGV1cm9zXG4gICAtIFF1YW50aXR5IG5lZWRlZDogMjcgcGVuc1xuICAgLSBRdWVzdGlvbjogSG93IG1hbnkgZXVyb3MgZG8gMjcgcGVucyBjb3N0P1xuXG4yLiAgKipJZGVudGlmeSB0aGUgS2V5IE1hdGhlbWF0aWNhbCBSZWxhdGlvbnNoaXA6KipcbiAgIC0gUHJpY2UgcGVyIGdyb3VwIG9mIDMgcGVucyA9IDQgZXVyb3NcbiAgIC0gTnVtYmVyIG9mIGdyb3VwcyBvZiAzIGluIDI3IHBlbnMgPSAyNyAvIDMgPSA5IGdyb3Vwc1xuICAgLSBUb3RhbCBjb3N0ID0gTnVtYmVyIG9mIGdyb3VwcyDDlyBQcmljZSBwZXIgZ3JvdXAgPSA5IMOXIDQgZXVyb3NcblxuMy4gICoqQ2FsY3VsYXRlOioqXG4gICAtIDI3IC8gMyA9IDlcbiAgIC0gOSDDlyA0ID0gMzZcbiAgIC0gU28sIDI3IHBlbnMgY29zdCAzNiBldXJvcy5cblxuNC4gICoqVmVyaWZ5OioqXG4gICAtIEFsdGVybmF0aXZlIG1ldGhvZDogUHJpY2UgcGVyIHBlbiA9IDQvMyBldXJvcyDiiYggMS4zMzMuLi4gZXVyb3NcbiAgIC0gMjcgcGVucyDDlyAoNC8zKSBldXJvcy9wZW4gPSAoMjcgw5cgNCkgLyAzID0gMTA4IC8gMyA9IDM2IGV1cm9zXG4gICAtIEJvdGggbWV0aG9kcyBnaXZlIDM2LiBDb3JyZWN0LlxuXG41LiAgKipGb3JtdWxhdGUgUmVzcG9uc2U6KipcbiAgIC0gU3RhdGUgdGhlIGFuc3dlciBjbGVhcmx5IGFuZCBjb25jaXNlbHkuXG4gICAtIE9wdGlvbmFsbHkgc2hvdyB0aGUgcXVpY2sgY2FsY3VsYXRpb246IDI3IHBlbnMgaXMgOSBzZXRzIG9mIDMgcGVucywgYW5kIDkgw5cgNCBldXJvcyA9IDM2IGV1cm9zLlxuXG4gICBEcmFmdDogMjcgcGVucyBjb3N0IDM2IGV1cm9zLiAoU2luY2UgMjcgaXMgOSBzZXRzIG9mIDMgcGVucywgYW5kIGVhY2ggc2V0IGNvc3RzIDQgZXVyb3MsIDkgw5cgNCA9IDM2LilcblxuNi4gICoqRmluYWwgQ2hlY2s6KipcbiAgIC0gTWF0Y2hlcyBxdWVzdGlvbj8gWWVzLlxuICAgLSBNYXRoIGNvcnJlY3Q/IFllcy5cbiAgIC0gQ2xlYXIgYW5kIGRpcmVjdD8gWWVzLlxuICAgLSBSZWFkeS7inIVcbiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCIsImxvZ3Byb2JzIjpudWxsfV0sImNyZWF0ZWQiOjE3OTQ3MDU2MDEsIm1vZGVsIjoidGhpbmstZmFzdCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjMyLCJjb21wbGV0aW9uX3Rva2VucyI6NDQ3LCJ0b3RhbF90b2tlbnMiOjQ3OSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjQwM319fQ==
-  recorded_at: Sun, 15 Nov 2026 01:20:03 GMT
+      string: '{"id":"chatcmpl-95675b5f-d11e-44cd-b9d1-f3656957d050","choices":[{"index":0,"message":{"content":"\n\n27
+        pens cost **36 euros**.\n\nHere is the breakdown:\n1.  First, find out how
+        many sets of 3 are in 27: $27 \\div 3 = 9$ sets.\n2.  Since each set costs
+        4 euros, multiply the number of sets by the price: $9 \\times 4 = 36$.","refusal":null,"role":"assistant","reasoning_content":"Here''s
+        my thought process for solving this problem:\n\n1.  **Analyze the Request:**\n    *   Given:
+        A shop sells pens at a rate of 3 pens for 4 euros.\n    *   Question: What
+        is the cost of 27 pens?\n\n2.  **Identify the Relationship (Ratio/Proportion):**\n    *   The
+        price is tied to a specific quantity.\n    *   Ratio: 3 pens / 4 euros.\n\n3.  **Determine
+        the Target Quantity:**\n    *   Target: 27 pens.\n\n4.  **Formulate a Plan:**\n    *   *Method
+        1: Unitary Method (Find the price of one pen).*\n    *   *Method 2: Multiplier
+        Method (Find how many sets of 3 are in 27).*\n\n5.  **Execute Method 1 (Unitary
+        Method):**\n    *   Price of 3 pens = 4 euros.\n    *   Price of 1 pen = $4
+        / 3$ euros ($1.333...$).\n    *   Price of 27 pens = $27 \\times (4/3)$ euros.\n    *   Calculation:
+        $27 \\times 4 = 108$; $108 / 3 = 36$.\n    *   Result: 36 euros.\n\n6.  **Execute
+        Method 2 (Multiplier Method) - *This is usually more intuitive for \"3 for
+        4\" type problems*:**\n    *   How many groups of 3 pens are in 27 pens?\n    *   $27
+        / 3 = 9$ groups.\n    *   Each group costs 4 euros.\n    *   Total cost =
+        $9 \\text{ groups} \\times 4 \\text{ euros/group}$.\n    *   Calculation:
+        $9 \\times 4 = 36$.\n    *   Result: 36 euros.\n\n7.  **Verify the Result:**\n    *   If
+        3 pens cost 4 euros, then 27 pens (which is $3 \\times 9$) should cost $4
+        \\times 9$.\n    *   $4 \\times 9 = 36$.\n    *   The logic holds up.\n\n8.  **Final
+        Answer Formulation:**\n    *   State the steps clearly.\n    *   Provide the
+        final number.\n\n    *Drafting the response:*\n    To solve this, first determine
+        how many sets of 3 pens are in 27.\n    $27 \\div 3 = 9$ sets.\n    Since
+        each set costs 4 euros, multiply the number of sets by the price.\n    $9
+        \\times 4 = 36$.\n    The cost is 36 euros.\n\n9.  **Final Polish:** Just
+        give the direct answer clearly. \"27 pens cost 36 euros.\" (Maybe show the
+        math briefly for clarity).\n\n    *   27 pens is 9 times the quantity of 3
+        pens ($27 \\div 3 = 9$).\n    *   Therefore, the cost is 9 times the price
+        of 4 euros.\n    *   $9 \\times 4 = 36$ euros.\n\n    This looks solid.\n\n10.
+        **Final Output Generation.** (Matches the thought process above).\n"},"finish_reason":"stop","logprobs":null}],"created":1794983680,"model":"think-fast","object":"chat.completion","usage":{"prompt_tokens":32,"completion_tokens":818,"total_tokens":850,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":736}}}'
+  recorded_at: Wed, 18 Nov 2026 06:34:44 GMT
 - request:
     method: post
     uri: https://agent.deepgram.com/v1/think
@@ -54,7 +83,7 @@ http_interactions:
         sells pens at 3 for 4 euros. How many euros do 27 pens cost?"}],"stream":false,"reasoning_effort":"none"}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Token <DEEPGRAM_API_KEY>
       Content-Type:
@@ -80,20 +109,20 @@ http_interactions:
       Access-Control-Expose-Headers:
       - dg-model-name,dg-model-uuid,dg-additional-model-uuids,dg-char-count,dg-request-id,dg-project-id,dg-error,dg-breaks-applied,dg-pronunciations-applied,dg-pronunciation-warnings,dg-engine-instance
       Dg-Request-Id:
-      - 01a1dcca-415e-741b-9570-48157569910b
+      - 01a1ed5d-6ab5-72d1-9e4b-58aac70a4817
       Transfer-Encoding:
       - chunked
       Date:
-      - Sun, 15 Nov 2026 01:20:05 GMT
+      - Wed, 18 Nov 2026 06:34:45 GMT
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"chatcmpl-fa507a21-f964-4457-a379-a2dfd23be87a","choices":[{"index":0,"message":{"content":"To
-        determine the cost of 27 pens, we can follow these steps:\n\n**Step 1: Determine
-        how many sets of pens are in 27.**\nThe pens are sold in sets of 3. We divide
-        the total number of pens by the number of pens per set:\n$$27 \\div 3 = 9
-        \\text{ sets}$$\n\n**Step 2: Calculate the total cost.**\nEach set of 3 pens
-        costs 4 euros. Since there are 9 sets, we multiply the number of sets by the
-        price per set:\n$$9 \\times 4 = 36 \\text{ euros}$$\n\n**Conclusion:**\n27
-        pens cost **36 euros**.","refusal":null,"role":"assistant"},"finish_reason":"stop","logprobs":null}],"created":1794705604,"model":"think-fast","object":"chat.completion","usage":{"prompt_tokens":34,"completion_tokens":151,"total_tokens":185,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0}}}'
-  recorded_at: Sun, 15 Nov 2026 01:20:05 GMT
-recorded_with: VCR 6.4.0
+      string: '{"id":"chatcmpl-849cafd2-bcb8-4ade-9782-a890f595a684","choices":[{"index":0,"message":{"content":"To
+        determine the cost of 27 pens, we can break the problem down into simple steps.\n\n**Step
+        1: Determine how many groups of 3 pens are in 27 pens.**\nSince the pens are
+        sold in groups of 3, we divide the total number of pens by 3.\n$$ 27 \\div
+        3 = 9 $$\nThere are 9 groups of 3 pens.\n\n**Step 2: Calculate the total cost.**\nEach
+        group of 3 pens costs 4 euros. Since there are 9 groups, we multiply the number
+        of groups by the price per group.\n$$ 9 \\times 4 = 36 $$\n\n**Conclusion:**\n27
+        pens cost **36 euros**.","refusal":null,"role":"assistant"},"finish_reason":"stop","logprobs":null}],"created":1794983684,"model":"think-fast","object":"chat.completion","usage":{"prompt_tokens":34,"completion_tokens":158,"total_tokens":192,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0}}}'
+  recorded_at: Wed, 18 Nov 2026 06:34:45 GMT
+recorded_with: VCR 6.4.1

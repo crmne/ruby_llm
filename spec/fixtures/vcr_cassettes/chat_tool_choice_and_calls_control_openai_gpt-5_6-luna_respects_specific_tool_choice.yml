@@ -12,7 +12,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true},"strict":false}],"tool_choice":{"type":"function","name":"weather"}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:42:28 GMT
+      - Wed, 18 Nov 2026 06:56:14 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -51,7 +51,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '814'
+      - '784'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -78,16 +78,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_05a0a29baee1f151016af90e04173c87d29c1ffd8af81a40c0",
+          "id": "resp_0e17ac85fc3d1557016afd4c0d421c87d2a445f20f1003eeda",
           "object": "response",
-          "created_at": 1794706948,
+          "created_at": 1794984973,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794706948,
+          "completed_at": 1794984973,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
@@ -102,11 +102,11 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "fc_05a0a29baee1f151016af90e04aee487d2bc422a11717cf7b0",
+              "id": "fc_0e17ac85fc3d1557016afd4c0db61087d291dd83f53cceb202",
               "type": "function_call",
               "status": "completed",
               "arguments": "{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}",
-              "call_id": "call_KW7mdo4OOehu7V9IiniBaNPn",
+              "call_id": "call_iLuyZ1YQWLmPzsZTomdETYTy",
               "name": "weather"
             }
           ],
@@ -203,21 +203,21 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Sun, 15 Nov 2026 01:42:28 GMT
+  recorded_at: Wed, 18 Nov 2026 06:56:14 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
       string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"What''s
-        the fall of Rome?"},{"type":"function_call","call_id":"call_KW7mdo4OOehu7V9IiniBaNPn","name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"},{"type":"function_call_output","call_id":"call_KW7mdo4OOehu7V9IiniBaNPn","output":"Current
+        the fall of Rome?"},{"type":"function_call","call_id":"call_iLuyZ1YQWLmPzsZTomdETYTy","name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"},{"type":"function_call_output","call_id":"call_iLuyZ1YQWLmPzsZTomdETYTy","output":"Current
         weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -232,7 +232,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:42:31 GMT
+      - Wed, 18 Nov 2026 06:56:16 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -256,7 +256,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '2568'
+      - '2615'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -281,143 +281,7 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: |-
-        {
-          "id": "resp_0dba4a02fb7d2915016af90e04ff8487d2bcc6638b387b1d41",
-          "object": "response",
-          "created_at": 1794706949,
-          "status": "completed",
-          "access_programs": null,
-          "background": false,
-          "billing": {
-            "payer": "developer"
-          },
-          "completed_at": 1794706951,
-          "error": null,
-          "frequency_penalty": 0.0,
-          "image": {
-            "context_compression": "disabled"
-          },
-          "incomplete_details": null,
-          "input_transformations": [],
-          "instructions": null,
-          "max_output_tokens": null,
-          "max_tool_calls": null,
-          "model": "gpt-5.6-luna",
-          "moderation": null,
-          "output": [
-            {
-              "id": "rs_0dba4a02fb7d2915016af90e0591a887d2a84ce1e3a25f7b2a",
-              "type": "reasoning",
-              "content": [],
-              "encrypted_content": "gAAAAABq-Q4Ho-IvSCHemFKL-buJGDR_slvSMFFZEFJ1zeUormCzRUqdYLiqc4lfv0WqwlSAybqzzbHXIKseVFSH1Tzl1INmr9FSyT6Kzr-2U003DewB0wPjMmnkVWmimIN_kVlhf96TQlvFBKqepJCQyPSLk7oMH4WjYw6tGSNRxTDOMItZW561UcHL3K4ha_6iO_VPgdtQaQpNummbmVkhDRUtfvna0unv9v5yNmk-WGuShyqaaqfTB5rZnySOsFvYYAgT3Of9gL34LX1M7sLJ_dJxUnHHoSw62_tfWdNdDBxFDhW_As5d_ZUDcLwfzekpytLkX7hWIpPXmAnLMx9T13B2hWPC9XXl-zBSIZT2gNaPHPPkO27HlpP2IeY84_fIbtf4fKPaa1OAI0kbhw6QfUvOsZGVb7eaJMR8vNspeis2Xyq6KD28cfM8Md3Vo6uD009llUMcy9c2B4CoZJRpa4z9uaQ8Yg5d9flyO3RVDrSpw3VT4DhqJSORMUAg-S_xJDkOgAldRQRnpN4mleHxGtxlbshFb1xA-v-mVWTSymGBuKho0CAmMesgKzYZkrOpjE9D9joxzP6Z_iVnDPsgGbswFGP7UB7D9pdRq0Q70uoLnRs0nR966_rAglEmugNr5ZraAUClnuWF9UmcbrIaS_knY0ov5iJ0Z7C7ZEQpdIRFWKChQM6YMGcM-aE0K1kzaqssxUzEwRq-Goq7IYZnurQuHiyjLt2Y9N987krEVmvE3P8tAIzisXs9zvuMBe_rjuRjQBt2qjWW1EijKDIhBlcu4wUC7LZQYSVgFZpB8Gv0EpjGRXkwXSuVLlfVHeOUW83qhPpDJ_aK_Xxxp9q-a4-n8fMqXpoCgYF2zV21ZYe_IZOuEFyZXHvWRsRhjORcgPJPf3eGWUKefbHkCusrvzIHXkXXGxCJU8yUtbvflSSMuJdaxLfX7vW9ntqPsScd5ZDPcpNfL3SRQK3DWh4umBVMg7gaGDX-lx9pHoOKmftPSbCaA2K5BiH0YtTvqXRVW-fphpr19bTBPnPOuEKsvMyzTDm-b-i42c-ybbux4iqlnkpjLpSmxrngw2ELo5PD4TZkH-zTnplBGic4dibyaEcCctwx-FpmIBK27oeEp5bbXqP066qhRYIG6BRCTGdI-S73ZrxcgjKcKTfYI6eZyLdfTDJUQAwB0W_TmGelofkKxCWa_ZVe9i1cH5fTctZ-z5P6A3tHT3pvczKzvjxQnILcVK7NTaqnEKLEodbg30S2BQnBgdobHc8qFPUy47ikVFWHK-SuByU5txUYH_rIk6ups9e0XgRkn-6dDg-2yfOqpi0jAspptm7T8A8xc6TEoVZyEjqfcbpk2v6pXwO11XVuPUZFYnzCHq7dd9i4ucRQHAeLM2_DuQXpSnWIH6avuBoTIOqQQf-4a5mE28Wndl1PvXQ3cGwJU4j_aq455qD2Ypp3uIvnJBsXJ-MJxAxsN0MSdtbK9V13H615GbeT1H72HVemyFct1q97LX0Nbflbbh2gMb-CK8cJnOY6DPV2K4HuFNVa4Acye_MESefHmKa33L5j3NFuftrnZSD7adKhrQ16g6Sfsvw3IYdijRMNYgggW2Z4D1pV-d6Wc0yPw1B0xiebPXh82BEjZ6P_eMXV_q0jWNrHrEIUEL-KYEA0hYd3GOxb8ZoBkJhau_3sUepT7VPawxAAnbq3uB2iZwsw1KStAUiFY6gHF8LHpHF8wbebm7GzqLl18YFaLsVFcdfOSrtUc6FqWriahAWF4de-eJ3_rkNBou7-eLEWyQnFTSQwGeezUfyQz1rydLLMKqktUwM0Ou3TbIgdzIR-HNYMcwKkdAkghVSo8VDr7TD0Mpo0GorpNVvwxV0mcSHneKhyj_xuQ2fdgirX5CJF0DFLaLT3hYyEXL7NzFtzPzStIa1igel-0qzXOUb8_QivS-9ajZO94990JvnXvYI--z0KPTnkLKPbm2nXQY16jkCEEyRkchLpG3jWKypU2N4DKyoLxsdpL5_gGAkyLo7Q8az7oi9p25kio2N6tb6Yaw_daqa6HFO724LdwKrMv3u3Ha79EeBdGpTEs369HiQTguxwNdwcVeCgAVToiAvPWvt5L5PX624y51oTebmHwZSJ7Lia33bZf4tBOsyhMEItPK4YieM2MAfbftcEmY3vPE2rfWJRJKe2SqQEzVYvehkMsWkYTU5LBHexprRDRGcktuSppgXywbWGRgviLW_kIq1tucRL27RwLcYyouxuVpeiibafItqtgw==",
-              "summary": []
-            },
-            {
-              "id": "msg_0dba4a02fb7d2915016af90e05f1c087d2a656bcc0bbcda57a",
-              "type": "message",
-              "status": "completed",
-              "content": [
-                {
-                  "type": "output_text",
-                  "annotations": [],
-                  "logprobs": [],
-                  "text": "The **fall of Rome** usually refers to the collapse of the **Western Roman Empire**, traditionally dated to **476 CE**, when the Germanic leader **Odoacer** deposed the last western emperor, **Romulus Augustulus**.\n\nIt was not a single event but a long decline caused by factors including:\n\n- Political instability and civil wars  \n- Economic problems, heavy taxation, and inflation  \n- Military pressures from Germanic peoples and the Huns  \n- Reliance on foreign mercenaries  \n- Administrative division between the eastern and western empires  \n- The weakening of cities, trade, and central authority  \n\nThe **Eastern Roman Empire**, or Byzantine Empire, continued for nearly another thousand years until the fall of Constantinople in **1453**."
-                }
-              ],
-              "phase": "final_answer",
-              "role": "assistant"
-            }
-          ],
-          "parallel_tool_calls": true,
-          "presence_penalty": 0.0,
-          "previous_response_id": null,
-          "prompt_cache_key": null,
-          "prompt_cache_retention": "24h",
-          "reasoning": {
-            "context": "all_turns",
-            "effort": "medium",
-            "mode": "standard",
-            "summary": null
-          },
-          "safety_identifier": null,
-          "service_tier": "default",
-          "store": false,
-          "temperature": 1.0,
-          "text": {
-            "format": {
-              "type": "text"
-            },
-            "verbosity": "medium"
-          },
-          "tool_choice": "auto",
-          "tool_usage": {
-            "image_gen": {
-              "input_tokens": 0,
-              "input_tokens_details": {
-                "image_tokens": 0,
-                "text_tokens": 0
-              },
-              "output_tokens": 0,
-              "output_tokens_details": {
-                "image_tokens": 0,
-                "text_tokens": 0
-              },
-              "total_tokens": 0
-            },
-            "web_search": {
-              "num_requests": 0
-            }
-          },
-          "tools": [
-            {
-              "type": "function",
-              "description": "Gets current weather for a location",
-              "name": "weather",
-              "output_schema": null,
-              "parameters": {
-                "type": "object",
-                "properties": {
-                  "latitude": {
-                    "type": "string",
-                    "description": "Latitude (e.g., 52.5200)"
-                  },
-                  "longitude": {
-                    "type": "string",
-                    "description": "Longitude (e.g., 13.4050)"
-                  }
-                },
-                "required": [
-                  "latitude",
-                  "longitude"
-                ],
-                "additionalProperties": false,
-                "strict": true
-              },
-              "strict": false
-            }
-          ],
-          "top_logprobs": 0,
-          "top_p": 0.98,
-          "truncation": "disabled",
-          "usage": {
-            "input_tokens": 137,
-            "input_tokens_details": {
-              "cache_write_tokens": 0,
-              "cache_write_tokens_details": {
-                "ttl_12h_tokens": 0,
-                "ttl_30m_tokens": 0
-              },
-              "cached_tokens": 0
-            },
-            "output_tokens": 206,
-            "output_tokens_details": {
-              "reasoning_tokens": 47
-            },
-            "total_tokens": 343
-          },
-          "user": null,
-          "metadata": {}
-        }
-  recorded_at: Sun, 15 Nov 2026 01:42:31 GMT
-recorded_with: VCR 6.4.0
+      string: !binary |-
+        ewogICJhY2Nlc3NfcHJvZ3JhbXMiOiBudWxsLAogICJiYWNrZ3JvdW5kIjogZmFsc2UsCiAgImJpbGxpbmciOiB7CiAgICAicGF5ZXIiOiAiZGV2ZWxvcGVyIgogIH0sCiAgImNvbXBsZXRlZF9hdCI6IDE3OTQ5ODQ5NzYsCiAgImNyZWF0ZWRfYXQiOiAxNzk0OTg0OTc0LAogICJlcnJvciI6IG51bGwsCiAgImZyZXF1ZW5jeV9wZW5hbHR5IjogMC4wLAogICJpZCI6ICJyZXNwXzBmOTdkMTE5ZjMyYTU1MzUwMTZhZmQ0YzBlMjEwYzg3ZDI4ODFhM2ExNjVhOGIzNGUwIiwKICAiaW1hZ2UiOiB7CiAgICAiY29udGV4dF9jb21wcmVzc2lvbiI6ICJkaXNhYmxlZCIKICB9LAogICJpbmNvbXBsZXRlX2RldGFpbHMiOiBudWxsLAogICJpbnB1dF90cmFuc2Zvcm1hdGlvbnMiOiBbXSwKICAiaW5zdHJ1Y3Rpb25zIjogbnVsbCwKICAibWF4X291dHB1dF90b2tlbnMiOiBudWxsLAogICJtYXhfdG9vbF9jYWxscyI6IG51bGwsCiAgIm1vZGVsIjogImdwdC01LjYtbHVuYSIsCiAgIm1vZGVyYXRpb24iOiBudWxsLAogICJvYmplY3QiOiAicmVzcG9uc2UiLAogICJvdXRwdXQiOiBbCiAgICB7CiAgICAgICJjb250ZW50IjogW10sCiAgICAgICJlbmNyeXB0ZWRfY29udGVudCI6ICJnQUFBQUFCcV9Vd09tVllUX0hNOWl5TmhQVGJqT2VPaUFGRFh5Tk5WSkxhVkpsWTZBTm5tUXc2MEhtbXh0ZS1mYW5QS0NwVnZkMGpWc1dyOEZ6REhGWXpTNmtoZkN3emp3VWVZRkx1bVBCNngyRkYwU1VYM1NPbks2NDhta1pFSDVIMExrT2VWZXNBY3hoakZPNW5QdDlTWXlySGpsb2YxWXlEYmxrV0lERkhXZmVuTDd2QkdaaTdzSDIzdnR1QkJuXzBTdE05U3FfeVRNYm45aTF5YUFabnAzbUhvZlluSFRpNG5XMng2bE1SSlA5aXVtaWJrOExDbTE0N1k3azk0bHZNU3lZbUJwRXk0M09VVWp2YjN6Q0JiXy1hRkVCU3NPQmpfN1Ztd0RJT082emFRLVUtN0VCQ0lKRV9MMVhSSVlxd251TDdKdUZXdUcwMXlYMDdiX1p1c1QzTHJkZjFSMlJ6N0Rpa3NVT3k5bjlfVEdodTZrRkpsTThxalo1VC1vZkFNaGRWTEYycWpGWnNxMEhySzlzU0YzWmZZUzZJTV9tS3BmNW1BRGtteHU2ZFZzUGhCTjFCdGlmZF9MTmNHRlhPLUV2clgwczZVNzltdHZVS2JBajdVM19nbnpkUmx3N3l0YWVneDlRS0ZLaU5yRmdtZDR1bUxTbHVSLUtxc0t3MXFPTHU1eWQ5Uk8xRVBDbUtPUUN2THZoV0IxcVM0ZG1hb0tjQ0FJcjUyeTFhRHNWWVF1ZUtTa0hDSjhNams5M2w3N0tPQUM3SUw5Sk92MTZPTExJbGQ2akdFek9QR2IxQm4xV0lsMi1DWFoweHU2OWt2d3BLM1laOFJqNEZnZVZKR3B4bUtiZDNfZnhYTXlDdWFVcVJSTW1QNGItbGRVams5bnBuMk1GbXpnelJkdmdkZnNnMENkN2Y1VkxJVmFCelZnUDBWdGJieVNHVTM0ZG1ESGZDQ1pxUEJKcEM2eVBQLTROamg1WlZ2ZElSNExjS192ZVE5OUFQNTNjQmpPdy1GdFlOVXQ5ODVXbDl1NUNmNGJxMjdKeE1QMWZSd2xHdEotNnBNUm1nd04xOWxNTmdiVThfaGJwcmJ4d3RSaXFXSzJ4VF81NUE1dFJ6SGY5LVZrOThKWDFFRWhBRDNDZnF5M0EwY1ZDejlaeV9uSEh0QmpTZ1RFblcyNllMMmo5VWdJZVljOG1teWtpSkdKYWo2LVRYeGgxUVBOVWJ4Q0RlQ2N3RGxEdmJaQllBTzFMMms5YmFEYXRSaDBjN0I3eDFKTmdDY3hGV1h1bVhvb1BCa293OWlCRHhCYWJXT2hwaUxuRTFuR3lPdHBkQW5sSm1WRzZXYzVYaEZCWHF0SDhTbkhub0s5MDViWmVMdWNpdFVBYkhlOUtnYzZkUmRXRDZHMkZNazJ6SFhuX01KSC1ITmI5TkdLUnZ3ZGpZWHhhdTFXRFZiUmFac3JZSFFaOTQzZjdqRVhnTldvZ3RCWVltbGpPVnU3NXRvdGxTRkxRRXFOcVBiblVWMHFrZDdFSkV0cHBmb1hGZVVPOHoxcGs1M0VhV1R2U3BwMWxLUEVCcHd1VmFfUDg0Z2VHcnZ6Mko0Qmt5WmxHeUVzTHlRWFNzTG0tQjloU3R2V0Z6aThfLThlYzdLdzVPbVFZWm5Wem1GN0NhMFYxSFNyV3ZqTGVCLTlzRWRjNFlpRmlTODJMalZwZ1hQTXJGS2pYZXczVHNMaGpKUnhkX1pwb3hfMkVNakV2d0NFanQwLUYzcWNRYUgzVlJwSlQ4cUpud3BxUzVFWHRmbVRMdGhYT3V2RmhTQzZEUFItaVBkclZOTjRHNUQ0aFFXckdITHd2d196d05LOURxV1Ezd0VIQld1cWJrSW5BOEd4RmhyTU5kWXA5alR5NjIzczJ5SENVb1BseWRheUMwYW42S2NIbzEtbkZqZG5BZlJ0V3FubjFxcEZ4V0JiaDJtOE84aFFLWERka3djU2RDRHJvTy1fdVRORHliWmUzQVBrZkJiUDdFVHU0SzlZSkxYbUk0ZTM4Mk1MbTNydzZCb3ZoVGZSWDJYejBaTmFraThRV3Q1M1h0N0dRVlVhWkZENzg2MVlLTEViVktVaTExa2ZBZHB5cHZBYlUtZVN2cUQ0SlQxbjdxbWg5TGttUU5wZGhfVHR2STgxZUpWT1Q1ZnowZ2ppdlpSamt3ZUY4YklsOEhMSnZDTE9YSGNZUE9pNDRYZGNfVS1jYWpabVZVS1kxTTBxVE90d0w5Nm4zck9BTGhuREplUHpYQ2tlRE90a3lZcGxIcjBHWUw3am1IMFpDRFN3NDlLcVpJdnV6ZlBkUVppV3RrTFFScDdNVGZTY05lWEtIV0FjVVFfYUdadjVoRk1sTEM1dVBwTkQ2SjFDRlhrc1dzQkVubl9zUFJuLVlOUThGRVBUNTZobjJlMElvZmJxWkZwSTZnVlhhN240UFVDRmdIanNpVkFlOGxtU0FOUjg0NVkzNmEyX3FEUnh6M2dvTkdLNGFsM1hCRDg2c1k0Yi03VTRNTElGYzZtMWxvQnNDc0JENFY4N3hoTXNRQjJIRnh3Z19vdVUtdUJIYzhpMnByWTExZEpWelZfY0QyREFid3hRMGRFTWo0RXRXWi1vbTFteUVpandSZW9za2ZNYWEzaElITTBsNVlOc1V2SjJQYnlFQlp2Q1ZEU1p5cjF2S1B4cER6YW9aOU5SZGNhdGlQZnpRZGFoRUlSSjlKNVRKZTdzMkk5dThjck94dWNhcGl3SDRWUzJWNU9EWGhQM1dvSEthc3RVTmxLYmRVLTF6UnVtQ2kwS2xfRmtpcHpGQW02dmI5Z0JCcmlYLWxQM0pZNk4xS3RjYlFZQlhFSjJiQVd6MW5FOC1ObzY3d3dka3I0NTJTNmhaaWNLVkFnekFvSzhtaDVTekd6RUVMVlBLallFQkxseWRTMEdYQ1hOcHdyYWE2dVVmRT0iLAogICAgICAiaWQiOiAicnNfMGY5N2QxMTlmMzJhNTUzNTAxNmFmZDRjMGVlYzM4ODdkMjhlOTI1ZGJiOTVhNjIxOGYiLAogICAgICAic3VtbWFyeSI6IFtdLAogICAgICAidHlwZSI6ICJyZWFzb25pbmciCiAgICB9LAogICAgewogICAgICAiY29udGVudCI6IFsKICAgICAgICB7CiAgICAgICAgICAiYW5ub3RhdGlvbnMiOiBbXSwKICAgICAgICAgICJsb2dwcm9icyI6IFtdLAogICAgICAgICAgInRleHQiOiAiVGhlICoqRmFsbCBvZiBSb21lKiogcmVmZXJzIG1haW5seSB0byB0aGUgY29sbGFwc2Ugb2YgdGhlICoqV2VzdGVybiBSb21hbiBFbXBpcmUqKiwgdHJhZGl0aW9uYWxseSBkYXRlZCB0byAqKjQ3NiBDRSoqLCB3aGVuIHRoZSBHZXJtYW5pYyBsZWFkZXIgKipPZG9hY2VyIGRlcG9zZWQgRW1wZXJvciBSb211bHVzIEF1Z3VzdHVsdXMqKi5cblxuSXQgd2FzbuKAmXQgYSBzaW5nbGUgZXZlbnQsIGJ1dCBhIGxvbmcgZGVjbGluZSBjYXVzZWQgYnkgZmFjdG9ycyBpbmNsdWRpbmc6XG5cbi0gUG9saXRpY2FsIGluc3RhYmlsaXR5IGFuZCBjaXZpbCB3YXJzICBcbi0gRWNvbm9taWMgdHJvdWJsZXMsIGluZmxhdGlvbiwgYW5kIGhlYXZ5IHRheGF0aW9uICBcbi0gTWlsaXRhcnkgcHJlc3N1cmVzIGFuZCBpbnZhc2lvbnMgYnkgZ3JvdXBzIHN1Y2ggYXMgdGhlIFZpc2lnb3RocywgVmFuZGFscywgYW5kIEh1bnMgIFxuLSBPdmVycmVsaWFuY2Ugb24gZm9yZWlnbiB0cm9vcHMgIFxuLSBBZG1pbmlzdHJhdGl2ZSBkaWZmaWN1bHRpZXMgaW4gZ292ZXJuaW5nIGEgdmFzdCBlbXBpcmUgIFxuLSBUaGUgZGl2aXNpb24gb2YgdGhlIGVtcGlyZSBpbnRvIGVhc3Rlcm4gYW5kIHdlc3Rlcm4gaGFsdmVzICBcblxuVGhlICoqRWFzdGVybiBSb21hbiBFbXBpcmUqKiwgbGF0ZXIgY2FsbGVkIHRoZSBCeXphbnRpbmUgRW1waXJlLCBjb250aW51ZWQgZm9yIG5lYXJseSBhbm90aGVyIHRob3VzYW5kIHllYXJzIHVudGlsIENvbnN0YW50aW5vcGxlIGZlbGwgaW4gKioxNDUzKiouIiwKICAgICAgICAgICJ0eXBlIjogIm91dHB1dF90ZXh0IgogICAgICAgIH0KICAgICAgXSwKICAgICAgImlkIjogIm1zZ18wZjk3ZDExOWYzMmE1NTM1MDE2YWZkNGMwZWY2Njg4N2QyOGRmODcxNmE4NTU2NmI4MCIsCiAgICAgICJwaGFzZSI6ICJmaW5hbF9hbnN3ZXIiLAogICAgICAicm9sZSI6ICJhc3Npc3RhbnQiLAogICAgICAic3RhdHVzIjogImNvbXBsZXRlZCIsCiAgICAgICJ0eXBlIjogIm1lc3NhZ2UiCiAgICB9CiAgXSwKICAicGFyYWxsZWxfdG9vbF9jYWxscyI6IHRydWUsCiAgInByZXNlbmNlX3BlbmFsdHkiOiAwLjAsCiAgInByZXZpb3VzX3Jlc3BvbnNlX2lkIjogbnVsbCwKICAicHJvbXB0X2NhY2hlX2tleSI6IG51bGwsCiAgInByb21wdF9jYWNoZV9yZXRlbnRpb24iOiAiMjRoIiwKICAicmVhc29uaW5nIjogewogICAgImNvbnRleHQiOiAiYWxsX3R1cm5zIiwKICAgICJlZmZvcnQiOiAibWVkaXVtIiwKICAgICJtb2RlIjogInN0YW5kYXJkIiwKICAgICJzdW1tYXJ5IjogbnVsbAogIH0sCiAgInNhZmV0eV9pZGVudGlmaWVyIjogbnVsbCwKICAic2VydmljZV90aWVyIjogImRlZmF1bHQiLAogICJzdGF0dXMiOiAiY29tcGxldGVkIiwKICAic3RvcmUiOiBmYWxzZSwKICAidGVtcGVyYXR1cmUiOiAxLjAsCiAgInRleHQiOiB7CiAgICAiZm9ybWF0IjogewogICAgICAidHlwZSI6ICJ0ZXh0IgogICAgfSwKICAgICJ2ZXJib3NpdHkiOiAibWVkaXVtIgogIH0sCiAgInRvb2xfY2hvaWNlIjogImF1dG8iLAogICJ0b29sX3VzYWdlIjogewogICAgImltYWdlX2dlbiI6IHsKICAgICAgImlucHV0X3Rva2VucyI6IDAsCiAgICAgICJpbnB1dF90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgICAiaW1hZ2VfdG9rZW5zIjogMCwKICAgICAgICAidGV4dF90b2tlbnMiOiAwCiAgICAgIH0sCiAgICAgICJvdXRwdXRfdG9rZW5zIjogMCwKICAgICAgIm91dHB1dF90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgICAiaW1hZ2VfdG9rZW5zIjogMCwKICAgICAgICAidGV4dF90b2tlbnMiOiAwCiAgICAgIH0sCiAgICAgICJ0b3RhbF90b2tlbnMiOiAwCiAgICB9LAogICAgIndlYl9zZWFyY2giOiB7CiAgICAgICJudW1fcmVxdWVzdHMiOiAwCiAgICB9CiAgfSwKICAidG9vbHMiOiBbCiAgICB7CiAgICAgICJkZXNjcmlwdGlvbiI6ICJHZXRzIGN1cnJlbnQgd2VhdGhlciBmb3IgYSBsb2NhdGlvbiIsCiAgICAgICJuYW1lIjogIndlYXRoZXIiLAogICAgICAib3V0cHV0X3NjaGVtYSI6IG51bGwsCiAgICAgICJwYXJhbWV0ZXJzIjogewogICAgICAgICJhZGRpdGlvbmFsUHJvcGVydGllcyI6IGZhbHNlLAogICAgICAgICJwcm9wZXJ0aWVzIjogewogICAgICAgICAgImxhdGl0dWRlIjogewogICAgICAgICAgICAiZGVzY3JpcHRpb24iOiAiTGF0aXR1ZGUgKGUuZy4sIDUyLjUyMDApIiwKICAgICAgICAgICAgInR5cGUiOiAic3RyaW5nIgogICAgICAgICAgfSwKICAgICAgICAgICJsb25naXR1ZGUiOiB7CiAgICAgICAgICAgICJkZXNjcmlwdGlvbiI6ICJMb25naXR1ZGUgKGUuZy4sIDEzLjQwNTApIiwKICAgICAgICAgICAgInR5cGUiOiAic3RyaW5nIgogICAgICAgICAgfQogICAgICAgIH0sCiAgICAgICAgInJlcXVpcmVkIjogWwogICAgICAgICAgImxhdGl0dWRlIiwKICAgICAgICAgICJsb25naXR1ZGUiCiAgICAgICAgXSwKICAgICAgICAic3RyaWN0IjogdHJ1ZSwKICAgICAgICAidHlwZSI6ICJvYmplY3QiCiAgICAgIH0sCiAgICAgICJzdHJpY3QiOiBmYWxzZSwKICAgICAgInR5cGUiOiAiZnVuY3Rpb24iCiAgICB9CiAgXSwKICAidG9wX2xvZ3Byb2JzIjogMCwKICAidG9wX3AiOiAwLjk4LAogICJ0cnVuY2F0aW9uIjogImRpc2FibGVkIiwKICAidXNhZ2UiOiB7CiAgICAiaW5wdXRfdG9rZW5zIjogMTM3LAogICAgImlucHV0X3Rva2Vuc19kZXRhaWxzIjogewogICAgICAiY2FjaGVfd3JpdGVfdG9rZW5zIjogMCwKICAgICAgImNhY2hlX3dyaXRlX3Rva2Vuc19kZXRhaWxzIjogewogICAgICAgICJ0dGxfMTJoX3Rva2VucyI6IDAsCiAgICAgICAgInR0bF8zMG1fdG9rZW5zIjogMAogICAgICB9LAogICAgICAiY2FjaGVkX3Rva2VucyI6IDAKICAgIH0sCiAgICAib3V0cHV0X3Rva2VucyI6IDIwOCwKICAgICJvdXRwdXRfdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJyZWFzb25pbmdfdG9rZW5zIjogNDYKICAgIH0sCiAgICAidG90YWxfdG9rZW5zIjogMzQ1CiAgfSwKICAidXNlciI6IG51bGwsCiAgIm1ldGFkYXRhIjoge30KfQ==
+  recorded_at: Wed, 18 Nov 2026 06:56:16 GMT
+recorded_with: VCR 6.4.1

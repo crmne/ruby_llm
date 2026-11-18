@@ -9,7 +9,7 @@ http_interactions:
         weather in Berlin?"}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:20:40 GMT
+      - Wed, 18 Nov 2026 06:35:27 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -34,7 +34,7 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       X-Internal-Adhoc-Canary:
-      - '1897954185'
+      - '2666295442'
       Msh-Gid:
       - "<MOONSHOT_GROUP_ID>"
       Msh-Org-Id:
@@ -42,7 +42,7 @@ http_interactions:
       Msh-Project-Id:
       - "<MOONSHOT_PROJECT_ID>"
       Msh-Request-Id:
-      - c543c88f-e092-11f1-89f0-00163e05d0f4
+      - 3e38bc45-e31a-11f1-9cef-00163e5443c0
       Msh-Trace-Mode:
       - 'on'
       Msh-Uid:
@@ -50,7 +50,7 @@ http_interactions:
       Vary:
       - Origin
       X-Msh-Trace-Id:
-      - 8502d5f61722f383f123afb863b97a01
+      - edf3838e78d2bee869dfdf634fa10706
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Cf-Cache-Status:
@@ -62,7 +62,7 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '{"code":0,"data":{"total_tokens":92},"scode":"0x0","status":true}'
-  recorded_at: Sun, 15 Nov 2026 01:20:40 GMT
+  recorded_at: Wed, 18 Nov 2026 06:35:27 GMT
 - request:
     method: post
     uri: https://api.moonshot.ai/v1/tokenizers/estimate-token-count
@@ -74,7 +74,7 @@ http_interactions:
         name"}},"required":["city"],"additionalProperties":false,"strict":true}}}],"response_format":{"type":"json_schema","json_schema":{"name":"response","schema":{"type":"object","properties":{"weather":{"type":"string"}},"required":["weather"],"additionalProperties":false},"strict":true}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -89,7 +89,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:20:40 GMT
+      - Wed, 18 Nov 2026 06:35:28 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -99,7 +99,7 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       X-Internal-Adhoc-Canary:
-      - '1897954185'
+      - '2666295442'
       Msh-Gid:
       - "<MOONSHOT_GROUP_ID>"
       Msh-Org-Id:
@@ -107,7 +107,7 @@ http_interactions:
       Msh-Project-Id:
       - "<MOONSHOT_PROJECT_ID>"
       Msh-Request-Id:
-      - c567dd6d-e092-11f1-a6a9-00163e59531e
+      - 3e673992-e31a-11f1-8b2b-00163e71f1da
       Msh-Trace-Mode:
       - 'on'
       Msh-Uid:
@@ -115,7 +115,7 @@ http_interactions:
       Vary:
       - Origin
       X-Msh-Trace-Id:
-      - b5519fc3bcf4605444dd27840d0154b5
+      - 9fbeb65bdf1e240cf4714305ff41256b
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Cf-Cache-Status:
@@ -127,5 +127,5 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '{"code":0,"data":{"total_tokens":282},"scode":"0x0","status":true}'
-  recorded_at: Sun, 15 Nov 2026 01:20:40 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:35:28 GMT
+recorded_with: VCR 6.4.1

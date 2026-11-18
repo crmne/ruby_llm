@@ -9,7 +9,7 @@ http_interactions:
         is the capital of France?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -26,33 +26,33 @@ http_interactions:
       Content-Type:
       - application/json
       X-Build-Commit:
-      - 9259ed42dedddf2a22abf15e2a28fc3662da6272
+      - cf4922364784346c6f13e06b08149fb1469e06a1
       X-Build-Time:
-      - '2026-11-14T15:25:41-08:00'
+      - '2026-11-17T18:17:32-08:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Content-Length:
-      - '437'
+      - '490'
       Date:
-      - Sun, 15 Nov 2026 01:23:57 GMT
+      - Wed, 18 Nov 2026 06:39:34 GMT
       Server:
       - Google Frontend
-      Traceparent:
-      - 00-ce0a92e9845f43b93a31abe24ecbc246-ce7a8824d5599c57-00
       X-Cloud-Trace-Context:
-      - ce0a92e9845f43b93a31abe24ecbc246/14878354010751474775
+      - 67cdef1809c422c3919434cd2b2bb0ae/5645870794440517526
+      Traceparent:
+      - 00-67cdef1809c422c3919434cd2b2bb0ae-4e5a29930e612796-00
       Via:
       - 1.1 google
       Alt-Svc:
       - h3=":443"; ma=2592000
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-66","object":"chat.completion","created":1794705837,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        capital of France is **Paris**.","reasoning":"We just need answer: Paris.
-        Provide concise answer.\n\n"},"finish_reason":"stop"}],"usage":{"prompt_tokens":74,"completion_tokens":30,"total_tokens":104,"prompt_tokens_details":{"cached_tokens":48}}}
+      string: '{"id":"chatcmpl-66","object":"chat.completion","created":1794983973,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        capital of France is **Paris**.","reasoning":"User asks: \"What is the capital
+        of France?\" Straight answer: Paris. Could elaborate a bit. Provide answer."},"finish_reason":"stop"}],"usage":{"prompt_tokens":74,"completion_tokens":43,"total_tokens":117,"prompt_tokens_details":{"cached_tokens":48}}}
 
         '
-  recorded_at: Sun, 15 Nov 2026 01:23:57 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:39:34 GMT
+recorded_with: VCR 6.4.1

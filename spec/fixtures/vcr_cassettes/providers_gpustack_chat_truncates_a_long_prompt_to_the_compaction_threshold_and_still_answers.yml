@@ -281,7 +281,7 @@ http_interactions:
         filler filler filler filler filler filler filler Name one colour."}],"stream":false,"max_tokens":8,"truncate_prompt_tokens":40,"truncation_side":"left"}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -296,17 +296,17 @@ http_interactions:
       message: OK
     headers:
       Req-Cost-Time:
-      - '33'
+      - '1146'
+      Req-Arrive-Time:
+      - '1794987183295'
+      Resp-Start-Time:
+      - '1794987184442'
+      X-Envoy-Upstream-Service-Time:
+      - '372'
       Date:
-      - Sun, 15 Nov 2026 01:19:25 GMT
+      - Wed, 18 Nov 2026 07:33:03 GMT
       Server:
       - istio-envoy
-      Req-Arrive-Time:
-      - '1794705565865'
-      Resp-Start-Time:
-      - '1794705565899'
-      X-Envoy-Upstream-Service-Time:
-      - '27'
       Content-Type:
       - application/json
       Vary:
@@ -315,7 +315,7 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"chatcmpl-2e9353ef-8c6a-40e1-a88a-e56ea6645ae9","object":"chat.completion","created":1794705565,"model":"smollm2-135m","choices":[{"index":0,"message":{"role":"assistant","content":"\nThe
-        word \"smell\" or","refusal":null,"annotations":null,"audio":null,"function_call":null,"reasoning":null},"logprobs":null,"finish_reason":"length","stop_reason":null,"token_ids":null,"routed_experts":null}],"service_tier":null,"system_fingerprint":"vllm-0.25.1-019fab29","usage":{"prompt_tokens":40,"total_tokens":48,"completion_tokens":8,"prompt_tokens_details":{"cached_tokens":32,"multimodal_tokens":null}},"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"metrics":null}'
-  recorded_at: Sun, 15 Nov 2026 01:19:25 GMT
-recorded_with: VCR 6.4.0
+      string: '{"id":"chatcmpl-2d53e877-70d8-4ddf-8125-2da46cdd45e1","object":"chat.completion","created":1794987184,"model":"smollm2-135m","choices":[{"index":0,"message":{"role":"assistant","content":"A
+        person''s perceptions of a horse.","refusal":null,"annotations":null,"audio":null,"function_call":null,"reasoning":null},"logprobs":null,"finish_reason":"length","stop_reason":null,"token_ids":null,"routed_experts":null}],"service_tier":null,"system_fingerprint":"vllm-0.25.1-019fab29","usage":{"prompt_tokens":40,"total_tokens":48,"completion_tokens":8,"prompt_tokens_details":{"cached_tokens":32,"multimodal_tokens":null}},"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"metrics":null}'
+  recorded_at: Wed, 18 Nov 2026 07:33:04 GMT
+recorded_with: VCR 6.4.1

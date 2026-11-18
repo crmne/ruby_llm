@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -20,12 +20,12 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Pragma:
-      - no-cache
       Date:
-      - Sun, 15 Nov 2026 01:32:19 GMT
+      - Wed, 18 Nov 2026 06:46:19 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
+      Pragma:
+      - no-cache
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
       Content-Type:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/sqlservice.login",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Sun, 15 Nov 2026 01:32:19 GMT
+  recorded_at: Wed, 18 Nov 2026 06:46:19 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -69,7 +69,7 @@ http_interactions:
         window to schedule"}},"required":["window"],"additionalProperties":false}}]}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -84,7 +84,7 @@ http_interactions:
       message: OK
     headers:
       X-Goog-Request-Id:
-      - owv5asiqH7ncvNkP6bWo6Qo
+      - u0n9ao-mJuKJx_AP8OSggAg
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -92,7 +92,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 15 Nov 2026 01:32:20 GMT
+      - Wed, 18 Nov 2026 06:46:21 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -124,7 +124,7 @@ http_interactions:
                         }
                       }
                     },
-                    "thoughtSignature": "AY89a1/+8FGNaLumX63WaywqMbIPo4stsoHg86ujf8gVAlsf6nWc6xADTAR1oGVyX2bx6MGs7yQ0x+b4RkhtbKRHXBAyYzxZcnFyZgZBlLSdrd11jqD3u6J4XYXc1FgWx9gwXR3qzBCSSGKImruhR90i+ryngbwEdnHl/uZ7j/ZtgFFRIKEPNkV6e9YPPyAXCioK6DVQWL8JJcSGL8y6o2FejpIP482Mio11wOD4TWIFAIxYJ4d0YTQi+7HRG9SAPi4ld8hcLGIUhrcga9VSmZzE+x5MaXisLLnoiutnpnpzKTMCsHMEJs8a8Xe0JChA/SybnTYaoGJnW4nb6NnL3kYIvS9bY/OFlkD0vU+B7c+MFFucbG7OoBMWRd5CzhBSTiu2PvvcIHOgR5S3Rm9CT81/KWIOL6Vy4uq+K9zVLdubZMScvXKbeqQqoz/vjikBn13svv8lo61DcqFDSBqwj4DpZ4sHW4tCuGJ/Q9m89rWHyRHPwbK+G9SffzZN9cnEfUGxh3h2+ABFxCPn+EMydAY8lTmweHzB+rBucoflcPCQdhuJwRFyzZXdgWMEaPm1dm3BD6m/WbskTrWs6R1wMD85l8LdHKgQMEcw8Q6XxJlUMFFQg09G5RPYaSd3/EFS4g=="
+                    "thoughtSignature": "AY89a1+S/nQCvN0UZ8ROafRi8ml92+jX6TrAVzUtxcbt19vTxd+Dq6osRO6kO86MeNAnzNBQtkugyz+hzi8QdrDEz5rw4QupX/co+ikprMxdixzkGiybDW2HRFGUd+5HaTXB3RoJVo7U9L2Uy/mIFw7p6qoa2gDfgEhq/u+rd8Ofpd4gc4tZj50abSoAw3M2vX1q2GpqoX9H2ZJ9s0/EjXHRxg5vC3OjUHhJgDiH117h08pRg7Ddt2br3Hz+44ioadFuqlBrM7cvjr6ndrvC8QYn5xuefec76R5gsonxFORYl2uecYgWh803YMZLMwWIB6cK0hr385IX5v06hBoZ/yWibhwy9aH0e0VdO+OzlTrqPy/I/s7Uooah+N4GvCkEassUwSiWjAq0lFSyuK87Go8ecbY6cFoW+3Kns3j0aIYFB2sdX26TLvZxlEytnFFiHt1fBJmnPpwGHf7QxKn8aImNwImWAsNTpihLdk0fkLXLqy2bPVS8J9KcqDnwLkAbmx/RejxzKLhoDwRNhmu38J+Ntz9u422gKd0RH4Ez0Hno6utydgseEpC5Cc55ymKAiWfNgfhgAT0qgiIh/dO8fRIOaCm7bCdGosSiGfCf/TjUbNTP1rOt0BZ5je8a3KnP5ovwnbesBIHD+B+GrmhGfaw95QYAUsMMVjeHFx6PpvMRYNfYJp+1yjLkN/OUY6BXDA=="
                   }
                 ]
               },
@@ -134,7 +134,7 @@ http_interactions:
           "usageMetadata": {
             "promptTokenCount": 45,
             "candidatesTokenCount": 46,
-            "totalTokenCount": 209,
+            "totalTokenCount": 243,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -148,11 +148,11 @@ http_interactions:
                 "tokenCount": 46
               }
             ],
-            "thoughtsTokenCount": 118
+            "thoughtsTokenCount": 152
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-11-15T01:32:19.513352Z",
-          "responseId": "owv5asiqH7ncvNkP6bWo6Qo"
+          "createTime": "2026-11-18T06:46:19.627471Z",
+          "responseId": "u0n9ao-mJuKJx_AP8OSggAg"
         }
-  recorded_at: Sun, 15 Nov 2026 01:32:20 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:46:21 GMT
+recorded_with: VCR 6.4.1

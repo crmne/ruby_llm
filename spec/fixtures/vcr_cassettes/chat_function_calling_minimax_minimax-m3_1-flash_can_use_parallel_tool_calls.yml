@@ -14,7 +14,7 @@ http_interactions:
         the best language to learn","input_schema":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -33,25 +33,25 @@ http_interactions:
       Content-Length:
       - '574'
       Trace-Id:
-      - '07483d3b2f6cb15b667c8bb554a1ab84'
+      - 074c7b65fbaa2008d68ea3fb7e3931f3
       X-Session-Id:
       - 8a0567856d21bfffe521d4c4381e5b39
       X-Mm-Request-Id:
-      - 2092934004998157135_1794705979nkpl3u
+      - 2092934004998157135_1794984037bp1yd6
       Minimax-Request-Id:
-      - 1b78c692f8dc451641ef3d2dc8a1a3d0
+      - f279958a1d991a2ccd2aa4e3deb63aa5
       Alb-Receive-Time:
-      - '1794705979.866'
+      - '1794984037.332'
       Alb-Request-Id:
-      - ca40e2b8c30b1d5d9d901073c9d8c6632a2f965e
+      - 386305343a93b750261624a88c1c2ac6858d0a03
       Expires:
-      - Sun, 15 Nov 2026 01:26:20 GMT
+      - Wed, 18 Nov 2026 06:40:38 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Sun, 15 Nov 2026 01:26:20 GMT
+      - Wed, 18 Nov 2026 06:40:38 GMT
       Connection:
       - keep-alive
       Access-Control-Allow-Origin:
@@ -60,9 +60,9 @@ http_interactions:
       - ak
     body:
       encoding: UTF-8
-      string: '{"id":"07483d3b2f6cb15b667c8bb554a1ab84","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"text":"I''ll
-        check both for you.","type":"text"},{"type":"tool_use","id":"call_570dd01d452540688e041b47","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}},{"type":"tool_use","id":"call_099fc02590064de9818ddcbe","name":"best_language_to_learn","input":{}}],"usage":{"input_tokens":559,"output_tokens":63,"cache_creation_input_tokens":0,"cache_read_input_tokens":0},"stop_reason":"tool_use","base_resp":{"status_code":0,"status_msg":""}}'
-  recorded_at: Sun, 15 Nov 2026 01:26:21 GMT
+      string: '{"id":"074c7b65fbaa2008d68ea3fb7e3931f3","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"text":"I''ll
+        check both for you.","type":"text"},{"type":"tool_use","id":"call_cbf04bc8feb6420398760d92","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}},{"type":"tool_use","id":"call_f501e36702ab4b238f523e82","name":"best_language_to_learn","input":{}}],"usage":{"input_tokens":559,"output_tokens":63,"cache_creation_input_tokens":0,"cache_read_input_tokens":0},"stop_reason":"tool_use","base_resp":{"status_code":0,"status_msg":""}}'
+  recorded_at: Wed, 18 Nov 2026 06:40:38 GMT
 - request:
     method: post
     uri: https://api.minimax.io/anthropic/v1/messages
@@ -71,15 +71,15 @@ http_interactions:
       string: '{"model":"MiniMax-M3.1-Flash","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         the weather in Berlin (52.5200, 13.4050) and what''s the best language to
         learn?"}]},{"role":"assistant","content":[{"type":"text","text":"I''ll check
-        both for you."},{"type":"tool_use","id":"call_570dd01d452540688e041b47","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}},{"type":"tool_use","id":"call_099fc02590064de9818ddcbe","name":"best_language_to_learn","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"call_570dd01d452540688e041b47","content":[{"type":"text","text":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]},{"type":"tool_result","tool_use_id":"call_099fc02590064de9818ddcbe","content":[{"type":"text","text":"Ruby"}]}]}],"stream":false,"max_tokens":524288,"tools":[{"name":"weather","description":"Gets
+        both for you."},{"type":"tool_use","id":"call_cbf04bc8feb6420398760d92","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}},{"type":"tool_use","id":"call_f501e36702ab4b238f523e82","name":"best_language_to_learn","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"call_cbf04bc8feb6420398760d92","content":[{"type":"text","text":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]},{"type":"tool_result","tool_use_id":"call_f501e36702ab4b238f523e82","content":[{"type":"text","text":"Ruby"}]}]}],"stream":false,"max_tokens":524288,"tools":[{"name":"weather","description":"Gets
         current weather for a location","input_schema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}},{"name":"best_language_to_learn","description":"Gets
         the best language to learn","input_schema":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -96,27 +96,27 @@ http_interactions:
       Content-Type:
       - application/json; charset=utf-8
       Content-Length:
-      - '660'
+      - '508'
       Trace-Id:
-      - '07483d3d7b1c59655bdc2ce0e9052aaf'
+      - 074c7b66aa8462339088ffec80f920eb
       X-Session-Id:
       - 8a0567856d21bfffe521d4c4381e5b39
       X-Mm-Request-Id:
-      - 2092934004998157135_1794705981jzpit0
+      - 2092934004998157135_1794984038bqgwvx
       Minimax-Request-Id:
-      - efa9a574b88eb8de7b3514339122d104
+      - 0aba4cb9f4117eb9da3e1f6652f28a0e
       Alb-Receive-Time:
-      - '1794705981.155'
+      - '1794984038.9'
       Alb-Request-Id:
-      - 5e5da5e3bcd2f4146972d8997829790a1e6f50df
+      - 39d33f9aa5a98fe5cfb04a7d6cd91ecf1150135c
       Expires:
-      - Sun, 15 Nov 2026 01:26:22 GMT
+      - Wed, 18 Nov 2026 06:40:40 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Sun, 15 Nov 2026 01:26:22 GMT
+      - Wed, 18 Nov 2026 06:40:40 GMT
       Connection:
       - keep-alive
       Access-Control-Allow-Origin:
@@ -126,6 +126,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6IjA3NDgzZDNkN2IxYzU5NjU1YmRjMmNlMGU5MDUyYWFmIiwidHlwZSI6Im1lc3NhZ2UiLCJyb2xlIjoiYXNzaXN0YW50IiwibW9kZWwiOiJNaW5pTWF4LU0zLjEtRmxhc2giLCJjb250ZW50IjpbeyJ0ZXh0IjoiSGVyZSdzIHdoYXQgSSBmb3VuZDpcblxuKipXZWF0aGVyIGluIEJlcmxpbioqICg1Mi41MjAwLCAxMy40MDUwKVxuLSBUZW1wZXJhdHVyZTogMTXCsENcbi0gV2luZDogMTAga20vaFxuXG4qKkJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm46KiogUnVieVxuXG5BIHBsZWFzYW50LCBtaWxkbHkgY29vbCBhZnRlcm5vb24gaW4gQmVybGluIOKAlCBhIGxpZ2h0IGxheWVyIHdvdWxkIGJlIHNlbnNpYmxlLiBBbmQgZm9yIGxlYXJuaW5nLCBSdWJ5IGlzIHRoZSByZWNvbW1lbmRlZCBwaWNrIOKAlCBhIGNsZWFuLCBiZWdpbm5lci1mcmllbmRseSBsYW5ndWFnZSB3aXRoIGEgc3Ryb25nIGVjb3N5c3RlbS4iLCJ0eXBlIjoidGV4dCJ9XSwidXNhZ2UiOnsiaW5wdXRfdG9rZW5zIjoxNTcsIm91dHB1dF90b2tlbnMiOjg0LCJjYWNoZV9jcmVhdGlvbl9pbnB1dF90b2tlbnMiOjAsImNhY2hlX3JlYWRfaW5wdXRfdG9rZW5zIjo1MTJ9LCJzdG9wX3JlYXNvbiI6ImVuZF90dXJuIiwiYmFzZV9yZXNwIjp7InN0YXR1c19jb2RlIjowLCJzdGF0dXNfbXNnIjoiIn19
-  recorded_at: Sun, 15 Nov 2026 01:26:22 GMT
-recorded_with: VCR 6.4.0
+        eyJpZCI6IjA3NGM3YjY2YWE4NDYyMzM5MDg4ZmZlYzgwZjkyMGViIiwidHlwZSI6Im1lc3NhZ2UiLCJyb2xlIjoiYXNzaXN0YW50IiwibW9kZWwiOiJNaW5pTWF4LU0zLjEtRmxhc2giLCJjb250ZW50IjpbeyJ0ZXh0IjoiSGVyZSdzIHdoYXQgSSBmb3VuZDpcblxuKipXZWF0aGVyIGluIEJlcmxpbiAoNTIuNTIwMCwgMTMuNDA1MCkqKlxuLSBUZW1wZXJhdHVyZTogMTXCsENcbi0gV2luZDogMTAga20vaFxuXG4qKkJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm4qKlxuLSBSdWJ5IPCfjolcblxuQW55dGhpbmcgZWxzZSB5b3UnZCBsaWtlIHRvIGtub3c/IiwidHlwZSI6InRleHQifV0sInVzYWdlIjp7ImlucHV0X3Rva2VucyI6MTU3LCJvdXRwdXRfdG9rZW5zIjo1NywiY2FjaGVfY3JlYXRpb25faW5wdXRfdG9rZW5zIjowLCJjYWNoZV9yZWFkX2lucHV0X3Rva2VucyI6NTEyfSwic3RvcF9yZWFzb24iOiJlbmRfdHVybiIsImJhc2VfcmVzcCI6eyJzdGF0dXNfY29kZSI6MCwic3RhdHVzX21zZyI6IiJ9fQ==
+  recorded_at: Wed, 18 Nov 2026 06:40:40 GMT
+recorded_with: VCR 6.4.1

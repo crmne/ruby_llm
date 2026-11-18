@@ -9,7 +9,7 @@ http_interactions:
         square root of 64? Answer with a JSON object with the key `result`."}],"stream":false,"response_format":{"type":"json_object"}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -24,27 +24,25 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 15 Nov 2026 01:20:23 GMT
+      - Wed, 18 Nov 2026 06:35:24 GMT
       Content-Length:
-      - '1363'
+      - '1240'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-218","object":"chat.completion","created":1794705623,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"{\n\n\"result\":
-        8\n}","reasoning":"Okay, the user is asking for the square root of 64. Let
-        me think. First, I know that the square root of a number is a value that,
-        when multiplied by itself, gives the original number. So, for 64, I need to
-        find a number that when squared equals 64.\n\nHmm, 8 times 8 is 64. Wait,
-        is there another number? Like negative numbers? Because (-8) multiplied by
-        (-8) also gives 64. But usually, when people ask for the square root, they''re
-        referring to the principal (positive) root. So the main answer should be 8.
-        \n\nBut I should check if there''s any other possible answers. Let me verify.
-        64 is a perfect square, so yes, 8 is the square root. The square root symbol
-        typically denotes the principal root, so the answer is 8. \n\nThe user wants
-        the answer in a JSON object with the key ''result''. So I need to structure
-        it as {\"result\": 8}. Let me make sure there''s no mistake here. Maybe I
-        should double-check by calculating 8 squared. 8*8 is indeed 64. Yep, that''s
-        correct. Alright, I think that''s it.\n"},"finish_reason":"stop"}],"usage":{"prompt_tokens":31,"prompt_tokens_details":{"cached_tokens":1},"completion_tokens":273,"total_tokens":304}}
+      string: '{"id":"chatcmpl-863","object":"chat.completion","created":1794983724,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"{\"result\":
+        8}","reasoning":"Okay, the user is asking for the square root of 64. Let me
+        think about how to approach this.\n\nFirst, I know that the square root of
+        a number is a value that, when multiplied by itself, gives the original number.
+        So, for 64, I need to find a number that when squared equals 64.\n\nLet me
+        recall the squares of numbers. 8 times 8 is 64, right? Yes, 8 squared is 64.
+        But wait, there''s also negative numbers. Because (-8) multiplied by (-8)
+        is also 64. However, when people ask for the square root, they usually refer
+        to the principal (positive) root unless stated otherwise. So the main answer
+        should be 8.\n\nThe user wants the answer in a JSON object with the key \"result\".
+        So I need to structure it as {\"result\": 8}. Let me double-check to make
+        sure I didn''t make a mistake. 8*8 is indeed 64. Yep, that''s correct. No
+        other positive number squared gives 64. So the answer is 8.\n"},"finish_reason":"stop"}],"usage":{"prompt_tokens":31,"prompt_tokens_details":{"cached_tokens":1},"completion_tokens":243,"total_tokens":274}}
 
         '
-  recorded_at: Sun, 15 Nov 2026 01:20:23 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:35:24 GMT
+recorded_with: VCR 6.4.1

@@ -12,7 +12,7 @@ http_interactions:
         city name"}},"required":["city"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Token <DEEPGRAM_API_KEY>
       Content-Type:
@@ -38,16 +38,16 @@ http_interactions:
       Access-Control-Expose-Headers:
       - dg-model-name,dg-model-uuid,dg-additional-model-uuids,dg-char-count,dg-request-id,dg-project-id,dg-error,dg-breaks-applied,dg-pronunciations-applied,dg-pronunciation-warnings,dg-engine-instance
       Dg-Request-Id:
-      - 01a1dcca-1eea-7236-a9f5-8adc20137f18
+      - 01a1ed5d-4953-7576-a627-1f8a3050f0bd
       Transfer-Encoding:
       - chunked
       Date:
-      - Sun, 15 Nov 2026 01:19:56 GMT
+      - Wed, 18 Nov 2026 06:34:36 GMT
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"chatcmpl-11293ace-e73e-4be5-a464-774c6eee9ada","choices":[{"index":0,"message":{"content":"Checking
-        both cities now.\n\n\n","refusal":null,"tool_calls":[{"id":"call-fe77bb39-c61a-4fea-a644-7747f46c2ab2","type":"function","function":{"name":"weather","arguments":"{\"city\":\"Berlin\"}"}},{"id":"call-ae1894bf-f637-4e06-b9d0-6d108c078a37","type":"function","function":{"name":"weather","arguments":"{\"city\":\"Paris\"}"}}],"role":"assistant"},"finish_reason":"tool_calls","logprobs":null}],"created":1794705596,"model":"think-fast","object":"chat.completion","usage":{"prompt_tokens":312,"completion_tokens":58,"total_tokens":370,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0}}}'
-  recorded_at: Sun, 15 Nov 2026 01:19:56 GMT
+      string: '{"id":"chatcmpl-bce533f6-81f0-428a-bf3f-55f97734a8cf","choices":[{"index":0,"message":{"content":"Sure,
+        checking both cities now.\n\n\n","refusal":null,"tool_calls":[{"id":"call-9f711d0d-c857-4ef2-ab01-93d71b88da68","type":"function","function":{"name":"weather","arguments":"{\"city\":\"Berlin\"}"}},{"id":"call-a6284402-7386-4a10-8379-6f1850c79271","type":"function","function":{"name":"weather","arguments":"{\"city\":\"Paris\"}"}}],"role":"assistant"},"finish_reason":"tool_calls","logprobs":null}],"created":1794983676,"model":"think-fast","object":"chat.completion","usage":{"prompt_tokens":312,"completion_tokens":60,"total_tokens":372,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0}}}'
+  recorded_at: Wed, 18 Nov 2026 06:34:36 GMT
 - request:
     method: post
     uri: https://agent.deepgram.com/v1/think
@@ -55,14 +55,14 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"think-fast","messages":[{"role":"user","content":"What is
         the weather in Berlin and in Paris? Call the tool once per city, both at the
-        same time."},{"role":"assistant","content":"Checking both cities now.\n\n\n","tool_calls":[{"id":"call-fe77bb39-c61a-4fea-a644-7747f46c2ab2","type":"function","function":{"name":"weather","arguments":"{\"city\":\"Berlin\"}"}},{"id":"call-ae1894bf-f637-4e06-b9d0-6d108c078a37","type":"function","function":{"name":"weather","arguments":"{\"city\":\"Paris\"}"}}]},{"role":"tool","content":"Berlin:
-        15 degrees","tool_call_id":"call-fe77bb39-c61a-4fea-a644-7747f46c2ab2"},{"role":"tool","content":"Paris:
-        15 degrees","tool_call_id":"call-ae1894bf-f637-4e06-b9d0-6d108c078a37"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        same time."},{"role":"assistant","content":"Sure, checking both cities now.\n\n\n","tool_calls":[{"id":"call-9f711d0d-c857-4ef2-ab01-93d71b88da68","type":"function","function":{"name":"weather","arguments":"{\"city\":\"Berlin\"}"}},{"id":"call-a6284402-7386-4a10-8379-6f1850c79271","type":"function","function":{"name":"weather","arguments":"{\"city\":\"Paris\"}"}}]},{"role":"tool","content":"Berlin:
+        15 degrees","tool_call_id":"call-9f711d0d-c857-4ef2-ab01-93d71b88da68"},{"role":"tool","content":"Paris:
+        15 degrees","tool_call_id":"call-a6284402-7386-4a10-8379-6f1850c79271"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         the current weather for one city","parameters":{"type":"object","properties":{"city":{"type":"string","description":"The
         city name"}},"required":["city"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Token <DEEPGRAM_API_KEY>
       Content-Type:
@@ -88,14 +88,14 @@ http_interactions:
       Access-Control-Expose-Headers:
       - dg-model-name,dg-model-uuid,dg-additional-model-uuids,dg-char-count,dg-request-id,dg-project-id,dg-error,dg-breaks-applied,dg-pronunciations-applied,dg-pronunciation-warnings,dg-engine-instance
       Dg-Request-Id:
-      - 01a1dcca-219f-72b1-9c0d-98f2b34d5516
+      - 01a1ed5d-4caa-7775-8b3e-d1b19e152bd0
       Transfer-Encoding:
       - chunked
       Date:
-      - Sun, 15 Nov 2026 01:19:56 GMT
+      - Wed, 18 Nov 2026 06:34:37 GMT
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"chatcmpl-7bf914af-c5da-45e0-8bea-1cdba517637d","choices":[{"index":0,"message":{"content":"Both
-        Berlin and Paris are fifteen degrees right now.","refusal":null,"role":"assistant"},"finish_reason":"stop","logprobs":null}],"created":1794705596,"model":"think-fast","object":"chat.completion","usage":{"prompt_tokens":404,"completion_tokens":11,"total_tokens":415,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0}}}'
-  recorded_at: Sun, 15 Nov 2026 01:19:56 GMT
-recorded_with: VCR 6.4.0
+      string: '{"id":"chatcmpl-a9e86f72-f2d8-4daf-b0ef-2d247d1e7ca3","choices":[{"index":0,"message":{"content":"It''s
+        fifteen degrees in Berlin and fifteen degrees in Paris.","refusal":null,"role":"assistant"},"finish_reason":"stop","logprobs":null}],"created":1794983677,"model":"think-fast","object":"chat.completion","usage":{"prompt_tokens":406,"completion_tokens":13,"total_tokens":419,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0}}}'
+  recorded_at: Wed, 18 Nov 2026 06:34:37 GMT
+recorded_with: VCR 6.4.1

@@ -12,7 +12,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:20:13 GMT
+      - Wed, 18 Nov 2026 06:35:40 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -37,7 +37,7 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       X-Internal-Adhoc-Canary:
-      - '1897954185'
+      - '2666295442'
       Msh-Gid:
       - "<MOONSHOT_GROUP_ID>"
       Msh-Org-Id:
@@ -45,7 +45,7 @@ http_interactions:
       Msh-Project-Id:
       - "<MOONSHOT_PROJECT_ID>"
       Msh-Request-Id:
-      - ad63130c-e092-11f1-95dc-00163e7aa8ca
+      - 43177b7e-e31a-11f1-9c77-00163e789b79
       Msh-Trace-Mode:
       - 'on'
       Msh-Uid:
@@ -57,7 +57,7 @@ http_interactions:
       Vary:
       - Origin
       X-Msh-Trace-Id:
-      - e10723b9e30d0b7749371a1c915a7daa
+      - 336b15217a4c9df8b30c9041a5023659
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Cf-Cache-Status:
@@ -68,13 +68,12 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"chatcmpl-2f2e091bc393494f432a93432","object":"chat.completion","created":1794705601,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
-        check the current weather in Berlin using those coordinates.","tool_calls":[{"index":0,"id":"weather_0_aff236f7","type":"function","function":{"name":"weather","arguments":"{\"latitude\":
-        \"52.5200\", \"longitude\": \"13.4050\"}"}}],"reasoning_content":"The user
-        is asking about the weather in Berlin and has provided coordinates (52.5200,
+      string: '{"id":"chatcmpl-9fa9f85c-5f54-91aa-80ca-de78b58cc867","object":"chat.completion","created":1794983736,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
+        check the current weather in Berlin for you using those coordinates.","tool_calls":[{"index":0,"id":"weather_0_9b0f8d4c","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}],"reasoning_content":"The
+        user is asking about the weather in Berlin and has provided coordinates (52.5200,
         13.4050). I have a weather tool available that takes latitude and longitude
-        parameters. I should call it with the provided coordinates."},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":222,"completion_tokens":127,"total_tokens":349,"completion_tokens_details":{"reasoning_tokens":47},"prompt_tokens_details":{"cache_write_tokens":0}}}'
-  recorded_at: Sun, 15 Nov 2026 01:20:13 GMT
+        parameters. Let me call it with the provided coordinates."},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":222,"completion_tokens":132,"total_tokens":354,"completion_tokens_details":{"reasoning_tokens":47},"prompt_tokens_details":{"cache_write_tokens":0}}}'
+  recorded_at: Wed, 18 Nov 2026 06:35:40 GMT
 - request:
     method: post
     uri: https://api.moonshot.ai/v1/chat/completions
@@ -82,17 +81,17 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"kimi-k3","messages":[{"role":"user","content":"What''s the
         weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"I''ll
-        check the current weather in Berlin using those coordinates.","tool_calls":[{"id":"weather_0_aff236f7","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}],"reasoning_content":"The
+        check the current weather in Berlin for you using those coordinates.","tool_calls":[{"id":"weather_0_9b0f8d4c","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}],"reasoning_content":"The
         user is asking about the weather in Berlin and has provided coordinates (52.5200,
         13.4050). I have a weather tool available that takes latitude and longitude
-        parameters. I should call it with the provided coordinates."},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"weather_0_aff236f7"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        parameters. Let me call it with the provided coordinates."},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"weather_0_9b0f8d4c"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -107,7 +106,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:20:16 GMT
+      - Wed, 18 Nov 2026 06:35:44 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -117,7 +116,7 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       X-Internal-Adhoc-Canary:
-      - '1897954185'
+      - '2666295442'
       Msh-Gid:
       - "<MOONSHOT_GROUP_ID>"
       Msh-Org-Id:
@@ -125,7 +124,7 @@ http_interactions:
       Msh-Project-Id:
       - "<MOONSHOT_PROJECT_ID>"
       Msh-Request-Id:
-      - b51dc510-e092-11f1-b46d-00163e4bf4af
+      - 45bbd7c5-e31a-11f1-9cef-00163e5443c0
       Msh-Trace-Mode:
       - 'on'
       Msh-Uid:
@@ -137,7 +136,7 @@ http_interactions:
       Vary:
       - Origin
       X-Msh-Trace-Id:
-      - 87622015530a06359c5fb08c1c442f35
+      - de2e1ebb307ec68b6279da94d1c2aaf3
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Cf-Cache-Status:
@@ -149,6 +148,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTJmMmUwMTYwZGMyZWQ0NjA2ZGU2ODAxODIiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjcmVhdGVkIjoxNzk0NzA1NjE0LCJtb2RlbCI6ImtpbWktazMiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IkhlcmUncyB0aGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiAoNTIuNTIwMCwgMTMuNDA1MCk6XG5cbi0gKipUZW1wZXJhdHVyZToqKiAxNcKwQ1xuLSAqKldpbmQ6KiogMTAga20vaFxuXG5BIG1pbGQgZGF5IHdpdGggYSBsaWdodCBicmVlemUhIExldCBtZSBrbm93IGlmIHlvdSdkIGxpa2Ugd2VhdGhlciBpbmZvcm1hdGlvbiBmb3IgYW55IG90aGVyIGxvY2F0aW9uLiIsInJlYXNvbmluZ19jb250ZW50IjoiVGhlIHdlYXRoZXIgdG9vbCByZXR1cm5lZDogMTXCsEMsIFdpbmQ6IDEwIGttL2ggZm9yIHRoZSBjb29yZGluYXRlcy4gSSBzaG91bGQgcHJlc2VudCB0aGlzIHRvIHRoZSB1c2VyIGluIGEgZnJpZW5kbHkgd2F5LiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NDAzLCJjb21wbGV0aW9uX3Rva2VucyI6MTAwLCJ0b3RhbF90b2tlbnMiOjUwMywiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjozMX0sInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZV93cml0ZV90b2tlbnMiOjI1Nn19fQ==
-  recorded_at: Sun, 15 Nov 2026 01:20:16 GMT
-recorded_with: VCR 6.4.0
+        eyJpZCI6ImNoYXRjbXBsLTUzYzk0ODA2LTQ3NTMtOWJjMS04YTE3LWYzOWQ4NWY5M2JjNyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTQ5ODM3NDAsIm1vZGVsIjoia2ltaS1rMyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiSGVyZSdzIHRoZSBjdXJyZW50IHdlYXRoZXIgaW4gQmVybGluICg1Mi41MjAwLCAxMy40MDUwKTpcblxuLSAqKlRlbXBlcmF0dXJlOioqIDE1wrBDXG4tICoqV2luZDoqKiAxMCBrbS9oXG5cbkEgbWlsZCBkYXkgd2l0aCBhIGxpZ2h0IGJyZWV6ZSEgTGV0IG1lIGtub3cgaWYgeW91J2QgbGlrZSB3ZWF0aGVyIGluZm9ybWF0aW9uIGZvciBhbnkgb3RoZXIgbG9jYXRpb24uIiwicmVhc29uaW5nX2NvbnRlbnQiOiJUaGUgd2VhdGhlciB0b29sIHJldHVybmVkOiAxNcKwQywgV2luZDogMTAga20vaCBmb3IgQmVybGluIGNvb3JkaW5hdGVzLiBMZXQgbWUgcHJlc2VudCB0aGlzIHRvIHRoZSB1c2VyIGluIGEgZnJpZW5kbHkgd2F5LiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NDA1LCJjb21wbGV0aW9uX3Rva2VucyI6MTAzLCJ0b3RhbF90b2tlbnMiOjUwOCwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjozMX0sInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZV93cml0ZV90b2tlbnMiOjI1Nn19fQ==
+  recorded_at: Wed, 18 Nov 2026 06:35:44 GMT
+recorded_with: VCR 6.4.1

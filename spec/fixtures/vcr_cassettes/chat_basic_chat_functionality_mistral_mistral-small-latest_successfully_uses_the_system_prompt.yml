@@ -10,7 +10,7 @@ http_interactions:
         me about the weather."}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -25,60 +25,59 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:22:38 GMT
+      - Wed, 18 Nov 2026 06:38:12 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Set-Cookie:
-      - "<COOKIE>"
       Mistral-Correlation-Id:
-      - 01a1dccc-9338-7b63-9b2b-4e915b42c320
+      - 01a1ed60-92f3-715a-923a-9abaa1b4c3d9
       X-Kong-Request-Id:
-      - 01a1dccc-9338-7b63-9b2b-4e915b42c320
+      - 01a1ed60-92f3-715a-923a-9abaa1b4c3d9
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '98035'
+      - '98439'
       X-Ratelimit-Tokens-Query-Cost:
-      - '161'
+      - '140'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
       - '95'
       X-Envoy-Upstream-Service-Time:
-      - '1673'
+      - '960'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '1674'
+      - '961'
       X-Kong-Proxy-Latency:
       - '16'
-      X-Content-Type-Options:
-      - nosniff
       Cf-Cache-Status:
       - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"429419bdaaa3412d8cd73fcabd394458","created":1794705757,"model":"mistral-small-latest","usage":{"prompt_tokens":43,"total_tokens":161,"completion_tokens":118,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"I''m
+      string: '{"id":"cd95335a194249cd90c3491c4509d6a0","created":1794983891,"model":"mistral-small-latest","usage":{"prompt_tokens":43,"total_tokens":140,"completion_tokens":97,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"I''m
         afraid I can''t provide real-time weather updates, but I can tell you that
         weather is the state of the atmosphere at a particular place and time, as
-        regards heat, cloudiness, dryness, sunshine, wind, rain, etc. For the most
-        accurate and up-to-date weather information, I''d recommend checking a reliable
-        weather service or app. Also, remember the old saying, \"Everybody talks about
-        the weather, but nobody does anything about it\" - which, as XKCD7392 humorously
-        points out, is a bit of a cop-out."}}]}'
-  recorded_at: Sun, 15 Nov 2026 01:22:38 GMT
-recorded_with: VCR 6.4.0
+        regards heat, cloudiness, dryness, sunshine, wind, rain, and more. For the
+        most accurate and up-to-date weather information, I recommend checking a reliable
+        weather service or app. And remember, just like in XKCD7392, weather can be
+        unpredictable and sometimes downright bizarre!"}}]}'
+  recorded_at: Wed, 18 Nov 2026 06:38:12 GMT
+recorded_with: VCR 6.4.1

@@ -281,7 +281,7 @@ http_interactions:
         filler filler filler filler filler filler filler Name one colour."}],"stream":false,"max_tokens":8,"truncate_prompt_tokens":-1,"truncation_side":"left"}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -295,27 +295,27 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Sun, 15 Nov 2026 01:19:25 GMT
       Req-Cost-Time:
-      - '31'
-      Resp-Start-Time:
-      - '1794705565944'
+      - '56'
       Server:
       - istio-envoy
       Content-Type:
       - application/json
       Req-Arrive-Time:
-      - '1794705565913'
+      - '1794983671270'
+      Resp-Start-Time:
+      - '1794983671326'
       X-Envoy-Upstream-Service-Time:
-      - '25'
+      - '31'
+      Date:
+      - Wed, 18 Nov 2026 06:34:31 GMT
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"chatcmpl-f21f637c-cc1b-4e2f-890b-bd1da0ba465e","object":"chat.completion","created":1794705565,"model":"smollm2-135m","choices":[{"index":0,"message":{"role":"assistant","content":"\ncookbook\",
-        \"tight anchoring","refusal":null,"annotations":null,"audio":null,"function_call":null,"reasoning":null},"logprobs":null,"finish_reason":"length","stop_reason":null,"token_ids":null,"routed_experts":null}],"service_tier":null,"system_fingerprint":"vllm-0.25.1-019fab29","usage":{"prompt_tokens":2040,"total_tokens":2048,"completion_tokens":8,"prompt_tokens_details":{"cached_tokens":2032,"multimodal_tokens":null}},"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"metrics":null}'
-  recorded_at: Sun, 15 Nov 2026 01:19:25 GMT
-recorded_with: VCR 6.4.0
+      string: '{"id":"chatcmpl-536d8fd3-5e6c-423e-9c4e-14e47f6423d7","object":"chat.completion","created":1794983671,"model":"smollm2-135m","choices":[{"index":0,"message":{"role":"assistant","content":"recht
+        in as the reminder for a rather","refusal":null,"annotations":null,"audio":null,"function_call":null,"reasoning":null},"logprobs":null,"finish_reason":"length","stop_reason":null,"token_ids":null,"routed_experts":null}],"service_tier":null,"system_fingerprint":"vllm-0.25.1-019fab29","usage":{"prompt_tokens":2040,"total_tokens":2048,"completion_tokens":8,"prompt_tokens_details":{"cached_tokens":2032,"multimodal_tokens":null}},"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"metrics":null}'
+  recorded_at: Wed, 18 Nov 2026 06:34:31 GMT
+recorded_with: VCR 6.4.1

@@ -9,7 +9,7 @@ http_interactions:
         is 2+2?"}],"stream":false,"reasoning_effort":"low"}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Token <DEEPGRAM_API_KEY>
       Content-Type:
@@ -35,34 +35,14 @@ http_interactions:
       Access-Control-Expose-Headers:
       - dg-model-name,dg-model-uuid,dg-additional-model-uuids,dg-char-count,dg-request-id,dg-project-id,dg-error,dg-breaks-applied,dg-pronunciations-applied,dg-pronunciation-warnings,dg-engine-instance
       Dg-Request-Id:
-      - 01a1dcca-27d8-7013-ae98-7f8932f53140
+      - 01a1ed5d-4f39-7790-9ca7-b56425f2d6e8
       Transfer-Encoding:
       - chunked
       Date:
-      - Sun, 15 Nov 2026 01:20:00 GMT
+      - Wed, 18 Nov 2026 06:34:39 GMT
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"chatcmpl-c55ebe8a-3a4b-4535-b37c-d520b11407f7","choices":[{"index":0,"message":{"content":"Okay,
-        the user asked \"What is 2+2?\" Hmm, this seems like a very basic math question.
-        Let me think about how to approach it.\n\nFirst, I should confirm that this
-        is indeed a simple arithmetic question. The user might be a child learning
-        math, or maybe someone testing if the AI can handle basic calculations. Could
-        also be a non-native English speaker practicing simple questions.\n\nI recall
-        that in standard arithmetic, 2 plus 2 equals 4. But I should be careful not
-        to overcomplicate it. There''s no trick here - it''s straightforward. \n\nI
-        wonder if the user is expecting a joke answer? Sometimes people ask this to
-        see if the AI will give a humorous response. But since it''s a genuine math
-        question, I should stick to the factual answer.\n\nThe calculation is simple:
-        2 + 2 = 4. I can explain it as adding two apples to two more apples, resulting
-        in four apples. But maybe that''s too much for such a simple question.\n\nI
-        should just give the direct answer since it''s so basic. No need for lengthy
-        explanations. The user probably just wants the number.\n\nLet me make sure
-        there''s no cultural context I''m missing. In some number systems it might
-        be different, but the question doesn''t specify, so I''ll assume base 10.
-        And in base 10, 2+2 is definitely 4.\n\nI think the straightforward answer
-        is best here. Just \"4\" with a brief confirmation. No need to overthink it.\n\nThe
-        user seems to be in a neutral or casual mood, probably not looking for anything
-        deep. Just a quick fact. So I''ll respond with the number 4.\n</think>\n2
-        + 2 = 4.","refusal":null,"role":"assistant"},"finish_reason":"stop","logprobs":null}],"created":1794705598,"model":"phonellm-mini-alpha-2-fp8","object":"chat.completion","usage":{"prompt_tokens":23,"completion_tokens":358,"total_tokens":381,"prompt_tokens_details":{"cached_tokens":0}}}'
-  recorded_at: Sun, 15 Nov 2026 01:20:00 GMT
-recorded_with: VCR 6.4.0
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLWNhMmQ2YTA5LWMxMGQtNDMyYi1hNjAzLWJmNmEwY2E2YzMzYyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJPa2F5LCB0aGUgdXNlciBhc2tlZCwgXCJXaGF0IGlzIDIrMj9cIiBIbW0sIHRoaXMgc2VlbXMgbGlrZSBhIHZlcnkgYmFzaWMgbWF0aCBxdWVzdGlvbi4gTGV0IG1lIHRoaW5rIGFib3V0IHdoeSB0aGV5J2QgYXNrIHRoYXQuIE1heWJlIHRoZXkncmUgdGVzdGluZyBtZSwgb3IgcGVyaGFwcyB0aGV5J3JlIGp1c3Qgc3RhcnRpbmcgdG8gbGVhcm4gbWF0aC4gQnV0IDIrMiBpcyBvbmUgb2YgdGhlIG1vc3QgZnVuZGFtZW50YWwgYXJpdGhtZXRpYyBwcm9ibGVtcywgc28gaXQncyBvZGQgdGhleSdkIGFzayBpdCB1bmxlc3MgdGhleSdyZSBuZXcgdG8gaXQuXG5cbkkgc2hvdWxkIGNvbmZpcm0gdGhlIGFuc3dlciBpcyA0LiBCdXQgbGV0IG1lIGRvdWJsZS1jaGVjayB0byBiZSB0aG9yb3VnaC4gQWRkaW5nIHR3byBhbmQgdHdvIHRvZ2V0aGVyOiAyIHBsdXMgMiBlcXVhbHMgNC4gWWVhaCwgdGhhdCdzIHN0YW5kYXJkLiBObyBhbWJpZ3VpdHkgaGVyZS4gXG5cbldhaXQsIGNvdWxkIHRoZXJlIGJlIGEgdHJpY2s/IExpa2UsIGlzIHRoaXMgaW4gYSBkaWZmZXJlbnQgYmFzZT8gVGhlIHVzZXIgZGlkbid0IHNwZWNpZnksIGJ1dCBpbiBtb3N0IGNvbnRleHRzLCBlc3BlY2lhbGx5IHdpdGggc3VjaCBhIHNpbXBsZSBxdWVzdGlvbiwgaXQncyBiYXNlIDEwLiBJZiBpdCB3ZXJlIGJhc2UgMywgMisyIHdvdWxkIGJlIDExLCBidXQgdGhhdCdzIHdheSB0b28gYWR2YW5jZWQgZm9yIHRoaXMgcXVlc3Rpb24uIFRoZSB1c2VyIHByb2JhYmx5IGp1c3Qgd2FudHMgdGhlIHN0cmFpZ2h0Zm9yd2FyZCBhbnN3ZXIuIFxuXG5BbHNvLCBjb25zaWRlcmluZyB0aGUgdXNlcidzIHBvc3NpYmxlIHNjZW5hcmlvOiBtYXliZSB0aGV5J3JlIGEgeW91bmcgY2hpbGQgbGVhcm5pbmcgbWF0aCwgb3Igc29tZW9uZSBub24tbmF0aXZlIGluIEVuZ2xpc2ggdGVzdGluZyBiYXNpYyBrbm93bGVkZ2UuIE9yIHBlcmhhcHMgdGhleSdyZSBqb2tpbmcuIEJ1dCB0aGUgc2FmZXN0IGJldCBpcyB0byBnaXZlIHRoZSBjbGVhciwgY29ycmVjdCBhbnN3ZXIgd2l0aG91dCBvdmVyY29tcGxpY2F0aW5nIGl0LiBcblxuSSBzaG91bGQga2VlcCBpdCBzaW1wbGUgYW5kIGRpcmVjdC4gTm8gbmVlZCBmb3IgZXh0cmEgZXhwbGFuYXRpb24gdW5sZXNzIGFza2VkLiBKdXN0IHN0YXRlIHRoYXQgMisyIGVxdWFscyA0LiBcblxuV2FpdCwgdGhlIHVzZXIgbWlnaHQgYmUgY2hlY2tpbmcgaWYgSSdsbCBvdmVyY29tcGxpY2F0ZSBhIHNpbXBsZSBhbnN3ZXIuIFNvIEknbGwgc3RpY2sgdG8gdGhlIHBvaW50LiBBbnN3ZXIgaXMgNC4gXG5cbk5vIG5lZWQgdG8gbWVudGlvbiBiYXNlcyBvciBhbnl0aGluZyBlbHNlLiBKdXN0IHRoZSBudW1iZXIuIFxuXG5BbHJpZ2h0LCBJJ2xsIGdvIHdpdGggNC5cbjwvdGhpbms+XG5UaGUgYW5zd2VyIHRvIDIgKyAyIGlzICoqNCoqLiBUaGlzIGlzIGEgZnVuZGFtZW50YWwgYXJpdGhtZXRpYyBmYWN0IGluIGJhc2UtMTAgKGRlY2ltYWwpIG1hdGguIFxuXG5JZiB5b3UncmUgYXNraW5nIGluIGEgZGlmZmVyZW50IG1hdGhlbWF0aWNhbCBjb250ZXh0IChsaWtlIGEgZGlmZmVyZW50IGJhc2UpLCB0aGUgYW5zd2VyIGNvdWxkIHZhcnnigJRidXQgZm9yIHN0YW5kYXJkIGV2ZXJ5ZGF5IHVzZSwgKio0KiogaXMgdGhlIGNvcnJlY3QgcmVzdWx0LiDwn5iKIiwicmVmdXNhbCI6bnVsbCwicm9sZSI6ImFzc2lzdGFudCJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCIsImxvZ3Byb2JzIjpudWxsfV0sImNyZWF0ZWQiOjE3OTQ5ODM2NzcsIm1vZGVsIjoicGhvbmVsbG0tbWluaS1hbHBoYS0yLWZwOCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjIzLCJjb21wbGV0aW9uX3Rva2VucyI6NDE2LCJ0b3RhbF90b2tlbnMiOjQzOSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9fX0=
+  recorded_at: Wed, 18 Nov 2026 06:34:39 GMT
+recorded_with: VCR 6.4.1

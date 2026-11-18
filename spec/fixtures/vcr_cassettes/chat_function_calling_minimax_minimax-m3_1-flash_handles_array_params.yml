@@ -12,7 +12,7 @@ http_interactions:
         of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -31,25 +31,25 @@ http_interactions:
       Content-Length:
       - '482'
       Trace-Id:
-      - '07483d6417ef4bce8b2d3ff559a7db3f'
+      - 074c7b83a0c8de0689dd2c763a3c32a1
       X-Session-Id:
       - 39cfba45256f1c303bc1b7a3ac6d8163
       X-Mm-Request-Id:
-      - 2092934004998157135_1794706020czedc4
+      - 2092934004998157135_1794984067bcr1aa
       Minimax-Request-Id:
-      - 427d7f5b3a5e4678d14ec4bfe2412567
+      - ba9a761edc15c59421550f6e43310d70
       Alb-Receive-Time:
-      - '1794706020.607'
+      - '1794984067.644'
       Alb-Request-Id:
-      - afbe73fa1a34cd75c8da929593f584dcd62f9667
+      - dc68043da702c846671e3a975435a41f2b05c0e9
       Expires:
-      - Sun, 15 Nov 2026 01:27:01 GMT
+      - Wed, 18 Nov 2026 06:41:08 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Sun, 15 Nov 2026 01:27:01 GMT
+      - Wed, 18 Nov 2026 06:41:08 GMT
       Connection:
       - keep-alive
       Access-Control-Allow-Origin:
@@ -58,7 +58,7 @@ http_interactions:
       - ak
     body:
       encoding: UTF-8
-      string: '{"id":"07483d6417ef4bce8b2d3ff559a7db3f","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"text":"I''ll
-        call the array params tool with those tags.","type":"text"},{"type":"tool_use","id":"call_27ff3adcd1eb4cfc96ce6a24","name":"array_params","input":{"tags":["red","blue"]}}],"usage":{"input_tokens":470,"output_tokens":55,"cache_creation_input_tokens":0,"cache_read_input_tokens":0},"stop_reason":"tool_use","base_resp":{"status_code":0,"status_msg":""}}'
-  recorded_at: Sun, 15 Nov 2026 01:27:01 GMT
-recorded_with: VCR 6.4.0
+      string: '{"id":"074c7b83a0c8de0689dd2c763a3c32a1","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"text":"I''ll
+        call the array params tool with those tags.","type":"text"},{"type":"tool_use","id":"call_0a9089fee3904d908df317e5","name":"array_params","input":{"tags":["red","blue"]}}],"usage":{"input_tokens":470,"output_tokens":55,"cache_creation_input_tokens":0,"cache_read_input_tokens":0},"stop_reason":"tool_use","base_resp":{"status_code":0,"status_msg":""}}'
+  recorded_at: Wed, 18 Nov 2026 06:41:08 GMT
+recorded_with: VCR 6.4.1

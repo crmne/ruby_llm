@@ -11,7 +11,7 @@ http_interactions:
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:27:10 GMT
+      - Wed, 18 Nov 2026 06:41:15 GMT
       Content-Type:
       - text/event-stream; charset=utf-8
       Transfer-Encoding:
@@ -34,9 +34,9 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a1dcd0-beb6-7c5e-95de-2d9374bfdad2
+      - 01a1ed63-5e6b-71c6-a08b-f57748d2335f
       X-Kong-Request-Id:
-      - 01a1dcd0-beb6-7c5e-95de-2d9374bfdad2
+      - 01a1ed63-5e6b-71c6-a08b-f57748d2335f
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Req-Minute:
@@ -46,25 +46,25 @@ http_interactions:
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '98866'
+      - '98968'
       X-Envoy-Upstream-Service-Time:
-      - '207'
+      - '234'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '209'
+      - '235'
       X-Kong-Proxy-Latency:
-      - '19'
-      Set-Cookie:
-      - "<COOKIE>"
-      X-Content-Type-Options:
-      - nosniff
+      - '14'
       Cf-Cache-Status:
       - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
@@ -72,13 +72,13 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |+
-        data: {"id":"4adacda9a11e49b98a70e8e23be9f748","object":"chat.completion.chunk","created":1794706030,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
+        data: {"id":"7294d0b296ae4e778262a402eccf7b48","object":"chat.completion.chunk","created":1794984074,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
 
-        data: {"id":"4adacda9a11e49b98a70e8e23be9f748","object":"chat.completion.chunk","created":1794706030,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"tool_calls":[{"id":"2AoprF44F","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"},"index":0}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":101,"total_tokens":110,"completion_tokens":9,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"p":"abcdefghijklmnopqrstuvw"}
+        data: {"id":"7294d0b296ae4e778262a402eccf7b48","object":"chat.completion.chunk","created":1794984074,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"tool_calls":[{"id":"9JizcJ3RQ","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"},"index":0}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":101,"total_tokens":110,"completion_tokens":9,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"p":"abcdefg"}
 
         data: [DONE]
 
-  recorded_at: Sun, 15 Nov 2026 01:27:10 GMT
+  recorded_at: Wed, 18 Nov 2026 06:41:15 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
@@ -86,11 +86,11 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"mistral-small-latest","messages":[{"role":"system","content":"You
         must use tools whenever possible."},{"role":"user","content":"Call best_language_to_learn
-        and repeat the programming language it returns."},{"role":"assistant","content":"","tool_calls":[{"id":"2AoprF44F","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"2AoprF44F"}],"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        and repeat the programming language it returns."},{"role":"assistant","content":"","tool_calls":[{"id":"9JizcJ3RQ","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"9JizcJ3RQ"}],"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -105,7 +105,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:27:10 GMT
+      - Wed, 18 Nov 2026 06:41:15 GMT
       Content-Type:
       - text/event-stream; charset=utf-8
       Transfer-Encoding:
@@ -113,9 +113,9 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a1dcd0-bfe9-720d-b3ce-a490ac3d728e
+      - 01a1ed63-5fd3-79de-8f5e-d8cec6376380
       X-Kong-Request-Id:
-      - 01a1dcd0-bfe9-720d-b3ce-a490ac3d728e
+      - 01a1ed63-5fd3-79de-8f5e-d8cec6376380
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Req-Minute:
@@ -125,25 +125,25 @@ http_interactions:
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '98756'
+      - '98968'
       X-Envoy-Upstream-Service-Time:
-      - '272'
+      - '194'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '273'
+      - '196'
       X-Kong-Proxy-Latency:
-      - '20'
-      Set-Cookie:
-      - "<COOKIE>"
-      X-Content-Type-Options:
-      - nosniff
+      - '14'
       Cf-Cache-Status:
       - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
@@ -151,15 +151,15 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |+
-        data: {"id":"a3c8af185d684048af958233654647c9","object":"chat.completion.chunk","created":1794706030,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
+        data: {"id":"41cab154afae48b78e45587abed3f9fb","object":"chat.completion.chunk","created":1794984075,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
 
-        data: {"id":"a3c8af185d684048af958233654647c9","object":"chat.completion.chunk","created":1794706030,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":"Ruby"},"finish_reason":null}],"p":"abcdefghijklmnop"}
+        data: {"id":"41cab154afae48b78e45587abed3f9fb","object":"chat.completion.chunk","created":1794984075,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":"Ruby"},"finish_reason":null}],"p":"abcdefghijklmnop"}
 
-        data: {"id":"a3c8af185d684048af958233654647c9","object":"chat.completion.chunk","created":1794706030,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":""},"finish_reason":"stop"}],"usage":{"prompt_tokens":113,"total_tokens":115,"completion_tokens":2,"prompt_tokens_details":{"cached_tokens":80},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"p":"abcdefghijklmnopqrstuvwxyz012"}
+        data: {"id":"41cab154afae48b78e45587abed3f9fb","object":"chat.completion.chunk","created":1794984075,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":""},"finish_reason":"stop"}],"usage":{"prompt_tokens":113,"total_tokens":115,"completion_tokens":2,"prompt_tokens_details":{"cached_tokens":80},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"p":"abcdefghijklmnopqrstuv"}
 
         data: [DONE]
 
-  recorded_at: Sun, 15 Nov 2026 01:27:10 GMT
+  recorded_at: Wed, 18 Nov 2026 06:41:15 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
@@ -167,12 +167,12 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"mistral-small-latest","messages":[{"role":"system","content":"You
         must use tools whenever possible."},{"role":"user","content":"Call best_language_to_learn
-        and repeat the programming language it returns."},{"role":"assistant","content":"","tool_calls":[{"id":"2AoprF44F","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"2AoprF44F"},{"role":"assistant","content":"Ruby"},{"role":"user","content":"Call
+        and repeat the programming language it returns."},{"role":"assistant","content":"","tool_calls":[{"id":"9JizcJ3RQ","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"9JizcJ3RQ"},{"role":"assistant","content":"Ruby"},{"role":"user","content":"Call
         best_language_to_learn again and repeat the programming language it returns."}],"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -187,7 +187,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:27:11 GMT
+      - Wed, 18 Nov 2026 06:41:16 GMT
       Content-Type:
       - text/event-stream; charset=utf-8
       Transfer-Encoding:
@@ -195,9 +195,9 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a1dcd0-c162-7dd3-a077-fc8ec39ea206
+      - 01a1ed63-610d-7fd7-a8ff-7b620975235c
       X-Kong-Request-Id:
-      - 01a1dcd0-c162-7dd3-a077-fc8ec39ea206
+      - 01a1ed63-610d-7fd7-a8ff-7b620975235c
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Req-Minute:
@@ -207,25 +207,25 @@ http_interactions:
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '98721'
+      - '98823'
       X-Envoy-Upstream-Service-Time:
-      - '218'
+      - '470'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '219'
+      - '471'
       X-Kong-Proxy-Latency:
       - '16'
-      Set-Cookie:
-      - "<COOKIE>"
-      X-Content-Type-Options:
-      - nosniff
       Cf-Cache-Status:
       - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
@@ -233,13 +233,13 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |+
-        data: {"id":"bd93647ba3524e70b047fff116c84c35","object":"chat.completion.chunk","created":1794706031,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
+        data: {"id":"702003aa718349b6816b6b31b88d5c2c","object":"chat.completion.chunk","created":1794984075,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
 
-        data: {"id":"bd93647ba3524e70b047fff116c84c35","object":"chat.completion.chunk","created":1794706031,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"tool_calls":[{"id":"MYfTnz215","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"},"index":0}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":132,"total_tokens":141,"completion_tokens":9,"prompt_tokens_details":{"cached_tokens":96},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"p":"abcdefghijklmnopqrs"}
+        data: {"id":"702003aa718349b6816b6b31b88d5c2c","object":"chat.completion.chunk","created":1794984075,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"tool_calls":[{"id":"UbjwOVacO","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"},"index":0}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":132,"total_tokens":141,"completion_tokens":9,"prompt_tokens_details":{"cached_tokens":96},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"p":"abcdefghijklmnopqrst"}
 
         data: [DONE]
 
-  recorded_at: Sun, 15 Nov 2026 01:27:11 GMT
+  recorded_at: Wed, 18 Nov 2026 06:41:16 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
@@ -247,12 +247,12 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"mistral-small-latest","messages":[{"role":"system","content":"You
         must use tools whenever possible."},{"role":"user","content":"Call best_language_to_learn
-        and repeat the programming language it returns."},{"role":"assistant","content":"","tool_calls":[{"id":"2AoprF44F","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"2AoprF44F"},{"role":"assistant","content":"Ruby"},{"role":"user","content":"Call
-        best_language_to_learn again and repeat the programming language it returns."},{"role":"assistant","content":"","tool_calls":[{"id":"MYfTnz215","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"MYfTnz215"}],"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        and repeat the programming language it returns."},{"role":"assistant","content":"","tool_calls":[{"id":"9JizcJ3RQ","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"9JizcJ3RQ"},{"role":"assistant","content":"Ruby"},{"role":"user","content":"Call
+        best_language_to_learn again and repeat the programming language it returns."},{"role":"assistant","content":"","tool_calls":[{"id":"UbjwOVacO","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"UbjwOVacO"}],"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -267,7 +267,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:27:12 GMT
+      - Wed, 18 Nov 2026 06:41:16 GMT
       Content-Type:
       - text/event-stream; charset=utf-8
       Transfer-Encoding:
@@ -275,9 +275,9 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a1dcd0-c28f-7f11-83ff-713f76307b17
+      - 01a1ed63-633e-7b79-8516-65641c7be6f2
       X-Kong-Request-Id:
-      - 01a1dcd0-c28f-7f11-83ff-713f76307b17
+      - 01a1ed63-633e-7b79-8516-65641c7be6f2
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Req-Minute:
@@ -287,25 +287,25 @@ http_interactions:
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '98676'
+      - '98778'
       X-Envoy-Upstream-Service-Time:
-      - '1160'
+      - '405'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '1162'
+      - '407'
       X-Kong-Proxy-Latency:
-      - '20'
-      Set-Cookie:
-      - "<COOKIE>"
-      X-Content-Type-Options:
-      - nosniff
+      - '16'
       Cf-Cache-Status:
       - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
@@ -313,14 +313,14 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |+
-        data: {"id":"e5ada28f395049bcbb2d7539523cdf53","object":"chat.completion.chunk","created":1794706032,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
+        data: {"id":"d2c2f086ac674166b870bc4e8e9a7670","object":"chat.completion.chunk","created":1794984076,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
 
-        data: {"id":"e5ada28f395049bcbb2d7539523cdf53","object":"chat.completion.chunk","created":1794706032,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":"Ruby"},"finish_reason":null}],"p":"abcdefgh"}
+        data: {"id":"d2c2f086ac674166b870bc4e8e9a7670","object":"chat.completion.chunk","created":1794984076,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":"Ruby"},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxyz0123456"}
 
-        data: {"id":"e5ada28f395049bcbb2d7539523cdf53","object":"chat.completion.chunk","created":1794706032,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":""},"finish_reason":"stop"}],"usage":{"prompt_tokens":144,"total_tokens":146,"completion_tokens":2,"prompt_tokens_details":{"cached_tokens":112},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"p":"abcdefghi"}
+        data: {"id":"d2c2f086ac674166b870bc4e8e9a7670","object":"chat.completion.chunk","created":1794984076,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":""},"finish_reason":"stop"}],"usage":{"prompt_tokens":144,"total_tokens":146,"completion_tokens":2,"prompt_tokens_details":{"cached_tokens":112},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"p":"abcdefghijklmnopq"}
 
         data: [DONE]
 
-  recorded_at: Sun, 15 Nov 2026 01:27:12 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:41:16 GMT
+recorded_with: VCR 6.4.1
 ...

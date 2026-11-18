@@ -12,7 +12,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true},"strict":false}],"tool_choice":"none"}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:42:24 GMT
+      - Wed, 18 Nov 2026 06:56:09 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -51,7 +51,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1537'
+      - '1114'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -76,136 +76,7 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: |-
-        {
-          "id": "resp_04ff53824d7404f7016af90dff4e2087d2be6fb288e897d0a9",
-          "object": "response",
-          "created_at": 1794706943,
-          "status": "completed",
-          "access_programs": null,
-          "background": false,
-          "billing": {
-            "payer": "developer"
-          },
-          "completed_at": 1794706944,
-          "error": null,
-          "frequency_penalty": 0.0,
-          "image": {
-            "context_compression": "disabled"
-          },
-          "incomplete_details": null,
-          "input_transformations": [],
-          "instructions": null,
-          "max_output_tokens": null,
-          "max_tool_calls": null,
-          "model": "gpt-5.6-luna",
-          "moderation": null,
-          "output": [
-            {
-              "id": "msg_04ff53824d7404f7016af90e009bbc87d2a3944e201b2ca78c",
-              "type": "message",
-              "status": "completed",
-              "content": [
-                {
-                  "type": "output_text",
-                  "annotations": [],
-                  "logprobs": [],
-                  "text": "I\u2019m unable to access live weather data right now."
-                }
-              ],
-              "phase": "final_answer",
-              "role": "assistant"
-            }
-          ],
-          "parallel_tool_calls": true,
-          "presence_penalty": 0.0,
-          "previous_response_id": null,
-          "prompt_cache_key": null,
-          "prompt_cache_retention": "24h",
-          "reasoning": {
-            "context": "all_turns",
-            "effort": "medium",
-            "mode": "standard",
-            "summary": null
-          },
-          "safety_identifier": null,
-          "service_tier": "default",
-          "store": false,
-          "temperature": 1.0,
-          "text": {
-            "format": {
-              "type": "text"
-            },
-            "verbosity": "medium"
-          },
-          "tool_choice": "none",
-          "tool_usage": {
-            "image_gen": {
-              "input_tokens": 0,
-              "input_tokens_details": {
-                "image_tokens": 0,
-                "text_tokens": 0
-              },
-              "output_tokens": 0,
-              "output_tokens_details": {
-                "image_tokens": 0,
-                "text_tokens": 0
-              },
-              "total_tokens": 0
-            },
-            "web_search": {
-              "num_requests": 0
-            }
-          },
-          "tools": [
-            {
-              "type": "function",
-              "description": "Gets current weather for a location",
-              "name": "weather",
-              "output_schema": null,
-              "parameters": {
-                "type": "object",
-                "properties": {
-                  "latitude": {
-                    "type": "string",
-                    "description": "Latitude (e.g., 52.5200)"
-                  },
-                  "longitude": {
-                    "type": "string",
-                    "description": "Longitude (e.g., 13.4050)"
-                  }
-                },
-                "required": [
-                  "latitude",
-                  "longitude"
-                ],
-                "additionalProperties": false,
-                "strict": true
-              },
-              "strict": false
-            }
-          ],
-          "top_logprobs": 0,
-          "top_p": 0.98,
-          "truncation": "disabled",
-          "usage": {
-            "input_tokens": 87,
-            "input_tokens_details": {
-              "cache_write_tokens": 0,
-              "cache_write_tokens_details": {
-                "ttl_12h_tokens": 0,
-                "ttl_30m_tokens": 0
-              },
-              "cached_tokens": 0
-            },
-            "output_tokens": 15,
-            "output_tokens_details": {
-              "reasoning_tokens": 0
-            },
-            "total_tokens": 102
-          },
-          "user": null,
-          "metadata": {}
-        }
-  recorded_at: Sun, 15 Nov 2026 01:42:24 GMT
-recorded_with: VCR 6.4.0
+      string: !binary |-
+        ewogICJhY2Nlc3NfcHJvZ3JhbXMiOiBudWxsLAogICJiYWNrZ3JvdW5kIjogZmFsc2UsCiAgImJpbGxpbmciOiB7CiAgICAicGF5ZXIiOiAiZGV2ZWxvcGVyIgogIH0sCiAgImNvbXBsZXRlZF9hdCI6IDE3OTQ5ODQ5NjksCiAgImNyZWF0ZWRfYXQiOiAxNzk0OTg0OTY4LAogICJlcnJvciI6IG51bGwsCiAgImZyZXF1ZW5jeV9wZW5hbHR5IjogMC4wLAogICJpZCI6ICJyZXNwXzBkNzA0NzA0N2Q2MWYyNmEwMTZhZmQ0YzA4NDljNDg3ZDI4NGU4NTcxNDhhNzM5ZmVmIiwKICAiaW1hZ2UiOiB7CiAgICAiY29udGV4dF9jb21wcmVzc2lvbiI6ICJkaXNhYmxlZCIKICB9LAogICJpbmNvbXBsZXRlX2RldGFpbHMiOiBudWxsLAogICJpbnB1dF90cmFuc2Zvcm1hdGlvbnMiOiBbXSwKICAiaW5zdHJ1Y3Rpb25zIjogbnVsbCwKICAibWF4X291dHB1dF90b2tlbnMiOiBudWxsLAogICJtYXhfdG9vbF9jYWxscyI6IG51bGwsCiAgIm1vZGVsIjogImdwdC01LjYtbHVuYSIsCiAgIm1vZGVyYXRpb24iOiBudWxsLAogICJvYmplY3QiOiAicmVzcG9uc2UiLAogICJvdXRwdXQiOiBbCiAgICB7CiAgICAgICJjb250ZW50IjogWwogICAgICAgIHsKICAgICAgICAgICJhbm5vdGF0aW9ucyI6IFtdLAogICAgICAgICAgImxvZ3Byb2JzIjogW10sCiAgICAgICAgICAidGV4dCI6ICJJ4oCZbSB1bmFibGUgdG8gYWNjZXNzIGxpdmUgd2VhdGhlciBkYXRhIHJpZ2h0IG5vdy4iLAogICAgICAgICAgInR5cGUiOiAib3V0cHV0X3RleHQiCiAgICAgICAgfQogICAgICBdLAogICAgICAiaWQiOiAibXNnXzBkNzA0NzA0N2Q2MWYyNmEwMTZhZmQ0YzA5MTg0NDg3ZDJhMGY5YjU5MTBlZjdmMGM0IiwKICAgICAgInBoYXNlIjogImZpbmFsX2Fuc3dlciIsCiAgICAgICJyb2xlIjogImFzc2lzdGFudCIsCiAgICAgICJzdGF0dXMiOiAiY29tcGxldGVkIiwKICAgICAgInR5cGUiOiAibWVzc2FnZSIKICAgIH0KICBdLAogICJwYXJhbGxlbF90b29sX2NhbGxzIjogdHJ1ZSwKICAicHJlc2VuY2VfcGVuYWx0eSI6IDAuMCwKICAicHJldmlvdXNfcmVzcG9uc2VfaWQiOiBudWxsLAogICJwcm9tcHRfY2FjaGVfa2V5IjogbnVsbCwKICAicHJvbXB0X2NhY2hlX3JldGVudGlvbiI6ICIyNGgiLAogICJyZWFzb25pbmciOiB7CiAgICAiY29udGV4dCI6ICJhbGxfdHVybnMiLAogICAgImVmZm9ydCI6ICJtZWRpdW0iLAogICAgIm1vZGUiOiAic3RhbmRhcmQiLAogICAgInN1bW1hcnkiOiBudWxsCiAgfSwKICAic2FmZXR5X2lkZW50aWZpZXIiOiBudWxsLAogICJzZXJ2aWNlX3RpZXIiOiAiZGVmYXVsdCIsCiAgInN0YXR1cyI6ICJjb21wbGV0ZWQiLAogICJzdG9yZSI6IGZhbHNlLAogICJ0ZW1wZXJhdHVyZSI6IDEuMCwKICAidGV4dCI6IHsKICAgICJmb3JtYXQiOiB7CiAgICAgICJ0eXBlIjogInRleHQiCiAgICB9LAogICAgInZlcmJvc2l0eSI6ICJtZWRpdW0iCiAgfSwKICAidG9vbF9jaG9pY2UiOiAibm9uZSIsCiAgInRvb2xfdXNhZ2UiOiB7CiAgICAiaW1hZ2VfZ2VuIjogewogICAgICAiaW5wdXRfdG9rZW5zIjogMCwKICAgICAgImlucHV0X3Rva2Vuc19kZXRhaWxzIjogewogICAgICAgICJpbWFnZV90b2tlbnMiOiAwLAogICAgICAgICJ0ZXh0X3Rva2VucyI6IDAKICAgICAgfSwKICAgICAgIm91dHB1dF90b2tlbnMiOiAwLAogICAgICAib3V0cHV0X3Rva2Vuc19kZXRhaWxzIjogewogICAgICAgICJpbWFnZV90b2tlbnMiOiAwLAogICAgICAgICJ0ZXh0X3Rva2VucyI6IDAKICAgICAgfSwKICAgICAgInRvdGFsX3Rva2VucyI6IDAKICAgIH0sCiAgICAid2ViX3NlYXJjaCI6IHsKICAgICAgIm51bV9yZXF1ZXN0cyI6IDAKICAgIH0KICB9LAogICJ0b29scyI6IFsKICAgIHsKICAgICAgImRlc2NyaXB0aW9uIjogIkdldHMgY3VycmVudCB3ZWF0aGVyIGZvciBhIGxvY2F0aW9uIiwKICAgICAgIm5hbWUiOiAid2VhdGhlciIsCiAgICAgICJvdXRwdXRfc2NoZW1hIjogbnVsbCwKICAgICAgInBhcmFtZXRlcnMiOiB7CiAgICAgICAgImFkZGl0aW9uYWxQcm9wZXJ0aWVzIjogZmFsc2UsCiAgICAgICAgInByb3BlcnRpZXMiOiB7CiAgICAgICAgICAibGF0aXR1ZGUiOiB7CiAgICAgICAgICAgICJkZXNjcmlwdGlvbiI6ICJMYXRpdHVkZSAoZS5nLiwgNTIuNTIwMCkiLAogICAgICAgICAgICAidHlwZSI6ICJzdHJpbmciCiAgICAgICAgICB9LAogICAgICAgICAgImxvbmdpdHVkZSI6IHsKICAgICAgICAgICAgImRlc2NyaXB0aW9uIjogIkxvbmdpdHVkZSAoZS5nLiwgMTMuNDA1MCkiLAogICAgICAgICAgICAidHlwZSI6ICJzdHJpbmciCiAgICAgICAgICB9CiAgICAgICAgfSwKICAgICAgICAicmVxdWlyZWQiOiBbCiAgICAgICAgICAibGF0aXR1ZGUiLAogICAgICAgICAgImxvbmdpdHVkZSIKICAgICAgICBdLAogICAgICAgICJzdHJpY3QiOiB0cnVlLAogICAgICAgICJ0eXBlIjogIm9iamVjdCIKICAgICAgfSwKICAgICAgInN0cmljdCI6IGZhbHNlLAogICAgICAidHlwZSI6ICJmdW5jdGlvbiIKICAgIH0KICBdLAogICJ0b3BfbG9ncHJvYnMiOiAwLAogICJ0b3BfcCI6IDAuOTgsCiAgInRydW5jYXRpb24iOiAiZGlzYWJsZWQiLAogICJ1c2FnZSI6IHsKICAgICJpbnB1dF90b2tlbnMiOiA4NywKICAgICJpbnB1dF90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgImNhY2hlX3dyaXRlX3Rva2VucyI6IDAsCiAgICAgICJjYWNoZV93cml0ZV90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgICAidHRsXzEyaF90b2tlbnMiOiAwLAogICAgICAgICJ0dGxfMzBtX3Rva2VucyI6IDAKICAgICAgfSwKICAgICAgImNhY2hlZF90b2tlbnMiOiAwCiAgICB9LAogICAgIm91dHB1dF90b2tlbnMiOiAxNSwKICAgICJvdXRwdXRfdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJyZWFzb25pbmdfdG9rZW5zIjogMAogICAgfSwKICAgICJ0b3RhbF90b2tlbnMiOiAxMDIKICB9LAogICJ1c2VyIjogbnVsbCwKICAibWV0YWRhdGEiOiB7fQp9
+  recorded_at: Wed, 18 Nov 2026 06:56:09 GMT
+recorded_with: VCR 6.4.1

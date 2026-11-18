@@ -12,7 +12,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -29,27 +29,27 @@ http_interactions:
       Content-Type:
       - application/json; charset=utf-8
       Content-Length:
-      - '502'
+      - '499'
       Trace-Id:
-      - '07483d3e6b9e6c8139ae68db36834406'
+      - 074c7b6879cbb72ed6448cb73357d727
       X-Session-Id:
       - f950ddba17296fc881a49ec8d6450c57
       X-Mm-Request-Id:
-      - 2092934004998157135_1794705982o83ng2
+      - 2092934004998157135_179498404031r47n
       Minimax-Request-Id:
-      - a58eabd172a95a89f11afaeed719325e
+      - 4ff61210c4013a0929ce0b4a0bd64db0
       Alb-Receive-Time:
-      - '1794705982.77'
+      - '1794984040.361'
       Alb-Request-Id:
-      - d2338bf100860bdff065f771119daa755c8e250f
+      - bd19874a6df41a8f39d6c74e64332538fbb9d223
       Expires:
-      - Sun, 15 Nov 2026 01:26:25 GMT
+      - Wed, 18 Nov 2026 06:40:41 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Sun, 15 Nov 2026 01:26:25 GMT
+      - Wed, 18 Nov 2026 06:40:41 GMT
       Connection:
       - keep-alive
       Access-Control-Allow-Origin:
@@ -58,9 +58,9 @@ http_interactions:
       - ak
     body:
       encoding: UTF-8
-      string: '{"id":"07483d3e6b9e6c8139ae68db36834406","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"text":"I''ll
-        check the current weather in Berlin for you.","type":"text"},{"type":"tool_use","id":"chatcmpl-tool-914ddf215e957ff6","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}],"usage":{"input_tokens":243,"output_tokens":52,"cache_creation_input_tokens":0,"cache_read_input_tokens":256},"stop_reason":"tool_use","base_resp":{"status_code":0,"status_msg":""}}'
-  recorded_at: Sun, 15 Nov 2026 01:26:25 GMT
+      string: '{"id":"074c7b6879cbb72ed6448cb73357d727","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"text":"I''ll
+        check the current weather in Berlin for you.","type":"text"},{"type":"tool_use","id":"call_01a1ed62da2177348a957ecd","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}],"usage":{"input_tokens":1,"output_tokens":52,"cache_creation_input_tokens":0,"cache_read_input_tokens":497},"stop_reason":"tool_use","base_resp":{"status_code":0,"status_msg":""}}'
+  recorded_at: Wed, 18 Nov 2026 06:40:41 GMT
 - request:
     method: post
     uri: https://api.minimax.io/anthropic/v1/messages
@@ -68,14 +68,14 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"MiniMax-M3.1-Flash","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         the weather in Berlin? (52.5200, 13.4050)"}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
-        check the current weather in Berlin for you."},{"type":"tool_use","id":"chatcmpl-tool-914ddf215e957ff6","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"chatcmpl-tool-914ddf215e957ff6","content":[{"type":"text","text":"Current
+        check the current weather in Berlin for you."},{"type":"tool_use","id":"call_01a1ed62da2177348a957ecd","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"call_01a1ed62da2177348a957ecd","content":[{"type":"text","text":"Current
         weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}]}],"stream":false,"max_tokens":524288,"tools":[{"name":"weather","description":"Gets
         current weather for a location","input_schema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -92,27 +92,27 @@ http_interactions:
       Content-Type:
       - application/json; charset=utf-8
       Content-Length:
-      - '523'
+      - '477'
       Trace-Id:
-      - '07483d4127ecb427b12bef5341355f50'
+      - 074c7b69c4e3e77b0776484909534851
       X-Session-Id:
       - f950ddba17296fc881a49ec8d6450c57
       X-Mm-Request-Id:
-      - 2092934004998157135_1794705985l5d7z6
+      - 2092934004998157135_1794984041b3o1d9
       Minimax-Request-Id:
-      - aab9d505aae8ae698d1ec2b303b6da3a
+      - f517898db5d404a9aa8d64f8ae4acbe5
       Alb-Receive-Time:
-      - '1794705985.54'
+      - '1794984041.356'
       Alb-Request-Id:
-      - 81aee4ac04ba7ad0874696fab025d58f173305e9
+      - 6571ea222235556dd3f71f0b091d038d25f4566f
       Expires:
-      - Sun, 15 Nov 2026 01:26:28 GMT
+      - Wed, 18 Nov 2026 06:40:42 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Sun, 15 Nov 2026 01:26:28 GMT
+      - Wed, 18 Nov 2026 06:40:42 GMT
       Connection:
       - keep-alive
       Access-Control-Allow-Origin:
@@ -122,27 +122,26 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6IjA3NDgzZDQxMjdlY2I0MjdiMTJiZWY1MzQxMzU1ZjUwIiwidHlwZSI6Im1lc3NhZ2UiLCJyb2xlIjoiYXNzaXN0YW50IiwibW9kZWwiOiJNaW5pTWF4LU0zLjEtRmxhc2giLCJjb250ZW50IjpbeyJ0ZXh0IjoiVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW4gKDUyLjUyMDAsIDEzLjQwNTApIGlzOlxuXG4tICoqVGVtcGVyYXR1cmU6KiogMTXCsENcbi0gKipXaW5kOioqIDEwIGttL2hcblxuTWlsZCBhbmQgZmFpcmx5IGNhbG0g4oCUIGEgdHlwaWNhbCBCZXJsaW4gc3ByaW5nIGRheS4gTGV0IG1lIGtub3cgaWYgeW91J2QgbGlrZSBtb3JlIGRldGFpbHMhIiwidHlwZSI6InRleHQifV0sInVzYWdlIjp7ImlucHV0X3Rva2VucyI6MzM0LCJvdXRwdXRfdG9rZW5zIjo1OSwiY2FjaGVfY3JlYXRpb25faW5wdXRfdG9rZW5zIjowLCJjYWNoZV9yZWFkX2lucHV0X3Rva2VucyI6MjU2fSwic3RvcF9yZWFzb24iOiJlbmRfdHVybiIsImJhc2VfcmVzcCI6eyJzdGF0dXNfY29kZSI6MCwic3RhdHVzX21zZyI6IiJ9fQ==
-  recorded_at: Sun, 15 Nov 2026 01:26:28 GMT
+        eyJpZCI6IjA3NGM3YjY5YzRlM2U3N2IwNzc2NDg0OTA5NTM0ODUxIiwidHlwZSI6Im1lc3NhZ2UiLCJyb2xlIjoiYXNzaXN0YW50IiwibW9kZWwiOiJNaW5pTWF4LU0zLjEtRmxhc2giLCJjb250ZW50IjpbeyJ0ZXh0IjoiVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW4gaXMgKioxNcKwQyoqIHdpdGggd2luZHMgYXQgKioxMCBrbS9oKiouIFRoYXQncyBhIG1pbGQsIGNvbWZvcnRhYmxlIGRheSDigJQgcGVyZmVjdCBmb3IgYSB3YWxrIG9yIHNvbWUgdGltZSBvdXRkb29ycy4g8J+MpO+4jyIsInR5cGUiOiJ0ZXh0In1dLCJ1c2FnZSI6eyJpbnB1dF90b2tlbnMiOjEsIm91dHB1dF90b2tlbnMiOjM4LCJjYWNoZV9jcmVhdGlvbl9pbnB1dF90b2tlbnMiOjAsImNhY2hlX3JlYWRfaW5wdXRfdG9rZW5zIjo1ODl9LCJzdG9wX3JlYXNvbiI6ImVuZF90dXJuIiwiYmFzZV9yZXNwIjp7InN0YXR1c19jb2RlIjowLCJzdGF0dXNfbXNnIjoiIn19
+  recorded_at: Wed, 18 Nov 2026 06:40:42 GMT
 - request:
     method: post
     uri: https://api.minimax.io/anthropic/v1/messages
     body:
       encoding: UTF-8
-      string: '{"model":"MiniMax-M3.1-Flash","messages":[{"role":"user","content":[{"type":"text","text":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
-        check the current weather in Berlin for you."},{"type":"tool_use","id":"chatcmpl-tool-914ddf215e957ff6","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"chatcmpl-tool-914ddf215e957ff6","content":[{"type":"text","text":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}]},{"role":"assistant","content":[{"type":"text","text":"The
-        current weather in Berlin (52.5200, 13.4050) is:\n\n- **Temperature:** 15°C\n-
-        **Wind:** 10 km/h\n\nMild and fairly calm — a typical Berlin spring day. Let
-        me know if you''d like more details!"}]},{"role":"user","content":[{"type":"text","text":"What''s
-        the weather in Paris? (48.8575, 2.3514)"}]}],"stream":false,"max_tokens":524288,"tools":[{"name":"weather","description":"Gets
-        current weather for a location","input_schema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
-        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}]}'
+      string: "{\"model\":\"MiniMax-M3.1-Flash\",\"messages\":[{\"role\":\"user\",\"content\":[{\"type\":\"text\",\"text\":\"What's
+        the weather in Berlin? (52.5200, 13.4050)\"}]},{\"role\":\"assistant\",\"content\":[{\"type\":\"text\",\"text\":\"I'll
+        check the current weather in Berlin for you.\"},{\"type\":\"tool_use\",\"id\":\"call_01a1ed62da2177348a957ecd\",\"name\":\"weather\",\"input\":{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}}]},{\"role\":\"user\",\"content\":[{\"type\":\"tool_result\",\"tool_use_id\":\"call_01a1ed62da2177348a957ecd\",\"content\":[{\"type\":\"text\",\"text\":\"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h\"}]}]},{\"role\":\"assistant\",\"content\":[{\"type\":\"text\",\"text\":\"The
+        current weather in Berlin is **15°C** with winds at **10 km/h**. That's a
+        mild, comfortable day — perfect for a walk or some time outdoors. \U0001F324️\"}]},{\"role\":\"user\",\"content\":[{\"type\":\"text\",\"text\":\"What's
+        the weather in Paris? (48.8575, 2.3514)\"}]}],\"stream\":false,\"max_tokens\":524288,\"tools\":[{\"name\":\"weather\",\"description\":\"Gets
+        current weather for a location\",\"input_schema\":{\"type\":\"object\",\"properties\":{\"latitude\":{\"type\":\"string\",\"description\":\"Latitude
+        (e.g., 52.5200)\"},\"longitude\":{\"type\":\"string\",\"description\":\"Longitude
+        (e.g., 13.4050)\"}},\"required\":[\"latitude\",\"longitude\"],\"additionalProperties\":false,\"strict\":true}}]}"
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -159,27 +158,27 @@ http_interactions:
       Content-Type:
       - application/json; charset=utf-8
       Content-Length:
-      - '426'
+      - '424'
       Trace-Id:
-      - '07483d443187bf25f456a9a0270720f5'
+      - 074c7b6ac1c1575d436559da5a4e9755
       X-Session-Id:
       - f950ddba17296fc881a49ec8d6450c57
       X-Mm-Request-Id:
-      - 2092934004998157135_17947059883dghwl
+      - 2092934004998157135_1794984042e5ryl8
       Minimax-Request-Id:
-      - f10153f1d4dc24fc8c157656bb1391fc
+      - 45b41150b323238260a19747400fcf62
       Alb-Receive-Time:
-      - '1794705988.879'
+      - '1794984042.534'
       Alb-Request-Id:
-      - 1d2b796da89b99576eb4c54740d95c67aa2987b9
+      - c64667b635b7d6335eb850f47b2c2f6142b4ac60
       Expires:
-      - Sun, 15 Nov 2026 01:26:31 GMT
+      - Wed, 18 Nov 2026 06:40:43 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Sun, 15 Nov 2026 01:26:31 GMT
+      - Wed, 18 Nov 2026 06:40:43 GMT
       Connection:
       - keep-alive
       Access-Control-Allow-Origin:
@@ -188,28 +187,27 @@ http_interactions:
       - ak
     body:
       encoding: UTF-8
-      string: '{"id":"07483d443187bf25f456a9a0270720f5","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"type":"tool_use","id":"chatcmpl-tool-9ddf168adbee757e","name":"weather","input":{"latitude":"48.8575","longitude":"2.3514"}}],"usage":{"input_tokens":164,"output_tokens":42,"cache_creation_input_tokens":0,"cache_read_input_tokens":512},"stop_reason":"tool_use","base_resp":{"status_code":0,"status_msg":""}}'
-  recorded_at: Sun, 15 Nov 2026 01:26:31 GMT
+      string: '{"id":"074c7b6ac1c1575d436559da5a4e9755","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"type":"tool_use","id":"call_01a1ed62e2167026b8b41de0","name":"weather","input":{"latitude":"48.8575","longitude":"2.3514"}}],"usage":{"input_tokens":65,"output_tokens":42,"cache_creation_input_tokens":0,"cache_read_input_tokens":590},"stop_reason":"tool_use","base_resp":{"status_code":0,"status_msg":""}}'
+  recorded_at: Wed, 18 Nov 2026 06:40:43 GMT
 - request:
     method: post
     uri: https://api.minimax.io/anthropic/v1/messages
     body:
       encoding: UTF-8
-      string: '{"model":"MiniMax-M3.1-Flash","messages":[{"role":"user","content":[{"type":"text","text":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
-        check the current weather in Berlin for you."},{"type":"tool_use","id":"chatcmpl-tool-914ddf215e957ff6","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"chatcmpl-tool-914ddf215e957ff6","content":[{"type":"text","text":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}]},{"role":"assistant","content":[{"type":"text","text":"The
-        current weather in Berlin (52.5200, 13.4050) is:\n\n- **Temperature:** 15°C\n-
-        **Wind:** 10 km/h\n\nMild and fairly calm — a typical Berlin spring day. Let
-        me know if you''d like more details!"}]},{"role":"user","content":[{"type":"text","text":"What''s
-        the weather in Paris? (48.8575, 2.3514)"}]},{"role":"assistant","content":[{"type":"tool_use","id":"chatcmpl-tool-9ddf168adbee757e","name":"weather","input":{"latitude":"48.8575","longitude":"2.3514"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"chatcmpl-tool-9ddf168adbee757e","content":[{"type":"text","text":"Current
-        weather at 48.8575, 2.3514: 15°C, Wind: 10 km/h"}]}]}],"stream":false,"max_tokens":524288,"tools":[{"name":"weather","description":"Gets
-        current weather for a location","input_schema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
-        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}]}'
+      string: "{\"model\":\"MiniMax-M3.1-Flash\",\"messages\":[{\"role\":\"user\",\"content\":[{\"type\":\"text\",\"text\":\"What's
+        the weather in Berlin? (52.5200, 13.4050)\"}]},{\"role\":\"assistant\",\"content\":[{\"type\":\"text\",\"text\":\"I'll
+        check the current weather in Berlin for you.\"},{\"type\":\"tool_use\",\"id\":\"call_01a1ed62da2177348a957ecd\",\"name\":\"weather\",\"input\":{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}}]},{\"role\":\"user\",\"content\":[{\"type\":\"tool_result\",\"tool_use_id\":\"call_01a1ed62da2177348a957ecd\",\"content\":[{\"type\":\"text\",\"text\":\"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h\"}]}]},{\"role\":\"assistant\",\"content\":[{\"type\":\"text\",\"text\":\"The
+        current weather in Berlin is **15°C** with winds at **10 km/h**. That's a
+        mild, comfortable day — perfect for a walk or some time outdoors. \U0001F324️\"}]},{\"role\":\"user\",\"content\":[{\"type\":\"text\",\"text\":\"What's
+        the weather in Paris? (48.8575, 2.3514)\"}]},{\"role\":\"assistant\",\"content\":[{\"type\":\"tool_use\",\"id\":\"call_01a1ed62e2167026b8b41de0\",\"name\":\"weather\",\"input\":{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}}]},{\"role\":\"user\",\"content\":[{\"type\":\"tool_result\",\"tool_use_id\":\"call_01a1ed62e2167026b8b41de0\",\"content\":[{\"type\":\"text\",\"text\":\"Current
+        weather at 48.8575, 2.3514: 15°C, Wind: 10 km/h\"}]}]}],\"stream\":false,\"max_tokens\":524288,\"tools\":[{\"name\":\"weather\",\"description\":\"Gets
+        current weather for a location\",\"input_schema\":{\"type\":\"object\",\"properties\":{\"latitude\":{\"type\":\"string\",\"description\":\"Latitude
+        (e.g., 52.5200)\"},\"longitude\":{\"type\":\"string\",\"description\":\"Longitude
+        (e.g., 13.4050)\"}},\"required\":[\"latitude\",\"longitude\"],\"additionalProperties\":false,\"strict\":true}}]}"
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -226,27 +224,27 @@ http_interactions:
       Content-Type:
       - application/json; charset=utf-8
       Content-Length:
-      - '573'
+      - '488'
       Trace-Id:
-      - '07483d475e1a191a398591b32aaf2fba'
+      - 074c7b6b0350a221a7e4e1526b9c4859
       X-Session-Id:
       - f950ddba17296fc881a49ec8d6450c57
       X-Mm-Request-Id:
-      - 2092934004998157135_1794705991va8bgf
+      - 2092934004998157135_1794984043fn3p4o
       Minimax-Request-Id:
-      - a24c667e7e1cc19467c32707f26f4efd
+      - 5cf229e5d92745895b1edeb30278b9ea
       Alb-Receive-Time:
-      - '1794705991.892'
+      - '1794984043.324'
       Alb-Request-Id:
-      - 8bc3a005a8a3d0d6647f21709c10933c50cb9463
+      - 8bd5a731c9736e8a0e51216b4dacfb119366f38e
       Expires:
-      - Sun, 15 Nov 2026 01:26:35 GMT
+      - Wed, 18 Nov 2026 06:40:44 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Sun, 15 Nov 2026 01:26:35 GMT
+      - Wed, 18 Nov 2026 06:40:44 GMT
       Connection:
       - keep-alive
       Access-Control-Allow-Origin:
@@ -256,6 +254,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6IjA3NDgzZDQ3NWUxYTE5MWEzOTg1OTFiMzJhYWYyZmJhIiwidHlwZSI6Im1lc3NhZ2UiLCJyb2xlIjoiYXNzaXN0YW50IiwibW9kZWwiOiJNaW5pTWF4LU0zLjEtRmxhc2giLCJjb250ZW50IjpbeyJ0ZXh0IjoiVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBQYXJpcyAoNDguODU3NSwgMi4zNTE0KSBpczpcblxuLSAqKlRlbXBlcmF0dXJlOioqIDE1wrBDXG4tICoqV2luZDoqKiAxMCBrbS9oXG5cbkludGVyZXN0aW5nbHksIGl0J3MgdGhlIHNhbWUgcmVhZGluZyBhcyBCZXJsaW4g4oCUIDE1wrBDIHdpdGggMTAga20vaCB3aW5kLiBCb3RoIGNpdGllcyBhcmUgZXhwZXJpZW5jaW5nIHNpbWlsYXIgbWlsZCwgY2FsbSBjb25kaXRpb25zIHJpZ2h0IG5vdy4iLCJ0eXBlIjoidGV4dCJ9XSwidXNhZ2UiOnsiaW5wdXRfdG9rZW5zIjoyNDYsIm91dHB1dF90b2tlbnMiOjY5LCJjYWNoZV9jcmVhdGlvbl9pbnB1dF90b2tlbnMiOjAsImNhY2hlX3JlYWRfaW5wdXRfdG9rZW5zIjo1MTJ9LCJzdG9wX3JlYXNvbiI6ImVuZF90dXJuIiwiYmFzZV9yZXNwIjp7InN0YXR1c19jb2RlIjowLCJzdGF0dXNfbXNnIjoiIn19
-  recorded_at: Sun, 15 Nov 2026 01:26:35 GMT
-recorded_with: VCR 6.4.0
+        eyJpZCI6IjA3NGM3YjZiMDM1MGEyMjFhN2U0ZTE1MjZiOWM0ODU5IiwidHlwZSI6Im1lc3NhZ2UiLCJyb2xlIjoiYXNzaXN0YW50IiwibW9kZWwiOiJNaW5pTWF4LU0zLjEtRmxhc2giLCJjb250ZW50IjpbeyJ0ZXh0IjoiUGFyaXMgaXMgYWxzbyBhdCAqKjE1wrBDKiogd2l0aCB3aW5kcyBhdCAqKjEwIGttL2gqKiDigJQgZXhhY3RseSB0aGUgc2FtZSBhcyBCZXJsaW4uIEJvdGggY2l0aWVzIGFyZSBlbmpveWluZyBpZGVudGljYWwgbWlsZCwgY29tZm9ydGFibGUgd2VhdGhlciByaWdodCBub3cuIPCfjKTvuI8iLCJ0eXBlIjoidGV4dCJ9XSwidXNhZ2UiOnsiaW5wdXRfdG9rZW5zIjo4Miwib3V0cHV0X3Rva2VucyI6MzksImNhY2hlX2NyZWF0aW9uX2lucHV0X3Rva2VucyI6MCwiY2FjaGVfcmVhZF9pbnB1dF90b2tlbnMiOjY1NX0sInN0b3BfcmVhc29uIjoiZW5kX3R1cm4iLCJiYXNlX3Jlc3AiOnsic3RhdHVzX2NvZGUiOjAsInN0YXR1c19tc2ciOiIifX0=
+  recorded_at: Wed, 18 Nov 2026 06:40:44 GMT
+recorded_with: VCR 6.4.1

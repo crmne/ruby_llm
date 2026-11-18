@@ -9,7 +9,7 @@ http_interactions:
         is 6 times 7? Reply with the number only."}],"stream":true,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -30,7 +30,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Sun, 15 Nov 2026 01:21:00 GMT
+      - Wed, 18 Nov 2026 06:34:33 GMT
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -42,117 +42,123 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - e2ffc77f6809f2b8d886bda724abcbc4
+      - bedc8c398ab03e74c26618f28414b2bb
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 eeeb5087a36839b2299b9c53f96feb8e.cloudfront.net (CloudFront)
+      - 1.1 edd1b5bc7d0087f00636fe3b7878b848.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL50-P1
+      - TXL52-P2
       X-Amz-Cf-Id:
-      - xB3Op-wh38gWd9DIRFAe47yokHP3km_cw7YX9A_2iOgu5GQwHPg3oA==
+      - kC44oIzyb-DsdvfDxd4_kgt__huUw-Ui9Su8Tb6Lztl3Bsv_s9NfgQ==
     body:
       encoding: ASCII-8BIT
       string: |+
         event: response.created
-        data: {"type":"response.created","response":{"id":"5ebaf766-c4e1-4e35-811c-c53b43683057","object":"response","created_at":1794705660,"status":"in_progress","background":false,"completed_at":null,"content_filters":null,"error":null,"frequency_penalty":0.0,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"deepseek-flash","moderation":null,"output":[],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":null,"reasoning":{"effort":null,"summary":null},"safety_identifier":null,"service_tier":"default","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":null},"tool_choice":"auto","tools":[],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":null,"user":null,"metadata":{}},"sequence_number":0}
+        data: {"type":"response.created","response":{"id":"840774b5-cc33-4596-b19c-ad12c29d2d79","object":"response","created_at":1794983673,"status":"in_progress","background":false,"completed_at":null,"content_filters":null,"error":null,"frequency_penalty":0.0,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"deepseek-flash","moderation":null,"output":[],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":null,"reasoning":{"effort":null,"summary":null},"safety_identifier":null,"service_tier":"default","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":null},"tool_choice":"auto","tools":[],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":null,"user":null,"metadata":{}},"sequence_number":0}
 
         event: response.in_progress
-        data: {"type":"response.in_progress","response":{"id":"5ebaf766-c4e1-4e35-811c-c53b43683057","object":"response","created_at":1794705660,"status":"in_progress","background":false,"completed_at":null,"content_filters":null,"error":null,"frequency_penalty":0.0,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"deepseek-flash","moderation":null,"output":[],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":null,"reasoning":{"effort":null,"summary":null},"safety_identifier":null,"service_tier":"default","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":null},"tool_choice":"auto","tools":[],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":null,"user":null,"metadata":{}},"sequence_number":1}
+        data: {"type":"response.in_progress","response":{"id":"840774b5-cc33-4596-b19c-ad12c29d2d79","object":"response","created_at":1794983673,"status":"in_progress","background":false,"completed_at":null,"content_filters":null,"error":null,"frequency_penalty":0.0,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"deepseek-flash","moderation":null,"output":[],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":null,"reasoning":{"effort":null,"summary":null},"safety_identifier":null,"service_tier":"default","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":null},"tool_choice":"auto","tools":[],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":null,"user":null,"metadata":{}},"sequence_number":1}
 
         event: response.output_item.added
-        data: {"type":"response.output_item.added","item":{"type":"reasoning","id":"8350cbec-41bd-403b-b8fa-274fc032b507","status":"in_progress","content":[],"summary":[],"encrypted_content":"5ebaf766-c4e1-4e35-811c-c53b43683057-0"},"output_index":0,"sequence_number":2}
+        data: {"type":"response.output_item.added","item":{"type":"reasoning","id":"7a8961f3-3a9b-4e5e-b95d-38011a2845bb","status":"in_progress","content":[],"summary":[],"encrypted_content":"840774b5-cc33-4596-b19c-ad12c29d2d79-0"},"output_index":0,"sequence_number":2}
 
         event: response.content_part.added
-        data: {"type":"response.content_part.added","content_index":0,"item_id":"8350cbec-41bd-403b-b8fa-274fc032b507","output_index":0,"part":{"type":"reasoning_text","text":""},"sequence_number":3}
+        data: {"type":"response.content_part.added","content_index":0,"item_id":"7a8961f3-3a9b-4e5e-b95d-38011a2845bb","output_index":0,"part":{"type":"reasoning_text","text":""},"sequence_number":3}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":"We","item_id":"8350cbec-41bd-403b-b8fa-274fc032b507","output_index":0,"sequence_number":4}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":"We","item_id":"7a8961f3-3a9b-4e5e-b95d-38011a2845bb","output_index":0,"sequence_number":4}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" need","item_id":"8350cbec-41bd-403b-b8fa-274fc032b507","output_index":0,"sequence_number":5}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" need","item_id":"7a8961f3-3a9b-4e5e-b95d-38011a2845bb","output_index":0,"sequence_number":5}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" answer","item_id":"8350cbec-41bd-403b-b8fa-274fc032b507","output_index":0,"sequence_number":6}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" answer","item_id":"7a8961f3-3a9b-4e5e-b95d-38011a2845bb","output_index":0,"sequence_number":6}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" only","item_id":"8350cbec-41bd-403b-b8fa-274fc032b507","output_index":0,"sequence_number":7}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" only","item_id":"7a8961f3-3a9b-4e5e-b95d-38011a2845bb","output_index":0,"sequence_number":7}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" number","item_id":"8350cbec-41bd-403b-b8fa-274fc032b507","output_index":0,"sequence_number":8}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" number","item_id":"7a8961f3-3a9b-4e5e-b95d-38011a2845bb","output_index":0,"sequence_number":8}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":".","item_id":"8350cbec-41bd-403b-b8fa-274fc032b507","output_index":0,"sequence_number":9}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":".","item_id":"7a8961f3-3a9b-4e5e-b95d-38011a2845bb","output_index":0,"sequence_number":9}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" ","item_id":"8350cbec-41bd-403b-b8fa-274fc032b507","output_index":0,"sequence_number":10}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" ","item_id":"7a8961f3-3a9b-4e5e-b95d-38011a2845bb","output_index":0,"sequence_number":10}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":"6","item_id":"8350cbec-41bd-403b-b8fa-274fc032b507","output_index":0,"sequence_number":11}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":"6","item_id":"7a8961f3-3a9b-4e5e-b95d-38011a2845bb","output_index":0,"sequence_number":11}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":"*","item_id":"8350cbec-41bd-403b-b8fa-274fc032b507","output_index":0,"sequence_number":12}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":"*","item_id":"7a8961f3-3a9b-4e5e-b95d-38011a2845bb","output_index":0,"sequence_number":12}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":"7","item_id":"8350cbec-41bd-403b-b8fa-274fc032b507","output_index":0,"sequence_number":13}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":"7","item_id":"7a8961f3-3a9b-4e5e-b95d-38011a2845bb","output_index":0,"sequence_number":13}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":"=","item_id":"8350cbec-41bd-403b-b8fa-274fc032b507","output_index":0,"sequence_number":14}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":"=","item_id":"7a8961f3-3a9b-4e5e-b95d-38011a2845bb","output_index":0,"sequence_number":14}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":"42","item_id":"8350cbec-41bd-403b-b8fa-274fc032b507","output_index":0,"sequence_number":15}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":"42","item_id":"7a8961f3-3a9b-4e5e-b95d-38011a2845bb","output_index":0,"sequence_number":15}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":".","item_id":"8350cbec-41bd-403b-b8fa-274fc032b507","output_index":0,"sequence_number":16}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":".","item_id":"7a8961f3-3a9b-4e5e-b95d-38011a2845bb","output_index":0,"sequence_number":16}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" Must","item_id":"8350cbec-41bd-403b-b8fa-274fc032b507","output_index":0,"sequence_number":17}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" Must","item_id":"7a8961f3-3a9b-4e5e-b95d-38011a2845bb","output_index":0,"sequence_number":17}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" reply","item_id":"8350cbec-41bd-403b-b8fa-274fc032b507","output_index":0,"sequence_number":18}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" reply","item_id":"7a8961f3-3a9b-4e5e-b95d-38011a2845bb","output_index":0,"sequence_number":18}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" number","item_id":"8350cbec-41bd-403b-b8fa-274fc032b507","output_index":0,"sequence_number":19}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" with","item_id":"7a8961f3-3a9b-4e5e-b95d-38011a2845bb","output_index":0,"sequence_number":19}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" only","item_id":"8350cbec-41bd-403b-b8fa-274fc032b507","output_index":0,"sequence_number":20}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" number","item_id":"7a8961f3-3a9b-4e5e-b95d-38011a2845bb","output_index":0,"sequence_number":20}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":".","item_id":"8350cbec-41bd-403b-b8fa-274fc032b507","output_index":0,"sequence_number":21}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" only","item_id":"7a8961f3-3a9b-4e5e-b95d-38011a2845bb","output_index":0,"sequence_number":21}
+
+        event: response.reasoning_text.delta
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":".","item_id":"7a8961f3-3a9b-4e5e-b95d-38011a2845bb","output_index":0,"sequence_number":22}
+
+        event: response.reasoning_text.delta
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" \n","item_id":"7a8961f3-3a9b-4e5e-b95d-38011a2845bb","output_index":0,"sequence_number":23}
 
         event: response.reasoning_text.done
-        data: {"type":"response.reasoning_text.done","content_index":0,"item_id":"8350cbec-41bd-403b-b8fa-274fc032b507","output_index":0,"sequence_number":22,"text":"We need answer only number. 6*7=42. Must reply number only."}
+        data: {"type":"response.reasoning_text.done","content_index":0,"item_id":"7a8961f3-3a9b-4e5e-b95d-38011a2845bb","output_index":0,"sequence_number":24,"text":"We need answer only number. 6*7=42. Must reply with number only. \n"}
 
         event: response.content_part.done
-        data: {"type":"response.content_part.done","content_index":0,"item_id":"8350cbec-41bd-403b-b8fa-274fc032b507","output_index":0,"part":{"type":"reasoning_text","text":"We need answer only number. 6*7=42. Must reply number only."},"sequence_number":23}
+        data: {"type":"response.content_part.done","content_index":0,"item_id":"7a8961f3-3a9b-4e5e-b95d-38011a2845bb","output_index":0,"part":{"type":"reasoning_text","text":"We need answer only number. 6*7=42. Must reply with number only. \n"},"sequence_number":25}
 
         event: response.output_item.done
-        data: {"type":"response.output_item.done","item":{"type":"reasoning","id":"8350cbec-41bd-403b-b8fa-274fc032b507","status":"completed","content":[{"type":"reasoning_text","text":"We need answer only number. 6*7=42. Must reply number only."}],"summary":[],"encrypted_content":"5ebaf766-c4e1-4e35-811c-c53b43683057-0"},"output_index":0,"sequence_number":24}
+        data: {"type":"response.output_item.done","item":{"type":"reasoning","id":"7a8961f3-3a9b-4e5e-b95d-38011a2845bb","status":"completed","content":[{"type":"reasoning_text","text":"We need answer only number. 6*7=42. Must reply with number only. \n"}],"summary":[],"encrypted_content":"840774b5-cc33-4596-b19c-ad12c29d2d79-0"},"output_index":0,"sequence_number":26}
 
         event: response.output_item.added
-        data: {"type":"response.output_item.added","item":{"type":"message","id":"c46d2724-7582-40f0-96e9-36455b8064aa","status":"in_progress","content":[],"phase":"final_answer","role":"assistant"},"output_index":1,"sequence_number":25}
+        data: {"type":"response.output_item.added","item":{"type":"message","id":"09777ef5-243f-4f37-a473-2adfbd093ad4","status":"in_progress","content":[],"phase":"final_answer","role":"assistant"},"output_index":1,"sequence_number":27}
 
         event: response.content_part.added
-        data: {"type":"response.content_part.added","content_index":0,"item_id":"c46d2724-7582-40f0-96e9-36455b8064aa","output_index":1,"part":{"type":"output_text","annotations":[],"logprobs":[],"text":""},"sequence_number":26}
+        data: {"type":"response.content_part.added","content_index":0,"item_id":"09777ef5-243f-4f37-a473-2adfbd093ad4","output_index":1,"part":{"type":"output_text","annotations":[],"logprobs":[],"text":""},"sequence_number":28}
 
         event: response.output_text.delta
-        data: {"type":"response.output_text.delta","content_index":0,"delta":"42","item_id":"c46d2724-7582-40f0-96e9-36455b8064aa","logprobs":[],"output_index":1,"sequence_number":27}
+        data: {"type":"response.output_text.delta","content_index":0,"delta":"42","item_id":"09777ef5-243f-4f37-a473-2adfbd093ad4","logprobs":[],"output_index":1,"sequence_number":29}
 
         event: response.output_text.done
-        data: {"type":"response.output_text.done","content_index":0,"item_id":"c46d2724-7582-40f0-96e9-36455b8064aa","logprobs":[],"output_index":1,"sequence_number":28,"text":"42"}
+        data: {"type":"response.output_text.done","content_index":0,"item_id":"09777ef5-243f-4f37-a473-2adfbd093ad4","logprobs":[],"output_index":1,"sequence_number":30,"text":"42"}
 
         event: response.content_part.done
-        data: {"type":"response.content_part.done","content_index":0,"item_id":"c46d2724-7582-40f0-96e9-36455b8064aa","output_index":1,"part":{"type":"output_text","annotations":[],"logprobs":[],"text":"42"},"sequence_number":29}
+        data: {"type":"response.content_part.done","content_index":0,"item_id":"09777ef5-243f-4f37-a473-2adfbd093ad4","output_index":1,"part":{"type":"output_text","annotations":[],"logprobs":[],"text":"42"},"sequence_number":31}
 
         event: response.output_item.done
-        data: {"type":"response.output_item.done","item":{"type":"message","id":"c46d2724-7582-40f0-96e9-36455b8064aa","status":"completed","content":[{"type":"output_text","annotations":[],"logprobs":[],"text":"42"}],"phase":"final_answer","role":"assistant"},"output_index":1,"sequence_number":30}
+        data: {"type":"response.output_item.done","item":{"type":"message","id":"09777ef5-243f-4f37-a473-2adfbd093ad4","status":"completed","content":[{"type":"output_text","annotations":[],"logprobs":[],"text":"42"}],"phase":"final_answer","role":"assistant"},"output_index":1,"sequence_number":32}
 
         event: response.completed
-        data: {"type":"response.completed","response":{"id":"5ebaf766-c4e1-4e35-811c-c53b43683057","object":"response","created_at":1794705660,"status":"completed","background":false,"completed_at":1794705661,"content_filters":null,"error":null,"frequency_penalty":0.0,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"deepseek-flash","moderation":null,"output":[{"type":"reasoning","id":"8350cbec-41bd-403b-b8fa-274fc032b507","status":"completed","content":[{"type":"reasoning_text","text":"We need answer only number. 6*7=42. Must reply number only."}],"summary":[],"encrypted_content":"5ebaf766-c4e1-4e35-811c-c53b43683057-0"},{"type":"message","id":"c46d2724-7582-40f0-96e9-36455b8064aa","status":"completed","content":[{"type":"output_text","annotations":[],"logprobs":[],"text":"42"}],"phase":"final_answer","role":"assistant"}],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":null,"reasoning":{"effort":null,"summary":null},"safety_identifier":null,"service_tier":"default","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":null},"tool_choice":"auto","tools":[],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":{"input_tokens":44,"input_tokens_details":{"cached_tokens":0},"output_tokens":20,"output_tokens_details":{"reasoning_tokens":18},"total_tokens":64},"user":null,"metadata":{}},"sequence_number":31}
+        data: {"type":"response.completed","response":{"id":"840774b5-cc33-4596-b19c-ad12c29d2d79","object":"response","created_at":1794983673,"status":"completed","background":false,"completed_at":1794983674,"content_filters":null,"error":null,"frequency_penalty":0.0,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"deepseek-flash","moderation":null,"output":[{"type":"reasoning","id":"7a8961f3-3a9b-4e5e-b95d-38011a2845bb","status":"completed","content":[{"type":"reasoning_text","text":"We need answer only number. 6*7=42. Must reply with number only. \n"}],"summary":[],"encrypted_content":"840774b5-cc33-4596-b19c-ad12c29d2d79-0"},{"type":"message","id":"09777ef5-243f-4f37-a473-2adfbd093ad4","status":"completed","content":[{"type":"output_text","annotations":[],"logprobs":[],"text":"42"}],"phase":"final_answer","role":"assistant"}],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":null,"reasoning":{"effort":null,"summary":null},"safety_identifier":null,"service_tier":"default","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":null},"tool_choice":"auto","tools":[],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":{"input_tokens":44,"input_tokens_details":{"cached_tokens":0},"output_tokens":22,"output_tokens_details":{"reasoning_tokens":20},"total_tokens":66},"user":null,"metadata":{}},"sequence_number":33}
 
-  recorded_at: Sun, 15 Nov 2026 01:21:01 GMT
+  recorded_at: Wed, 18 Nov 2026 06:34:34 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/responses
@@ -160,11 +166,11 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"deepseek-v4-flash","input":[{"role":"user","content":"What
         is 6 times 7? Reply with the number only."},{"type":"reasoning","content":[{"type":"reasoning_text","text":"We
-        need answer only number. 6*7=42. Must reply number only."}]},{"role":"assistant","content":[{"type":"output_text","text":"42"}],"phase":"final_answer"},{"role":"user","content":"Add
+        need answer only number. 6*7=42. Must reply with number only. \n"}]},{"role":"assistant","content":[{"type":"output_text","text":"42"}],"phase":"final_answer"},{"role":"user","content":"Add
         one to it. Reply with the number only."}],"stream":true,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -185,7 +191,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Sun, 15 Nov 2026 01:21:01 GMT
+      - Wed, 18 Nov 2026 06:34:34 GMT
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -197,131 +203,134 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - f7a2f7ce4fba8afc74e3551c1c1d0ca4
+      - abcc7bb73b747c611f76f1239ce30f03
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 bdbe839f5dd01bab617336740c740d78.cloudfront.net (CloudFront)
+      - 1.1 f421789bb9b1af95b94e4ddcef306278.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL52-P2
+      - TXL52-P3
       X-Amz-Cf-Id:
-      - r1dgWwZc_pqu9u8Fq9GZaI_CE1FjThBBdReRCdD9gq34bnB7u8E_pg==
+      - 4QxWHmvD3CRnHW7cP85QOV-C79ZGaJkJPNwh_nab9xaqn13yLPqcSA==
     body:
       encoding: ASCII-8BIT
       string: |+
         event: response.created
-        data: {"type":"response.created","response":{"id":"9e90f534-1b50-4526-ab77-f801718237c4","object":"response","created_at":1794705661,"status":"in_progress","background":false,"completed_at":null,"content_filters":null,"error":null,"frequency_penalty":0.0,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"deepseek-flash","moderation":null,"output":[],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":null,"reasoning":{"effort":null,"summary":null},"safety_identifier":null,"service_tier":"default","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":null},"tool_choice":"auto","tools":[],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":null,"user":null,"metadata":{}},"sequence_number":0}
+        data: {"type":"response.created","response":{"id":"531caefb-a3c8-4d1c-a8b4-b96c3d502be2","object":"response","created_at":1794983674,"status":"in_progress","background":false,"completed_at":null,"content_filters":null,"error":null,"frequency_penalty":0.0,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"deepseek-flash","moderation":null,"output":[],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":null,"reasoning":{"effort":null,"summary":null},"safety_identifier":null,"service_tier":"default","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":null},"tool_choice":"auto","tools":[],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":null,"user":null,"metadata":{}},"sequence_number":0}
 
         event: response.in_progress
-        data: {"type":"response.in_progress","response":{"id":"9e90f534-1b50-4526-ab77-f801718237c4","object":"response","created_at":1794705661,"status":"in_progress","background":false,"completed_at":null,"content_filters":null,"error":null,"frequency_penalty":0.0,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"deepseek-flash","moderation":null,"output":[],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":null,"reasoning":{"effort":null,"summary":null},"safety_identifier":null,"service_tier":"default","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":null},"tool_choice":"auto","tools":[],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":null,"user":null,"metadata":{}},"sequence_number":1}
+        data: {"type":"response.in_progress","response":{"id":"531caefb-a3c8-4d1c-a8b4-b96c3d502be2","object":"response","created_at":1794983674,"status":"in_progress","background":false,"completed_at":null,"content_filters":null,"error":null,"frequency_penalty":0.0,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"deepseek-flash","moderation":null,"output":[],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":null,"reasoning":{"effort":null,"summary":null},"safety_identifier":null,"service_tier":"default","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":null},"tool_choice":"auto","tools":[],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":null,"user":null,"metadata":{}},"sequence_number":1}
 
         event: response.output_item.added
-        data: {"type":"response.output_item.added","item":{"type":"reasoning","id":"1ebc1ca3-c6d3-4f61-9416-25aca6539e65","status":"in_progress","content":[],"summary":[],"encrypted_content":"9e90f534-1b50-4526-ab77-f801718237c4-0"},"output_index":0,"sequence_number":2}
+        data: {"type":"response.output_item.added","item":{"type":"reasoning","id":"ec0fad19-3e9d-40c2-9ba1-9611f27237af","status":"in_progress","content":[],"summary":[],"encrypted_content":"531caefb-a3c8-4d1c-a8b4-b96c3d502be2-0"},"output_index":0,"sequence_number":2}
 
         event: response.content_part.added
-        data: {"type":"response.content_part.added","content_index":0,"item_id":"1ebc1ca3-c6d3-4f61-9416-25aca6539e65","output_index":0,"part":{"type":"reasoning_text","text":""},"sequence_number":3}
+        data: {"type":"response.content_part.added","content_index":0,"item_id":"ec0fad19-3e9d-40c2-9ba1-9611f27237af","output_index":0,"part":{"type":"reasoning_text","text":""},"sequence_number":3}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":"We","item_id":"1ebc1ca3-c6d3-4f61-9416-25aca6539e65","output_index":0,"sequence_number":4}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":"We","item_id":"ec0fad19-3e9d-40c2-9ba1-9611f27237af","output_index":0,"sequence_number":4}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" need","item_id":"1ebc1ca3-c6d3-4f61-9416-25aca6539e65","output_index":0,"sequence_number":5}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" need","item_id":"ec0fad19-3e9d-40c2-9ba1-9611f27237af","output_index":0,"sequence_number":5}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" answer","item_id":"1ebc1ca3-c6d3-4f61-9416-25aca6539e65","output_index":0,"sequence_number":6}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" answer","item_id":"ec0fad19-3e9d-40c2-9ba1-9611f27237af","output_index":0,"sequence_number":6}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":".","item_id":"1ebc1ca3-c6d3-4f61-9416-25aca6539e65","output_index":0,"sequence_number":7}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" only","item_id":"ec0fad19-3e9d-40c2-9ba1-9611f27237af","output_index":0,"sequence_number":7}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" \"","item_id":"1ebc1ca3-c6d3-4f61-9416-25aca6539e65","output_index":0,"sequence_number":8}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" number","item_id":"ec0fad19-3e9d-40c2-9ba1-9611f27237af","output_index":0,"sequence_number":8}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":"Add","item_id":"1ebc1ca3-c6d3-4f61-9416-25aca6539e65","output_index":0,"sequence_number":9}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":".","item_id":"ec0fad19-3e9d-40c2-9ba1-9611f27237af","output_index":0,"sequence_number":9}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" one","item_id":"1ebc1ca3-c6d3-4f61-9416-25aca6539e65","output_index":0,"sequence_number":10}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" Need","item_id":"ec0fad19-3e9d-40c2-9ba1-9611f27237af","output_index":0,"sequence_number":10}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" to","item_id":"1ebc1ca3-c6d3-4f61-9416-25aca6539e65","output_index":0,"sequence_number":11}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" interpret","item_id":"ec0fad19-3e9d-40c2-9ba1-9611f27237af","output_index":0,"sequence_number":11}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" it","item_id":"1ebc1ca3-c6d3-4f61-9416-25aca6539e65","output_index":0,"sequence_number":12}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":":","item_id":"ec0fad19-3e9d-40c2-9ba1-9611f27237af","output_index":0,"sequence_number":12}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":"\"","item_id":"1ebc1ca3-c6d3-4f61-9416-25aca6539e65","output_index":0,"sequence_number":13}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" previous","item_id":"ec0fad19-3e9d-40c2-9ba1-9611f27237af","output_index":0,"sequence_number":13}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" refers","item_id":"1ebc1ca3-c6d3-4f61-9416-25aca6539e65","output_index":0,"sequence_number":14}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" answer","item_id":"ec0fad19-3e9d-40c2-9ba1-9611f27237af","output_index":0,"sequence_number":14}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" previous","item_id":"1ebc1ca3-c6d3-4f61-9416-25aca6539e65","output_index":0,"sequence_number":15}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" ","item_id":"ec0fad19-3e9d-40c2-9ba1-9611f27237af","output_index":0,"sequence_number":15}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" ","item_id":"1ebc1ca3-c6d3-4f61-9416-25aca6539e65","output_index":0,"sequence_number":16}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":"42","item_id":"ec0fad19-3e9d-40c2-9ba1-9611f27237af","output_index":0,"sequence_number":16}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":"42","item_id":"1ebc1ca3-c6d3-4f61-9416-25aca6539e65","output_index":0,"sequence_number":17}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":",","item_id":"ec0fad19-3e9d-40c2-9ba1-9611f27237af","output_index":0,"sequence_number":17}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":".","item_id":"1ebc1ca3-c6d3-4f61-9416-25aca6539e65","output_index":0,"sequence_number":18}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" add","item_id":"ec0fad19-3e9d-40c2-9ba1-9611f27237af","output_index":0,"sequence_number":18}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" So","item_id":"1ebc1ca3-c6d3-4f61-9416-25aca6539e65","output_index":0,"sequence_number":19}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" one","item_id":"ec0fad19-3e9d-40c2-9ba1-9611f27237af","output_index":0,"sequence_number":19}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" ","item_id":"1ebc1ca3-c6d3-4f61-9416-25aca6539e65","output_index":0,"sequence_number":20}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" =","item_id":"ec0fad19-3e9d-40c2-9ba1-9611f27237af","output_index":0,"sequence_number":20}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":"43","item_id":"1ebc1ca3-c6d3-4f61-9416-25aca6539e65","output_index":0,"sequence_number":21}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":"43","item_id":"ec0fad19-3e9d-40c2-9ba1-9611f27237af","output_index":0,"sequence_number":21}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":".","item_id":"1ebc1ca3-c6d3-4f61-9416-25aca6539e65","output_index":0,"sequence_number":22}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":".","item_id":"ec0fad19-3e9d-40c2-9ba1-9611f27237af","output_index":0,"sequence_number":22}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" Number","item_id":"1ebc1ca3-c6d3-4f61-9416-25aca6539e65","output_index":0,"sequence_number":23}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" Must","item_id":"ec0fad19-3e9d-40c2-9ba1-9611f27237af","output_index":0,"sequence_number":23}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" only","item_id":"1ebc1ca3-c6d3-4f61-9416-25aca6539e65","output_index":0,"sequence_number":24}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" reply","item_id":"ec0fad19-3e9d-40c2-9ba1-9611f27237af","output_index":0,"sequence_number":24}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":".","item_id":"1ebc1ca3-c6d3-4f61-9416-25aca6539e65","output_index":0,"sequence_number":25}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" number","item_id":"ec0fad19-3e9d-40c2-9ba1-9611f27237af","output_index":0,"sequence_number":25}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" \n","item_id":"1ebc1ca3-c6d3-4f61-9416-25aca6539e65","output_index":0,"sequence_number":26}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" only","item_id":"ec0fad19-3e9d-40c2-9ba1-9611f27237af","output_index":0,"sequence_number":26}
+
+        event: response.reasoning_text.delta
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":".","item_id":"ec0fad19-3e9d-40c2-9ba1-9611f27237af","output_index":0,"sequence_number":27}
 
         event: response.reasoning_text.done
-        data: {"type":"response.reasoning_text.done","content_index":0,"item_id":"1ebc1ca3-c6d3-4f61-9416-25aca6539e65","output_index":0,"sequence_number":27,"text":"We need answer. \"Add one to it\" refers previous 42. So 43. Number only. \n"}
+        data: {"type":"response.reasoning_text.done","content_index":0,"item_id":"ec0fad19-3e9d-40c2-9ba1-9611f27237af","output_index":0,"sequence_number":28,"text":"We need answer only number. Need interpret: previous answer 42, add one =43. Must reply number only."}
 
         event: response.content_part.done
-        data: {"type":"response.content_part.done","content_index":0,"item_id":"1ebc1ca3-c6d3-4f61-9416-25aca6539e65","output_index":0,"part":{"type":"reasoning_text","text":"We need answer. \"Add one to it\" refers previous 42. So 43. Number only. \n"},"sequence_number":28}
+        data: {"type":"response.content_part.done","content_index":0,"item_id":"ec0fad19-3e9d-40c2-9ba1-9611f27237af","output_index":0,"part":{"type":"reasoning_text","text":"We need answer only number. Need interpret: previous answer 42, add one =43. Must reply number only."},"sequence_number":29}
 
         event: response.output_item.done
-        data: {"type":"response.output_item.done","item":{"type":"reasoning","id":"1ebc1ca3-c6d3-4f61-9416-25aca6539e65","status":"completed","content":[{"type":"reasoning_text","text":"We need answer. \"Add one to it\" refers previous 42. So 43. Number only. \n"}],"summary":[],"encrypted_content":"9e90f534-1b50-4526-ab77-f801718237c4-0"},"output_index":0,"sequence_number":29}
+        data: {"type":"response.output_item.done","item":{"type":"reasoning","id":"ec0fad19-3e9d-40c2-9ba1-9611f27237af","status":"completed","content":[{"type":"reasoning_text","text":"We need answer only number. Need interpret: previous answer 42, add one =43. Must reply number only."}],"summary":[],"encrypted_content":"531caefb-a3c8-4d1c-a8b4-b96c3d502be2-0"},"output_index":0,"sequence_number":30}
 
         event: response.output_item.added
-        data: {"type":"response.output_item.added","item":{"type":"message","id":"bc3aeedd-baf3-45b8-b50f-239904312ea0","status":"in_progress","content":[],"phase":"final_answer","role":"assistant"},"output_index":1,"sequence_number":30}
+        data: {"type":"response.output_item.added","item":{"type":"message","id":"2a5e3e40-9c87-409c-9738-83f0199ee382","status":"in_progress","content":[],"phase":"final_answer","role":"assistant"},"output_index":1,"sequence_number":31}
 
         event: response.content_part.added
-        data: {"type":"response.content_part.added","content_index":0,"item_id":"bc3aeedd-baf3-45b8-b50f-239904312ea0","output_index":1,"part":{"type":"output_text","annotations":[],"logprobs":[],"text":""},"sequence_number":31}
+        data: {"type":"response.content_part.added","content_index":0,"item_id":"2a5e3e40-9c87-409c-9738-83f0199ee382","output_index":1,"part":{"type":"output_text","annotations":[],"logprobs":[],"text":""},"sequence_number":32}
 
         event: response.output_text.delta
-        data: {"type":"response.output_text.delta","content_index":0,"delta":"43","item_id":"bc3aeedd-baf3-45b8-b50f-239904312ea0","logprobs":[],"output_index":1,"sequence_number":32}
+        data: {"type":"response.output_text.delta","content_index":0,"delta":"43","item_id":"2a5e3e40-9c87-409c-9738-83f0199ee382","logprobs":[],"output_index":1,"sequence_number":33}
 
         event: response.output_text.done
-        data: {"type":"response.output_text.done","content_index":0,"item_id":"bc3aeedd-baf3-45b8-b50f-239904312ea0","logprobs":[],"output_index":1,"sequence_number":33,"text":"43"}
+        data: {"type":"response.output_text.done","content_index":0,"item_id":"2a5e3e40-9c87-409c-9738-83f0199ee382","logprobs":[],"output_index":1,"sequence_number":34,"text":"43"}
 
         event: response.content_part.done
-        data: {"type":"response.content_part.done","content_index":0,"item_id":"bc3aeedd-baf3-45b8-b50f-239904312ea0","output_index":1,"part":{"type":"output_text","annotations":[],"logprobs":[],"text":"43"},"sequence_number":34}
+        data: {"type":"response.content_part.done","content_index":0,"item_id":"2a5e3e40-9c87-409c-9738-83f0199ee382","output_index":1,"part":{"type":"output_text","annotations":[],"logprobs":[],"text":"43"},"sequence_number":35}
 
         event: response.output_item.done
-        data: {"type":"response.output_item.done","item":{"type":"message","id":"bc3aeedd-baf3-45b8-b50f-239904312ea0","status":"completed","content":[{"type":"output_text","annotations":[],"logprobs":[],"text":"43"}],"phase":"final_answer","role":"assistant"},"output_index":1,"sequence_number":35}
+        data: {"type":"response.output_item.done","item":{"type":"message","id":"2a5e3e40-9c87-409c-9738-83f0199ee382","status":"completed","content":[{"type":"output_text","annotations":[],"logprobs":[],"text":"43"}],"phase":"final_answer","role":"assistant"},"output_index":1,"sequence_number":36}
 
         event: response.completed
-        data: {"type":"response.completed","response":{"id":"9e90f534-1b50-4526-ab77-f801718237c4","object":"response","created_at":1794705661,"status":"completed","background":false,"completed_at":1794705662,"content_filters":null,"error":null,"frequency_penalty":0.0,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"deepseek-flash","moderation":null,"output":[{"type":"reasoning","id":"1ebc1ca3-c6d3-4f61-9416-25aca6539e65","status":"completed","content":[{"type":"reasoning_text","text":"We need answer. \"Add one to it\" refers previous 42. So 43. Number only. \n"}],"summary":[],"encrypted_content":"9e90f534-1b50-4526-ab77-f801718237c4-0"},{"type":"message","id":"bc3aeedd-baf3-45b8-b50f-239904312ea0","status":"completed","content":[{"type":"output_text","annotations":[],"logprobs":[],"text":"43"}],"phase":"final_answer","role":"assistant"}],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":null,"reasoning":{"effort":null,"summary":null},"safety_identifier":null,"service_tier":"default","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":null},"tool_choice":"auto","tools":[],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":{"input_tokens":60,"input_tokens_details":{"cached_tokens":0},"output_tokens":25,"output_tokens_details":{"reasoning_tokens":23},"total_tokens":85},"user":null,"metadata":{}},"sequence_number":36}
+        data: {"type":"response.completed","response":{"id":"531caefb-a3c8-4d1c-a8b4-b96c3d502be2","object":"response","created_at":1794983674,"status":"completed","background":false,"completed_at":1794983675,"content_filters":null,"error":null,"frequency_penalty":0.0,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"deepseek-flash","moderation":null,"output":[{"type":"reasoning","id":"ec0fad19-3e9d-40c2-9ba1-9611f27237af","status":"completed","content":[{"type":"reasoning_text","text":"We need answer only number. Need interpret: previous answer 42, add one =43. Must reply number only."}],"summary":[],"encrypted_content":"531caefb-a3c8-4d1c-a8b4-b96c3d502be2-0"},{"type":"message","id":"2a5e3e40-9c87-409c-9738-83f0199ee382","status":"completed","content":[{"type":"output_text","annotations":[],"logprobs":[],"text":"43"}],"phase":"final_answer","role":"assistant"}],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":null,"reasoning":{"effort":null,"summary":null},"safety_identifier":null,"service_tier":"default","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":null},"tool_choice":"auto","tools":[],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":{"input_tokens":60,"input_tokens_details":{"cached_tokens":0},"output_tokens":26,"output_tokens_details":{"reasoning_tokens":24},"total_tokens":86},"user":null,"metadata":{}},"sequence_number":37}
 
-  recorded_at: Sun, 15 Nov 2026 01:21:02 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:34:35 GMT
+recorded_with: VCR 6.4.1
 ...

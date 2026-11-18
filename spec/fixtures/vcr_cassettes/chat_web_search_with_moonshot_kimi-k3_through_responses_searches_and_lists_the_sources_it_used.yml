@@ -9,7 +9,7 @@ http_interactions:
         the web: what is the latest stable Ruby version? Answer in one sentence."}]}],"stream":false,"store":false,"include":["reasoning.encrypted_content","web_search_call.action.sources"],"tools":[{"type":"web_search"}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:19:56 GMT
+      - Wed, 18 Nov 2026 06:35:39 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -37,7 +37,7 @@ http_interactions:
       - Accept-Encoding
       - Origin
       X-Internal-Adhoc-Canary:
-      - '1897954185'
+      - '2666295442'
       Msh-Gid:
       - "<MOONSHOT_GROUP_ID>"
       Msh-Org-Id:
@@ -45,7 +45,7 @@ http_interactions:
       Msh-Project-Id:
       - "<MOONSHOT_PROJECT_ID>"
       Msh-Request-Id:
-      - a866d9e6-e092-11f1-b46d-00163e4bf4af
+      - 3efe93d0-e31a-11f1-9aba-00163e2b0d23
       Msh-Trace-Mode:
       - 'on'
       Msh-Uid:
@@ -53,9 +53,9 @@ http_interactions:
       Msh-Usage-Cache-Write-Tokens-1h:
       - '0'
       Msh-Usage-Cache-Write-Tokens-5m:
-      - '8960'
+      - '9472'
       X-Msh-Trace-Id:
-      - 7709f012ef1ff12fbdcb9d7f0cf2a379
+      - 6b8a2931678d67546b089c9e4e908853
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Cf-Cache-Status:
@@ -66,19 +66,7 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"resp_059ac13e-658c-937b-85cc-2b43613a6d75","object":"response","created_at":1794705593,"completed_at":1794705596,"status":"completed","error":null,"incomplete_details":null,"output":[{"type":"web_search_call","id":"ws_dbsghe6rht5p715sg0m0","status":"completed","action":{"type":"search","query":"latest
-        stable Ruby version 2026 Ruby 3.2 latest release Ruby 3.2.0 release date 2026","sources":[{"type":"url","url":"https://endoflife.date/ruby","title":"Ruby"},{"type":"url","url":"https://dev.to/hsbt/is-your-ruby-version-still-supported-a-maintainers-guide-to-rubys-release-cycle-799","title":"Is
-        Your Ruby Version Still Supported? A Maintainer''s Guide to Ruby''s Release
-        Cycle"},{"type":"url","url":"https://www.herodevs.com/blog-posts/ruby-on-rails-end-of-life-versions-the-dual-ruby-rails-eol-problem-enterprises-face-in-2026","title":"Ruby
-        on Rails End-of-Life Versions: The Dual Ruby + Rails EOL Problem Enterprises
-        Face in 2026"},{"type":"url","url":"https://www.ruby-lang.org/en/downloads/releases/","title":"Ruby
-        Releases"},{"type":"url","url":"https://www.ruby-lang.org/en/downloads/","title":"Download
-        Ruby"},{"type":"url","url":"https://rubychangelog.com/versions-all/","title":"Ruby
-        all versions changelog"},{"type":"url","url":"https://piechowski.io/post/ruby-3-2-eol/","title":"Ruby
-        3.2 Is EOL: What You Actually Need to Do"}]}},{"type":"reasoning","id":"rs_G9WWB1eVh0EGWfHcMC3oa8hJ","status":"completed","summary":[{"type":"summary_text","text":"The
-        search results confirm that the latest stable Ruby version is 4.0.9, released
-        on October 22-23, 2026. The official ruby-lang.org downloads page states \"The
-        current stable version is 4.0.9.\"\n\nThe user wants the answer in one sentence."}]},{"type":"message","id":"msg_nLFKeuJU0V4al4BJoLPuqr0F","status":"completed","role":"assistant","content":[{"type":"output_text","text":"The
-        latest stable Ruby version is **Ruby 4.0.9**, released on October 22, 2026.","annotations":[]}]}],"usage":{"input_tokens":9023,"input_tokens_details":{"cache_write_tokens":8960,"cached_tokens":0},"output_tokens":100,"output_tokens_details":{"reasoning_tokens":60},"total_tokens":9123},"store":false,"background":false,"previous_response_id":null,"conversation":null,"instructions":null,"reasoning":null,"text":{"format":{"type":"text"}},"tools":[],"tool_choice":"auto","parallel_tool_calls":true,"max_output_tokens":null,"max_tool_calls":null,"metadata":null,"model":"kimi-k3","temperature":1,"top_p":0.95,"presence_penalty":0,"frequency_penalty":0,"top_logprobs":0,"truncation":"disabled","prompt_cache_key":null,"safety_identifier":null,"service_tier":"default"}'
-  recorded_at: Sun, 15 Nov 2026 01:19:56 GMT
-recorded_with: VCR 6.4.0
+      string: !binary |-
+        eyJpZCI6InJlc3BfMGJmY2ViMWItY2QzMS05ZTgxLTlhNjEtOTQ5OTEwZmQwYTNhIiwib2JqZWN0IjoicmVzcG9uc2UiLCJjcmVhdGVkX2F0IjoxNzk0OTgzNzMzLCJjb21wbGV0ZWRfYXQiOjE3OTQ5ODM3MzgsInN0YXR1cyI6ImNvbXBsZXRlZCIsImVycm9yIjpudWxsLCJpbmNvbXBsZXRlX2RldGFpbHMiOm51bGwsIm91dHB1dCI6W3sidHlwZSI6IndlYl9zZWFyY2hfY2FsbCIsImlkIjoid3NfZGJ1a2VjZGI4cW8yMjJ2Z2Y4NTAiLCJzdGF0dXMiOiJjb21wbGV0ZWQiLCJhY3Rpb24iOnsidHlwZSI6InNlYXJjaCIsInF1ZXJ5IjoibGF0ZXN0IHN0YWJsZSBSdWJ5IHZlcnNpb24gMjAyNiBSdWJ5IDMuMyBsYXRlc3QgcmVsZWFzZSBSdWJ5IDMuMy4wIHJlbGVhc2UgZGF0ZSAyMDI2Iiwic291cmNlcyI6W3sidHlwZSI6InVybCIsInVybCI6Imh0dHBzOi8vcnVieXJlZmVyZW5jZXMuZ2l0aHViLmlvL3J1YnljaGFuZ2VzLyIsInRpdGxlIjoiVGhlIFJ1YnkgQ2hhbmdlcyJ9LHsidHlwZSI6InVybCIsInVybCI6Imh0dHBzOi8vZ2l0bGFiLmNvbS9ncm91cHMvZ2l0bGFiLW9yZy8tL2VwaWNzLzEyMzUwIiwidGl0bGUiOiJSdWJ5IDMuMyAoIzEyMzUwKSDCtyBFcGljIMK3IGdpdGxhYi1vcmcifSx7InR5cGUiOiJ1cmwiLCJ1cmwiOiJodHRwczovL2VuZG9mbGlmZS5kYXRlL3J1YnkiLCJ0aXRsZSI6IlJ1YnkifSx7InR5cGUiOiJ1cmwiLCJ1cmwiOiJodHRwczovL2Rldi50by9oc2J0L2lzLXlvdXItcnVieS12ZXJzaW9uLXN0aWxsLXN1cHBvcnRlZC1hLW1haW50YWluZXJzLWd1aWRlLXRvLXJ1YnlzLXJlbGVhc2UtY3ljbGUtNzk5IiwidGl0bGUiOiJJcyBZb3VyIFJ1YnkgVmVyc2lvbiBTdGlsbCBTdXBwb3J0ZWQ/IEEgTWFpbnRhaW5lcidzIEd1aWRlIHRvIFJ1YnkncyBSZWxlYXNlIEN5Y2xlIn0seyJ0eXBlIjoidXJsIiwidXJsIjoiaHR0cHM6Ly93d3cuaGVyb2RldnMuY29tL2Jsb2ctcG9zdHMvcnVieS1vbi1yYWlscy1lbmQtb2YtbGlmZS12ZXJzaW9ucy10aGUtZHVhbC1ydWJ5LXJhaWxzLWVvbC1wcm9ibGVtLWVudGVycHJpc2VzLWZhY2UtaW4tMjAyNiIsInRpdGxlIjoiUnVieSBvbiBSYWlscyBFbmQtb2YtTGlmZSBWZXJzaW9uczogVGhlIER1YWwgUnVieSArIFJhaWxzIEVPTCBQcm9ibGVtIEVudGVycHJpc2VzIEZhY2UgaW4gMjAyNiJ9LHsidHlwZSI6InVybCIsInVybCI6Imh0dHBzOi8vd3d3LnJ1YnktbGFuZy5vcmcvZW4vZG93bmxvYWRzL3JlbGVhc2VzLyIsInRpdGxlIjoiUnVieSBSZWxlYXNlcyJ9LHsidHlwZSI6InVybCIsInVybCI6Imh0dHBzOi8vd3d3LnJ1YnktbGFuZy5vcmcvZW4vZG93bmxvYWRzLyIsInRpdGxlIjoiRG93bmxvYWQgUnVieSJ9LHsidHlwZSI6InVybCIsInVybCI6Imh0dHBzOi8vcnVieWNoYW5nZWxvZy5jb20vdGltZWxpbmUvIiwidGl0bGUiOiJUaW1lbGluZSAtIFJ1YnkgQ2hhbmdlbG9nIn0seyJ0eXBlIjoidXJsIiwidXJsIjoiaHR0cHM6Ly93d3cuZmFzdHJ1YnkuaW8vYmxvZy9ydWJ5LTMtMy5odG1sIiwidGl0bGUiOiJXaGF0J3MgTmV3IGluIFJ1YnkgMy4zLjAifSx7InR5cGUiOiJ1cmwiLCJ1cmwiOiJodHRwczovL2Rldm5ld3NsZXR0ZXIuY29tL3Avc3RhdGUtb2YtcnVieS0yMDI2LyIsInRpdGxlIjoiU3RhdGUgb2YgUnVieSAyMDI2In0seyJ0eXBlIjoidXJsIiwidXJsIjoiaHR0cHM6Ly9ydWJ5Y2hhbmdlbG9nLmNvbS92ZXJzaW9ucy1hbGwvIiwidGl0bGUiOiJSdWJ5IGFsbCB2ZXJzaW9ucyBjaGFuZ2Vsb2cifV19fSx7InR5cGUiOiJyZWFzb25pbmciLCJpZCI6InJzX1JkRUdBUG1MdG0yckp1czU3VEZ4THlKaSIsInN0YXR1cyI6ImNvbXBsZXRlZCIsInN1bW1hcnkiOlt7InR5cGUiOiJzdW1tYXJ5X3RleHQiLCJ0ZXh0IjoiVGhlIHVzZXIgYXNrczogXCJ3aGF0IGlzIHRoZSBsYXRlc3Qgc3RhYmxlIFJ1YnkgdmVyc2lvbj8gQW5zd2VyIGluIG9uZSBzZW50ZW5jZS5cIlxuXG5CYXNlZCBvbiB0aGUgc2VhcmNoIHJlc3VsdHMsIHRoZSBvZmZpY2lhbCBSdWJ5IGRvd25sb2FkcyBwYWdlIChydWJ5LWxhbmcub3JnKSBzYXlzOiBcIlRoZSBjdXJyZW50IHN0YWJsZSB2ZXJzaW9uIGlzIDQuMC45LlwiIFJ1YnkgNC4wLjkgd2FzIHJlbGVhc2VkIDIwMjYtMTAtMjMuIFRoZSBjdXJyZW50IGRhdGUgaXMgMjAyNi0xMS0wNS4gU28gdGhlIGxhdGVzdCBzdGFibGUgUnVieSB2ZXJzaW9uIGlzIFJ1YnkgNC4wLjkuXG5cbk5vdGU6IFRoZXJlIGlzIGFsc28gUnVieSA0LjEuMC1wcmV2aWV3MSwgYnV0IHRoYXQncyBhIHByZXZpZXcsIG5vdCBzdGFibGUuIFNvIHRoZSBhbnN3ZXIgaXMgUnVieSA0LjAuOSwgcmVsZWFzZWQgT2N0b2JlciAyMywgMjAyNi5cblxuQW5zd2VyIGluIG9uZSBzZW50ZW5jZS4ifV19LHsidHlwZSI6Im1lc3NhZ2UiLCJpZCI6Im1zZ19QT1dpUzdvVzY0cjNKUTY0VHRPbFp4WnMiLCJzdGF0dXMiOiJjb21wbGV0ZWQiLCJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6W3sidHlwZSI6Im91dHB1dF90ZXh0IiwidGV4dCI6IlRoZSBsYXRlc3Qgc3RhYmxlIFJ1YnkgdmVyc2lvbiBpcyAqKlJ1YnkgNC4wLjkqKiwgcmVsZWFzZWQgb24gT2N0b2JlciAyMywgMjAyNiwgYWNjb3JkaW5nIHRvIHRoZSBvZmZpY2lhbCBydWJ5LWxhbmcub3JnIGRvd25sb2FkcyBwYWdlLiIsImFubm90YXRpb25zIjpbXX1dfV0sInVzYWdlIjp7ImlucHV0X3Rva2VucyI6OTU3NSwiaW5wdXRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVfd3JpdGVfdG9rZW5zIjo5NDcyLCJjYWNoZWRfdG9rZW5zIjowfSwib3V0cHV0X3Rva2VucyI6MTkyLCJvdXRwdXRfdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MTQyfSwidG90YWxfdG9rZW5zIjo5NzY3fSwic3RvcmUiOmZhbHNlLCJiYWNrZ3JvdW5kIjpmYWxzZSwicHJldmlvdXNfcmVzcG9uc2VfaWQiOm51bGwsImNvbnZlcnNhdGlvbiI6bnVsbCwiaW5zdHJ1Y3Rpb25zIjpudWxsLCJyZWFzb25pbmciOm51bGwsInRleHQiOnsiZm9ybWF0Ijp7InR5cGUiOiJ0ZXh0In19LCJ0b29scyI6W10sInRvb2xfY2hvaWNlIjoiYXV0byIsInBhcmFsbGVsX3Rvb2xfY2FsbHMiOnRydWUsIm1heF9vdXRwdXRfdG9rZW5zIjpudWxsLCJtYXhfdG9vbF9jYWxscyI6bnVsbCwibWV0YWRhdGEiOm51bGwsIm1vZGVsIjoia2ltaS1rMyIsInRlbXBlcmF0dXJlIjoxLCJ0b3BfcCI6MC45NSwicHJlc2VuY2VfcGVuYWx0eSI6MCwiZnJlcXVlbmN5X3BlbmFsdHkiOjAsInRvcF9sb2dwcm9icyI6MCwidHJ1bmNhdGlvbiI6ImRpc2FibGVkIiwicHJvbXB0X2NhY2hlX2tleSI6bnVsbCwic2FmZXR5X2lkZW50aWZpZXIiOm51bGwsInNlcnZpY2VfdGllciI6ImRlZmF1bHQifQ==
+  recorded_at: Wed, 18 Nov 2026 06:35:39 GMT
+recorded_with: VCR 6.4.1

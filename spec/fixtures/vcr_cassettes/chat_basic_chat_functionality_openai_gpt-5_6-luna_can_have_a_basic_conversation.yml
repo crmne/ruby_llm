@@ -9,7 +9,7 @@ http_interactions:
         2 + 2?"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:24:15 GMT
+      - Wed, 18 Nov 2026 06:39:47 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -48,7 +48,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '751'
+      - '827'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -75,16 +75,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0aafc3d50bfec5e6016af909bebf3887d2a7d06f191a2bd241",
+          "id": "resp_056323e483f285e5016afd48330bbc87d28e2e745253e03c86",
           "object": "response",
-          "created_at": 1794705854,
+          "created_at": 1794983987,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794705855,
+          "completed_at": 1794983987,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
@@ -99,7 +99,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_0aafc3d50bfec5e6016af909bf46b887d2a87a542cabbcf233",
+              "id": "msg_056323e483f285e5016afd4833b98087d2b5bb0f5904df1d40",
               "type": "message",
               "status": "completed",
               "content": [
@@ -107,7 +107,7 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "2 + 2 = 4"
+                  "text": "4"
                 }
               ],
               "phase": "final_answer",
@@ -168,14 +168,14 @@ http_interactions:
               },
               "cached_tokens": 0
             },
-            "output_tokens": 11,
+            "output_tokens": 5,
             "output_tokens_details": {
               "reasoning_tokens": 0
             },
-            "total_tokens": 24
+            "total_tokens": 18
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Sun, 15 Nov 2026 01:24:15 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 18 Nov 2026 06:39:47 GMT
+recorded_with: VCR 6.4.1

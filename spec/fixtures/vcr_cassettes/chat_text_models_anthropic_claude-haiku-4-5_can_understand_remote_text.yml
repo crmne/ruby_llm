@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -26,20 +26,22 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
+      X-Origin-Cache:
+      - HIT
       Last-Modified:
-      - Tue, 03 Nov 2026 01:08:56 GMT
+      - Tue, 17 Nov 2026 10:38:58 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"6ae93428-9c6"
+      - W/"6afc2ec2-9c6"
       Expires:
-      - Sun, 15 Nov 2026 01:29:24 GMT
+      - Wed, 18 Nov 2026 06:45:29 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 1AA8:148882:4D5DE00:4DD0C30:6AF9089B
+      - FC46:157F:1704236:172B244:6AFD4731
       X-Github-Edge-Region:
       - fra
       Accept-Ranges:
@@ -47,21 +49,21 @@ http_interactions:
       Age:
       - '0'
       Date:
-      - Sun, 15 Nov 2026 01:19:24 GMT
+      - Wed, 18 Nov 2026 06:35:29 GMT
       Via:
       - 1.1 varnish
       X-Served-By:
-      - cache-ber1080026-BER
+      - cache-ber1080031-BER
       X-Cache:
       - MISS
       X-Cache-Hits:
       - '0'
       X-Timer:
-      - S1794705564.238738,VS0,VE137
+      - S1794983730.607302,VS0,VE122
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - cf514a7e53691b79889bef2a83b03fe9ef412927
+      - dee20d7db9f5db5f47b6ce4fb95324b0963e3cad
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -97,7 +99,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Sun, 15 Nov 2026 01:19:24 GMT
+  recorded_at: Wed, 18 Nov 2026 06:35:29 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
@@ -140,7 +142,7 @@ http_interactions:
         A PARTICULAR\n     PURPOSE.\n</file>"}]}],"stream":false,"max_tokens":64000}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -157,7 +159,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Nov 2026 01:19:27 GMT
+      - Wed, 18 Nov 2026 06:35:32 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -169,31 +171,31 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '10000000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-11-15T01:19:24Z'
+      - '2026-11-18T06:35:30Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-11-15T01:19:27Z'
+      - '2026-11-18T06:35:32Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-11-15T01:19:24Z'
+      - '2026-11-18T06:35:29Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-11-15T01:19:24Z'
+      - '2026-11-18T06:35:30Z'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Request-Id:
       - "<REQUEST_ID>"
       Traceresponse:
-      - 00-07b73ed30322e92664c0d544cadca63c-deb7e71395f89f39-01
+      - 00-93be8767048c33ae65aa52a484dab30e-5cbd3f28cd4c3963-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
@@ -205,7 +207,7 @@ http_interactions:
       Server:
       - cloudflare
       Server-Timing:
-      - x-originResponse;dur=3247
+      - x-originResponse;dur=3044
       Cf-Cache-Status:
       - DYNAMIC
       X-Robots-Tag:
@@ -214,26 +216,7 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Ch3qLYVH7R6g7RkCYnkMV","type":"message","role":"assistant","content":[{"type":"text","text":"#
-        Ruby License File\n\nThis is the **license.txt** file for the Ruby programming
-        language. It outlines the terms under which Ruby can be used and distributed.\n\n##
-        Key Points:\n\n**Copyright & Author:** Ruby is copyrighted free software by
-        Yukihiro Matsumoto (matz@netlab.jp)\n\n**License Options:** You can use Ruby
-        under either:\n- The 2-clause BSD License (BSDL), OR\n- The conditions outlined
-        in this file\n\n**Main Permissions:**\n\n1. **Source Distribution** - You
-        can freely copy and distribute the source code, provided you keep all original
-        copyright notices\n\n2. **Modifications** - You can modify the software if
-        you:\n   - Release modifications to the public domain, OR\n   - Keep modifications
-        internal to your organization, OR\n   - Distribute modified versions with
-        different names and instructions, OR\n   - Make other arrangements with the
-        author\n\n3. **Binary Distribution** - You can distribute compiled/binary
-        versions if you provide the original source location or include source code\n\n4.
-        **Commercial Use** - You can modify and include Ruby in other software (including
-        commercial software)\n\n5. **Generated Output** - Scripts and output generated
-        by Ruby don''t automatically fall under Ruby''s copyright and can be sold
-        commercially\n\n6. **Disclaimer** - The software is provided \"AS IS\" with
-        no warranties of any kind\n\nThis is a permissive license similar to BSD,
-        allowing broad use including commercial applications while maintaining attribution
-        to the original author."}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":588,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":324,"service_tier":"standard","inference_geo":"not_available","speed":"standard"},"diagnostics":null}'
-  recorded_at: Sun, 15 Nov 2026 01:19:27 GMT
-recorded_with: VCR 6.4.0
+      string: !binary |-
+        eyJtb2RlbCI6ImNsYXVkZS1oYWlrdS00LTUtMjAyNTEwMDEiLCJpZCI6Im1zZ18wMTFDaDl2c0pvRUt6VzU3cGpDQktDMWEiLCJ0eXBlIjoibWVzc2FnZSIsInJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjpbeyJ0eXBlIjoidGV4dCIsInRleHQiOiIjIFJ1YnkgTGljZW5zZSBTdW1tYXJ5XG5cblRoaXMgZmlsZSBjb250YWlucyB0aGUgKipsaWNlbnNlIHRlcm1zIGZvciB0aGUgUnVieSBwcm9ncmFtbWluZyBsYW5ndWFnZSoqLCBjb3B5cmlnaHRlZCBieSBZdWtpaGlybyBNYXRzdW1vdG8gKFJ1YnkncyBjcmVhdG9yKS5cblxuIyMgS2V5IFBvaW50czpcblxuKipMaWNlbnNlIE9wdGlvbnM6Kipcbi0gRWl0aGVyIHRoZSAyLWNsYXVzZSBCU0QgTGljZW5zZSAoQlNETCksIE9SXG4tIFRoZSBjdXN0b20gdGVybXMgb3V0bGluZWQgaW4gdGhpcyBkb2N1bWVudFxuXG4qKk1haW4gUGVybWlzc2lvbnM6KipcbjEuICoqRnJlZSBkaXN0cmlidXRpb24qKiBvZiBzb3VyY2UgY29kZSB3aXRoIG9yaWdpbmFsIGNvcHlyaWdodCBub3RpY2VzIGludGFjdFxuMi4gKipNb2RpZmljYXRpb24gYWxsb3dlZCoqIGlmIHlvdSBlaXRoZXI6XG4gICAtIFJlbGVhc2UgbW9kaWZpY2F0aW9ucyBwdWJsaWNseS9mcmVlbHksIE9SXG4gICAtIFVzZSB0aGVtIG9ubHkgaW50ZXJuYWxseSwgT1JcbiAgIC0gRGlzdHJpYnV0ZSB1bmRlciBhIGRpZmZlcmVudCBuYW1lIHdpdGggaW5zdHJ1Y3Rpb25zIHRvIGdldCB0aGUgb3JpZ2luYWwsIE9SXG4gICAtIE1ha2Ugb3RoZXIgYXJyYW5nZW1lbnRzIHdpdGggdGhlIGF1dGhvclxuXG4zLiAqKkJpbmFyeSBkaXN0cmlidXRpb24qKiBwZXJtaXR0ZWQgd2l0aCBzaW1pbGFyIGNvbmRpdGlvbnNcbjQuICoqQ29tbWVyY2lhbCB1c2UqKiBhbGxvd2Vk4oCUeW91IGNhbiBtb2RpZnkgUnVieSBhbmQgaW5jbHVkZSBpdCBpbiBvdGhlciBzb2Z0d2FyZVxuNS4gKipTY3JpcHRzL291dHB1dHMqKiB5b3UgY3JlYXRlIGFyZW4ndCBhdXRvbWF0aWNhbGx5IGNvcHlyaWdodGVkIGJ5IFJ1YnlcblxuKipJbXBvcnRhbnQ6KiogSW5jbHVkZXMgYSBkaXNjbGFpbWVyIHN0YXRpbmcgdGhlIHNvZnR3YXJlIGlzIHByb3ZpZGVkIFwiYXMtaXNcIiB3aXRoIG5vIHdhcnJhbnRpZXMuXG5cbioqTm90ZToqKiBTb21lIGZpbGVzIGluIFJ1YnkncyBkaXN0cmlidXRpb24gbWF5IGhhdmUgZGlmZmVyZW50IGxpY2Vuc2Vz4oCUc2VlIHRoZSBMRUdBTCBmaWxlIGZvciBkZXRhaWxzLlxuXG5UaGlzIGlzIGVzc2VudGlhbGx5IGEgKipwZXJtaXNzaXZlIG9wZW4tc291cmNlIGxpY2Vuc2UqKiB0aGF0IGFsbG93cyBicm9hZCB1c2UsIG1vZGlmaWNhdGlvbiwgYW5kIGNvbW1lcmNpYWwgYXBwbGljYXRpb25zLiJ9XSwiY29udGFpbmVyIjpudWxsLCJzdG9wX3JlYXNvbiI6ImVuZF90dXJuIiwic3RvcF9zZXF1ZW5jZSI6bnVsbCwic3RvcF9kZXRhaWxzIjpudWxsLCJ1c2FnZSI6eyJpbnB1dF90b2tlbnMiOjU4OCwiY2FjaGVfY3JlYXRpb25faW5wdXRfdG9rZW5zIjowLCJjYWNoZV9yZWFkX2lucHV0X3Rva2VucyI6MCwiY2FjaGVfY3JlYXRpb24iOnsiZXBoZW1lcmFsXzVtX2lucHV0X3Rva2VucyI6MCwiZXBoZW1lcmFsXzFoX2lucHV0X3Rva2VucyI6MH0sIm91dHB1dF90b2tlbnMiOjI3MCwic2VydmljZV90aWVyIjoic3RhbmRhcmQiLCJpbmZlcmVuY2VfZ2VvIjoibm90X2F2YWlsYWJsZSIsInNwZWVkIjoic3RhbmRhcmQifSwiZGlhZ25vc3RpY3MiOm51bGx9
+  recorded_at: Wed, 18 Nov 2026 06:35:32 GMT
+recorded_with: VCR 6.4.1
