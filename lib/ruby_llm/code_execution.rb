@@ -423,7 +423,6 @@ module RubyLLM
 
     private
 
-    # The language a call runs in, and why it cannot run when it cannot.
     def language_for(name)
       name ||= languages.first if languages.one?
       return [nil, "Say which language the code is in: #{languages.join(', ')}"] if name.nil?
