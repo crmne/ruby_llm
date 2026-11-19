@@ -190,13 +190,17 @@ module RubyLLM
                    inverse_of: :message,
                    dependent: :nullify
 
-          ruby_llm_attachments if attachments
+          ruby_llm_attachments(attachments)
           ruby_llm_broadcasting(broadcasts)
         end
 
         private
 
-        def ruby_llm_attachments
+        def ruby_llm_attachments(attachments)
+          class_attribute :ruby_llm_stores_attachments, instance_accessor: false
+          self.ruby_llm_stores_attachments = attachments
+          return unless attachments
+
           if respond_to?(:has_many_attached)
             has_many_attached :attachments unless reflect_on_attachment(:attachments)
           else

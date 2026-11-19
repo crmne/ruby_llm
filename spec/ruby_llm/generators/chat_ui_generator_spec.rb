@@ -128,6 +128,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
     expect(controller).to include('FORBID_TAGS: ["img"')
     expect(controller).to include('turbo:before-morph-element')
     expect(assistant_partial).to include('<%= streaming ? "stream" : "content" %>')
+    expect(assistant_partial).to include('assistant.respond_to?(:attachments) && assistant.attachments.attached?')
     attachments = File.read(File.join(base_path, 'messages/_attachments.html.erb'))
     expect(attachments).to include('message.attachments.attached?')
     expect(attachments).to include('number_to_human_size(attachment.byte_size)')

@@ -1035,6 +1035,7 @@ module RubyLLM
       private
 
       def create_message_record(llm_message, record_attributes)
+        raise_unless_attachments(messages_association.klass) if llm_message.attachments.any?
         transaction do
           forget_stale_cancellation if llm_message.role == :user
           messages_association.create!(message_attributes(llm_message).merge(record_attributes))

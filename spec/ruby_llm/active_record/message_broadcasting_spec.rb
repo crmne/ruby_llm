@@ -235,6 +235,24 @@ RSpec.describe RubyLLM::ActiveRecord::MessageBroadcasting do
 
     expect { chat.add_message(role: :user, content: 'see attached', attachments: [file]) }
       .to raise_error(RubyLLM::ConfigurationError, /PlainMessage .*attachments: false/)
+    expect(chat.messages.count).to eq(0)
+
+    expect { chat.queue('see attached', with: file) }
+      .to raise_error(RubyLLM::ConfigurationError, /PlainMessage .*attachments: false/)
+    expect(chat.queued_messages.count).to eq(0)
+  end
+
+  it 'reads a message that defines its own attachments when attachments are turned off' do
+    stub_const('PlainMessage', Class.new(ApplicationRecord) do
+      self.table_name = 'messages'
+      acts_as_message chat_class: 'Chat', chat_foreign_key: :chat_id, attachments: false
+
+      def attachments = []
+    end)
+    chat = Chat.create!(model: model_for(:openai))
+    message = PlainMessage.find(chat.messages.create!(role: :user, content: 'Hello').id)
+
+    expect(message.to_llm.attachments).to be_empty
   end
 
   it 'reads a message without attachments and without querying Active Storage' do
