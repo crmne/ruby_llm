@@ -255,6 +255,27 @@ RSpec.describe RubyLLM::ActiveRecord::MessageBroadcasting do
     expect(message.to_llm.attachments).to be_empty
   end
 
+  it 'removes a blank reply that defines its own attachments when the request fails' do
+    stub_const('PlainChat', Class.new(ApplicationRecord) do
+      self.table_name = 'chats'
+      acts_as_chat message_class: 'PlainMessage', messages_foreign_key: :chat_id
+    end)
+    stub_const('PlainMessage', Class.new(ApplicationRecord) do
+      self.table_name = 'messages'
+      acts_as_message chat_class: 'PlainChat', chat_foreign_key: :chat_id, attachments: false
+
+      def attachments = []
+    end)
+    chat = PlainChat.create!(model: model_for(:openai))
+    allow(chat.to_llm).to receive(:complete).and_raise(RubyLLM::ServerError.new('boom'))
+    allow(RubyLLM.logger).to receive(:warn)
+    chat.send(:persist_new_message)
+    blank = chat.instance_variable_get(:@message)
+
+    expect { chat.complete }.to raise_error(RubyLLM::ServerError, 'boom')
+    expect(PlainMessage.find_by(id: blank.id)).to be_nil
+  end
+
   it 'reads a message without attachments and without querying Active Storage' do
     stub_const('PlainMessage', Class.new(ApplicationRecord) do
       self.table_name = 'messages'
