@@ -200,6 +200,59 @@ RSpec.describe RubyLLM::ActiveRecord::MessageBroadcasting do
     expect(model.reflect_on_attachment(:attachments)).to be_nil
   end
 
+  it 'declares no attachments and logs nothing when attachments are turned off' do
+    allow(RubyLLM.logger).to receive(:warn)
+    stub_const('PlainMessage', Class.new(ApplicationRecord) { self.table_name = 'messages' })
+
+    PlainMessage.acts_as_message chat_class: 'Chat', chat_foreign_key: :chat_id, attachments: false
+
+    expect(RubyLLM.logger).not_to have_received(:warn)
+    expect(PlainMessage.reflect_on_attachment(:attachments)).to be_nil
+  end
+
+  it 'logs nothing without Active Storage when attachments are turned off' do
+    model = Class.new(ApplicationRecord) { self.table_name = 'messages' }
+    allow(model).to receive(:respond_to?).and_call_original
+    allow(model).to receive(:respond_to?).with(:has_many_attached).and_return(false)
+    allow(RubyLLM.logger).to receive(:warn)
+
+    model.acts_as_message chat_class: 'Chat', chat_foreign_key: :chat_id, attachments: false
+
+    expect(RubyLLM.logger).not_to have_received(:warn)
+  end
+
+  it 'refuses to store an attachment when attachments are turned off' do
+    stub_const('PlainChat', Class.new(ApplicationRecord) do
+      self.table_name = 'chats'
+      acts_as_chat message_class: 'PlainMessage', messages_foreign_key: :chat_id
+    end)
+    stub_const('PlainMessage', Class.new(ApplicationRecord) do
+      self.table_name = 'messages'
+      acts_as_message chat_class: 'PlainChat', chat_foreign_key: :chat_id, attachments: false
+    end)
+    chat = PlainChat.create!(model: model_for(:openai))
+    file = RubyLLM::Attachment.new(StringIO.new('hello'), filename: 'hello.txt')
+
+    expect { chat.add_message(role: :user, content: 'see attached', attachments: [file]) }
+      .to raise_error(RubyLLM::ConfigurationError, /PlainMessage .*attachments: false/)
+  end
+
+  it 'reads a message without attachments and without querying Active Storage' do
+    stub_const('PlainMessage', Class.new(ApplicationRecord) do
+      self.table_name = 'messages'
+      acts_as_message chat_class: 'Chat', chat_foreign_key: :chat_id, attachments: false
+    end)
+    chat = Chat.create!(model: model_for(:openai))
+    message = PlainMessage.find(chat.messages.create!(role: :user, content: 'Hello').id)
+    queries = []
+    callback = ->(*, payload) { queries << payload[:sql] if payload[:sql].include?('active_storage') }
+
+    llm_message = ActiveSupport::Notifications.subscribed(callback, 'sql.active_record') { message.to_llm }
+
+    expect(llm_message.attachments).to be_empty
+    expect(queries).to be_empty
+  end
+
   it 'declares the attachments itself' do
     expect(Message.reflect_on_attachment(:attachments)).to be_present
   end

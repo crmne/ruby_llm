@@ -36,7 +36,7 @@ RubyLLM::ActiveRecord (module)
 RubyLLM::ActiveRecord::ActsAs (module)
 RubyLLM::ActiveRecord::ActsAs extend ActiveSupport::Concern
 RubyLLM::ActiveRecord::ActsAs.acts_as_chat(messages: :messages, message_class: nil, messages_foreign_key: nil, owner: nil)
-RubyLLM::ActiveRecord::ActsAs.acts_as_message(chat: :chat, chat_class: nil, chat_foreign_key: nil, touch_chat: false, broadcasts: nil)
+RubyLLM::ActiveRecord::ActsAs.acts_as_message(chat: :chat, chat_class: nil, chat_foreign_key: nil, touch_chat: false, broadcasts: nil, attachments: true)
 RubyLLM::ActiveRecord::Batch (class < RubyLLM::ActiveRecord::Record)
 RubyLLM::ActiveRecord::Batch#chats
 RubyLLM::ActiveRecord::ChatFile (class < RubyLLM::ActiveRecord::Record)

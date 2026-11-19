@@ -8,11 +8,7 @@ module RubyLLM
       private
 
       def persist_content(message_record, attachments)
-        unless message_record.respond_to?(:attachments)
-          raise RubyLLM::ConfigurationError,
-                "#{message_record.class.name} cannot store attachments without Active Storage. " \
-                'Load it with require "active_storage/engine", then run bin/rails active_storage:install.'
-        end
+        raise_without_attachments(message_record) unless message_record.respond_to?(:attachments)
 
         attachables = prepare_for_active_storage(attachments)
         return if attachables.empty?
@@ -21,6 +17,18 @@ module RubyLLM
         Support::Utils.to_safe_array(attachments).grep(RubyLLM::Attachment).each do |attachment|
           attachment.provider_file_store ||= ProviderFile.store { persisted_blob_key(message_record, attachment) }
         end
+      end
+
+      def raise_without_attachments(message_record)
+        name = message_record.class.name
+        if message_record.class.respond_to?(:has_many_attached)
+          raise RubyLLM::ConfigurationError,
+                "#{name} cannot store attachments because it declares acts_as_message attachments: false."
+        end
+
+        raise RubyLLM::ConfigurationError,
+              "#{name} cannot store attachments without Active Storage. " \
+              'Load it with require "active_storage/engine", then run bin/rails active_storage:install.'
       end
 
       # Active Storage records the size and MD5 of every blob, so the
