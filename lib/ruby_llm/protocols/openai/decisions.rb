@@ -124,7 +124,8 @@ module RubyLLM
         end
 
         def parse_distribution(entries, key, names)
-          entries.to_h { |entry| [names.fetch(entry.fetch(key)), entry.fetch('probability')] }
+          probabilities = entries.to_h { |entry| [names.fetch(entry.fetch(key)), entry.fetch('probability')] }
+          names.values.to_h { |name| [name, probabilities.fetch(name)] }
         end
 
         def parse_tokens(usage)

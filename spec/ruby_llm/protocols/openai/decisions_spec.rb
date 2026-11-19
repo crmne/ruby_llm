@@ -179,4 +179,22 @@ RSpec.describe RubyLLM::Protocols::OpenAI::Decisions do
       end.to raise_error(RubyLLM::Error, /OpenAI Decisions returned an invalid judgment/)
     end
   end
+
+  it 'raises when a distribution leaves out a declared option or names an unknown one' do
+    distribution = lambda do |index, &change|
+      answers = body['answers'].dup
+      answers[index] = answers[index].merge('probabilities' => change.call(answers[index]['probabilities']))
+      instance_double(Faraday::Response, body: body.merge('answers' => answers))
+    end
+    invalid = [
+      distribution.call(1) { |entries| entries.take(1) },
+      distribution.call(2) { |entries| entries.take(1) },
+      distribution.call(1) { |entries| entries + [{ 'value' => 'sales', 'probability' => 0.0 }] }
+    ]
+
+    invalid.each do |invalid_response|
+      expect { protocol.parse_judgment_response(invalid_response, questions:) }
+        .to raise_error(RubyLLM::Error, /OpenAI Decisions returned an invalid judgment/)
+    end
+  end
 end
