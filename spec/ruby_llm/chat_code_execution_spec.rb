@@ -784,6 +784,25 @@ RSpec.describe RubyLLM::Chat do
       end
     end
 
+    it 'takes only the program when one language is allowed, and runs it in that language' do
+      sandbox = FakeSandbox.new
+      chat = RubyLLM.context { |config| config.sandbox = sandbox }.chat(model: model_for(:openai), provider: :openai)
+      tool = chat.with_code_execution(languages: [:shell]).tools[:run_code]
+
+      tool.call(code: 'echo hi')
+
+      expect(tool.parameters_schema['properties'].keys).to eq(%w[code])
+      expect(tool.parameters_schema['required']).to eq(%w[code])
+      expect(File.basename(sandbox.code_runs.last[:command].last)).to eq('main.sh')
+    end
+
+    it 'asks for the language when several are allowed and the call names none' do
+      chat.with_code_execution(languages: %i[ruby shell])
+
+      expect(chat.tools[:run_code].call(code: 'puts 1')).to eq(error: 'Say which language the code is in: ruby, shell')
+      expect(chat.tools[:run_code].parameters_schema['required']).to include('language', 'code')
+    end
+
     it 'refuses a language it was not given' do
       chat.with_code_execution(languages: [:ruby])
 

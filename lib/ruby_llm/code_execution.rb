@@ -384,27 +384,27 @@ module RubyLLM
     # +files+ when runs copy in the chat's files, and +sandbox+ and
     # +reason+ when the model may ask for another sandbox.
     def parameters_schema
-      properties = {
-        'language' => { 'type' => 'string', 'enum' => languages.map(&:to_s),
-                        'description' => 'The language the code is written in' },
-        'code' => { 'type' => 'string', 'description' => 'The complete program to run' }
-      }
+      properties = {}
+      if languages.size > 1
+        properties['language'] = { 'type' => 'string', 'enum' => languages.map(&:to_s),
+                                   'description' => 'The language the code is written in' }
+      end
+      properties['code'] = { 'type' => 'string', 'description' => 'The complete program to run' }
       properties['files'] = FILES_PROPERTY if copies_files?
       properties.merge!(escalation_properties) if escalations.any?
       { 'type' => 'object', 'properties' => properties, 'required' => properties.keys,
         'additionalProperties' => false, 'strict' => true }
     end
 
-    # Runs +code+ written in +language+ and returns its report, followed by
+    # Runs +code+ written in +language+, or in the one language allowed when
+    # there is one, and returns its report, followed by
     # the files it wrote as Attachments. +files+ names the chat's files to
     # copy into the run directory, for a store without a folder. With
     # +sandbox+, runs in that sandbox only when the chat recorded an
     # approval for +tool_call+.
-    def execute(language:, code:, sandbox: nil, reason: nil, files: nil, tool_call: nil) # rubocop:disable Lint/UnusedMethodArgument
-      language = language.to_s.downcase.to_sym
-      unless languages.include?(language)
-        return { error: "Unsupported language #{language}. Use one of: #{languages.join(', ')}" }
-      end
+    def execute(code:, language: nil, sandbox: nil, reason: nil, files: nil, tool_call: nil) # rubocop:disable Lint/UnusedMethodArgument
+      language, error = language_for(language)
+      return { error: } if error
 
       runner, error = runner_for(sandbox, code, tool_call)
       return { error: } if error
@@ -422,6 +422,16 @@ module RubyLLM
     end
 
     private
+
+    def language_for(name)
+      name ||= languages.first if languages.one?
+      return [nil, "Say which language the code is in: #{languages.join(', ')}"] if name.nil?
+
+      language = name.to_s.downcase.to_sym
+      return [language, nil] if languages.include?(language)
+
+      [nil, "Unsupported language #{language}. Use one of: #{languages.join(', ')}"]
+    end
 
     def runner_for(name, code, tool_call)
       return [sandbox, nil] if name.nil?
