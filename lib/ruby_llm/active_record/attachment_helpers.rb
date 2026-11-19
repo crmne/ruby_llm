@@ -8,11 +8,7 @@ module RubyLLM
       private
 
       def persist_content(message_record, attachments)
-        unless message_record.respond_to?(:attachments)
-          raise RubyLLM::ConfigurationError,
-                "#{message_record.class.name} cannot store attachments without Active Storage. " \
-                'Load it with require "active_storage/engine", then run bin/rails active_storage:install.'
-        end
+        raise_unless_attachments(message_record.class)
 
         attachables = prepare_for_active_storage(attachments)
         return if attachables.empty?
@@ -21,6 +17,23 @@ module RubyLLM
         Support::Utils.to_safe_array(attachments).grep(RubyLLM::Attachment).each do |attachment|
           attachment.provider_file_store ||= ProviderFile.store { persisted_blob_key(message_record, attachment) }
         end
+      end
+
+      def raise_unless_attachments(record_class)
+        return if attachments_declared?(record_class)
+
+        if record_class.respond_to?(:ruby_llm_stores_attachments) && !record_class.ruby_llm_stores_attachments
+          raise RubyLLM::ConfigurationError,
+                "#{record_class.name} cannot store attachments because it declares acts_as_message attachments: false."
+        end
+
+        raise RubyLLM::ConfigurationError,
+              "#{record_class.name} cannot store attachments without Active Storage. " \
+              'Load it with require "active_storage/engine", then run bin/rails active_storage:install.'
+      end
+
+      def attachments_declared?(record_class)
+        record_class.respond_to?(:reflect_on_attachment) && !record_class.reflect_on_attachment(:attachments).nil?
       end
 
       # Active Storage records the size and MD5 of every blob, so the
@@ -186,7 +199,7 @@ module RubyLLM
       end
 
       def active_storage_attachments?
-        return false unless respond_to?(:attachments)
+        return false unless attachments_declared?(self.class)
 
         preloaded = preloaded_attachments
         preloaded ? preloaded.any? : attachments.attached?

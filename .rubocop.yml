@@ -17,6 +17,9 @@ AllCops:
     - tmp/**/*
   SuggestExtensions: false
 
+Layout/LineLength:
+  Exclude:
+    - lib/ruby_llm/active_record/acts_as.rb
 Metrics/ClassLength:
   Max: 600
 Metrics/AbcSize:

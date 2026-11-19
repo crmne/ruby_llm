@@ -409,7 +409,17 @@ Active Record cannot read a plain-text value from an encrypted column. When the 
 
 ## Attachments and Structured Output
 
-`acts_as_message` declares `has_many_attached :attachments` when Active Storage is loaded. Files passed to `ask` are persisted with the user message. In a controller action, check that an upload parameter is a file before passing it to `ask`:
+`acts_as_message` declares `has_many_attached :attachments` when Active Storage is loaded. Without it, RubyLLM logs how to add it. An application that stores no attachments turns them off, and RubyLLM declares nothing and logs nothing:
+
+```ruby
+class Message < ApplicationRecord
+  acts_as_message attachments: false
+end
+```
+
+Passing a file to `ask` on such a chat raises `RubyLLM::ConfigurationError`.
+
+Files passed to `ask` are persisted with the user message. In a controller action, check that an upload parameter is a file before passing it to `ask`:
 
 ```ruby
 uploaded_file = params[:uploaded_file]

@@ -34,7 +34,7 @@ module RubyLLM
         return false unless @message&.persisted? && @message.content.blank?
         return false unless @message.role.to_s == 'assistant'
         return false if unfinished_record?(@message)
-        return false if @message.respond_to?(:attachments) && @message.attachments.attached?
+        return false if attachments_declared?(@message.class) && @message.attachments.attached?
 
         !@message.ruby_llm_tool_calls.exists?
       end

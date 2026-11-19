@@ -83,6 +83,17 @@ RSpec.describe RubyLLM::ActiveRecord::AttachmentHelpers do
         .to raise_error(RubyLLM::ConfigurationError, /without Active Storage.*active_storage:install/)
     end
 
+    it 'names the option for a record that turned attachments off without Active Storage' do
+      record_class = Class.new do
+        class_attribute :ruby_llm_stores_attachments, default: false
+
+        def self.name = 'PlainMessage'
+      end
+
+      expect { helpers.persist_content(record_class.new, [blob]) }
+        .to raise_error(RubyLLM::ConfigurationError, /PlainMessage .*attachments: false/)
+    end
+
     it 'keeps the media resolution across a reload' do
       chat = Chat.create!(model: model_for(:openai))
       message = chat.messages.create!(role: 'user', content: 'see attached')
