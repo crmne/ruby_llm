@@ -8,9 +8,7 @@ module RubyLLM
 
         def parse_judgment_response(response, questions:)
           body = response.body
-          usage = body['usage'] || {}
-          tokens = Tokens.new(input: usage['input_tokens'], output: usage['output_tokens'],
-                              reported_cost: reported_cost(usage))
+          tokens = parse_judgment_tokens(body['usage'] || {})
           # The provider billed this attempt even if its answers don't parse.
           @usage_tracker&.observe_tokens(tokens)
           answers = questions.values.to_h do |question|
@@ -22,7 +20,18 @@ module RubyLLM
                                                                      redact: @config&.redact_error_messages)
         end
 
+        def parse_judgment_tokens(usage)
+          input = usage['input_tokens']
+          cached = cache_read_tokens(usage)
+          Tokens.new(input: cached && input ? input - cached : input, output: usage['output_tokens'],
+                     cache_read: cached, reported_cost: reported_cost(usage))
+        end
+
         def reported_cost(_usage)
+          nil
+        end
+
+        def cache_read_tokens(_usage)
           nil
         end
 

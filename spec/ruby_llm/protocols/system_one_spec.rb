@@ -71,7 +71,9 @@ RSpec.describe RubyLLM::Protocols::SystemOne do
     expect(result[:team].probabilities).to eq('Billing & payments' => 0.9, other: 0.1)
     expect(result[:severity].levels).to eq(['Minor', %w[Major Blocking]])
     expect(result[:severity].probabilities.keys).to eq([0, 1])
+    expect(result.tokens.input).to eq(100)
     expect(result.tokens.output).to eq(20)
+    expect(result.tokens.cache_read).to be_nil
   end
 
   it 'raises an error with the response when the answers do not map onto the questions' do
