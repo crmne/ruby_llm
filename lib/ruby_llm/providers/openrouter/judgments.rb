@@ -4,7 +4,7 @@ module RubyLLM
   module Providers
     class OpenRouter
       # OpenRouter's dialect of the System One API: the Decisions route, media
-      # parts inside the state, and the exact cost of each judgment.
+      # parts inside the state, cached input, and the exact cost of each judgment.
       module Judgments
         module_function
 
@@ -40,6 +40,10 @@ module RubyLLM
 
         def reported_cost(usage)
           usage['cost']
+        end
+
+        def cache_read_tokens(usage)
+          usage.dig('input_tokens_details', 'cached_tokens')
         end
       end
     end

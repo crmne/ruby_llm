@@ -46,9 +46,29 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Judgments do
     expect(result.urgent.probability).to eq(0.9)
     expect(result.model).to eq('typesafe/jev-1.14-20261014')
     expect(result.tokens.input).to eq(40)
+    expect(result.tokens.cache_read).to be_nil
     expect(result.tokens.reported_cost).to eq(0.00001)
     expect(result.cost.total).to eq(0.00001)
     expect(stub).to have_been_requested.once
+  end
+
+  it 'counts the input tokens served from the prompt cache as cache reads' do
+    instrumenter = CaptureInstrumenter.new
+    context = RubyLLM.context { |config| config.instrumenter = instrumenter }
+    stub_request(:post, 'https://openrouter.ai/api/alpha/decisions').to_return(
+      status: 200, headers: { 'Content-Type' => 'application/json' },
+      body: { model: model_id, answers: { urgent: { type: 'noul', noul: 0.9 } },
+              usage: { input_tokens: 1000, output_tokens: 0, cost: 0.00005,
+                       input_tokens_details: { cached_tokens: 800 } } }.to_json
+    )
+
+    result = context.judge('Help', model: model_id, provider: :openrouter, assume_model_exists: true, questions:)
+
+    expect(result.tokens.input).to eq(200)
+    expect(result.tokens.cache_read).to eq(800)
+    expect(result.cost.total).to eq(0.00005)
+    usage = instrumenter.events.filter_map { |name, payload| payload if name == 'usage.ruby_llm' }.sole
+    expect(usage[:tokens].to_h).to include(input_tokens: 200, cache_read_tokens: 800)
   end
 
   it 'keeps the reported cost of a judgment it cannot parse' do
