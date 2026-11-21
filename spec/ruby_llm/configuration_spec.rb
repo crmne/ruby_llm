@@ -95,6 +95,38 @@ RSpec.describe RubyLLM::Configuration do
 
       expect(config.secret_values).to contain_exactly('sk-openai', 'bedrock-secret')
     end
+
+    it 'sends no request headers of its own' do
+      expect(config.request_headers).to eq({})
+    end
+
+    it 'keeps request headers as frozen strings' do
+      config.request_headers = { 'X-Gateway-Key': 'gw-secret', 'cf-aig-cache-ttl' => 3600 }
+
+      expect(config.request_headers).to eq('X-Gateway-Key' => 'gw-secret', 'cf-aig-cache-ttl' => '3600')
+      expect(config.request_headers).to be_frozen
+    end
+
+    it 'keeps request headers out of inspect' do
+      config.request_headers = { 'X-Gateway-Key' => 'gw-secret' }
+
+      expect(config.inspect).not_to include('gw-secret')
+    end
+
+    it 'lists the values of credential request headers as secret values' do
+      config.request_headers = { 'X-Gateway-Key' => 'gw-secret', 'cf-aig-cache-ttl' => '3600' }
+
+      expect(config.secret_values).to contain_exactly('gw-secret')
+    end
+
+    it 'leaves the global request headers alone when a context sets its own' do
+      RubyLLM.configure { |global| global.request_headers = { 'X-Gateway-Key' => 'global' } }
+      RubyLLM.context { |context| context.request_headers = context.request_headers.merge('X-Tenant' => 'a') }
+
+      expect(RubyLLM.config.request_headers).to eq('X-Gateway-Key' => 'global')
+    ensure
+      RubyLLM.configure { |global| global.request_headers = nil }
+    end
   end
 
   describe 'an option with a block' do

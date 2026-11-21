@@ -13,7 +13,7 @@ module RubyLLM
             segments = []
             metadata = nil
             @usage_tracker.start
-            Transport::WebsocketConnection.open(url, headers: @provider.headers, config: @config) do |socket|
+            Transport::WebsocketConnection.open(url, headers: @provider.request_headers, config: @config) do |socket|
               write = ->(connection) { send_transcription_audio(connection, attachment.first.content) }
               socket.each_message(write:) do |message|
                 event = JSON.parse(message)

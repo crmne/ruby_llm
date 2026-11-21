@@ -1359,7 +1359,8 @@ module RubyLLM
     # Sets extra HTTP headers sent with completion requests, replacing any
     # previously set headers; +nil+ clears them. Returns +self+. The
     # provider's own headers, such as authentication and API version
-    # headers, win over a header of the same name set here.
+    # headers, win over a header of the same name set here, and a header
+    # set here wins over the same one in Configuration#request_headers.
     #
     #   chat.with_headers('anthropic-beta' => 'fine-grained-tool-streaming-2025-05-14')
     #

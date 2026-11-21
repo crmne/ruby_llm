@@ -15,6 +15,7 @@ After reading this guide, you will know:
 * Where RubyLLM reads the model registry and how to relocate it.
 * How to tune timeouts, retries, and HTTP proxies.
 * How to set TLS options for a server behind an internal certificate authority.
+* How to send your own headers, such as a gateway's credentials, with every request.
 * How to reuse connections between calls with a keep-alive adapter.
 * How to configure logging and debug streaming responses.
 * How to create isolated configurations with contexts for multi-tenancy.
@@ -137,6 +138,26 @@ dev = RubyLLM.context { |config| config.ssl = { verify: false } }
 
 It works with every Faraday adapter that honours Faraday's SSL options, including the default `:net_http`. Streaming transcription over WebSockets doesn't, and raises `ArgumentError` when `ssl` is set.
 
+### Request Headers
+
+An AI gateway between your app and the provider often wants headers of its own, such as a key that identifies your app to the gateway. Point the provider at the gateway and set `request_headers`:
+
+```ruby
+RubyLLM.configure do |config|
+  config.openai_api_base = "https://gateway.example.com/v1/openai"
+  config.request_headers = { "X-Gateway-Key" => ENV["GATEWAY_KEY"] }
+end
+```
+
+Every request to the provider's endpoints carries them: chats, `embed`, `moderate`, `paint`, uploads, streaming transcription, and the rest. File downloads, MCP servers, and OAuth token endpoints don't get them. Set them in a context to give each tenant its own:
+
+```ruby
+context = RubyLLM.context { |config| config.request_headers = { "X-Gateway-Key" => tenant.gateway_key } }
+context.embed("Ruby is a programmer's best friend")
+```
+
+They are defaults. The provider's own headers, such as `Authorization`, win over a header of the same name, and so does a header set with [`with_headers`]({% link _core_features/chat-request-control.md %}#custom-http-headers) on one chat. Headers whose names end in `key`, `secret`, or `token`, like `X-Gateway-Key`, are replaced with `[FILTERED]` in logs.
+
 ### Connection Reuse
 
 A new connection costs a TCP and TLS handshake, which can add tens of milliseconds to a fast call. RubyLLM keeps one HTTP client for each provider endpoint and set of connection settings, shared by every call, thread, and fiber in the process. Choose an adapter that keeps connections open, and consecutive calls skip the handshake:
@@ -156,7 +177,7 @@ end
 
 The default `:net_http` adapter opens a new connection for every request. `:net_http_persistent` keeps a pool that every thread draws from, which suits Puma and Sidekiq. Twenty calls to a local HTTPS server take 2.0 ms each through `:net_http`, and 0.4 ms through `:net_http_persistent`, which connects once. On Falcon or Solid Queue fiber workers, use `:async_http` from the `async-http-faraday` gem instead. It keeps connections open for as long as the Async reactor that opened them runs, so calls made outside a reactor still connect every time.
 
-Contexts share connections when their connection settings match. Credentials travel with each request, so tenants with their own API keys reuse the same connections. A context that changes an API base, `request_timeout`, `stream_idle_timeout`, `connect_timeout`, a retry setting, `http_proxy`, `ssl`, or `faraday_adapter` gets connections of its own. Each forked process, such as a Puma worker, opens its own connections instead of sharing its parent's.
+Contexts share connections when their connection settings match. Credentials and `request_headers` travel with each request, so tenants with their own API keys or gateway headers reuse the same connections. A context that changes an API base, `request_timeout`, `stream_idle_timeout`, `connect_timeout`, a retry setting, `http_proxy`, `ssl`, or `faraday_adapter` gets connections of its own. Each forked process, such as a Puma worker, opens its own connections instead of sharing its parent's.
 
 ## Logging & Debugging
 
@@ -317,6 +338,7 @@ Every setting that isn't a provider's, with its default. Provider keys and endpo
 | `retry_interval_randomness` | `0.5` | Random jitter factor applied to retry delays. |
 | `retry_max_interval` | `30` | Longest wait between retries, in seconds. |
 | `http_proxy` | `nil` | Proxy URL. |
+| `request_headers` | `{}` | Headers sent with every request to a provider, such as `{ "X-Gateway-Key" => "..." }`. |
 | `ssl` | `nil` | Faraday SSL options, such as `{ ca_file: "/certs/internal-ca.pem" }`. |
 | `faraday_adapter` | `:net_http` | Faraday adapter for requests. |
 | `auto_upload_large_files` | `true` | Upload attachments too large to send inline. |

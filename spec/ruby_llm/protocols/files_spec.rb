@@ -249,6 +249,22 @@ RSpec.describe RubyLLM::Protocols::Files do
       expect(upload_request).to have_been_requested
     end
 
+    it 'sends the request headers with an upload and lets the API key win' do
+      provider.config.request_headers = { 'X-Gateway-Key' => 'gw-secret', 'x-goog-api-key' => 'gateway' }
+      start_request = stub_request(:post, 'https://generativelanguage.googleapis.com/upload/v1beta/files')
+                      .with(headers: { 'X-Gateway-Key' => 'gw-secret', 'X-Goog-Api-Key' => 'test' })
+                      .to_return(headers: { 'X-Goog-Upload-URL' => 'https://upload.example/session' })
+      upload_request = stub_request(:post, 'https://upload.example/session')
+                       .with(headers: { 'X-Gateway-Key' => 'gw-secret', 'X-Goog-Api-Key' => 'test' })
+                       .to_return(body: '{"file":{"name":"files/abc","displayName":"ruby.txt","state":"ACTIVE"}}',
+                                  headers: { 'Content-Type' => 'application/json' })
+
+      protocol.upload(fixture_path)
+
+      expect(start_request).to have_been_requested
+      expect(upload_request).to have_been_requested
+    end
+
     it 'raises when Gemini does not hand back an upload URL' do
       connection = instance_double(Faraday::Connection)
       allow(RubyLLM::Transport::Connection).to receive(:basic).and_return(connection)
