@@ -107,6 +107,22 @@ RSpec.describe RubyLLM::Configuration do
       expect(config.request_headers).to be_frozen
     end
 
+    it 'keeps its own copy of each request header value' do
+      key = +'gw-secret'
+      config.request_headers = { 'X-Gateway-Key' => key }
+      key.replace('changed')
+
+      expect(config.request_headers['X-Gateway-Key']).to eq('gw-secret')
+      expect(config.request_headers['X-Gateway-Key']).to be_frozen
+    end
+
+    it 'leaves out request headers with blank values' do
+      config.request_headers = { 'X-Gateway-Key' => ENV.fetch('RUBYLLM_UNSET_GATEWAY_KEY', nil), 'X-Tenant' => ' ' }
+
+      expect(config.request_headers).to eq({})
+      expect(config.secret_values).to be_empty
+    end
+
     it 'keeps request headers out of inspect' do
       config.request_headers = { 'X-Gateway-Key' => 'gw-secret' }
 

@@ -341,7 +341,8 @@ module RubyLLM
     # Headers sent with every request to a provider's endpoints, such as an
     # AI gateway's credentials, as a Hash of names to values. The
     # provider's own headers and Chat#with_headers win over a header of
-    # the same name set here. File downloads, MCP servers, and OAuth
+    # the same name set here. A header with a blank value is left out.
+    # Fetching URL attachments and hosted media, MCP servers, and OAuth
     # token endpoints don't get them. Default: <tt>{}</tt>.
     #
     #   RubyLLM.context do |config|
@@ -349,7 +350,11 @@ module RubyLLM
     #     config.request_headers = { 'X-Gateway-Key' => ENV['GATEWAY_KEY'] }
     #   end
     #
-    option(:request_headers, {}) { |headers| headers.to_h { |name, value| [name.to_s, value.to_s] }.freeze }
+    option(:request_headers, {}) do |headers|
+      headers.to_h.filter_map do |name, value|
+        [name.to_s.dup.freeze, value.to_s.dup.freeze] unless value.to_s.strip.empty?
+      end.to_h.freeze
+    end
 
     ##
     # :attr_accessor: ssl

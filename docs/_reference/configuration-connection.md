@@ -149,14 +149,14 @@ RubyLLM.configure do |config|
 end
 ```
 
-Every request to the provider's endpoints carries them: chats, `embed`, `moderate`, `paint`, uploads, streaming transcription, and the rest. File downloads, MCP servers, and OAuth token endpoints don't get them. Set them in a context to give each tenant its own:
+Every request to the provider's endpoints carries them: chats, `embed`, `moderate`, `paint`, file uploads and downloads, streaming transcription, and the rest. RubyLLM leaves them off when it fetches a URL attachment or a hosted image or video, since those can live on any host, and off requests to MCP servers and OAuth token endpoints. A header whose value is blank, such as one read from an unset environment variable, isn't sent. Set them in a context to give each tenant its own:
 
 ```ruby
 context = RubyLLM.context { |config| config.request_headers = { "X-Gateway-Key" => tenant.gateway_key } }
 context.embed("Ruby is a programmer's best friend")
 ```
 
-They are defaults. The provider's own headers, such as `Authorization`, win over a header of the same name, and so does a header set with [`with_headers`]({% link _core_features/chat-request-control.md %}#custom-http-headers) on one chat. Headers whose names end in `key`, `secret`, or `token`, like `X-Gateway-Key`, are replaced with `[FILTERED]` in logs.
+They are defaults. The provider's own headers, such as `Authorization`, win over a header of the same name, and so does a header set with [`with_headers`]({% link _core_features/chat-request-control.md %}#custom-http-headers) on one chat. RubyLLM never logs headers, but a provider can echo one back in an error. When a header's name ends in `-key`, `-secret`, or `-token`, like `X-Gateway-Key`, its value is replaced with `[FILTERED]` wherever it shows up in the logs. Other values, such as an `Authorization` header's, are not.
 
 ### Connection Reuse
 

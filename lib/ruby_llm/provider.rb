@@ -480,7 +480,7 @@ module RubyLLM
     end
 
     def settings # :nodoc:
-      self.class.configuration_options.map { |option| config.public_send(option) }
+      self.class.configuration_options.map { |option| config.public_send(option) } << config.request_headers
     end
 
     def configured? # :nodoc:
