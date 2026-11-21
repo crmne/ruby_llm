@@ -69,7 +69,7 @@ RSpec.describe RubyLLM::Batch, :live do
         expect { RubyLLM.batch(requests) }.to raise_error(ArgumentError)
       end
 
-      it 'rejects contexts that only differ in request headers' do
+      it 'rejects contexts that only differ in request headers', live: false do
         gateways = %w[gw-a gw-b].map do |key|
           RubyLLM.context do |config|
             config.anthropic_api_key = 'shared'

@@ -156,7 +156,7 @@ context = RubyLLM.context { |config| config.request_headers = { "X-Gateway-Key" 
 context.embed("Ruby is a programmer's best friend")
 ```
 
-They are defaults. The provider's own headers, such as `Authorization`, win over a header of the same name, and so does a header set with [`with_headers`]({% link _core_features/chat-request-control.md %}#custom-http-headers) on one chat. RubyLLM never logs headers, but a provider can echo one back in an error. When a header is named `Authorization` or its name ends in `-key`, `-secret`, `-token`, or `-authorization`, like `X-Gateway-Key`, its value is replaced with `[FILTERED]` wherever it shows up in the logs. Other values, such as a cache TTL, are not.
+They are defaults. The provider's own headers, such as `Authorization`, win over a header of the same name, and so does a header set with [`with_headers`]({% link _core_features/chat-request-control.md %}#custom-http-headers) on one chat. RubyLLM never logs headers, but a provider can echo one back in an error. When a header is named `Authorization`, or its name ends in `key`, `secret`, `token`, or `authorization` after a `-` or `_`, like `X-Gateway-Key`, its value is replaced with `[FILTERED]` wherever it shows up in the logs. Other values, such as a cache TTL, are not.
 
 ### Connection Reuse
 
