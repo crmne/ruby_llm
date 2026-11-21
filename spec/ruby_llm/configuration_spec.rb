@@ -130,9 +130,12 @@ RSpec.describe RubyLLM::Configuration do
     end
 
     it 'lists the values of credential request headers as secret values' do
-      config.request_headers = { 'X-Gateway-Key' => 'gw-secret', 'cf-aig-cache-ttl' => '3600' }
+      config.request_headers = {
+        'X-Gateway-Key' => 'gw-secret', 'Authorization' => 'Bearer gw', 'cf-aig-authorization' => 'Bearer cf',
+        'x_api_token' => 'tok', 'cf-aig-cache-ttl' => '3600', 'X-Monkey' => 'banana'
+      }
 
-      expect(config.secret_values).to contain_exactly('gw-secret')
+      expect(config.secret_values).to contain_exactly('gw-secret', 'Bearer gw', 'Bearer cf', 'tok')
     end
 
     it 'leaves the global request headers alone when a context sets its own' do

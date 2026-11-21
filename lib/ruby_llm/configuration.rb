@@ -25,6 +25,7 @@ module RubyLLM
   # never set.
   class Configuration
     SECRET_OPTION = /_(key|secret|token)\z/ # :nodoc:
+    SECRET_HEADER = /(?:\A|[-_])(?:key|secret|token|authorization)\z/i # :nodoc:
 
     class << self
       def option(key, default = nil, &normalize) # :nodoc:
@@ -576,10 +577,8 @@ module RubyLLM
       end
     end
 
-    # Header names are matched as if they were option names, so
-    # +X-Gateway-Key+ counts as a credential and +Authorization+ does not.
     def credential_header_values
-      request_headers.filter_map { |name, value| value if name.downcase.tr('-', '_').match?(SECRET_OPTION) }
+      request_headers.filter_map { |name, value| value if name.match?(SECRET_HEADER) }
     end
 
     # Whether the +name+ environment variable is set to something that means
