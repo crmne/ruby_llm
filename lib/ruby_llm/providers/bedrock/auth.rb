@@ -89,6 +89,7 @@ module RubyLLM
           sent = conn.build_url(path).request_uri
 
           conn.public_send(method, path, payload) do |req|
+            req.headers.merge!(@config.request_headers)
             req.headers.merge!(sign_headers(method.to_s.upcase, sent, body, base_url:, service:))
           end
         end

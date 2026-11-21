@@ -12,7 +12,7 @@ module RubyLLM
           segments = []
           completed = []
           @usage_tracker.start
-          Transport::WebsocketConnection.open(url, headers: @provider.headers, config: @config) do |socket|
+          Transport::WebsocketConnection.open(url, headers: @provider.request_headers, config: @config) do |socket|
             receive_streamed_transcription(socket, audio, segments, completed, &block)
           end
           raise Error, 'xAI transcription ended before its final transcript' unless completed.size == audio.channels

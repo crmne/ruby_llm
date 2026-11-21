@@ -306,6 +306,8 @@ response = chat.ask "Tell me about the weather"
 
 Headers are merged with the provider's own, and the provider's win. `with_headers` cannot replace the authentication headers, such as `Authorization` or `x-api-key`, or the API version headers, such as `anthropic-version`, that the provider sets. Use it to add headers for optional features.
 
+To send a header with every request, not just one chat's, set [`request_headers`]({% link _reference/configuration-connection.md %}#request-headers) in the configuration. A header set with `with_headers` wins over the same one there.
+
 
 ## Next Steps
 

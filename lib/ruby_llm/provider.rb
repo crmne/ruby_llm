@@ -78,6 +78,12 @@ module RubyLLM
       {}
     end
 
+    # The configuration's request_headers with #headers over them, for
+    # requests that bypass the provider's connection.
+    def request_headers # :nodoc:
+      Faraday::Utils::Headers.new.merge!(@config.request_headers).merge!(headers).to_h
+    end
+
     # Returns how many seconds the service asked us to wait before
     # retrying a rate-limited request, or +nil+ when the response carries
     # no timing information. The retry middleware already honors the
@@ -474,7 +480,7 @@ module RubyLLM
     end
 
     def settings # :nodoc:
-      self.class.configuration_options.map { |option| config.public_send(option) }
+      self.class.configuration_options.map { |option| config.public_send(option) } << config.request_headers
     end
 
     def configured? # :nodoc:
