@@ -124,5 +124,17 @@ RSpec.describe RubyLLM::Providers::OpenAI do
         .to raise_error(RubyLLM::PaymentRequiredError) { |error| expect(error.error_code).to eq('insufficient_quota') }
       expect(request).to have_been_requested.once
     end
+
+    it 'raises PaymentRequiredError for a stream error event' do
+      event = { type: 'error', code: 'insufficient_quota',
+                message: 'You exceeded your current quota, please check your plan and billing details.' }
+      request = stub_request(:post, %r{\Ahttps://api\.openai\.com/})
+                .to_return(status: 200, headers: { 'Content-Type' => 'text/event-stream' },
+                           body: "event: error\ndata: #{event.to_json}\n\n")
+
+      expect { context.chat(model: model_for(:openai), provider: :openai).ask('Hi') { |_chunk| nil } }
+        .to raise_error(RubyLLM::PaymentRequiredError)
+      expect(request).to have_been_requested.once
+    end
   end
 end
