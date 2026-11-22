@@ -142,6 +142,8 @@ module RubyLLM
           /credit balance is too low/i
         ].freeze
 
+        PAYMENT_REQUIRED_CODES = %w[insufficient_quota].freeze
+
         AUTHENTICATION_PATTERNS = [
           /api key not valid/i,
           /incorrect api key/i,
@@ -153,8 +155,8 @@ module RubyLLM
           return if (200..399).cover?(status)
 
           message = provider&.parse_error(response)
-          raise error_class(message, status).new(response:, provider_message: message,
-                                                 **provider_details(provider, response))
+          details = provider_details(provider, response)
+          raise error_class(message, status, details[:error_code]).new(response:, provider_message: message, **details)
         end
 
         private
@@ -173,14 +175,14 @@ module RubyLLM
           }
         end
 
-        def error_class(message, status)
+        def error_class(message, status, code)
           case status
           when 400 then bad_request_class(message)
           when 401 then UnauthorizedError
           when 402 then PaymentRequiredError
           when 403 then authentication_failed?(message) ? UnauthorizedError : ForbiddenError
           when 413 then context_length_exceeded?(message) ? ContextLengthExceededError : Error
-          when 429 then rate_limit_class(message)
+          when 429 then rate_limit_class(message, code)
           when 500 then ServerError
           when 502..504 then ServiceUnavailableError
           when 529 then OverloadedError
@@ -198,7 +200,8 @@ module RubyLLM
           end
         end
 
-        def rate_limit_class(message)
+        def rate_limit_class(message, code)
+          return PaymentRequiredError if PAYMENT_REQUIRED_CODES.include?(code)
           return RateLimitError if rate_limited?(message)
           return ContextLengthExceededError if context_length_exceeded?(message)
 

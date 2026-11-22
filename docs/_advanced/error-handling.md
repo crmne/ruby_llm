@@ -34,7 +34,7 @@ Provider operation errors inherit from `RubyLLM::Error`. RubyLLM maps the provid
 | `RubyLLM::BadRequestError` | 400 | No |
 | `RubyLLM::UnsupportedParameterError` | A 400 to a chat request, in OpenAI's error format, that names a parameter the model doesn't take, such as a temperature. Other operations raise `BadRequestError` for it | No |
 | `RubyLLM::UnauthorizedError` | 401, or a 400 or 403 with a recognized invalid-credentials message, such as `Incorrect API key` | No |
-| `RubyLLM::PaymentRequiredError` | 402, or a 400 saying the credit balance is too low | No |
+| `RubyLLM::PaymentRequiredError` | 402, a 400 saying the credit balance is too low, or a 429 with the `insufficient_quota` error code | No |
 | `RubyLLM::ForbiddenError` | Any other 403 | No |
 | `RubyLLM::ContextLengthExceededError` | 400 or 413 with a recognized context or token limit message, or a 429 with one and no rate limit message | No |
 | `RubyLLM::RateLimitError` | Any other 429, or a 400 with a recognized rate limit message, such as `quota exceeded`, and no context or token limit message | Yes |
