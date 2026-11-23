@@ -43,12 +43,13 @@ module RubyLLM
           usage['prompt_audio_seconds'] || super
         end
 
-        # Mistral bills transcription by audio length and reports that
-        # length next to token counts it does not charge for.
+        # Mistral bills transcription by audio length.
         def billed_audio_seconds(usage, duration = nil)
           usage['prompt_audio_seconds'] || super
         end
 
+        # Mistral does not charge for the token counts it reports next to
+        # the billed audio length, so they stay out of Tokens.
         def transcription_tokens(usage)
           usage['prompt_audio_seconds'] ? {} : super
         end
