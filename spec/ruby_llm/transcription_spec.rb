@@ -157,7 +157,7 @@ RSpec.describe RubyLLM::Transcription, :live do
       expect(chunks.last).to be_done
       expect(transcription.text).to match(/ruby/i)
       expect(transcription.segments.first).to have_key('speaker_id')
-      expect(transcription.tokens.input).to be_positive
+      expect(transcription.tokens.audio_seconds).to be_positive
       expect(transcription.duration).to be_positive
     end
 

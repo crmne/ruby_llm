@@ -178,7 +178,7 @@ rerank.tokens.search_units # => 1
 rerank.cost.search_units
 ```
 
-`characters` counts every character of the text sent, including spaces and newlines. `audio_seconds` is the billed length of the audio, which may be fractional. It is recorded when the provider bills transcription by duration, so a model billed by tokens leaves it `nil`. A provider that bills by duration may report token counts next to it. `search_units` is the count the provider reports.
+`characters` counts every character of the text sent, including spaces and newlines. `audio_seconds` is the billed length of the audio, which may be fractional. It is recorded when the provider bills transcription by duration, so a model billed by tokens leaves it `nil`. `search_units` is the count the provider reports.
 
 `cost` prices each unit from the model registry, in US dollars per million units, and adds it to `cost.total`. When the registry has no price for a unit that was used, that component and `cost.total` are `nil`, never zero.
 
@@ -207,8 +207,6 @@ RubyLLM.configure do |config|
   config.price "chat-data-zone", provider: :azure, input: 2.2, output: 11
 end
 ```
-
-A usage can carry more than one count, such as a transcription with both token counts and `audio_seconds`. Each count needs a price, so set `0` for one the provider does not charge for.
 
 Prices belong to the global configuration. Setting one on a [context]({% link _reference/configuration-connection.md %}#contexts-isolated-configurations) raises `RubyLLM::ConfigurationError`: a cost read later, such as from a saved chat, would not know which context it ran in.
 
