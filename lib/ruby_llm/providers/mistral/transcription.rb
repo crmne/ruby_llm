@@ -43,6 +43,13 @@ module RubyLLM
           usage['prompt_audio_seconds'] || super
         end
 
+        # Mistral bills transcription by audio length and reports that
+        # length next to token counts, so the token counts do not mean the
+        # reply is billed in tokens.
+        def billed_audio_seconds(usage, duration = nil)
+          usage['prompt_audio_seconds'] || super
+        end
+
         def render_transcription_payload(file_part, model:, language:, speaker_names: nil, provider_options: {},
                                          prompt: nil, temperature: nil, **)
           payload = {
