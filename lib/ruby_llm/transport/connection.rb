@@ -273,15 +273,25 @@ module RubyLLM
           max_interval: settings.retry_max_interval,
           interval_randomness: settings.retry_interval_randomness,
           backoff_factor: settings.retry_backoff_factor,
-          methods: Faraday::Retry::Middleware::IDEMPOTENT_METHODS,
+          methods: [],
           retry_if: lambda { |env, exception|
-            Support::Cancellation.check
-            env[:method] == :post && idempotent?(env) && !stream_delivered?(env) &&
-              !fall_back_instead?(env, exception)
+            cancellation_checkpoint(env)
+            Faraday::Retry::Middleware::IDEMPOTENT_METHODS.include?(env[:method]) || retry_post?(env, exception)
           },
           exceptions: retry_exceptions
         }
         faraday.use :llm_usage
+      end
+
+      def self.cancellation_checkpoint(env)
+        Support::Cancellation.check
+      rescue CancelledError
+        ReleaseRequest.release(env)
+        raise
+      end
+
+      def self.retry_post?(env, exception)
+        env[:method] == :post && idempotent?(env) && !stream_delivered?(env) && !fall_back_instead?(env, exception)
       end
 
       def self.stream_delivered?(env)
@@ -363,9 +373,10 @@ module RubyLLM
         ]
       end
 
-      private_class_method :setup_timeout, :setup_logging, :logging_regexp, :setup_retry, :stream_delivered?,
-                           :idempotent?, :fall_back_instead?, :retry_wait, :header_seconds, :setup_middleware,
-                           :adapter_options, :setup_http_proxy, :setup_ssl, :retry_exceptions
+      private_class_method :setup_timeout, :setup_logging, :logging_regexp, :setup_retry, :cancellation_checkpoint,
+                           :retry_post?, :stream_delivered?, :idempotent?, :fall_back_instead?, :retry_wait,
+                           :header_seconds, :setup_middleware, :adapter_options, :setup_http_proxy, :setup_ssl,
+                           :retry_exceptions
 
       def set_usage_tracker(request, tracker)
         context = request.options.context ||= {}

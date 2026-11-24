@@ -204,6 +204,56 @@ RSpec.describe RubyLLM::Transport::Connection do
       expect(stub).to have_been_requested.twice
     end
 
+    %i[get delete].each do |verb|
+      it "retries a #{verb.upcase} that fails with a server error" do
+        stub = stub_request(verb, 'https://api.openai.com/v1/files/file-abc')
+               .to_return(
+                 { status: 500, body: '{"error":{"message":"Internal server error"}}' },
+                 { status: 200, headers: { 'Content-Type' => 'application/json' }, body: '{}' }
+               )
+
+        expect(provider.connection.public_send(verb, 'files/file-abc').status).to eq(200)
+        expect(stub).to have_been_requested.twice
+      end
+
+      it "stops retrying a #{verb.upcase} once its chat is cancelled" do
+        stub = stub_request(verb, 'https://api.openai.com/v1/files/file-abc')
+               .to_return(status: 500, body: '{"error":{"message":"Internal server error"}}')
+
+        expect do
+          RubyLLM::Support::Cancellation.watch(-> { raise RubyLLM::CancelledError }) do
+            provider.connection.public_send(verb, 'files/file-abc')
+          end
+        end.to raise_error(RubyLLM::CancelledError)
+        expect(stub).to have_been_requested.once
+      end
+    end
+
+    %i[post get].each do |verb|
+      it "keeps no credentials on the failure a cancelled #{verb.upcase} stopped at" do
+        stub_request(verb, 'https://api.openai.com/v1/files/file-abc')
+          .to_return(status: 500, body: '{"error":{"message":"Internal server error"}}')
+
+        error = RubyLLM::Support::Cancellation.watch(-> { raise RubyLLM::CancelledError }) do
+          provider.connection.public_send(verb, 'files/file-abc', *([{ secret: 'conversation' }] if verb == :post))
+        rescue RubyLLM::CancelledError => e
+          e
+        end
+
+        expect(error.cause).to be_a(RubyLLM::ServerError)
+        expect(error.cause.response.request_headers).not_to include('Authorization')
+        expect(error.cause.response.request_body).to be_nil
+      end
+    end
+
+    it 'does not retry a PATCH' do
+      stub = stub_request(:patch, 'https://api.openai.com/v1/files/file-abc')
+             .to_return(status: 500, body: '{"error":{"message":"Internal server error"}}')
+
+      expect { provider.connection.patch('files/file-abc', {}) }.to raise_error(RubyLLM::ServerError)
+      expect(stub).to have_been_requested.once
+    end
+
     it 'sends every upload part again when a multipart request is retried' do
       bodies = []
       stub_request(:post, 'https://api.openai.com/v1/images/edits').to_return do |request|
