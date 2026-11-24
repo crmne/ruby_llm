@@ -2550,7 +2550,9 @@ module RubyLLM
       server_calls, local_calls = pending.to_h.partition { |_, call| call.remote? }.map(&:to_h)
       decisions = server_calls.transform_values { |tool_call| approval_decision(nil, tool_call) }.compact
       executable, denied = partition_pending_tool_calls(local_calls)
-      executable = executable.reject { |_id, tool_call| exclusive_blocked?(tool_call, executable) }
+      executable = executable.each_with_object({}) do |(id, tool_call), kept|
+        kept[id] = tool_call unless exclusive_blocked?(tool_call, kept)
+      end
       claimed = claim_tool_calls(executable, server_calls.slice(*decisions.keys).merge(denied))
       answer_claimed_tool_calls(claimed, server_calls, decisions, executable, denied)
       answer_capped_tool_calls(response)
