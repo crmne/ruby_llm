@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'digest'
+
 module RubyLLM
   class MCP
     # The servers that could not be reached lately, for this whole process.
@@ -9,7 +11,8 @@ module RubyLLM
     # MCP objects anew. A server that answers that it is unavailable, with
     # HTTP 429 or a 5xx status, counts as one that can't be reached; one
     # that refuses the credentials or the request does not, since trying
-    # again won't fix that.
+    # again won't fix that. A 429 counts only against the credentials that
+    # got it.
     module Outages # :nodoc:
       BACKOFF = 60
       PARTLY_RUN = 'The call may have partly run, so check before trying it again.'
@@ -32,7 +35,7 @@ module RubyLLM
         rescue RubyLLM::Error => e
           raise unless unavailable?(e)
 
-          report(server, e) if record(server, backoff(e))
+          report(server, e) if record(server, e)
           []
         end
 
@@ -66,17 +69,17 @@ module RubyLLM
           return if refused_status?(error.response&.status)
 
           if unavailable?(error)
-            report(server, error) if record(server, backoff(error))
+            report(server, error) if record(server, error)
             server.send(:forget_tools)
           end
           Failure[error: failure_text(server, tool, error)]
         end
 
         def down?(server)
-          return false if server.tools_listed?
+          return false if server.tools_listed? || @retry_at.empty?
 
-          key = key(server)
-          @lock.synchronize { (@retry_at[key] || 0) > monotonic_now }
+          keys = [key(server), limited_key(server)]
+          @lock.synchronize { keys.any? { |key| (@retry_at[key] || 0) > monotonic_now } }
         end
 
         def clear
@@ -137,14 +140,14 @@ module RubyLLM
         end
 
         # Returns whether this caller started the backoff.
-        def record(server, backoff)
-          key = key(server)
+        def record(server, error)
+          key = error.response&.status == 429 ? limited_key(server) : key(server)
           @lock.synchronize do
             now = monotonic_now
             @retry_at.delete_if { |_key, retry_at| retry_at <= now }
             next false if @retry_at.key?(key)
 
-            @retry_at[key] = now + backoff
+            @retry_at[key] = now + backoff(error)
             true
           end
         end
@@ -161,6 +164,19 @@ module RubyLLM
           config = server.send(:config)
           ssl = Transport::Connection.ssl_snapshot(config.ssl) if config.ssl
           [*endpoint, config.http_proxy, ssl, config.faraday_adapter, config.request_timeout]
+        end
+
+        # The credentials are hashed, so secrets are not kept for the backoff.
+        def limited_key(server)
+          [key(server), Digest::SHA256.hexdigest(credentials(server).inspect)]
+        end
+
+        def credentials(server)
+          settings = server.class
+          headers = settings.headers.transform_values { |value| server.send(:resolve, value) }
+          return [headers, server.send(:oauth).identity] if settings.oauth_settings
+
+          [headers, server.send(:resolve, settings.bearer_token)]
         end
 
         def monotonic_now
