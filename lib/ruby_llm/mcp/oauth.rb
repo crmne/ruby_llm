@@ -49,6 +49,7 @@ module RubyLLM
         authorization_response_iss_parameter_supported
       ].freeze
       CLIENT_FIELDS = %w[client_id client_secret issuer server redirect_uri dpop_key resource].freeze
+      TOKEN_FIELDS = %w[access_token refresh_token expires_at token_type].freeze
       TOKEN = /[!\#$%&'*+.^_`|~0-9A-Za-z-]+/
       PARAMETER = /#{TOKEN}\s*=/
       QUOTED = /"((?:[^"\\]|\\.)*)"/
@@ -179,8 +180,7 @@ module RubyLLM
           next true if credential && credential['access_token'] != used
           next false unless credential&.key?('refresh_token')
 
-          store_tokens(token_request('refresh_token', refresh_token: credential['refresh_token']))
-          true
+          refresh_tokens
         end
       rescue Error
         false
@@ -253,6 +253,16 @@ module RubyLLM
 
       def synchronize(&block)
         self.class.refreshing(key) { store.respond_to?(:synchronize) ? store.synchronize(key, &block) : yield }
+      end
+
+      def refresh_tokens
+        store_tokens(token_request('refresh_token', refresh_token: credential['refresh_token']))
+        true
+      rescue Error => e
+        raise unless oauth_error(e) == 'invalid_grant'
+
+        write(credential.except(*TOKEN_FIELDS))
+        false
       end
 
       def store_tokens(tokens, client: nil)
