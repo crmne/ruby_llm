@@ -208,6 +208,19 @@ RSpec.describe RubyLLM::Chat do
     expect(response.content).to eq('All done')
   end
 
+  it 'closes the calls that wait for a decision when the chat is cancelled' do
+    chat = stubbed_chat(tool_call_message('call_1' => 'dangerous'), final_message, tools: [dangerous_tool])
+    chat.ask('Do the thing')
+    chat.cancel
+
+    expect { chat.complete }.to raise_error(RubyLLM::CancelledError)
+    expect(chat).not_to be_waiting
+    expect(chat).not_to be_cancelled
+    expect(chat.messages.last).to be_cancelled
+    expect(chat.ask('Never mind').content).to eq('All done')
+    expect(executions).to be_empty
+  end
+
   it 'returns the assistant message holding the pending call after another tool ran' do
     chat = stubbed_chat(
       tool_call_message('call_a' => 'harmless', 'call_b' => 'dangerous'),

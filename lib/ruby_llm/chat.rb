@@ -385,6 +385,7 @@ module RubyLLM
           steering_only ||= boundary
         end
       end
+      stop_waiting
       @cancelled = false
       turn_result
     end
@@ -1967,6 +1968,13 @@ module RubyLLM
       raise ToolRoundLimitError,
             "Reached the tool round limit (#{@tool_rounds}). Every tool call has its result, so call complete " \
             'to continue, or raise the limit with with_tool_options(rounds:).'
+    end
+
+    def stop_waiting
+      raise_if_cancelled! if waiting?
+    rescue CancelledError
+      stop_tool_round
+      raise
     end
 
     def stop_tool_round
