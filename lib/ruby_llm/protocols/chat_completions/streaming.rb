@@ -33,7 +33,7 @@ module RubyLLM
           delta = data.dig('choices', 0, 'delta') || {}
           content_source = delta['content'] || delta['refusal'] || data.dig('choices', 0, 'message', 'content')
           content, thinking_from_blocks = parse_content_and_thinking(content_source)
-          thinking_text = thinking_from_blocks || delta['reasoning_content'] || delta['reasoning']
+          thinking_text = thinking_from_blocks || parse_thinking_text(delta)
           citations = parse_chunk_citations(delta, data)
           content, thinking_text, citations = split_chunk_think_tags(content, thinking_text, citations) if @think_tags
 
@@ -42,7 +42,8 @@ module RubyLLM
             model: data['model'],
             content: content,
             citations: citations,
-            thinking: Thinking.build(text: thinking_text, signature: delta['reasoning_signature']),
+            thinking: Thinking.build(text: thinking_text, signature: parse_thinking_signature(delta)),
+            raw_reasoning: accumulate_raw_reasoning(delta),
             tool_calls: parse_tool_calls(delta['tool_calls'], parse_arguments: false, stream_keys: true),
             input_tokens: input_tokens(usage),
             output_tokens: output_tokens(usage),
@@ -54,6 +55,10 @@ module RubyLLM
             finish_reason: normalize_finish_reason(data.dig('choices', 0, 'finish_reason')),
             content_filters: ContentFilters.parse_content_filters(data)
           )
+        end
+
+        def accumulate_raw_reasoning(_delta)
+          nil
         end
 
         def split_chunk_think_tags(content, thinking_text, citations)
