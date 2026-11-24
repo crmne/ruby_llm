@@ -47,6 +47,16 @@ RSpec.describe RubyLLM::MCP::EventDelivery do
     expect(described_class.new(rack, body, secret:).subscription_id).to eq('sub_a3f1c8e2b0d49f7e')
   end
 
+  it 'reads the headers of a request object that looks them up itself' do
+    request_headers = Struct.new(:env) do
+      def [](name)
+        env[name]
+      end
+    end.new(headers(body))
+
+    expect(described_class.new(request_headers, body, secret:).kind).to eq(:event)
+  end
+
   it 'accepts a delivery signed with either secret while the server rotates them' do
     signed = headers(body, signed_with: [other_secret, secret])
 
