@@ -442,6 +442,29 @@ RSpec.describe RubyLLM::Tool do
     end
   end
 
+  it 'keeps the note of a declined question for the result of the task it goes on to' do
+    ship = Class.new(RubyLLM::Tool) do
+      def self.name = 'Ship'
+
+      description 'Ships an order'
+
+      def execute
+        ask('Use express?', choices: %w[yes no])
+        RubyLLM::Task.new
+      end
+
+      def resume(task, **)
+        @checked ? 'Shipped' : task.tap { @checked = true }
+      end
+    end
+    asking(ship)
+
+    chat.pending_questions.sole.decline('too expensive')
+    3.times { chat.complete }
+
+    expect(result).to eq("Shipped\n\nThe user declined: too expensive")
+  end
+
   it 'reads an answer whose question was stored with its keys in another order' do
     question = RubyLLM::Question.asked(0, 'Who is flying?', schema: RubyLLM::Tool::SchemaDefinition.new(block: proc do
       string :name

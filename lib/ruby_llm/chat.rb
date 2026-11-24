@@ -2895,12 +2895,12 @@ module RubyLLM
           input ? tool.resume_call(input, arguments, tool_call:) : tool.call(**arguments, tool_call:)
         end
       end
-      return pause_tool_call(tool_call, result.to_h) if result.is_a?(Task)
+      return pause_tool_call(tool_call, result.to_h, input) if result.is_a?(Task)
 
       record_tool_call_input(tool_call, nil) if input
       with_decline_notes(result, input)
     rescue InputRequiredError => e
-      pause_tool_call(tool_call, e.to_h)
+      pause_tool_call(tool_call, e.to_h, input)
     end
 
     # The one place a tool's Tool.rescue_from handlers run, so they cover
@@ -2919,11 +2919,16 @@ module RubyLLM
     end
 
     def with_decline_notes(result, input)
-      notes = Array(input&.[]('requests')).filter_map do |request|
+      notes = decline_notes(input)
+      notes.empty? ? result : noted_result(result, notes)
+    end
+
+    def decline_notes(input)
+      asked = Array(input&.[]('requests')).filter_map do |request|
         note = request.dig('response', 'note')
         "The user declined: #{note_text(note)}" if note
       end
-      notes.empty? ? result : noted_result(result, notes)
+      [*input&.[]('notes'), *asked]
     end
 
     def noted_result(result, notes)
@@ -2939,8 +2944,9 @@ module RubyLLM
       end
     end
 
-    def pause_tool_call(tool_call, state)
-      record_tool_call_input(tool_call, state)
+    def pause_tool_call(tool_call, state, input)
+      notes = decline_notes(input) - decline_notes(state)
+      record_tool_call_input(tool_call, notes.empty? ? state : state.merge('notes' => notes))
       PAUSED
     end
 
