@@ -900,6 +900,8 @@ RubyLLM::MCP#authorized?
 RubyLLM::MCP#call(name, **arguments)
 RubyLLM::MCP#close
 RubyLLM::MCP#deauthorize
+RubyLLM::MCP#event_type(name, **arguments)
+RubyLLM::MCP#event_types
 RubyLLM::MCP#instructions
 RubyLLM::MCP#listen(resources: [], tasks: [], &)
 RubyLLM::MCP#name
@@ -944,6 +946,51 @@ RubyLLM::MCP::Collection#empty?
 RubyLLM::MCP::Error (class < RubyLLM::Error)
 RubyLLM::MCP::Error#code (attr_reader)
 RubyLLM::MCP::Error#data (attr_reader)
+RubyLLM::MCP::Event (class)
+RubyLLM::MCP::Event include Support::Inspectable
+RubyLLM::MCP::Event#cursor (attr_reader)
+RubyLLM::MCP::Event#data (attr_reader)
+RubyLLM::MCP::Event#id (attr_reader)
+RubyLLM::MCP::Event#name (attr_reader)
+RubyLLM::MCP::Event#timestamp
+RubyLLM::MCP::EventDelivery (class)
+RubyLLM::MCP::EventDelivery include Support::Inspectable
+RubyLLM::MCP::EventDelivery#challenge
+RubyLLM::MCP::EventDelivery#cursor
+RubyLLM::MCP::EventDelivery#error
+RubyLLM::MCP::EventDelivery#event
+RubyLLM::MCP::EventDelivery#id (attr_reader)
+RubyLLM::MCP::EventDelivery#kind
+RubyLLM::MCP::EventDelivery#secret (attr_reader)
+RubyLLM::MCP::EventDelivery#subscription_id (attr_reader)
+RubyLLM::MCP::EventDelivery.new(headers, body, secret:)
+RubyLLM::MCP::EventPage (class)
+RubyLLM::MCP::EventPage include Enumerable
+RubyLLM::MCP::EventPage include Support::Inspectable
+RubyLLM::MCP::EventPage#cursor (attr_reader)
+RubyLLM::MCP::EventPage#each(&)
+RubyLLM::MCP::EventPage#empty?
+RubyLLM::MCP::EventPage#more?
+RubyLLM::MCP::EventPage#poll_interval
+RubyLLM::MCP::EventPage#truncated?
+RubyLLM::MCP::EventSubscription (class)
+RubyLLM::MCP::EventSubscription include Support::Inspectable
+RubyLLM::MCP::EventSubscription#cursor (attr_reader)
+RubyLLM::MCP::EventSubscription#id (attr_reader)
+RubyLLM::MCP::EventSubscription#last_error (attr_reader)
+RubyLLM::MCP::EventSubscription#refresh_before
+RubyLLM::MCP::EventSubscription#truncated?
+RubyLLM::MCP::EventType (class)
+RubyLLM::MCP::EventType include Support::Inspectable
+RubyLLM::MCP::EventType#arguments (attr_reader)
+RubyLLM::MCP::EventType#delivery (attr_reader)
+RubyLLM::MCP::EventType#description (attr_reader)
+RubyLLM::MCP::EventType#name (attr_reader)
+RubyLLM::MCP::EventType#parameters_schema (attr_reader)
+RubyLLM::MCP::EventType#payload_schema (attr_reader)
+RubyLLM::MCP::EventType#poll(cursor: nil, max_age: nil, limit: nil)
+RubyLLM::MCP::EventType#subscribe(url:, secret:, cursor: nil, max_age: nil, ttl: nil)
+RubyLLM::MCP::EventType#unsubscribe(url:)
 RubyLLM::MCP::InputRequest
 RubyLLM::MCP::InputRequest (class)
 RubyLLM::MCP::InputRequest include Support::Inspectable

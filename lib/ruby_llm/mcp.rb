@@ -42,7 +42,8 @@ module RubyLLM
     }.freeze
     EXTENSIONS = {
       apps: [Apps::EXTENSION, { 'mimeTypes' => [Apps::MIME_TYPE] }],
-      tasks: ['io.modelcontextprotocol/tasks', {}]
+      tasks: ['io.modelcontextprotocol/tasks', {}],
+      events: [EventType::EXTENSION, {}]
     }.freeze
     POLL_INTERVAL = 1
     UNKNOWN_TOOL_ERRORS = [-32_601, -32_602].freeze
@@ -449,14 +450,16 @@ module RubyLLM
       #
       #   extension "com.example/audit", level: "full"
       #
-      # RubyLLM implements two extensions you declare by name. With
+      # RubyLLM implements three extensions you declare by name. With
       # +:apps+, MCP Apps, tools come with a UI your app renders next to
       # their results, and tools that only a UI may call stay out of chats;
       # see MCP::Tool#visibility. With +:tasks+, a server may run a long
-      # tool call in the background; see MCP::Task.
+      # tool call in the background; see MCP::Task. With +:events+, a
+      # server tells your app what happens on it; see MCP::EventType.
       #
       #   extension :apps
       #   extension :tasks
+      #   extension :events
       #
       # RubyLLM declares extensions in the capabilities of every request,
       # and when it connects to a server that predates 2026-07-28.
@@ -660,6 +663,22 @@ module RubyLLM
         Message.new(role: message['role'].to_sym, content:, attachments:)
       end
       Prompt.new(self, { 'name' => name.to_s, 'description' => result['description'] }, messages:)
+    end
+
+    # Returns the kinds of events the server announces, as MCP::EventType
+    # objects, or an empty Array for a server without events.
+    def event_types
+      @event_types ||= EventType.offered(client)
+    end
+
+    # Returns the MCP::EventType +name+ with the +arguments+ that say which
+    # events you want, ready to poll or subscribe to.
+    #
+    #   linear.event_type("issue.created", team: "ENG").poll
+    #
+    # Raises MCP::Error when the server does not list the event type.
+    def event_type(name, **arguments)
+      EventType.named(event_types, name, self.name).with(arguments)
     end
 
     # Asks the server to complete the first of +values+ for +reference+,
