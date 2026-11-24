@@ -857,9 +857,7 @@ module RubyLLM
 
       def apply_caching(chat, runtime)
         value = evaluate(@caching, runtime)
-        return if value.nil?
-
-        value == false ? chat.with_caching(false) : chat.with_caching(**value)
+        chat.with_caching(value) unless value.nil?
       end
 
       def apply_compaction(chat)

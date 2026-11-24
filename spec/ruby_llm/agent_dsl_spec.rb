@@ -295,6 +295,21 @@ RSpec.describe RubyLLM::Agent do
       expect(chat.instance_variable_get(:@headers)).to eq('X-Tenant' => 'acme')
     end
 
+    it 'accepts every caching value from a block that Chat#with_caching accepts' do
+      cache = RubyLLM::CachedContent.new(name: 'cachedContents/abc123')
+      build = lambda do |value|
+        Class.new(described_class) do
+          model model_for(:openai, :temperature), provider: :openai
+          caching { value }
+        end.chat.caching
+      end
+
+      expect(build.call(true)).to eq({})
+      expect(build.call(cache)).to eq(id: cache)
+      expect(build.call(false)).to be(false)
+      expect(build.call({ 'ttl' => '1h' })).to eq(ttl: '1h')
+    end
+
     it 'picks the model when the chat is built' do
       agent = Class.new(described_class) do
         inputs :quality
