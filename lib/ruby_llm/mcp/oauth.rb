@@ -251,8 +251,12 @@ module RubyLLM
         store.write(key, data, owner: @owner)
       end
 
+      # A store may undo what the block wrote when it raises, so a rejected
+      # registration is forgotten once the store is done.
       def synchronize(&block)
         self.class.refreshing(key) { store.respond_to?(:synchronize) ? store.synchronize(key, &block) : yield }
+      ensure
+        forget_registration
       end
 
       def store_tokens(tokens, client: nil)
@@ -398,7 +402,7 @@ module RubyLLM
         server = client['server'] or raise Error, 'No authorization server known; authorize first'
         send_token_request(server, client, key, params.merge(grant_type:))
       rescue Error => e
-        forget_registration(client) if oauth_error(e) == 'invalid_client'
+        @rejected = client if oauth_error(e) == 'invalid_client'
         raise
       end
 
@@ -430,7 +434,9 @@ module RubyLLM
         error.data['error'] if error.data.is_a?(Hash)
       end
 
-      def forget_registration(client)
+      def forget_registration
+        client = @rejected or return
+        @rejected = nil
         registration = registration_key(client['issuer'], client['redirect_uri'])
         store.delete(registration) if store.read(registration)&.fetch('client_id', nil) == client['client_id']
       end
