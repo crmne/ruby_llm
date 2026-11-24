@@ -350,6 +350,18 @@ RSpec.describe RubyLLM::Providers::VertexAI do
       expect(payload[:anthropic_version]).to eq('vertex-2023-10-16')
       expect(payload.dig(:messages, 0, :role)).to eq('user')
     end
+
+    it 'sends remote images and documents as their bytes' do
+      files = { 'https://example.com/ruby.png' => 'image/png', 'https://example.com/ruby.pdf' => 'application/pdf' }
+      files.each { |url, type| stub_request(:get, url).to_return(body: 'bytes', headers: { 'Content-Type' => type }) }
+      messages = [RubyLLM::Message.new(role: :user, content: 'hi', attachments: files.keys)]
+
+      payload = protocol.send(:render_payload, messages, tools: {}, temperature: nil, model:)
+
+      expect(payload.dig(:messages, 0, :content).filter_map { |block| block[:source] }).to eq(
+        files.values.map { |media_type| { type: 'base64', media_type:, data: Base64.strict_encode64('bytes') } }
+      )
+    end
   end
 
   describe '.cache_write_input_multiplier' do

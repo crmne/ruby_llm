@@ -10,6 +10,7 @@ module RubyLLM
       # Converse, it carries Anthropic's own features, such as tool search,
       # so a prompt cache survives the tools a model loads on demand.
       class Anthropic < Protocols::Anthropic
+        include Protocols::Anthropic::InlineSources
         include Protocols::Bedrock::EventStream
 
         ANTHROPIC_VERSION = 'bedrock-2023-05-31'
@@ -30,10 +31,7 @@ module RubyLLM
         end
 
         def render_payload(messages, **)
-          payload = super.except(:model, :stream)
-          payload[:messages] = inline_url_sources(payload[:messages])
-          payload[:system] = inline_url_sources(payload[:system]) if payload[:system]
-          payload.merge(anthropic_version: ANTHROPIC_VERSION)
+          super.except(:model, :stream).merge(anthropic_version: ANTHROPIC_VERSION)
         end
 
         def parse_count_tokens_response(response)
@@ -98,29 +96,6 @@ module RubyLLM
 
         def without_beta_header(headers)
           canonical_beta_headers(headers).except(BETA_HEADER)
-        end
-
-        # Bedrock does not fetch URLs, so remote images and documents travel
-        # as their bytes.
-        def inline_url_sources(blocks)
-          return blocks unless blocks.is_a?(Array)
-
-          blocks.map do |block|
-            next block unless block.is_a?(Hash)
-            next inline_url_source(block) if url_source?(block)
-
-            block[:content].is_a?(Array) ? block.merge(content: inline_url_sources(block[:content])) : block
-          end
-        end
-
-        def url_source?(block)
-          source = block[:source]
-          source.is_a?(Hash) && source[:type] == 'url'
-        end
-
-        def inline_url_source(block)
-          attachment = Attachment.new(block.dig(:source, :url))
-          block.merge(source: { type: 'base64', media_type: attachment.mime_type, data: attachment.encoded })
         end
 
         # Application inference profile ARNs contain '/', which Bedrock
