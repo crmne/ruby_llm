@@ -409,7 +409,16 @@ module RubyLLM
       reasoning_price = price_for(:thinking)
       return false unless reasoning_price
 
-      text_output_price.nil? || reasoning_price != text_output_price
+      output_price = output_price_beside_thinking
+      output_price.nil? || reasoning_price != output_price
+    end
+
+    # A context tier without a thinking price leaves the standard one, which
+    # compares with the output price listed beside it.
+    def output_price_beside_thinking
+      return text_output_price if @tier == :batch || text_pricing.tier_for(prompt_tokens)&.reasoning_output_per_million
+
+      text_pricing.output
     end
 
     def normalize_model(model)

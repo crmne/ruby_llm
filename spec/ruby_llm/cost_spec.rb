@@ -167,6 +167,24 @@ RSpec.describe RubyLLM::Cost do
       expect(long.total).to be_within(0.0000000001).of(5.45)
     end
 
+    it 'keeps thinking inside output above the threshold, unless it is priced separately there' do
+      standard = { input_per_million: 1, output_per_million: 10, reasoning_output_per_million: 10 }
+      long_context = { input_per_million: 2, output_per_million: 15 }
+      costs = [{}, { reasoning_output_per_million: 20 }].map do |thinking|
+        described_class.new(
+          tokens: RubyLLM::Tokens.new(input: 300_000, output: 10_000, thinking: 6_000),
+          model: RubyLLM::Model.new(
+            id: 'google/gemini-2.5-pro', provider: 'openrouter',
+            pricing: { text_tokens: { standard:, long_context: long_context.merge(thinking),
+                                      long_context_threshold: 200_000 } }
+          )
+        )
+      end
+
+      expect(costs.map(&:thinking)).to match([nil, be_within(1e-9).of(0.12)])
+      expect(costs.first.total).to be_within(1e-9).of(0.75)
+    end
+
     it 'counts cache tokens toward the long-context prompt threshold' do
       long_context_model = RubyLLM::Model.new(
         id: 'gpt-5.6-sol',
