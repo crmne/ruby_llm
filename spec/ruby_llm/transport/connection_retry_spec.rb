@@ -229,6 +229,23 @@ RSpec.describe RubyLLM::Transport::Connection do
       end
     end
 
+    %i[post get].each do |verb|
+      it "keeps no credentials on the failure a cancelled #{verb.upcase} stopped at" do
+        stub_request(verb, 'https://api.openai.com/v1/files/file-abc')
+          .to_return(status: 500, body: '{"error":{"message":"Internal server error"}}')
+
+        error = RubyLLM::Support::Cancellation.watch(-> { raise RubyLLM::CancelledError }) do
+          provider.connection.public_send(verb, 'files/file-abc', *([{ secret: 'conversation' }] if verb == :post))
+        rescue RubyLLM::CancelledError => e
+          e
+        end
+
+        expect(error.cause).to be_a(RubyLLM::ServerError)
+        expect(error.cause.response.request_headers).not_to include('Authorization')
+        expect(error.cause.response.request_body).to be_nil
+      end
+    end
+
     it 'does not retry a PATCH' do
       stub = stub_request(:patch, 'https://api.openai.com/v1/files/file-abc')
              .to_return(status: 500, body: '{"error":{"message":"Internal server error"}}')
