@@ -116,6 +116,24 @@ RSpec.describe RubyLLM::Chat do
         expect(chat.messages.select(&:tool_result?).map(&:content)).to eq(%w[read_a approve_click read_b])
       end
 
+      it 'holds the calls after an exclusive call that waits for an earlier approval' do
+        gated = tool('approve_read')
+        gated.requires_approval
+        chat.with_tools(gated)
+        allow(chat.provider).to receive(:complete)
+          .and_return(calls('read_a', 'approve_read', 'click', 'read_b'), answer)
+
+        chat.ask('Go')
+
+        expect(chat.waiting? && chat.pending_questions.any?(&:approval?)).to be(true)
+        expect(chat.messages.select(&:tool_result?).map(&:content)).to eq(%w[read_a])
+
+        chat.approve(chat.pending_questions.find(&:approval?))
+        chat.complete
+
+        expect(chat.messages.select(&:tool_result?).map(&:content)).to eq(%w[read_a approve_read click read_b])
+      end
+
       it 'holds the calls after an exclusive call that paused on a task' do
         finished = false
         paused = Class.new(RubyLLM::Tool) do
