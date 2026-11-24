@@ -261,6 +261,13 @@ RSpec.describe RubyLLM::FileStore::Converters::Office do
       expect(xlsx('<c r="XFD1"><v>1</v></c>').lines.last.size).to eq(16_384)
     end
 
+    it 'keeps a row on one line whatever its cells hold' do
+      strings = "<sst><si><t>12 Main St\nSpring\tfield</t></si></sst>"
+      cells = '<c r="A1" t="s"><v>0</v></c><c r="B1"><v>42</v></c>'
+
+      expect(xlsx(cells, 'xl/sharedStrings.xml': strings).lines.last).to eq("12 Main St Spring field\t42")
+    end
+
     it 'leaves out phonetic hints and formulas' do
       strings = '<sst><si><t>東京</t><rPh sb="0" eb="2"><t>トウキョウ</t></rPh></si></sst>'
       cells = '<c r="A1" t="s"><v>0</v></c><c r="B1"><f>1+1</f><v>2</v></c>'
