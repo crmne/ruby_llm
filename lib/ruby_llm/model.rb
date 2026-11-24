@@ -190,12 +190,12 @@ module RubyLLM
     def cost_for(tokens, tier: :standard)
       requests = usage_entries_of(tokens)
       if requests.any?
-        complete = requests.all? { |entry| entry.usage_available? || entry.tokens.reported_cost }
+        complete = requests.all?(&:usage_available?)
         return Cost.aggregate(requests.map { |entry| cost_for(entry.tokens, tier:) }, complete:)
       end
 
       tokens = tokens.tokens if tokens.respond_to?(:tokens)
-      Cost.new(tokens:, model: self, tier:)
+      Cost.new(tokens: tokens&.without_reported_cost, model: self, tier:)
     end
 
     # Returns the Provider class registered for this model's provider slug,

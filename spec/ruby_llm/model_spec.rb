@@ -369,6 +369,35 @@ RSpec.describe RubyLLM::Model do
       expect(model.cost_for(chat).total).to be_nil
     end
 
+    context 'when a provider reported what it charged' do
+      let(:model) do
+        described_class.new(
+          data.merge(pricing: { text_tokens: { standard: { input_per_million: 1.0, output_per_million: 2.0 } } })
+        )
+      end
+
+      def message_with(*tokens)
+        entries = tokens.map do |counts|
+          RubyLLM::Accounting::Usage::Entry.new(operation: :chat, provider: 'openrouter', model: 'gpt-5',
+                                                status: :succeeded, tokens: counts)
+        end
+        RubyLLM::Message.new(role: :assistant, content: 'Hi', usage_entries: entries)
+      end
+
+      it 'prices the tokens with its own rates' do
+        tokens = RubyLLM::Tokens.new(input: 1_000_000, reported_cost: 9.99)
+
+        expect(model.cost_for(tokens).total).to eq(1.0)
+        expect(model.cost_for(message_with(tokens)).total).to eq(1.0)
+      end
+
+      it 'keeps the total unknown when a request has no tokens to price' do
+        message = message_with(RubyLLM::Tokens.new(input: 10), RubyLLM::Tokens.new(reported_cost: 1.0))
+
+        expect(model.cost_for(message).total).to be_nil
+      end
+    end
+
     it 'hydrates long_context pricing from metadata.cost when pricing lacks it' do
       model = described_class.new(
         data.merge(
