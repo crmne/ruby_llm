@@ -98,8 +98,8 @@ module RubyLLM
       def error # :nodoc:
         details = data['error'] || {}
         reported = details['message'] || status_message
-        Error.new(("Task #{id} was #{status}" unless reported), provider_message: reported,
-                                                                code: details['code'], data: details['data'])
+        TaskError.new(("Task #{id} was #{status}" unless reported), task: self, provider_message: reported,
+                                                                    code: details['code'], data: details['data'])
       end
 
       def record_answers(keys) # :nodoc:
