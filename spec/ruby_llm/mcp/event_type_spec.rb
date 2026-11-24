@@ -191,6 +191,17 @@ RSpec.describe RubyLLM::MCP::EventType do
       expect(sent('events/subscribe').headers).to include('mcp-name' => 'incident.created')
     end
 
+    it 'keeps the secret out of a debug log that logs bodies' do
+      output = StringIO.new
+      allow(RubyLLM).to receive(:logger).and_return(Logger.new(output, level: :debug))
+      allow(RubyLLM.config).to receive(:log_bodies).and_return(true)
+
+      mcp.event_type('incident.created').subscribe(url:, secret:)
+
+      expect(output.string).to include('POST')
+      expect(output.string).not_to include(secret)
+    end
+
     it 'subscribes from a cursor, within an age, for a while' do
       mcp.event_type('incident.created').subscribe(url:, secret:, cursor: 'cursor_0', max_age: 300, ttl: 3600)
 
