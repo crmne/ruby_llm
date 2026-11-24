@@ -20,6 +20,13 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
         .to raise_error(RubyLLM::RateLimitError, /Slow down/)
     end
 
+    it 'raises an error the body reports as a String' do
+      body = { 'error' => 'overloaded' }
+
+      expect { protocol.send(:parse_completion_body, body, raw: body) }
+        .to raise_error(RubyLLM::ServerError, 'overloaded')
+    end
+
     it 'raises for a failed response with no error object' do
       body = { 'status' => 'failed', 'error' => nil, 'output' => [] }
 
