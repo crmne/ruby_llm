@@ -235,6 +235,15 @@ RSpec.describe RubyLLM::MCP::HTTP do
     expect(notifications.map { |message| message['method'] }).to eq(['notifications/progress'])
   end
 
+  it 'replaces invalid bytes in a JSON body' do
+    stub_method('server/discover', result: discover_result)
+    stub_method('tools/call', body: lambda { |request|
+      %({"jsonrpc":"2.0","id":"#{JSON.parse(request.body)['id']}","result":{"text":"caf\xE9 €"}}).b
+    })
+
+    expect(client.request('tools/call', { name: 'search' })).to eq('text' => "caf\uFFFD €")
+  end
+
   it 'goes on with a call when the server refuses the answer to its own request' do
     stub_method('server/discover', result: discover_result)
     stub_request(:post, url).with { |request| JSON.parse(request.body)['id'] == 'roots-1' }.to_return(status: 401)

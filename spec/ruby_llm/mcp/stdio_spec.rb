@@ -35,6 +35,15 @@ RSpec.describe RubyLLM::MCP::Stdio do
     expect { stdio.listen(nil) { nil } }.to raise_error(RubyLLM::MCP::Stdio::Unavailable, /exited/)
   end
 
+  it 'replaces invalid bytes the server writes' do
+    script = '$stdin.gets; puts %({"id":1,"text":"caf\xE9 €"}); $stdout.flush; $stdin.gets'
+    stdio = described_class.new([RbConfig.ruby, '-e', script])
+
+    expect(stdio.request({ id: 1, method: 'probe' })['text']).to eq("caf\uFFFD €")
+  ensure
+    stdio.close
+  end
+
   it 'keeps the application environment from the server' do
     parent = %w[
       FAKE_PROVIDER_API_KEY BUNDLE_GEMFILE BUNDLE_PATH RAILS_ENV SECRET_KEY_BASE NODE_EXTRA_CA_CERTS
