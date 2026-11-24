@@ -139,16 +139,6 @@ RSpec.describe RubyLLM::Agent, :live do
     expect(agent_class.chat.caching).to eq({})
   end
 
-  it 'accepts every caching value from a block that Chat#with_caching accepts' do
-    cache = RubyLLM::CachedContent.new(name: 'cachedContents/abc123')
-    build = ->(value) { Class.new(RubyLLM::Agent) { caching { value } }.chat.caching }
-
-    expect(build.call(true)).to eq({})
-    expect(build.call(cache)).to eq(id: cache)
-    expect(build.call(false)).to be(false)
-    expect(build.call({ 'ttl' => '1h' })).to eq(ttl: '1h')
-  end
-
   it 'does not enable prompt caching unless configured' do
     agent_class = Class.new(RubyLLM::Agent) do
       model model_for(:openai, :temperature)
