@@ -2973,7 +2973,7 @@ module RubyLLM
         state = tool_call_input(tool_call)
         next unless state&.key?('task')
 
-        cancel_task(task_for(tool_call, state))
+        cancel_task(tool_call, state)
         record_tool_call_input(tool_call, nil)
       end
     end
@@ -2991,10 +2991,10 @@ module RubyLLM
       end
     end
 
-    def cancel_task(task)
-      task.cancel
-    rescue Error, ConfigurationError, Faraday::Error => e
-      RubyLLM.logger.debug { "RubyLLM could not cancel the task of tool call #{task.tool_call&.id}: #{e.message}" }
+    def cancel_task(tool_call, state)
+      task_for(tool_call, state).cancel
+    rescue StandardError => e
+      RubyLLM.logger.debug { "RubyLLM could not cancel the task of tool call #{tool_call.id}: #{e.message}" }
     end
 
     def tool_call_input(tool_call)
