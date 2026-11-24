@@ -2,9 +2,11 @@
 
 module RubyLLM
   class MCP
-    # Keeps a subscription to a server's changes open in a thread of its
-    # own, so the notifications reach the MCP while chats and requests go
-    # on. #start returns once the server acknowledges the subscription.
+    # Keeps a subscription to a server's changes open. #start does so in a
+    # thread of its own, so the notifications reach the MCP while chats and
+    # requests go on, and returns once the server acknowledges the
+    # subscription. #listen does so in the caller's thread or fiber, and
+    # returns when the server ends the subscription for good.
     # When a stream ends, the listener subscribes again after a delay that
     # starts at a second and doubles up to a minute, and gives up when the
     # server agrees to send nothing or does not know the method. Changes
@@ -21,6 +23,20 @@ module RubyLLM
       MAX_RETRY_DELAY = 60
       STOP_TIMEOUT = 5
 
+      # Returns the subscriptions/listen filter for the lists a server with
+      # +capabilities+ announces changes to, +resources+ as URIs or
+      # MCP::Resource objects, and +tasks+ as MCP::Task objects or IDs.
+      def self.filter(capabilities, resources, tasks)
+        lists = %w[tools prompts resources].select { |list| capabilities.dig(list, 'listChanged') }
+        lists.to_h { |list| [:"#{list}ListChanged", true] }
+             .merge(resourceSubscriptions: named(resources, :uri), taskIds: named(tasks, :id))
+             .reject { |_change, listened| listened == [] }
+      end
+
+      def self.named(items, reader)
+        items.map { |item| item.respond_to?(reader) ? item.public_send(reader) : item.to_s }
+      end
+
       def initialize(client, name:, timeout:, resumed: nil, &on_notification)
         @client = client
         @name = name
@@ -35,6 +51,8 @@ module RubyLLM
       # Listens for +changes+, a subscriptions/listen filter, instead of
       # whatever the listener heard before. Returns the changes the server
       # agreed to send, or +nil+ when there is nothing to listen for.
+      # Raises Error when the server will not send updates for a resource
+      # or task among them.
       def start(changes)
         @control.synchronize do
           next @state if running? && changes == @changes
@@ -48,16 +66,33 @@ module RubyLLM
         @control.synchronize { halt }
       end
 
+      # Listens for +changes+ where it is called, until the server agrees
+      # to send nothing or does not know the method. Raises as #start
+      # does, and what kept the server from acknowledging.
+      def listen(changes)
+        prepare(changes)
+        begin
+          cycle
+        rescue CancelledError
+          raise unless @state.is_a?(Exception)
+        end
+        raise @state if @state.is_a?(Exception)
+      end
+
       private
 
       def running?
         @pid == Process.pid && @thread&.alive?
       end
 
-      def launch(changes)
+      def prepare(changes)
         @changes = changes
-        @pid = Process.pid
         @state = nil
+      end
+
+      def launch(changes)
+        prepare(changes)
+        @pid = Process.pid
         @thread = Thread.new do
           Support::Cancellation.watch(nil) do
             Support::Instrumentation.with_workflow(nil) do
@@ -94,6 +129,12 @@ module RubyLLM
       end
 
       def run
+        cycle
+      rescue CancelledError
+        nil
+      end
+
+      def cycle
         delay = RETRY_DELAY
         loop do
           opened = monotonic_now
@@ -104,8 +145,6 @@ module RubyLLM
           pause(delay * (1 + rand) / 2, ending)
           delay = [delay * 2, MAX_RETRY_DELAY].min
         end
-      rescue CancelledError
-        nil
       end
 
       def pause(seconds, ending)
@@ -131,7 +170,19 @@ module RubyLLM
           dispatch(@on_notification, notification)
           dispatch(@resumed, listened) if resumed
         end
-        settle(listened) if acknowledged
+        acknowledge(listened) if acknowledged
+      end
+
+      def acknowledge(listened)
+        refusal = refuse(listened) unless @state.is_a?(Hash)
+        settle(refusal || listened)
+        raise CancelledError if refusal
+      end
+
+      def refuse(listened)
+        wanted = Array(@changes[:resourceSubscriptions]) + Array(@changes[:taskIds])
+        missing = wanted - Array(listened['resourceSubscriptions']) - Array(listened['taskIds'])
+        Error.new("#{@name} does not send updates for #{missing.join(', ')}") unless missing.empty?
       end
 
       def dispatch(callback, argument)

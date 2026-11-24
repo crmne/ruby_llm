@@ -103,7 +103,7 @@ end
 
 The transport handles its own authentication and timeouts. `timeout` is `nil` unless RubyLLM wants a shorter one than the transport's own, and `headers` holds the tool arguments the server asks to receive as `Mcp-Param-*` HTTP headers, which a transport that doesn't end in HTTP can ignore. After `close`, the next request reconnects. Raise `RubyLLM::ConnectionError` when the server can't be reached, as the HTTP transport does. To let the model know instead, answer a `tools/call` request with a tool error, `{ "result" => { "isError" => true, "content" => [{ "type" => "text", "text" => "The laptop is offline" }] } }`.
 
-To support [listening for changes](#listening-for-changes), a transport also responds to `listen(message, version:)`. It sends `message`, a `subscriptions/listen` request, yields each notification the server sends for it, and returns the server's response once the server ends the subscription. RubyLLM calls it from the listener's thread and raises `RubyLLM::CancelledError` there to stop it. For servers that predate the 2026-07-28 revision, `message` is `nil`, and the transport yields the changes the server announces on its own.
+To support [listening for changes](#listening-for-changes), a transport also responds to `listen(message, version:)`. It sends `message`, a `subscriptions/listen` request, yields each notification the server sends for it, and returns the server's response once the server ends the subscription. RubyLLM calls it from the listener's thread and raises `RubyLLM::CancelledError` there to stop it, or from the thread or fiber that passed [`listen` a block](#listening-in-your-own-thread-or-fiber). For servers that predate the 2026-07-28 revision, `message` is `nil`, and the transport yields the changes the server announces on its own.
 
 When your app also sends such a server requests of its own, outside RubyLLM, give them the `_meta` RubyLLM's client adds to every request on the 2026-07-28 revision, so the server sees the same protocol revision and client name:
 
@@ -583,6 +583,8 @@ Callbacks for the changes a listener hears run in its thread, one at a time, so 
 
 When the connection drops or the server ends the subscription, RubyLLM subscribes again after about a second, doubling the wait up to a minute while the server stays away. Changes made in between are lost, so once it is back, RubyLLM treats everything it listens to as changed: it lists tools again, and `after_change` runs for each list the server announces changes to, each resource, and each task, which it checks on first. Write callbacks that can run again for something that didn't change.
 
+A server need not send anything while nothing changes. Over HTTP, a subscription stays open through that silence whatever your `timeout` is, and RubyLLM subscribes again only after a day without a byte.
+
 Older servers send their changes on their session's event stream, and RubyLLM subscribes to resources with `resources/subscribe`; over stdio, the listener shares the server's pipe with your requests. `listen` works the same either way.
 
 ### Running a Listener
@@ -622,6 +624,32 @@ end
 ```
 
 A forked process does not inherit the listener's thread. If forked workers should listen too, call `listen` after forking, such as in Puma's `on_worker_boot`.
+
+### Listening in Your Own Thread or Fiber
+
+A thread per listener adds up when one process listens to many servers. Pass `listen` a block, and it listens where you call it instead, starting no thread:
+
+```ruby
+handbook.listen(resources: ["handbook://policies"]) do |change|
+  ReindexPolicyJob.perform_later(change.uri) if change.is_a?(RubyLLM::MCP::Resource)
+end
+```
+
+The block receives what `after_change` receives, after those callbacks ran, and again for everything you listen to once a subscription is back. `listen` returns when the server ends the subscription for good. To stop sooner, `break` out of the block, or stop the thread or task that called it.
+
+Under a fiber scheduler, each listener waits in a fiber, so one thread holds thousands of subscriptions:
+
+```ruby
+require "async"
+
+Sync do |task|
+  Subscription.find_each do |subscription|
+    task.async do
+      subscription.mcp.listen(resources: subscription.uris) { |change| subscription.nudge(change) }
+    end
+  end
+end
+```
 
 ## Extensions
 

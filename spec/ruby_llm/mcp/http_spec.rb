@@ -890,6 +890,47 @@ RSpec.describe RubyLLM::MCP::HTTP do
         expect(next_change).to have_attributes(uri: 'file:///notes.md')
       end
 
+      it 'runs after_change when the resource list changes, and not for notifications it does not know' do
+        mcp.listen
+
+        changed('notifications/message', level: 'info')
+        changed('notifications/resources/list_changed')
+
+        expect(next_change).to eq(:resources)
+        expect(changes).to be_empty
+      end
+
+      it 'keeps a subscription the server leaves quiet for longer than the timeout' do
+        quiet = RubyLLM.mcp(url: server.url, timeout: 0.3).listen
+
+        sleep 1
+
+        expect(server.requests_for('subscriptions/listen').size).to eq(1)
+      ensure
+        quiet&.close
+      end
+
+      it 'listens with a block in fibers, starting no threads' do
+        url = server.url
+        heard = []
+        threads = nil
+
+        in_reactor do |reactor|
+          listeners = Array.new(20) do
+            reactor.async do
+              RubyLLM.mcp(url:).listen { |change| break heard << change }
+            end
+          end
+          eventually { server.open_streams == 20 }
+          threads = Thread.list.count { |thread| thread.name == 'ruby_llm-mcp-listener' }
+          changed('notifications/tools/list_changed')
+          listeners.each(&:wait)
+        end
+
+        expect(threads).to eq(0)
+        expect(heard).to eq([:tools] * 20)
+      end
+
       it 'runs callbacks that call the server while the stream stays open' do
         sizes = changes
         mcp.class.after_change { |change| sizes << tools.size if change == :tools }

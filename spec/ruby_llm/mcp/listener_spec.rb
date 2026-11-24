@@ -54,12 +54,12 @@ RSpec.describe RubyLLM::MCP::Listener do
   end
 
   it 'keeps a subscription for the same changes and replaces it for others' do
-    files = tools.merge(resourceSubscriptions: ['file:///notes.md'])
+    lists = tools.merge(promptsListChanged: true)
 
     2.times { listener.start(tools) }
-    listener.start(files)
+    listener.start(lists)
 
-    expect(client.attempts).to eq([tools, files])
+    expect(client.attempts).to eq([tools, lists])
     expect(client.cancelled).to eq([1])
   end
 
@@ -201,6 +201,55 @@ RSpec.describe RubyLLM::MCP::Listener do
     it 'raises and cancels the subscription' do
       expect { listener.start(tools) }.to raise_error(RubyLLM::MCP::Error, /did not acknowledge/)
       expect(client.cancelled).to eq([1])
+    end
+  end
+
+  describe '#listen' do
+    before do
+      allow(listener).to receive(:sleep)
+      allow(RubyLLM.logger).to receive(:warn)
+    end
+
+    context 'when the server ends the subscription for good' do
+      let(:script) do
+        lambda do |attempt, notify|
+          notify[acknowledgment(attempt == 1 ? { 'toolsListChanged' => true } : {})]
+        end
+      end
+
+      it 'listens in the calling thread until then' do
+        threads = Thread.list.size
+
+        expect(listener.listen(tools)).to be_nil
+        expect(Thread.list.size).to eq(threads)
+        expect(client.attempts.size).to eq(2)
+      end
+    end
+
+    context 'when the server never acknowledges' do
+      let(:script) { ->(*) { raise RubyLLM::MCP::Error, 'Unauthorized' } }
+
+      it 'raises why' do
+        expect { listener.listen(tools) }.to raise_error(RubyLLM::MCP::Error, 'Unauthorized')
+        expect(client.attempts.size).to eq(1)
+      end
+    end
+
+    context 'when the server will not watch a resource' do
+      it 'raises and cancels the subscription' do
+        expect { listener.listen(tools.merge(resourceSubscriptions: ['file:///notes.md'])) }
+          .to raise_error(RubyLLM::MCP::Error, 'files does not send updates for file:///notes.md')
+        expect(client.cancelled).to eq([1])
+      end
+    end
+
+    context 'when the caller is cancelled' do
+      let(:script) { ->(*) { raise RubyLLM::CancelledError } }
+
+      it 'raises the cancellation' do
+        expect { listener.listen(tools) }.to raise_error(RubyLLM::CancelledError)
+        expect(client.cancelled).to eq([1])
+      end
     end
   end
 

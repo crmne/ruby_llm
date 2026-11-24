@@ -178,16 +178,20 @@ module RubyLLM
 
       def subscribe(changes)
         request = message('subscriptions/listen', { notifications: changes }, id: SecureRandom.uuid)
+        abandoned = true
         ending = catch(request) do
           @transport.listen(request, version:) do |notification|
             throw request, notification if cancels?(notification, request)
             yield notification
           end
+        rescue StandardError => e
+          abandoned = e.is_a?(CancelledError)
+          raise
         end
+        abandoned = false
         answer(ending)
-      rescue CancelledError
-        cancel(request)
-        raise
+      ensure
+        cancel(request) if abandoned
       end
 
       def listen_to_session(changes, &)
