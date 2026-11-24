@@ -133,6 +133,8 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(chat.to_llm.messages.last.content).to eq({ error: 'The tool call did not finish.' }.to_json)
   end
 
+  def in_another_process(&) = Fiber.new(storage: nil, &).resume
+
   def job_for(chat, tool = charge_tool, &during_request)
     Chat.find(chat.id).with_tools(tool).tap do |job|
       allow(job.to_llm.provider).to receive(:complete) do |*, **, &stream|
@@ -383,7 +385,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     second_job = job_for(chat)
     during_run << lambda {
       travel 11.minutes
-      second_job.complete
+      in_another_process { second_job.complete }
     }
 
     response = first_job.complete
@@ -778,7 +780,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       travel 1.minute
       job.__send__(:renew_claim_leases)
       claims << claimed_until(chat)
-      second_job.complete
+      in_another_process { second_job.complete }
     end
 
     job.complete

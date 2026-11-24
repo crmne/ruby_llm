@@ -20,6 +20,22 @@ module RubyLLM
         Fiber[KEY] = previous
       end
 
+      # Watches +checkpoint+ along with the one around it until the block
+      # returns, after which a thread that outlives it stops for neither.
+      def nest(checkpoint, &)
+        around = Fiber[KEY]
+        active = true
+        nested = lambda do
+          next unless active
+
+          around&.call
+          checkpoint.call
+        end
+        watch(nested, &)
+      ensure
+        active = false
+      end
+
       def check
         Fiber[KEY]&.call
       end
