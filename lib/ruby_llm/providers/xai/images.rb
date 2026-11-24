@@ -38,13 +38,14 @@ module RubyLLM
           Support::Utils.to_safe_array(sources).filter_map do |source|
             next if blank_attachment?(source)
 
-            { type: 'image_url', url: image_reference_url(source) }
+            attachment = source.is_a?(Attachment) ? source : Attachment.new(source, config: @config)
+            next { file_id: attachment.provider_file_id } if attachment.provider_file?
+
+            { type: 'image_url', url: image_reference_url(attachment) }
           end
         end
 
-        def image_reference_url(source)
-          attachment = source.is_a?(Attachment) ? source : Attachment.new(source, config: @config)
-          return attachment.provider_file_id if attachment.provider_file?
+        def image_reference_url(attachment)
           return attachment.source.to_s if attachment.url?
 
           raise UnsupportedAttachmentError, attachment.mime_type unless attachment.image?
