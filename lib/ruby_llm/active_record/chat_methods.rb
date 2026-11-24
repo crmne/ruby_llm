@@ -1298,15 +1298,17 @@ module RubyLLM
         tool_call = find_tool_call(message.tool_call_id) if message.tool_call_id
         attrs = message_attributes(message)
 
-        answered = fenced_by_run_claim do
-          @message.assign_attributes(attrs)
-          @message.save!
-          raise ::ActiveRecord::Rollback if tool_call && !tool_result_recorded?(tool_call, message)
+        answered = restoring_unsaved_tool_call(tool_call) do
+          fenced_by_run_claim do
+            @message.assign_attributes(attrs)
+            @message.save!
+            raise ::ActiveRecord::Rollback if tool_call && !tool_result_recorded?(tool_call, message)
 
-          persist_content(@message, message.attachments) if message.attachments.any?
-          persist_tool_calls(message.tool_calls) if message.tool_calls.present?
-          link_usage_entries(message)
-          true
+            persist_content(@message, message.attachments) if message.attachments.any?
+            persist_tool_calls(message.tool_calls) if message.tool_calls.present?
+            link_usage_entries(message)
+            true
+          end
         end
         discard_superseded_message unless answered
       end

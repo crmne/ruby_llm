@@ -2614,7 +2614,7 @@ module RubyLLM
       stopped_by = e
       raise
     ensure
-      release_tool_calls(claimed, stopped_by, finished:)
+      @tool_call_state.release(claimed, stopped_by, finished:)
     end
 
     # A call that had started in a process that stopped before saving its
@@ -2640,11 +2640,6 @@ module RubyLLM
         answered.each_value { |tool_call| leases[tool_call] = @config.max_run_time }
         leases
       end
-    end
-
-    def release_tool_calls(ids, stopped_by, finished:)
-      answered = messages.filter_map { |message| message.tool_call_id if message.tool_result? }
-      @tool_call_state.release(ids - answered, stopped_by, finished:)
     end
 
     def max_run_time_for(tool_call)
