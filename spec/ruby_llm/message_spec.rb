@@ -169,6 +169,10 @@ RSpec.describe RubyLLM::Message do
       expect(ask.parsed).to be_nil
     end
 
+    it 'parses only the final answer of a message rebuilt from to_h' do
+      expect(described_class.new(ask.to_h).parsed).to eq('total' => 12.1)
+    end
+
     it 'parses only the final answer after a JSON round trip' do
       restored = described_class.new(ask.to_h)
       restored.ruby_llm_usage_entries = ask.ruby_llm_usage_entries

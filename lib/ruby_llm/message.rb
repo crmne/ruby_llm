@@ -464,7 +464,7 @@ module RubyLLM
     private
 
     def answer_text
-      slug = ruby_llm_usage_entries.reverse.find(&:succeeded?)&.provider if raw_content || phase
+      slug = provider if raw_content || phase
       (Provider.resolve(slug)&.answer_text(self) if slug) || content
     end
 
