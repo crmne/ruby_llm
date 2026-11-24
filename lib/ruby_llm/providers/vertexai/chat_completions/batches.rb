@@ -42,7 +42,7 @@ module RubyLLM
             body = response.is_a?(Hash) ? response['body'] || response : response
 
             if body
-              [index, parse_completion_body(body, raw: body)]
+              parsed_batch_result(index, index, body) { parse_completion_body(body, raw: body) }
             else
               [index, nil, batch_failure(index, line.dig('status', 'message') || batch_error_message(line))]
             end
