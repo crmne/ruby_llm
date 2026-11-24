@@ -21,7 +21,8 @@ module RubyLLM
     # adapters that keep one connection per thread. Servers need not send
     # anything while nothing changes, so that connection waits a day for
     # the next byte instead of the request timeout, which is how long a
-    # connection that died silently goes unnoticed. Older servers send
+    # connection that died silently goes unnoticed. async-http-faraday
+    # reads that wait from its own options. Older servers send
     # changes on the session's event stream instead.
     #
     # A server's own requests, on any stream, are answered right away on
@@ -76,12 +77,13 @@ module RubyLLM
         @responded = responded
         @idempotent = idempotent
         @timeout = timeout || config.request_timeout
-        @connect = lambda do
+        @connect = lambda do |**adapter_options|
           Transport::Connection.basic(config) do |faraday|
             faraday.options.timeout = timeout if timeout
-            faraday.adapter config.faraday_adapter
+            faraday.adapter config.faraday_adapter, **adapter_options
           end
         end
+        @adapter = config.faraday_adapter
         @connection = @connect.call
       end
 
@@ -210,7 +212,10 @@ module RubyLLM
       end
 
       def streams
-        @streams ||= @connect.call.tap { |connection| connection.options.read_timeout = LISTEN_TIMEOUT }
+        @streams ||= begin
+          adapter_options = @adapter == :async_http ? { read_timeout: LISTEN_TIMEOUT } : {}
+          @connect.call(**adapter_options).tap { |connection| connection.options.read_timeout = LISTEN_TIMEOUT }
+        end
       end
 
       def receiver(version, on_notification)

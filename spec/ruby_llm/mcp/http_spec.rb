@@ -789,6 +789,37 @@ RSpec.describe RubyLLM::MCP::HTTP do
     end
   end
 
+  describe 'the connection of a subscription' do
+    let(:adapter) do
+      Class.new(Faraday::Adapter) do
+        attr_reader :connection_options
+      end
+    end
+
+    before { Faraday::Adapter.register_middleware(spec_listener: adapter, async_http: adapter) }
+
+    after do
+      Faraday::Adapter.unregister_middleware(:spec_listener)
+      Faraday::Adapter.unregister_middleware(:async_http)
+    end
+
+    def streams(faraday_adapter)
+      config = RubyLLM.config.dup.tap { |settings| settings.faraday_adapter = faraday_adapter }
+      described_class.new(url, timeout: 5, config:).send(:streams)
+    end
+
+    it 'waits a day for the next byte, whatever the timeout' do
+      connection = streams(:spec_listener)
+
+      expect(connection.options).to have_attributes(timeout: 5, read_timeout: 86_400)
+      expect(connection.builder.adapter.build.connection_options).to eq({})
+    end
+
+    it 'tells async-http-faraday so in its own options' do
+      expect(streams(:async_http).builder.adapter.build.connection_options).to eq(read_timeout: 86_400)
+    end
+  end
+
   describe 'listening over a real connection' do
     let(:changes) { Queue.new }
     let(:mcp) do

@@ -1052,9 +1052,10 @@ module RubyLLM
       @tools = @server_tools = nil
     end
 
-    def announce(change, &heard)
+    def announce(change)
       self.class.callbacks(:after_change).each { |callback| apply(callback, change) }
-      heard&.call(change)
+    ensure
+      yield change if block_given?
     end
 
     def listener(&heard)

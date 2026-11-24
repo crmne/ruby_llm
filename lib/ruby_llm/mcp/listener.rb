@@ -68,7 +68,9 @@ module RubyLLM
 
       # Listens for +changes+ where it is called, until the server agrees
       # to send nothing or does not know the method. Raises as #start
-      # does, and what kept the server from acknowledging.
+      # does, and what kept the server from acknowledging. Nothing but the
+      # caller can interrupt its wait, so unlike #start it waits for the
+      # acknowledgment as long as the transport does.
       def listen(changes)
         prepare(changes)
         begin
@@ -180,8 +182,8 @@ module RubyLLM
       end
 
       def refuse(listened)
-        wanted = Array(@changes[:resourceSubscriptions]) + Array(@changes[:taskIds])
-        missing = wanted - Array(listened['resourceSubscriptions']) - Array(listened['taskIds'])
+        missing = (Array(@changes[:resourceSubscriptions]) - Array(listened['resourceSubscriptions'])) +
+                  (Array(@changes[:taskIds]) - Array(listened['taskIds']))
         Error.new("#{@name} does not send updates for #{missing.join(', ')}") unless missing.empty?
       end
 

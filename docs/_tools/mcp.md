@@ -635,7 +635,7 @@ handbook.listen(resources: ["handbook://policies"]) do |change|
 end
 ```
 
-The block receives what `after_change` receives, after those callbacks ran, and again for everything you listen to once a subscription is back. `listen` returns when the server ends the subscription for good. To stop sooner, `break` out of the block, or stop the thread or task that called it.
+The block receives what `after_change` receives, after those callbacks ran, and again for everything you listen to once a subscription is back. `listen` returns when the server ends the subscription for good. To stop sooner, `break` out of the block, or stop the thread or task that called it. Nothing else interrupts it, so it has no deadline for the server's confirmation the way the background form does: put your own around it when you need one.
 
 Under a fiber scheduler, each listener waits in a fiber, so one thread holds thousands of subscriptions:
 

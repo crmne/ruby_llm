@@ -243,6 +243,15 @@ RSpec.describe RubyLLM::MCP::Listener do
       end
     end
 
+    context 'when a resource and a task share a name and the server watches only one' do
+      let(:script) { ->(_attempt, notify) { notify[acknowledgment('resourceSubscriptions' => ['report'])] } }
+
+      it 'raises for the other' do
+        expect { listener.listen(resourceSubscriptions: ['report'], taskIds: ['report']) }
+          .to raise_error(RubyLLM::MCP::Error, 'files does not send updates for report')
+      end
+    end
+
     context 'when the caller is cancelled' do
       let(:script) { ->(*) { raise RubyLLM::CancelledError } }
 
