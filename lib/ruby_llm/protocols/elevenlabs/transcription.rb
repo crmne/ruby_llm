@@ -36,7 +36,7 @@ module RubyLLM
 
           if speaker_names
             payload[:diarize] = true
-            payload[:num_speakers] = speaker_names.size
+            payload[:num_speakers] = speaker_names.size unless speaker_names.empty?
           end
 
           payload.merge(provider_options)
