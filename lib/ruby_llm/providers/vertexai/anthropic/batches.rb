@@ -37,12 +37,12 @@ module RubyLLM
 
           def parse_vertex_batch_result(line, fallback_index)
             index = vertex_batch_result_index(line, fallback_index)
-            body = line.dig('response', 'body') || line['response']
+            body = vertex_batch_response(line)
 
             if body
               [index, parse_completion_body(body, raw: body)]
             else
-              [index, nil, batch_failure(index, line.dig('status', 'message') || batch_error_message(line))]
+              [index, nil, batch_failure(index, vertex_batch_status_message(line))]
             end
           end
         end
