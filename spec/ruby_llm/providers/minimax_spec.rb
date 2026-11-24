@@ -363,6 +363,13 @@ RSpec.describe RubyLLM::Providers::MiniMax do
         .to raise_error(RubyLLM::UnsupportedAttachmentError)
     end
 
+    it 'leaves out blank text the model wrote' do
+      blocks = []
+      protocol.send(:append_formatted_content, blocks, RubyLLM::Message.new(role: :assistant, content: "\n\n"))
+
+      expect(blocks).to be_empty
+    end
+
     it 'accepts video attachments' do
       video = RubyLLM::Attachment.new('https://example.com/clip.mp4', mime_type: 'video/mp4')
 

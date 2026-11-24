@@ -245,10 +245,16 @@ module RubyLLM
           blocks = msg.role == :assistant ? render_thinking_blocks(msg) : []
 
           blocks.concat(
-            Media.render_content(msg.content, msg.attachments, used_document_names: @used_document_names, citations:)
+            Media.render_content(replayed_text(msg), msg.attachments, used_document_names: @used_document_names,
+                                                                      citations:)
           )
 
           blocks
+        end
+
+        # A turn can hold blank text, which Claude writes but Bedrock refuses.
+        def replayed_text(msg)
+          msg.content unless msg.content.to_s.strip.empty? && msg.role == :assistant
         end
 
         # Reasoning rebuilt from thinking text goes back only to the provider
