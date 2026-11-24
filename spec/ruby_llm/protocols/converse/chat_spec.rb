@@ -926,6 +926,39 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
       expect(rendered.last[:role]).to eq('user')
       expect(rendered.last[:content].first[:toolResult][:toolUseId]).to eq('call_a')
     end
+
+    context 'with attachments on an assistant message' do
+      let(:image) { RubyLLM::Attachment.new(StringIO.new("\x89PNG\r\n\x1a\n".b), filename: 'drawing.png') }
+      let(:call) { RubyLLM::ToolCall.new(id: 'call_a', name: 'lookup', arguments: {}) }
+      let(:user) { RubyLLM::Message.new(role: :user, content: 'And now?') }
+
+      def block_types(*messages)
+        described_class.render_messages(messages).map do |message|
+          [message[:role], message[:content].map { |block| block.keys.first }]
+        end
+      end
+
+      it 'sends them in the user message after it' do
+        answer = RubyLLM::Message.new(role: :assistant, content: 'Here it is.', attachments: [image])
+
+        expect(block_types(answer, user)).to eq([['assistant', [:text]], ['user', %i[text image text]]])
+      end
+
+      it 'sends them behind the tool results' do
+        answer = RubyLLM::Message.new(role: :assistant, content: '', attachments: [image],
+                                      tool_calls: { 'call_a' => call })
+        result = RubyLLM::Message.new(role: :tool, content: 'result', tool_call_id: 'call_a')
+
+        expect(block_types(answer, result, user))
+          .to eq([['assistant', [:toolUse]], ['user', %i[toolResult text image text]]])
+        expect(block_types(answer, result)).to eq([['assistant', [:toolUse]], ['user', %i[toolResult text image]]])
+      end
+
+      it 'sends those of an answer without text' do
+        expect(block_types(RubyLLM::Message.new(role: :assistant, content: nil, attachments: [image]), user))
+          .to eq([['user', %i[text image text]]])
+      end
+    end
   end
 
   describe '.render_count_tokens_payload' do
