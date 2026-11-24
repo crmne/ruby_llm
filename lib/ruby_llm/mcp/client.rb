@@ -206,7 +206,7 @@ module RubyLLM
         @transport.listen(nil, version:, &)
         abandoned = false
       rescue StandardError => e
-        abandoned = false
+        abandoned = e.is_a?(CancelledError)
         reconnect(e.session) if e.is_a?(SessionExpired)
         raise
       ensure

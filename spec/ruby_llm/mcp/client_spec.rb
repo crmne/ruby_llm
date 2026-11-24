@@ -217,6 +217,15 @@ RSpec.describe RubyLLM::MCP::Client do
       expect(server.params['resources/unsubscribe']).to eq(uri: 'file:///a')
     end
 
+    it 'unsubscribes from the resources of a session whose listener is cancelled' do
+      server = session_server { |_notify| raise RubyLLM::CancelledError }
+
+      expect { described_class.new(server).listen({ resourceSubscriptions: ['file:///a'] }) { nil } }
+        .to raise_error(RubyLLM::CancelledError)
+
+      expect(server.sent.last).to eq('resources/unsubscribe')
+    end
+
     it 'abandons a session even when the server will not unsubscribe' do
       allow(RubyLLM.logger).to receive(:debug)
       server = session_server(unsubscribed: { 'error' => { 'code' => -32_603, 'message' => 'Gone' } }) do |notify|

@@ -11,7 +11,9 @@ module RubyLLM
     # starts at a second and doubles up to a minute, and gives up when the
     # server agrees to send nothing or does not know the method. Changes
     # made in between are lost, so once the server acknowledges again, the
-    # +resumed+ callable receives what the listener listens to.
+    # +resumed+ callable receives what the listener listens to, one list,
+    # resource or task at a time, so one that fails does not keep the rest
+    # from catching up.
     #
     # Stopping raises CancelledError in the listener's thread. Callbacks run
     # with that deferred, so a stop never cuts one short, and inside the
@@ -170,9 +172,15 @@ module RubyLLM
         resumed = acknowledged && @resumed && @state.is_a?(Hash)
         Thread.handle_interrupt(CancelledError => :never) do
           dispatch(@on_notification, notification)
-          dispatch(@resumed, listened) if resumed
+          each_listened(listened) { |one| dispatch(@resumed, one) } if resumed
         end
         acknowledge(listened) if acknowledged
+      end
+
+      def each_listened(listened)
+        listened.each do |kind, heard|
+          heard.is_a?(Array) ? heard.each { |item| yield({ kind => [item] }) } : yield({ kind => heard })
+        end
       end
 
       def acknowledge(listened)
