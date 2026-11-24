@@ -21,7 +21,7 @@ After reading this guide, you will know:
 * How to read a server's resources and ask with its prompts.
 * How to answer a server's questions and follow its progress and logs.
 * How to keep up with servers whose tools and resources change.
-* How to declare protocol extensions, host MCP Apps, and follow long tasks.
+* How to declare protocol extensions, host MCP Apps, follow long tasks, and receive a server's events.
 * How to authorize servers with OAuth.
 * How RubyLLM talks to servers and keeps connections safe.
 
@@ -806,6 +806,133 @@ Outside a chat, `call` waits for the task of a tool you call directly, and `wait
 reports.render_report(quarter: "Q3").text
 task.wait.result
 ```
+
+### Events
+
+A chat asks a server for something. Events go the other way: the server tells your app that an issue was created or an email arrived, so your app can start work when it happens. With the [Events extension](https://modelcontextprotocol.io/extensions/events/overview), a server lists the kinds of events it announces:
+
+```ruby
+class Linear < RubyLLM::MCP
+  url "https://mcp.linear.app/mcp"
+  extension :events
+end
+
+linear = Linear.new(user: current_user)
+linear.event_types
+# => [#<RubyLLM::MCP::EventType name: "issue.created", delivery: [:poll, :webhook]>]
+```
+
+A server without events lists none. Each `RubyLLM::MCP::EventType` has a `name`, a `description`, the `parameters_schema` of the arguments it takes, the `payload_schema` of an event's data, and its `delivery`: how the server hands events over, any of `:poll`, `:push`, and `:webhook`.
+
+Fill an event type in with the arguments that say which events you want:
+
+```ruby
+issues = linear.event_type("issue.created", team: "ENG")
+```
+
+#### Polling
+
+Ask what happened since the last time you asked:
+
+```ruby
+page = issues.poll(cursor: trigger.cursor)
+page.each { |event| trigger.fire(event) }
+trigger.update!(cursor: page.cursor)
+```
+
+The server keeps nothing between polls. The cursor says where you are, so store it with your own records. The first poll, without a cursor, returns no events and the cursor to start from.
+
+`poll` returns a `RubyLLM::MCP::EventPage` of `RubyLLM::MCP::Event` objects, oldest first. Each event has an `id`, a `name`, a `timestamp`, and its `data`, a Hash in the shape of the event type's `payload_schema`. The page also tells you what to do next:
+
+| Method | Meaning |
+| --- | --- |
+| `cursor` | Where to poll from next. `nil` when the server keeps no history. |
+| `more?` | More events wait. Poll again right away. |
+| `truncated?` | The server no longer had every event since your cursor, so some are missing. |
+| `poll_interval` | How many seconds the server asks you to wait before the next poll. |
+
+Pass `max_age:`, in seconds, to skip events older than that, and `limit:` to cap how many come back. A recurring job polls well:
+
+```ruby
+class PollLinearJob < ApplicationJob
+  def perform(trigger)
+    issues = Linear.new(user: trigger.user).event_type("issue.created", team: trigger.team)
+    page = issues.poll(cursor: trigger.cursor, max_age: 1.hour)
+    page.each { |event| TriggerJob.perform_later(trigger, event.id, event.data) }
+    trigger.update!(cursor: page.cursor)
+    self.class.perform_later(trigger) if page.more?
+  end
+end
+```
+
+The server may deliver an event more than once, so skip an `id` you have seen for the same event type and arguments.
+
+An event's data comes from outside your app. When you show it to a model, present it as data, never as instructions.
+
+#### Webhooks
+
+Polling asks on a schedule. With `:webhook` delivery, the server posts each event to your app as it happens:
+
+```ruby
+secret = "whsec_#{SecureRandom.base64(32)}"
+trigger.update!(secret:)
+
+subscription = issues.subscribe(url: linear_events_url, secret:)
+trigger.update!(subscription_id: subscription.id, refresh_before: subscription.refresh_before,
+                cursor: subscription.cursor)
+```
+
+The address must be `https`. Your app makes the secret: `whsec_` followed by 24 to 64 random bytes in base64. Store it before you subscribe, since a server may check the address while `subscribe` waits.
+
+A subscription lasts until its `refresh_before`. Subscribe again with the same address before then to keep it, passing the last cursor you stored, so nothing is lost if the server forgot the subscription in between. Pass a new secret to rotate it. `ttl:`, in seconds, suggests how long the subscription lasts, and `ttl: Float::INFINITY` asks for one that never expires, with a `refresh_before` of `nil`. When the server's deliveries to your app failed, the subscription you get back says why in `last_error`.
+
+End a subscription with the address it posts to:
+
+```ruby
+issues.unsubscribe(url: linear_events_url)
+```
+
+In the controller that receives the events, build a `RubyLLM::MCP::EventDelivery` from the request. It checks the signature before anything else:
+
+```ruby
+class LinearEventsController < ApplicationController
+  skip_forgery_protection
+
+  def create
+    delivery = RubyLLM::MCP::EventDelivery.new(request.headers, request.raw_post, secret: secrets)
+    trigger = Trigger.find_by!(secret: delivery.secret)
+
+    case delivery.kind
+    when :verification then return render(json: { challenge: delivery.challenge })
+    when :event then TriggerJob.perform_later(trigger, delivery.event.id, delivery.event.data)
+    when :terminated then trigger.update!(ended_because: delivery.error.message)
+    end
+    trigger.update!(cursor: delivery.cursor) if delivery.cursor
+    head :ok
+  rescue RubyLLM::MCP::Error
+    head :unauthorized
+  end
+
+  private
+
+  def secrets
+    Trigger.where(subscription_id: [request.headers["X-MCP-Subscription-Id"], nil]).pluck(:secret)
+  end
+end
+```
+
+`EventDelivery.new` raises `RubyLLM::MCP::Error` when no secret you pass signed the delivery, or when the delivery is more than five minutes old. Pass the raw body, as the signature covers its exact bytes. `secret:` takes one secret or several, and `delivery.secret` is the one that matched. That matters for the first delivery: the server checks a new address before `subscribe` returns, when your app does not know the subscription's ID yet, so try every secret that has no ID.
+
+A delivery's `kind` says what arrived:
+
+| Kind | Meaning | Read |
+| --- | --- | --- |
+| `:event` | Something happened. | `event`, `cursor` |
+| `:verification` | The server checks that the address is yours. Send the challenge back as JSON. | `challenge` |
+| `:gap` | Events were lost. Catch up however your app can. | `cursor` |
+| `:terminated` | The subscription ended, such as when access was revoked. | `error` |
+
+Answer quickly and do the work in a job: servers wait a few seconds, then deliver again. A retry carries the same `delivery.id`, so skip one you have seen.
 
 ## Authorization
 

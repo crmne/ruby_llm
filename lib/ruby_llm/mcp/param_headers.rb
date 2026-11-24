@@ -16,13 +16,13 @@ module RubyLLM
 
       module_function
 
-      def valid?(definition)
+      def valid?(definition, kind = 'tool')
         declared = declarations(definition)
         names = declared.map { |_, header, _| header.to_s.downcase }
         valid = declared.all? { |path, header, schema| valid_declaration?(path, header, schema) }
         return true if valid && names.uniq.size == names.size
 
-        RubyLLM.logger.warn { "Ignoring MCP tool #{definition['name']}: it declares invalid x-mcp-header values" }
+        RubyLLM.logger.warn { "Ignoring MCP #{kind} #{definition['name']}: it declares invalid x-mcp-header values" }
         false
       end
 
