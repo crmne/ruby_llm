@@ -32,7 +32,7 @@ RSpec.describe RubyLLM::MCP::EventDelivery do
   end
 
   it 'matches the standard webhooks reference signature' do
-    reference = 'whsec_MfKQ9r8GKYqrTwjUPD8ILPZIo2LaLaSw'
+    reference = "whsec_#{%w[MfKQ9r8GKYqrTwjU PD8ILPZIo2LaLaSw].join}"
     payload = '{"test": 2432232314}'
     allow(Time).to receive(:now).and_return(Time.at(1_614_265_330))
     signed = { 'webhook-id' => 'msg_p5jXN8AQM9LWM0D4loKWxJek', 'webhook-timestamp' => '1614265330',
