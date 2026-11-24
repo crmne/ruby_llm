@@ -814,6 +814,8 @@ A chat asks a server for something. Events go the other way: the server tells yo
 ```ruby
 class Linear < RubyLLM::MCP
   url "https://mcp.linear.app/mcp"
+  inputs :user
+  bearer_token { user.linear_token }
   extension :events
 end
 
