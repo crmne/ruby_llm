@@ -124,7 +124,7 @@ module RubyLLM
         def replace(content, path, change)
           raise ToolError, 'Pass new_text, or an empty string to delete old_text.' if change.new_text.nil?
 
-          old_text = change.old_text.to_s
+          old_text, new_text = [change.old_text, change.new_text].map { |text| with_endings_of(content, text.to_s) }
           count = old_text.empty? ? 0 : content.scan(old_text).size
           raise ToolError, "old_text does not appear in #{path}." if count.zero?
           if count > 1 && !change.replace_all
@@ -132,7 +132,12 @@ module RubyLLM
                              'it unique, or set replace_all.'
           end
 
-          [content.public_send(change.replace_all ? :gsub : :sub, old_text) { change.new_text.to_s }, count]
+          [content.public_send(change.replace_all ? :gsub : :sub, old_text) { new_text }, count]
+        end
+
+        def with_endings_of(content, text)
+          crlf = content.include?("\r\n") && !content.match?(/(?<!\r)\n/)
+          crlf ? text.gsub(/\r?\n/, "\r\n") : text
         end
 
         def report(files)
