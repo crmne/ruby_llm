@@ -2825,7 +2825,7 @@ module RubyLLM
       result = result.content if halted
       content, attachments = split_tool_result(result)
       content = @file_references.spill(tool_for(tool_call), tool_call, content) if @file_references
-      content = context_budget_for_model.cap(content) if @context_budget
+      content = context_budget_for_model.cap(content) if @context_budget && !tool_for(tool_call).is_a?(Tools::Search)
       mcp_result = result if result.is_a?(MCP::Result) && result.ui_uri
       message = add_message(role: :tool, content:, attachments:, tool_call_id: tool_call.id,
                             provider_call_id: tool_call.provider_call_id, mcp_result:,
