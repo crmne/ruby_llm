@@ -30,9 +30,19 @@ module RubyLLM
         def execute(path:, content:)
           guarded_write do |write|
             path = path_for(path)
-            file = changing(path) { write.call(path, content.to_s) }
+            file = changing(path) do
+              refuse_inside_file(path)
+              write.call(path, content.to_s)
+            end
             "Wrote #{file.path} (#{file.human_size})."
           end
+        end
+
+        private
+
+        def refuse_inside_file(path)
+          parent = Pathname.new(path).ascend.drop(1).map(&:to_s).find { |folder| store[folder] }
+          raise ToolError, "#{parent} is a file, not a folder" if parent
         end
       end
     end
