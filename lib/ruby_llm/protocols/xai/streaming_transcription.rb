@@ -83,12 +83,19 @@ module RubyLLM
             return
           end
 
+          segment = new_transcription_segment(event, segments)
+          return unless segment
+
+          delta = segments.empty? ? segment['text'] : " #{segment['text']}"
+          segments << segment
+          yield TranscriptionChunk.new(type: TranscriptionChunk::SEGMENT, delta:, segment:, raw: event)
+        end
+
+        def new_transcription_segment(event, segments)
           segment = parse_transcription_segment(event)
           return if segments.any? { |previous| duplicate_transcription_segment?(previous, segment) }
 
-          delta = segments.empty? ? text : " #{text}"
-          segments << segment
-          yield TranscriptionChunk.new(type: TranscriptionChunk::SEGMENT, delta:, segment:, raw: event)
+          event['speech_final'] ? unlocked_transcription_segment(segment, segments) : segment
         end
 
         def parse_transcription_segment(event)
@@ -101,6 +108,23 @@ module RubyLLM
           same_text = previous.values_at('text', 'channel', 'words') == segment.values_at('text', 'channel', 'words')
           same_time = previous.values_at('start', 'end') == segment.values_at('start', 'end')
           same_text && (segment['start'].nil? || same_time)
+        end
+
+        # The final of an utterance restates the chunks of it locked before.
+        def unlocked_transcription_segment(segment, segments)
+          restated = segments.select { |previous| within_utterance?(previous, segment) }
+          locked = restated.flat_map { |previous| previous['words'] || [] }
+          return segment if locked.empty?
+
+          words = Array(segment['words']).select { |word| word['start'] >= locked.last['end'] }
+          return if words.empty?
+
+          segment.merge('text' => words.map { |word| word['text'] }.join(' '),
+                        'start' => words.first['start'], 'words' => words)
+        end
+
+        def within_utterance?(previous, utterance)
+          previous['channel'] == utterance['channel'] && previous['start'].to_f >= utterance['start'].to_f
         end
 
         def build_streamed_transcription(segments, completed, model:, language:)
