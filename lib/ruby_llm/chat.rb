@@ -922,8 +922,9 @@ module RubyLLM
     # by name misses some, and an +on:+ that adds an error should splat the
     # default list into it. Cancelling the chat never triggers a fallback,
     # and neither does another process taking over a persisted chat or an
-    # error your streaming block raises. Pass +nil+ to remove all fallbacks
-    # and restore the default error classes. Returns +self+.
+    # error your streaming block or a message or fallback callback raises.
+    # Pass +nil+ to remove all fallbacks and restore the default error
+    # classes. Returns +self+.
     #
     # While a fallback is left, a timeout, a failed connection, or a retry
     # wait longer than two seconds moves on to it at once instead of
@@ -2134,7 +2135,7 @@ module RubyLLM
       usage_start = usage_entries.length
       block_failed = false
       on_chunk = block && proc do |chunk|
-        block.call(chunk)
+        without_fallback_ready { block.call(chunk) }
       rescue StandardError
         block_failed = true
         raise
@@ -2148,17 +2149,20 @@ module RubyLLM
           result = with_fallback_ready(fallback_queue) do
             generate_once(stream_tracker: proc { chunks_yielded = true }, usage_start:, &on_chunk)
           end
-          finish_fallback(active_fallback, response: result)
-          return result
         rescue StandardError => e
+          callback_failed = e.equal?(@callback_error)
           finish_fallback(active_fallback, fallback_error: e)
-          raise e if block_failed || unfinished?(messages.last)
+          raise e if block_failed || callback_failed || unfinished?(messages.last)
 
           active_fallback, attempt = next_attempt!(fallback_queue, drops, error: e, attempt:, streaming:,
                                                                           chunks_yielded:)
+        else
+          finish_fallback(active_fallback, response: result)
+          return result
         end
       end
     ensure
+      @callback_error = nil
       @answering_fallback = false
       restore_parameters(drops)
     end
@@ -2193,6 +2197,10 @@ module RubyLLM
       return yield if fallback_queue.empty?
 
       Transport::Connection.with_fallback_ready(method(:fallback_error?), &)
+    end
+
+    def without_fallback_ready(&)
+      Transport::Connection.with_fallback_ready(nil, &)
     end
 
     # Retries the same model without each parameter it rejects, when the
@@ -2524,7 +2532,10 @@ module RubyLLM
     end
 
     def run_callbacks(name, *args)
-      @callbacks[name].each { |callback| callback.call(*args) }
+      without_fallback_ready { @callbacks[name].each { |callback| callback.call(*args) } }
+    rescue StandardError => e
+      @callback_error = e
+      raise
     end
 
     def wrap_streaming_block(tool_call_ids:, stream_tracker: nil, &block)
