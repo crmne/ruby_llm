@@ -198,7 +198,7 @@ module RubyLLM
 
       def raise_buffered_error(state, env)
         parsed = JSON.parse(state.buffer)
-        raise_stream_error(state.buffer, parsed, env) if parsed.is_a?(Hash) && parsed['error']
+        raise_stream_error(state.buffer, parsed, env) if stream_error?(parsed)
       rescue JSON::ParserError
         log_debug { 'Waiting for the remaining JSON response bytes' }
       end
@@ -247,11 +247,15 @@ module RubyLLM
 
       def handle_data(data, env)
         parsed = JSON.parse(data)
-        return parsed unless parsed.is_a?(Hash) && parsed['error']
+        return parsed unless stream_error?(parsed)
 
         raise_stream_error(data, parsed, env)
       rescue JSON::ParserError => e
         log_body_debug { "Failed to parse data chunk: #{e.message}" }
+      end
+
+      def stream_error?(data)
+        data.is_a?(Hash) && data['error']
       end
 
       def handle_error_event(data, env)

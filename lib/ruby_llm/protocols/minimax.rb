@@ -13,6 +13,15 @@ module RubyLLM
 
       private
 
+      def stream_error?(data)
+        super || (data.is_a?(Hash) && !@provider.failure_status(data).nil?)
+      end
+
+      def parse_streaming_error(data)
+        status = @provider.failure_status(JSON.parse(data))
+        status ? [status, nil] : super
+      end
+
       def media_url(path)
         "#{@provider.media_base}/#{path}"
       end

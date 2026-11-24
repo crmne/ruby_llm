@@ -61,13 +61,17 @@ module RubyLLM
         def stream_transcription(payload, model:, language: nil, headers: {}, &block)
           text = +''
           duration = nil
+          finished = false
           stream_events(transcription_url, payload.merge(stream: 'true'), headers) do |event|
             delta = event['delta'].to_s
             text << delta
             duration = event['duration'] || duration
+            finished ||= event['finish']
             block.call(transcription_chunk(:delta, delta:, raw: event)) unless delta.empty?
             block.call(transcription_chunk(:done, text: text.dup, raw: event)) if event['finish']
           end
+          raise Error, 'MiniMax transcription ended before its final event' unless finished
+
           RubyLLM::Transcription.new(text:, model:, language:, duration:, audio_seconds: duration)
         end
 
