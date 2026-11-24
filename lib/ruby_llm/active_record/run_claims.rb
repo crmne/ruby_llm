@@ -580,7 +580,7 @@ module RubyLLM
 
       def tool_result_recorded?(tool_call, message)
         attributes = { result_type: @message.class.polymorphic_name, result_id: @message.id, updated_at: Time.current }
-        attributes[:mcp_result] = message.mcp_result&.dump if tool_call.has_attribute?(:mcp_result)
+        attributes[:mcp_result] = without_nul(message.mcp_result&.dump) if tool_call.has_attribute?(:mcp_result)
         attributes[:claimed_until] = nil if tool_call.has_attribute?(:claimed_until)
         claim_lock.synchronize { tool_call_claims.delete(tool_call.tool_call_id) }
         RubyLLM::ActiveRecord::ToolCall.where(id: tool_call.id, result_id: nil).update_all(attributes) == 1
