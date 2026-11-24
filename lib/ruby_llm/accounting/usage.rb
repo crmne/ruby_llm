@@ -270,15 +270,28 @@ module RubyLLM
           end
         end
 
+        # Records usage another model ran up within the current attempt,
+        # ahead of it, so the last entry still names the requested model.
+        def add(model:, tokens:)
+          entry = Entry.new(operation: @operation, provider: @provider.slug, model:,
+                            owner: Usage.owner, workflow: Usage.workflow)
+          @entries.unshift(entry)
+          finish(entry, status: :succeeded, tokens:, model: find_model(model))
+        end
+
         private
 
         def result_model(result)
           return @model_info if result.model.nil? || result.model == @model_info&.id
           return @model_info if @model_info&.configured_prices?
 
-          RubyLLM.models.find(result.model, provider: @provider.slug, config: @config)
+          find_model(result.model) || @model_info
+        end
+
+        def find_model(id)
+          RubyLLM.models.find(id, provider: @provider.slug, config: @config)
         rescue ModelNotFoundError
-          @model_info
+          nil
         end
 
         # A request that never reached the provider, or that the provider
@@ -316,11 +329,11 @@ module RubyLLM
           (400..499).cover?(status) || ((500..599).cover?(status) && !entry.equal?(@answered))
         end
 
-        def finish(entry, status:, tokens:, **details)
+        def finish(entry, status:, tokens:, model: @model_info, **details)
           supplied = details[:cost]
           cost = (supplied if supplied&.total) || Cost.new(
             tokens:,
-            model: @model_info,
+            model:,
             category: CATEGORY_BY_OPERATION.fetch(@operation)
           )
           entry.finish(status:, tokens:, cost:)

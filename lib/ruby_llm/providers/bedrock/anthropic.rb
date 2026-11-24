@@ -66,7 +66,7 @@ module RubyLLM
                                       usage: @usage_tracker) do |request|
             request.headers.merge!(without_beta_header(headers))
           end
-          parse_completion_response(response)
+          with_advisor_usage { parse_completion_response(response) }
         end
 
         def stream_events(url, payload, additional_headers = {}, &)

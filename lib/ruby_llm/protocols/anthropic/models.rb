@@ -128,16 +128,27 @@ module RubyLLM
 
         # A compacted turn runs the model more than once, and the top-level
         # counts cover only the final iteration. Everything billed is in
-        # usage.iterations, so their sum is what the request cost.
+        # usage.iterations, so their sum is what the request cost. Advisor
+        # iterations ran on another model and are billed apart.
         def aggregate_usage(usage)
           return {} unless usage.is_a?(Hash)
 
           iterations = usage['iterations']
           return usage unless iterations.is_a?(Array) && !iterations.empty?
 
+          @advisor_iterations, iterations = iterations.partition { |item| item['type'] == 'advisor_message' }
+          return usage if iterations.empty?
+
           usage.merge(ITERATION_TOKEN_KEYS.to_h do |key|
             [key, iterations.sum { |iteration| iteration[key].to_i }]
           end, { 'cache_creation' => iteration_cache_creation(iterations) }.compact)
+        end
+
+        def advisor_tokens(usage)
+          Tokens.new(input: usage['input_tokens'], output: usage['output_tokens'],
+                     cache_read: usage['cache_read_input_tokens'],
+                     cache_write: usage['cache_creation_input_tokens'],
+                     cache_write_by_ttl: parse_cache_write_by_ttl('usage' => usage))
         end
 
         def iteration_cache_creation(iterations)
