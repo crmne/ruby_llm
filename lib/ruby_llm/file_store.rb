@@ -56,7 +56,8 @@ module RubyLLM
 
     UNSAFE_CHARACTERS = /[\x00-\x1f\x7f\\:*?"<>|]/
     DIGEST_CHUNK = 1024 * 1024
-    private_constant :UNSAFE_CHARACTERS, :DIGEST_CHUNK
+    MAX_NAME_BYTES = 255
+    private_constant :UNSAFE_CHARACTERS, :DIGEST_CHUNK, :MAX_NAME_BYTES
 
     class << self
       # Returns +name+ as a path inside a store: relative, with forward
@@ -340,11 +341,16 @@ module RubyLLM
 
     def candidates(name)
       extension = File.extname(name)
+      extension = '' if extension.bytesize > MAX_NAME_BYTES / 2
       base = name.delete_suffix(extension)
       Enumerator.new do |paths|
-        paths << name
-        (2..).each { |number| paths << "#{base}-#{number}#{extension}" }
+        paths << shortened(base, extension)
+        (2..).each { |number| paths << shortened(base, "-#{number}#{extension}") }
       end
+    end
+
+    def shortened(base, ending)
+      "#{base.byteslice(0, MAX_NAME_BYTES - ending.bytesize).scrub('')}#{ending}"
     end
 
     def same_content?(file, content, digest)

@@ -358,4 +358,19 @@ RSpec.describe RubyLLM::FileStore::Directory do
     expect(file.path).to eq('reports-2')
     expect(store.read('reports/q3.pdf')).to eq('x')
   end
+
+  it 'shortens an attachment name too long for the file system, keeping its extension and number' do
+    files = %w[one two].map do |content|
+      store.store_attachment(RubyLLM::Attachment.new(StringIO.new(content), filename: "#{'日' * 90}.txt"))
+    end
+
+    expect(files.map(&:path)).to eq(["#{'日' * 83}.txt", "#{'日' * 83}-2.txt"])
+    expect(files.map { |file| store.read(file.path) }).to eq(%w[one two])
+  end
+
+  it 'shortens an attachment name that is one long extension' do
+    file = store.store_attachment(RubyLLM::Attachment.new(StringIO.new('x'), filename: "a.#{'b' * 300}"))
+
+    expect(file.path).to eq("a.#{'b' * 253}")
+  end
 end
