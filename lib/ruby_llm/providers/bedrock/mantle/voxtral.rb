@@ -35,9 +35,7 @@ module RubyLLM
 
               yield RubyLLM::TranscriptionChunk.new(type: RubyLLM::TranscriptionChunk::DELTA, delta: chunk.content)
             end
-            unless message.finish_reason == :stop
-              raise Error.new('Bedrock Voxtral did not complete the transcript', response: message.raw)
-            end
+            raise_incomplete_transcript(message.raw) unless message.finish_reason == :stop
 
             result = RubyLLM::Transcription.new(text: message.content.to_s, model: message.model || model)
             yield RubyLLM::TranscriptionChunk.new(type: RubyLLM::TranscriptionChunk::DONE, text: result.text)
@@ -84,8 +82,17 @@ module RubyLLM
             text = data.dig('choices', 0, 'message', 'content')
             raise Error.new('Bedrock returned no transcript', response:) unless text.is_a?(String)
 
-            RubyLLM::Transcription.new(text:, model: data['model'] || model,
-                                       **transcription_tokens(data['usage'] || {}))
+            result = RubyLLM::Transcription.new(text:, model: data['model'] || model,
+                                                **transcription_tokens(data['usage'] || {}))
+            finish_reason = data.dig('choices', 0, 'finish_reason')
+            return result if finish_reason.nil? || finish_reason == 'stop'
+
+            @usage_tracker&.observe_tokens(result.tokens)
+            raise_incomplete_transcript(response)
+          end
+
+          def raise_incomplete_transcript(response)
+            raise Error.new('Bedrock Voxtral did not complete the transcript', response:)
           end
         end
       end
