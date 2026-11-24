@@ -34,6 +34,7 @@ module RubyLLM
             )
           when :audio then Protocols::ChatCompletions::Media.render_audio(attachment)
           when :video then { type: 'video_url', video_url: { url: attachment.for_llm } }
+          when :pdf, :document then Protocols::ChatCompletions::Media.render_document(attachment)
           else raise UnsupportedAttachmentError, attachment.mime_type
           end
         end

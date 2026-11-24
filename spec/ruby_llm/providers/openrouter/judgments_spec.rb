@@ -124,14 +124,41 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Judgments do
     )
   end
 
+  it 'puts documents in the state array as file parts' do
+    pdf = RubyLLM::Attachment.new(File.join(fixtures, 'sample.pdf'))
+    docx = RubyLLM::Attachment.new(File.join(fixtures, 'sample.docx'))
+
+    expect(render('Read', with: [pdf, docx])[:state]).to eq(
+      ['Read', { type: 'file', file: { filename: 'sample.pdf', file_data: pdf.for_llm } },
+       { type: 'file', file: { filename: 'sample.docx', file_data: docx.for_llm } }]
+    )
+    expect(render(nil, with: [pdf])[:state])
+      .to eq([{ type: 'file', file: { filename: 'sample.pdf', file_data: pdf.for_llm } }])
+  end
+
+  it 'sends a PDF to a judgment model' do
+    pdf_part = ->(request) { JSON.parse(request.body).dig('state', 1, 'file', 'file_data').to_s }
+    stub = stub_request(:post, 'https://openrouter.ai/api/alpha/decisions')
+           .with { |request| pdf_part.call(request).start_with?('data:application/pdf;base64,') }
+           .to_return(status: 200, headers: { 'Content-Type' => 'application/json' }, body: {
+             model: 'google/gemini-decision-1', answers: { urgent: { type: 'noul', noul: 0.2 } },
+             usage: { input_tokens: 300, output_tokens: 0, cost: 0.00002 }
+           }.to_json)
+
+    result = RubyLLM.judge('Is this invoice overdue?', with: File.join(fixtures, 'sample.pdf'),
+                                                       model: 'google/gemini-decision-1', provider: :openrouter,
+                                                       assume_model_exists: true, questions:)
+
+    expect(result.urgent.probability).to eq(0.2)
+    expect(stub).to have_been_requested.once
+  end
+
   it 'rejects uploaded files and attachments Decisions cannot carry' do
     uploaded = RubyLLM::Attachment.new(
-      RubyLLM::UploadedFile.new(id: 'file-123', filename: 'receipt.png', mime_type: 'image/png')
+      RubyLLM::UploadedFile.new(id: 'file-123', filename: 'receipt.pdf', mime_type: 'application/pdf')
     )
 
-    expect { render('Help', with: [uploaded]) }.to raise_error(RubyLLM::UnsupportedAttachmentError, %r{image/png})
-    expect { render('Help', with: [RubyLLM::Attachment.new(File.join(fixtures, 'sample.pdf'))]) }
-      .to raise_error(RubyLLM::UnsupportedAttachmentError, %r{application/pdf})
+    expect { render('Help', with: [uploaded]) }.to raise_error(RubyLLM::UnsupportedAttachmentError, %r{application/pdf})
   end
 
   it 'reports normalized OpenRouter errors' do

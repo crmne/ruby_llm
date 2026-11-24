@@ -144,7 +144,7 @@ DocumentType.judge("Scanned by the mail room", with: "scan.png").type.choice
 DocumentType.judge(with: document.scan).type.choice
 ```
 
-`with:` accepts the same files, URLs, and Active Storage attachments as chat. Images need a model that accepts them, such as `{{ site.models.openai_judgment }}`, Clef on OpenRouter, or Clef on Ollama. Clef Omni on OpenRouter also reads audio and video passed with `with:`. OpenRouter passes media to the model you chose, which answers or rejects the request. Other attachment types raise `RubyLLM::UnsupportedAttachmentError`, and so does any attachment sent to TypeSafe, which judges text only.
+`with:` accepts the same files, URLs, and Active Storage attachments as chat. Images need a model that accepts them, such as `{{ site.models.openai_judgment }}`, Clef on OpenRouter, or Clef on Ollama. Clef Omni on OpenRouter also reads audio and video passed with `with:`, and `google/gemini-decision-1` on OpenRouter reads PDFs and office documents. OpenRouter passes media and documents to the model you chose, which answers or rejects the request. Other attachment types raise `RubyLLM::UnsupportedAttachmentError`, and so does any attachment sent to TypeSafe, which judges text only.
 
 Gemini's `{{ site.models.gemini_judgment }}` reads images, audio, video, and PDFs passed with `with:`. Pass an `Attachment` with `resolution:` to select the detail of an image, a video, or a PDF.
 
