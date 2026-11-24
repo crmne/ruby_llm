@@ -228,7 +228,7 @@ module RubyLLM
       @provider_options = Support::Utils.deep_dup(@provider_options)
       @callbacks = @callbacks.dup.transform_values!(&:dup)
       @skill_loader = build_skill_loader
-      @tool_search_tool = nil
+      @local_tool_search = nil
       with_code_execution(**@code_execution) if @code_execution
       if @file_references
         with_file_store(file_store, inline_limit: @file_references.inline_limit, tools: @file_references.tools)
