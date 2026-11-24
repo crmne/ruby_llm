@@ -39,6 +39,7 @@ RSpec.describe RubyLLM::Protocols::ElevenLabs::StreamingTranscription do
     expect(result.text).to eq('First sentence. Second sentence.')
     expect(result.words.map { |word| word['start'] }).to eq([0, 20])
     expect(result).to have_attributes(language: 'en', duration: 25)
+    expect(result.tokens.audio_seconds).to eq(25)
     expect(socket).to have_received(:close).once
   end
 
