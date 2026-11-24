@@ -447,7 +447,8 @@ module RubyLLM
     # Returns the response's Model from its provider's registry, falling
     # back to the requested model when the response ID is unknown.
     # Restored messages use the last successful attempt's provider and model.
-    # Messages without request context look up #model, or return +nil+ if unknown.
+    # Messages without request context look up #model at their #provider, or
+    # return +nil+ if unknown.
     def model_info
       return @model_info if @model_info
 
@@ -455,9 +456,9 @@ module RubyLLM
       @model_info = if entry&.model
                       RubyLLM.models.find(entry.model, provider: entry.provider)
                     elsif model
-                      RubyLLM.models.find(model)
+                      RubyLLM.models.find(model, **{ provider: }.compact)
                     end
-    rescue ModelNotFoundError
+    rescue ModelNotFoundError, ConfigurationError
       nil
     end
 
