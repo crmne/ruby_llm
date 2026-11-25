@@ -96,7 +96,9 @@ module RubyLLM
 
       def missing_recorded_components(amounts, tokens, total)
         if tokens
-          COMPONENTS.select { |component| tokens.public_send(component).to_f.positive? && amounts[component].nil? }
+          (COMPONENTS - [:thinking]).select do |component|
+            tokens.public_send(component).to_f.positive? && amounts[component].nil?
+          end
         elsif total && amounts.values.any?
           []
         else
