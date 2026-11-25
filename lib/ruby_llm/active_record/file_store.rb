@@ -156,12 +156,13 @@ module RubyLLM
       end
 
       # Keeps an attachment from Active Storage by its blob, without
-      # copying it: the file and the message share the blob.
+      # copying it: the file and the message share the blob. The file stays
+      # the attachment's once it is edited, in every process.
       def store_attachment(attachment) # :nodoc:
         blob = blob_of(attachment)
         return super unless blob
 
-        existing = visible.joins(:file_blob).find_by(active_storage_blobs: { id: blob.id })
+        existing = visible.joins(:file_blob).find_by(active_storage_blobs: { id: blob.id }) || started_as(blob)
         existing ? existing.to_stored_file : super
       end
 
@@ -186,6 +187,12 @@ module RubyLLM
         false
       end
 
+      def started_as(blob)
+        visible.joins(:original_blob).find_by(
+          active_storage_blobs: { filename: blob.filename.to_s, checksum: blob.checksum, byte_size: blob.byte_size }
+        )
+      end
+
       def read_digests?
         ChatFile.column_names.include?('read_digest')
       end
@@ -196,11 +203,13 @@ module RubyLLM
       end
 
       def write_attachment(path, attachment, content)
-        blob = blob_of(attachment)
-        return super unless blob
-
-        save(path, blob.byte_size, attachment.mime_type, RubyLLM::FileStore.digest(content)) do |record|
+        type = attachment.mime_type
+        blob = blob_of(attachment) ||
+               ::ActiveStorage::Blob.create_and_upload!(io: StringIO.new(content), filename: attachment.filename,
+                                                        content_type: type, identify: false)
+        save(path, blob.byte_size, type, RubyLLM::FileStore.digest(content)) do |record|
           record.file.attach(blob)
+          record.original.attach(blob)
         end
       end
 

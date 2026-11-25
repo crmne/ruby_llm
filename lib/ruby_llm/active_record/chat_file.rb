@@ -18,13 +18,15 @@ module RubyLLM
       belongs_to :chat, polymorphic: true
       belongs_to :owner, polymorphic: true, optional: true
 
-      # Declares the content attachment when Active Storage is loaded.
+      # Declares the content attachment, and the attachment of a message the
+      # file started as, when Active Storage is loaded.
       # Called by +acts_as_chat+, since Active Storage loads after
       # RubyLLM's records.
       def self.declare_attachments # :nodoc:
         return unless respond_to?(:has_one_attached) && !reflect_on_attachment(:file)
 
         has_one_attached :file
+        has_one_attached :original
       end
 
       # Returns the file as a RubyLLM::StoredFile.
