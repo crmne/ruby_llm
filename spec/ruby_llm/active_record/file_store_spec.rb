@@ -346,6 +346,17 @@ RSpec.describe RubyLLM::ActiveRecord::FileStore do
       expect { described_class.new(chat, owner: alice).delete('reports') }
         .to raise_error(ArgumentError, /is a folder/)
     end
+
+    it "refuses to write over a folder of shared files, but not over another owner's folder" do
+      store.write('reports/shared.md', 'for everyone')
+      described_class.new(chat, owner: bob).write('drafts/bob.md', 'his file')
+      alices = described_class.new(chat, owner: alice)
+
+      expect { alices.write('reports', 'oops') }.to raise_error(ArgumentError, 'reports is a folder, not a file')
+      alices.write('drafts', 'her file')
+
+      expect(alices.list.map(&:path)).to eq(%w[drafts reports/shared.md])
+    end
   end
 
   describe 'a persisted chat with files' do

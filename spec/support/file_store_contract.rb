@@ -41,6 +41,14 @@ RSpec.shared_examples 'a file store' do
     expect(store.delete_folder('reports')).to eq([])
   end
 
+  it 'refuses to write a file over a folder' do
+    store.write('reports/q3.md', 'Q3')
+
+    expect { store.write('reports', 'oops') }.to raise_error(ArgumentError, 'reports is a folder, not a file')
+    expect(store.list.map(&:path)).to eq(%w[reports/q3.md])
+    expect(store.read('reports/q3.md')).to eq('Q3')
+  end
+
   it 'refuses to delete a file with delete_folder' do
     store.write('notes.md', 'hello')
 
