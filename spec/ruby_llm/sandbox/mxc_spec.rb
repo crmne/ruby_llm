@@ -28,7 +28,7 @@ RSpec.describe RubyLLM::Sandbox::MXC do
   it 'runs here, on the configured backend' do
     expect(sandbox).to be_supported
     expect(sandbox.reason).to be_nil
-    expect(sandbox.backend).to eq(SandboxBackend.name)
+    expect(sandbox.backend).to eq(RUBY_PLATFORM.include?('linux') ? SandboxBackend.name : :auto)
   end
 
   it 'runs a command with the paths, directory, and environment it is given' do
