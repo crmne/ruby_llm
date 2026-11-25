@@ -388,7 +388,8 @@ module RubyLLM
       def result_content(result)
         case result
         when String then result
-        when Hash, Array, SearchResults then result.to_json
+        when SearchResults then result.to_json
+        when Hash, Array then JSON.generate(result.respond_to?(:as_json) ? result.as_json : result)
         else result.to_s
         end
       end

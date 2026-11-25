@@ -350,6 +350,34 @@ RSpec.describe RubyLLM::Tool do
       expect(described_class.split_result([1, 2])).to eq(['[1,2]', []])
     end
 
+    it 'keeps &, < and > as the tool wrote them' do
+      result = { link: '/invoices?number=42&format=pdf', xml: '<number>42</number>' }
+
+      expect(described_class.split_result(result).first)
+        .to eq('{"link":"/invoices?number=42&format=pdf","xml":"<number>42</number>"}')
+      expect(described_class.split_result([{ name: 'Tom & Jerry' }]).first).to eq('[{"name":"Tom & Jerry"}]')
+    end
+
+    it 'converts values with as_json, as Active Support does' do
+      money = Class.new { def as_json(*) = { cents: 1050 } }.new
+
+      expect(described_class.split_result({ at: Time.utc(2026, 11, 25, 13), price: money }).first)
+        .to eq('{"at":"2026-11-25T13:00:00.000Z","price":{"cents":1050}}')
+    end
+
+    it 'serializes a result without as_json, as in plain Ruby' do
+      result = Class.new(Hash) { undef_method :as_json }[link: '/invoices?number=42&format=pdf']
+
+      expect(described_class.split_result(result).first).to eq('{"link":"/invoices?number=42&format=pdf"}')
+    end
+
+    it 'keeps the search results shape' do
+      results = RubyLLM::SearchResults.new({ title: 'Tom & Jerry', text: '<p>Cartoon</p>' })
+
+      expect(described_class.split_result(results).first)
+        .to eq('{"search_results":[{"title":"Tom & Jerry","text":"<p>Cartoon</p>"}]}')
+    end
+
     it 'splits an attachment out of a mixed result' do
       attachment = RubyLLM::Attachment.new(StringIO.new('bytes'), filename: 'a.txt')
 
