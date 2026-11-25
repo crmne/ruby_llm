@@ -619,6 +619,11 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       send_message.(nil)
       abort "switched for an unchanged model: \#{switches}" unless switches == [ [ other.id ] ]
 
+      #{controller}.prepend(Module.new { define_method(:available_chat_models) { super().without(other) } })
+      session.get "#{chats_path}/\#{chat.id}"
+      shown = selected.(session.response.body)
+      abort "the page of a chat on an unlisted model selects \#{shown}" unless shown == choice
+
       send_message.("")
       abort "the default entry left \#{chat.model_id}" unless chat.model_id == default.id
     RUBY
