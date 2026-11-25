@@ -439,7 +439,7 @@ module RubyLLM
 
     def source_filename
       if url?
-        File.basename(@source.path).to_s
+        File.basename(@source.path).delete('/')
       elsif provider_file?
         @source.filename.to_s
       elsif path?
