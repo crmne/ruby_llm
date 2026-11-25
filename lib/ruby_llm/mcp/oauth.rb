@@ -179,7 +179,8 @@ module RubyLLM
           next true if credential && credential['access_token'] != used
           next false unless credential&.key?('refresh_token')
 
-          store_tokens(token_request('refresh_token', refresh_token: credential['refresh_token']))
+          store_tokens(token_request('refresh_token', client: refreshing_client,
+                                                      refresh_token: credential['refresh_token']))
           true
         end
       rescue Error
@@ -253,6 +254,14 @@ module RubyLLM
 
       def synchronize(&block)
         self.class.refreshing(key) { store.respond_to?(:synchronize) ? store.synchronize(key, &block) : yield }
+      end
+
+      # The configured client's secret may have changed since the owner
+      # authorized.
+      def refreshing_client
+        return credential unless credential['client_id'] == @client_id
+
+        credential.merge('client_secret' => @client_secret)
       end
 
       def store_tokens(tokens, client: nil)

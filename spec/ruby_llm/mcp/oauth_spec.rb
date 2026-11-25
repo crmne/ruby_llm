@@ -689,6 +689,28 @@ RSpec.describe RubyLLM::MCP::OAuth do
       expect(grants).to eq(%w[authorization_code refresh_token])
     end
 
+    it 'refreshes with the secret it is configured with now' do
+      first = described_class.new(server_url, owner: 'ada', client_id: 'client', client_secret: 'secret')
+      first.authorize(callback(first.authorization_url(redirect_uri:)))
+
+      described_class.new(server_url, owner: 'ada', client_id: 'client', client_secret: 'rotated').refresh
+
+      expect(a_request(:post, 'https://auth.example.com/token')
+        .with(body: /grant_type=refresh_token/,
+              headers: { 'Authorization' => "Basic #{Base64.strict_encode64('client:rotated')}" })).to have_been_made
+    end
+
+    it "refreshes another client's grant with the secret that client was given" do
+      first = described_class.new(server_url, owner: 'ada', client_id: 'client', client_secret: 'secret')
+      first.authorize(callback(first.authorization_url(redirect_uri:)))
+
+      described_class.new(server_url, owner: 'ada', client_id: 'newer', client_secret: 'rotated').refresh
+
+      expect(a_request(:post, 'https://auth.example.com/token')
+        .with(body: /grant_type=refresh_token/,
+              headers: { 'Authorization' => "Basic #{Base64.strict_encode64('client:secret')}" })).to have_been_made
+    end
+
     def pre_registered(client_id)
       url = server_url
       Class.new(RubyLLM::MCP) do
