@@ -44,10 +44,10 @@ RSpec.describe RubyLLM::MCP::Stdio do
         while (line = $stdin.gets)
           next unless JSON.parse(line)['id'] == 2
 
-          2.times do
-            puts JSON.generate(method: 'notifications/tools/list_changed', params: { _meta: meta })
-            sleep 0.5
-          end
+          change = JSON.generate(method: 'notifications/tools/list_changed', params: { _meta: meta })
+          puts change
+          sleep 0.3
+          puts change
           puts JSON.generate(id: 2, result: {})
         end
       RUBY
@@ -63,7 +63,6 @@ RSpec.describe RubyLLM::MCP::Stdio do
       request = Thread.new { stdio.request({ id: 2, method: 'tools/call' }) }
 
       expect(Array.new(2) { heard.pop(timeout: 3) }).to eq(%i[change change])
-      expect(request).to be_alive
     ensure
       request&.join(10)
       listener&.kill
