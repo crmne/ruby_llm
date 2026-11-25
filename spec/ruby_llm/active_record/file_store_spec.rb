@@ -283,6 +283,13 @@ RSpec.describe RubyLLM::ActiveRecord::FileStore do
     expect(store.read('a.txt')).to eq('theirs')
   end
 
+  it 'lists a folder by its exact case' do
+    store.write('reports/a.md', 'lower')
+    store.write('Reports/b.md', 'upper')
+
+    expect(store.list('reports').map(&:path)).to eq(%w[reports/a.md])
+  end
+
   it 'matches a folder to delete by its exact case' do
     store.write('reports/a.md', 'lower')
     store.write('Reports/b.md', 'upper')

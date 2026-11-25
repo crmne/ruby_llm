@@ -63,8 +63,8 @@ module RubyLLM
 
       # Returns the files inside the folder +prefix+, or every file.
       def list(prefix = nil)
-        scope = prefix.present? ? inside(path(prefix)) : visible
-        preferred(scope.includes(:owner).order(:path, :id).to_a).map(&:to_stored_file)
+        rows = prefix.present? ? rows_in_folder(path(prefix)) : visible.includes(:owner).order(:path, :id).to_a
+        preferred(rows).map(&:to_stored_file)
       end
 
       # Returns the StoredFile at +path+, or +nil+.
