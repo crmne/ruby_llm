@@ -477,7 +477,7 @@ module RubyLLM
     # the given block, which adds the message with the attributes the
     # callbacks pass to +join+. Returns the message, or +nil+ when a
     # callback withdrew it. Takes the message back out of the conversation
-    # when a callback raises.
+    # when a callback raises or is stopped.
     def run_around_join(queued, &add) # :nodoc:
       joined = nil
       size = messages.length
@@ -491,10 +491,10 @@ module RubyLLM
         end
       end
       chain.call
+      finished = true
       joined
-    rescue StandardError
-      messages.slice!(size..)
-      raise
+    ensure
+      messages.slice!(size..) unless finished
     end
 
     # Records approval for +tool_call+, the approval Question from
