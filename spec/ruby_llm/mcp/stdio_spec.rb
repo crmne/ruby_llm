@@ -35,6 +35,53 @@ RSpec.describe RubyLLM::MCP::Stdio do
     expect { stdio.listen(nil) { nil } }.to raise_error(RubyLLM::MCP::Stdio::Unavailable, /exited/)
   end
 
+  describe 'a request larger than the pipe buffer' do
+    let(:message) { { id: 1, method: 'probe', text: 'x' * 500_000 } }
+
+    def request(script, timeout:)
+      stdio = described_class.new([RbConfig.ruby, '-rjson', '-e', script], timeout:)
+      Timeout.timeout(20) { stdio.request(message) }
+    ensure
+      stdio.close
+    end
+
+    it 'times out when the server stops reading' do
+      expect { request('sleep', timeout: 0.5) }.to raise_error(described_class::Unavailable, /in time/)
+    end
+
+    it 'stops when the chat is cancelled' do
+      allow(RubyLLM::Support::Cancellation).to receive(:check).and_raise(RubyLLM::CancelledError)
+
+      expect { request('sleep', timeout: 30) }.to raise_error(RubyLLM::CancelledError)
+    end
+
+    it 'reaches a server that writes more than the pipe buffer before it reads on' do
+      script = <<~RUBY
+        $stdin.readpartial(1)
+        puts JSON.generate(id: 0, text: 'y' * 500_000)
+        $stdin.gets
+        puts JSON.generate(id: 1, read: true)
+        $stdout.flush
+        $stdin.gets
+      RUBY
+
+      expect(request(script, timeout: 10)).to include('read' => true)
+    end
+
+    it 'starts the server again for the next request' do
+      Dir.mktmpdir do |directory|
+        marker = File.join(directory, 'stuck')
+        script = "unless File.exist?('#{marker}')\nFile.write('#{marker}', '')\nsleep\nend\n#{server}"
+        stdio = described_class.new([RbConfig.ruby, '-e', script], timeout: 1)
+
+        expect { Timeout.timeout(20) { stdio.request(message) } }.to raise_error(described_class::Unavailable)
+        expect(stdio.request({ id: 2, method: 'probe' }, timeout: 5)['id']).to eq(2)
+      ensure
+        stdio.close
+      end
+    end
+  end
+
   it 'keeps the application environment from the server' do
     parent = %w[
       FAKE_PROVIDER_API_KEY BUNDLE_GEMFILE BUNDLE_PATH RAILS_ENV SECRET_KEY_BASE NODE_EXTRA_CA_CERTS

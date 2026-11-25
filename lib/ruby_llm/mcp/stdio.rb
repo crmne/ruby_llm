@@ -6,17 +6,18 @@ require 'open3'
 module RubyLLM
   class MCP
     # stdio. The server is a child process that reads one JSON-RPC message
-    # per line on stdin and writes one per line on stdout. Reads never block
-    # past the deadline, even on a partial line. It starts on the
+    # per line on stdin and writes one per line on stdout. Reads and
+    # writes never block past the deadline, even on a partial line, and a
+    # message written only in part ends the process. It starts on the
     # first request, restarts after it exits, and handles one request at a
     # time. Its stderr is the parent's. A server that predates 2026-07-28
-    # keeps its session for the life of its process, so after a restart its
-    # requests raise SessionExpired until the client initializes it again.
-    # The process inherits only INHERITED_ENV from the application, and +env+
-    # adds to and overrides those: a Hash, or a callable that returns one,
-    # called each time the process starts. Where the platform has process
-    # groups the server leads its own, so stopping it reaches the processes
-    # it started.
+    # keeps its session for the life of its process, so after a restart
+    # its requests raise SessionExpired until the client initializes it
+    # again. The process inherits only INHERITED_ENV from the application,
+    # and +env+ adds to and overrides those: a Hash, or a callable that
+    # returns one, called each time the process starts. Where the platform
+    # has process groups the server leads its own, so stopping it reaches
+    # the processes it started.
     #
     # Subscriptions share the channel, so whichever thread reads a message
     # that belongs to one hands it to the subscription's listener: a
@@ -70,9 +71,10 @@ module RubyLLM
       def request(message, version: nil, timeout: nil, **, &)
         @lock.synchronize do
           check_session(version)
-          write(message)
+          deadline = monotonic_now + (timeout || @timeout)
+          write(message, deadline)
           @session = @process if message[:method] == 'initialize'
-          await(message[:id], timeout || @timeout, &)
+          await(message[:id], deadline, &)
         end
       end
 
@@ -82,7 +84,8 @@ module RubyLLM
       end
 
       def cancel(notification, **)
-        notify(notification)
+        @lock.synchronize { write(notification) if @process&.alive? }
+        nil
       end
 
       def listen(message, **)
@@ -147,11 +150,7 @@ module RubyLLM
             message = parse(line)
             handled?(message) if message
           end
-          chunk = @stdout.read_nonblock(65_536, exception: false)
-          return if chunk == :wait_readable
-
-          exited unless chunk
-          @buffer << chunk
+          return unless fill
         end
       end
 
@@ -171,8 +170,7 @@ module RubyLLM
         Thread.handle_interrupt(CancelledError => :never, &)
       end
 
-      def await(id, timeout)
-        deadline = monotonic_now + timeout
+      def await(id, deadline)
         loop do
           reply = read(deadline)
           return reply if reply['id'] == id && !reply.key?('method')
@@ -181,14 +179,29 @@ module RubyLLM
         end
       end
 
-      def write(message)
+      def write(message, deadline = monotonic_now + @timeout)
         start unless @process&.alive?
-        begin
-          @stdin.puts JSON.generate(message)
-          @stdin.flush
-        rescue Errno::EPIPE, IOError
-          stop
-          raise Unavailable, "#{name} exited"
+        write_line("#{JSON.generate(message)}\n".b, deadline)
+      end
+
+      def write_line(line, deadline)
+        written = 0
+        written += write_chunk(line.byteslice(written..), deadline) while written < line.bytesize
+      rescue Errno::EPIPE, IOError
+        exited
+      ensure
+        stop if written.positive? && written < line.bytesize
+      end
+
+      # Reads meanwhile, since a server blocked on a full stdout reads
+      # nothing more.
+      def write_chunk(line, deadline)
+        loop do
+          count = @stdin.write_nonblock(line, exception: false)
+          return count unless count == :wait_writable
+
+          readable, = IO.select([@stdout], [@stdin], nil, remaining_wait(deadline))
+          fill if readable&.any?
         end
       end
 
@@ -214,18 +227,24 @@ module RubyLLM
           line = @buffer.slice!(/\A[^\n]*\n/)
           return line if line
 
-          remaining = deadline - monotonic_now
-          raise Unavailable, "#{name} did not answer in time" unless remaining.positive?
-
-          Support::Cancellation.check
-          next unless @stdout.wait_readable([remaining, CHECK_INTERVAL].min)
-
-          chunk = @stdout.read_nonblock(65_536, exception: false)
-          next if chunk == :wait_readable
-
-          exited unless chunk
-          @buffer << chunk
+          fill if @stdout.wait_readable(remaining_wait(deadline))
         end
+      end
+
+      def remaining_wait(deadline)
+        remaining = deadline - monotonic_now
+        raise Unavailable, "#{name} did not answer in time" unless remaining.positive?
+
+        Support::Cancellation.check
+        [remaining, CHECK_INTERVAL].min
+      end
+
+      def fill
+        chunk = @stdout.read_nonblock(65_536, exception: false)
+        return if chunk == :wait_readable
+
+        exited unless chunk
+        @buffer << chunk
       end
 
       def exited
