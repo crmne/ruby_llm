@@ -576,6 +576,20 @@ RSpec.describe RubyLLM::Message do
 
       expect(message.to_h[:cache_until_here]).to be true
     end
+
+    it 'rebuilds a message without content' do
+      messages = [
+        described_class.new(role: :user, content: nil, attachments: [StringIO.new('hi')]),
+        described_class.new(role: :assistant, content: nil, thinking: 'Considering', finish_reason: :max_tokens)
+      ]
+
+      rebuilt = messages.map { |message| described_class.new(message.to_h) }
+
+      expect(rebuilt.map(&:content)).to eq([nil, nil])
+      expect(rebuilt.first.attachments.size).to eq(1)
+      expect(rebuilt.last).to have_attributes(finish_reason: :max_tokens)
+      expect(rebuilt.last.thinking.text).to eq('Considering')
+    end
   end
 
   describe '#truncated?' do
