@@ -132,7 +132,7 @@ module RubyLLM
     def initialize(options = {}) # :nodoc:
       @role = options.fetch(:role).to_sym
       @tool_calls = coerce_tool_calls(options[:tool_calls])
-      @content = normalize_content(options.fetch(:content))
+      @content = normalize_content(options[:content])
       @config = options[:config]
       @attachments = Attachment.wrap(options[:attachments], config: @config)
       @model = options[:model]
