@@ -178,7 +178,7 @@ begin
   accumulated_content = ""
   chat.ask "Generate a very long story..." do |chunk|
     print chunk.content
-    accumulated_content << chunk.content
+    accumulated_content << chunk.content.to_s
   end
   puts "\nStream completed successfully."
 rescue RubyLLM::RateLimitError
