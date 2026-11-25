@@ -15,11 +15,14 @@ module RubyLLM
       end
 
       argument :skill_name, type: :string, banner: 'name'
-      argument :description, type: :string, banner: '"What it does and when to use it"'
+      argument :description, type: :string, required: false, banner: '"What it does and when to use it"'
 
       desc 'Creates a skill folder with its SKILL.md in app/skills'
 
       def check_skill
+        return if behavior == :revoke
+        raise Thor::Error, 'Pass a description of what the skill does and when to use it' if description.blank?
+
         Dir.mktmpdir do |root|
           folder = File.join(root, skill_name)
           FileUtils.mkdir_p(folder)
