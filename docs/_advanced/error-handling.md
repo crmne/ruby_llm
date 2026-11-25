@@ -41,7 +41,7 @@ Provider operation errors inherit from `RubyLLM::Error`. RubyLLM maps the provid
 | `RubyLLM::ServerError` | 500 | Yes |
 | `RubyLLM::ServiceUnavailableError` | 502, 503, 504 | Yes |
 | `RubyLLM::OverloadedError` | 529, or a 400 saying the service is `currently overloaded` | Yes |
-| `RubyLLM::ConnectionError` | None: the provider or an MCP server could not be reached, or the request timed out | Yes, for provider requests |
+| `RubyLLM::ConnectionError` | None: the provider or an MCP server could not be reached, the request timed out, or a stream closed before its answer ended | Yes, for provider requests |
 | `RubyLLM::ContentFilterError` | None: provider content filters blocked a transcription | No |
 | `RubyLLM::ToolCallParseError` | None: parent of `ToolCallTruncatedError`; other malformed arguments go back to the model | No |
 | `RubyLLM::ToolCallTruncatedError` | None: the output token limit cut off a tool call | No |
@@ -216,7 +216,7 @@ Leave out `on:` unless you have a reason to change it. The default, `RubyLLM::Fa
 | HTTP 502, 503 or 504: how OpenAI, Gemini and Bedrock say they are overloaded or unavailable, and how OpenRouter reports a failed upstream provider | `RubyLLM::ServiceUnavailableError` |
 | HTTP 529: Anthropic's overload, and an `overloaded_error` mid-stream | `RubyLLM::OverloadedError` |
 | HTTP 400 whose message says the service is currently overloaded | `RubyLLM::OverloadedError` |
-| A timeout or a failed connection | `RubyLLM::ConnectionError` |
+| A timeout, a failed connection, or a stream that closes before its answer ends | `RubyLLM::ConnectionError` |
 
 A provider that accepts a streaming request and then sends nothing still holds it for one `request_timeout`, which may be many minutes when you allow for long answers. Set [`stream_idle_timeout`]({% link _reference/configuration-connection.md %}#stalled-streams) to move on to the fallback as soon as a stream goes quiet:
 

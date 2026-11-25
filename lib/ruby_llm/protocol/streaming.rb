@@ -58,14 +58,18 @@ module RubyLLM
       def stream_response(payload, additional_headers = {}, &block)
         accumulator = StreamAccumulator.new(log: method(:log_stream_debug))
         received = false
+        @stream_finished = false
 
         response = stream_events(stream_url, payload, additional_headers) do |data|
           received = true
           chunk = build_chunk(data)
+          @stream_finished ||= stream_finished?(data, chunk)
           accumulator.add chunk
           block.call chunk
         end
         raise Error.new('Provider returned no stream events', response:) unless received
+
+        require_finished_stream(response)
 
         if (remainder = stream_remainder)
           accumulator.add remainder
@@ -75,6 +79,16 @@ module RubyLLM
         message = accumulator.to_message(response)
         log_body_debug { "Stream completed: #{message.content}" }
         message
+      end
+
+      # Returns whether an event ends the answer. A connection can close
+      # cleanly before one arrives.
+      def stream_finished?(_data, chunk)
+        chunk.finish_reason || chunk.continuation
+      end
+
+      def require_finished_stream(response)
+        raise ConnectionError.new('Provider stream ended before completion', response:) unless @stream_finished
       end
 
       # Returns a last Chunk for text a protocol held back while streaming,
@@ -234,7 +248,10 @@ module RubyLLM
           when :error
             handle_error_event(data, env)
           else
-            next if data == '[DONE]'
+            if data == '[DONE]'
+              @stream_finished = true
+              next
+            end
 
             parsed = handle_data(data, env)
             next unless parsed.is_a?(Hash)

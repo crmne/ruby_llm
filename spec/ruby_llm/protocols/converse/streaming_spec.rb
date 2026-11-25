@@ -609,6 +609,16 @@ RSpec.describe RubyLLM::Protocols::Converse::Streaming do
     end
   end
 
+  it 'raises when the stream closes before messageStop' do
+    allow(streaming).to receive(:stream_events) do |*, &block|
+      block.call('contentBlockIndex' => 0, 'delta' => { 'text' => 'Hel' })
+      nil
+    end
+
+    expect { streaming.send(:stream_response, {}) { |_chunk| nil } }
+      .to raise_error(RubyLLM::ConnectionError, 'Provider stream ended before completion')
+  end
+
   describe 'retried attempts in stream_response' do
     before { stub_const('Faraday::VERSION', '2.0.0') }
 
@@ -672,7 +682,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Streaming do
       streaming.instance_variable_set(:@connection, connection)
       streaming.instance_variable_set(:@provider, provider)
       allow(streaming).to receive_messages(event_stream_decoder: :decoder, parse_stream_chunk: nil,
-                                           handle_failed_stream: nil)
+                                           handle_failed_stream: nil, require_finished_stream: nil)
       allow(RubyLLM::Protocol::StreamAccumulator).to receive(:new).and_return(
         instance_double(RubyLLM::Protocol::StreamAccumulator,
                         to_message: RubyLLM::Message.new(role: :assistant, content: ''))
