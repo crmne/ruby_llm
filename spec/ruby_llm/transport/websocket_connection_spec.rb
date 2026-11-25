@@ -106,7 +106,7 @@ RSpec.describe RubyLLM::Transport::WebsocketConnection do
 
     expect do
       described_class.open("wss://127.0.0.1:#{server.addr[1]}", headers: {}, config:) { nil }
-    end.to raise_error(OpenSSL::SSL::SSLError, /certificate verify failed/)
+    end.to raise_error(RubyLLM::ConnectionError, /certificate verify failed/)
   ensure
     server&.close
     worker&.join(1)
@@ -332,5 +332,60 @@ RSpec.describe RubyLLM::Transport::WebsocketConnection do
   ensure
     server&.close
     worker&.join(1)
+  end
+
+  describe 'failures an HTTP request reports as RubyLLM errors' do
+    def open_refused(status)
+      server = TCPServer.new('127.0.0.1', 0)
+      worker = Thread.new do
+        socket = server.accept
+        socket.gets("\r\n\r\n")
+        socket.write("HTTP/1.1 #{status} Refused\r\nRetry-After: 7\r\nContent-Length: 0\r\n\r\n")
+        socket.close
+      end
+      described_class.open("ws://127.0.0.1:#{server.addr[1]}", headers: {}, config:) { nil }
+    ensure
+      server&.close
+      worker&.join(1)
+    end
+
+    { 401 => RubyLLM::UnauthorizedError, 429 => RubyLLM::RateLimitError,
+      503 => RubyLLM::ServiceUnavailableError }.each do |status, error_class|
+      it "raises #{error_class} when the handshake answers #{status}" do
+        expect { open_refused(status) }.to raise_error(error_class) { |error|
+          expect(error.response).to have_attributes(status:, headers: include('Retry-After' => '7'))
+        }
+      end
+    end
+
+    it 'raises ConnectionError when the connection is refused' do
+      port = TCPServer.open('127.0.0.1', 0) { |server| server.addr[1] }
+
+      expect { described_class.open("ws://127.0.0.1:#{port}", headers: {}, config:) { nil } }
+        .to raise_error(RubyLLM::ConnectionError) { |error|
+          expect(error.cause).to be_a(Errno::ECONNREFUSED)
+          expect(error).not_to be_timeout
+        }
+    end
+
+    it 'tells a timeout apart' do
+      config.request_timeout = 0.2
+      with_server(echo: false) do |url, _worker|
+        described_class.open(url, headers: {}, config:) do |connection|
+          expect { connection.read }.to raise_error(RubyLLM::ConnectionError) { |error| expect(error).to be_timeout }
+        end
+      end
+    end
+
+    it 'raises ConnectionError when a write fails' do
+      with_server do |url, _worker|
+        described_class.open(url, headers: {}, config:) do |connection|
+          allow(connection).to receive(:write).and_raise(Errno::EPIPE)
+
+          expect { connection.send_text('hello') }.to raise_error(RubyLLM::ConnectionError)
+          expect { connection.send_binary('hello') }.to raise_error(RubyLLM::ConnectionError)
+        end
+      end
+    end
   end
 end

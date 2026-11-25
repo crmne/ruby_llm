@@ -9,6 +9,7 @@ module RubyLLM
   module Transport # :nodoc:
     class WebsocketConnection # :nodoc: all
       MAX_FRAME_BYTES = 16 * 1024 * 1024
+      NETWORK_FAILURES = [SystemCallError, SocketError, OpenSSL::SSL::SSLError].freeze
 
       attr_reader :url
 
@@ -48,19 +49,23 @@ module RubyLLM
         raise Error, 'WebSocket closed before opening' unless @opened
 
         self
-      rescue StandardError
+      rescue StandardError => e
         close
-        raise
+        raise_failure(e)
       end
 
       def send_text(text)
         ensure_open
         @driver.text(text)
+      rescue *NETWORK_FAILURES => e
+        raise_failure(e)
       end
 
       def send_binary(data)
         ensure_open
         @driver.binary(data.b)
+      rescue *NETWORK_FAILURES => e
+        raise_failure(e)
       end
 
       def read(timeout: @timeout)
@@ -69,8 +74,8 @@ module RubyLLM
         raise_unread_error
 
         @messages.shift
-      rescue IOError, SystemCallError, OpenSSL::SSL::SSLError
-        raise unless @closed || @messages.any?
+      rescue IOError, *NETWORK_FAILURES => e
+        raise_failure(e) unless @closed || @messages.any?
 
         @messages.shift
       end
@@ -99,7 +104,7 @@ module RubyLLM
 
       def close
         @driver.close if @driver && @opened && !@closed
-      rescue IOError, SystemCallError, OpenSSL::SSL::SSLError, Error
+      rescue IOError, *NETWORK_FAILURES, Error
         nil
       ensure
         @closed = true
@@ -129,11 +134,27 @@ module RubyLLM
         @headers.each { |name, value| @driver.set_header(name, value) if value }
         @driver.on(:open) { @opened = true }
         @driver.on(:message) { |event| @messages << event.data }
-        @driver.on(:error) { |event| @error = Error.new(event.message) }
+        @driver.on(:error) { |event| @error = handshake_error || Error.new(event.message) }
         @driver.on(:close) do |event|
           @closed = true
           @error ||= Error.new("WebSocket closed with code #{event.code}: #{event.reason}") unless event.code == 1000
         end
+      end
+
+      def handshake_error
+        return if @opened || @driver.status.to_i < 400
+
+        headers = { 'Retry-After' => @driver.headers['Retry-After'] }.compact
+        response = Faraday::Response.new(status: @driver.status, response_headers: headers, body: '')
+        ErrorMiddleware.parse_error(provider: nil, response:)
+      rescue Error => e
+        e
+      end
+
+      def raise_failure(error)
+        raise ConnectionError, error.message if NETWORK_FAILURES.any? { |failure| error.is_a?(failure) }
+
+        raise error
       end
 
       def open_socket(deadline)
@@ -147,11 +168,13 @@ module RubyLLM
       # the outer timeout holds the whole connect to one deadline.
       def connect_socket(port, opened_by)
         remaining = opened_by - monotonic_time
-        raise Error, 'WebSocket operation timed out' unless remaining.positive?
+        time_out unless remaining.positive?
 
-        Timeout.timeout(remaining, Error, 'WebSocket operation timed out') do
+        Timeout.timeout(remaining) do
           Socket.tcp(@uri.hostname, port, connect_timeout: remaining, resolv_timeout: remaining)
         end
+      rescue Timeout::Error
+        time_out
       end
 
       def close_socket
@@ -189,7 +212,7 @@ module RubyLLM
         @driver.parse(data)
       rescue EOFError, Errno::ECONNRESET
         @closed = true
-        @error ||= Error.new('WebSocket connection ended without a close frame')
+        @error ||= ConnectionError.new('WebSocket connection ended without a close frame')
       end
 
       def socket_operation(deadline)
@@ -204,8 +227,13 @@ module RubyLLM
 
       def wait_for_socket(method, deadline)
         remaining = deadline - monotonic_time
-        raise Error, 'WebSocket operation timed out' unless remaining.positive?
-        raise Error, 'WebSocket operation timed out' unless @socket.to_io.public_send(method, remaining)
+        time_out unless remaining.positive?
+        time_out unless @socket.to_io.public_send(method, remaining)
+      end
+
+      def time_out
+        message = 'WebSocket operation timed out'
+        raise ConnectionError, message, cause: Faraday::TimeoutError.new(message)
       end
 
       def monotonic_time
