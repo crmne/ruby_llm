@@ -1461,7 +1461,8 @@ module RubyLLM
     # #before_tool_call and before #after_tool_result. Several blocks nest
     # in the order they were registered, the first outermost. The result is
     # the tool's, whatever the block returns. A block that never calls
-    # +run+ skips the tool, and the model is told the call did not run.
+    # +run+ skips the tool, and the model is told the call did not run. One
+    # that rescues an error the tool raised gives the model its message.
     def around_tool_call(&)
       add_callback(:around_tool_call, &)
     end
@@ -2803,21 +2804,22 @@ module RubyLLM
 
     def run_around_tool_call(tool_call, &execute)
       ran = false
-      result = nil
+      result = { error: "The #{tool_call.name} call did not run." }
       innermost = lambda do
         result = execute.call unless ran
         ran = true
         result
+      rescue StandardError => e
+        result = { error: e.message }
+        raise
       end
-      outcome = -> { ran ? result : { error: "The #{tool_call.name} call did not run." } }
       chain = @callbacks[:around_tool_call].reverse.reduce(innermost) do |inner, callback|
         lambda do
           callback.call(tool_call) { inner.call }
-          outcome.call
+          result
         end
       end
       chain.call
-      outcome.call
     end
 
     def add_tool_result_message(tool_call, result)

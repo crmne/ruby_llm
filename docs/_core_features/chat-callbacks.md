@@ -71,7 +71,7 @@ chat.around_tool_call do |call, &run|
 end
 ```
 
-The block runs in the thread or fiber that runs the tool, so a tenant, `Current` attributes, or fiber-local values you set there reach the tool, also with [concurrent tool execution]({% link _tools/tool-execution.md %}#concurrent-tool-execution). `run` returns the tool's result, and the conversation gets that result whatever your block returns. A block that never calls `run` skips the tool, and the model is told the call did not run.
+The block runs in the thread or fiber that runs the tool, so a tenant, `Current` attributes, or fiber-local values you set there reach the tool, also with [concurrent tool execution]({% link _tools/tool-execution.md %}#concurrent-tool-execution). `run` returns the tool's result, and the conversation gets that result whatever your block returns. A block that never calls `run` skips the tool, and the model is told the call did not run. A block that rescues an error the tool raised gives the model its message.
 
 It runs after `before_tool_call` and before `after_tool_result`. Several blocks nest in the order you registered them, the first outermost.
 

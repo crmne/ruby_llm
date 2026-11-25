@@ -137,6 +137,49 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
+  context 'with a tool that raises' do
+    let(:runs) { [] }
+
+    before do
+      log = runs
+      chat.with_tools(Class.new(RubyLLM::Tool) do
+        define_singleton_method(:tool_name) { 'pay' }
+        define_method(:execute) do
+          log << :paid
+          raise IOError, 'printer offline' if log.one?
+
+          'paid'
+        end
+      end)
+      allow(chat.provider).to receive(:complete).and_return(calls('pay'), answer)
+    end
+
+    it 'tells the model the error a block rescues' do
+      chat.around_tool_call do |_call, &run|
+        run.call
+      rescue IOError
+        nil
+      end
+
+      chat.ask('Go')
+
+      expect(results).to eq([{ error: 'printer offline' }.to_json])
+      expect(runs.size).to eq(1)
+    end
+
+    it 'runs the tool again when a block that rescues the error calls run again' do
+      chat.around_tool_call do |_call, &run|
+        run.call
+      rescue IOError
+        run.call
+      end
+
+      chat.ask('Go')
+
+      expect(results).to eq(['paid'])
+    end
+  end
+
   describe 'the Agent macro' do
     after { Fiber[tenant_key] = nil }
 
