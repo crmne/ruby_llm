@@ -12,13 +12,17 @@ RSpec.describe RubyLLM::Generators::MCPGenerator, :generator, type: :generator d
   let(:app_name) { 'test_mcp_generator' }
   let(:app_path) { GeneratorTestHelpers.app_path(app_name) }
 
-  def run_rails_generate(*args)
+  def run_rails_generate(*)
+    run_rails_command('generate', *)
+  end
+
+  def run_rails_command(*args)
     env = {
       'BUNDLE_GEMFILE' => ENV['BUNDLE_GEMFILE'] || Bundler.default_gemfile.to_s,
       'BUNDLE_IGNORE_CONFIG' => '1',
       'OPENAI_API_KEY' => ENV.fetch('OPENAI_API_KEY', 'test')
     }
-    GeneratorTestHelpers.run_command(env, ['bundle', 'exec', 'rails', 'generate', *args], chdir: app_path)
+    GeneratorTestHelpers.run_command(env, ['bundle', 'exec', 'rails', *args], chdir: app_path)
   end
 
   before(:all) do # rubocop:disable RSpec/BeforeAfterAll
@@ -48,6 +52,18 @@ RSpec.describe RubyLLM::Generators::MCPGenerator, :generator, type: :generator d
       success, runner = run_rails_runner('puts LinearMcp.url, FilesMcp.command.inspect')
       expect(success).to be(true), runner
       expect(runner).to include("https://mcp.linear.app/mcp\n")
+    end
+  end
+
+  it 'destroys a server class by its name' do
+    within_test_app(app_path) do
+      run_rails_generate('ruby_llm:mcp', 'Sentry', 'https://mcp.sentry.dev/mcp')
+      expect(File).to exist('app/mcp/sentry_mcp.rb')
+
+      output, status = run_rails_command('destroy', 'ruby_llm:mcp', 'Sentry')
+
+      expect(status.success?).to be(true), output
+      expect(File).not_to exist('app/mcp/sentry_mcp.rb')
     end
   end
 
