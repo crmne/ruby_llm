@@ -365,10 +365,19 @@ RSpec.describe RubyLLM::Tool do
         .to eq('{"at":"2026-11-25T13:00:00.000Z","price":{"cents":1050}}')
     end
 
-    it 'serializes a result without as_json, as in plain Ruby' do
-      result = Class.new(Hash) { undef_method :as_json }[link: '/invoices?number=42&format=pdf']
+    it 'converts values nested in what a custom as_json returns' do
+      invoice = Class.new { def as_json(*) = { issued_at: Time.utc(2026, 11, 1, 10) } }.new
 
-      expect(described_class.split_result(result).first).to eq('{"link":"/invoices?number=42&format=pdf"}')
+      expect(described_class.split_result({ invoice: }).first)
+        .to eq('{"invoice":{"issued_at":"2026-11-01T10:00:00.000Z"}}')
+    end
+
+    it 'adds no nesting limit to what to_json returns' do
+      deep = (1..150).reduce('"leaf"') { |inner, _| %({"level":#{inner}}) }
+      result = { level: 'stubbed' }
+      allow(result).to receive(:to_json).and_return(deep)
+
+      expect(described_class.split_result(result).first).to eq(deep)
     end
 
     it 'keeps the search results shape' do

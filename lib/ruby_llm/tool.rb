@@ -388,10 +388,16 @@ module RubyLLM
       def result_content(result)
         case result
         when String then result
-        when SearchResults then result.to_json
-        when Hash, Array then JSON.generate(result.respond_to?(:as_json) ? result.as_json : result)
+        when Hash, Array, SearchResults then json_without_html_escapes(result)
         else result.to_s
         end
+      end
+
+      # Active Support's to_json escapes &, < and > for HTML pages. Parsing
+      # its output and generating it again keeps its value conversions and
+      # gives the model the characters the tool returned.
+      def json_without_html_escapes(result)
+        JSON.generate(JSON.parse(result.to_json, max_nesting: false), max_nesting: false)
       end
     end
 
