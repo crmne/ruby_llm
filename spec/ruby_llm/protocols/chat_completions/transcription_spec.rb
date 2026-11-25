@@ -44,6 +44,14 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Transcription do
       expect(payload).to eq(model: 'gpt-transcribe-2026-07-28', file: 'file-part', languages: %w[en fr])
     end
 
+    it 'keeps language for a deployment named after gpt-transcribe' do
+      payload = described_class.render_transcription_payload(
+        'file-part', model: 'gpt-transcribe-production', language: 'es'
+      )
+
+      expect(payload).to eq(model: 'gpt-transcribe-production', file: 'file-part', language: 'es')
+    end
+
     it 'sends no language field to gpt-transcribe without a hint' do
       payload = described_class.render_transcription_payload('file-part', model: 'gpt-transcribe', language: nil)
 

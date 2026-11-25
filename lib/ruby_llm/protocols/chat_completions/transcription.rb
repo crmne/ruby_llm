@@ -11,6 +11,7 @@ module RubyLLM
           'transcript.text.segment' => RubyLLM::TranscriptionChunk::SEGMENT,
           'transcript.text.done' => RubyLLM::TranscriptionChunk::DONE
         }.freeze
+        LANGUAGE_LIST_MODEL = /\Agpt-transcribe(-\d{4}-\d{2}-\d{2})?\z/
 
         module_function
 
@@ -48,7 +49,7 @@ module RubyLLM
         end
 
         def render_transcription_language(language, model:)
-          return { language: language } unless model.start_with?('gpt-transcribe')
+          return { language: language } unless model.match?(LANGUAGE_LIST_MODEL)
 
           { languages: language && Array(language) }
         end
