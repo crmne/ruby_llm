@@ -1312,7 +1312,7 @@ module RubyLLM
       end
 
       def message_attributes(message)
-        attrs = { role: message.role, content: message.content }
+        attrs = { role: message.role, content: message_content(message) }
         assign_supported_attribute(attrs, :thinking_text, message.thinking&.text)
         assign_supported_attribute(attrs, :thinking_signature, message.thinking&.signature)
         assign_supported_attribute(attrs, :citations, message.citations.map(&:to_h).presence)
@@ -1326,6 +1326,16 @@ module RubyLLM
         assign_supported_attribute(attrs, :cache_ttl, message.cache_ttl)
         assign_fallback_attributes(attrs, message) if message.stood_in?
         attrs
+      end
+
+      # Action Text reads a String as HTML, which a rich text editor sends
+      # and a model does not.
+      def message_content(message)
+        content = message.content
+        rich_text = messages_association.klass.reflect_on_association(:rich_text_content)
+        return content if message.role == :user || !content.is_a?(String) || !rich_text
+
+        ActionText::Content.new(ERB::Util.html_escape(content).gsub(/\r\n?|\n/, '<br>'))
       end
 
       def assign_fallback_attributes(attributes, message)
