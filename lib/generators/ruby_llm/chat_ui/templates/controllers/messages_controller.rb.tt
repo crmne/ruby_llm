@@ -2,7 +2,13 @@ class <%= message_controller_class_name %> < ApplicationController
   before_action :set_<%= chat_variable_name %>
 
   rescue_from RubyLLM::PendingToolCallsError do
-    redirect_to @<%= chat_variable_name %>, notice: "Answer the questions above to continue.", status: :see_other
+    if @<%= chat_variable_name %>.pending_questions.any?
+      notice = "Answer the questions above to continue."
+    else
+      <%= chat_job_class_name %>.perform_later(@<%= chat_variable_name %>.id)
+      notice = "The last reply isn't finished yet. Send your message again when it is."
+    end
+    redirect_to @<%= chat_variable_name %>, notice: notice, status: :see_other
   end
 
   def create
