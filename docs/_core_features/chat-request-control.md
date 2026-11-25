@@ -219,6 +219,8 @@ end
 
 The `protocol:` option sits alongside `provider:` in model selection: a model is identified by its name, its provider, and its protocol. Unknown protocol names raise when the request is rendered or sent, listing the protocols the provider supports. A bare `with_model` returns the chat to the provider's default protocol, just as it re-resolves the provider.
 
+Some OpenAI reasoning models call tools only through the Responses API, and others accept tools over Chat Completions only with thinking turned off. For a chat with tools on such a model, keep the default protocol or add `with_thinking(effort: :none)`.
+
 ### Perplexity Presets
 
 Perplexity chat runs on its Agent API. Name a preset, which bundles a model, web search, and instructions, or name a model in `provider/model` form:
