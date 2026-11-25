@@ -986,6 +986,8 @@ class Linear < RubyLLM::MCP
 end
 ```
 
+Over HTTP, each message the server sends while it works, such as progress, starts the time again.
+
 Outside a chat's tool calls, a server that answers with a protocol error raises `RubyLLM::MCP::Error`, whose `code` is the JSON-RPC error code. A server that wants credentials raises `RubyLLM::UnauthorizedError`. A server that refuses a request raises `RubyLLM::ForbiddenError`, or `RubyLLM::MCP::InsufficientScopeError` when the token lacks a scope.
 
 ## Next Steps

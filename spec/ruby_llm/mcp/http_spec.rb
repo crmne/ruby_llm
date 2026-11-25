@@ -713,7 +713,7 @@ RSpec.describe RubyLLM::MCP::HTTP do
       WebMock.enable!
     end
 
-    def serve(responses)
+    def serve(responses, timeout: 3)
       server = TCPServer.new('127.0.0.1', 0)
       sockets = []
       worker = Thread.new do
@@ -725,7 +725,7 @@ RSpec.describe RubyLLM::MCP::HTTP do
         end
       end
       address = "http://127.0.0.1:#{server.addr[1]}/mcp"
-      transport = described_class.new(address, timeout: 3, idempotent: ->(_name) { true })
+      transport = described_class.new(address, timeout:, idempotent: ->(_name) { true })
       yield RubyLLM::MCP::Client.new(transport)
     ensure
       worker&.kill
@@ -763,6 +763,38 @@ RSpec.describe RubyLLM::MCP::HTTP do
       end
 
       serve([method(:discovered), broken, ->(socket, request) { open_stream(socket, answer(request)) }]) do |client|
+        expect(client.request('tools/call', { name: 'slow' })).to eq('content' => [])
+      end
+    end
+
+    it 'times out while the server only keeps the stream alive' do
+      keep_alive = lambda do |socket, _request|
+        open_stream(socket)
+        20.times do
+          socket.write("8\r\n: ping\n\n\r\n")
+          sleep 0.1
+        end
+      rescue SystemCallError
+        nil
+      end
+
+      serve([method(:discovered), keep_alive], timeout: 0.5) do |client|
+        expect { client.request('tools/call', { name: 'stuck' }) }
+          .to raise_error(RubyLLM::ConnectionError, /in time/)
+      end
+    end
+
+    it 'waits longer than the timeout while the server reports progress' do
+      progress = "data: #{{ jsonrpc: '2.0', method: 'notifications/progress', params: {} }.to_json}\n\n"
+      report = lambda do |socket, request|
+        open_stream(socket)
+        [*Array.new(10, progress), answer(request)].each do |data|
+          socket.write("#{data.bytesize.to_s(16)}\r\n#{data}\r\n")
+          sleep 0.1
+        end
+      end
+
+      serve([method(:discovered), report], timeout: 0.5) do |client|
         expect(client.request('tools/call', { name: 'slow' })).to eq('content' => [])
       end
     end

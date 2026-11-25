@@ -256,7 +256,8 @@ module RubyLLM
       def oauth_settings = @oauth # :nodoc:
 
       # Sets how many seconds a request to the server may take. Defaults to
-      # the configured +request_timeout+.
+      # the configured +request_timeout+. Over HTTP, each message the server
+      # sends while it works, such as progress, starts the time again.
       #
       #   timeout 30
       #
