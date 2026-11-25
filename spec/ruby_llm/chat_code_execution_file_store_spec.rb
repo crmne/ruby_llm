@@ -311,6 +311,8 @@ RSpec.describe RubyLLM::Chat do
     end
 
     it 'names a file whose name is not valid UTF-8 as skipped, because the run already happened' do
+      skip 'This filesystem refuses file names that are not valid UTF-8' unless FileNames.non_utf8?
+
       written = []
       chat.after_file_write { |file| written << file.path }
       chat.with_code_execution(sandbox: FakeSandbox.new do |run|
