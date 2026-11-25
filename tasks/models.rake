@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 require 'dotenv'
-# .env holds 1Password lookups; CI passes its secrets as environment variables.
-Dotenv.load unless ENV['CI']
 require 'ruby_llm'
 require 'json'
 require 'json_schemer'
@@ -40,6 +38,8 @@ namespace :models do
 end
 
 def configure_from_env
+  # .env holds 1Password lookups; CI passes its secrets as environment variables.
+  Dotenv.load unless ENV['CI']
   RubyLLM.configure do |config|
     config.anthropic_api_key = ENV.fetch('ANTHROPIC_API_KEY', nil)
     config.azure_api_base = ENV.fetch('AZURE_API_BASE', nil)
