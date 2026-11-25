@@ -39,7 +39,7 @@ Provider operation errors inherit from `RubyLLM::Error`. RubyLLM maps the provid
 | `RubyLLM::ContextLengthExceededError` | 400 or 413 with a recognized context or token limit message, or a 429 with one and no rate limit message | No |
 | `RubyLLM::RateLimitError` | Any other 429, or a 400 with a recognized rate limit message, such as `quota exceeded`, and no context or token limit message | Yes |
 | `RubyLLM::ServerError` | 500 | Yes |
-| `RubyLLM::ServiceUnavailableError` | 502, 503, 504 | Yes |
+| `RubyLLM::ServiceUnavailableError` | 408, 502 to 504, 520 to 524 | Yes |
 | `RubyLLM::OverloadedError` | 529, or a 400 saying the service is `currently overloaded` | Yes |
 | `RubyLLM::ConnectionError` | None: the provider or an MCP server could not be reached, or the request timed out | Yes, for provider requests |
 | `RubyLLM::ContentFilterError` | None: provider content filters blocked a transcription | No |
@@ -214,6 +214,7 @@ Leave out `on:` unless you have a reason to change it. The default, `RubyLLM::Fa
 | HTTP 429 from any provider, or a stream error event the provider tags as a rate limit or quota error: Anthropic's `rate_limit_error`, OpenAI's `rate_limit_exceeded` or `insufficient_quota`, Bedrock's `throttlingException` | `RubyLLM::RateLimitError`, or `RubyLLM::ContextLengthExceededError` when RubyLLM recognizes the message as a context length error and not as a rate limit |
 | HTTP 500, and a Bedrock stream error of a type not listed here, such as `modelStreamErrorException` | `RubyLLM::ServerError` |
 | HTTP 502, 503 or 504: how OpenAI, Gemini and Bedrock say they are overloaded or unavailable, and how OpenRouter reports a failed upstream provider | `RubyLLM::ServiceUnavailableError` |
+| HTTP 408, or 520 to 524: a request that timed out, or a provider that Cloudflare cannot reach | `RubyLLM::ServiceUnavailableError` |
 | HTTP 529: Anthropic's overload, and an `overloaded_error` mid-stream | `RubyLLM::OverloadedError` |
 | HTTP 400 whose message says the service is currently overloaded | `RubyLLM::OverloadedError` |
 | A timeout or a failed connection | `RubyLLM::ConnectionError` |
@@ -418,7 +419,7 @@ Retries are attempted for:
 
 *   Network failures (`RubyLLM::ConnectionError`: timeouts, refused or dropped connections, and TLS failures)
 *   Rate limit errors (`RubyLLM::RateLimitError`, often HTTP 429)
-*   Server-side errors (`RubyLLM::ServerError`, `RubyLLM::ServiceUnavailableError`, `RubyLLM::OverloadedError` / HTTP 500, 502, 503, 504, 529)
+*   Server-side errors (`RubyLLM::ServerError`, `RubyLLM::ServiceUnavailableError`, `RubyLLM::OverloadedError` / HTTP 408, 500, 502 to 504, 520 to 524, 529)
 
 `RubyLLM::ContextLengthExceededError` is not retried. Neither is a stream that fails after it has started delivering events, because the retry would replay them into the same response.
 

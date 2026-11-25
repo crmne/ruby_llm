@@ -527,6 +527,15 @@ RSpec.describe RubyLLM::Transport::ErrorMiddleware do
       end.to raise_error(RubyLLM::ForbiddenError)
     end
 
+    [408, *520..524].each do |status|
+      it "maps #{status} to ServiceUnavailableError" do
+        response = Struct.new(:status, :body).new(status, '')
+
+        expect { described_class.parse_error(provider: nil, response: response) }
+          .to raise_error(RubyLLM::ServiceUnavailableError)
+      end
+    end
+
     it 'maps 529 to OverloadedError' do
       response = Struct.new(:status, :body).new(529, '{}')
       provider = instance_double(RubyLLM::Provider, parse_error: 'overloaded')
