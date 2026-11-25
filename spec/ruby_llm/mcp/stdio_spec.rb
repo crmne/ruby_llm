@@ -35,6 +35,15 @@ RSpec.describe RubyLLM::MCP::Stdio do
     expect { stdio.listen(nil) { nil } }.to raise_error(RubyLLM::MCP::Stdio::Unavailable, /exited/)
   end
 
+  it 'reports a command that is not installed as unavailable' do
+    expect { child('ruby-llm-no-such-command') }
+      .to raise_error(described_class::Unavailable, /ruby-llm-no-such-command could not start: No such file/)
+  end
+
+  it 'reports a directory that does not exist as unavailable' do
+    expect { child(directory: '/no/such/directory') }.to raise_error(described_class::Unavailable, /could not start/)
+  end
+
   it 'keeps the application environment from the server' do
     parent = %w[
       FAKE_PROVIDER_API_KEY BUNDLE_GEMFILE BUNDLE_PATH RAILS_ENV SECRET_KEY_BASE NODE_EXTRA_CA_CERTS

@@ -24,7 +24,8 @@ module RubyLLM
     # request reads. A listener stops when CancelledError is raised in its
     # thread, so it reads and writes with that deferred.
     class Stdio # :nodoc:
-      # Raised when the server's process exits or does not answer in time.
+      # Raised when the server's process does not start, exits, or does not
+      # answer in time.
       class Unavailable < Error # :nodoc:
       end
 
@@ -241,8 +242,14 @@ module RubyLLM
         options = @directory ? { chdir: @directory } : {}
         options[:pgroup] = true if groups?
         env = ENV.slice(*INHERITED_ENV).merge(environment)
-        @stdin, @stdout, @process = Open3.popen2(env, *@command, unsetenv_others: true, **options)
+        spawn(env, options)
         @buffer = +''
+      end
+
+      def spawn(env, options)
+        @stdin, @stdout, @process = Open3.popen2(env, *@command, unsetenv_others: true, **options)
+      rescue SystemCallError => e
+        raise Unavailable, "#{name} could not start: #{e.message}"
       end
 
       def environment
