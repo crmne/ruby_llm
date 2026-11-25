@@ -38,17 +38,20 @@ RSpec.describe RubyLLM::Protocol do
       converse_protocol_class = Class.new(described_class) do
         private
 
-        def parse_completion_body(data, raw:) # rubocop:disable Lint/UnusedMethodArgument
-          data.dig('output', 'message', 'content')
+        def parse_completion_body(data, **)
+          data.dig('output', 'message').fetch('content')
         end
       end
-      response = instance_double(Faraday::Response, body: { 'output' => 'busy' })
 
-      expect do
-        converse_protocol_class.allocate.send(:parse_completion_response, response)
-      end.to raise_error(RubyLLM::Error, 'Provider returned an unreadable response body') { |error|
-        expect(error.response).to be(response)
-      }
+      [{ 'output' => 'busy' }, { 'output' => { 'message' => {} } }].each do |body|
+        response = instance_double(Faraday::Response, body: body)
+
+        expect do
+          converse_protocol_class.allocate.send(:parse_completion_response, response)
+        end.to raise_error(RubyLLM::Error, 'Provider returned an unreadable response body') { |error|
+          expect(error.response).to be(response)
+        }
+      end
     end
 
     it 'passes non-empty bodies to the protocol parser' do
