@@ -77,7 +77,7 @@ module RubyLLM
       ##
       # :singleton-method: acts_as_message
       # :call-seq:
-      #   acts_as_message(chat: :chat, chat_class: nil, chat_foreign_key: nil, touch_chat: false, broadcasts: nil)
+      #   acts_as_message(chat: :chat, chat_class: nil, chat_foreign_key: nil, touch_chat: false, broadcasts: nil, attachments: true)
       #
       # Turns an application record into a persisted RubyLLM message.
       #
@@ -105,6 +105,11 @@ module RubyLLM
       # [+broadcasts:+] Broadcast messages with Turbo. Defaults to +nil+,
       #                 which follows Configuration#broadcast_messages.
       #                 Overrides it with +true+ or +false+.
+      # [+attachments:+] Declare <tt>has_many_attached :attachments</tt>.
+      #                  Defaults to +true+, which declares it when Active
+      #                  Storage is loaded and logs how to add Active Storage
+      #                  otherwise. +false+ declares no attachments and logs
+      #                  nothing.
 
       class_methods do # rubocop:disable Metrics/BlockLength
         def acts_as_chat(messages: :messages, message_class: nil, messages_foreign_key: nil, owner: nil)
@@ -154,7 +159,8 @@ module RubyLLM
           RubyLLM::ActiveRecord::ChatFile.declare_attachments
         end
 
-        def acts_as_message(chat: :chat, chat_class: nil, chat_foreign_key: nil, touch_chat: false, broadcasts: nil)
+        def acts_as_message(chat: :chat, chat_class: nil, chat_foreign_key: nil, touch_chat: false, broadcasts: nil,
+                            attachments: true)
           include RubyLLM::ActiveRecord::MessageMethods
 
           class_attribute :chat_association_name, :chat_class
@@ -184,13 +190,17 @@ module RubyLLM
                    inverse_of: :message,
                    dependent: :nullify
 
-          ruby_llm_attachments
+          ruby_llm_attachments(attachments)
           ruby_llm_broadcasting(broadcasts)
         end
 
         private
 
-        def ruby_llm_attachments
+        def ruby_llm_attachments(attachments)
+          class_attribute :ruby_llm_stores_attachments, instance_accessor: false
+          self.ruby_llm_stores_attachments = attachments
+          return unless attachments
+
           if respond_to?(:has_many_attached)
             has_many_attached :attachments unless reflect_on_attachment(:attachments)
           else

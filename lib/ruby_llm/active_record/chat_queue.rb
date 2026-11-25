@@ -31,6 +31,7 @@ module RubyLLM
       end
 
       def push(content:, attachments:, steer:, sender:)
+        raise_unless_attachments(@chat.messages_association.klass) if Support::Utils.to_safe_array(attachments).any?
         QueuedMessage.transaction do
           @chat.forget_stale_cancellation
           queued = rows.create!(content:, steer:, sender:)
