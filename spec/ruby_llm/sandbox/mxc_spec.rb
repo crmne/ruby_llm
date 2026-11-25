@@ -175,9 +175,9 @@ RSpec.describe RubyLLM::Sandbox::MXC do
   end
 
   it 'runs LibreOffice, Poppler, and fontconfig with a writable home and cache' do
-    installed = %w[soffice pdftoppm fc-list].all? { |tool| system('which', tool, out: File::NULL) }
-    skip 'LibreOffice and Poppler are not installed' unless installed
     skip 'LibreOffice writes to /tmp, which Landlock leaves out' if SandboxBackend.landlock?
+    probe = report(run_code('command -v soffice && command -v pdftoppm && command -v fc-list', language: 'shell'))
+    skip 'LibreOffice and Poppler are not available in the sandbox' unless probe['exit_code']&.zero?
 
     text, *files = run_code(<<~SH, language: 'shell')
       printf 'Quarterly report' > report.txt
