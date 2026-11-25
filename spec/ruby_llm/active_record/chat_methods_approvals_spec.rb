@@ -99,6 +99,31 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(later.pending_questions).to be_empty
   end
 
+  it 'marks an approval accepted when the question or the record approves it' do
+    approved = %i[question chat].map do |approver|
+      chat = process(Chat.create!(model: model_for(:openai)))
+      park(chat, call('refund'))
+      question = chat.pending_questions.find(&:approval?)
+
+      approver == :question ? question.approve : chat.approve(question)
+      question
+    end
+
+    expect(approved).to all(be_answered)
+    expect(approved.map(&:response)).to all(eq(RubyLLM::Question::ACCEPTED))
+  end
+
+  it 'leaves an approval unanswered when the record approves a call that has a result' do
+    chat = process(Chat.create!(model: model_for(:openai)))
+    pending = park(chat, call('refund'))
+    question = chat.pending_questions.find(&:approval?)
+    chat.add_message(role: :tool, content: 'refunded', tool_call_id: pending.id)
+
+    chat.approve(question)
+
+    expect(question).not_to be_answered
+  end
+
   it 'remembers nothing for an answered call, here or in another process' do
     chat = process(Chat.create!(model: model_for(:openai)))
     first = park(chat, call('refund'))
