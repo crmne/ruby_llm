@@ -38,13 +38,19 @@ module RubyLLM
           {
             model: model,
             file: file_part,
-            language: language,
+            **render_transcription_language(language, model:),
             response_format: format || default_response_format(model),
             prompt: prompt,
             temperature: temperature,
             known_speaker_names: speaker_names,
             known_speaker_references: encode_speaker_references(speaker_references)
           }.compact.merge(provider_options)
+        end
+
+        def render_transcription_language(language, model:)
+          return { language: language } unless model.start_with?('gpt-transcribe')
+
+          { languages: language && Array(language) }
         end
 
         def encode_speaker_references(references)

@@ -30,6 +30,26 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Transcription do
       expect(payload).to eq(model: 'whisper-1', file: 'file-part', language: 'en')
     end
 
+    it 'sends a language hint to gpt-transcribe as languages' do
+      payload = described_class.render_transcription_payload('file-part', model: 'gpt-transcribe', language: 'es')
+
+      expect(payload).to eq(model: 'gpt-transcribe', file: 'file-part', languages: ['es'])
+    end
+
+    it 'sends candidate languages to a gpt-transcribe snapshot as languages' do
+      payload = described_class.render_transcription_payload(
+        'file-part', model: 'gpt-transcribe-2026-07-28', language: %w[en fr]
+      )
+
+      expect(payload).to eq(model: 'gpt-transcribe-2026-07-28', file: 'file-part', languages: %w[en fr])
+    end
+
+    it 'sends no language field to gpt-transcribe without a hint' do
+      payload = described_class.render_transcription_payload('file-part', model: 'gpt-transcribe', language: nil)
+
+      expect(payload).to eq(model: 'gpt-transcribe', file: 'file-part')
+    end
+
     it 'maps format to response_format' do
       payload = described_class.render_transcription_payload(
         'file-part', model: 'whisper-1', language: nil, format: 'verbose_json'
