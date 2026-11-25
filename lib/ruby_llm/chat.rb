@@ -699,8 +699,11 @@ module RubyLLM
     def with_instructions(instructions, append: false, cache_until_here: false)
       boundary = Message.cache_boundary_options(cache_until_here) if cache_until_here
       @messages.reject! { |message| message.role == :system } unless append
-      @messages << Message.new(role: :system, content: instructions) unless instructions.nil?
-      @messages.last.cache_until_here(**boundary) if instructions && boundary
+      return self if instructions.nil?
+
+      message = Message.new(role: :system, content: instructions)
+      message.cache_until_here(**boundary) if boundary
+      @messages.insert(unfinished?(@messages.last) ? -2 : -1, message)
       self
     end
 
