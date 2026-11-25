@@ -858,6 +858,8 @@ module RubyLLM
       raise Error.new('Provider returned no completion message', response:) unless message
 
       message
+    rescue NoMethodError, TypeError
+      raise Error.new('Provider returned an unreadable response body', response:)
     end
   end
 end
