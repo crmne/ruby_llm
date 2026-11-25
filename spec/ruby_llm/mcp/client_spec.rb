@@ -135,6 +135,47 @@ RSpec.describe RubyLLM::MCP::Client do
     end
   end
 
+  describe 'a change announced while the client connects' do
+    let(:transport) do
+      Class.new do
+        attr_accessor :session
+
+        def request(message, **)
+          case message[:method]
+          when 'server/discover' then { 'error' => { 'code' => -32_601 } }
+          when 'initialize'
+            yield({ 'method' => 'notifications/tools/list_changed' })
+            { 'result' => { 'protocolVersion' => '2025-06-18' } }
+          else { 'result' => { 'tools' => [] } }
+          end
+        end
+
+        def notify(*, **) = nil
+        def close = nil
+      end.new
+    end
+    let(:changes) { [] }
+    let(:client) do
+      described_class.new(transport) do |change|
+        client.list('tools/list', 'tools')
+        changes << change['method']
+      end
+    end
+
+    it 'reaches a report that makes requests' do
+      expect(client.list('tools/list', 'tools')).to eq([])
+      expect(changes).to eq(['notifications/tools/list_changed'])
+    end
+
+    it 'reaches one again after a new session' do
+      client.server
+      transport.session = Object.new
+      client.send(:reconnect, transport.session)
+
+      expect(changes.size).to eq(2)
+    end
+  end
+
   describe 'protocol versions' do
     let(:fake_server) do
       Class.new do
