@@ -177,6 +177,19 @@ RSpec.describe RubyLLM::ActiveRecord::Usage do
     expect(record.to_entry).to have_attributes(owner:, workflow:)
   end
 
+  it 'loads a chat whose owner class is gone, with the owners that are left' do
+    chat = Chat.create!(model: model_for(:openai))
+    attributes = { provider: 'openai', model: model_for(:openai), operation: 'chat', status: 'succeeded' }
+    reply = chat.messages.create!(role: :assistant, content: 'Hello')
+    described_class.create!(**attributes, chat:, message: reply, owner_type: 'RenamedAccount', owner_id: 1)
+    described_class.create!(**attributes, chat:, owner:)
+
+    found = Chat.find(chat.id)
+
+    expect(found.to_llm.usage_entries.map(&:owner)).to eq([nil, owner])
+    expect(found.ruby_llm_usage_entries.map(&:owner)).to eq([nil, owner])
+  end
+
   it 'writes a persisted chat attempt once, linked to both its chat and owner' do
     stub_chat_reply
     chat = Chat.create!(model: model_for(:anthropic))

@@ -819,7 +819,8 @@ module RubyLLM
 
       def ruby_llm_usage_entries # :nodoc:
         records = ruby_llm_usages.to_a
-        ::ActiveRecord::Associations::Preloader.new(records:, associations: [:message, *Usage.owner_preload]).call
+        ::ActiveRecord::Associations::Preloader.new(records:, associations: :message).call
+        Usage.preload_owners(records)
         records.map(&:to_entry)
       end
 
@@ -1168,12 +1169,13 @@ module RubyLLM
         messages = assoc.to_a
         return messages unless assoc.respond_to?(:klass)
 
-        associations = [:ruby_llm_tool_calls, :ruby_llm_parent_tool_call, { ruby_llm_usages: Usage.owner_preload }]
+        associations = %i[ruby_llm_tool_calls ruby_llm_parent_tool_call ruby_llm_usages]
         associations << { attachments_attachments: :blob } if attachment_association?(assoc.klass)
         rich_text_reflection = assoc.klass.reflect_on_association(:rich_text_content)
         associations << :rich_text_content if rich_text_reflection
 
         ::ActiveRecord::Associations::Preloader.new(records: messages, associations: associations).call
+        Usage.preload_owners(messages.flat_map(&:ruby_llm_usage_records))
         preload_action_text_embeds(messages) if rich_text_reflection
         messages
       end
@@ -1205,8 +1207,7 @@ module RubyLLM
           record.ruby_llm_usage_records.zip(message.ruby_llm_usage_entries)
         end
         linked_entries = linked_entry_pairs.to_h { |record, entry| [record.id, entry] }
-        ::ActiveRecord::Associations::Preloader.new(records: ruby_llm_usages.to_a,
-                                                    associations: Usage.owner_preload).call
+        Usage.preload_owners(ruby_llm_usages.to_a)
         chat.usage_entries = ruby_llm_usages.map do |record|
           linked_entries.fetch(record.id) { record.to_entry }
         end
