@@ -18,7 +18,8 @@ module RubyLLM
     # [+completed+] Whether the provider has finished the batch.
     # [+request_counts+] The provider's request counts, as a Hash.
     # [+reported_cost+] The cost the provider reported, as a Hash.
-    # [+chat_type+, +chat_ids+] The class and ids of the submitted chats.
+    # [+chat_type+, +chat_ids+] The class and ids of the submitted chats. The
+    #   id is +nil+ once the answer to a deleted chat arrived.
     #
     # RubyLLM writes these rows. Read and query them, and add scopes and
     # columns of your own, but do not create or update them.
@@ -94,8 +95,8 @@ module RubyLLM
         RubyLLM::Batch.new(
           provider: provider_instance,
           chats: records.map { |chat| chat&.to_llm },
-          delivered: records.each_index.select { |index| answered?(records[index]) },
-          delivery: ->(index, failed: false, &deliver) { deliver_once(records[index], failed:, &deliver) },
+          delivered: records.each_index.select { |index| chat_ids[index].nil? || answered?(records[index]) },
+          delivery: ->(index, failed: false, &deliver) { deliver_once(records[index], index:, failed:, &deliver) },
           id: provider_batch_id,
           raw_status: raw_status,
           completed: completed,
@@ -122,12 +123,23 @@ module RubyLLM
 
       # Two pollers can load a batch before either delivers, so the check
       # is repeated once this one holds the chat.
-      def deliver_once(chat, failed: false)
-        return yield.then { true } unless chat
+      def deliver_once(chat, index: nil, failed: false, &)
+        return bill_once(index, &).then { true } unless chat
 
         chat.claiming_delivery do
           yield unless failed ? billed_failure?(chat) : answered?(chat)
           true
+        end
+      end
+
+      # A deleted chat can't show that its answer came, so its id leaves the
+      # row once the answer's usage is recorded.
+      def bill_once(index)
+        with_lock do
+          next if chat_ids[index].nil?
+
+          yield
+          update!(chat_ids: chat_ids.dup.tap { |ids| ids[index] = nil })
         end
       end
 
