@@ -536,6 +536,10 @@ RSpec.describe RubyLLM::FileStore::Converters::Office do
       expect(docx(paragraph)).to eq("Name\tValue\nNext")
     end
 
+    it 'reads non-breaking hyphens' do
+      expect(docx("<w:p>#{run('<w:t>555</w:t><w:noBreakHyphen/><w:t>1234</w:t>')}</w:p>")).to eq('555-1234')
+    end
+
     it 'leaves out the tab stops a paragraph defines' do
       paragraph = '<w:p><w:pPr><w:tabs><w:tab w:val="left" w:pos="720"/></w:tabs></w:pPr>' \
                   "#{run('<w:t>One</w:t>')}</w:p>"
