@@ -68,6 +68,38 @@ RSpec.describe RubyLLM::MCP::Stdio do
     stdio.close
   end
 
+  context 'with an env callable slower than the timeout' do
+    let(:clock) { { elapsed: 0 } }
+    let(:stdio) do
+      described_class.new([RbConfig.ruby, '-e', server], timeout: 20, env: -> { (clock[:elapsed] += 30) && {} })
+    end
+
+    before { allow(stdio).to(receive(:monotonic_now).and_wrap_original { |now| now.call + clock[:elapsed] }) }
+
+    after { stdio.close }
+
+    it 'gives a request its whole timeout once the server has started' do
+      expect(stdio.request({ id: 1, method: 'probe' })['id']).to eq(1)
+    end
+
+    it 'gives a notification its whole timeout once the server has started' do
+      expect(stdio.notify({ method: 'probe', text: 'x' * 500_000 })).to be_nil
+    end
+  end
+
+  it 'holds replies to the server to the deadline of the request' do
+    script = "require 'json'; 5000.times { |id| puts JSON.generate(id:, method: 'ping') }; $stdout.flush; sleep"
+    stub_const("#{described_class}::SHUTDOWN_GRACE", 0.2)
+    stdio = described_class.new([RbConfig.ruby, '-e', script], timeout: 60)
+    stdio.send(:start)
+    stdio.instance_variable_get(:@stdout).wait_readable(20)
+
+    expect { Timeout.timeout(15) { stdio.request({ id: 'probe', method: 'probe' }, timeout: 1) } }
+      .to raise_error(described_class::Unavailable, /in time/)
+  ensure
+    stdio.close
+  end
+
   describe 'a request larger than the pipe buffer' do
     let(:message) { { id: 1, method: 'probe', text: 'x' * 500_000 } }
 

@@ -71,6 +71,7 @@ module RubyLLM
       def request(message, version: nil, timeout: nil, **, &)
         @lock.synchronize do
           check_session(version)
+          start unless @process&.alive?
           deadline = monotonic_now + (timeout || @timeout)
           write(message, deadline)
           @session = @process if message[:method] == 'initialize'
@@ -158,11 +159,11 @@ module RubyLLM
         end
       end
 
-      def handled?(message)
+      def handled?(message, deadline = nil)
         return true if route(message)
         return false unless message.key?('method') && message.key?('id')
 
-        answer(message)
+        answer(message, deadline)
         true
       end
 
@@ -179,13 +180,13 @@ module RubyLLM
           reply = read(deadline)
           return reply if reply['id'] == id && !reply.key?('method')
 
-          yield reply if !handled?(reply) && reply.key?('method') && block_given?
+          yield reply if !handled?(reply, deadline) && reply.key?('method') && block_given?
         end
       end
 
-      def write(message, deadline = monotonic_now + @timeout)
+      def write(message, deadline = nil)
         start unless @process&.alive?
-        write_line("#{JSON.generate(message)}\n".b, deadline)
+        write_line("#{JSON.generate(message)}\n".b, deadline || (monotonic_now + @timeout))
       end
 
       def write_line(line, deadline)
@@ -256,8 +257,8 @@ module RubyLLM
         raise Unavailable, "#{name} exited"
       end
 
-      def answer(request)
-        write(Client.reply(request))
+      def answer(request, deadline)
+        write(Client.reply(request), deadline)
       end
 
       def start
