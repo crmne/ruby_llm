@@ -28,6 +28,7 @@ module RubyLLM
         }.freeze
 
         def speak(input, model:, voice:, format:, provider_options: {}, &block)
+          @speech_characters = input.to_s.length
           track_usage(:speech) do
             spoken_model = speech_model_for(model, voice)
             payload = render_speech_payload(input, model: spoken_model, voice:, format:)
@@ -60,7 +61,8 @@ module RubyLLM
             data: response.body,
             model: model,
             voice: voice,
-            format: format_for(format)
+            format: format_for(format),
+            characters: @speech_characters
           )
         end
 

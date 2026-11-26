@@ -28,7 +28,8 @@ module RubyLLM
             data: response.body,
             model: model,
             voice: voice || 'eve',
-            format: (format || 'mp3').to_s
+            format: (format || 'mp3').to_s,
+            characters: @speech_characters
           )
         end
 
