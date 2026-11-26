@@ -87,6 +87,54 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(Message.exists?(placeholder.id)).to be(false)
   end
 
+  describe 'a tool result that fails to save' do
+    def failures
+      @failures ||= [ActiveRecord::Deadlocked.new('deadlock detected')]
+    end
+
+    def asked_chat
+      resumed(Chat.create!(model: model_for(:openai))).tap do |chat|
+        calls = { first_call => RubyLLM::ToolCall.new(id: first_call, name: 'lookup', arguments: {}) }
+        allow(chat.to_llm.provider).to receive(:complete)
+          .and_return(RubyLLM::Message.new(role: :assistant, content: '', tool_calls: calls))
+      end
+    end
+
+    def fail_to_save_result
+      errors = failures
+      allow_any_instance_of(Message).to receive(:save!).and_wrap_original do |save, **options| # rubocop:disable RSpec/AnyInstance
+        raise errors.shift if save.receiver.role == 'tool' && errors.any?
+
+        save.call(**options)
+      end
+    end
+
+    it 'leaves its call interrupted, so the retried job answers' do
+      fail_to_save_result
+      chat = asked_chat
+      expect { chat.ask('Look') }.to raise_error(ActiveRecord::Deadlocked)
+
+      retried = resumed(Chat.find(chat.id))
+
+      expect(retried.complete.content).to eq('Answered')
+      expect(requests.last.last.content).to include('did not finish')
+      expect(executions).to eq([:lookup])
+    end
+
+    it 'leaves its call interrupted when the failure follows the recorded result' do
+      chat = asked_chat
+      allow(chat).to receive(:link_usage_entries).and_wrap_original do |link, message|
+        raise failures.shift if message.role == :tool && failures.any?
+
+        link.call(message)
+      end
+      expect { chat.ask('Look') }.to raise_error(ActiveRecord::Deadlocked)
+
+      expect(resumed(Chat.find(chat.id)).complete.content).to eq('Answered')
+      expect(executions).to eq([:lookup])
+    end
+  end
+
   # What a worker leaves when it is killed while the reply streams: the
   # blank placeholder the reply streamed into, and its claim on the chat.
   def killed_stream_chat

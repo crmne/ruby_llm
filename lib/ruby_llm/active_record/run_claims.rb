@@ -586,6 +586,22 @@ module RubyLLM
         RubyLLM::ActiveRecord::ToolCall.where(id: tool_call.id, result_id: nil).update_all(attributes) == 1
       end
 
+      # A result that fails to save leaves its call unanswered, so the claim
+      # comes back for the end of the round to release. A call that started
+      # may have done its work, so it counts as interrupted.
+      def restoring_unsaved_tool_call(tool_call)
+        id = tool_call&.tool_call_id
+        claim = claim_lock.synchronize { tool_call_claims[id] }
+        result = yield
+        saved = true
+        result
+      ensure
+        if claim && !saved
+          claim.interrupted ||= claim.started
+          claim_lock.synchronize { tool_call_claims[id] = claim }
+        end
+      end
+
       def decide_persisted_tool_call(record, decision)
         return true if record.approval == decision || decision_recorded?(record, decision)
         return false unless decision == 'denied' && RubyLLM::ActiveRecord::ToolCall.uncached { record.reload }.running?
