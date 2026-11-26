@@ -61,7 +61,8 @@ module RubyLLM
         SUPPORTED_VIDEO_FORMATS = %w[mkv mov mp4 webm flv mpeg mpg wmv three_gp].freeze
         AUDIO_FORMAT_ALIASES = {
           'x-flac' => 'flac',
-          'x-m4a' => 'm4a'
+          'x-m4a' => 'm4a',
+          'x-matroska' => 'mka'
         }.freeze
         VIDEO_FORMAT_ALIASES = {
           'quicktime' => 'mov',
