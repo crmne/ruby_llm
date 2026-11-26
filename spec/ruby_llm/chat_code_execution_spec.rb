@@ -870,6 +870,16 @@ RSpec.describe RubyLLM::Chat do
       expect(JSON.parse(text)['skipped_files']).to eq(['big.txt (larger than 10 bytes)', 'c.txt (more than 2 files)'])
     end
 
+    it 'names 50 of the files it leaves out and counts the rest' do
+      files = (10...82).to_h { |number| ["#{number}.txt", 'x'] }
+      chat = RubyLLM.context { |config| config.sandbox = writing(files) }.chat(model: model_for(:openai),
+                                                                               provider: :openai)
+      text, = chat.with_code_execution.tools[:run_code].call(language: 'ruby', code: 'x')
+
+      expect(JSON.parse(text)['skipped_files']).to have_attributes(size: 51, first: '20.txt (more than 10 files)',
+                                                                   last: '12 more files')
+    end
+
     it 'copies the conversation files in read-only' do
       seen = nil
       sandbox = FakeSandbox.new do |run|
