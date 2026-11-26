@@ -141,6 +141,21 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         expect(message[:content]).to be_nil
         expect(llm_message.content).to eq('This is plain text')
       end
+
+      it 'reads a reply and a tool result back as they were written' do
+        text = "Use `<script>` and a<b && c\n\n- one\n  - two &amp; <b>three</b>"
+        call = RubyLLM::ToolCall.new(id: "call_#{SecureRandom.hex(4)}", name: 'echo', arguments: {})
+        chat.add_message(role: :assistant, content: text, tool_calls: { call.id => call })
+        chat.add_message(role: :tool, content: text, tool_call_id: call.id)
+
+        expect(ActionTextChat.find(chat.id).to_llm.messages.map(&:content)).to eq([text, text])
+      end
+
+      it 'keeps the HTML of a message a rich text editor wrote' do
+        message = chat.add_message(role: :user, content: '<div>Hello <strong>there</strong></div>')
+
+        expect(message.content.body.to_html).to include('<strong>there</strong>')
+      end
     end
 
     context 'when the message model uses a regular text column' do
