@@ -103,6 +103,22 @@ RSpec.describe RubyLLM::Chat do
     expect(logged).to include("RubyLLM could not cancel the task of tool call #{tool_call_id}: gone")
   end
 
+  it 'closes the call of a cancelled chat whatever its task raises' do
+    task_class = Class.new(RubyLLM::Task) do
+      define_method(:cancel) { raise Net::OpenTimeout, 'job API down' }
+    end
+    tool = Class.new(sub_agent_tool) do
+      define_method(:task) { |state, tool_call: nil| task_class.load(state, tool_call:) }
+    end
+    chat = stubbed_chat(tool)
+    chat.ask('Deploy')
+    chat.cancel
+
+    expect { chat.complete }.to raise_error(RubyLLM::CancelledError)
+    expect(chat).not_to be_waiting
+    expect(chat.ask('Next').content).to eq('Done')
+  end
+
   it 'raises for a tool that returns a task without implementing resume' do
     tool = Class.new(RubyLLM::Tool) do
       define_method(:name) { 'sub_agent' }
