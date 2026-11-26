@@ -7,8 +7,8 @@ module RubyLLM
   # normalizes the message across providers. Subclasses map common HTTP
   # status codes: BadRequestError (400), UnauthorizedError (401),
   # PaymentRequiredError (402), ForbiddenError (403), RateLimitError (429),
-  # ServerError (500), ServiceUnavailableError (502 to 504), and
-  # OverloadedError (529).
+  # ServerError (500), ServiceUnavailableError (408, 502 to 504, 520 to
+  # 524), and OverloadedError (529).
   #
   #   begin
   #     RubyLLM.chat.ask "Translate 'hello' to French."
@@ -329,7 +329,8 @@ module RubyLLM
     end
   end
 
-  # Raised for HTTP 502, 503, and 504 responses when the provider is
+  # Raised for HTTP 408, 502, 503, and 504 responses, and for the 520 to 524
+  # a proxy answers for a server it cannot reach, when the provider is
   # temporarily unavailable.
   class ServiceUnavailableError < Error
     def self.default_message # :nodoc:

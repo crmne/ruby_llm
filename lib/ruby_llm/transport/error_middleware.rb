@@ -182,7 +182,7 @@ module RubyLLM
           when 413 then context_length_exceeded?(message) ? ContextLengthExceededError : Error
           when 429 then rate_limit_class(message)
           when 500 then ServerError
-          when 502..504 then ServiceUnavailableError
+          when 408, 502..504, 520..524 then ServiceUnavailableError
           when 529 then OverloadedError
           else Error
           end
