@@ -168,6 +168,15 @@ RSpec.shared_examples 'a file store' do
     expect(store.read('report-2.txt')).to eq('two')
   end
 
+  it 'numbers an attachment named like a folder instead of writing over it' do
+    store.write('reports/q3.pdf', 'x')
+
+    file = store.store_attachment(RubyLLM::Attachment.new(StringIO.new('new'), filename: 'reports'))
+
+    expect(file.path).to eq('reports-2')
+    expect(store.read('reports/q3.pdf')).to eq('x')
+  end
+
   it 'yields only the attachments it writes' do
     written = []
     2.times do

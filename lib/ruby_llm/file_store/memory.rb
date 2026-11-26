@@ -44,7 +44,7 @@ module RubyLLM
                               digest: FileStore.digest(content), updated_at: Time.now)
         with_lock do
           @lock.synchronize do
-            refuse_write_over_folder(path) if @files.keys.any? { |key| key != path && FileStore.inside?(key, path) }
+            refuse_write_over_folder(path) if holds_folder?(path)
             @files[path] = [file, content]
           end
         end
@@ -74,6 +74,16 @@ module RubyLLM
             paths.map { |key| @files.delete(key).first }.sort_by(&:path)
           end
         end
+      end
+
+      private
+
+      def folder?(path)
+        @lock.synchronize { holds_folder?(path) }
+      end
+
+      def holds_folder?(path)
+        @files.each_key.any? { |key| key != path && FileStore.inside?(key, path) }
       end
     end
   end

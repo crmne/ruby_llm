@@ -201,6 +201,13 @@ RSpec.describe RubyLLM::ActiveRecord::FileStore do
     expect(RubyLLM::ActiveRecord::ChatFile).not_to have_received(:has_one_attached)
   end
 
+  it 'removes the upload of a write it refuses over a folder' do
+    store.write('reports/q3.md', 'Q3')
+
+    expect { expect { store.write('reports', 'oops') }.to raise_error(ArgumentError, /is a folder/) }
+      .not_to change(ActiveStorage::Blob, :count)
+  end
+
   it 'keeps an attachment by its blob, given the blob itself' do
     blob = ActiveStorage::Blob.create_and_upload!(io: File.open(image_path), filename: 'logo.png')
 
