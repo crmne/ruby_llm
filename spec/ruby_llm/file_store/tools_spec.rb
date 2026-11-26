@@ -233,6 +233,17 @@ RSpec.describe RubyLLM::FileStore::Tools do
       FileUtils.rm_rf(root)
     end
 
+    it 'answers write_file with the reason when the path is inside a file, and keeps the file' do
+      root = Dir.mktmpdir('ruby_llm-store')
+      chat.with_file_store(RubyLLM::FileStore::Directory.new(root))
+      files.write('notes', 'kept')
+
+      expect(call(:write_file, path: 'notes/a/todo.md', content: 'x')).to eq(error: 'notes is a file, not a folder')
+      expect(files.read('notes')).to eq('kept')
+    ensure
+      FileUtils.rm_rf(root)
+    end
+
     it 'writes a text file and tells the chat' do
       written = []
       chat.after_file_write { |file| written << file.path }
