@@ -178,7 +178,7 @@ rerank.tokens.search_units # => 1
 rerank.cost.search_units
 ```
 
-`characters` counts every character of the text sent, including spaces and newlines. `audio_seconds` is the billed length of the audio, which may be fractional. It is recorded when the provider bills transcription by duration, so a model that reports token usage leaves it `nil`. `search_units` is the count the provider reports.
+`characters` counts every character of the text sent, including spaces and newlines. `audio_seconds` is the billed length of the audio, which may be fractional. It is recorded when the provider bills transcription by duration, so a model billed by tokens leaves it `nil`. `search_units` is the count the provider reports.
 
 `cost` prices each unit from the model registry, in US dollars per million units, and adds it to `cost.total`. When the registry has no price for a unit that was used, that component and `cost.total` are `nil`, never zero.
 
