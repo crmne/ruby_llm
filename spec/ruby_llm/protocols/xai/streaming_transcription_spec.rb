@@ -34,6 +34,44 @@ RSpec.describe RubyLLM::Protocols::XAI::StreamingTranscription do
     expect(segments.first['words'].first['speaker']).to eq(0)
   end
 
+  context 'when an utterance is longer than one chunk' do
+    def final(text, start, **extra)
+      words = text.split.each_with_index.map do |word, index|
+        { 'text' => word, 'start' => start + index, 'end' => start + index + 1 }
+      end
+      segment.merge('text' => text, 'start' => start, 'duration' => words.size.to_f, 'words' => words,
+                    **extra.transform_keys(&:to_s))
+    end
+
+    def transcribe(*events)
+      deltas = []
+      segments = []
+      events.each do |event|
+        protocol.process_transcription_segment(event, segments) { |chunk| deltas << chunk.delta }
+      end
+      [segments, deltas.join]
+    end
+
+    it 'does not repeat the chunks its final restates' do
+      segments, text = transcribe(
+        final('The balance is', 0.0), final('on the statement', 3.0),
+        final('The balance is, on the statement today.', 0.0, speech_final: true)
+      )
+
+      expect(text).to eq('The balance is on the statement today.')
+      expect(segments.last).to include('text' => 'today.', 'start' => 6.0, 'end' => 7.0)
+    end
+
+    it 'keeps the next utterance and other channels' do
+      segments, = transcribe(
+        final('Yes indeed', 0.0, channel_index: 0), final('No', 0.0, speech_final: true, channel_index: 1),
+        final('Yes indeed', 2.0, speech_final: true, channel_index: 0)
+      )
+
+      expect(segments.map { |item| item['text'] }).to eq(['Yes indeed', 'No', 'Yes indeed'])
+    end
+  end
+
   it 'keeps an intentionally repeated phrase at a different audio position' do
     segments = []
     chunks = []
