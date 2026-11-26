@@ -238,10 +238,10 @@ RSpec.describe RubyLLM::ActiveRecord::FileStore do
 
     ActiveSupport::Notifications.subscribed(record, 'sql.active_record') { store.write('a.txt', 'mine') }
 
-    chat_lock = queries.index { |sql| sql.match?(/\A(SELECT .* FROM|UPDATE) ["`]?chats["`]?/) }
+    locking = /\A(SELECT .* FROM ["`]?chats["`]? .*FOR UPDATE|UPDATE ["`]?chats["`]?)/
+    chat_lock = queries.index { |sql| sql.match?(locking) }
     lookup = queries.index { |sql| sql.match?(/\ASELECT .* FROM ["`]?ruby_llm_chat_files["`]?/) }
     expect(chat_lock).to be < lookup
-    expect(queries[chat_lock]).to include('FOR UPDATE') unless Chat.connection.adapter_name.match?(/sqlite/i)
   end
 
   { 'delete' => ->(store) { store.delete('a.txt') },
@@ -269,6 +269,31 @@ RSpec.describe RubyLLM::ActiveRecord::FileStore do
     end
 
     expect(chat.ruby_llm_chat_files.where(path: 'a.txt').count).to eq(1)
+  end
+
+  it 'writes files on a table without a text column' do
+    store.write('notes.md', 'one')
+    allow_any_instance_of(RubyLLM::ActiveRecord::ChatFile).to receive(:has_attribute?).and_call_original # rubocop:disable RSpec/AnyInstance
+    allow_any_instance_of(RubyLLM::ActiveRecord::ChatFile).to receive(:has_attribute?).with(:text).and_return(false) # rubocop:disable RSpec/AnyInstance
+
+    store.write('notes.md', 'two')
+
+    expect(store.read('notes.md')).to eq('two')
+    expect(chat.ruby_llm_chat_files.sole.digest).to eq(Digest::SHA256.hexdigest('two'))
+  end
+
+  it 'sees a folder another process made after the query cache saw none' do
+    blob = ActiveStorage::Blob.create_and_upload!(io: StringIO.new('new'), filename: 'reports')
+    allow(Chat.connection).to receive(:adapter_name).and_return('PostgreSQL')
+
+    RubyLLM::ActiveRecord::ChatFile.cache do
+      expect(store.list('reports')).to be_empty
+      write_elsewhere('reports/q3.md', 'Q3').join
+
+      expect { store.store_attachment(RubyLLM::Attachment.new(blob)) }.to raise_error(ArgumentError, /is a folder/)
+    end
+
+    expect(chat.ruby_llm_chat_files.pluck(:path)).to eq(%w[reports/q3.md])
   end
 
   it 'keeps one row when another process writes the same path at the same time' do

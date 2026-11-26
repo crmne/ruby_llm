@@ -214,15 +214,17 @@ module RubyLLM
       end
 
       def save(path, byte_size, content_type, digest)
-        ChatFile.transaction do
-          lock_chat
-          refuse_write_over_folder(path) if folder?(path)
-          record = owned.lock.find_or_initialize_by(path:)
-          record.assign_attributes(byte_size:, content_type:, digest:)
-          record.text = nil if record.has_attribute?(:text)
-          yield record
-          record.save!
-          record.to_stored_file
+        ChatFile.uncached do
+          ChatFile.transaction do
+            lock_chat
+            refuse_write_over_folder(path) if folder?(path)
+            record = owned.lock.find_or_initialize_by(path:)
+            record.assign_attributes(byte_size:, content_type:, digest:)
+            record.text = nil if record.has_attribute?(:text)
+            yield record
+            record.save!
+            record.to_stored_file
+          end
         end
       end
 
