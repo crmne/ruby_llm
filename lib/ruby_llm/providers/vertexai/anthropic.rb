@@ -5,6 +5,8 @@ module RubyLLM
     class VertexAI < Provider
       # The Anthropic protocol over Vertex AI rawPredict endpoints.
       class Anthropic < Protocols::Anthropic
+        include Protocols::Anthropic::InlineSources
+
         ANTHROPIC_VERSION = 'vertex-2023-10-16'
 
         def completion_url
