@@ -54,12 +54,12 @@ RSpec.describe RubyLLM::MCP::Listener do
   end
 
   it 'keeps a subscription for the same changes and replaces it for others' do
-    files = tools.merge(resourceSubscriptions: ['file:///notes.md'])
+    lists = tools.merge(promptsListChanged: true)
 
     2.times { listener.start(tools) }
-    listener.start(files)
+    listener.start(lists)
 
-    expect(client.attempts).to eq([tools, files])
+    expect(client.attempts).to eq([tools, lists])
     expect(client.cancelled).to eq([1])
   end
 
@@ -204,6 +204,64 @@ RSpec.describe RubyLLM::MCP::Listener do
     end
   end
 
+  describe '#listen' do
+    before do
+      allow(listener).to receive(:sleep)
+      allow(RubyLLM.logger).to receive(:warn)
+    end
+
+    context 'when the server ends the subscription for good' do
+      let(:script) do
+        lambda do |attempt, notify|
+          notify[acknowledgment(attempt == 1 ? { 'toolsListChanged' => true } : {})]
+        end
+      end
+
+      it 'listens in the calling thread until then' do
+        threads = Thread.list.size
+
+        expect(listener.listen(tools)).to be_nil
+        expect(Thread.list.size).to eq(threads)
+        expect(client.attempts.size).to eq(2)
+      end
+    end
+
+    context 'when the server never acknowledges' do
+      let(:script) { ->(*) { raise RubyLLM::MCP::Error, 'Unauthorized' } }
+
+      it 'raises why' do
+        expect { listener.listen(tools) }.to raise_error(RubyLLM::MCP::Error, 'Unauthorized')
+        expect(client.attempts.size).to eq(1)
+      end
+    end
+
+    context 'when the server will not watch a resource' do
+      it 'raises and cancels the subscription' do
+        expect { listener.listen(tools.merge(resourceSubscriptions: ['file:///notes.md'])) }
+          .to raise_error(RubyLLM::MCP::Error, 'files does not send updates for file:///notes.md')
+        expect(client.cancelled).to eq([1])
+      end
+    end
+
+    context 'when a resource and a task share a name and the server watches only one' do
+      let(:script) { ->(_attempt, notify) { notify[acknowledgment('resourceSubscriptions' => ['report'])] } }
+
+      it 'raises for the other' do
+        expect { listener.listen(resourceSubscriptions: ['report'], taskIds: ['report']) }
+          .to raise_error(RubyLLM::MCP::Error, 'files does not send updates for report')
+      end
+    end
+
+    context 'when the caller is cancelled' do
+      let(:script) { ->(*) { raise RubyLLM::CancelledError } }
+
+      it 'raises the cancellation' do
+        expect { listener.listen(tools) }.to raise_error(RubyLLM::CancelledError)
+        expect(client.cancelled).to eq([1])
+      end
+    end
+  end
+
   context 'when a subscription resumes' do
     let(:resumes) { Queue.new }
     let(:listener) do
@@ -225,6 +283,38 @@ RSpec.describe RubyLLM::MCP::Listener do
       expect(Timeout.timeout(5) { resumes.pop }).to eq('toolsListChanged' => true)
       expect(client.attempts.size).to eq(2)
       expect(resumes).to be_empty
+    end
+
+    context 'with several resources, one of which fails to catch up' do
+      def watched
+        { resourceSubscriptions: ['file:///a', 'file:///b'] }
+      end
+
+      let(:script) do
+        lambda do |attempt, notify|
+          notify[acknowledgment('toolsListChanged' => true, **watched.transform_keys(&:to_s))]
+          sleep if attempt == 2
+        end
+      end
+      let(:listener) do
+        resumed = lambda do |listened|
+          raise 'boom' if listened == { 'resourceSubscriptions' => ['file:///a'] }
+
+          resumes << listened
+        end
+        described_class.new(client, name: 'files', timeout: 2, resumed:, &callback)
+      end
+
+      it 'catches up with the rest' do
+        allow(listener).to receive(:sleep)
+        allow(RubyLLM.logger).to receive_messages(warn: nil, error: nil)
+
+        listener.start(tools.merge(watched))
+
+        expect(Array.new(2) { Timeout.timeout(5) { resumes.pop } })
+          .to eq([{ 'toolsListChanged' => true }, { 'resourceSubscriptions' => ['file:///b'] }])
+        expect(RubyLLM.logger).to have_received(:error).once
+      end
     end
   end
 

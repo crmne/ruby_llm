@@ -717,6 +717,112 @@ RSpec.describe RubyLLM::MCP do
       quiet&.close
     end
 
+    context 'with a block' do
+      around { |example| Timeout.timeout(15) { example.run } }
+
+      def announcing(mcp, **announcement)
+        Thread.new do
+          eventually { subscriptions(mcp).presence }
+          ask(mcp, 'spec/announce', **announcement)
+        end
+      end
+
+      it 'listens in the calling thread and yields each change after the callbacks ran' do
+        before = listener_threads
+        announcer = announcing(mcp, method: 'notifications/prompts/list_changed')
+        heard = []
+
+        result = mcp.listen do |change|
+          heard << [change, changes.size, listener_threads, Thread.current]
+          break :stopped
+        end
+
+        expect(result).to eq(:stopped)
+        expect(heard).to eq([[:prompts, 1, before, Thread.current]])
+      ensure
+        announcer&.join
+      end
+
+      it 'yields the resource that changed' do
+        announcer = announcing(mcp, method: 'notifications/resources/updated',
+                                    params: { uri: 'file:///project/README.md' })
+
+        content = mcp.listen(resources: ['file:///project/README.md']) { |change| break change.content }
+
+        expect(content).to eq("# Spec Project\n")
+      ensure
+        announcer&.join
+      end
+
+      it 'yields a change even when a callback raised for it' do
+        allow(RubyLLM.logger).to receive(:error)
+        mcp_class.after_change { |_change| raise 'Callback failed' }
+        announcer = announcing(mcp, method: 'notifications/prompts/list_changed')
+
+        expect(mcp.listen { |change| break change }).to eq(:prompts)
+      ensure
+        announcer&.join
+      end
+
+      it 'unsubscribes from the resources of a server that predates subscriptions when the block breaks' do
+        legacy = listening_to(server, MCP_ERA: 'legacy').new
+        announcer = Thread.new do
+          eventually { ask(legacy, 'spec/subscriptions')['watched'].presence }
+          ask(legacy, 'spec/announce', method: 'notifications/tools/list_changed')
+        end
+
+        legacy.listen(resources: ['file:///project/README.md']) { break }
+
+        expect(ask(legacy, 'spec/subscriptions')['watched']).to be_empty
+      ensure
+        announcer&.join
+        legacy&.close
+      end
+
+      it 'yields everything it listens to once it subscribes again' do
+        ender = Thread.new do
+          eventually { subscriptions(mcp).presence }
+          ask(mcp, 'spec/end_subscriptions')
+        end
+        heard = []
+
+        mcp.listen do |change|
+          heard << change
+          break if heard.size == 3
+        end
+
+        expect(heard).to eq(%i[tools prompts resources])
+      ensure
+        ender&.join
+      end
+
+      it 'raises when the server does not watch a resource' do
+        expect { mcp.listen(resources: ['unwatched:notes']) { |change| changes << change } }
+          .to raise_error(RubyLLM::MCP::Error, /does not send updates for unwatched:notes/)
+        expect(changes).to be_empty
+        expect(subscriptions(mcp)).to be_empty
+      end
+
+      it 'stops the subscription on the server when the block breaks' do
+        announcer = announcing(mcp, method: 'notifications/prompts/list_changed')
+
+        mcp.listen { break }
+
+        expect(subscriptions(mcp)).to be_empty
+      ensure
+        announcer&.join
+      end
+
+      it 'returns the MCP at once for a server that announces no changes' do
+        quiet = listening_to(server, MCP_CHANGES: 'none').new
+
+        expect(quiet.listen { |change| changes << change }).to be(quiet)
+        expect(subscriptions(quiet)).to be_empty
+      ensure
+        quiet&.close
+      end
+    end
+
     it 'listens in a forked child only once the child asks' do
       skip 'fork is unavailable' unless Process.respond_to?(:fork)
 

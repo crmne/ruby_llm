@@ -794,19 +794,27 @@ module RubyLLM
     #   handbook = Handbook.new.listen(resources: ["handbook://policies"])
     #   reports.listen(tasks: chat.pending_tasks)
     #
+    # With a block, listens where you call it instead, in your thread or
+    # fiber, and yields each change after the ::after_change callbacks
+    # ran: what they receive. Returns +self+ when the server ends the
+    # subscription for good; +break+ out of the block to stop sooner.
+    #
+    #   handbook.listen(resources: ["handbook://policies"]) do |change|
+    #     Rails.cache.delete("handbook/policies") if change.is_a?(RubyLLM::MCP::Resource)
+    #   end
+    #
     # Without +resources+ or +tasks+, does nothing for a server that
     # announces no changes. Raises RubyLLM::ConnectionError when a server
     # over HTTP cannot be reached, and MCP::Error when the server does not
     # send updates for the resources or tasks.
-    def listen(resources: [], tasks: [])
-      uris = resources.map { |resource| resource.respond_to?(:uri) ? resource.uri : resource.to_s }
-      ids = tasks.map { |task| task.respond_to?(:id) ? task.id : task.to_s }
-      watched = listener.start(listened_changes(uris, ids)) || {}
-      missing = (uris - Array(watched['resourceSubscriptions'])) + (ids - Array(watched['taskIds']))
-      return self if missing.empty?
-
-      listener.stop
-      raise Error, "#{name} does not send updates for #{missing.join(', ')}"
+    def listen(resources: [], tasks: [], &)
+      changes = Listener.filter(client.server['capabilities'] || {}, resources, tasks)
+      if block_given?
+        listener(&).listen(changes) unless changes.empty?
+      else
+        (@listener ||= listener).start(changes)
+      end
+      self
     end
 
     # Closes the connection, stopping a stdio server's process and ending
@@ -1025,17 +1033,17 @@ module RubyLLM
       value
     end
 
-    def changed(notification)
+    def changed(notification, &)
       case notification['method']
       when Client::ACKNOWLEDGED then forget_tools
       when 'notifications/tools/list_changed'
         forget_tools
-        announce(:tools)
-      when 'notifications/prompts/list_changed' then announce(:prompts)
-      when 'notifications/resources/list_changed' then announce(:resources)
+        announce(:tools, &)
+      when 'notifications/prompts/list_changed' then announce(:prompts, &)
+      when 'notifications/resources/list_changed' then announce(:resources, &)
       when 'notifications/resources/updated'
-        announce(Resource.new(self, 'uri' => notification.dig('params', 'uri')))
-      when 'notifications/tasks' then announce(Task.new(self, notification['params'].except('_meta')))
+        announce(Resource.new(self, 'uri' => notification.dig('params', 'uri')), &)
+      when 'notifications/tasks' then announce(Task.new(self, notification['params'].except('_meta')), &)
       end
     end
 
@@ -1046,27 +1054,21 @@ module RubyLLM
 
     def announce(change)
       self.class.callbacks(:after_change).each { |callback| apply(callback, change) }
+    ensure
+      yield change if block_given?
     end
 
-    def listener
-      @listener ||= Listener.new(client, name:, timeout: self.class.timeout || config.request_timeout,
-                                         resumed: method(:caught_up)) { |notification| changed(notification) }
-    end
-
-    def caught_up(listened)
-      %i[tools prompts resources].each { |list| announce(list) if listened["#{list}ListChanged"] }
-      Array(listened['resourceSubscriptions']).each { |uri| announce(Resource.new(self, 'uri' => uri)) }
-      Array(listened['taskIds']).each { |id| announce(Task.new(self, poll_task(id))) }
-    end
-
-    def listened_changes(uris, ids)
-      capabilities = client.server['capabilities'] || {}
-      changes = %w[tools prompts resources].each_with_object({}) do |list, listened|
-        listened[:"#{list}ListChanged"] = true if capabilities.dig(list, 'listChanged')
+    def listener(&heard)
+      Listener.new(client, name:, timeout: self.class.timeout || config.request_timeout,
+                           resumed: ->(listened) { caught_up(listened, &heard) }) do |notification|
+        changed(notification, &heard)
       end
-      changes[:resourceSubscriptions] = uris unless uris.empty?
-      changes[:taskIds] = ids unless ids.empty?
-      changes
+    end
+
+    def caught_up(listened, &)
+      %i[tools prompts resources].each { |list| announce(list, &) if listened["#{list}ListChanged"] }
+      Array(listened['resourceSubscriptions']).each { |uri| announce(Resource.new(self, 'uri' => uri), &) }
+      Array(listened['taskIds']).each { |id| announce(Task.new(self, poll_task(id)), &) }
     end
 
     def server_info

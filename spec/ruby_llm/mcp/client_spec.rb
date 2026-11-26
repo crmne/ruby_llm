@@ -175,6 +175,69 @@ RSpec.describe RubyLLM::MCP::Client do
       end
     end
 
+    # A server that predates subscriptions, whose session stream plays out
+    # +stream+ with a way to send the listener a notification.
+    def session_server(unsubscribed: { 'result' => {} }, &stream)
+      server = fake_server.new do |method|
+        case method
+        when 'initialize' then handshake('2025-06-18')
+        when 'server/discover' then { 'error' => { 'code' => -32_601, 'message' => 'Not found' } }
+        when 'resources/unsubscribe' then unsubscribed
+        else { 'result' => {} }
+        end
+      end
+      server.define_singleton_method(:listen) { |*, **, &notify| stream.call(notify) }
+      server
+    end
+
+    def updated
+      { 'method' => 'notifications/resources/updated', 'params' => { 'uri' => 'file:///a' } }
+    end
+
+    def abandon(server)
+      described_class.new(server).listen({ resourceSubscriptions: ['file:///a'] }) do |notification|
+        break if notification == updated
+      end
+    end
+
+    it 'keeps the resources of a session whose stream ends, to listen again' do
+      server = session_server { |_notify| nil }
+
+      described_class.new(server).listen({ resourceSubscriptions: ['file:///a'] }) { nil }
+
+      expect(server.sent).not_to include('resources/unsubscribe')
+    end
+
+    it 'unsubscribes from the resources of a session the listener abandons' do
+      server = session_server { |notify| notify.call(updated) }
+
+      abandon(server)
+
+      expect(server.sent.last).to eq('resources/unsubscribe')
+      expect(server.params['resources/unsubscribe']).to eq(uri: 'file:///a')
+    end
+
+    it 'unsubscribes from the resources of a session whose listener is cancelled' do
+      server = session_server { |_notify| raise RubyLLM::CancelledError }
+
+      expect { described_class.new(server).listen({ resourceSubscriptions: ['file:///a'] }) { nil } }
+        .to raise_error(RubyLLM::CancelledError)
+
+      expect(server.sent.last).to eq('resources/unsubscribe')
+    end
+
+    it 'abandons a session even when the server will not unsubscribe' do
+      allow(RubyLLM.logger).to receive(:debug)
+      server = session_server(unsubscribed: { 'error' => { 'code' => -32_603, 'message' => 'Gone' } }) do |notify|
+        notify.call(updated)
+      end
+
+      expect { abandon(server) }.not_to raise_error
+      expect(RubyLLM.logger).to have_received(:debug) do |&message|
+        expect(message.call).to eq('Could not unsubscribe from resources: Gone')
+      end
+    end
+
     it 'sends a request again when the server rejects a version it lists' do
       server = fake_server.new do |method, attempt|
         next unsupported('2026-07-28') if method == 'server/discover' && attempt == 1

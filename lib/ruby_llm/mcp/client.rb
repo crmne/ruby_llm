@@ -178,16 +178,20 @@ module RubyLLM
 
       def subscribe(changes)
         request = message('subscriptions/listen', { notifications: changes }, id: SecureRandom.uuid)
+        abandoned = true
         ending = catch(request) do
           @transport.listen(request, version:) do |notification|
             throw request, notification if cancels?(notification, request)
             yield notification
           end
+        rescue StandardError => e
+          abandoned = e.is_a?(CancelledError)
+          raise
         end
+        abandoned = false
         answer(ending)
-      rescue CancelledError
-        cancel(request)
-        raise
+      ensure
+        cancel(request) if abandoned
       end
 
       def listen_to_session(changes, &)
@@ -198,10 +202,22 @@ module RubyLLM
         request('ping')
         listened = changes.except(:taskIds).transform_keys(&:to_s)
         yield({ 'method' => ACKNOWLEDGED, 'params' => { 'notifications' => listened } })
+        abandoned = true
         @transport.listen(nil, version:, &)
-      rescue SessionExpired => e
-        reconnect(e.session)
+        abandoned = false
+      rescue StandardError => e
+        abandoned = e.is_a?(CancelledError)
+        reconnect(e.session) if e.is_a?(SessionExpired)
         raise
+      ensure
+        unsubscribe if abandoned
+      end
+
+      def unsubscribe
+        @subscribed.each { |uri| request('resources/unsubscribe', { uri: }) }
+        @subscribed = []
+      rescue RubyLLM::Error, Faraday::Error => e
+        RubyLLM.logger.debug { "Could not unsubscribe from resources: #{e.message}" }
       end
 
       def reconnect(expired)

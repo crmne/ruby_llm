@@ -789,6 +789,37 @@ RSpec.describe RubyLLM::MCP::HTTP do
     end
   end
 
+  describe 'the connection of a subscription' do
+    let(:adapter) do
+      Class.new(Faraday::Adapter) do
+        attr_reader :connection_options
+      end
+    end
+
+    before { Faraday::Adapter.register_middleware(spec_listener: adapter, async_http: adapter) }
+
+    after do
+      Faraday::Adapter.unregister_middleware(:spec_listener)
+      Faraday::Adapter.unregister_middleware(:async_http)
+    end
+
+    def streams(faraday_adapter)
+      config = RubyLLM.config.dup.tap { |settings| settings.faraday_adapter = faraday_adapter }
+      described_class.new(url, timeout: 5, config:).send(:streams)
+    end
+
+    it 'waits a day for the next byte, whatever the timeout' do
+      connection = streams(:spec_listener)
+
+      expect(connection.options).to have_attributes(timeout: 5, read_timeout: 86_400)
+      expect(connection.builder.adapter.build.connection_options).to eq({})
+    end
+
+    it 'tells async-http-faraday so in its own options' do
+      expect(streams(:async_http).builder.adapter.build.connection_options).to eq(read_timeout: 86_400)
+    end
+  end
+
   describe 'listening over a real connection' do
     let(:changes) { Queue.new }
     let(:mcp) do
@@ -888,6 +919,47 @@ RSpec.describe RubyLLM::MCP::HTTP do
 
         changed('notifications/resources/updated', uri: 'file:///notes.md')
         expect(next_change).to have_attributes(uri: 'file:///notes.md')
+      end
+
+      it 'runs after_change when the resource list changes, and not for notifications it does not know' do
+        mcp.listen
+
+        changed('notifications/message', level: 'info')
+        changed('notifications/resources/list_changed')
+
+        expect(next_change).to eq(:resources)
+        expect(changes).to be_empty
+      end
+
+      it 'keeps a subscription the server leaves quiet for longer than the timeout' do
+        quiet = RubyLLM.mcp(url: server.url, timeout: 0.3).listen
+
+        sleep 1
+
+        expect(server.requests_for('subscriptions/listen').size).to eq(1)
+      ensure
+        quiet&.close
+      end
+
+      it 'listens with a block in fibers, starting no threads' do
+        url = server.url
+        heard = []
+        threads = nil
+
+        in_reactor do |reactor|
+          listeners = Array.new(20) do
+            reactor.async do
+              RubyLLM.mcp(url:).listen { |change| break heard << change }
+            end
+          end
+          eventually { server.open_streams == 20 }
+          threads = Thread.list.count { |thread| thread.name == 'ruby_llm-mcp-listener' }
+          changed('notifications/tools/list_changed')
+          listeners.each(&:wait)
+        end
+
+        expect(threads).to eq(0)
+        expect(heard).to eq([:tools] * 20)
       end
 
       it 'runs callbacks that call the server while the stream stays open' do
