@@ -749,8 +749,8 @@ module RubyLLM
       server_info['version']
     end
 
-    # Returns whether the owner has authorized this server. Only for
-    # servers declared with ::oauth.
+    # Returns whether the owner has authorized this server, and +false+ once
+    # a refresh finds the grant revoked. Only for servers declared with ::oauth.
     def authorized?
       oauth.authorized?
     end

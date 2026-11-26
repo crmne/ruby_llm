@@ -140,6 +140,27 @@ RSpec.describe 'models:update', type: :task do
     expect(priced.find('gpt-4.1', provider: :openai).pricing.characters.input).to eq(15)
   end
 
+  it 'leaves .env unread when the tasks load' do
+    allow(ENV).to receive(:[]).with('CI').and_return(nil)
+    allow(Dotenv).to receive(:load)
+
+    Rake.with_application(Rake::Application.new) { load File.expand_path('../../tasks/models.rake', __dir__), true }
+
+    expect(Dotenv).not_to have_received(:load)
+  end
+
+  it 'reads .env before it configures the providers' do
+    allow(ENV).to receive(:[]).with('CI').and_return(nil)
+    allow(ENV).to receive(:fetch).and_call_original
+    allow(Dotenv).to receive(:load) do
+      allow(ENV).to receive(:fetch).with('GOOGLE_CLOUD_LOCATION', nil).and_return('location-from-dotenv')
+    end
+
+    configure_from_env
+
+    expect(RubyLLM.config.vertexai_location).to eq('location-from-dotenv')
+  end
+
   it 'does not rewrite the registry when only upstream ordering changes' do
     expect { persist(existing_models.reverse) }.to output(/Model list unchanged/).to_stdout
 

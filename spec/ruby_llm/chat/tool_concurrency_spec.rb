@@ -352,6 +352,18 @@ RSpec.describe RubyLLM::Chat::ToolConcurrency do
       expect(error).to equal(failure)
     end
 
+    it "reports every #{mode} result before raising the first callback failure" do
+      reported = []
+      callback = lambda do |call, value|
+        reported << [call, value]
+        raise "callback #{reported.size} failed"
+      end
+
+      expect { described_class.run(mode, tool_calls, on_result: callback) { :ok } }
+        .to raise_error(RuntimeError, 'callback 1 failed')
+      expect(reported).to contain_exactly(%i[first ok], %i[second ok])
+    end
+
     it "waits for remaining #{mode} workers when a result callback fails" do
       ready = Queue.new
       release = Queue.new

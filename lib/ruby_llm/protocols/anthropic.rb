@@ -80,6 +80,7 @@ module RubyLLM
         current_messages = messages
 
         MAX_PAUSE_TURN_CONTINUATIONS.times do
+          @continuing_turn = segments.any?
           message = super(current_messages, ...)
           segments << message
           break unless message.finish_reason == :pause_turn

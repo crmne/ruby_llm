@@ -46,6 +46,7 @@ Provider operation errors inherit from `RubyLLM::Error`. RubyLLM maps the provid
 | `RubyLLM::ToolCallParseError` | None: parent of `ToolCallTruncatedError`; other malformed arguments go back to the model | No |
 | `RubyLLM::ToolCallTruncatedError` | None: the output token limit cut off a tool call | No |
 | `RubyLLM::UnsupportedAttachmentError` | None: the attachment cannot be sent to this provider or model | No |
+| `RubyLLM::InputRequiredError` | None: a tool asked a person something outside a chat, where no call can pause for the answer | No |
 | `RubyLLM::UnsupportedServerToolError` | None: the provider or protocol does not define this server tool | No |
 
 Yes means the error is eligible for a retry. [Automatic Retries](#automatic-retries) lists the requests that are never retried, such as file uploads and streams that have started delivering events.
@@ -136,7 +137,7 @@ begin
   response = chat.ask "Some specific query"
 rescue RubyLLM::ForbiddenError => e
   puts "Access forbidden: #{e.message}"
-  if e.response&.body&.include?("invalid_organization")
+  if e.error_code == "invalid_organization"
     puts "Hint: Check if your API key is enabled for the correct OpenAI organization."
   end
   puts "Status Code: #{e.response&.status}"
@@ -178,7 +179,7 @@ begin
   accumulated_content = ""
   chat.ask "Generate a very long story..." do |chunk|
     print chunk.content
-    accumulated_content << chunk.content
+    accumulated_content << chunk.content.to_s
   end
   puts "\nStream completed successfully."
 rescue RubyLLM::RateLimitError
@@ -241,7 +242,7 @@ chat.with_fallbacks(
 )
 ```
 
-Cancelling a chat never triggers a fallback, whatever `on:` lists. `chat.cancel` raises `RubyLLM::CancelledError` and no fallback model runs. The same holds for a persisted chat that another process takes over mid-run: this process steps aside and no fallback model runs. An error your streaming block raises is yours to handle too: it propagates as it is, and the block does not run again on a fallback model.
+Cancelling a chat never triggers a fallback, whatever `on:` lists. `chat.cancel` raises `RubyLLM::CancelledError` and no fallback model runs. The same holds for a persisted chat that another process takes over mid-run: this process steps aside and no fallback model runs. An error your streaming block raises is yours to handle too: it propagates as it is, and the block does not run again on a fallback model. The same holds for an error a message or fallback callback raises.
 
 Fallbacks can be model IDs or `RubyLLM::Model` objects:
 

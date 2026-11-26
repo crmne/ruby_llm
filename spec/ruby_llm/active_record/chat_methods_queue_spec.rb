@@ -311,6 +311,18 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(transcript(chat)).to be_empty
   end
 
+  %i[ask_later queue].each do |verb|
+    it "stores no message from #{verb} when its attachment cannot be read" do
+      url = 'https://files.example.com/report.txt'
+      stub_request(:get, url).to_return(status: 503)
+
+      expect { chat.public_send(verb, 'Summarize', with: url) }.to raise_error(/503/)
+      expect(transcript(chat)).to be_empty
+      expect(chat.to_llm.messages).to be_empty
+      expect(chat.queued_messages).to be_empty
+    end
+  end
+
   it 'takes every queued message at the next complete, waiting ones included' do
     chat.queue('Wait', steer: false)
     chat.queue('Steer')

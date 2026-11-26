@@ -98,7 +98,7 @@ module RubyLLM
                       provider_options: {},
                       metadata: nil,
                       owner: nil)
-      attachments = Attachment.wrap(with)
+      attachments = Attachment.wrap(with, config: context&.config)
       raise ArgumentError, 'must provide input text, image attachment, or both' if input.nil? && attachments.empty?
 
       Accounting::Operation.new(

@@ -601,6 +601,15 @@ RSpec.describe RubyLLM::Agent do
       expect(child.model).not_to equal(parent.model)
     end
 
+    it 'copies the description, which a subclass can replace' do
+      parent = Class.new(described_class) { description 'Researches flights' }
+      stub_const('CharterAgent', Class.new(parent))
+      other = Class.new(parent) { description 'Researches private flights' }
+
+      expect(CharterAgent.to_tool.description).to eq('Researches flights')
+      expect([other.description, parent.description]).to eq(['Researches private flights', 'Researches flights'])
+    end
+
     it 'copies instruction declarations with their options' do
       parent = Class.new(described_class) do
         instructions 'Be terse.', cache_until_here: true

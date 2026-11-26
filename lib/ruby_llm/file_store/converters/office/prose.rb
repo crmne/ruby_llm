@@ -9,7 +9,7 @@ module RubyLLM
         # table row. Word and PowerPoint share these element names.
         class Prose # :nodoc:
           SKIPPED = %w[tabs tabLst pPrChange rPr tblPr tcPr trPr sectPr Fallback].freeze
-          BREAKS = { 'tab' => "\t", 'br' => "\n", 'cr' => "\n" }.freeze
+          BREAKS = { 'tab' => "\t", 'br' => "\n", 'cr' => "\n", 'noBreakHyphen' => '-' }.freeze
           BLANK = /\A[[:space:]]*\z/
           UNREAD_PLACEHOLDERS = %w[sldNum hdr ftr dt sldImg].freeze
           Paragraph = Struct.new(:text, :style, :list, :level, :outline, :marked, :marker)
@@ -71,7 +71,7 @@ module RubyLLM
 
             paragraph = @paragraphs.last
             case name
-            when 'tab', 'br', 'cr' then paragraph.text << BREAKS[name]
+            when *BREAKS.keys then paragraph.text << BREAKS[name]
             when 'pStyle' then paragraph.style = Markup.prefixed(tag, 'val')
             when 'numId' then paragraph.list = number(tag)
             when 'ilvl' then paragraph.level = number(tag)

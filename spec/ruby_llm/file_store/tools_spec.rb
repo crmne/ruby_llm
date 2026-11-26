@@ -233,6 +233,17 @@ RSpec.describe RubyLLM::FileStore::Tools do
       FileUtils.rm_rf(root)
     end
 
+    it 'answers write_file with the reason when the path is inside a file, and keeps the file' do
+      root = Dir.mktmpdir('ruby_llm-store')
+      chat.with_file_store(RubyLLM::FileStore::Directory.new(root))
+      files.write('notes', 'kept')
+
+      expect(call(:write_file, path: 'notes/a/todo.md', content: 'x')).to eq(error: 'notes is a file, not a folder')
+      expect(files.read('notes')).to eq('kept')
+    ensure
+      FileUtils.rm_rf(root)
+    end
+
     it 'writes a text file and tells the chat' do
       written = []
       chat.after_file_write { |file| written << file.path }
@@ -276,6 +287,26 @@ RSpec.describe RubyLLM::FileStore::Tools do
       expect(call(:edit_file, path: 'plan.md', old_text: 'three', new_text: 'four'))
         .to eq('Replaced 1 occurrence in plan.md.')
       expect(files.read('plan.md')).to eq("one two\nfour two")
+    end
+
+    it 'matches lines read from a CRLF file, and keeps its line endings' do
+      files.write('plan.md', "one\r\ntwo\r\nthree\r\n")
+      call(:read_file, path: 'plan.md')
+
+      expect(call(:edit_file, path: 'plan.md', old_text: "one\ntwo", new_text: "1\n2\n2b"))
+        .to eq('Replaced 1 occurrence in plan.md.')
+      expect(call(:edit_file, path: 'plan.md', old_text: "2b\r\nthree", new_text: "3\r\n4"))
+        .to eq('Replaced 1 occurrence in plan.md.')
+      expect(files.read('plan.md')).to eq("1\r\n2\r\n3\r\n4\r\n")
+    end
+
+    it 'leaves the line endings of a mixed file alone' do
+      files.write('plan.md', "one\r\ntwo\nthree\n")
+      call(:read_file, path: 'plan.md')
+
+      call(:edit_file, path: 'plan.md', old_text: "two\nthree", new_text: "2\n3")
+
+      expect(files.read('plan.md')).to eq("one\r\n2\n3\n")
     end
 
     it 'refuses a span that is missing or not unique, unless replacing all' do

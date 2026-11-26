@@ -30,7 +30,8 @@ RSpec.describe RubyLLM::Chat do
   end
 
   it "runs a skill's script in the sandbox and returns the file it writes" do
-    skip 'python3 is not installed' unless system('python3 --version', out: File::NULL, err: File::NULL)
+    python = chat.with_code_execution(languages: %i[shell python]).tools[:run_code].languages.include?(:python)
+    skip 'python3 is not available in the sandbox' unless python
 
     chat.with_skills.with_code_execution
     command = 'ls skills && python3 skills/csv-report/scripts/report.py attachments/sample.csv report.md'

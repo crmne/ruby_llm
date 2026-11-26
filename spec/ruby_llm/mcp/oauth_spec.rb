@@ -377,6 +377,36 @@ RSpec.describe RubyLLM::MCP::OAuth do
     expect(store.read(key)['access_token']).to eq('access-2')
   end
 
+  describe 'a refresh the authorization server refuses' do
+    before do
+      linear.authorize(callback(linear.authorization_url(redirect_uri:)))
+      store.write(key, store.read(key).merge('access_token' => 'stale'))
+    end
+
+    def store = RubyLLM.config.mcp_credential_store
+    def key = "ada@#{server_url}"
+
+    def refuse_with(error)
+      stub_request(:post, 'https://auth.example.com/token').to_return(status: 400, body: { error: }.to_json)
+    end
+
+    it 'forgets the tokens of a revoked grant, but not the client' do
+      refuse_with('invalid_grant')
+
+      expect { linear_class.new(user: 'ada').tools }.to raise_error(RubyLLM::UnauthorizedError)
+      expect(linear_class.new(user: 'ada')).not_to be_authorized
+      expect(store.read(key)).to include('client_id' => 'registered')
+      expect(store.read(key)).not_to include('access_token', 'refresh_token')
+    end
+
+    it 'keeps the tokens when it is refused for another reason' do
+      refuse_with('temporarily_unavailable')
+
+      expect { linear_class.new(user: 'ada').tools }.to raise_error(RubyLLM::UnauthorizedError)
+      expect(linear_class.new(user: 'ada')).to be_authorized
+    end
+  end
+
   describe 'refreshing a rotating token' do
     def store = RubyLLM.config.mcp_credential_store
     def key = "ada@#{server_url}"

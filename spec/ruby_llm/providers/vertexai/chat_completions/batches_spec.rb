@@ -73,6 +73,27 @@ RSpec.describe RubyLLM::Providers::VertexAI::ChatCompletions::Batches do
       expect(message.content).to eq('Hello')
       expect(message.model).to eq('meta/llama-3.3-70b-instruct-maas')
     end
+
+    it 'fails only a row whose tool call was cut short, with its billed usage' do
+      allow(RubyLLM.logger).to receive(:warn)
+      call = { 'id' => 'c', 'type' => 'function', 'function' => { 'name' => 'f', 'arguments' => '{"a": "trunc' } }
+      line = {
+        'custom_id' => '1',
+        'response' => {
+          'choices' => [
+            { 'message' => { 'role' => 'assistant', 'tool_calls' => [call] }, 'finish_reason' => 'length' }
+          ],
+          'usage' => { 'prompt_tokens' => 3, 'completion_tokens' => 2 },
+          'model' => 'meta/llama-3.3-70b-instruct-maas'
+        }
+      }
+
+      index, message, status, billed = protocol.send(:parse_vertex_batch_result, line, 0)
+
+      expect([index, message, status]).to eq([1, nil, :failed])
+      expect(billed[:tokens].to_h).to include(input_tokens: 3, output_tokens: 2)
+      expect(billed[:model]).to eq('meta/llama-3.3-70b-instruct-maas')
+    end
   end
 
   describe '#validate_batch_requests!' do

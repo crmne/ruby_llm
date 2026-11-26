@@ -157,7 +157,8 @@ module RubyLLM
       def approve(tool_call, remember: false)
         record = tool_call_record(RubyLLM::Question.decided_call(tool_call, 'answer'))
         @chat&.approve(record.to_llm, remember:) if record.result_id.nil?
-        record_tool_call_decision(record, remember ? 'remembered' : 'approved')
+        approved = record_tool_call_decision(record, remember ? 'remembered' : 'approved') && record.result_id.nil?
+        tool_call.respond(RubyLLM::Question::ACCEPTED) if approved && tool_call.is_a?(RubyLLM::Question)
         self
       end
 
@@ -722,16 +723,19 @@ module RubyLLM
       # record and updating the underlying chat. Falls back to the configured
       # default model when +model_name+ is +nil+. Pass +protocol:+ to override
       # the wire protocol the provider would pick for the model. Returns +self+.
+      # The chat keeps the model it had when +model_name+ can't be resolved.
       #
       #   chat.with_model 'claude-sonnet-5'
       #
       def with_model(model_name, provider: nil, protocol: nil, assume_model_exists: false)
         model_name ||= (context&.config || RubyLLM.config).default_model
-        self.model = model_name
-        self.provider = provider if provider
-        self.protocol = protocol
-        self.assume_model_exists = assume_model_exists
-        resolve_model
+        keeping_model_on_failure do
+          self.model = model_name
+          self.provider = provider if provider
+          self.protocol = protocol
+          self.assume_model_exists = assume_model_exists
+          resolve_model
+        end
         save!
         to_llm
         self
@@ -864,7 +868,8 @@ module RubyLLM
       # persisted either way.
       #
       # Raises PendingToolCallsError while the last response has tool calls
-      # waiting for their results and no run holds the chat.
+      # waiting for their results and no run holds the chat. An attachment
+      # that can't be read raises, and no message is stored.
       def ask_later(message = nil, with: nil)
         staging = ChatQueue.new(self)
         if !run_claims? || message.is_a?(RubyLLM::MCP::Prompt)
@@ -1035,6 +1040,7 @@ module RubyLLM
       private
 
       def create_message_record(llm_message, record_attributes)
+        read_attachments(llm_message.attachments) if llm_message.role == :user
         transaction do
           forget_stale_cancellation if llm_message.role == :user
           messages_association.create!(message_attributes(llm_message).merge(record_attributes))
@@ -1079,6 +1085,16 @@ module RubyLLM
 
       def usage_records_by_entry
         @usage_records_by_entry ||= {}.compare_by_identity
+      end
+
+      def keeping_model_on_failure
+        previous = [model, @pending_model_id, @pending_provider, protocol, assume_model_exists]
+        yield
+      rescue StandardError
+        self.model, pending_model_id, pending_provider, self.protocol, self.assume_model_exists = previous
+        @pending_model_id = pending_model_id
+        @pending_provider = pending_provider
+        raise
       end
 
       def resolve_model
