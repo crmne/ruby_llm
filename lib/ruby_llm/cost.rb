@@ -21,13 +21,13 @@ module RubyLLM
   #   speech = RubyLLM.speak "Hello"
   #   speech.cost.characters # => 0.00015, or nil when no price is known
   #
-  #
   # When the provider reports the exact cost of a call, #total returns the
   # reported amount instead of a registry-price estimate, even when
   # registry pricing is missing.
   #
   # Costs are computed when the object is built. Readers do not recalculate
   # them when registry prices change.
+  #
   # ::aggregate and ::from_h return the same class, so a single call, a
   # whole chat, and a stored breakdown all read the same way.
   class Cost
