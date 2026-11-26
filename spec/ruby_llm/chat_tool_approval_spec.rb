@@ -73,6 +73,31 @@ RSpec.describe RubyLLM::Chat do
     expect(chat.waiting? && chat.pending_questions.any?(&:approval?)).to be(false)
   end
 
+  it 'marks an approval accepted when the question or the chat approves it' do
+    approved = %i[question chat].map do |approver|
+      chat = stubbed_chat(tool_call_message('call_1' => 'dangerous'), final_message, tools: [dangerous_tool])
+      chat.ask('Do the thing')
+      question = chat.pending_questions.find(&:approval?)
+
+      approver == :question ? question.approve : chat.approve(question)
+      question
+    end
+
+    expect(approved).to all(be_answered)
+    expect(approved.map(&:response)).to all(eq(RubyLLM::Question::ACCEPTED))
+  end
+
+  it 'leaves an approval unanswered when its call already has a result' do
+    chat = stubbed_chat(tool_call_message('call_1' => 'dangerous'), final_message, tools: [dangerous_tool])
+    chat.ask('Do the thing')
+    question = chat.pending_questions.find(&:approval?)
+    chat.add_message(role: :tool, content: 'done', tool_call_id: 'call_1')
+
+    chat.approve(question)
+
+    expect(question).not_to be_answered
+  end
+
   it 'accepts a ToolCall for approve' do
     chat = stubbed_chat(tool_call_message('call_1' => 'dangerous'), final_message, tools: [dangerous_tool])
     response = chat.ask('Do the thing')

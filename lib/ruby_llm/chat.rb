@@ -518,10 +518,14 @@ module RubyLLM
     # ArgumentError, and the approval never applies to another call.
     # Raises ArgumentError for a Question that is not an approval.
     def approve(tool_call, remember: false)
+      question = tool_call
       tool_call = Question.decided_call(tool_call, 'answer')
       name = remembered_tool_identity(tool_call) if remember
       record_tool_call_decision(tool_call, true)
-      @tool_call_state.remember(name) if name && !tool_call_answered?(tool_call)
+      return self if tool_call_answered?(tool_call)
+
+      @tool_call_state.remember(name) if name
+      question.respond(Question::ACCEPTED) if question.is_a?(Question)
       self
     end
 
