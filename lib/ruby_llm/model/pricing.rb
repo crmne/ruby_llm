@@ -47,18 +47,24 @@ module RubyLLM
 
         # Returns pricing +data+ with the standard-tier +prices+ replaced.
         # A thinking price that equals the output price is the same price,
-        # so it follows a new output price.
+        # so it follows a new output price, and audio input and output
+        # follow the token prices.
         def overridden(data, prices) # :nodoc:
           data = RubyLLM::Support::Utils.deep_dup(data)
           standard = data.dig(:text_tokens, :standard) || {}
           thinking = standard[:reasoning_output_per_million]
           follows = prices.key?(:output) && thinking && thinking == standard[:output_per_million]
-          prices.each do |kind, price|
-            category, attribute = OVERRIDES.fetch(kind)
-            ((data[category] ||= {})[:standard] ||= {})[attribute] = price
-          end
+          prices.each { |kind, price| override_price(data, *OVERRIDES.fetch(kind), price) }
           data[:text_tokens][:standard][:reasoning_output_per_million] = prices[:output] if follows
           data
+        end
+
+        private
+
+        def override_price(data, category, attribute, price)
+          ((data[category] ||= {})[:standard] ||= {})[attribute] = price
+          audio = data.dig(:audio_tokens, :standard) if category == :text_tokens
+          audio[attribute] = price if audio&.key?(attribute)
         end
       end
 

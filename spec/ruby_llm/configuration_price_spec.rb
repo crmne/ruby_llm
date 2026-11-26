@@ -56,6 +56,17 @@ RSpec.describe RubyLLM::Configuration, '#price' do
     expect(model.cost_for(RubyLLM::Tokens.new(input: 100_000, output: 100_000)).total).to be_within(1e-9).of(0.168)
   end
 
+  it 'reaches the audio tokens of a transcription' do
+    audio = { standard: { input_per_million: 1.0 }, batch: { input_per_million: 0.5 } }
+    model = priced_model('gemini-2.5-flash', provider: 'gemini', pricing: pricing.merge(audio_tokens: audio))
+
+    RubyLLM.config.price 'gemini-2.5-flash', provider: :gemini, input: 0.01
+
+    expect(RubyLLM::Cost.new(tokens: RubyLLM::Tokens.new(input: 100_000), model:, category: :audio_tokens).input)
+      .to eq(0.001)
+    expect(model.pricing.audio_tokens.batch.input_per_million).to eq(0.5)
+  end
+
   it 'keeps the batch and long-context rates of the registry' do
     RubyLLM.config.price 'gpt-5.6-luna', provider: :azure, input: 0.24
 

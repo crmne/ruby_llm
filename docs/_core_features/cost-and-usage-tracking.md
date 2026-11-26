@@ -195,7 +195,7 @@ RubyLLM.configure do |config|
 end
 ```
 
-Prices are in US dollars per million. `input`, `output`, `cache_read`, and `cache_write` price tokens, and `characters`, `audio_seconds`, and `search_units` price the [other units](#characters-audio-seconds-and-search-units). A price you leave out stays as the registry has it, and so do the model's batch and long-context rates.
+Prices are in US dollars per million. `input`, `output`, `cache_read`, and `cache_write` price tokens, and `characters`, `audio_seconds`, and `search_units` price the [other units](#characters-audio-seconds-and-search-units). `input` and `output` also replace a model's separate audio token prices. A price you leave out stays as the registry has it, and so do the model's batch and long-context rates.
 
 Every cost uses your prices from then on: `response.cost`, `chat.cost`, `model.cost_for`, and `model.price(:input)`. `RubyLLM.models.refresh` keeps them, because they live in your configuration. The registry file, or the `ruby_llm_models` table in Rails, keeps the list price.
 
