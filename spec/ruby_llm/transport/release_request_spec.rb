@@ -28,8 +28,8 @@ RSpec.describe RubyLLM::Transport::ReleaseRequest do
     env = Faraday::Env.from(request:, request_body: 'prompt', request_headers: { 'x-api-key' => 'secret-key' })
 
     expect(described_class.release(env)).to be(env)
-    expect(env.to_h.values_at(:request_body, :request_headers)).to eq([nil, {}])
-    expect(env.request.to_h.values_at(:context, :on_data)).to eq([nil, nil])
+    expect(env.to_hash.values_at(:request_body, :request_headers)).to eq([nil, {}])
+    expect(env.request.to_hash.values_at(:context, :on_data)).to eq([nil, nil])
   end
 
   it 'releases a response that has no request options' do
@@ -37,7 +37,7 @@ RSpec.describe RubyLLM::Transport::ReleaseRequest do
                                      request_headers: { 'x-api-key' => 'secret-key' })
 
     expect(described_class.release(response)).to be(response)
-    expect(response.env.to_h.values_at(:request_body, :request_headers)).to eq([nil, {}])
+    expect(response.env.to_hash.values_at(:request_body, :request_headers)).to eq([nil, {}])
   end
 
   it 'leaves a successful request alone' do
