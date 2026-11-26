@@ -266,6 +266,53 @@ RSpec.describe RubyLLM::Chat do
     expect(fallback_provider).not_to have_received(:complete)
   end
 
+  it 'does not fall back when a message callback raises' do
+    chat = described_class.new(model: 'primary-model').with_fallbacks('fallback-model')
+    allow(primary_provider).to receive(:complete)
+      .and_return(RubyLLM::Message.new(role: :assistant, content: 'answer', model: 'primary-model'))
+    allow(fallback_provider).to receive(:complete)
+    chat.after_message { |message| raise RubyLLM::RateLimitError, 'audit' if message.role == :assistant }
+
+    expect { chat.ask('Hello') }.to raise_error(RubyLLM::RateLimitError, 'audit')
+    expect(chat.messages.map(&:content)).to eq(%w[Hello answer])
+    expect(fallback_provider).not_to have_received(:complete)
+  end
+
+  it 'reports a fallback once and does not fall back again when after_fallback raises' do
+    chat = described_class.new(model: 'primary-model').with_fallbacks('fallback-model', 'second-fallback-model')
+    allow(primary_provider).to receive(:complete).and_raise(RubyLLM::ServerError, 'down')
+    allow(fallback_provider).to receive(:complete)
+      .and_return(RubyLLM::Message.new(role: :assistant, content: 'answer', model: 'fallback-model'))
+    allow(second_fallback_provider).to receive(:complete)
+    reported = []
+    chat.after_fallback do |fallback|
+      reported << fallback.id
+      raise RubyLLM::RateLimitError, 'audit'
+    end
+
+    expect { chat.ask('Hello') }.to raise_error(RubyLLM::RateLimitError, 'audit')
+    expect(reported).to eq(['fallback-model'])
+    expect(second_fallback_provider).not_to have_received(:complete)
+  end
+
+  it 'leaves the retries of requests made in callbacks and streaming blocks as configured' do
+    chat = described_class.new(model: 'primary-model').with_fallbacks('fallback-model')
+    ready = -> { Fiber[RubyLLM::Transport::Connection::FALLBACK_KEY] }
+    in_request = []
+    in_application = []
+    allow(primary_provider).to receive(:complete) do |*, **, &stream|
+      stream.call(RubyLLM::Chunk.new(role: :assistant, content: 'answer', model: 'primary-model'))
+      in_request << ready.call
+      RubyLLM::Message.new(role: :assistant, content: 'answer', model: 'primary-model')
+    end
+    chat.before_message { in_application << ready.call }.after_message { in_application << ready.call }
+
+    chat.ask('Hello') { in_application << ready.call }
+
+    expect(in_application).to eq([nil, nil, nil])
+    expect(in_request).to contain_exactly(respond_to(:call))
+  end
+
   it 'does not fall back on an error its run reports as an interruption' do
     claim_lost = Class.new(StandardError)
     chat = described_class.new(model: 'primary-model')
