@@ -92,7 +92,7 @@ RSpec.describe RubyLLM::Chat, :live do # rubocop:disable RSpec/MultipleMemoizedH
       chat = RubyLLM.chat(model: model, provider: provider)
       expect do
         chat.ask('What do you see in this image?', with: bad_image_url)
-      end.to raise_error(Faraday::ResourceNotFound)
+      end.to raise_error(RubyLLM::Error, /failed with status 404/)
 
       chat = RubyLLM.chat(model: model, provider: provider)
       expect do

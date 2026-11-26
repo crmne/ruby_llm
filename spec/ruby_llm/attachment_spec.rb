@@ -191,6 +191,25 @@ RSpec.describe RubyLLM::Attachment do
       expect(described_class.new(url, filename: 'a.pdf')).not_to be_io_like
     end
 
+    it 'raises a RubyLLM error for a failed status' do
+      stub_request(:get, 'https://example.com/a.png').to_return(redirect_to('https://cdn.example.com/a.png'))
+      stub_request(:get, 'https://cdn.example.com/a.png').to_return(status: 403, body: 'Expired')
+
+      expect { described_class.new('https://example.com/a.png').content }.to raise_error(RubyLLM::Error) { |error|
+        expect(error.message).to eq('Download from cdn.example.com failed with status 403')
+        expect(error.response).to have_attributes(status: 403, body: 'Expired')
+      }
+    end
+
+    it 'raises a connection error when the host never answers' do
+      stub_request(:get, 'https://example.com/a.png').to_timeout
+
+      expect { described_class.new('https://example.com/a.png').content }
+        .to raise_error(RubyLLM::ConnectionError, /example.com failed/) { |error|
+          expect(error.cause).to be_a(Faraday::Error)
+        }
+    end
+
     it 'stops following redirects after five' do
       loop_request = stub_request(:get, 'https://example.com/loop.png').to_return(redirect_to('/loop.png'))
 

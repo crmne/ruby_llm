@@ -75,8 +75,18 @@ module RubyLLM
         end
         return response.body if response.success?
 
-        raise Error.new("Download from #{uri.host} failed with status #{response.status}", response:)
+        raise failed_download(uri, response)
+      rescue Faraday::Error => e
+        raise ConnectionError, "Download from #{uri.host} failed: #{e.message}" unless e.response
+
+        raise failed_download(uri, Faraday::Response.new(status: e.response[:status], body: e.response[:body],
+                                                         response_headers: e.response[:headers]))
       end
+
+      def self.failed_download(uri, response)
+        Error.new("Download from #{uri.host} failed with status #{response.status}", response:)
+      end
+      private_class_method :failed_download
 
       def self.redirect_target(from, location)
         target = URI.join(from, location)
