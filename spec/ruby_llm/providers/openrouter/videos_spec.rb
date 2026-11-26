@@ -82,6 +82,14 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Videos do
       )
     end
 
+    it 'fails when the job was cancelled or expired' do
+      %w[cancelled expired].each do |status|
+        response = instance_double(Faraday::Response, body: { 'id' => 'abc123', 'status' => status })
+
+        expect(protocol.parse_video_job_status(response, job: job)).to include(status: :failed, error: status)
+      end
+    end
+
     it 'completes when the job reports completed' do
       body = {
         'id' => 'abc123',
