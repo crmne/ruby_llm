@@ -113,15 +113,47 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(approved.map(&:response)).to all(eq(RubyLLM::Question::ACCEPTED))
   end
 
-  it 'leaves an approval unanswered when the record approves a call that has a result' do
+  %w[pending approved].each do |approval|
+    it "leaves an approval unanswered when the record approves a call that has a result, with approval #{approval}" do
+      chat = process(Chat.create!(model: model_for(:openai)))
+      pending = park(chat, call('refund'))
+      question = chat.pending_questions.find(&:approval?)
+      RubyLLM::ActiveRecord::ToolCall.where(tool_call_id: pending.id).update_all(approval:)
+      chat.add_message(role: :tool, content: 'refunded', tool_call_id: pending.id)
+
+      chat.approve(question)
+
+      expect(question).not_to be_answered
+    end
+  end
+
+  it 'leaves an approval unanswered when its call gets a result before the approval is written' do
     chat = process(Chat.create!(model: model_for(:openai)))
     pending = park(chat, call('refund'))
     question = chat.pending_questions.find(&:approval?)
-    chat.add_message(role: :tool, content: 'refunded', tool_call_id: pending.id)
+    result = chat.messages.create!(role: 'tool', content: 'refunded')
+    allow(chat).to receive(:tool_call_record).and_wrap_original do |original, *args|
+      original.call(*args).tap do
+        RubyLLM::ActiveRecord::ToolCall.where(tool_call_id: pending.id).update_all(result_id: result.id)
+      end
+    end
 
     chat.approve(question)
 
     expect(question).not_to be_answered
+  end
+
+  it 'leaves an approval unanswered and unwritten when its call is running' do
+    chat = process(Chat.create!(model: model_for(:openai)))
+    pending = park(chat, call('refund'))
+    question = chat.pending_questions.find(&:approval?)
+    row = RubyLLM::ActiveRecord::ToolCall.where(tool_call_id: pending.id)
+    row.update_all(claimed_until: 10.minutes.from_now)
+
+    chat.approve(question)
+
+    expect(question).not_to be_answered
+    expect(row.pick(:approval)).to eq('pending')
   end
 
   it 'remembers nothing for an answered call, here or in another process' do

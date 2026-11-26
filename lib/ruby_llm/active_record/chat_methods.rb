@@ -157,8 +157,8 @@ module RubyLLM
       def approve(tool_call, remember: false)
         record = tool_call_record(RubyLLM::Question.decided_call(tool_call, 'answer'))
         @chat&.approve(record.to_llm, remember:) if record.result_id.nil?
-        record_tool_call_decision(record, remember ? 'remembered' : 'approved')
-        tool_call.respond(RubyLLM::Question::ACCEPTED) if record.result_id.nil? && tool_call.is_a?(RubyLLM::Question)
+        approved = record_tool_call_decision(record, remember ? 'remembered' : 'approved') && record.result_id.nil?
+        tool_call.respond(RubyLLM::Question::ACCEPTED) if approved && tool_call.is_a?(RubyLLM::Question)
         self
       end
 
