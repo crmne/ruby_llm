@@ -865,7 +865,8 @@ module RubyLLM
       # persisted either way.
       #
       # Raises PendingToolCallsError while the last response has tool calls
-      # waiting for their results and no run holds the chat.
+      # waiting for their results and no run holds the chat. An attachment
+      # that can't be read raises, and no message is stored.
       def ask_later(message = nil, with: nil)
         staging = ChatQueue.new(self)
         if !run_claims? || message.is_a?(RubyLLM::MCP::Prompt)
@@ -1036,6 +1037,7 @@ module RubyLLM
       private
 
       def create_message_record(llm_message, record_attributes)
+        read_attachments(llm_message.attachments) if llm_message.role == :user
         transaction do
           forget_stale_cancellation if llm_message.role == :user
           messages_association.create!(message_attributes(llm_message).merge(record_attributes))
