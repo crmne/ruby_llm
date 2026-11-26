@@ -45,12 +45,16 @@ module RubyLLM
       end
 
       def error_status(response)
-        code = failure_code(response)
-        FAILURE_STATUSES.fetch(code, 400) if code
+        failure_status(parse_error_body(response)) if response.body.to_s.include?('base_resp')
+      end
+
+      def failure_status(body) # :nodoc:
+        code = body.dig('base_resp', 'status_code') if body.is_a?(Hash)
+        FAILURE_STATUSES.fetch(code, 400) unless code.nil? || code.zero?
       end
 
       def parse_error(response)
-        return super unless failure_code(response)
+        return super unless error_status(response)
 
         parse_error_body(response).dig('base_resp', 'status_msg')
       end
@@ -85,14 +89,6 @@ module RubyLLM
 
       def messages_only_request?(schema, thinking, tool_prefs)
         schema || tool_prefs&.dig(:calls) == :one || (thinking && !thinking.effort)
-      end
-
-      def failure_code(response)
-        return unless response.body.to_s.include?('base_resp')
-
-        body = parse_error_body(response)
-        code = body.dig('base_resp', 'status_code') if body.is_a?(Hash)
-        code unless code.nil? || code.zero?
       end
     end
   end

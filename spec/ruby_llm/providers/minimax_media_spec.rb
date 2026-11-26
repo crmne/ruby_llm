@@ -57,6 +57,35 @@ RSpec.describe RubyLLM::Providers::MiniMax do
       expect { context.speak('Hi', model: 'speech-2.8-turbo', provider: :minimax, assume_model_exists: true) }
         .to raise_error(RubyLLM::BadRequestError, /invalid params/)
     end
+
+    context 'with a streamed transcription' do
+      let(:deltas) { [] }
+
+      def transcribe(*events, body: events.map { |event| "data: #{event.to_json}\n\n" }.join)
+        stub_request(:post, 'https://api.minimax.io/v1/speech_to_text').to_return(status: 200, body:)
+        context.transcribe(fixture('ruby.wav'), model: 'asr-1.0', provider: :minimax,
+                                                assume_model_exists: true) { |chunk| deltas << chunk.delta }
+      end
+
+      it 'raises an error body sent instead of the stream' do
+        body = { base_resp: { status_code: 1008, status_msg: 'insufficient balance' } }.to_json
+
+        expect { transcribe(body:) }.to raise_error(RubyLLM::PaymentRequiredError, /insufficient balance/)
+      end
+
+      it 'raises an error event in the middle of the stream' do
+        failure = { base_resp: { status_code: 1002, status_msg: 'rate limit' } }
+
+        expect { transcribe({ delta: 'Hello ', finish: false }, failure) }
+          .to raise_error(RubyLLM::RateLimitError, /rate limit/)
+        expect(deltas).to eq(['Hello '])
+      end
+
+      it 'raises when the stream ends before its final event' do
+        expect { transcribe({ delta: 'Hello ', finish: false }) }
+          .to raise_error(RubyLLM::Error, /before its final event/)
+      end
+    end
   end
 
   describe 'images' do
