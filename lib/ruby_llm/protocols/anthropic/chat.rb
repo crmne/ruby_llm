@@ -279,7 +279,7 @@ module RubyLLM
 
           build_message(data, content: text_content, citations:, thinking: thinking_content,
                               thinking_signature:, tool_use_blocks:, server_tool_calls:,
-                              raw_content: server_tool_calls.any? ? content_blocks : nil, raw:)
+                              raw_content: server_tool_calls.any? || @continuing_turn ? content_blocks : nil, raw:)
         end
 
         # Any block that is not text, thinking, or a function tool_use is a
