@@ -173,6 +173,22 @@ RSpec.describe RubyLLM::Chat do
     expect(chat.ask('Hello').content).to eq('second answer')
   end
 
+  it 'skips a fallback it cannot ask to think and tries the next one' do
+    chat = described_class.new(model: 'primary-model').with_thinking
+                          .with_fallbacks('fallback-model', 'second-fallback-model')
+    [primary_model, second_fallback_model].each do |model|
+      allow(model).to receive(:reasoning_options).and_return([{ type: 'toggle' }])
+    end
+    allow(primary_provider).to receive(:complete).and_raise(RubyLLM::ServerError, 'first down')
+    allow(fallback_provider).to receive(:complete)
+    allow(second_fallback_provider).to receive(:complete)
+      .and_return(RubyLLM::Message.new(role: :assistant, content: 'second answer', model: 'second-fallback-model'))
+
+    expect(chat.ask('Hello').content).to eq('second answer')
+    expect(chat.model).to eq(primary_model)
+    expect(fallback_provider).not_to have_received(:complete)
+  end
+
   it 'raises the provider error when no fallback is usable' do
     allow(RubyLLM::Models).to receive(:resolve).with('unkeyed-model', any_args)
                                                .and_raise(RubyLLM::ConfigurationError, 'Missing key')

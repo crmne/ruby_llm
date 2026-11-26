@@ -937,7 +937,9 @@ module RubyLLM
     # wait longer than two seconds moves on to it at once instead of
     # retrying the same model. A fallback that took over answers the rest
     # of that #complete, including its tool rounds; the next one starts on
-    # the chat's own model.
+    # the chat's own model. A fallback RubyLLM can't use is skipped: an
+    # unknown model, a provider without its configuration, or a model
+    # RubyLLM can't turn #with_thinking on or off for.
     #
     #   chat.with_fallbacks("gpt-4.1-mini", "claude-haiku-4-5")
     #   chat.with_fallbacks(nil)
@@ -2321,7 +2323,20 @@ module RubyLLM
     end
 
     def switch_to_usable_fallback(fallback_queue)
-      Fallback.next_usable(fallback_queue) { |fallback| switch_to_fallback_model(fallback) }&.first
+      Fallback.next_usable(fallback_queue) do |fallback|
+        from = [@model, @provider, @connection, @protocol]
+        switch_to_fallback_model(fallback)
+        check_fallback_thinking
+      rescue ConfigurationError
+        @model, @provider, @connection, @protocol = from
+        raise
+      end&.first
+    end
+
+    def check_fallback_thinking
+      resolved_thinking
+    rescue ArgumentError => e
+      raise ConfigurationError, e.message
     end
 
     def finish_fallback(fallback, response: nil, fallback_error: nil)
