@@ -46,6 +46,7 @@ Provider operation errors inherit from `RubyLLM::Error`. RubyLLM maps the provid
 | `RubyLLM::ToolCallParseError` | None: parent of `ToolCallTruncatedError`; other malformed arguments go back to the model | No |
 | `RubyLLM::ToolCallTruncatedError` | None: the output token limit cut off a tool call | No |
 | `RubyLLM::UnsupportedAttachmentError` | None: the attachment cannot be sent to this provider or model | No |
+| `RubyLLM::InputRequiredError` | None: a tool asked a person something outside a chat, where no call can pause for the answer | No |
 | `RubyLLM::UnsupportedServerToolError` | None: the provider or protocol does not define this server tool | No |
 
 Yes means the error is eligible for a retry. [Automatic Retries](#automatic-retries) lists the requests that are never retried, such as file uploads and streams that have started delivering events.
