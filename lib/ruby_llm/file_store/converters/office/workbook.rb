@@ -86,7 +86,7 @@ module RubyLLM
           def add_row(lines, row)
             return if row.all?(&:empty?)
 
-            line = row.join("\t")
+            line = row.map { |cell| cell.tr("\t\r\n", ' ') }.join("\t")
             @size += line.bytesize
             raise Zip::Error, 'workbook too large' if @size > MAX_SIZE
 
