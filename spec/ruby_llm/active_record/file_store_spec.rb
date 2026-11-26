@@ -495,6 +495,29 @@ RSpec.describe RubyLLM::ActiveRecord::FileStore do
       expect(chat.ruby_llm_chat_files.count).to eq(1)
     end
 
+    it 'keeps an attachment with the file the model edited, across processes' do
+      report = StringIO.new('draft: total is 10')
+      requests = []
+      job = lambda do
+        Chat.find(chat.id).with_file_store.tap do |record|
+          allow(record.to_llm.provider).to receive(:complete) do |messages, **|
+            requests << messages
+            answer('Ok')
+          end
+        end
+      end
+      first = job.call
+      first.ask('Fix this', with: RubyLLM::Attachment.new(report, filename: 'report.txt'))
+      first.file_store.write('report.txt', 'final: total is 12')
+
+      2.times { job.call.ask('And now?') }
+
+      expect(store.list.map(&:path)).to eq(['report.txt'])
+      expect(store.read('report.txt')).to eq('final: total is 12')
+      expect(requests.last.first.attachments.sole.content).to start_with('report.txt (')
+      expect(chat.messages.first.attachments.sole.download).to eq('draft: total is 10')
+    end
+
     it 'saves a long tool result as a file and persists only its start' do
       tool = Class.new(RubyLLM::Tool) do
         description 'Lists everything'
