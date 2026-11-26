@@ -350,6 +350,43 @@ RSpec.describe RubyLLM::Tool do
       expect(described_class.split_result([1, 2])).to eq(['[1,2]', []])
     end
 
+    it 'keeps &, < and > as the tool wrote them' do
+      result = { link: '/invoices?number=42&format=pdf', xml: '<number>42</number>' }
+
+      expect(described_class.split_result(result).first)
+        .to eq('{"link":"/invoices?number=42&format=pdf","xml":"<number>42</number>"}')
+      expect(described_class.split_result([{ name: 'Tom & Jerry' }]).first).to eq('[{"name":"Tom & Jerry"}]')
+    end
+
+    it 'converts values with as_json, as Active Support does' do
+      money = Class.new { def as_json(*) = { cents: 1050 } }.new
+
+      expect(described_class.split_result({ at: Time.utc(2026, 11, 25, 13), price: money }).first)
+        .to eq('{"at":"2026-11-25T13:00:00.000Z","price":{"cents":1050}}')
+    end
+
+    it 'converts values nested in what a custom as_json returns' do
+      invoice = Class.new { def as_json(*) = { issued_at: Time.utc(2026, 11, 1, 10) } }.new
+
+      expect(described_class.split_result({ invoice: }).first)
+        .to eq('{"invoice":{"issued_at":"2026-11-01T10:00:00.000Z"}}')
+    end
+
+    it 'adds no nesting limit to what to_json returns' do
+      deep = (1..150).reduce('"leaf"') { |inner, _| %({"level":#{inner}}) }
+      result = { level: 'stubbed' }
+      allow(result).to receive(:to_json).and_return(deep)
+
+      expect(described_class.split_result(result).first).to eq(deep)
+    end
+
+    it 'keeps the search results shape' do
+      results = RubyLLM::SearchResults.new({ title: 'Tom & Jerry', text: '<p>Cartoon</p>' })
+
+      expect(described_class.split_result(results).first)
+        .to eq('{"search_results":[{"title":"Tom & Jerry","text":"<p>Cartoon</p>"}]}')
+    end
+
     it 'splits an attachment out of a mixed result' do
       attachment = RubyLLM::Attachment.new(StringIO.new('bytes'), filename: 'a.txt')
 

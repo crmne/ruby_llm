@@ -684,7 +684,7 @@ module RubyLLM
 
     def report(result, files, skipped, **notes)
       blocked = Array(result.blocked) if result.respond_to?(:blocked)
-      {
+      fields = {
         exit_code: result.exit_code,
         stdout: truncate(result.stdout),
         stderr: truncate(result.stderr),
@@ -693,7 +693,8 @@ module RubyLLM
         files: (files.map { |file| file.is_a?(String) ? file : file.filename } if files.any?),
         skipped_files: (shortened(skipped) if skipped.any?),
         **notes
-      }.compact.to_json
+      }
+      JSON.generate(fields.compact)
     end
 
     def shortened(skipped)

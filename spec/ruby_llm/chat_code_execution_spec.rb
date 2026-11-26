@@ -1008,6 +1008,14 @@ RSpec.describe RubyLLM::Chat do
       expect(output['stdout']).to eq("abcde\n[100 characters omitted]\nvwxyz")
       expect(output['stderr']).to eq([0xFFFD].pack('U'))
     end
+
+    it 'keeps &, < and > in the output as the code printed them' do
+      sandbox = FakeSandbox.new { FakeSandbox.result(stdout: '<b>Tom & Jerry</b>') }
+      chat = RubyLLM.context { |config| config.sandbox = sandbox }.chat(model: model_for(:openai), provider: :openai)
+      result = chat.with_code_execution.tools[:run_code].call(language: 'ruby', code: 'x')
+
+      expect(Array(result).first).to include('"stdout":"<b>Tom & Jerry</b>"')
+    end
   end
 
   describe 'the conversation loop' do
