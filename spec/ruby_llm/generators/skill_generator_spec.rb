@@ -12,13 +12,17 @@ RSpec.describe RubyLLM::Generators::SkillGenerator, :generator, type: :generator
   let(:app_name) { 'test_skill_generator' }
   let(:app_path) { GeneratorTestHelpers.app_path(app_name) }
 
-  def run_rails_generate(*args)
+  def run_rails_generate(*)
+    run_rails_command('generate', *)
+  end
+
+  def run_rails_command(*args)
     env = {
       'BUNDLE_GEMFILE' => ENV['BUNDLE_GEMFILE'] || Bundler.default_gemfile.to_s,
       'BUNDLE_IGNORE_CONFIG' => '1',
       'OPENAI_API_KEY' => ENV.fetch('OPENAI_API_KEY', 'test')
     }
-    GeneratorTestHelpers.run_command(env, ['bundle', 'exec', 'rails', 'generate', *args], chdir: app_path)
+    GeneratorTestHelpers.run_command(env, ['bundle', 'exec', 'rails', *args], chdir: app_path)
   end
 
   before(:all) do # rubocop:disable RSpec/BeforeAfterAll
@@ -42,6 +46,28 @@ RSpec.describe RubyLLM::Generators::SkillGenerator, :generator, type: :generator
       success, runner = run_rails_runner('puts RubyLLM::Skill.resolve([:invoices]).first.description')
       expect(success).to be(true), runner
       expect(runner).to include("Bills an order to a customer as a PDF.\n")
+    end
+  end
+
+  it 'asks for a description' do
+    within_test_app(app_path) do
+      output, status = run_rails_generate('ruby_llm:skill', 'undescribed')
+
+      expect(status.success?).to be(false)
+      expect(output).to include('Pass a description')
+      expect(Dir.glob('*', base: 'app/skills')).not_to include('undescribed')
+    end
+  end
+
+  it 'destroys a skill by its name' do
+    within_test_app(app_path) do
+      run_rails_generate('ruby_llm:skill', 'refunds', 'Refunds an order.')
+      expect(File).to exist('app/skills/refunds/SKILL.md')
+
+      output, status = run_rails_command('destroy', 'ruby_llm:skill', 'refunds')
+
+      expect(status.success?).to be(true), output
+      expect(File).not_to exist('app/skills/refunds/SKILL.md')
     end
   end
 
