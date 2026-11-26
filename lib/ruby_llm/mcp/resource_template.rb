@@ -67,7 +67,7 @@ module RubyLLM
       end
 
       def self.encode(value, reserved) # :nodoc:
-        pattern = reserved ? %r{[^A-Za-z0-9\-._~:/?#\[\]@!$&'()*+,;=%]} : /[^A-Za-z0-9\-._~]/
+        pattern = reserved ? %r{[^A-Za-z0-9\-._~:/?#\[\]@!$&'()*+,;=%]|%(?!\h{2})} : /[^A-Za-z0-9\-._~]/
         value.gsub(pattern) { |char| char.bytes.map { |byte| format('%%%02X', byte) }.join }
       end
 
