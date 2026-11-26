@@ -212,6 +212,7 @@ RSpec.describe RubyLLM::Transport::Connection do
       return Logger.new(File::NULL) if option == :logger
       return { verify: false } if option == :ssl
       return { per_request: 0.5 } if option == :context_budget
+      return { 'X-Gateway-Key' => 'changed' } if option == :request_headers
 
       case value
       when nil then 'http://changed.example.test'

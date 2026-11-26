@@ -69,6 +69,18 @@ RSpec.describe RubyLLM::Batch, :live do
         expect { RubyLLM.batch(requests) }.to raise_error(ArgumentError)
       end
 
+      it 'rejects contexts that only differ in request headers', live: false do
+        gateways = %w[gw-a gw-b].map do |key|
+          RubyLLM.context do |config|
+            config.anthropic_api_key = 'shared'
+            config.request_headers = { 'X-Gateway-Key' => key }
+          end
+        end
+        chats = gateways.map { |context| context.chat(model: model).ask_later('Hi') }
+
+        expect { RubyLLM.batch(chats) }.to raise_error(ArgumentError, /one set of credentials/)
+      end
+
       it 'accepts separate contexts with the same credentials' do
         same = Array.new(2) { RubyLLM.context { |config| config.anthropic_api_key = 'shared' } }
         chats = same.map { |context| context.chat(model: model).ask_later('Hi') }

@@ -155,6 +155,7 @@ module RubyLLM
             set_usage_tracker(req, usage) if usage
             mark_non_idempotent(req) unless idempotent
             yield req if block_given?
+            apply_request_headers(req)
           end
         end
       end
@@ -165,6 +166,7 @@ module RubyLLM
             prepare(req)
             keep_raw_body(req) if raw
             yield req if block_given?
+            apply_request_headers(req)
           end
         end
       end
@@ -174,6 +176,7 @@ module RubyLLM
           connection.patch url, payload do |req|
             prepare(req)
             yield req if block_given?
+            apply_request_headers(req)
           end
         end
       end
@@ -183,6 +186,7 @@ module RubyLLM
           connection.delete url do |req|
             prepare(req)
             yield req if block_given?
+            apply_request_headers(req)
           end
         end
       end
@@ -237,6 +241,14 @@ module RubyLLM
         context = request.options.context ||= {}
         context[ErrorMiddleware::PROVIDER_KEY] = @provider
         context[SigningMiddleware::CONTEXT_KEY] = @signer if @signer
+      end
+
+      # The configuration's request headers go under the caller's, which
+      # include the provider's own and Chat#with_headers.
+      def apply_request_headers(request)
+        @config.request_headers.each do |name, value|
+          request.headers[name] = value unless request.headers.key?(name)
+        end
       end
 
       # Adapters time each read of a response with +read_timeout+, so on a

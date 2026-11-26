@@ -72,6 +72,7 @@ RSpec.describe RubyLLM::Providers::Bedrock::Connection do
       expect(signature(headers['authorization'])).to eq(
         expected_signature(request[:verb], "http://#{host}#{target}", headers['x-amz-date'], request[:body], service:)
       )
+      yield headers if block_given?
     end
 
     it 'keeps the path and signs what a chat sends' do
@@ -112,6 +113,17 @@ RSpec.describe RubyLLM::Providers::Bedrock::Connection do
       provider.signed_post(provider.control_api_base, '/model-invocation-job', { jobName: 'job' })
 
       expect_signed_request('/bedrock/model-invocation-job')
+    end
+
+    it 'sends the request headers unsigned beside a control plane signature' do
+      provider.config.request_headers = { 'X-Gateway-Key' => 'gw-secret', 'Authorization' => 'Bearer gateway' }
+
+      provider.signed_get(provider.control_api_base, '/foundation-models')
+
+      expect_signed_request('/bedrock/foundation-models') do |headers|
+        expect(headers['x-gateway-key']).to eq('gw-secret')
+        expect(headers['authorization']).not_to include('x-gateway-key')
+      end
     end
 
     it 'signs a control plane query string' do

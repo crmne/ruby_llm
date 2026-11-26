@@ -43,6 +43,25 @@ RSpec.describe RubyLLM::Protocols::ElevenLabs::StreamingTranscription do
     expect(socket).to have_received(:close).once
   end
 
+  it 'opens the socket with the request headers under the provider headers' do
+    config = RubyLLM.context do |context|
+      context.request_headers = { 'X-Gateway-Key' => 'gw-secret', 'xi-api-key' => 'gateway' }
+    end.config
+    protocol = RubyLLM::Protocols::ElevenLabs.new(RubyLLM::Providers::ElevenLabs.new(config))
+    socket = instance_double(RubyLLM::Transport::WebsocketConnection, close: nil)
+    allow(RubyLLM::Transport::WebsocketConnection).to receive(:open).and_yield(socket)
+    allow(socket).to receive(:each_message) do |&block|
+      committed('Hi.').each { |event| block.call(JSON.generate(event)) }
+    end
+
+    protocol.collect_transcription('wss://example.com', nil, 1) { |_chunk| nil }
+
+    expect(RubyLLM::Transport::WebsocketConnection).to have_received(:open).with(
+      'wss://example.com', headers: { 'X-Gateway-Key' => 'gw-secret', 'xi-api-key' => config.elevenlabs_api_key },
+                           config:
+    )
+  end
+
   it 'does not turn a truncated set of committed groups into a successful result' do
     socket = instance_double(RubyLLM::Transport::WebsocketConnection)
     allow(RubyLLM::Transport::WebsocketConnection).to receive(:open).and_yield(socket)

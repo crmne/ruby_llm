@@ -25,6 +25,7 @@ module RubyLLM
   # never set.
   class Configuration
     SECRET_OPTION = /_(key|secret|token)\z/ # :nodoc:
+    SECRET_HEADER = /(?:\A|[-_])(?:key|secret|token|authorization)\z/i # :nodoc:
 
     class << self
       def option(key, default = nil, &normalize) # :nodoc:
@@ -336,6 +337,27 @@ module RubyLLM
     option :http_proxy, nil
 
     ##
+    # :attr_accessor: request_headers
+    #
+    # Headers sent with every request to a provider's endpoints, such as an
+    # AI gateway's credentials, as a Hash of names to values. The
+    # provider's own headers and Chat#with_headers win over a header of
+    # the same name set here. A header with a blank value is left out.
+    # Fetching URL attachments and hosted media, MCP servers, and OAuth
+    # token endpoints don't get them. Default: <tt>{}</tt>.
+    #
+    #   RubyLLM.context do |config|
+    #     config.openai_api_base = 'https://gateway.example.com/v1/openai'
+    #     config.request_headers = { 'X-Gateway-Key' => ENV['GATEWAY_KEY'] }
+    #   end
+    #
+    option(:request_headers, {}) do |headers|
+      headers.to_h.filter_map do |name, value|
+        [name.to_s.dup.freeze, value.to_s.dup.freeze] unless value.to_s.strip.empty?
+      end.to_h.freeze
+    end
+
+    ##
     # :attr_accessor: ssl
     #
     # TLS options for all requests, as a Hash of Faraday's SSL option
@@ -525,17 +547,17 @@ module RubyLLM
       @ssl = @ssl.to_h.transform_values { |value| value.is_a?(String) ? value.dup : value } if @ssl
     end
 
-    # The values of the credential options set on this configuration, which
-    # logging replaces before writing a line.
+    # The values of the credential options and credential request headers
+    # set on this configuration, which logging replaces before writing a
+    # line.
     def secret_values # :nodoc:
-      self.class.options.grep(SECRET_OPTION).filter_map do |key|
-        value = public_send(key)
-        value if value.is_a?(String)
-      end
+      credential_option_values + credential_header_values
     end
 
     def instance_variables # :nodoc:
-      super.reject { |ivar| ivar.to_s.match?(/(_id|_key|_secret|_token|_credential_provider|_proxy|\A@ssl)$/) }
+      super.reject do |ivar|
+        ivar.to_s.match?(/(_id|_key|_secret|_token|_credential_provider|_proxy|\A@ssl|\A@request_headers)$/)
+      end
     end
 
     # Object#inspect reads the instance variable table directly, so
@@ -547,6 +569,17 @@ module RubyLLM
     end
 
     private
+
+    def credential_option_values
+      self.class.options.grep(SECRET_OPTION).filter_map do |key|
+        value = public_send(key)
+        value if value.is_a?(String)
+      end
+    end
+
+    def credential_header_values
+      request_headers.filter_map { |name, value| value if name.match?(SECRET_HEADER) }
+    end
 
     # Whether the +name+ environment variable is set to something that means
     # yes, so that <tt>RUBYLLM_DEBUG=false</tt> reads as off rather than as

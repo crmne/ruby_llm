@@ -25,7 +25,7 @@ module RubyLLM
           raise Error, 'gemini file has no download URI' unless download_uri
 
           gemini_connection(request_json: false, response_json: false).get(download_uri) do |request|
-            request.headers.merge!(@provider.headers)
+            request.headers.merge!(@provider.request_headers)
           end.body
         end
 
@@ -54,7 +54,7 @@ module RubyLLM
 
         def start_resumable_upload(attachment, resource:)
           response = gemini_connection(request_json: true, response_json: true).post(gemini_upload_url) do |request|
-            request.headers.merge!(@provider.headers)
+            request.headers.merge!(@provider.request_headers)
             request.headers['X-Goog-Upload-Protocol'] = 'resumable'
             request.headers['X-Goog-Upload-Command'] = 'start'
             request.headers['X-Goog-Upload-Header-Content-Length'] = attachment.content.bytesize.to_s
@@ -69,7 +69,7 @@ module RubyLLM
 
         def upload_file_bytes(upload_url, attachment)
           gemini_connection(request_json: false, response_json: true).post(upload_url) do |request|
-            request.headers.merge!(@provider.headers)
+            request.headers.merge!(@provider.request_headers)
             request.headers['Content-Length'] = attachment.content.bytesize.to_s
             request.headers['X-Goog-Upload-Offset'] = '0'
             request.headers['X-Goog-Upload-Command'] = 'upload, finalize'

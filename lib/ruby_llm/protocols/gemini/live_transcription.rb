@@ -77,7 +77,7 @@ module RubyLLM
           events = []
           ready = Queue.new
           Transport::WebsocketConnection.open(
-            transcription_websocket_url, headers: @provider.headers.transform_keys(&:to_s), config: @config
+            transcription_websocket_url, headers: @provider.request_headers.transform_keys(&:to_s), config: @config
           ) do |socket|
             socket.send_text(JSON.generate(setup))
             write = lambda { |connection|
