@@ -287,6 +287,8 @@ RSpec.describe RubyLLM::CodeExecution::Workspace do
   end
 
   it 'reports an output whose name is not valid UTF-8 as skipped' do
+    skip 'This filesystem refuses file names that are not valid UTF-8' unless FileNames.non_utf8?
+
     described_class.open do |workspace|
       File.binwrite(File.join(workspace.directory, "bad\xFFname.txt".b), 'x')
       File.binwrite(File.join(workspace.directory, 'kept.txt'), 'y')
