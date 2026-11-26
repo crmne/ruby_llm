@@ -201,6 +201,13 @@ RSpec.describe RubyLLM::ActiveRecord::FileStore do
     expect(RubyLLM::ActiveRecord::ChatFile).not_to have_received(:has_one_attached)
   end
 
+  it 'removes the upload of a write it refuses over a folder' do
+    store.write('reports/q3.md', 'Q3')
+
+    expect { expect { store.write('reports', 'oops') }.to raise_error(ArgumentError, /is a folder/) }
+      .not_to change(ActiveStorage::Blob, :count)
+  end
+
   it 'keeps an attachment by its blob, given the blob itself' do
     blob = ActiveStorage::Blob.create_and_upload!(io: File.open(image_path), filename: 'logo.png')
 
@@ -231,10 +238,10 @@ RSpec.describe RubyLLM::ActiveRecord::FileStore do
 
     ActiveSupport::Notifications.subscribed(record, 'sql.active_record') { store.write('a.txt', 'mine') }
 
-    chat_lock = queries.index { |sql| sql.match?(/\A(SELECT .* FROM|UPDATE) ["`]?chats["`]?/) }
+    locking = /\A(SELECT .* FROM ["`]?chats["`]? .*FOR UPDATE|UPDATE ["`]?chats["`]?)/
+    chat_lock = queries.index { |sql| sql.match?(locking) }
     lookup = queries.index { |sql| sql.match?(/\ASELECT .* FROM ["`]?ruby_llm_chat_files["`]?/) }
     expect(chat_lock).to be < lookup
-    expect(queries[chat_lock]).to include('FOR UPDATE') unless Chat.connection.adapter_name.match?(/sqlite/i)
   end
 
   { 'delete' => ->(store) { store.delete('a.txt') },
@@ -262,6 +269,31 @@ RSpec.describe RubyLLM::ActiveRecord::FileStore do
     end
 
     expect(chat.ruby_llm_chat_files.where(path: 'a.txt').count).to eq(1)
+  end
+
+  it 'writes files on a table without a text column' do
+    store.write('notes.md', 'one')
+    allow_any_instance_of(RubyLLM::ActiveRecord::ChatFile).to receive(:has_attribute?).and_call_original # rubocop:disable RSpec/AnyInstance
+    allow_any_instance_of(RubyLLM::ActiveRecord::ChatFile).to receive(:has_attribute?).with(:text).and_return(false) # rubocop:disable RSpec/AnyInstance
+
+    store.write('notes.md', 'two')
+
+    expect(store.read('notes.md')).to eq('two')
+    expect(chat.ruby_llm_chat_files.sole.digest).to eq(Digest::SHA256.hexdigest('two'))
+  end
+
+  it 'sees a folder another process made after the query cache saw none' do
+    blob = ActiveStorage::Blob.create_and_upload!(io: StringIO.new('new'), filename: 'reports')
+    allow(Chat.connection).to receive(:adapter_name).and_return('PostgreSQL')
+
+    RubyLLM::ActiveRecord::ChatFile.cache do
+      expect(store.list('reports')).to be_empty
+      write_elsewhere('reports/q3.md', 'Q3').join
+
+      expect { store.store_attachment(RubyLLM::Attachment.new(blob)) }.to raise_error(ArgumentError, /is a folder/)
+    end
+
+    expect(chat.ruby_llm_chat_files.pluck(:path)).to eq(%w[reports/q3.md])
   end
 
   it 'keeps one row when another process writes the same path at the same time' do
@@ -345,6 +377,17 @@ RSpec.describe RubyLLM::ActiveRecord::FileStore do
 
       expect { described_class.new(chat, owner: alice).delete('reports') }
         .to raise_error(ArgumentError, /is a folder/)
+    end
+
+    it "refuses to write over a folder of shared files, but not over another owner's folder" do
+      store.write('reports/shared.md', 'for everyone')
+      described_class.new(chat, owner: bob).write('drafts/bob.md', 'his file')
+      alices = described_class.new(chat, owner: alice)
+
+      expect { alices.write('reports', 'oops') }.to raise_error(ArgumentError, 'reports is a folder, not a file')
+      alices.write('drafts', 'her file')
+
+      expect(alices.list.map(&:path)).to eq(%w[drafts reports/shared.md])
     end
   end
 

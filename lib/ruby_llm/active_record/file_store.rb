@@ -87,7 +87,12 @@ module RubyLLM
           io.rewind
           blob = ::ActiveStorage::Blob.create_and_upload!(io:, filename: File.basename(path),
                                                           content_type: type, identify: false)
-          save(path, blob.byte_size, type, digest) { |record| record.file.attach(blob) }
+          begin
+            save(path, blob.byte_size, type, digest) { |record| record.file.attach(blob) }
+          rescue StandardError
+            blob.purge
+            raise
+          end
         end
       end
 
@@ -195,6 +200,10 @@ module RubyLLM
                              .select { |row| RubyLLM::FileStore.inside?(row.path, folder) }
       end
 
+      def folder?(path)
+        rows_in_folder(path).any? { |row| row.path != path }
+      end
+
       def write_attachment(path, attachment, content)
         blob = blob_of(attachment)
         return super unless blob
@@ -205,14 +214,17 @@ module RubyLLM
       end
 
       def save(path, byte_size, content_type, digest)
-        ChatFile.transaction do
-          lock_chat
-          record = owned.lock.find_or_initialize_by(path:)
-          record.assign_attributes(byte_size:, content_type:, digest:)
-          record.text = nil if record.has_attribute?(:text)
-          yield record
-          record.save!
-          record.to_stored_file
+        ChatFile.uncached do
+          ChatFile.transaction do
+            lock_chat
+            refuse_write_over_folder(path) if folder?(path)
+            record = owned.lock.find_or_initialize_by(path:)
+            record.assign_attributes(byte_size:, content_type:, digest:)
+            record.text = nil if record.has_attribute?(:text)
+            yield record
+            record.save!
+            record.to_stored_file
+          end
         end
       end
 
