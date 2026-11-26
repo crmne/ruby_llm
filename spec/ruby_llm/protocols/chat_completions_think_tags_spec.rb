@@ -21,7 +21,10 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions do
   def stream(*deltas)
     chunks = []
     allow(protocol).to receive(:stream_events) do |*, &block|
-      deltas.each { |delta| block.call('model' => 'qwen3', 'choices' => [{ 'delta' => delta }]) }
+      deltas.each_with_index do |delta, index|
+        finish_reason = 'stop' if index == deltas.size - 1
+        block.call('model' => 'qwen3', 'choices' => [{ 'delta' => delta, 'finish_reason' => finish_reason }])
+      end
       instance_double(Faraday::Response)
     end
     message = protocol.send(:stream_response, {}) { |chunk| chunks << chunk }

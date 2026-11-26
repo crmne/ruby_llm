@@ -164,7 +164,7 @@ end
 
 ## Error Handling During Streaming
 
-Errors (like network issues, rate limits, or provider errors) can occur mid-stream. The `ask` method will raise the appropriate `RubyLLM::Error` subclass after the block execution finishes or is interrupted by the error.
+Errors (like network issues, rate limits, or provider errors) can occur mid-stream. The `ask` method will raise the appropriate `RubyLLM::Error` subclass after the block execution finishes or is interrupted by the error. A stream that closes before the provider finishes its answer raises `RubyLLM::ConnectionError`, even when the connection closes cleanly.
 
 ```ruby
 begin

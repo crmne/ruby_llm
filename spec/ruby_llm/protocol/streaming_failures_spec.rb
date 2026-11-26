@@ -89,4 +89,60 @@ RSpec.describe RubyLLM::Protocol::Streaming do
     expect(context.chat(model: model_for(:openai), provider: :openai, protocol: :chat_completions)
       .ask('Hi') { |_chunk| nil }.content).to eq('hi')
   end
+
+  describe 'a stream that closes before its answer ends' do
+    include_context 'with configured RubyLLM'
+
+    let(:text) { { choices: [{ delta: { content: 'Hel' } }] } }
+
+    def stub_stream(url, *events)
+      body = events.map { |event| "data: #{event.is_a?(String) ? event : event.to_json}\n\n" }.join
+      stub_request(:post, url).to_return(body:, headers: { 'Content-Type' => 'text/event-stream' })
+    end
+
+    def ask(provider, protocol = nil, &)
+      RubyLLM.chat(model: model_for(provider), provider:, protocol:).ask('Hi', &)
+    end
+
+    {
+      %i[openai chat_completions] => { choices: [{ delta: { content: 'Hel' } }] },
+      %i[openai responses] => { type: 'response.output_text.delta', output_index: 0, content_index: 0, delta: 'Hel' },
+      [:anthropic] => { type: 'content_block_delta', index: 0, delta: { type: 'text_delta', text: 'Hel' } },
+      [:gemini] => { candidates: [{ content: { parts: [{ text: 'Hel' }] } }] },
+      [:cohere] => { type: 'content-delta', index: 0, delta: { message: { content: { text: 'Hel' } } } }
+    }.each do |target, event|
+      it "raises on #{target.join(' ')} after delivering the text so far" do
+        stub_stream(/.*/, event)
+        chunks = []
+
+        expect { ask(*target) { |chunk| chunks << chunk.content } }
+          .to raise_error(RubyLLM::ConnectionError, 'Provider stream ended before completion')
+        expect(chunks).to eq(['Hel'])
+      end
+    end
+
+    it 'takes [DONE] or a finish reason as the end of a Chat Completions answer' do
+      [['[DONE]'], [{ choices: [{ delta: {}, finish_reason: 'stop' }] }]].each do |ending|
+        stub_stream(/.*/, text, *ending)
+
+        expect(ask(:openai, :chat_completions) { |_chunk| nil }.content).to eq('Hel')
+      end
+    end
+
+    it 'takes an incomplete response that names no reason as ended' do
+      stub_stream(/.*/, { type: 'response.incomplete', response: { status: 'incomplete', output: [] } })
+
+      expect { ask(:openai, :responses) { |_chunk| nil } }.not_to raise_error
+    end
+
+    it 'falls back' do
+      stub_stream(/openai/, text)
+      stub_stream(/generativelanguage/,
+                  { candidates: [{ content: { parts: [{ text: 'Hello' }] }, finishReason: 'STOP' }] })
+      chat = RubyLLM.chat(model: model_for(:openai), provider: :openai, protocol: :chat_completions)
+                    .with_fallbacks(RubyLLM.models.find(model_for(:gemini), provider: :gemini))
+
+      expect(chat.ask('Hi') { |_chunk| nil }.content).to eq('Hello')
+    end
+  end
 end

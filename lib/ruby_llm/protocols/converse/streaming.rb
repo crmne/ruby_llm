@@ -21,12 +21,15 @@ module RubyLLM
           @stream_citations = {}
           @server_tool_blocks = {}
           accumulator = RubyLLM::Protocol::StreamAccumulator.new(log: method(:log_stream_debug))
+          @stream_finished = false
 
           response = stream_events(stream_url, JSON.generate(payload), additional_headers) do |event|
             chunk = build_chunk(event)
+            @stream_finished ||= stream_finished?(event, chunk)
             accumulator.add(chunk)
             block.call(chunk)
           end
+          require_finished_stream(response)
 
           message = accumulator.to_message(response)
           log_body_debug { "Stream completed: #{message.content}" }

@@ -32,6 +32,10 @@ module RubyLLM
           completion_url
         end
 
+        def stream_finished?(data, chunk)
+          data['type'] == 'message_stop' || super
+        end
+
         def build_chunk(data)
           delta_type = data.dig('delta', 'type')
           track_stream_blocks(data, delta_type)

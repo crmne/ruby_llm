@@ -18,6 +18,10 @@ module RubyLLM
           super
         end
 
+        def stream_finished?(data, _chunk)
+          %w[response.completed response.incomplete].include?(data['type'])
+        end
+
         def build_chunk(data)
           case data['type']
           when 'response.output_text.delta', 'response.refusal.delta'

@@ -131,7 +131,8 @@ RSpec.describe RubyLLM::Protocols::Responses::Streaming do
 
   it 'starts every stream without a separator' do
     allow(protocol).to receive(:stream_events) do |*, &block|
-      [text_part_added(0), text_delta(0, 'Checking.'), text_part_added(1), text_delta(1, 'Ruby')].each(&block)
+      [text_part_added(0), text_delta(0, 'Checking.'), text_part_added(1), text_delta(1, 'Ruby'),
+       { 'type' => 'response.completed' }].each(&block)
       nil
     end
 
@@ -202,6 +203,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Streaming do
       block.call({ 'type' => 'response.output_text.annotation.added', 'output_index' => 1,
                    'annotation' => { 'type' => 'url_citation', 'url' => 'https://ruby-lang.org',
                                      'start_index' => 0, 'end_index' => 4 } })
+      block.call({ 'type' => 'response.completed' })
       nil
     end
 
@@ -218,13 +220,14 @@ RSpec.describe RubyLLM::Protocols::Responses::Streaming do
       deltas.each do |delta|
         block.call({ 'type' => 'response.output_text.delta', 'output_index' => 0, 'delta' => delta })
       end
+      block.call({ 'type' => 'response.completed' })
       nil
     end
     chunks = []
 
     response = protocol.send(:stream_response, {}) { |chunk| chunks << chunk }
 
-    expect(chunks.map(&:content)).to eq(['Two are urgent', nil, '. Next'])
+    expect(chunks.map(&:content)).to eq(['Two are urgent', nil, '. Next', nil])
     expect(response.content).to eq('Two are urgent. Next')
   end
 
@@ -233,6 +236,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Streaming do
       block.call({ 'type' => 'response.output_text.delta', 'output_index' => 0, 'delta' => "Odd \u{E200}text here" })
       block.call({ 'type' => 'response.output_text.done', 'output_index' => 0 })
       block.call({ 'type' => 'response.output_text.delta', 'output_index' => 1, 'delta' => ' and more' })
+      block.call({ 'type' => 'response.completed' })
       nil
     end
 
@@ -246,6 +250,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Streaming do
       block.call({ 'type' => 'response.output_text.annotation.added', 'output_index' => 0,
                    'annotation' => { 'type' => 'url_citation', 'url' => 'https://ruby-lang.org',
                                      'start_index' => 24, 'end_index' => 33 } })
+      block.call({ 'type' => 'response.completed' })
       nil
     end
 
