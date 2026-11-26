@@ -109,8 +109,12 @@ module RubyLLM
         workflow.to_h.slice(*WORKFLOW_COLUMNS)
       end
 
-      def self.owner_preload # :nodoc:
-        column_names.include?('owner_id') ? :owner : []
+      def self.preload_owners(records) # :nodoc:
+        return unless column_names.include?('owner_id')
+
+        ::ActiveRecord::Associations::Preloader.new(records:, associations: :owner).call
+      rescue NameError, ::ActiveRecord::SubclassNotFound
+        nil
       end
 
       # Returns the attempt's counts as RubyLLM::Tokens.
@@ -157,7 +161,7 @@ module RubyLLM
           tokens: tokens,
           cost: cost,
           message: message,
-          owner: (owner if has_attribute?(:owner_id)),
+          owner: recorded_owner,
           workflow: workflow_context
         )
       end
@@ -169,6 +173,14 @@ module RubyLLM
           column = :"#{unit}#{suffix}"
           units[unit] = self[column] if has_attribute?(column)
         end
+      end
+
+      # Nil once the owner's class is gone, say renamed since the attempt, so
+      # the chat it paid for still loads.
+      def recorded_owner
+        owner if has_attribute?(:owner_id)
+      rescue NameError, ::ActiveRecord::SubclassNotFound
+        nil
       end
 
       def workflow_context
