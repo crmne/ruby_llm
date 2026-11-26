@@ -131,6 +131,18 @@ RSpec.describe RubyLLM::Transcription, :live do
       expect(transcription.model).to eq(model_for(:openai, :streaming_transcription))
     end
 
+    it "openai/#{model_for(:openai, :language_list_transcription)} sends a language hint as languages" do
+      model = model_for(:openai, :language_list_transcription)
+
+      transcription = RubyLLM.transcribe(audio_path, model:, provider: :openai, language: 'en')
+
+      expect(transcription.text).to match(/ruby/i)
+      expect(transcription.model).to eq(model)
+      expect(a_request(:post, 'https://api.openai.com/v1/audio/transcriptions').with do |request|
+        request.body.include?("name=\"languages[]\"\r\n\r\nen\r\n") && !request.body.include?('name="language"')
+      end).to have_been_made.once
+    end
+
     it "openai/#{model_for(:openai, :transcription)} streams segments labelled with speakers" do
       chunks = []
 
