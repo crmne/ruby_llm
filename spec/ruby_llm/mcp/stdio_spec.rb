@@ -35,8 +35,43 @@ RSpec.describe RubyLLM::MCP::Stdio do
     expect { stdio.listen(nil) { nil } }.to raise_error(RubyLLM::MCP::Stdio::Unavailable, /exited/)
   end
 
+  it 'waits past a check for a server that is slow to answer' do
+    stub_const("#{described_class}::CHECK_INTERVAL", 0.05)
+    script = "require 'json'; $stdin.gets; sleep 0.3; puts JSON.generate(id: 1, slow: true); $stdout.flush; $stdin.gets"
+    stdio = described_class.new([RbConfig.ruby, '-e', script], timeout: 10)
+
+    expect(stdio.request({ id: 1, method: 'probe' })).to include('slow' => true)
+  ensure
+    stdio.close
+  end
+
+  it 'hears the changes the listener reads itself' do
+    stub_const("#{described_class}::CHECK_INTERVAL", 60)
+    script = <<~RUBY
+      require 'json'
+      $stdin.gets
+      meta = { 'io.modelcontextprotocol/subscriptionId' => 1 }
+      puts
+      2.times { puts JSON.generate(method: 'notifications/tools/list_changed', params: { _meta: meta }) }
+      puts JSON.generate(id: 1, result: {})
+      $stdout.flush
+      $stdin.gets
+    RUBY
+    stdio = described_class.new([RbConfig.ruby, '-e', script])
+    heard = []
+    reply = Timeout.timeout(20) do
+      stdio.listen({ id: 1, method: 'subscriptions/listen' }) { |change| heard << change['method'] }
+    end
+
+    expect([heard.size, reply['id']]).to eq([2, 1])
+  ensure
+    stdio.close
+  end
+
   describe 'a request larger than the pipe buffer' do
     let(:message) { { id: 1, method: 'probe', text: 'x' * 500_000 } }
+
+    before { stub_const("#{described_class}::SHUTDOWN_GRACE", 0.2) }
 
     def request(script, timeout:)
       stdio = described_class.new([RbConfig.ruby, '-rjson', '-e', script], timeout:)
@@ -68,6 +103,57 @@ RSpec.describe RubyLLM::MCP::Stdio do
       expect(request(script, timeout: 10)).to include('read' => true)
     end
 
+    it 'ends the process when only part of the message was written' do
+      stdio = described_class.new([RbConfig.ruby, '-e', 'sleep'], timeout: 0.5)
+      stdio.send(:start)
+      process = stdio.instance_variable_get(:@process)
+
+      expect { stdio.request(message) }.to raise_error(described_class::Unavailable, /in time/)
+      expect(process.join(5)).to be(process)
+    ensure
+      stdio.close
+    end
+
+    it 'keeps the process when none of the message was written' do
+      stub_const("#{described_class}::CHECK_INTERVAL", 0.05)
+      stdio = described_class.new([RbConfig.ruby, '-e', 'sleep'], timeout: 0.5)
+      stdio.send(:start)
+      stdin = stdio.instance_variable_get(:@stdin)
+      nil until stdin.write_nonblock('x' * 65_536, exception: false) == :wait_writable
+      nil until stdin.write_nonblock('x', exception: false) == :wait_writable
+
+      expect { stdio.request(message) }.to raise_error(described_class::Unavailable, /in time/)
+      expect(stdio.instance_variable_get(:@process)).to be_alive
+    ensure
+      stdio.close
+    end
+
+    it 'waits for a server that is slow to read' do
+      script = 'sleep 0.3; $stdin.gets; puts JSON.generate(id: 1, read: true); $stdout.flush; $stdin.gets'
+
+      expect(request(script, timeout: 10)).to include('read' => true)
+    end
+
+    it 'reports a server that closes its stdout before it reads on', skip: Gem.win_platform? do
+      stdio = described_class.new(['sh', '-c', 'exec 1>&-; sleep 30'], timeout: 10)
+
+      expect { stdio.request(message) }.to raise_error(described_class::Unavailable, /exited/)
+    ensure
+      stdio.close
+    end
+
+    it 'carries on when there is nothing to read after all' do
+      stdio = described_class.new([RbConfig.ruby, '-e', server], timeout: 10)
+      stdio.send(:start)
+      stdout = stdio.instance_variable_get(:@stdout)
+      allow(IO).to receive(:select).and_return([[stdout], [], []])
+
+      expect(stdio.request(message)['id']).to eq(1)
+      expect(IO).to have_received(:select).at_least(:once)
+    ensure
+      stdio.close
+    end
+
     it 'starts the server again for the next request' do
       Dir.mktmpdir do |directory|
         marker = File.join(directory, 'stuck')
@@ -79,6 +165,77 @@ RSpec.describe RubyLLM::MCP::Stdio do
       ensure
         stdio.close
       end
+    end
+  end
+
+  describe 'a server that stops reading while it runs' do
+    before { stub_const("#{described_class}::SHUTDOWN_GRACE", 0.2) }
+
+    def closed_stdin
+      stdio = described_class.new(['sh', '-c', 'exec 0<&-; echo ready; sleep 30'], timeout: 10)
+      stdio.send(:start)
+      stdio.instance_variable_get(:@stdout).wait_readable(5)
+      yield stdio
+    ensure
+      stdio.close
+    end
+
+    it 'is reported as exited', skip: Gem.win_platform? do
+      closed_stdin do |stdio|
+        expect { stdio.request({ id: 1, method: 'probe' }) }.to raise_error(described_class::Unavailable, /exited/)
+      end
+    end
+
+    it 'is stopped', skip: Gem.win_platform? do
+      closed_stdin do |stdio|
+        process = stdio.instance_variable_get(:@process)
+        expect { stdio.notify({ method: 'probe' }) }.to raise_error(described_class::Unavailable)
+
+        expect(process.join(5)).to be(process)
+      end
+    end
+
+    it 'is reported as exited when its stdin is closed on this side' do
+      stdio = described_class.new([RbConfig.ruby, '-e', server])
+      stdio.send(:start)
+      stdio.instance_variable_get(:@stdin).close
+
+      expect { stdio.request({ id: 1, method: 'probe' }) }.to raise_error(described_class::Unavailable, /exited/)
+    ensure
+      stdio.close
+    end
+  end
+
+  describe '#cancel' do
+    let(:notice) { { method: 'notifications/cancelled', params: { requestId: 1 } } }
+    let(:server) do
+      <<~RUBY
+        require 'json'
+        $stdout.sync = true
+        seen = []
+        while (line = $stdin.gets)
+          message = JSON.parse(line)
+          puts JSON.generate(id: message['id'], seen:) if message['id']
+          seen << message['method']
+        end
+      RUBY
+    end
+    let(:stdio) { described_class.new([RbConfig.ruby, '-e', server]) }
+
+    after { stdio.close }
+
+    it 'starts no process when none is alive' do
+      allow(Open3).to receive(:popen2).and_call_original
+
+      expect(stdio.cancel(notice)).to be_nil
+      expect(Open3).not_to have_received(:popen2)
+    end
+
+    it 'writes the notice when a process is alive' do
+      stdio.request({ id: 1, method: 'probe' })
+
+      expect(stdio.cancel(notice)).to be_nil
+      expect(stdio.request({ id: 2, method: 'probe' })['seen']).to eq(%w[probe notifications/cancelled])
     end
   end
 
@@ -112,6 +269,30 @@ RSpec.describe RubyLLM::MCP::Stdio do
       expect(Array.new(2) { heard.pop(timeout: 3) }).to eq(%i[change change])
     ensure
       request&.join(10)
+      listener&.kill
+      stdio.close
+    end
+
+    it 'hears a change read while a request is being written' do
+      stub_const("#{described_class}::CHECK_INTERVAL", 60)
+      script = <<~RUBY
+        require 'json'
+        $stdin.gets
+        $stdin.readpartial(1)
+        meta = { 'io.modelcontextprotocol/subscriptionId' => 1 }
+        puts JSON.generate(method: 'notifications/tools/list_changed', params: { _meta: meta, text: 'y' * 500_000 })
+        $stdout.flush
+        2.times { $stdin.gets }
+      RUBY
+      stdio = described_class.new([RbConfig.ruby, '-e', script])
+      heard = Queue.new
+      listener = Thread.new { stdio.listen({ id: 1, method: 'subscriptions/listen' }) { heard << :change } }
+      sleep 0.05 until stdio.instance_variable_get(:@subscriptions).any?
+      request = Thread.new { stdio.request({ id: 2, method: 'tools/call', text: 'x' * 500_000 }) }
+
+      expect(heard.pop(timeout: 20)).to eq(:change)
+    ensure
+      request&.kill&.join
       listener&.kill
       stdio.close
     end

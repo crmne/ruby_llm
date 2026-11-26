@@ -6,18 +6,18 @@ require 'open3'
 module RubyLLM
   class MCP
     # stdio. The server is a child process that reads one JSON-RPC message
-    # per line on stdin and writes one per line on stdout. Reads and
-    # writes never block past the deadline, even on a partial line, and a
-    # message written only in part ends the process. It starts on the
+    # per line on stdin and writes one per line on stdout. Reads and writes
+    # never block past the deadline, even on a partial line. A message
+    # written only in part ends the process. It starts on the
     # first request, restarts after it exits, and handles one request at a
     # time. Its stderr is the parent's. A server that predates 2026-07-28
-    # keeps its session for the life of its process, so after a restart
-    # its requests raise SessionExpired until the client initializes it
-    # again. The process inherits only INHERITED_ENV from the application,
-    # and +env+ adds to and overrides those: a Hash, or a callable that
-    # returns one, called each time the process starts. Where the platform
-    # has process groups the server leads its own, so stopping it reaches
-    # the processes it started.
+    # keeps its session for the life of its process, so after a restart its
+    # requests raise SessionExpired until the client initializes it again.
+    # The process inherits only INHERITED_ENV from the application, and +env+
+    # adds to and overrides those: a Hash, or a callable that returns one,
+    # called each time the process starts. Where the platform has process
+    # groups the server leads its own, so stopping it reaches the processes
+    # it started.
     #
     # Subscriptions share the channel, so whichever thread reads a message
     # that belongs to one hands it to the subscription's listener: a
