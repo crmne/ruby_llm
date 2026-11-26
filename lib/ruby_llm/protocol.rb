@@ -852,6 +852,7 @@ module RubyLLM
       if body.nil? || (body.respond_to?(:empty?) && body.empty?)
         raise Error.new('Provider returned an empty response body', response:)
       end
+      raise Error.new('Provider returned an unreadable response body', response:) unless body.is_a?(Hash)
 
       message = parse_completion_body(body, raw: response)
       raise Error.new('Provider returned no completion message', response:) unless message

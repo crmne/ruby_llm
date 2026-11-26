@@ -89,6 +89,7 @@ module RubyLLM
     ].freeze
 
     COPIED_INHERITED_CONFIG = (%i[
+      @description
       @thinking
       @citations
       @code_execution

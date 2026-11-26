@@ -88,16 +88,17 @@ module RubyLLM
       def listen(message, **)
         subscription = Subscription.new(message&.dig(:id), Queue.new)
         process = uninterrupted { @lock.synchronize { subscribe(subscription, message) } }
+        routed = nil
         loop do
-          until subscription.messages.empty?
-            reply = subscription.messages.pop
+          while (reply = routed || subscription.messages.pop(timeout: 0))
+            routed = nil
             return reply if subscription.answer?(reply)
 
             yield reply
           end
           raise Unavailable, "#{name} exited" unless @process.equal?(process)
 
-          receive(subscription)
+          routed = receive(subscription)
         end
       ensure
         uninterrupted { @lock.synchronize { @subscriptions.delete(subscription) } }
@@ -134,9 +135,10 @@ module RubyLLM
           end
           true
         end
-        return sleep(CHECK_INTERVAL) unless read
+        return subscription.messages.pop(timeout: CHECK_INTERVAL) unless read
 
         @stdout.wait_readable(CHECK_INTERVAL) if subscription.messages.empty?
+        nil
       rescue IOError
         raise Unavailable, "#{name} exited"
       end

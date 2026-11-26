@@ -72,12 +72,17 @@ module RubyLLM
           return nil unless tool_calls&.any?
 
           calls = tool_calls.map do |tc|
+            tc = with_call_id(tc) unless stream_keys
             [
               tc['index'] || tc['id'],
               parse_tool_call(tc, parse_arguments:, response:, finish_reason:)
             ]
           end
           stream_keys ? calls.to_h : ToolCall.index(calls.map(&:last), by: :provider_call_id)
+        end
+
+        def with_call_id(call)
+          call['id'].to_s.empty? ? call.merge('id' => SecureRandom.uuid) : call
         end
 
         def parse_tool_call(call, parse_arguments:, response:, finish_reason:)

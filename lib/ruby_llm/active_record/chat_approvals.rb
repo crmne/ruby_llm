@@ -58,7 +58,6 @@ module RubyLLM
           RubyLLM::Chat::ToolCallState.remembered_identity(record.to_llm)
         end
         decide_persisted_tool_call(record, decision)
-        record
       end
 
       def tool_call_record(tool_call)

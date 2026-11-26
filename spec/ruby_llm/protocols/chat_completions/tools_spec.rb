@@ -13,6 +13,17 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Tools do
         .to raise_error(RubyLLM::Error, /Duplicate tool call ID in one response/)
     end
 
+    it 'gives each call sent without an ID its own' do
+      calls = [{}, { 'id' => nil }, { 'id' => '' }].map do |id|
+        { **id, 'function' => { 'name' => 'weather', 'arguments' => '{}' } }
+      end
+
+      ids = described_class.parse_tool_calls(calls).values.map(&:provider_call_id)
+
+      expect(ids).to all(match(/\S/))
+      expect(ids.uniq.size).to eq(3)
+    end
+
     it 'parses tool calls without thought signatures' do
       tool_calls = [
         {

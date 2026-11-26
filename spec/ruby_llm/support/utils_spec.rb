@@ -117,6 +117,17 @@ RSpec.describe RubyLLM::Support::Utils do
     end
   end
 
+  describe '.deep_merge with String and Symbol keys' do
+    it 'merges into the key the original already has' do
+      original = { reasoning: { effort: 'low' }, 'store' => true }
+      overrides = { 'reasoning' => { 'effort' => 'high', 'summary' => 'auto' }, store: false, 'user' => 'ada' }
+
+      expect(described_class.deep_merge(original, overrides)).to eq(
+        reasoning: { effort: 'high', 'summary' => 'auto' }, 'store' => false, 'user' => 'ada'
+      )
+    end
+  end
+
   describe '.deep_dup' do
     it 'duplicates nested arrays and hashes' do
       original = {

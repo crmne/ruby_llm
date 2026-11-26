@@ -16,6 +16,15 @@ module RubyLLM
         @agent_callback_receivers ||= {}
       end
 
+      # A copy of the chat builds these blocks again, so another agent that
+      # takes it over gets its own callbacks.
+      def agent_callback(agent_class, callback)
+        receivers = agent_callback_receivers
+        block = proc { |*args, &run| callback.run(receivers[agent_class], args, &run) }
+        agent_callbacks[block] = [agent_class, callback]
+        block
+      end
+
       OPERATIONS.each do |operation|
         define_method(operation) do |*args, **kwargs, &block|
           return super(*args, **kwargs, &block) unless @rescuer
@@ -41,7 +50,22 @@ module RubyLLM
       def initialize_copy(source)
         super
         @rescuing = false
-        @agent_callback_receivers = @agent_callback_receivers&.dup
+        @agent_callback_receivers = agent_callback_receivers.dup
+        rebind_agent_callbacks
+      end
+
+      private
+
+      def agent_callbacks
+        @agent_callbacks ||= {}.compare_by_identity
+      end
+
+      def rebind_agent_callbacks
+        source = agent_callbacks
+        @agent_callbacks = {}.compare_by_identity
+        @callbacks&.transform_values! do |callbacks|
+          callbacks.map { |block| source.key?(block) ? agent_callback(*source[block]) : block }
+        end
       end
     end
   end

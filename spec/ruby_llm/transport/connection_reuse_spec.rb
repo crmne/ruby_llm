@@ -112,7 +112,7 @@ RSpec.describe RubyLLM::Transport::Connection do
       ssl = { ca_file: '/certs/internal-ca.pem', min_version: :TLS1_2 }
       RubyLLM::Providers::OpenAI.new(configured(faraday_adapter: adapter, ssl:)).connection.post('chat/completions', {})
 
-      expect(seen.to_h.compact).to include(ssl)
+      expect(seen.to_hash).to include(ssl)
     end
 
     it 'keeps its cache key when the TLS options are changed in place afterwards' do
