@@ -38,6 +38,7 @@ concurrency:
 
 jobs:
   build:
+    if: github.repository == 'crmne/ruby_llm'
     runs-on: ubuntu-latest
     outputs:
       deploy: ${{ steps.registry.outputs.deploy }}
