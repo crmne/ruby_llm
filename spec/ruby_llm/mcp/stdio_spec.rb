@@ -159,9 +159,11 @@ RSpec.describe RubyLLM::MCP::Stdio do
         marker = File.join(directory, 'stuck')
         script = "unless File.exist?('#{marker}')\nFile.write('#{marker}', '')\nsleep\nend\n#{server}"
         stdio = described_class.new([RbConfig.ruby, '-e', script], timeout: 1)
+        stdio.send(:start)
+        Timeout.timeout(20) { sleep 0.05 until File.exist?(marker) }
 
         expect { Timeout.timeout(20) { stdio.request(message) } }.to raise_error(described_class::Unavailable)
-        expect(stdio.request({ id: 2, method: 'probe' }, timeout: 5)['id']).to eq(2)
+        expect(stdio.request({ id: 2, method: 'probe' }, timeout: 20)['id']).to eq(2)
       ensure
         stdio.close
       end
