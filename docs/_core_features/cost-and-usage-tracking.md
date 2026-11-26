@@ -192,10 +192,11 @@ The registry holds each provider's list price. You may pay something else: an Az
 RubyLLM.configure do |config|
   config.price "{{ site.models.default_chat }}", provider: :azure, input: 2.2, output: 11
   config.price "{{ site.models.azure_rerank }}", provider: :azure, input: 0.024
+  config.price "{{ site.models.image_openai }}", provider: :openai, input: 5, image_input: 8, image_output: 30
 end
 ```
 
-Prices are in US dollars per million. `input`, `output`, `cache_read`, and `cache_write` price tokens, and `characters`, `audio_seconds`, and `search_units` price the [other units](#characters-audio-seconds-and-search-units). A price you leave out stays as the registry has it, and so do the model's batch and long-context rates.
+Prices are in US dollars per million. `input`, `output`, `cache_read`, and `cache_write` price text tokens, `image_input` and `image_output` price image tokens, and `characters`, `audio_seconds`, and `search_units` price the [other units](#characters-audio-seconds-and-search-units). A price you leave out stays as the registry has it, and so do the model's batch and long-context rates.
 
 Every cost uses your prices from then on: `response.cost`, `chat.cost`, `model.cost_for`, and `model.price(:input)`. `RubyLLM.models.refresh` keeps them, because they live in your configuration. The registry file, or the `ruby_llm_models` table in Rails, keeps the list price.
 

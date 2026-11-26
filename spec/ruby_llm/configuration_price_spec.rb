@@ -50,6 +50,59 @@ RSpec.describe RubyLLM::Configuration, '#price' do
       .to have_attributes(characters: 15, audio_seconds: 100, search_units: 2000)
   end
 
+  it 'sets image input and output prices' do
+    image_model = RubyLLM::Model.new(id: 'gpt-image-2', name: 'GPT Image 2', provider: 'openai')
+
+    RubyLLM.config.price 'gpt-image-2', provider: :openai, input: 5, image_input: 8, image_output: 30
+
+    image_cost = RubyLLM::Cost.new(
+      tokens: RubyLLM::Tokens.new(input: 2_000_000, output: 1_000_000),
+      model: image_model,
+      category: :images,
+      input_details: { 'text_tokens' => 1_000_000, 'image_tokens' => 1_000_000 }
+    )
+
+    expect(image_model.pricing.images.standard.to_h).to eq(input_per_million: 8, output_per_million: 30)
+    expect(image_cost).to have_attributes(input: 13.0, output: 30.0, total: 43.0)
+  end
+
+  it 'sets an image output price without changing text or thinking output prices' do
+    text_pricing = {
+      text_tokens: { standard: { input_per_million: 2, output_per_million: 12, reasoning_output_per_million: 12 } }
+    }
+    image_model = RubyLLM::Model.new(id: 'gemini-3-pro-image', name: 'Gemini 3 Pro Image', provider: 'gemini',
+                                     pricing: text_pricing)
+
+    RubyLLM.config.price 'gemini-3-pro-image', provider: :gemini, image_output: 120
+
+    image_cost = RubyLLM::Cost.new(
+      tokens: RubyLLM::Tokens.new(input: 1_000_000, output: 1_000_000),
+      model: image_model,
+      category: :images
+    )
+
+    expect(image_cost).to have_attributes(input: 2.0, output: 120.0, total: 122.0)
+    expect(image_model.pricing.text_tokens.reasoning_output).to eq(12)
+    expect(cost(image_model, input: 1_000_000, output: 1_000_000))
+      .to have_attributes(input: 2.0, output: 12.0, total: 14.0)
+  end
+
+  it 'keeps other image prices and batch rates when replacing one' do
+    image_pricing = {
+      images: {
+        standard: { input_per_million: 10, output_per_million: 40 },
+        batch: { input_per_million: 5, output_per_million: 20 }
+      }
+    }
+    image_model = RubyLLM::Model.new(id: 'gpt-image-2', name: 'GPT Image 2', provider: 'openai',
+                                     pricing: image_pricing)
+
+    RubyLLM.config.price 'gpt-image-2', provider: :openai, image_output: 30
+
+    expect(image_model.pricing.images.standard.to_h).to eq(input_per_million: 10, output_per_million: 30)
+    expect(image_model.pricing.images.batch.to_h).to eq(input_per_million: 5, output_per_million: 20)
+  end
+
   it 'reaches every cost of the model' do
     RubyLLM.config.price 'gpt-5.6-luna', provider: :azure, input: 0.24, output: 1.44
 
@@ -286,7 +339,8 @@ RSpec.describe RubyLLM::Configuration, '#price' do
   it 'raises on a price it does not know, and names the ones it does' do
     expect { RubyLLM.config.price 'gpt-5.6-luna', provider: :azure, inptu: 1, output: 2 }
       .to raise_error(ArgumentError, 'Unknown price: inptu. Valid prices: input, output, cache_read, ' \
-                                     'cache_write, characters, audio_seconds, search_units')
+                                     'cache_write, image_input, image_output, characters, audio_seconds, ' \
+                                     'search_units')
   end
 
   it 'raises without a price' do
