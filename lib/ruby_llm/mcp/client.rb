@@ -14,12 +14,12 @@ module RubyLLM
     # Servers that predate 2026-07-28 may announce that their tools,
     # prompts, or resources changed on the stream of any request. Those
     # notifications reach the block given to ::new once the request is
-    # answered, so the block can make requests of its own. #listen opens a
-    # subscription for them instead: subscriptions/listen on newer servers,
-    # resources/subscribe and the session's own stream on older ones, which
-    # never announce the status of tasks. Their subscription counts as
-    # acknowledged once a ping confirms the session, starting a new one if
-    # it ended.
+    # answered and the client connected, so the block can make requests of
+    # its own. #listen opens a subscription for them instead:
+    # subscriptions/listen on newer servers, resources/subscribe and the
+    # session's own stream on older ones, which never announce the status
+    # of tasks. Their subscription counts as acknowledged once a ping
+    # confirms the session, starting a new one if it ended.
     #
     # An MCP builds its own client. Applications use one only to read
     # #meta, when they send a server requests of their own.
@@ -59,7 +59,7 @@ module RubyLLM
       end
 
       def server # :nodoc:
-        @connecting.synchronize { @server ||= discover || handshake }
+        connecting { @server ||= discover || handshake }
       end
 
       def request(method, params = {}, headers: {}, &) # :nodoc:
@@ -130,6 +130,19 @@ module RubyLLM
 
       private
 
+      def connecting
+        result, changes = @connecting.synchronize do
+          @changes = []
+          [yield, @changes]
+        end
+        announce(changes)
+        result
+      end
+
+      def announce(changes)
+        changes.each { |change| @on_change&.call(change) }
+      end
+
       def discover
         @version = VERSION
         result = call('server/discover', timeout: DISCOVERY_TIMEOUT)
@@ -173,7 +186,7 @@ module RubyLLM
         cancel(request)
         raise
       ensure
-        changes.each { |change| @on_change&.call(change) }
+        @connecting.owned? ? @changes.concat(changes) : announce(changes)
       end
 
       def subscribe(changes)
@@ -205,7 +218,7 @@ module RubyLLM
       end
 
       def reconnect(expired)
-        @connecting.synchronize { @server = handshake if @server.nil? || @transport.session.equal?(expired) }
+        connecting { @server = handshake if @server.nil? || @transport.session.equal?(expired) }
       end
 
       def cancels?(notification, request)
