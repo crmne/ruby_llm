@@ -136,7 +136,7 @@ begin
   response = chat.ask "Some specific query"
 rescue RubyLLM::ForbiddenError => e
   puts "Access forbidden: #{e.message}"
-  if e.response&.body&.include?("invalid_organization")
+  if e.error_code == "invalid_organization"
     puts "Hint: Check if your API key is enabled for the correct OpenAI organization."
   end
   puts "Status Code: #{e.response&.status}"
