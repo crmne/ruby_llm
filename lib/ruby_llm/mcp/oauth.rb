@@ -228,6 +228,10 @@ module RubyLLM
         end
       end
 
+      def identity
+        [key, @client_id]
+      end
+
       def deauthorize
         synchronize do
           @credential = nil

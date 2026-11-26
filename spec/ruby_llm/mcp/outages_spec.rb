@@ -221,4 +221,45 @@ RSpec.describe RubyLLM::MCP::Outages do
       expect(tool_result({ 'code' => -32_603, 'message' => 'Internal error' })).not_to include('partly run')
     end
   end
+
+  describe 'a rate limit' do
+    let(:url) { 'https://saas.example.com/mcp' }
+
+    before do
+      stub_request(:any, /saas.example.com/).to_return(status: 429, headers: { 'Retry-After' => '3600' })
+    end
+
+    def expect_only_first_down(limited, other)
+      expect(described_class.tools(limited.call)).to be_empty
+      expect(described_class.down?(limited.call)).to be(true)
+      expect(described_class.down?(other.call)).to be(false)
+    end
+
+    it 'sits the server out only for the bearer token it limited' do
+      url = self.url
+      tenants = Class.new(RubyLLM::MCP) do
+        url url
+        inputs :user
+        bearer_token { user }
+      end
+
+      expect_only_first_down(-> { tenants.new(user: 'one') }, -> { tenants.new(user: 'two') })
+    end
+
+    it 'sits the server out only for the headers it limited' do
+      expect_only_first_down(*%w[one two].map { |key| -> { RubyLLM.mcp(url:, headers: { 'X-Api-Key' => key }) } })
+    end
+
+    it 'sits the server out only for the OAuth owner it limited' do
+      expect_only_first_down(*%w[one two].map { |owner| -> { RubyLLM.mcp(url:, oauth: { owner: }) } })
+    end
+
+    it 'still sits an unavailable server out for every bearer token' do
+      stub_request(:any, /saas.example.com/).to_return(status: 503)
+
+      described_class.tools(RubyLLM.mcp(url:, bearer_token: 'one'))
+
+      expect(described_class.down?(RubyLLM.mcp(url:, bearer_token: 'two'))).to be(true)
+    end
+  end
 end
