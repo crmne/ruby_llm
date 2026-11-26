@@ -21,6 +21,8 @@ RSpec.describe RubyLLM::MCP::ResourceTemplate do
     ['search{?q,lang}', { q: 'ruby', lang: nil }] => 'search?q=ruby',
     ['search{?q,tags}', { q: 'ruby', tags: [] }] => 'search?q=ruby',
     ['search{?q,lang}', { q: 'ruby', lang: '' }] => 'search?q=ruby&lang=',
+    ['item{;id,lang}', { id: 5, lang: '' }] => 'item;id=5;lang',
+    ['item{;tags*}', { tags: ['x', ''] }] => 'item;tags=x;tags',
     ['file:///{root}{/dir,name}', { root: 'app', dir: nil, name: 'Gemfile' }] => 'file:///app/Gemfile'
   }.each do |(template, variables), expanded|
     it "expands #{template} with #{variables}" do

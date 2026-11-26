@@ -60,10 +60,13 @@ module RubyLLM
         return if values.empty?
 
         parts = values.map { |part| encode(length ? part.to_s[0, length.to_i] : part.to_s, reserved) }
-        named = NAMED_OPERATORS.include?(operator)
-        return parts.map { |part| named ? "#{name}=#{part}" : part }.join(separator) if explode
+        parts = [parts.join(',')] unless explode
+        parts = parts.map { |part| name_value(name, part, operator) } if NAMED_OPERATORS.include?(operator)
+        parts.join(separator)
+      end
 
-        named ? "#{name}=#{parts.join(',')}" : parts.join(',')
+      def self.name_value(name, value, operator) # :nodoc:
+        operator == ';' && value.empty? ? name : "#{name}=#{value}"
       end
 
       def self.encode(value, reserved) # :nodoc:
