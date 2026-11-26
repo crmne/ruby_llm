@@ -111,6 +111,15 @@ RSpec.describe RubyLLM::Providers::MiniMax do
       expect(sent_body['tools']).to eq([{ 'type' => 'web_search_20250305', 'name' => 'web_search' }])
     end
 
+    it 'stays on Messages when the chat holds a video, which Responses cannot carry' do
+      stub_messages(reply([{ type: 'text', text: 'Found it' }]))
+      video = RubyLLM::Attachment.new(StringIO.new('mp4'), filename: 'clip.mp4')
+
+      context.chat(model: model_id, provider: :minimax).with_provider_tools(:web_search).ask('Search', with: video)
+
+      expect(sent_body['tools']).to eq([{ 'type' => 'web_search_20250305', 'name' => 'web_search' }])
+    end
+
     it 'stays on Messages for a thinking budget, which Responses has no field for' do
       stub_messages(reply([{ type: 'text', text: 'Found it' }]))
 
