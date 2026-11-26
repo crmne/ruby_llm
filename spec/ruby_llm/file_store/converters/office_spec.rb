@@ -194,9 +194,9 @@ RSpec.describe RubyLLM::FileStore::Converters::Office do
             <numFmt numFmtId="166" formatCode="[h]:mm:ss"/>
           </numFmts>
           <cellStyleXfs count="1"><xf numFmtId="14"/></cellStyleXfs>
-          <cellXfs count="7">
+          <cellXfs count="8">
             <xf numFmtId="0"/><xf numFmtId="14"/><xf numFmtId="164"/><xf numFmtId="165"/>
-            <xf numFmtId="166"/><xf numFmtId="22"/><xf numFmtId="18"/>
+            <xf numFmtId="166"/><xf numFmtId="22"/><xf numFmtId="18"/><xf numFmtId="46"/>
           </cellXfs>
         </styleSheet>
       XML
@@ -219,6 +219,7 @@ RSpec.describe RubyLLM::FileStore::Converters::Office do
       expect(value(46_112, 0)).to eq('46112')
       expect(value(46_112, 3)).to eq('46112')
       expect(value(1.5, 4)).to eq('1.5')
+      expect(value(1.5, 7)).to eq('1.5')
     end
 
     it 'reads times and dates with times' do
