@@ -34,7 +34,7 @@ Provider operation errors inherit from `RubyLLM::Error`. RubyLLM maps the provid
 | `RubyLLM::BadRequestError` | 400 | No |
 | `RubyLLM::UnsupportedParameterError` | A 400 to a chat request, in OpenAI's error format, that names a parameter the model doesn't take, such as a temperature. Other operations raise `BadRequestError` for it | No |
 | `RubyLLM::UnauthorizedError` | 401, or a 400 or 403 with a recognized invalid-credentials message, such as `Incorrect API key` | No |
-| `RubyLLM::PaymentRequiredError` | 402, or a 400 saying the credit balance is too low | No |
+| `RubyLLM::PaymentRequiredError` | 402, a 400 saying the credit balance is too low, or a 429 with the `insufficient_quota` error code | No |
 | `RubyLLM::ForbiddenError` | Any other 403 | No |
 | `RubyLLM::ContextLengthExceededError` | 400 or 413 with a recognized context or token limit message, or a 429 with one and no rate limit message | No |
 | `RubyLLM::RateLimitError` | Any other 429, or a 400 with a recognized rate limit message, such as `quota exceeded`, and no context or token limit message | Yes |
@@ -212,7 +212,7 @@ Leave out `on:` unless you have a reason to change it. The default, `RubyLLM::Fa
 
 | What the provider sends | Raised as |
 | --- | --- |
-| HTTP 429 from any provider, or a stream error event the provider tags as a rate limit or quota error: Anthropic's `rate_limit_error`, OpenAI's `rate_limit_exceeded` or `insufficient_quota`, Bedrock's `throttlingException` | `RubyLLM::RateLimitError`, or `RubyLLM::ContextLengthExceededError` when RubyLLM recognizes the message as a context length error and not as a rate limit |
+| HTTP 429 from any provider, or a stream error event the provider tags as a rate limit or quota error: Anthropic's `rate_limit_error`, OpenAI's `rate_limit_exceeded`, Bedrock's `throttlingException` | `RubyLLM::RateLimitError`, or `RubyLLM::ContextLengthExceededError` when RubyLLM recognizes the message as a context length error and not as a rate limit, or `RubyLLM::PaymentRequiredError` for OpenAI's `insufficient_quota` |
 | HTTP 500, and a Bedrock stream error of a type not listed here, such as `modelStreamErrorException` | `RubyLLM::ServerError` |
 | HTTP 502, 503 or 504: how OpenAI, Gemini and Bedrock say they are overloaded or unavailable, and how OpenRouter reports a failed upstream provider | `RubyLLM::ServiceUnavailableError` |
 | HTTP 529: Anthropic's overload, and an `overloaded_error` mid-stream | `RubyLLM::OverloadedError` |

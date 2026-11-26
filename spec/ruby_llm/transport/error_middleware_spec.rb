@@ -339,6 +339,26 @@ RSpec.describe RubyLLM::Transport::ErrorMiddleware do
       end
     end
 
+    it 'maps a 429 with the insufficient_quota code to PaymentRequiredError' do
+      message = 'You exceeded your current quota, please check your plan and billing details.'
+      provider = instance_double(RubyLLM::Provider, parse_error: message, parse_error_code: 'insufficient_quota')
+      response = Struct.new(:status, :body).new(429, '{}')
+
+      expect do
+        described_class.parse_error(provider: provider, response: response)
+      end.to raise_error(RubyLLM::PaymentRequiredError, message)
+    end
+
+    it 'keeps a quota 429 with another code as RateLimitError' do
+      message = 'You exceeded your current quota, please check your plan and billing details.'
+      provider = instance_double(RubyLLM::Provider, parse_error: message, parse_error_code: 'RESOURCE_EXHAUSTED')
+      response = Struct.new(:status, :body).new(429, '{}')
+
+      expect do
+        described_class.parse_error(provider: provider, response: response)
+      end.to raise_error(RubyLLM::RateLimitError, message)
+    end
+
     it 'maps a 413 that calls the request too large to ContextLengthExceededError' do
       msg = 'failed to process LLM request: request was too large'
       provider = instance_double(RubyLLM::Provider, parse_error: msg)

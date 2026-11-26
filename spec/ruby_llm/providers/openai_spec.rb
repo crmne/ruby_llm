@@ -103,4 +103,38 @@ RSpec.describe RubyLLM::Providers::OpenAI do
       expect(provider.retry_delay(Faraday::Env.new)).to be_nil
     end
   end
+
+  describe 'an account out of quota' do
+    let(:context) do
+      RubyLLM.context do |config|
+        config.openai_api_key = 'test-key'
+        config.max_retries = 2
+        config.retry_interval = 0
+        config.retry_interval_randomness = 0
+      end
+    end
+
+    it 'raises PaymentRequiredError without retrying' do
+      body = { error: { message: 'You exceeded your current quota, please check your plan and billing details.',
+                        type: 'insufficient_quota', param: nil, code: 'insufficient_quota' } }
+      request = stub_request(:post, %r{\Ahttps://api\.openai\.com/})
+                .to_return(status: 429, headers: { 'Content-Type' => 'application/json' }, body: body.to_json)
+
+      expect { context.chat(model: model_for(:openai), provider: :openai).ask('Hi') }
+        .to raise_error(RubyLLM::PaymentRequiredError) { |error| expect(error.error_code).to eq('insufficient_quota') }
+      expect(request).to have_been_requested.once
+    end
+
+    it 'raises PaymentRequiredError for a stream error event' do
+      event = { type: 'error', code: 'insufficient_quota',
+                message: 'You exceeded your current quota, please check your plan and billing details.' }
+      request = stub_request(:post, %r{\Ahttps://api\.openai\.com/})
+                .to_return(status: 200, headers: { 'Content-Type' => 'text/event-stream' },
+                           body: "event: error\ndata: #{event.to_json}\n\n")
+
+      expect { context.chat(model: model_for(:openai), provider: :openai).ask('Hi') { |_chunk| nil } }
+        .to raise_error(RubyLLM::PaymentRequiredError)
+      expect(request).to have_been_requested.once
+    end
+  end
 end
