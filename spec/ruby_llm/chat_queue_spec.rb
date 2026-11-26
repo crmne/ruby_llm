@@ -259,6 +259,19 @@ RSpec.describe RubyLLM::Chat do
       expect(chat.provider).not_to have_received(:complete)
     end
 
+    it 'keeps the message queued and out of the conversation when a timeout stops the callback' do
+      chat.around_join do |_queued, join|
+        join.call
+        sleep 5
+      end
+      chat.queue('Hello')
+      chat.queue('Last')
+
+      expect { Timeout.timeout(0.1) { chat.complete } }.to raise_error(Timeout::Error)
+      expect(chat.messages).to be_empty
+      expect(chat.queued_messages.map(&:content)).to eq(%w[Hello Last])
+    end
+
     it 'rejects attributes for join on a plain chat' do
       chat.around_join { |queued, join| join.call(sender: queued.sender) }
       chat.queue('Hello', sender: :alice)
@@ -394,6 +407,15 @@ RSpec.describe RubyLLM::Chat do
       chat.queue 'Second'
 
       expect { chat.ask 'Hello' }.to raise_error(IOError)
+      expect(chat.queued_messages.map(&:content)).to eq(['Second'])
+    end
+
+    it 'keeps later messages queued, and the joined one out, when a timeout stops after_message' do
+      chat.after_message { |_message| sleep 5 }
+      chat.queue 'First'
+      chat.queue 'Second'
+
+      expect { Timeout.timeout(0.1) { chat.complete } }.to raise_error(Timeout::Error)
       expect(chat.queued_messages.map(&:content)).to eq(['Second'])
     end
 
