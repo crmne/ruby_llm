@@ -104,5 +104,13 @@ RSpec.describe RubyLLM::Providers::VertexAI::Anthropic::Batches do
       expect(message.content).to eq('Hello')
       expect(message.model).to eq('claude-haiku-4-5')
     end
+
+    it 'reports the error of a failed row whose response is empty' do
+      allow(RubyLLM.logger).to receive(:warn)
+      line = { 'custom_id' => '1', 'status' => 'Bad Request', 'response' => {} }
+
+      expect(protocol.send(:parse_vertex_batch_result, line, 0)).to eq([1, nil, :failed])
+      expect(RubyLLM.logger).to have_received(:warn).with('Batch request 1 failed: Bad Request')
+    end
   end
 end

@@ -156,5 +156,13 @@ RSpec.describe RubyLLM::Providers::VertexAI::ChatCompletions::Batches do
       expect(message).to be_nil
       expect(RubyLLM.logger).to have_received(:warn).with('Batch request 5 failed: quota exceeded')
     end
+
+    it 'reports the error of a failed row whose response is empty' do
+      allow(RubyLLM.logger).to receive(:warn)
+      line = { 'custom_id' => '1', 'status' => 'Bad Request', 'response' => {} }
+
+      expect(protocol.send(:parse_vertex_batch_result, line, 0)).to eq([1, nil, :failed])
+      expect(RubyLLM.logger).to have_received(:warn).with('Batch request 1 failed: Bad Request')
+    end
   end
 end

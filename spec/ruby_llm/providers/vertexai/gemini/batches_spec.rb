@@ -156,6 +156,15 @@ RSpec.describe RubyLLM::Providers::VertexAI::Gemini::Batches do
 
       expect(protocol.send(:parse_vertex_batch_result, line, 0)).to eq([1, nil, :failed])
     end
+
+    it 'reports the error of a failed row whose response is empty' do
+      allow(RubyLLM.logger).to receive(:warn)
+      line = { 'request' => { 'labels' => { 'ruby_llm_batch_id' => '1' } }, 'status' => 'Bad Request',
+               'response' => {} }
+
+      expect(protocol.send(:parse_vertex_batch_result, line, 0)).to eq([1, nil, :failed])
+      expect(RubyLLM.logger).to have_received(:warn).with('Batch request 1 failed: Bad Request')
+    end
   end
 
   describe '#find_batch and #cancel_batch' do

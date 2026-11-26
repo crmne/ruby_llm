@@ -18,22 +18,13 @@ module RubyLLM
 
           def parse_vertex_batch_result(line, fallback_index)
             index = vertex_batch_result_index(line, fallback_index)
+            body = vertex_batch_response(line)
 
-            if line['response']
-              body = line['response']
+            if body
               [index, parse_completion_body(body, raw: body)]
             else
               [index, nil, batch_failure(index, vertex_batch_status_message(line))]
             end
-          end
-
-          # Gemini prediction rows carry status as a plain string, empty on
-          # success and the error text on failure.
-          def vertex_batch_status_message(line)
-            status = line['status']
-            message = status.is_a?(Hash) ? status['message'] : status
-
-            message.to_s.empty? ? batch_error_message(line) : message
           end
         end
       end

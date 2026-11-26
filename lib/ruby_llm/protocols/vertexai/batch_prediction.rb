@@ -145,6 +145,21 @@ module RubyLLM
           raise NotImplementedError
         end
 
+        def vertex_batch_response(line)
+          response = line['response']
+          response = response['body'] || response if response.is_a?(Hash)
+          response unless response.nil? || response.empty?
+        end
+
+        # Prediction rows carry status as a plain string, empty on success
+        # and the error text on failure, or as an error with a message.
+        def vertex_batch_status_message(line)
+          status = line['status']
+          message = status.is_a?(Hash) ? status['message'] : status
+
+          message.to_s.empty? ? batch_error_message(line) : message
+        end
+
         def vertex_output_uri(job)
           job.dig('outputInfo', 'gcsOutputDirectory') ||
             job.dig('outputConfig', 'gcsDestination', 'outputUriPrefix')
