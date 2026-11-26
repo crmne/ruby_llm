@@ -355,6 +355,27 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(chat.model_id).to eq(model_id)
     end
 
+    it 'keeps the model it had when #with_model cannot find the new one' do
+      chat = Chat.create!(model: model_for(:openai))
+      provider = chat.provider
+
+      expect { chat.with_model('no-such-model', provider: :anthropic, protocol: :responses) }
+        .to raise_error(RubyLLM::ModelNotFoundError)
+
+      expect(chat).to have_attributes(model_id: model_for(:openai), provider:, protocol: nil)
+      expect(chat).not_to be_changed
+      expect(chat.to_llm.model.id).to eq(model_for(:openai))
+    end
+
+    it 'keeps an unsaved model when #with_model cannot find the new one' do
+      chat = Chat.new(model: model_for(:anthropic))
+
+      expect { chat.with_model('no-such-model') }.to raise_error(RubyLLM::ModelNotFoundError)
+
+      chat.save!
+      expect(chat.reload.model_id).to eq(model_for(:anthropic))
+    end
+
     it 'switches models with #with_model' do
       chat = Chat.create!(model: model_id)
 

@@ -723,16 +723,19 @@ module RubyLLM
       # record and updating the underlying chat. Falls back to the configured
       # default model when +model_name+ is +nil+. Pass +protocol:+ to override
       # the wire protocol the provider would pick for the model. Returns +self+.
+      # The chat keeps the model it had when +model_name+ can't be resolved.
       #
       #   chat.with_model 'claude-sonnet-5'
       #
       def with_model(model_name, provider: nil, protocol: nil, assume_model_exists: false)
         model_name ||= (context&.config || RubyLLM.config).default_model
-        self.model = model_name
-        self.provider = provider if provider
-        self.protocol = protocol
-        self.assume_model_exists = assume_model_exists
-        resolve_model
+        keeping_model_on_failure do
+          self.model = model_name
+          self.provider = provider if provider
+          self.protocol = protocol
+          self.assume_model_exists = assume_model_exists
+          resolve_model
+        end
         save!
         to_llm
         self
@@ -1082,6 +1085,16 @@ module RubyLLM
 
       def usage_records_by_entry
         @usage_records_by_entry ||= {}.compare_by_identity
+      end
+
+      def keeping_model_on_failure
+        previous = [model, @pending_model_id, @pending_provider, protocol, assume_model_exists]
+        yield
+      rescue StandardError
+        self.model, pending_model_id, pending_provider, self.protocol, self.assume_model_exists = previous
+        @pending_model_id = pending_model_id
+        @pending_provider = pending_provider
+        raise
       end
 
       def resolve_model
