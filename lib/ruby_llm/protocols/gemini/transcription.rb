@@ -86,8 +86,7 @@ module RubyLLM
           RubyLLM::Transcription.new(
             text: text,
             model: model,
-            input_tokens: usage[:input_tokens],
-            output_tokens: usage[:output_tokens]
+            **usage
           )
         end
 
@@ -99,7 +98,8 @@ module RubyLLM
           return unless data.dig('candidates', 0).nil? || normalize_finish_reason(reason) == :content_filter
 
           usage = parse_usage(data)
-          @usage_tracker&.observe_tokens(Tokens.new(input: usage[:input_tokens], output: usage[:output_tokens]))
+          @usage_tracker&.observe_tokens(Tokens.new(input: usage[:input_tokens], output: usage[:output_tokens],
+                                                    cache_read: usage[:cache_read_tokens]))
           raise ContentFilterError.new(['Gemini blocked the transcription', reason].compact.join(': '), response:)
         end
 
@@ -117,8 +117,9 @@ module RubyLLM
           return { input_tokens: nil, output_tokens: nil } unless metadata
 
           {
-            input_tokens: metadata['promptTokenCount'],
-            output_tokens: sum_output_tokens(metadata)
+            input_tokens: input_tokens(data),
+            output_tokens: sum_output_tokens(metadata),
+            cache_read_tokens: metadata['cachedContentTokenCount']
           }
         end
 
