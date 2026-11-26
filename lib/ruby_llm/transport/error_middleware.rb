@@ -94,15 +94,8 @@ module RubyLLM
       end
 
       def streaming_error_response(response)
-        stored_response = if response.respond_to?(:env) && response.env.respond_to?(:[])
-                            response.env[:streaming_error_response]
-                          elsif response.respond_to?(:[])
-                            response[:streaming_error_response]
-                          end
-
-        stored_response || response
-      rescue NameError
-        response
+        env = response.respond_to?(:env) ? response.env : response
+        env[:streaming_error_response] || response
       end
 
       class << self
