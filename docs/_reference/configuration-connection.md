@@ -256,7 +256,7 @@ embedding = ctx.embed("Ruby is a joy to write")
 transcript = ctx.transcribe("interview.mp3")
 ```
 
-`paint`, `animate`, `animate_later`, `embed`, `embed_later`, `moderate`, `speak`, `transcribe`, `ocr`, `rerank`, `upload`, `download`, `cache`, and `mcp` all use the context's keys, endpoints, and connection settings. So do the downloads RubyLLM performs on your behalf: fetching a URL attachment for a chat, or reading `image.to_blob` and `video.to_blob` from a provider's hosted file, goes through the context's `http_proxy`, `ssl`, `request_timeout`, and `connect_timeout` rather than the global ones.
+`chat`, `workflow`, `count_tokens`, `tokenize`, `paint`, `animate`, `animate_later`, `embed`, `embed_later`, `moderate`, `judge`, `research`, `research_later`, `speak`, `transcribe`, `ocr`, `rerank`, `upload`, `download`, `cache`, and `mcp` all use the context's keys, endpoints, and connection settings. So do the downloads RubyLLM performs on your behalf: fetching a URL attachment for a chat, or reading `image.to_blob` and `video.to_blob` from a provider's hosted file, goes through the context's `http_proxy`, `ssl`, `request_timeout`, and `connect_timeout` rather than the global ones.
 
 ### Multi-Tenant Applications
 
