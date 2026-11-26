@@ -239,6 +239,13 @@ RSpec.describe RubyLLM::MCP::Stdio do
       expect(stdio.cancel(notice)).to be_nil
       expect(stdio.request({ id: 2, method: 'probe' })['seen']).to eq(%w[probe notifications/cancelled])
     end
+
+    it 'gives up on a notice the server cannot receive' do
+      stdio.send(:start)
+      stdio.instance_variable_get(:@stdin).close
+
+      expect(stdio.cancel(notice)).to be_nil
+    end
   end
 
   context 'with a request in flight while a subscription listens' do

@@ -84,7 +84,9 @@ module RubyLLM
       end
 
       def cancel(notification, **)
-        @lock.synchronize { write(notification) if @process&.alive? }
+        @lock.synchronize { write(notification, monotonic_now + SHUTDOWN_GRACE) if @process&.alive? }
+        nil
+      rescue Unavailable
         nil
       end
 
