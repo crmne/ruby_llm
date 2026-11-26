@@ -67,7 +67,7 @@ end
 
 `request_timeout` also bounds opening the connection, and a connection that fails to open is retried, so a host you can't reach holds a request for `request_timeout` on every attempt. Set `connect_timeout` to give up on such a host sooner without cutting short a slow response. It covers finding the host, connecting, and the TLS handshake. Waiting for the answer after that, including the answer to a WebSocket upgrade, stays under `request_timeout`.
 
-When a provider reports how long to wait (the standard `Retry-After` header, OpenAI's `x-ratelimit-reset-requests` and `x-ratelimit-reset-tokens` headers, or the `RetryInfo` detail in a Gemini or Vertex AI error body), retries wait that long instead of the backoff interval. If the requested wait exceeds `retry_max_interval`, the request fails immediately with `RubyLLM::RateLimitError` rather than sleeping.
+When a provider reports how long to wait (the standard `Retry-After` header, the `retry-after-ms` header, OpenAI's `x-ratelimit-reset-requests` and `x-ratelimit-reset-tokens` headers, or the `RetryInfo` detail in a Gemini or Vertex AI error body), retries wait that long instead of the backoff interval. If the requested wait exceeds `retry_max_interval`, the request fails immediately with `RubyLLM::RateLimitError` rather than sleeping.
 
 A chat with [fallbacks]({% link _advanced/error-handling.md %}#model-fallbacks) left to try doesn't retry a timeout, a failed connection, or a wait longer than two seconds on the same model: the next fallback takes the request at once.
 
