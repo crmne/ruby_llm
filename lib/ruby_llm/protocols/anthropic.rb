@@ -94,11 +94,20 @@ module RubyLLM
       private
 
       def sync_response(payload, additional_headers = {})
-        super(payload, beta_headers(additional_headers, payload))
+        with_advisor_usage { super(payload, beta_headers(additional_headers, payload)) }
       end
 
       def stream_response(payload, additional_headers = {}, &)
-        super(payload, beta_headers(additional_headers, payload), &)
+        with_advisor_usage { super(payload, beta_headers(additional_headers, payload), &) }
+      end
+
+      # The advisor tool runs another model inside the request, which the
+      # API bills at that model's rates.
+      def with_advisor_usage
+        @advisor_iterations = []
+        message = yield
+        @advisor_iterations.each { |usage| @usage_tracker.add(model: usage['model'], tokens: advisor_tokens(usage)) }
+        message
       end
 
       def post_count_tokens(payload)
