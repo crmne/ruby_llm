@@ -106,4 +106,28 @@ RSpec.describe RubyLLM::Support::Cancellation do
 
     expect(checks).to eq([:parent])
   end
+
+  describe '.nest' do
+    it 'checks the outer checkpoint before its own' do
+      checks = []
+
+      described_class.nest(-> { checks << :outer }) do
+        described_class.nest(-> { checks << :inner }) { described_class.check }
+      end
+
+      expect(checks).to eq(%i[outer inner])
+    end
+
+    it 'checks nothing in a thread that outlives the block' do
+      checks = []
+      finished = Queue.new
+      thread = described_class.nest(-> { checks << :outer }) do
+        Thread.new { finished.pop.then { described_class.check } }
+      end
+      finished << true
+      thread.join
+
+      expect(checks).to be_empty
+    end
+  end
 end

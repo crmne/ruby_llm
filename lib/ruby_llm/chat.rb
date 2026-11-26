@@ -677,7 +677,8 @@ module RubyLLM
     # result are closed as unfinished, so the next #ask can go on and no
     # tool runs twice. A tool that already returned keeps its result. The
     # text a cancelled stream showed stays as a reply that is
-    # Message#cancelled?.
+    # Message#cancelled?. A chat that a running tool uses, such as its
+    # agent's, stops at its next checkpoint too.
     def cancel
       @cancelled = true
       self
@@ -1916,6 +1917,11 @@ module RubyLLM
     end
 
     def raise_if_cancelled!
+      observe_cancellation
+      Support::Cancellation.check
+    end
+
+    def observe_cancellation
       @cancelled = true if @run.cancellation_requested?
       raise CancelledError if @cancelled
     end
@@ -1924,7 +1930,7 @@ module RubyLLM
     # stops at its failure. A chat cancelled while a request failed was going
     # to stop anyway, so the cancellation is what the caller hears about.
     def cancellable_request(&)
-      Support::Cancellation.watch(-> { raise_if_cancelled! }, &)
+      Support::Cancellation.nest(-> { observe_cancellation }, &)
     rescue Error
       raise_if_cancelled!
       raise
@@ -2903,7 +2909,7 @@ module RubyLLM
       }
 
       RubyLLM.instrument('tool_call.ruby_llm', payload, config: @config) do |event|
-        result = Support::Cancellation.watch(-> { raise_if_cancelled! }) do
+        result = Support::Cancellation.nest(-> { observe_cancellation }) do
           Support::ProgressReporter.listen(progress_listener(tool_call)) { invoke_tool(tool, tool_call, args) }
         end
         event[:result] = result

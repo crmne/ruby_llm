@@ -116,6 +116,26 @@ RSpec.describe RubyLLM::AgentTool do
     expect(sub_requests.sole.first).to eq(:alice)
   end
 
+  it 'stops the agent at its next check when the chat that called it is cancelled' do
+    ran = []
+    research_agent.tools(Class.new(RubyLLM::Tool) do
+      define_singleton_method(:tool_name) { 'lookup' }
+      define_method(:execute) { ran << :lookup }
+    end)
+    stub_subagents(research_agent)
+    chat = parent_chat(calling('research_agent', { 'task' => 'Look it up', 'region' => 'EU' }), answer('Done'))
+    allow(sub_answers).to receive(:shift) do
+      chat.cancel
+      sub_requests.one? ? calling('lookup', {}) : answer('Found it')
+    end
+
+    expect { chat.with_tools(research_agent).ask('Go') }.to raise_error(RubyLLM::CancelledError)
+    expect(sub_requests.size).to eq(1)
+    expect(ran).to be_empty
+    expect(chat).not_to be_cancelled
+    expect(chat.messages.last).to be_cancelled
+  end
+
   it 'goes wherever tools go, such as another agent' do
     stub_subagents(research_agent)
     lead = Class.new(RubyLLM::Agent) { tools ResearchAgent.to_tool(region: 'US') }

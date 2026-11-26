@@ -117,7 +117,7 @@ Call `cancel` to stop the current in-flight chat operation. You can call it from
 RubyLLM checks for cancellation before model requests, before tool execution, and at every event in a stream. When cancellation is observed, it raises `RubyLLM::CancelledError` and clears the cancellation flag so the chat can be reused. So `cancel` takes effect:
 
 * At the next event, while a reply streams. A stream that only sends keep-alive comments has no event to stop at, so it goes on like a stalled one.
-* When the tool returns, while a tool is working. RubyLLM can't safely interrupt Ruby code. A sandbox run isn't stopped either: it finishes first, or ends at its timeout.
+* When the tool returns, while a tool is working. RubyLLM can't safely interrupt Ruby code. An agent or chat the tool runs stops at its own next check. A sandbox run isn't stopped either: it finishes first, or ends at its timeout.
 * At `request_timeout`, while a request receives nothing at all. It isn't retried, and the partial reply stays. Set [`stream_idle_timeout`]({% link _reference/configuration-connection.md %}#stalled-streams) to bound how long a stalled stream can hold a chat without shortening long answers.
 
 With `acts_as_chat`, a request from another process is read at most once a second at those same points.
