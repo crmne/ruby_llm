@@ -827,6 +827,21 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
 
       expect(RubyLLM::ActiveRecord::ToolCall.find_by(tool_call_id: call.id).result).to eq(result)
     end
+
+    it 'stores a NUL as its escape, which PostgreSQL accepts' do
+      call = tool_call(arguments: { 'q' => ["a\u0000"] })
+      chat = Chat.create!(model: model_id)
+      reply = chat.add_message(RubyLLM::Message.new(role: :assistant, content: "b\u0000",
+                                                    thinking: RubyLLM::Thinking.build(text: "c\u0000"),
+                                                    raw_content: [{ 'text' => "b\u0000" }],
+                                                    tool_calls: { call.id => call }))
+      result = chat.add_message(RubyLLM::Message.new(role: :tool, content: "d\u0000", tool_call_id: call.id))
+
+      expect(reply.reload).to have_attributes(content: 'b\u0000', thinking_text: 'c\u0000',
+                                              raw_content: [{ 'text' => 'b\u0000' }])
+      expect(reply.ruby_llm_tool_calls.sole.arguments).to eq('q' => ['a\u0000'])
+      expect(result.reload.content).to eq('d\u0000')
+    end
   end
 
   describe '#cache_until_here' do

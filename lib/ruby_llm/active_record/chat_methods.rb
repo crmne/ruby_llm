@@ -764,7 +764,7 @@ module RubyLLM
 
         tool_call = find_tool_call(llm_message.tool_call_id) if llm_message.tool_call_id
         if tool_call && tool_call.result_id.nil?
-          tool_call.mcp_result = llm_message.mcp_result&.dump if tool_call.has_attribute?(:mcp_result)
+          tool_call.mcp_result = without_nul(llm_message.mcp_result&.dump) if tool_call.has_attribute?(:mcp_result)
           tool_call.update!(result: message_record)
         end
 
@@ -1341,7 +1341,7 @@ module RubyLLM
         assign_supported_attribute(attrs, :cache_until_here, message.cache_until_here?)
         assign_supported_attribute(attrs, :cache_ttl, message.cache_ttl)
         assign_fallback_attributes(attrs, message) if message.stood_in?
-        attrs
+        without_nul(attrs)
       end
 
       def assign_fallback_attributes(attributes, message)
@@ -1358,15 +1358,20 @@ module RubyLLM
           attributes = tool_call.to_h
           attributes[:tool_call_id] = attributes.delete(:id)
           malformed = attributes.delete(:malformed_arguments)
-          attributes[:arguments] = without_nul(malformed) if malformed
+          attributes[:arguments] = malformed if malformed
           attributes[:approval] = 'pending' if to_llm.approval_pending?(tool_call)
-          message_record.ruby_llm_tool_calls.create!(**attributes)
+          message_record.ruby_llm_tool_calls.create!(**without_nul(attributes))
         end
       end
 
-      # PostgreSQL jsonb cannot store U+0000.
-      def without_nul(text)
-        text.gsub("\u0000", '\u0000')
+      # PostgreSQL text and jsonb cannot store U+0000.
+      def without_nul(value)
+        case value
+        when String then value.gsub("\u0000", '\u0000')
+        when Array then value.map { |item| without_nul(item) }
+        when Hash then value.transform_values { |item| without_nul(item) }
+        else value
+        end
       end
     end
   end
