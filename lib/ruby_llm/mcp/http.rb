@@ -82,6 +82,7 @@ module RubyLLM
       end
 
       def request(message, version:, timeout: nil, headers: {}, &)
+        timeout ||= @timeout
         stream = post(message, version:, timeout:, params: headers, &)
         RECONNECTS.times do
           if version == Client::VERSION
@@ -89,7 +90,7 @@ module RubyLLM
 
             stream = post(message.merge(id: SecureRandom.uuid), version:, timeout:, params: headers, &)
           else
-            break unless resumable?(stream, timeout || @timeout)
+            break unless resumable?(stream, timeout)
 
             stream = resume(stream, version:, timeout:, &)
           end
@@ -361,6 +362,8 @@ module RubyLLM
         end
 
         def attach(request, timeout)
+          @timeout = timeout
+          extend_deadline
           request.options.timeout = timeout if timeout
           request.options.on_data = method(:feed).to_proc
         end
@@ -401,6 +404,7 @@ module RubyLLM
 
           @parser.feed(chunk) { |_type, data| receive_event(data) }
           abandon_if_answered
+          check_deadline
         end
 
         def replies
@@ -430,6 +434,20 @@ module RubyLLM
           @events == true
         end
 
+        def check_deadline
+          return unless @deadline && monotonic_now > @deadline
+
+          raise Faraday::TimeoutError, 'The server did not answer in time'
+        end
+
+        def extend_deadline
+          @deadline = monotonic_now + @timeout if @timeout
+        end
+
+        def monotonic_now
+          Process.clock_gettime(Process::CLOCK_MONOTONIC)
+        end
+
         def abandon_if_answered
           raise Abandoned if answer && !@headers.empty?
         end
@@ -443,6 +461,7 @@ module RubyLLM
           (parsed.is_a?(Array) ? parsed : [parsed]).grep(Hash).each do |reply|
             reply['method'] ? deliver(reply) : @replies << reply
           end
+          extend_deadline
         rescue JSON::ParserError
           RubyLLM.logger.debug { 'MCP server sent a message that is not JSON' }
         end
