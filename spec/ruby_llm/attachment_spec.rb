@@ -374,6 +374,12 @@ RSpec.describe RubyLLM::Attachment do
     it 'takes the basename of a URL path' do
       expect(described_class.new('https://example.com/docs/report.pdf').filename).to eq('report.pdf')
     end
+
+    it 'takes no name from a root URL' do
+      stub_request(:get, 'https://example.com/').to_return(body: '<html>')
+
+      expect(described_class.new('https://example.com/').filename).to eq('')
+    end
   end
 
   describe 'document classification' do
