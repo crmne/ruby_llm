@@ -908,6 +908,14 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
       expect(rendered[2][:content][1]).to eq(text: 'Still there?')
     end
 
+    it 'leaves out blank text the model wrote beside a tool call' do
+      call = RubyLLM::ToolCall.new(id: 'call_a', name: 'lookup', arguments: {})
+      messages = [RubyLLM::Message.new(role: :assistant, content: "\n", tool_calls: { 'call_a' => call }),
+                  RubyLLM::Message.new(role: :tool, content: 'result', tool_call_id: 'call_a')]
+
+      expect(described_class.render_messages(messages).first[:content].flat_map(&:keys)).to eq([:toolUse])
+    end
+
     it 'drops a message that renders to nothing' do
       messages = [RubyLLM::Message.new(role: :user, content: '')]
 

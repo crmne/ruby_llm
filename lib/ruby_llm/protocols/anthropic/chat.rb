@@ -493,7 +493,12 @@ module RubyLLM
         end
 
         def append_formatted_content(content_blocks, msg, citations: false)
-          content_blocks.concat(Media.render_content(msg.content, msg.attachments, citations: citations))
+          content_blocks.concat(Media.render_content(replayed_text(msg), msg.attachments, citations: citations))
+        end
+
+        # A turn can hold blank text, which Claude writes but refuses to take back.
+        def replayed_text(msg)
+          msg.content unless msg.content.to_s.strip.empty? && msg.role == :assistant
         end
 
         def cache_boundary?(message, caching: nil)

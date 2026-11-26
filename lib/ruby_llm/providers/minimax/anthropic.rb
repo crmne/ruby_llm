@@ -61,7 +61,7 @@ module RubyLLM
           video = msg.attachments.find(&:video?) unless msg.role == :user
           raise UnsupportedAttachmentError, video.mime_type if video
 
-          content_blocks.concat(render_content(msg.content, msg.attachments, citations:))
+          content_blocks.concat(render_content(replayed_text(msg), msg.attachments, citations:))
         end
 
         def render_video(video)
