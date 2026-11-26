@@ -498,11 +498,12 @@ module RubyLLM
     #   end
     #
     # The prices are +input+, +output+, +cache_read+, and +cache_write+ per
-    # million tokens, and +characters+, +audio_seconds+, and +search_units+
-    # per million of those units. Prices you leave out stay as the registry
-    # has them, and so do the batch and long-context rates. A model takes
-    # its prices under the id you call it by, including an id the registry
-    # does not list.
+    # million tokens, +image_input+ and +image_output+ per million image
+    # tokens, and +characters+, +audio_seconds+, and +search_units+ per
+    # million of those units. Prices you leave out stay as the registry has
+    # them, and so do the batch and long-context rates. A model takes its
+    # prices under the id you call it by, including an id the registry does
+    # not list.
     #
     # Model#pricing, Model#price, and every Cost use the prices from then
     # on, and a registry refresh keeps them. They belong to the global

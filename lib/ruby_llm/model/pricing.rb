@@ -23,6 +23,8 @@ module RubyLLM
         output: %i[text_tokens output_per_million],
         cache_read: %i[text_tokens cache_read_input_per_million],
         cache_write: %i[text_tokens cache_write_input_per_million],
+        image_input: %i[images input_per_million],
+        image_output: %i[images output_per_million],
         characters: %i[characters input_per_million],
         audio_seconds: %i[audio_seconds input_per_million],
         search_units: %i[search_units input_per_million]
