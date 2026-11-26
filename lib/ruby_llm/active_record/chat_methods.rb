@@ -315,6 +315,7 @@ module RubyLLM
         to_llm
 
         if persist
+          layer_persisted_instruction(instructions, append:, cache_until_here:)
           if instructions.nil?
             clear_persisted_system_instructions
           else
@@ -1300,6 +1301,15 @@ module RubyLLM
         else
           @unpersisted_instructions = [entry]
         end
+      end
+
+      # Instructions an agent applied at runtime cover the persisted ones, so
+      # replacing those drops the cover, and appending to them adds to both.
+      def layer_persisted_instruction(instructions, append:, cache_until_here:)
+        return if unpersisted_instructions.all? { |_, appended| appended }
+        return unpersisted_instructions << [instructions, true, cache_until_here, :persisted] if append
+
+        unpersisted_instructions.select! { |_, appended, _, persisted| appended && !persisted }
       end
 
       def reapply_runtime_instructions(chat)

@@ -659,6 +659,20 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(chat.to_llm.messages.map(&:cache_until_here?)).to eq([true, false])
     end
 
+    it 'sends instructions persisted after them' do
+      chat = Chat.create!(model: model_id)
+      chat.with_instructions('Agent text', persist: false)
+      chat.with_instructions('Today is Monday', append: true, persist: false)
+      sent = -> { chat.to_llm.messages.map(&:content) }
+
+      chat.with_instructions('Use bullets', append: true)
+      expect(sent.call).to eq(['Agent text', 'Today is Monday', 'Use bullets'])
+
+      chat.with_instructions('Replaced')
+      expect(sent.call).to eq(['Replaced', 'Today is Monday'])
+      expect(chat.reload.to_llm.messages.map(&:content)).to eq(sent.call)
+    end
+
     it 'drops them when given nil' do
       chat = Chat.create!(model: model_id)
       chat.with_instructions('Answer in French', persist: false)
