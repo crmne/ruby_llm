@@ -41,9 +41,10 @@ module RubyLLM
         # sits out. A handler declared on the server's class or on MCP::Tool
         # takes the error instead, but not one every Tool inherits, so a
         # catch-all on RubyLLM::Tool keeps the outage handling. Checking on
-        # a task still raises, since the task may still be running.
-        def calling(server, tool, input)
-          return yield if input&.key?('task')
+        # a task still raises, since the task may still be running. A task
+        # that already raised its failure returns the tool error.
+        def calling(server, tool, input, &)
+          return checking(server, tool, input, &) if input&.key?('task')
           return Failure[error: "The #{server.name} MCP server can't be reached right now"] if down?(server)
 
           begin
@@ -84,6 +85,12 @@ module RubyLLM
         end
 
         private
+
+        def checking(server, tool, input)
+          return yield unless %w[failed cancelled].include?(input.dig('task', 'status'))
+
+          Failure[error: failure_text(server, tool, Task.load(server, input).error)]
+        end
 
         # Names the error by its class and status, never its message, since
         # a connection error's message can carry the server's host or URL.

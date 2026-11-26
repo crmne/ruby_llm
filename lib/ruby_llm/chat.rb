@@ -2942,6 +2942,9 @@ module RubyLLM
       with_decline_notes(result, input)
     rescue InputRequiredError => e
       pause_tool_call(tool_call, e.to_h)
+    rescue MCP::TaskError => e
+      pause_tool_call(tool_call, e.to_h) if e.ends?(input)
+      raise
     end
 
     # The one place a tool's Tool.rescue_from handlers run, so they cover

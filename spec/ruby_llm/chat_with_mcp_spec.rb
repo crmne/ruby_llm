@@ -615,6 +615,26 @@ RSpec.describe RubyLLM::Chat do
       expect { chat.complete }.to raise_error(RubyLLM::MCP::Error, 'Renderer crashed')
     end
 
+    it 'gives the model the failure of a task on the next run' do
+      run_task('broken_report')
+      expect { chat.complete }.to raise_error(RubyLLM::MCP::Error)
+      expect(chat.pending_tasks.first).to be_failed
+
+      chat.complete
+
+      expect(chat).to be_complete
+      expect(chat.messages.find(&:tool_result?).content).to include('MCP server failed: Renderer crashed')
+    end
+
+    it 'pauses nothing for a tool that waits for a task itself' do
+      server = files
+      stub_const('Report', Class.new(RubyLLM::Tool) { define_method(:execute) { server.call(:broken_report) } })
+      allow(chat.provider).to receive(:complete).and_return(tool_call('report', {}), answer)
+
+      expect { chat.with_tools(Report).ask('Run it') }.to raise_error(RubyLLM::MCP::Error, 'Renderer crashed')
+      expect(chat.pending_tasks).to be_empty
+    end
+
     it 'refuses a new question while a task runs' do
       run_task('report')
 

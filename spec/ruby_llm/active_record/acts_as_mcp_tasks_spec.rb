@@ -76,6 +76,21 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     expect(found.waiting? && found.pending_tasks.any?).to be(true)
   end
 
+  it 'gives the model the failure of a task from another process' do
+    chat = paused_chat('broken_report')
+    expect { chat.complete }.to raise_error(RubyLLM::MCP::Error, 'Renderer crashed')
+
+    resumed = Chat.find(chat.id).with_mcp(reports)
+    allow(resumed.to_llm.provider).to receive(:complete).and_return(
+      RubyLLM::Message.new(role: :assistant, content: 'Sorry', input_tokens: 1, output_tokens: 1)
+    )
+    resumed.complete
+
+    expect(resumed.messages_association.find_by(role: 'tool').content).to include('Renderer crashed')
+    expect(tool_call_record.mcp_state).to be_nil
+    expect(resumed).not_to be_waiting
+  end
+
   it 'cancels the task when another process cancels the chat' do
     chat = paused_chat('endless_report')
     Chat.find(chat.id).cancel
