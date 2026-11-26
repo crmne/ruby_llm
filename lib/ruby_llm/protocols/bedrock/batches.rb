@@ -139,7 +139,13 @@ module RubyLLM
           output = line['modelOutput']
           return [index, parse_bedrock_model_output(output, model:)] if output
 
-          [index, nil, batch_failure(record_id, line.dig('error', 'message') || line['errorMessage'])]
+          [index, nil, batch_failure(record_id, bedrock_batch_error(line))]
+        end
+
+        def bedrock_batch_error(line)
+          error = line['error']
+          error = error['errorMessage'] || error if error.is_a?(Hash)
+          batch_error_value(error) || line['errorMessage']
         end
       end
     end
