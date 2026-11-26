@@ -528,13 +528,24 @@ module RubyLLM
 
     class << self
       attr_reader :default_protocol # :nodoc:
-      attr_writer :slug # :nodoc:
+
+      # Setting the slug invalidates the option name derived from it.
+      def slug=(value) # :nodoc:
+        @protocol_option = nil
+        @slug = value
+      end
 
       # Returns the provider slug, a short lowercase string that
       # identifies the provider and prefixes its configuration keys.
       # Set by ::register, or derived from the class name.
       def slug
         @slug ||= to_s.split('::').last.downcase
+      end
+
+      # The name of the Configuration option that overrides this provider's
+      # protocol, built once per provider.
+      def protocol_option # :nodoc:
+        @protocol_option ||= :"#{slug}_protocol"
       end
 
       # Returns the human-readable provider name, derived from the
@@ -685,7 +696,8 @@ module RubyLLM
         provider_class.slug = name.to_s
         providers[name.to_sym] = provider_class
         models ? model_registry_files[name.to_sym] = models : model_registry_files.delete(name.to_sym)
-        RubyLLM::Configuration.register_provider_options(provider_class.configuration_options + [:"#{name}_protocol"])
+        options = provider_class.configuration_options + [provider_class.protocol_option]
+        RubyLLM::Configuration.register_provider_options(options)
       end
 
       def resolve(name) # :nodoc:
@@ -786,7 +798,7 @@ module RubyLLM
     end
 
     def configured_protocol
-      @config.send(:"#{slug}_protocol")
+      @config.send(self.class.protocol_option)
     end
 
     def fetch_protocol(name)
