@@ -565,6 +565,19 @@ RSpec.describe RubyLLM::Message do
 
       expect(message.model_info).to be_nil
     end
+
+    it 'finds the model of the provider a rebuilt message names' do
+      message = described_class.new(role: :assistant, content: 'ok', model: 'mistral-medium-3', provider: 'vertexai')
+
+      expect(described_class.new(message.to_h).model_info)
+        .to eq(RubyLLM.models.find('mistral-medium-3', provider: :vertexai))
+    end
+
+    it 'is nil when the provider a message names is not registered' do
+      message = described_class.new(role: :assistant, content: 'ok', model: model_for(:anthropic), provider: 'custom')
+
+      expect(message.model_info).to be_nil
+    end
   end
 
   describe '#to_h' do
