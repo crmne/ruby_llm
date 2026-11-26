@@ -408,6 +408,24 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
     RUBY
   end
 
+  def open_call_script(agent:, chats_path:, job:, message_key:, **)
+    <<~RUBY
+      ActiveJob::Base.queue_adapter = :test
+      ActionController::Base.allow_forgery_protection = false
+      chat = #{agent}.create!
+      call = RubyLLM::ToolCall.new(id: "call_open", name: "lookup", arguments: {})
+      chat.add_message(role: :user, content: "Look it up")
+      chat.add_message(role: :assistant, content: "", tool_calls: { call.id => call })
+
+      session = ActionDispatch::Integration::Session.new(Rails.application)
+      session.host! "localhost"
+      session.post "#{chats_path}/\#{chat.id}/messages", params: { #{message_key}: { content: "Try again" } }
+      abort "the message said \#{session.flash[:notice]}" unless session.flash[:notice].include?("isn't finished yet")
+      jobs = ActiveJob::Base.queue_adapter.enqueued_jobs.select { |job| job["job_class"] == "#{job}" }
+      abort "jobs \#{jobs}" unless jobs.map { |job| job["arguments"] } == [ [ chat.id ] ]
+    RUBY
+  end
+
   def question_flow_script(agent:, controller:, assigns:, chats_path:, job:, message_key:, **)
     <<~RUBY
       ActiveJob::Base.queue_adapter = :test
@@ -1835,6 +1853,13 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       it 'saves a message once, however often its job runs' do
         within_test_app(app_path) do
           output, status = run_rails_runner_outside_executor(job_retry_script(**config[:approval_flow]))
+          expect(status.success?).to be(true), output
+        end
+      end
+
+      it 'finishes a reply whose tool call was left open when a message arrives' do
+        within_test_app(app_path) do
+          output, status = run_rails_runner_outside_executor(open_call_script(**config[:approval_flow]))
           expect(status.success?).to be(true), output
         end
       end
