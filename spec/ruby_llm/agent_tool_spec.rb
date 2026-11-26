@@ -89,6 +89,14 @@ RSpec.describe RubyLLM::AgentTool do
     expect(chat.messages.last.content).to eq('It shipped in December.')
   end
 
+  it 'returns the value of a rescue_from handler of the agent' do
+    research_agent.rescue_from(RubyLLM::RateLimitError) { 'Research is busy' }
+    research_agent.model(model_for(:openai))
+    stub_request(:post, /openai/).to_return(status: 429, body: '{"error":{"message":"slow down"}}')
+
+    expect(research_agent.to_tool(region: 'EU').call(task: 'Look it up')).to eq('Research is busy')
+  end
+
   it 'runs under the owner of the chat that called it' do
     stub_subagents(research_agent)
     chat = parent_chat(calling('research_agent', { 'task' => 'Look it up', 'region' => 'EU' }), answer('Done'))
