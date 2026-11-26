@@ -66,6 +66,7 @@ module RubyLLM
         VIDEO_FORMAT_ALIASES = {
           'quicktime' => 'mov',
           'x-matroska' => 'mkv',
+          'x-flv' => 'flv',
           'x-ms-wmv' => 'wmv',
           '3gp' => 'three_gp',
           '3gpp' => 'three_gp'
