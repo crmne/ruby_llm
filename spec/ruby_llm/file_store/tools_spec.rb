@@ -289,6 +289,26 @@ RSpec.describe RubyLLM::FileStore::Tools do
       expect(files.read('plan.md')).to eq("one two\nfour two")
     end
 
+    it 'matches lines read from a CRLF file, and keeps its line endings' do
+      files.write('plan.md', "one\r\ntwo\r\nthree\r\n")
+      call(:read_file, path: 'plan.md')
+
+      expect(call(:edit_file, path: 'plan.md', old_text: "one\ntwo", new_text: "1\n2\n2b"))
+        .to eq('Replaced 1 occurrence in plan.md.')
+      expect(call(:edit_file, path: 'plan.md', old_text: "2b\r\nthree", new_text: "3\r\n4"))
+        .to eq('Replaced 1 occurrence in plan.md.')
+      expect(files.read('plan.md')).to eq("1\r\n2\r\n3\r\n4\r\n")
+    end
+
+    it 'leaves the line endings of a mixed file alone' do
+      files.write('plan.md', "one\r\ntwo\nthree\n")
+      call(:read_file, path: 'plan.md')
+
+      call(:edit_file, path: 'plan.md', old_text: "two\nthree", new_text: "2\n3")
+
+      expect(files.read('plan.md')).to eq("one\r\n2\n3\n")
+    end
+
     it 'refuses a span that is missing or not unique, unless replacing all' do
       files.write('plan.md', 'two \\1 two')
       call(:read_file, path: 'plan.md')
