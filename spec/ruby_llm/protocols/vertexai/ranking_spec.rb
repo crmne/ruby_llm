@@ -25,6 +25,7 @@ RSpec.describe RubyLLM::Protocols::VertexAI::Ranking do
   end
 
   it 'ranks real documents through the configured Discovery Engine service', :live do
+    skip_without_cassette_or_key('GOOGLE_CLOUD_PROJECT')
     unless VCR.current_cassette.recording? || VCR.current_cassette.http_interactions.interactions.any?
       skip 'No recorded Vertex ranking response; recording requires a project with Discovery Engine enabled'
     end
