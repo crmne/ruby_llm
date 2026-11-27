@@ -22,6 +22,14 @@ RSpec.describe RubyLLM::Protocols::Deepgram::StreamingTranscription do
     expect(segments.first.fetch('words').first).to include('speaker' => 0)
   end
 
+  it 'counts the seconds it is billed by' do
+    result = protocol.build_live_transcription([{ 'text' => 'Hello.' }], { 'duration' => 3.7 },
+                                               model: model_for(:deepgram, :transcription), language: nil)
+
+    expect(result.duration).to eq(3.7)
+    expect(result.tokens.audio_seconds).to eq(3.7)
+  end
+
   it 'sends all audio bytes before requesting the final transcript and connection close' do
     socket = instance_double(RubyLLM::Transport::WebsocketConnection)
     bytes = []

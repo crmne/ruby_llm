@@ -42,7 +42,8 @@ module RubyLLM
 
           state = case task['status']
                   when 'succeeded' then { status: :completed }
-                  when 'failed' then { status: :failed, error: task.dig('error', 'message') || 'failed' }
+                  when 'failed', 'cancelled'
+                    { status: :failed, error: task.dig('error', 'message') || task['status'] }
                   else { status: :pending }
                   end
           state.merge(raw: response.body)

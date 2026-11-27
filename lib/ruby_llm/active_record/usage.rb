@@ -37,7 +37,6 @@ module RubyLLM
       self.table_name = 'ruby_llm_usages'
 
       WORKFLOW_COLUMNS = %i[workflow_id workflow_name workflow_step_id workflow_step_name].freeze # :nodoc:
-      UNIT_COLUMNS = ::RubyLLM::Cost::UNITS.flat_map { |unit| [unit, :"#{unit}_cost"] }.freeze # :nodoc:
 
       belongs_to :chat, polymorphic: true, optional: true
       belongs_to :message, polymorphic: true, optional: true

@@ -177,6 +177,7 @@ module RubyLLM
         def render_messages(messages, caching: nil, citations: false, search_results: false, tool_text: false)
           rendered = []
           tool_result_blocks = []
+          assistant_attachments = []
           calls = {}
 
           messages.each do |msg|
@@ -188,6 +189,8 @@ module RubyLLM
               next
             end
 
+            tool_result_blocks.concat(assistant_attachments)
+            assistant_attachments = render_assistant_attachments(msg, citations:)
             message = render_non_tool_message(msg, caching:, citations:, tool_text:)
             next tool_result_blocks.concat(message[:content]) if joins_tool_results?(message, tool_result_blocks)
 
@@ -198,8 +201,18 @@ module RubyLLM
             rendered << message if message
           end
 
+          tool_result_blocks.concat(assistant_attachments)
           rendered << { role: 'user', content: tool_result_blocks } unless tool_result_blocks.empty?
           rendered
+        end
+
+        # Only user messages take images and documents, so a replayed turn's
+        # attachments ride the user message after it, behind any tool results.
+        def render_assistant_attachments(msg, citations: false)
+          return [] unless msg.role == :assistant && msg.attachments.any?
+
+          [{ text: 'Attachments from the assistant:' }] +
+            Media.render_content(nil, msg.attachments, used_document_names: @used_document_names, citations:)
         end
 
         def joins_tool_results?(message, tool_result_blocks)
@@ -207,6 +220,7 @@ module RubyLLM
         end
 
         def render_non_tool_message(msg, caching: nil, citations: false, tool_text: false)
+          msg = msg.with_attachments([]) if msg.role == :assistant
           content = render_message_content(msg, caching:, citations:, tool_text:)
           return nil if content.empty?
 
@@ -245,10 +259,16 @@ module RubyLLM
           blocks = msg.role == :assistant ? render_thinking_blocks(msg) : []
 
           blocks.concat(
-            Media.render_content(msg.content, msg.attachments, used_document_names: @used_document_names, citations:)
+            Media.render_content(replayed_text(msg), msg.attachments, used_document_names: @used_document_names,
+                                                                      citations:)
           )
 
           blocks
+        end
+
+        # A turn can hold blank text, which Claude writes but Bedrock refuses.
+        def replayed_text(msg)
+          msg.content unless msg.content.to_s.strip.empty? && msg.role == :assistant
         end
 
         # Reasoning rebuilt from thinking text goes back only to the provider

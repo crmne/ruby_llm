@@ -83,6 +83,18 @@ RSpec.describe RubyLLM::Protocols::Gemini::Transcription do
       expect(transcription.tokens.output).to eq(4)
     end
 
+    it 'counts cached input apart from the rest' do
+      transcription = parse(
+        {
+          'candidates' => [{ 'content' => { 'parts' => [{ 'text' => 'Ruby is fun' }] } }],
+          'usageMetadata' => { 'promptTokenCount' => 1_000, 'cachedContentTokenCount' => 900,
+                               'candidatesTokenCount' => 4 }
+        }
+      )
+
+      expect(transcription.tokens).to have_attributes(input: 100, cache_read: 900, output: 4)
+    end
+
     it 'leaves thought parts out of the transcript' do
       parts = [{ 'text' => 'The speaker greets someone.', 'thought' => true }, { 'text' => 'Ruby is fun' }]
 

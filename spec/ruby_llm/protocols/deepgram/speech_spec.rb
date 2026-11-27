@@ -99,4 +99,17 @@ RSpec.describe RubyLLM::Protocols::Deepgram::Speech do
       expect(speech.mime_type).to eq('audio/wav')
     end
   end
+
+  describe '#speak' do
+    include_context 'with configured RubyLLM'
+
+    it 'counts the characters it is billed by' do
+      stub_request(:post, %r{deepgram\.com/v1/speak})
+        .to_return(status: 200, headers: { 'Content-Type' => 'audio/mpeg' }, body: 'mp3')
+
+      speech = RubyLLM.speak('Hello there', model: model_for(:deepgram, :speech), provider: :deepgram)
+
+      expect(speech.tokens.characters).to eq(11)
+    end
+  end
 end

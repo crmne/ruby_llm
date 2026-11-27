@@ -42,7 +42,12 @@ module RubyLLM
         file = StoredFile.new(path:, byte_size: content.bytesize,
                               content_type: content_type || FileStore.content_type_for(path, content),
                               digest: FileStore.digest(content), updated_at: Time.now)
-        with_lock { @lock.synchronize { @files[path] = [file, content] } }
+        with_lock do
+          @lock.synchronize do
+            refuse_write_over_folder(path) if holds_folder?(path)
+            @files[path] = [file, content]
+          end
+        end
         file
       end
 
@@ -69,6 +74,16 @@ module RubyLLM
             paths.map { |key| @files.delete(key).first }.sort_by(&:path)
           end
         end
+      end
+
+      private
+
+      def folder?(path)
+        @lock.synchronize { holds_folder?(path) }
+      end
+
+      def holds_folder?(path)
+        @files.each_key.any? { |key| key != path && FileStore.inside?(key, path) }
       end
     end
   end

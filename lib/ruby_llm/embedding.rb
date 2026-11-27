@@ -118,6 +118,7 @@ module RubyLLM
                    provider_options: {},
                    metadata: nil,
                    owner: nil)
+      attachments = Attachment.wrap(with, config: context&.config)
       Accounting::Operation.new(
         'embedding', model, default: :default_embedding_model, category: :embeddings, provider:, assume_model_exists:,
                             context:, owner:,
@@ -129,9 +130,10 @@ module RubyLLM
                               event[:embedding_dimensions] = vector_dimensions(result.vectors)
                               event[:embedding_count] = embedding_count(result.vectors)
                             }
-      ).run(input: text, dimensions:, task_type:, title:, attachment_count: Attachment.wrap(with).size,
-            provider_options:, metadata:) do |provider_instance, model|
-        provider_instance.embed(text, model:, dimensions:, task_type:, title:, with:, provider_options:)
+      ).run(input: text, dimensions:, task_type:, title:, attachment_count: attachments.size, provider_options:,
+            metadata:) do |provider_instance, model|
+        provider_instance.embed(text, model:, dimensions:, task_type:, title:, with: with && attachments,
+                                      provider_options:)
       end
     end
 
