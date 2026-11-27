@@ -32,6 +32,7 @@ module RubyLLM
       SHUTDOWN_GRACE = 2
       SHUTDOWN_CHECK = 0.05
       CHECK_INTERVAL = 0.5
+      WRITE_CHECK = 0.01
       SUBSCRIPTION_ID = 'io.modelcontextprotocol/subscriptionId'
       INHERITED_ENV = %w[
         GEM_HOME GEM_PATH HOME LANG LC_ALL LC_CTYPE LOGNAME PATH SHELL TERM TMPDIR USER
@@ -205,9 +206,16 @@ module RubyLLM
           count = @stdin.write_nonblock(line, exception: false)
           return count unless count == :wait_writable
 
-          readable, = IO.select([@stdout], [@stdin], nil, remaining_wait(deadline))
-          fill if readable&.any?
+          fill if readable_before_write?(remaining_wait(deadline))
         end
+      end
+
+      # Windows reports a full pipe as writable.
+      def readable_before_write?(wait)
+        return @stdout.wait_readable([wait, WRITE_CHECK].min) if Gem.win_platform?
+
+        readable, = IO.select([@stdout], [@stdin], nil, wait)
+        readable&.any?
       end
 
       def read(deadline)
@@ -285,10 +293,17 @@ module RubyLLM
       end
 
       def terminate
-        signal('TERM')
-        signal('KILL') unless exited?
+        signal('KILL') unless terminated?
       rescue Errno::ESRCH, Errno::EPERM
         nil
+      end
+
+      # Windows has no TERM to send.
+      def terminated?
+        signal('TERM')
+        exited?
+      rescue Errno::EINVAL
+        false
       end
 
       def exited?

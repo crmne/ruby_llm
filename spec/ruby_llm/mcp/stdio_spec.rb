@@ -186,6 +186,59 @@ RSpec.describe RubyLLM::MCP::Stdio do
       stdio.close
     end
 
+    it 'waits on the pipe itself where it can', skip: Gem.win_platform? do
+      stub_const("#{described_class}::CHECK_INTERVAL", 60)
+      stub_const("#{described_class}::WRITE_CHECK", 60)
+      script = 'sleep 0.3; $stdin.gets; puts JSON.generate(id: 1, read: true); $stdout.flush; $stdin.gets'
+
+      expect(request(script, timeout: 60)).to include('read' => true)
+    end
+
+    context 'when a full pipe is always reported as writable' do
+      before do
+        allow(Gem).to receive(:win_platform?).and_return(true)
+        allow(IO).to receive(:select).and_wrap_original do |select, readers, writers, errors, wait|
+          readable, = select.call(readers, nil, errors, writers ? 0 : wait)
+          [readable || [], writers || [], []] if readable || writers
+        end
+      end
+
+      it 'waits between tries until the deadline' do
+        passes = 0
+        allow(RubyLLM::Support::Cancellation).to receive(:check) { passes += 1 }
+
+        expect { request('sleep', timeout: 0.5) }.to raise_error(described_class::Unavailable, /in time/)
+        expect(passes).to be_between(1, 100)
+      end
+
+      it 'waits no longer than the deadline allows' do
+        stub_const("#{described_class}::WRITE_CHECK", 60)
+
+        expect { request('sleep', timeout: 0.5) }.to raise_error(described_class::Unavailable, /in time/)
+      end
+
+      it 'writes on soon after the server reads again' do
+        stub_const("#{described_class}::CHECK_INTERVAL", 60)
+        script = 'sleep 0.3; $stdin.gets; puts JSON.generate(id: 1, read: true); $stdout.flush; $stdin.gets'
+
+        expect(request(script, timeout: 60)).to include('read' => true)
+      end
+
+      it 'reads what the server writes meanwhile' do
+        script = "$stdin.readpartial(1); puts 'y' * 500_000; $stdin.gets; puts JSON.generate(id: 1, read: true); " \
+                 '$stdout.flush; $stdin.gets'
+
+        expect(request(script, timeout: 10)).to include('read' => true)
+      end
+
+      it 'stops when the chat is cancelled' do
+        checks = 0
+        allow(RubyLLM::Support::Cancellation).to receive(:check) { raise RubyLLM::CancelledError if (checks += 1) > 2 }
+
+        expect { request('sleep', timeout: 30) }.to raise_error(RubyLLM::CancelledError)
+      end
+    end
+
     it 'starts the server again for the next request' do
       Dir.mktmpdir do |directory|
         marker = File.join(directory, 'stuck')
@@ -474,6 +527,40 @@ RSpec.describe RubyLLM::MCP::Stdio do
       stdio.close
 
       expect(Process).to have_received(:kill).with('TERM', pid)
+    end
+
+    context 'when the platform cannot send TERM' do
+      let(:stdio) { described_class.new([RbConfig.ruby, '-e', 'sleep 30'], timeout: 0.5) }
+
+      before do
+        allow(Gem).to receive(:win_platform?).and_return(true)
+        allow(Process).to receive(:kill).and_call_original
+        allow(Process).to receive(:kill).with('TERM', anything).and_raise(Errno::EINVAL)
+        stdio.send(:start)
+      end
+
+      after { stdio.close }
+
+      it 'kills the server' do
+        process = stdio.instance_variable_get(:@process)
+        stdio.close
+
+        expect(process.join(5)).to be(process)
+      end
+
+      it 'reports a message written in part as out of time' do
+        expect { stdio.notify({ method: 'probe', text: 'x' * 500_000 }) }
+          .to raise_error(described_class::Unavailable, /in time/)
+      end
+
+      it 'leaves a server that exits first' do
+        allow(Process).to receive(:kill).with('KILL', anything).and_wrap_original do |kill, *arguments|
+          kill.call(*arguments)
+          raise Errno::ESRCH
+        end
+
+        expect { stdio.close }.not_to raise_error
+      end
     end
   end
 end
