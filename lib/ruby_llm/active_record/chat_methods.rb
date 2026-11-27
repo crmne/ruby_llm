@@ -93,6 +93,7 @@ module RubyLLM
       included do
         define_model_callbacks :claim_renewal, only: :around
         scope :interrupted, -> { RunClaims.interrupted(self) }
+        before_save -> { @deferred_context&.call.tap { @deferred_context = nil } }
         before_save :resolve_model
         after_commit :remember_model_registry_stored, if: -> { @model_registry_loaded_into }
         after_rollback -> { @model_registry_loaded_into = nil }
@@ -298,6 +299,11 @@ module RubyLLM
         self
       end
       alias context= with_context
+
+      # Runs +block+ once before the next save resolves the model, after
+      # initialization and validation, so it can assign the record's context.
+      # Without a block, drops a pending one. Returns +self+.
+      def defer_context(&block) = tap { @deferred_context = block } # :nodoc:
 
       # Sets the system instructions, persisting them as a message with the
       # +:system+ role. Replaces any persisted system messages unless

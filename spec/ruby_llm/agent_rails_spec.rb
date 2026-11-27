@@ -23,6 +23,217 @@ RSpec.describe RubyLLM::Agent do
     expect(RubyLLM.config.openai_api_key).to be_nil
   end
 
+  it 'resolves the default model from the agent context when creating a chat' do
+    RubyLLM.config.default_model = model_for(:openai)
+    agent = Class.new(described_class) do
+      chat_class Chat
+    end
+    agent.context do |config|
+      config.default_model = model_for(:anthropic)
+      config.anthropic_api_key = 'agent-anthropic-key'
+    end
+
+    created = agent.create!
+    created_without_bang = agent.create
+
+    expect(created.model_id).to eq(model_for(:anthropic))
+    expect(created.provider).to eq('anthropic')
+    expect(created_without_bang.model_id).to eq(model_for(:anthropic))
+  end
+
+  it 'resolves a context-configured Azure deployment when creating a chat' do
+    agent = Class.new(described_class) do
+      chat_class Chat
+      model 'agent-custom-deploy', provider: :azure
+    end
+    agent.context do |config|
+      config.azure_api_key = 'agent-azure-key'
+      config.azure_api_base = 'https://example.openai.azure.com'
+      config.azure_deployments = { 'agent-custom-deploy' => model_for(:openai) }
+    end
+
+    created = agent.create!
+
+    expect(created.model_id).to eq('agent-custom-deploy')
+    expect(created.provider).to eq('azure')
+  end
+
+  it 'resolves the model with the agent context over a caller context, as Agent.chat does' do
+    agent = Class.new(described_class) do
+      chat_class Chat
+    end
+    agent.context do |config|
+      config.default_model = model_for(:anthropic)
+      config.anthropic_api_key = 'agent-anthropic-key'
+    end
+    caller_context = RubyLLM.context do |config|
+      config.default_model = model_for(:openai)
+      config.openai_api_key = 'caller-openai-key'
+    end
+
+    created = agent.create!(context: caller_context)
+    plain = agent.chat(context: caller_context)
+
+    expect(created.model_id).to eq(plain.model.id)
+    expect(created.model_id).to eq(model_for(:anthropic))
+    expect(created.context).to equal(plain.context)
+  end
+
+  it 'keeps a caller context on create! when the agent declares none' do
+    RubyLLM.config.default_model = model_for(:openai)
+    agent = Class.new(described_class) do
+      chat_class Chat
+    end
+    caller_context = RubyLLM.context do |config|
+      config.default_model = model_for(:anthropic)
+      config.anthropic_api_key = 'caller-anthropic-key'
+    end
+
+    created = agent.create!(context: caller_context)
+
+    expect(created.context).to equal(caller_context)
+    expect(created.model_id).to eq(model_for(:anthropic))
+  end
+
+  it 'evaluates a deferred context once before resolving the model on create!' do
+    RubyLLM.config.default_model = model_for(:openai)
+    evaluations = 0
+    anthropic_model = model_for(:anthropic)
+    agent = Class.new(described_class) do
+      chat_class Chat
+      inputs :api_key
+      send(:context) do
+        evaluations += 1
+        RubyLLM.context do |config|
+          config.default_model = anthropic_model
+          config.anthropic_api_key = api_key
+        end
+      end
+    end
+
+    created = agent.create!(api_key: 'tenant-anthropic-key')
+    created.save!
+
+    expect(evaluations).to eq(1)
+    expect(created.model_id).to eq(anthropic_model)
+    expect(created.context.config.anthropic_api_key).to eq('tenant-anthropic-key')
+  end
+
+  it 'evaluates a deferred context after the record initializes on create!' do
+    stub_const('TenantChat', Class.new(Chat) do
+      attr_accessor :tenant_key
+
+      after_initialize { self.tenant_key ||= 'tenant-anthropic-key' }
+    end)
+    anthropic_model = model_for(:anthropic)
+    agent = Class.new(described_class) do
+      chat_class TenantChat
+      send(:context) do
+        key = chat.tenant_key
+        RubyLLM.context do |config|
+          config.default_model = anthropic_model
+          config.anthropic_api_key = key
+        end
+      end
+    end
+
+    created = agent.create!
+
+    expect(created.model_id).to eq(anthropic_model)
+    expect(created.context.config.anthropic_api_key).to eq('tenant-anthropic-key')
+  end
+
+  it 'keeps the outcome of an invalid record without evaluating a deferred context' do
+    stub_const('RefusedChat', Class.new(Chat) { validate { errors.add(:base, 'Refused') } })
+    evaluations = 0
+    agent = Class.new(described_class) do
+      chat_class RefusedChat
+      send(:context) do
+        evaluations += 1
+        RubyLLM.context
+      end
+    end
+
+    expect(agent.create.errors[:base]).to eq(['Refused'])
+    expect { agent.create! }.to raise_error(ActiveRecord::RecordInvalid)
+    expect(evaluations).to eq(0)
+  end
+
+  it 'evaluates a deferred context before the created record is saved' do
+    saved_states = []
+    agent = Class.new(described_class) do
+      chat_class Chat
+      send(:context) do
+        saved_states << chat.new_record?
+        nil
+      end
+    end
+
+    agent.create!
+
+    expect(saved_states).to eq([true])
+  end
+
+  it 'does not apply the agent context when a refused record is saved later' do
+    stub_const('GatedChat', Class.new(Chat) do
+      attr_accessor :allowed
+
+      validate { errors.add(:base, 'Refused') unless allowed }
+    end)
+    evaluations = 0
+    agent = Class.new(described_class) do
+      chat_class GatedChat
+      model model_for(:openai)
+      send(:context) do
+        evaluations += 1
+        RubyLLM.context
+      end
+    end
+
+    refused = agent.create
+    invalid = begin
+      agent.create!
+    rescue ActiveRecord::RecordInvalid => e
+      e.record
+    end
+    [refused, invalid].each do |chat|
+      chat.allowed = true
+      chat.save!
+    end
+
+    expect(evaluations).to eq(0)
+    expect([refused.context, invalid.context]).to eq([nil, nil])
+  end
+
+  it 'validates a chat it creates once' do
+    validations = 0
+    stub_const('CountedChat', Class.new(Chat) { before_validation { validations += 1 } })
+    agent = Class.new(described_class) do
+      chat_class CountedChat
+      model model_for(:openai)
+    end
+
+    agent.create
+    agent.create!
+
+    expect(validations).to eq(2)
+  end
+
+  it 'returns a chat a before_save callback refuses without configuring it' do
+    stub_const('HaltedChat', Class.new(Chat) { before_save { throw :abort } })
+    agent = Class.new(described_class) do
+      chat_class HaltedChat
+      model model_for(:openai)
+      instructions 'Be brief'
+    end
+
+    chat = agent.create
+
+    expect(chat).not_to be_persisted
+    expect(chat.messages).to be_empty
+    expect { agent.create! }.to raise_error(ActiveRecord::RecordNotSaved)
+  end
+
   it 'sets the owner of a found record after its context and protocol, before its instructions' do
     RubyLLM.config.openai_api_key = nil
     agent = Class.new(described_class) do
