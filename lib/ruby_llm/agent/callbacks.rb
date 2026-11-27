@@ -83,14 +83,12 @@ module RubyLLM
         super.tap do
           next if chat_callbacks.empty?
 
-          receivers = (chat.respond_to?(:to_llm) ? chat.to_llm : chat).agent_callback_receivers
-          registered = receivers.key?(self)
-          receivers[self] = agent || allocate.bind(chat, input_values)
+          llm = chat.respond_to?(:to_llm) ? chat.to_llm : chat
+          registered = llm.agent_callback_receivers.key?(self)
+          llm.agent_callback_receivers[self] = agent || allocate.bind(chat, input_values)
           next if registered
 
-          chat_callbacks.each do |hook, callback|
-            chat.public_send(hook) { |*args, &run| callback.run(receivers[self], args, &run) }
-          end
+          chat_callbacks.each { |hook, callback| chat.public_send(hook, &llm.agent_callback(self, callback)) }
         end
       end
     end

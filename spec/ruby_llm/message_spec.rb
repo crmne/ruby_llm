@@ -169,6 +169,10 @@ RSpec.describe RubyLLM::Message do
       expect(ask.parsed).to be_nil
     end
 
+    it 'parses only the final answer of a message rebuilt from to_h' do
+      expect(described_class.new(ask.to_h).parsed).to eq('total' => 12.1)
+    end
+
     it 'parses only the final answer after a JSON round trip' do
       restored = described_class.new(ask.to_h)
       restored.ruby_llm_usage_entries = ask.ruby_llm_usage_entries
@@ -561,6 +565,19 @@ RSpec.describe RubyLLM::Message do
 
       expect(message.model_info).to be_nil
     end
+
+    it 'finds the model of the provider a rebuilt message names' do
+      message = described_class.new(role: :assistant, content: 'ok', model: 'mistral-medium-3', provider: 'vertexai')
+
+      expect(described_class.new(message.to_h).model_info)
+        .to eq(RubyLLM.models.find('mistral-medium-3', provider: :vertexai))
+    end
+
+    it 'is nil when the provider a message names is not registered' do
+      message = described_class.new(role: :assistant, content: 'ok', model: model_for(:anthropic), provider: 'custom')
+
+      expect(message.model_info).to be_nil
+    end
   end
 
   describe '#to_h' do
@@ -575,6 +592,20 @@ RSpec.describe RubyLLM::Message do
       message = described_class.new(role: :user, content: 'Hello').cache_until_here
 
       expect(message.to_h[:cache_until_here]).to be true
+    end
+
+    it 'rebuilds a message without content' do
+      messages = [
+        described_class.new(role: :user, content: nil, attachments: [StringIO.new('hi')]),
+        described_class.new(role: :assistant, content: nil, thinking: 'Considering', finish_reason: :max_tokens)
+      ]
+
+      rebuilt = messages.map { |message| described_class.new(message.to_h) }
+
+      expect(rebuilt.map(&:content)).to eq([nil, nil])
+      expect(rebuilt.first.attachments.size).to eq(1)
+      expect(rebuilt.last).to have_attributes(finish_reason: :max_tokens)
+      expect(rebuilt.last.thinking.text).to eq('Considering')
     end
   end
 

@@ -248,6 +248,15 @@ RSpec.describe RubyLLM::Protocols::Converse::Batches do
       expect(RubyLLM.logger).to have_received(:warn).with('Batch request 2 failed: throttled')
     end
 
+    it 'warns with the error message AWS gives' do
+      allow(RubyLLM.logger).to receive(:warn)
+
+      protocol.send(:parse_bedrock_record,
+                    { 'recordId' => '3', 'error' => { 'errorCode' => 400, 'errorMessage' => 'bad input' } }, model: nil)
+
+      expect(RubyLLM.logger).to have_received(:warn).with('Batch request 3 failed: bad input')
+    end
+
     it 'falls back to the flat error message field' do
       allow(RubyLLM.logger).to receive(:warn)
 

@@ -57,6 +57,12 @@ RSpec.describe RubyLLM::Protocols::Converse::Media do
       )
     end
 
+    it 'names Matroska audio the way Bedrock does' do
+      attachment = RubyLLM::Attachment.new(StringIO.new('mka bytes'), filename: 'clip.mka')
+
+      expect(described_class.render_content(nil, [attachment]).first[:audio][:format]).to eq('mka')
+    end
+
     it 'renders video attachments as video blocks' do
       attachment = RubyLLM::Attachment.new(StringIO.new('mp4 bytes'), filename: 'clip.mp4')
 
@@ -75,9 +81,11 @@ RSpec.describe RubyLLM::Protocols::Converse::Media do
     it 'normalizes media formats to the names Bedrock accepts' do
       mov = RubyLLM::Attachment.new(StringIO.new('mov bytes'), filename: 'clip.mov')
       three_gp = RubyLLM::Attachment.new(StringIO.new('3gp bytes'), filename: 'clip.3gp')
+      flv = RubyLLM::Attachment.new(StringIO.new('flv bytes'), filename: 'clip.flv')
 
       expect(described_class.render_content(nil, [mov]).first[:video][:format]).to eq('mov')
       expect(described_class.render_content(nil, [three_gp]).first[:video][:format]).to eq('three_gp')
+      expect(described_class.render_content(nil, [flv]).first[:video][:format]).to eq('flv')
     end
 
     it 'raises for audio formats Bedrock does not accept' do

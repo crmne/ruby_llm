@@ -36,9 +36,17 @@ module RubyLLM
       end
 
       def tool_search_tool
-        return unless searching_tools_here?(deferred_tool_names)
+        local_tool_search if searching_tools_here?(deferred_tool_names)
+      end
 
-        @tool_search_tool ||= Tools::Search.new(-> { deferred_tools })
+      # A fallback's calls run once the chat is back on its own provider,
+      # which may search natively.
+      def offered_tool_search(call)
+        local_tool_search if call.qualified_name == Tools::Search.tool_name && deferred_tool_names.any?
+      end
+
+      def local_tool_search
+        @local_tool_search ||= Tools::Search.new(-> { deferred_tools })
       end
 
       def searching_tools_here?(deferred)

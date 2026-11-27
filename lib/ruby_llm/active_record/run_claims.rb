@@ -587,8 +587,8 @@ module RubyLLM
       end
 
       def decide_persisted_tool_call(record, decision)
-        return if record.approval == decision || decision_recorded?(record, decision)
-        return unless decision == 'denied' && RubyLLM::ActiveRecord::ToolCall.uncached { record.reload }.running?
+        return true if record.approval == decision || decision_recorded?(record, decision)
+        return false unless decision == 'denied' && RubyLLM::ActiveRecord::ToolCall.uncached { record.reload }.running?
 
         raise ToolCallRunningError, "The #{record.name} tool call is already running"
       end

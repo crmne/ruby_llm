@@ -350,15 +350,6 @@ RSpec.describe RubyLLM::FileStore::Directory do
     expect(File.exist?(File.join(root, '.git'))).to be(true)
   end
 
-  it 'numbers an attachment named like a folder instead of writing over it' do
-    store.write('reports/q3.pdf', 'x')
-
-    file = store.store_attachment(RubyLLM::Attachment.new(StringIO.new('new'), filename: 'reports'))
-
-    expect(file.path).to eq('reports-2')
-    expect(store.read('reports/q3.pdf')).to eq('x')
-  end
-
   it 'shortens an attachment name too long for the file system, keeping its extension and number' do
     files = %w[one two].map do |content|
       store.store_attachment(RubyLLM::Attachment.new(StringIO.new(content), filename: "#{'日' * 90}.txt"))

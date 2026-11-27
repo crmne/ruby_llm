@@ -71,15 +71,16 @@ module RubyLLM
 
       private
 
-      # Only Responses cites web pages, but it ignores an attached PDF, so a
-      # chat that holds one stays on Messages, which reads it. Messages also
-      # raises on what MiniMax cannot carry and honours a thinking budget or
-      # off switch, all of which Responses would drop.
+      # Only Responses cites web pages, but it ignores an attached PDF and
+      # cannot carry a video, so a chat that holds either stays on Messages,
+      # which reads both. Messages also raises on what MiniMax cannot carry and
+      # honours a thinking budget or off switch, all of which Responses would
+      # drop.
       def web_search_route?(schema, thinking, tool_prefs, provider_tools, messages)
         return false unless provider_tools.any? { |entry| entry[:name] == :web_search }
         return false if messages_only_request?(schema, thinking, tool_prefs)
 
-        messages.none? { |message| message.attachments.any?(&:pdf?) }
+        messages.none? { |message| message.attachments.any? { |file| file.pdf? || file.video? } }
       end
 
       def messages_only_request?(schema, thinking, tool_prefs)

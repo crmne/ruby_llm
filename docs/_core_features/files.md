@@ -71,6 +71,7 @@ Pass `expires_in:` with a number of seconds to have the provider delete the file
 file = RubyLLM.upload("batch.jsonl", purpose: "batch", expires_in: 24 * 60 * 60)
 
 file.expires_at # => 2026-07-05 12:00:00 +0000
+file.expired?   # => true from a minute before expires_at
 ```
 
 OpenAI, Meta, and xAI accept 1 hour to 30 days, and Anthropic 1 hour to 90 days. Mistral rounds up to whole hours. Providers without a retention setting raise `ArgumentError`. Gemini files always expire after 48 hours.

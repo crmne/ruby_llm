@@ -132,7 +132,7 @@ module RubyLLM
           blocks = stream_block_list
           {
             server_tool_calls: parse_server_tool_calls(blocks),
-            raw_content: @saw_server_block ? blocks : nil,
+            raw_content: @saw_server_block || @continuing_turn ? blocks : nil,
             raw_reasoning: parse_thinking_blocks(blocks)
           }
         end
