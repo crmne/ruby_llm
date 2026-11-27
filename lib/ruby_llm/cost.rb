@@ -418,7 +418,7 @@ module RubyLLM
     # A context tier without a thinking price leaves the standard one, which
     # compares with the output price listed beside it.
     def output_price_beside_thinking
-      return text_output_price if @tier == :batch || text_pricing.tier_for(prompt_tokens)&.reasoning_output_per_million
+      return text_output_price if @tier == :batch || text_pricing.tier_for(prompt_tokens).reasoning_output_per_million
 
       text_pricing.output
     end
