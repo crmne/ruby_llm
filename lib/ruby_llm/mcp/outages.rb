@@ -155,12 +155,22 @@ module RubyLLM
         # server never sidelines another's.
         def key(server)
           settings = server.class
-          endpoint = [settings.url, *settings.command]
+          endpoint = [settings.url, *settings.command, directory(settings), path(settings)]
           return server if settings.transport || !endpoint.compact.all?(String)
 
           config = server.send(:config)
           ssl = Transport::Connection.ssl_snapshot(config.ssl) if config.ssl
           [*endpoint, config.http_proxy, ssl, config.faraday_adapter, config.request_timeout]
+        end
+
+        def directory(settings)
+          value = settings.directory
+          value.respond_to?(:to_path) ? value.to_path : value
+        end
+
+        def path(settings)
+          variables = settings.env.transform_keys(&:to_s)
+          variables['PATH'] || ('' if variables.key?('PATH'))
         end
 
         def monotonic_now
