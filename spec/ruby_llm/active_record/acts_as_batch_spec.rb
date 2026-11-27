@@ -251,6 +251,17 @@ RSpec.describe RubyLLM::Batch do # rubocop:disable RSpec/SpecFilePathFormat
       expect(described_class.find(batch_id).messages.map(&:content)).to eq(['4'])
     end
 
+    it 'bills an answer for a deleted chat once when both pollers load before either collects' do
+      batch
+      allow_any_instance_of(RubyLLM::Providers::Anthropic).to receive(:batch_results) do # rubocop:disable RSpec/AnyInstance
+        [[0, answer('4')]]
+      end
+      chat.destroy!
+      pollers = Array.new(2) { described_class.find(batch_id).refresh }
+
+      expect { pollers.each(&:messages) }.to change(RubyLLM::ActiveRecord::Usage, :count).by(1)
+    end
+
     it 'counts an answer another poller added as delivered' do
       batch
       record = RubyLLM::ActiveRecord::Batch.find_by!(provider_batch_id: batch_id)
