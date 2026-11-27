@@ -94,9 +94,15 @@ module RubyLLM
       end
 
       def answer(messages)
-        message = messages.reverse_each.take_while(&:tool_result?).find(&:halted?) ||
-                  messages.reverse.find { |candidate| candidate.role == :assistant }
+        message = halted_result(messages) || messages.reverse.find { |candidate| candidate.role == :assistant }
         message&.content
+      end
+
+      def halted_result(messages)
+        calls = messages.select(&:tool_call?).last(1).flat_map { |message| message.tool_calls.keys }
+        return if (calls - messages.map(&:tool_call_id)).any?
+
+        messages.reverse_each.take_while(&:tool_result?).find(&:halted?)
       end
 
       def conversation_data(chat, parents)
