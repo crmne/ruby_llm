@@ -278,6 +278,46 @@ RSpec.describe RubyLLM::Chat do
     expect(fallback_provider).not_to have_received(:complete)
   end
 
+  it 'reports a fallback as succeeded when after_message raises on its reply' do
+    chat = described_class.new(model: 'primary-model').with_fallbacks('fallback-model', 'second-fallback-model')
+    allow(primary_provider).to receive(:complete).and_raise(RubyLLM::ServerError, 'down')
+    allow(fallback_provider).to receive(:complete)
+      .and_return(RubyLLM::Message.new(role: :assistant, content: 'fallback answer', model: 'fallback-model'))
+    allow(second_fallback_provider).to receive(:complete)
+    after_events = []
+    chat.after_message { |message| raise RubyLLM::RateLimitError, 'audit' if message.role == :assistant }
+    chat.after_fallback { |event| after_events << event }
+
+    expect { chat.ask('Hello') }.to raise_error(RubyLLM::RateLimitError, 'audit')
+    expect(chat.messages.map(&:content)).to eq(['Hello', 'fallback answer'])
+    expect(after_events.size).to eq(1)
+    expect(after_events.first).to be_succeeded
+    expect(after_events.first).not_to be_failed
+    expect(after_events.first.response.content).to eq('fallback answer')
+    expect(after_events.first.fallback_error).to be_nil
+    expect(second_fallback_provider).not_to have_received(:complete)
+  end
+
+  it 'reports a failed fallback as failed after an earlier request succeeded' do
+    chat = described_class.new(model: 'primary-model').with_fallbacks('fallback-model')
+    primary_calls = 0
+    allow(primary_provider).to receive(:complete) do
+      primary_calls += 1
+      raise RubyLLM::ServerError, 'down' if primary_calls > 1
+
+      RubyLLM::Message.new(role: :assistant, content: 'first answer', model: 'primary-model')
+    end
+    allow(fallback_provider).to receive(:complete).and_raise(RubyLLM::ServerError, 'also down')
+    after_events = []
+    chat.after_fallback { |event| after_events << event }
+
+    chat.ask('Hello')
+    expect { chat.ask('Again') }.to raise_error(RubyLLM::ServerError, 'also down')
+    expect(after_events.size).to eq(1)
+    expect(after_events.first).to be_failed
+    expect(after_events.first.response).to be_nil
+  end
+
   it 'reports a fallback once and does not fall back again when after_fallback raises' do
     chat = described_class.new(model: 'primary-model').with_fallbacks('fallback-model', 'second-fallback-model')
     allow(primary_provider).to receive(:complete).and_raise(RubyLLM::ServerError, 'down')

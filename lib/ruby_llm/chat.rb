@@ -2078,6 +2078,7 @@ module RubyLLM
       note_fallback(result)
       run_callbacks(:before_message) if announce
       keep_unfinished ? add_message(result) : replace_unfinished(result)
+      @generated_response = result
       run_callbacks(:after_message, result)
     end
 
@@ -2161,6 +2162,7 @@ module RubyLLM
       drops = []
       loop do
         chunks_yielded = false
+        @generated_response = nil
 
         begin
           result = with_fallback_ready(fallback_queue) do
@@ -2168,7 +2170,7 @@ module RubyLLM
           end
         rescue StandardError => e
           callback_failed = e.equal?(@callback_error)
-          finish_fallback(active_fallback, fallback_error: e)
+          finish_failed_attempt(active_fallback, error: e, response: @generated_response)
           raise e if block_failed || callback_failed || unfinished?(messages.last)
 
           active_fallback, attempt = next_attempt!(fallback_queue, drops, error: e, attempt:, streaming:,
@@ -2345,6 +2347,14 @@ module RubyLLM
       resolved_thinking
     rescue ArgumentError => e
       raise ConfigurationError, e.message
+    end
+
+    def finish_failed_attempt(fallback, error:, response:)
+      if response
+        finish_fallback(fallback, response:)
+      else
+        finish_fallback(fallback, fallback_error: error)
+      end
     end
 
     def finish_fallback(fallback, response: nil, fallback_error: nil)
