@@ -451,6 +451,23 @@ RSpec.describe RubyLLM::Cost do
       expect(aggregate.to_h).to eq(described_class.aggregate([live, priced]).to_h)
     end
 
+    it 'keeps thinking billed inside output priced after a round trip with tokens' do
+      reasoning_model = RubyLLM::Model.new(
+        id: 'reasoning-priced-model', name: 'Reasoning Priced Model', provider: 'perplexity',
+        pricing: { text_tokens: { standard: { input_per_million: 2.0, output_per_million: 8.0,
+                                              reasoning_output_per_million: 3.0 } } }
+      )
+      tokens = RubyLLM::Tokens.new(input: 50, output: 1306, thinking: 1087)
+      live = [described_class.new(tokens:, model:), described_class.new(tokens:, model: reasoning_model)]
+      restored = live.map { |cost| described_class.from_h(cost.to_h, tokens:) }
+
+      expect(restored.first).not_to be_missing(:thinking)
+      expect(described_class.from_h(live.first.to_h.except(:total), tokens:).total)
+        .to be_within(0.0000000001).of(live.first.total)
+      expect(described_class.aggregate(restored).to_h).to eq(described_class.aggregate(live).to_h)
+      expect(described_class.aggregate(restored).thinking).to be_within(0.0000000001).of(0.003261)
+    end
+
     it 'round-trips a live cost through to_h' do
       live = described_class.new(tokens: RubyLLM::Tokens.new(input: 1_000, output: 2_000), model:)
       restored = described_class.from_h(live.to_h)

@@ -213,6 +213,17 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
       expect(formatted[:content].third).to include(type: 'tool_use', id: 'tool_123')
     end
 
+    it 'leaves out blank text the model wrote beside a tool call or its reasoning' do
+      call = RubyLLM::ToolCall.new(id: 'call_1', name: 'weather')
+      thinking = { 'type' => 'thinking', 'thinking' => 'hm', 'signature' => 'sig' }
+      turns = [RubyLLM::Message.new(role: :assistant, content: "\n\n", tool_calls: { call.id => call }),
+               RubyLLM::Message.new(role: :assistant, content: "\n", raw_reasoning: { 'anthropic' => [thinking] })]
+      rendered = turns.map { |turn| described_class.render_message(turn) }
+
+      expect(rendered.first[:content].map { |block| block[:type] }).to eq(['tool_use'])
+      expect(rendered.last[:content]).to eq([thinking])
+    end
+
     it 'does not send finish_reason back to the provider' do
       message = RubyLLM::Message.new(role: :assistant, content: 'Done', finish_reason: 'MAX_TOKENS')
 

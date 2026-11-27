@@ -78,7 +78,8 @@ module RubyLLM
         def build_live_transcription(segments, metadata, model:, language:)
           RubyLLM::Transcription.new(
             text: segments.map { |segment| segment.fetch('text') }.join(' '), model:, language:,
-            duration: metadata['duration'], segments:, words: segments.flat_map { |segment| segment['words'] || [] }
+            duration: metadata['duration'], audio_seconds: metadata['duration'], segments:,
+            words: segments.flat_map { |segment| segment['words'] || [] }
           )
         end
       end

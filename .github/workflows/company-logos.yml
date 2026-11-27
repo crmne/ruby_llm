@@ -15,6 +15,7 @@ concurrency:
 
 jobs:
   propose:
+    if: github.repository == 'crmne/ruby_llm'
     runs-on: ubuntu-latest
     # The Tally key reads every form on the account, so it lives in an
     # environment only main can use.

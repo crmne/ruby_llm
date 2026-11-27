@@ -12,7 +12,7 @@ module RubyLLM
           MAX_COLUMN = 16_384
           MAX_SERIAL = 2_958_465
           SECONDS_A_DAY = 86_400
-          BUILT_IN_DATE_FORMATS = [*14..22, *27..36, *45..47, *50..58].freeze
+          BUILT_IN_DATE_FORMATS = [*14..22, *27..36, 45, 47, *50..58].freeze
           TRUTHY = %w[1 true on].freeze
           private_constant :MAX_COLUMN, :MAX_SERIAL, :SECONDS_A_DAY, :BUILT_IN_DATE_FORMATS, :TRUTHY
 
@@ -86,7 +86,7 @@ module RubyLLM
           def add_row(lines, row)
             return if row.all?(&:empty?)
 
-            line = row.join("\t")
+            line = row.map { |cell| cell.tr("\t\r\n", ' ') }.join("\t")
             @size += line.bytesize
             raise Zip::Error, 'workbook too large' if @size > MAX_SIZE
 

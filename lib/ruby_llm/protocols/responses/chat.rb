@@ -71,7 +71,7 @@ module RubyLLM
         end
 
         def parse_completion_body(data, raw:)
-          raise_failed_response(data) if data.dig('error', 'message')
+          raise_failed_response(data) if data['error']
           raise Error.new('The provider reported a failed response', response: raw) if data['status'] == 'failed'
 
           output = data['output'] || []

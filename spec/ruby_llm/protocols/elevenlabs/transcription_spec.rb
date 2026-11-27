@@ -34,6 +34,13 @@ RSpec.describe RubyLLM::Protocols::ElevenLabs::Transcription do
       expect(payload[:num_speakers]).to eq(2)
     end
 
+    it 'leaves the number of speakers open when no names are given' do
+      payload = protocol.render_transcription_payload(file_part, model: 'scribe_v2', language: nil, speaker_names: [])
+
+      expect(payload[:diarize]).to be(true)
+      expect(payload).not_to have_key(:num_speakers)
+    end
+
     it 'leaves diarization alone without speaker names' do
       payload = protocol.render_transcription_payload(file_part, model: 'scribe_v2', language: nil)
 

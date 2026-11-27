@@ -101,6 +101,21 @@ RSpec.describe RubyLLM::Chat do
       expect(result).not_to include('narrower')
     end
 
+    it 'leaves the result of a tool search whole, so the tools it found load' do
+      tools = Array.new(10) do |index|
+        tool_returning("invoices_#{index}", 'ok').tap { |tool| tool.description('Manages invoices. ' * 12) }
+      end
+      chat = described_class.new(model: model_for(:mistral)).with_tools(*tools, defer: true)
+                            .with_context_budget(window: 8192, per_result: 0.1)
+      search = RubyLLM::ToolCall.new(id: 'call_1', name: 'tool_search', arguments: { query: 'invoices', limit: 10 })
+      allow(chat.provider).to receive(:complete)
+        .and_return(RubyLLM::Message.new(role: :assistant, content: '', tool_calls: [search]), answer)
+
+      chat.ask('Find the invoice tools')
+
+      expect(chat.render[:tools].size).to eq(11)
+    end
+
     it 'does nothing without a context window' do
       allow(chat.model).to receive(:context_window).and_return(nil)
       chat.with_tools(tool_returning('fetch', 'y' * 100_000)).with_context_budget(per_result: 0.25)

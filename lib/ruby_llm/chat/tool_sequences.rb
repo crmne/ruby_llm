@@ -11,7 +11,7 @@ module RubyLLM
       private
 
       def tool_for(call)
-        tool = tools[call.qualified_name.to_sym]
+        tool = tools[call.qualified_name.to_sym] || offered_tool_search(call)
         tool if tool && tool.namespace == call.namespace && tool.name.to_s == call.name.to_s
       end
 

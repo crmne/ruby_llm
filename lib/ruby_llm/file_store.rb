@@ -334,6 +334,10 @@ module RubyLLM
       raise ArgumentError, "#{path} is a file: delete it with delete"
     end
 
+    def refuse_write_over_folder(path)
+      raise ArgumentError, "#{path} is a folder, not a file"
+    end
+
     def write_attachment(path, attachment, content)
       write(path, content, content_type: attachment.mime_type)
     end

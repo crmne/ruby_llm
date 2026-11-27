@@ -23,6 +23,14 @@ module RubyLLM
         end
       end
 
+      # Reads what is about to be uploaded, so an unreadable attachment
+      # raises before its message is stored without it.
+      def read_attachments(attachments)
+        attachments.each do |attachment|
+          attachment.content unless attachment.active_storage? || attachment.provider_file?
+        end
+      end
+
       # Active Storage records the size and MD5 of every blob, so the
       # message's blob of the same size holds the attachment's bytes. Only
       # attachments of equal size need the MD5 to tell them apart.

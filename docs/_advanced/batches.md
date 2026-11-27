@@ -48,6 +48,7 @@ end
 batch = RubyLLM.batch(chats)
 batch.id     # Save this to collect the results later
 batch.status # => :pending
+batch.request_counts # => the provider's tallies by state, or nil when it reports none
 ```
 
 The chats keep their instructions, history, tools, schemas, and other request settings, subject to the [provider's batch restrictions](#provider-restrictions). Custom headers set with `with_headers` do not apply to batch requests, except Anthropic betas: the batch carries every `anthropic-beta` value its chats set.

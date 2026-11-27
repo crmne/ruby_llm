@@ -293,6 +293,25 @@ RSpec.describe RubyLLM::Protocols::Interactions do
     expect(chunks.last.tokens).to have_attributes(input: 46, output: 15)
   end
 
+  it 'accumulates streamed citations and keeps the step as a plain answer has it' do
+    annotations = [{ 'type' => 'url_citation', 'url' => 'https://ruby-lang.org', 'start_index' => 0, 'end_index' => 4 },
+                   { 'type' => 'url_citation', 'url' => 'https://docs.ruby.dev', 'start_index' => 5, 'end_index' => 9 }]
+    deltas = [{ 'type' => 'text', 'text' => 'Ruby docs.' }] +
+             annotations.map { |annotation| { 'type' => 'text_annotation_delta', 'annotations' => [annotation] } }
+    events = [{ 'event_type' => 'step.start', 'index' => 0, 'step' => { 'type' => 'model_output' } },
+              *deltas.map { |delta| { 'event_type' => 'step.delta', 'index' => 0, 'delta' => delta } },
+              { 'event_type' => 'interaction.completed', 'interaction' => body.except('steps') }]
+    stub_request(:post, /interactions/).to_return(
+      body: events.map { |event| "data: #{event.to_json}\n\n" }.join, headers: { 'Content-Type' => 'text/event-stream' }
+    )
+    message = chat.ask('Ruby?') { |_chunk| nil }
+
+    expect(message.citations.map(&:url)).to eq(%w[https://ruby-lang.org https://docs.ruby.dev])
+    expect(message.citations.map(&:text)).to eq(%w[Ruby docs])
+    content = [{ 'type' => 'text', 'text' => 'Ruby docs.', 'annotations' => annotations }]
+    expect(message.raw_content.dig('response', 'steps')).to eq([{ 'type' => 'model_output', 'content' => content }])
+  end
+
   describe 'Google Search' do
     def search_steps(suggestions)
       [
@@ -499,6 +518,7 @@ RSpec.describe RubyLLM::Protocols::Interactions do
     expect(chunks.flat_map(&:server_tool_calls).filter_map(&:search_suggestions).join).to include('<style>')
     expect(message.server_tool_calls.filter_map(&:search_suggestions).join).to include('<style>')
     expect(JSON.generate(message.raw_content)).not_to include('search_suggestions')
+    expect(message.citations).not_to be_empty
     expect(message.tokens.server_tool_use).to eq('web_search_requests' => 2)
   end
 
