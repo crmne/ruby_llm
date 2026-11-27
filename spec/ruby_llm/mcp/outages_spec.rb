@@ -147,6 +147,61 @@ RSpec.describe RubyLLM::MCP::Outages do
     end
   end
 
+  describe 'a command that runs in different directories' do
+    let(:command) { [RbConfig.ruby, File.expand_path('../../fixtures/mcp/server.rb', __dir__)] }
+
+    def server_in(directory)
+      Class.new(RubyLLM::MCP) { directory(directory) }.tap { |klass| klass.command(*command) }.new
+    end
+
+    it 'sits out only the directory that is missing' do
+      missing = server_in('/no/such/directory')
+
+      expect(described_class.tools(missing)).to eq([])
+      expect(described_class.down?(server_in(Pathname('/no/such/directory')))).to be(true)
+      expect(described_class.down?(server_in(Dir.pwd))).to be(false)
+    end
+
+    it 'sits out only the object whose directory depends on runtime state' do
+      missing = server_in(-> { '/no/such/directory' })
+
+      expect(described_class.tools(missing)).to eq([])
+      expect(described_class.down?(missing)).to be(true)
+      expect(described_class.down?(server_in(-> { '/no/such/directory' }))).to be(false)
+    end
+  end
+
+  describe 'a command that is looked up in different paths' do
+    def server_with(**variables)
+      Class.new(RubyLLM::MCP) do
+        command 'ruby-llm-no-such-command'
+        env(**variables)
+      end.new
+    end
+
+    it 'sits out only the path the command is missing from' do
+      missing = server_with(PATH: '/no/such/path')
+
+      expect(described_class.tools(missing)).to eq([])
+      expect(described_class.down?(server_with('PATH' => '/no/such/path', TOKEN: 'x'))).to be(true)
+      expect(described_class.down?(server_with(PATH: Dir.pwd))).to be(false)
+    end
+
+    it 'tells an empty path from an inherited one' do
+      expect(described_class.tools(server_with(PATH: nil))).to eq([])
+      expect(described_class.down?(server_with(PATH: ''))).to be(true)
+      expect(described_class.down?(server_with(TOKEN: 'x'))).to be(false)
+    end
+
+    it 'sits out only the object whose path depends on runtime state' do
+      missing = server_with(PATH: -> { '/no/such/path' })
+
+      expect(described_class.tools(missing)).to eq([])
+      expect(described_class.down?(missing)).to be(true)
+      expect(described_class.down?(server_with(PATH: -> { '/no/such/path' }))).to be(false)
+    end
+  end
+
   describe 'the event' do
     def event_for(failure)
       events = []
