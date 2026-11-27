@@ -155,6 +155,14 @@ RSpec.describe RubyLLM::Protocols::InvokeModel::EmbeddingBatches do
     expect(protocol.batch_results(job_id)).to eq([[0, nil, :failed], [1, nil, :failed]])
   end
 
+  it 'warns with the error message AWS gives' do
+    allow(RubyLLM.logger).to receive(:warn)
+    stub_job([{ recordId: 'rllm-0-0-1-s', error: { errorCode: 400, errorMessage: 'bad input' } }.to_json])
+
+    expect(protocol.batch_results(job_id)).to eq([[0, nil, :failed]])
+    expect(RubyLLM.logger).to have_received(:warn).with('Batch request 0 failed: bad input')
+  end
+
   it 'does not deliver incomplete arrays and rejects malformed indices and empty vectors' do
     stub_job([output('rllm-0-0-2-a', [0.1])])
     expect(protocol.batch_results(job_id)).to eq([])

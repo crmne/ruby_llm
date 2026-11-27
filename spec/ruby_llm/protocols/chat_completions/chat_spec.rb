@@ -612,14 +612,15 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
   end
 
   describe '.parse_completion_body error and usage handling' do
-    it 'raises the error the provider reported' do
-      body = { 'error' => { 'message' => 'model overloaded' } }
-      config = RubyLLM::Configuration.new.tap { |c| c.openai_api_key = 'test' }
-      protocol = RubyLLM::Protocols::ChatCompletions.new(RubyLLM::Providers::OpenAI.new(config))
+    [{ 'message' => 'model overloaded' }, 'model overloaded'].each do |error|
+      it "raises the error the provider reported as a #{error.class}" do
+        config = RubyLLM::Configuration.new.tap { |c| c.openai_api_key = 'test' }
+        protocol = RubyLLM::Protocols::ChatCompletions.new(RubyLLM::Providers::OpenAI.new(config))
 
-      expect { protocol.send(:parse_completion_body, body, raw: nil) }.to raise_error(
-        RubyLLM::Error, 'model overloaded'
-      )
+        expect { protocol.send(:parse_completion_body, { 'error' => error }, raw: nil) }.to raise_error(
+          RubyLLM::Error, 'model overloaded'
+        )
+      end
     end
 
     it 'raises when the response carries no message' do

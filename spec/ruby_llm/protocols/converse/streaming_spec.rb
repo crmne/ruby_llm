@@ -180,6 +180,19 @@ RSpec.describe RubyLLM::Protocols::Converse::Streaming do
     expect(result_chunk.server_tool_calls.map(&:type)).to eq(['nova_grounding_result'])
   end
 
+  it 'completes a server tool call with its streamed input when its block stops' do
+    tool_use = { 'name' => 'nova_code_interpreter', 'toolUseId' => 'tooluse_1', 'type' => 'server_tool_use' }
+    accumulator = RubyLLM::Protocol::StreamAccumulator.new
+    [{ 'start' => { 'toolUse' => tool_use } },
+     { 'delta' => { 'toolUse' => { 'input' => '{"snippet":' } } },
+     { 'delta' => { 'toolUse' => { 'input' => '"1+1"}' } } },
+     {}].each { |event| accumulator.add(streaming.send(:build_chunk, { 'contentBlockIndex' => 0, **event })) }
+    message = accumulator.to_message(nil)
+
+    expect(message.tool_calls).to be_empty
+    expect(message.server_tool_calls.map(&:input)).to eq([{ 'snippet' => '1+1' }])
+  end
+
   it 'keeps redacted thinking distinct from omitted thinking' do
     event = {
       'contentBlockDelta' => {

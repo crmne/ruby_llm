@@ -187,6 +187,42 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Streaming do
     expect(protocol.instance_variable_get(:@stream_block_json).keys).to eq([1])
   end
 
+  describe 'a pause_turn continuation that ends in cited text' do
+    let(:citation) { { 'type' => 'web_search_result_location', 'url' => 'https://a.example', 'cited_text' => 'two' } }
+    let(:search) { { 'type' => 'server_tool_use', 'id' => 'srv_1', 'name' => 'web_search', 'input' => {} } }
+    let(:text) { { 'type' => 'text', 'text' => 'two', 'citations' => [citation] } }
+    let(:chat) { RubyLLM.chat(model: model_for(:anthropic), provider: :anthropic) }
+
+    def events(block, stop_reason, *deltas)
+      [{ type: 'message_start', message: { usage: {} } },
+       { type: 'content_block_start', index: 0, content_block: block },
+       *deltas.map { |delta| { type: 'content_block_delta', index: 0, delta: } },
+       { type: 'content_block_stop', index: 0 },
+       { type: 'message_delta', delta: { stop_reason: }, usage: {} },
+       { type: 'message_stop' }].map { |event| "data: #{event.to_json}\n\n" }.join
+    end
+
+    def stub_messages(*bodies, type)
+      responses = bodies.map { |body| { body:, headers: { 'Content-Type' => type } } }
+      stub_request(:post, %r{/v1/messages}).to_return(*responses)
+    end
+
+    it 'keeps the citations for replay' do
+      stub_messages({ content: [search], stop_reason: 'pause_turn' }.to_json,
+                    { content: [text], stop_reason: 'end_turn' }.to_json, 'application/json')
+
+      expect(chat.ask('Search').raw_content).to eq([search, text])
+    end
+
+    it 'keeps the citations of a streamed continuation for replay' do
+      stub_messages(events(search, 'pause_turn'),
+                    events({ type: 'text', text: '' }, 'end_turn', { type: 'citations_delta', citation: },
+                           { type: 'text_delta', text: 'two' }), 'text/event-stream')
+
+      expect(chat.ask('Search') { |_chunk| nil }.raw_content).to eq([search, text])
+    end
+  end
+
   describe 'content block reconstruction' do
     def start(index, block)
       protocol.send(:build_chunk, { 'type' => 'content_block_start', 'index' => index, 'content_block' => block })

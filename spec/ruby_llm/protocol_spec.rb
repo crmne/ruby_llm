@@ -26,6 +26,14 @@ RSpec.describe RubyLLM::Protocol do
       end
     end
 
+    it 'raises RubyLLM::Error for a web page instead of a completion body' do
+      response = instance_double(Faraday::Response, body: '<html>Sign in</html>')
+
+      expect do
+        protocol_class.allocate.send(:parse_completion_response, response)
+      end.to raise_error(RubyLLM::Error, 'Provider returned an unreadable response body')
+    end
+
     it 'passes non-empty bodies to the protocol parser' do
       protocol = protocol_class.allocate
       response = instance_double(Faraday::Response, body: { 'text' => 'hello' })

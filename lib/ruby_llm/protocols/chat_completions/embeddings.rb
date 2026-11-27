@@ -25,7 +25,7 @@ module RubyLLM
 
         def parse_embedding_response(response, model:, text:)
           data = response.body
-          raise_stream_error(JSON.generate(data), data, nil) if data.dig('error', 'message')
+          raise_stream_error(JSON.generate(data), data, nil) if data['error']
           raise Error.new('The provider returned no embeddings', response:) unless data['data'].is_a?(Array)
 
           input_tokens = data.dig('usage', 'prompt_tokens')

@@ -45,6 +45,7 @@ module RubyLLM
 
     ESCALATION_NAME = /\A[a-z][a-z0-9_]*\z/
     PROGRESS_LINE = 200
+    MAX_SKIPPED = 50
     MAX_CHECK_ERROR = 2000
     USAGE_PROVIDER = 'sandbox' # :nodoc:
     USAGE_COUNTER = 'code_execution_seconds' # :nodoc:
@@ -66,7 +67,7 @@ module RubyLLM
                        'in it. null copies nothing'
     }.freeze
     private_constant :CHECKS, :CHECKS_LOCK, :ESCALATION_NAME, :PROGRESS_LINE, :MAX_CHECK_ERROR, :LIMIT_ERRORS,
-                     :FILES_PROPERTY
+                     :FILES_PROPERTY, :MAX_SKIPPED
 
     class << self
       def tool_name # :nodoc:
@@ -690,9 +691,14 @@ module RubyLLM
         error: run_error(result),
         blocked_hosts: (blocked if blocked&.any?),
         files: (files.map { |file| file.is_a?(String) ? file : file.filename } if files.any?),
-        skipped_files: (skipped if skipped.any?),
+        skipped_files: (shortened(skipped) if skipped.any?),
         **notes
       }.compact.to_json
+    end
+
+    def shortened(skipped)
+      rest = skipped.size - MAX_SKIPPED
+      rest.positive? ? [*skipped.first(MAX_SKIPPED), "#{rest} more files"] : skipped
     end
 
     def unmounted_note(paths)

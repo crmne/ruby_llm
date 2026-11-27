@@ -139,7 +139,7 @@ end
 
 The Rails install generator writes this line into `config/initializers/ruby_llm.rb`. Without it, chats have no budget. A [context]({% link _getting_started/configuration.md %}#giving-part-of-your-application-its-own-settings) can set its own.
 
-With `per_result`, a tool result longer than that share is cut when it is added, ending with a note telling the model how much it saw and to ask for a narrower query or the next page. The transcript keeps the cut result, so a persisted chat stores it too.
+With `per_result`, a tool result longer than that share is cut when it is added, ending with a note telling the model how much it saw and to ask for a narrower query or the next page. The transcript keeps the cut result, so a persisted chat stores it too. The result of a [tool search]({% link _tools/tool-search.md %}) stays whole, so the tools it found load.
 
 With `per_request`, a request that would take more than that share leaves out the oldest tool results, each replaced by a one-line note telling the model to call the tool again if it needs it. Only the request changes: `chat.messages` keeps every result. The results of the latest round go out whenever they fit, since the model hasn't seen them yet. When that round alone is over the share, its oldest results are left out too, with a note telling the model to ask for less, so the chat can't get stuck failing every request. The cut point moves in steps of about 15% of the budget rather than one result at a time, so the start of the request stays the same for many rounds and the provider's prompt cache keeps working.
 
@@ -218,6 +218,8 @@ end
 ```
 
 The `protocol:` option sits alongside `provider:` in model selection: a model is identified by its name, its provider, and its protocol. Unknown protocol names raise when the request is rendered or sent, listing the protocols the provider supports. A bare `with_model` returns the chat to the provider's default protocol, just as it re-resolves the provider.
+
+Some OpenAI reasoning models call tools only through the Responses API. A chat with tools on such a model needs `protocol: :responses` when `openai_protocol` or `azure_protocol` selects Chat Completions, or on an Azure deployment whose name does not contain the model's name. Others accept tools over Chat Completions only with thinking turned off, which `with_thinking(effort: :none)` does.
 
 ### Perplexity Presets
 

@@ -102,4 +102,24 @@ RSpec.describe RubyLLM::Protocols::ElevenLabs::Speech do
       expect(speech.mime_type).to eq('audio/pcm')
     end
   end
+
+  describe '#speak' do
+    include_context 'with configured RubyLLM'
+
+    let(:model) { model_for(:elevenlabs, :streaming_speech) }
+    let(:price) { RubyLLM.models.find(model, provider: :elevenlabs).pricing.characters.input }
+
+    before do
+      stub_request(:post, %r{elevenlabs\.io/v1/text-to-speech})
+        .to_return(status: 200, headers: { 'Content-Type' => 'audio/mpeg' }, body: 'mp3')
+    end
+
+    it 'counts the characters it is billed by, streamed or not' do
+      speeches = [RubyLLM.speak('Hello there', model:, provider: :elevenlabs),
+                  RubyLLM.speak('Hello there', model:, provider: :elevenlabs) { |chunk| chunk }]
+
+      expect(speeches.map { |speech| speech.tokens.characters }).to eq([11, 11])
+      expect(speeches.map { |speech| speech.cost.total }).to all(be_within(1e-12).of(11 * price / 1_000_000.0))
+    end
+  end
 end

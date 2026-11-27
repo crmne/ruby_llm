@@ -31,6 +31,10 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Embeddings do
         .to raise_error(RubyLLM::RateLimitError, /upstream busy/)
     end
 
+    it 'raises an error the body reports as a String' do
+      expect { parse_body('error' => 'overloaded') }.to raise_error(RubyLLM::ServerError, 'overloaded')
+    end
+
     it 'raises a RubyLLM error for a body with no embeddings' do
       expect { parse_body('usage' => {}) }.to raise_error(RubyLLM::Error, 'The provider returned no embeddings')
     end

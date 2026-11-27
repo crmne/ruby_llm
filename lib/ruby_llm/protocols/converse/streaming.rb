@@ -19,6 +19,7 @@ module RubyLLM
           @thinking_stream = ThinkingStream.new
           @stream_text_lengths = Hash.new(0)
           @stream_citations = {}
+          @server_tool_blocks = {}
           accumulator = RubyLLM::Protocol::StreamAccumulator.new(log: method(:log_stream_debug))
 
           response = stream_events(stream_url, JSON.generate(payload), additional_headers) do |event|
@@ -200,7 +201,7 @@ module RubyLLM
           return nil unless tool_use
 
           if Chat.server_tool_use?(tool_use)
-            remember_server_tool_block(event)
+            remember_server_tool_block(event, tool_use)
             return nil
           end
 
@@ -215,20 +216,23 @@ module RubyLLM
         end
 
         def parse_tool_call_delta(event)
-          return nil if server_tool_block_event?(event)
-
           input = normalized_delta(event).dig('toolUse', 'input')
           return nil unless input
+
+          if (block = @server_tool_blocks&.[](event_block_index(event)))
+            block[:input] << input
+            return nil
+          end
 
           { event_block_index(event) => ToolCall.new(name: nil, arguments: input) }
         end
 
         # Server-executed tool steps stream as typed toolUse and toolResult
-        # block starts. Their input deltas are not function-call arguments,
-        # so the block index is remembered and its deltas skipped.
+        # block starts. Their input deltas are not function-call arguments, so
+        # they collect apart and complete the call when its block stops.
         def parse_server_tool_call_events(event)
           start = event.dig('contentBlockStart', 'start') || event['start']
-          return [] unless start.is_a?(Hash)
+          return finished_server_tool_calls(event) unless start.is_a?(Hash)
 
           tool_use = start['toolUse']
           tool_result = start['toolResult']
@@ -243,17 +247,20 @@ module RubyLLM
           end
         end
 
-        def remember_server_tool_block(event)
+        def remember_server_tool_block(event, tool_use)
           index = event_block_index(event)
           return if index.nil?
 
-          @server_tool_block_indices ||= {}
-          @server_tool_block_indices[index] = true
+          @server_tool_blocks ||= {}
+          @server_tool_blocks[index] = { tool_use:, input: +'' }
         end
 
-        def server_tool_block_event?(event)
-          index = event_block_index(event)
-          !index.nil? && @server_tool_block_indices&.key?(index)
+        def finished_server_tool_calls(event)
+          blocks = finished_citation_blocks(event).filter_map { |index| @server_tool_blocks&.delete(index) }
+          blocks.reject! { |block| block[:input].empty? }
+          Chat.parse_server_tool_calls(blocks.map do |block|
+            { 'toolUse' => block[:tool_use].merge('input' => ToolCall.parse_arguments(block[:input])[:arguments]) }
+          end)
         end
 
         def event_block_index(event)

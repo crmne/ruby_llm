@@ -870,6 +870,16 @@ RSpec.describe RubyLLM::Chat do
       expect(JSON.parse(text)['skipped_files']).to eq(['big.txt (larger than 10 bytes)', 'c.txt (more than 2 files)'])
     end
 
+    it 'names 50 of the files it leaves out and counts the rest' do
+      files = (10...82).to_h { |number| ["#{number}.txt", 'x'] }
+      chat = RubyLLM.context { |config| config.sandbox = writing(files) }.chat(model: model_for(:openai),
+                                                                               provider: :openai)
+      text, = chat.with_code_execution.tools[:run_code].call(language: 'ruby', code: 'x')
+
+      expect(JSON.parse(text)['skipped_files']).to have_attributes(size: 51, first: '20.txt (more than 10 files)',
+                                                                   last: '12 more files')
+    end
+
     it 'copies the conversation files in read-only' do
       seen = nil
       sandbox = FakeSandbox.new do |run|
@@ -888,6 +898,22 @@ RSpec.describe RubyLLM::Chat do
 
       expect(seen.keys).to eq(%w[data.csv ruby.png])
       expect(seen['data.csv']).to eq('1,2')
+    end
+
+    it 'copies in a page attached by its root URL' do
+      stub_request(:get, 'https://example.com/').to_return(body: '<html>', headers: { 'Content-Type' => 'text/html' })
+      seen = nil
+      sandbox = FakeSandbox.new do |run|
+        seen = File.read(File.join(run[:directory], 'attachments', 'file'))
+        FakeSandbox.result
+      end
+      chat = RubyLLM.context { |config| config.sandbox = sandbox }.chat(model: model_for(:openai), provider: :openai)
+      chat.with_code_execution.add_message(role: :user, content: 'Read it',
+                                           attachments: [RubyLLM::Attachment.new('https://example.com/')])
+
+      chat.tools[:run_code].call(language: 'ruby', code: 'x')
+
+      expect(seen).to eq('<html>')
     end
 
     it 'copies returned files in at the paths they were written to' do

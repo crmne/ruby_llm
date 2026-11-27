@@ -211,6 +211,15 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Chat do
       expect(chunk.citations).to be_empty
     end
 
+    it 'reads content filters' do
+      filters = { 'hate' => { 'filtered' => false, 'severity' => 'safe' } }
+      chunk = provider.send(
+        :build_chunk, { 'choices' => [{ 'delta' => { 'content' => 'hi' }, 'content_filter_results' => filters }] }
+      )
+
+      expect(chunk.content_filters.map(&:category)).to eq(['hate'])
+    end
+
     it 'appends streamed reasoning text to its detail in place' do
       delta = lambda do |text|
         detail = { 'type' => 'reasoning.text', 'index' => 0, 'text' => text }
@@ -223,6 +232,23 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Chat do
 
       expect(chunk.raw_reasoning.first['text']).to be(text).and eq('Let me think')
     end
+  end
+
+  it 'splits think tags out of a streamed answer' do
+    context = RubyLLM.context do |config|
+      config.openrouter_api_key = 'test'
+      config.split_think_tags = true
+    end
+    events = [{ choices: [{ delta: { content: '<think>h' } }] },
+              { choices: [{ delta: { content: 'm</think>hi' }, finish_reason: 'stop' }] }]
+    stub_request(:post, /openrouter/).to_return(
+      body: events.map { |event| "data: #{event.to_json}\n\n" }.join, headers: { 'Content-Type' => 'text/event-stream' }
+    )
+
+    message = context.chat(model: model_for(:openrouter), provider: :openrouter).ask('Hello') { |_chunk| nil }
+
+    expect(message.content).to eq('hi')
+    expect(message.thinking.text).to eq('hm')
   end
 
   describe '#render_messages' do

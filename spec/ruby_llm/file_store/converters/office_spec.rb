@@ -194,9 +194,9 @@ RSpec.describe RubyLLM::FileStore::Converters::Office do
             <numFmt numFmtId="166" formatCode="[h]:mm:ss"/>
           </numFmts>
           <cellStyleXfs count="1"><xf numFmtId="14"/></cellStyleXfs>
-          <cellXfs count="7">
+          <cellXfs count="8">
             <xf numFmtId="0"/><xf numFmtId="14"/><xf numFmtId="164"/><xf numFmtId="165"/>
-            <xf numFmtId="166"/><xf numFmtId="22"/><xf numFmtId="18"/>
+            <xf numFmtId="166"/><xf numFmtId="22"/><xf numFmtId="18"/><xf numFmtId="46"/>
           </cellXfs>
         </styleSheet>
       XML
@@ -219,6 +219,7 @@ RSpec.describe RubyLLM::FileStore::Converters::Office do
       expect(value(46_112, 0)).to eq('46112')
       expect(value(46_112, 3)).to eq('46112')
       expect(value(1.5, 4)).to eq('1.5')
+      expect(value(1.5, 7)).to eq('1.5')
     end
 
     it 'reads times and dates with times' do
@@ -259,6 +260,13 @@ RSpec.describe RubyLLM::FileStore::Converters::Office do
       expect(xlsx('<c r="A1"><v>1</v></c><c r="C1"><v>3</v></c>').lines.last).to eq("1\t\t3")
       expect(xlsx('<c r="XFE1"><v>1</v></c>').lines.last).to eq('1')
       expect(xlsx('<c r="XFD1"><v>1</v></c>').lines.last.size).to eq(16_384)
+    end
+
+    it 'keeps a row on one line whatever its cells hold' do
+      strings = "<sst><si><t>12 Main St\nSpring\tfield</t></si></sst>"
+      cells = '<c r="A1" t="s"><v>0</v></c><c r="B1"><v>42</v></c>'
+
+      expect(xlsx(cells, 'xl/sharedStrings.xml': strings).lines.last).to eq("12 Main St Spring field\t42")
     end
 
     it 'leaves out phonetic hints and formulas' do
@@ -527,6 +535,10 @@ RSpec.describe RubyLLM::FileStore::Converters::Office do
       paragraph = "<w:p>#{run('<w:t>Name</w:t><w:tab/><w:t>Value</w:t><w:br/><w:t>Next</w:t>')}</w:p>"
 
       expect(docx(paragraph)).to eq("Name\tValue\nNext")
+    end
+
+    it 'reads non-breaking hyphens' do
+      expect(docx("<w:p>#{run('<w:t>555</w:t><w:noBreakHyphen/><w:t>1234</w:t>')}</w:p>")).to eq('555-1234')
     end
 
     it 'leaves out the tab stops a paragraph defines' do
