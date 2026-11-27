@@ -523,7 +523,14 @@ module RubyLLM
       # endpoints when it publishes no metadata either.
       def legacy_authorization_server
         origin = URI.join(@server_url, '/').to_s.chomp('/')
-        first_json(["#{origin}/.well-known/oauth-authorization-server"]) || {
+        server = first_json(["#{origin}/.well-known/oauth-authorization-server"]) || default_endpoints(origin)
+        return server if same_issuer?(server['issuer'].to_s.downcase, origin.downcase)
+
+        raise Error, "#{origin} metadata names a different issuer"
+      end
+
+      def default_endpoints(origin)
+        {
           'issuer' => origin, 'authorization_endpoint' => "#{origin}/authorize",
           'token_endpoint' => "#{origin}/token", 'registration_endpoint' => "#{origin}/register",
           'code_challenge_methods_supported' => ['S256']
