@@ -966,6 +966,32 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
         expect(block_types(RubyLLM::Message.new(role: :assistant, content: nil, attachments: [image]), user))
           .to eq([['user', %i[text image text]]])
       end
+
+      it 'merges consecutive user turns when an attachment-only answer sits between them' do
+        first = RubyLLM::Message.new(role: :user, content: 'Draw a cat')
+        answer = RubyLLM::Message.new(role: :assistant, content: nil, attachments: [image])
+
+        expect(block_types(first, answer, user)).to eq([['user', %i[text text image text]]])
+      end
+
+      it 'merges trailing assistant attachments into the preceding user turn when the answer had no text' do
+        first = RubyLLM::Message.new(role: :user, content: 'Draw a cat')
+        answer = RubyLLM::Message.new(role: :assistant, content: " \n ", attachments: [image])
+
+        expect(block_types(first, answer)).to eq([['user', %i[text text image]]])
+      end
+    end
+
+    it 'merges adjacent user turns when an empty assistant message is dropped between them' do
+      messages = [
+        RubyLLM::Message.new(role: :user, content: 'First'),
+        RubyLLM::Message.new(role: :assistant, content: ''),
+        RubyLLM::Message.new(role: :user, content: 'Second')
+      ]
+
+      rendered = described_class.render_messages(messages)
+
+      expect(rendered).to eq([{ role: 'user', content: [{ text: 'First' }, { text: 'Second' }] }])
     end
   end
 
