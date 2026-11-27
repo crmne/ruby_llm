@@ -8,6 +8,7 @@ require 'active_support/testing/time_helpers'
 # ends them by the time it exits instead.
 RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
   include_context 'with configured RubyLLM'
+
   include ActiveSupport::Testing::TimeHelpers
 
   let(:executions) { [] }

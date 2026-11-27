@@ -6,6 +6,7 @@ require_relative '../../support/query_helpers'
 
 RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
   include_context 'with configured RubyLLM'
+
   include ActiveSupport::Testing::TimeHelpers
 
   let(:model) { model_for(:openai) }

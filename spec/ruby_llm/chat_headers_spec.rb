@@ -4,6 +4,7 @@ require 'spec_helper'
 
 RSpec.describe RubyLLM::Chat do
   include_context 'with configured RubyLLM'
+
   describe '#with_headers' do
     it 'stores headers' do
       chat = RubyLLM.chat.with_headers('X-Custom-Header' => 'value')
