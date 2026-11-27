@@ -766,11 +766,25 @@ module RubyLLM
         raise ArgumentError, 'chat_class must be configured to use create/create!' unless resolved_chat_class
 
         input_values, chat_options = partition_inputs(kwargs)
+        resolved_context = UNRESOLVED_CONTEXT
+        created = nil
         record = resolved_chat_class.public_send(
           method_name, **resolved_chat_kwargs(inputs: input_values, options: chat_options)
-        )
-        apply_configuration(record, input_values:, persist_instructions: true, chat_options:) if record&.persisted?
+        ) do |chat|
+          created = chat.defer_context { resolved_context = apply_creation_context(chat, inputs: input_values) }
+        end
+        if record.persisted?
+          apply_configuration(record, input_values:, persist_instructions: true, resolved_context:, chat_options:)
+        end
         record
+      ensure
+        created&.defer_context
+      end
+
+      def apply_creation_context(chat, inputs:)
+        evaluate(context, runtime_context(chat:, inputs:)).tap do |value|
+          chat.with_context(value) if value
+        end
       end
 
       def apply_context(chat, runtime, resolved_context: UNRESOLVED_CONTEXT)

@@ -223,7 +223,7 @@ class SupportAgent < RubyLLM::Agent
 end
 ```
 
-The block runs once, when Ruby loads the class, on a copy of the global configuration. A block that takes no arguments runs each time the agent builds a chat instead: it reads inputs and returns a context. See [Contexts]({% link _reference/configuration-connection.md %}#contexts-isolated-configurations).
+The block runs once, when Ruby loads the class, on a copy of the global configuration. A block that takes no arguments runs each time the agent builds a chat instead: it reads inputs and returns a context. For a record from `create` or `create!`, it runs after validation and before the record is saved, so the chat's model resolves inside that context. See [Contexts]({% link _reference/configuration-connection.md %}#contexts-isolated-configurations).
 
 ## Callbacks
 
