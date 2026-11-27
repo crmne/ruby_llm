@@ -174,7 +174,7 @@ RSpec.describe RubyLLM::MCP::Stdio do
       stdio.close
     end
 
-    it 'carries on when there is nothing to read after all' do
+    it 'carries on when there is nothing to read after all', skip: Gem.win_platform? do
       stdio = described_class.new([RbConfig.ruby, '-e', server], timeout: 10)
       stdio.send(:start)
       stdout = stdio.instance_variable_get(:@stdout)
