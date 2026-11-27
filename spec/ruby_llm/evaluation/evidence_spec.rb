@@ -126,6 +126,12 @@ RSpec.describe RubyLLM::Evaluation::Evidence do
     expect([answered.output, answered.data[:output]]).to eq(['It is.', 'It is.'])
   end
 
+  it 'has no output for a chat without an assistant message' do
+    evidence = described_class.new(RubyLLM.chat(model: model_for(:openai)))
+
+    expect([evidence.output, evidence.data[:output]]).to eq([nil, nil])
+  end
+
   it 'distinguishes a change waiting for approval from an executed tool' do
     tool = Class.new(RubyLLM::Tool) do
       requires_approval
