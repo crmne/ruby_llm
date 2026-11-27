@@ -87,7 +87,7 @@ module RubyLLM
             finish_reason = data.dig('choices', 0, 'finish_reason')
             return result if finish_reason.nil? || finish_reason == 'stop'
 
-            @usage_tracker&.observe_tokens(result.tokens)
+            @usage_tracker.observe_tokens(result.tokens)
             raise_incomplete_transcript(response)
           end
 
