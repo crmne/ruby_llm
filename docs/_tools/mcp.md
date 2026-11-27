@@ -791,7 +791,7 @@ class Linear < RubyLLM::MCP
 end
 ```
 
-`owner:` names whose credentials these are, usually an input. RubyLLM finds the server's authorization server, registers itself when needed, and uses PKCE, as the MCP authorization spec requires. When the MCP server names its authorization server, RubyLLM uses that server's metadata only when the `issuer` it names is that server's own URL, and raises `RubyLLM::MCP::Error` otherwise. When it names none, the same holds for metadata at the MCP server's own origin. Send the user to authorize, then finish in the callback:
+`owner:` names whose credentials these are, usually an input. RubyLLM finds the server's authorization server, registers itself when needed, and uses PKCE, as the MCP authorization spec requires. When the MCP server names its authorization server, RubyLLM uses that server's metadata only when the `issuer` it names is that server's own URL, and raises `RubyLLM::MCP::Error` otherwise. When the MCP server publishes no protected resource metadata, the same holds for metadata at its own origin. Send the user to authorize, then finish in the callback:
 
 ```ruby
 class LinearConnectionsController < ApplicationController
