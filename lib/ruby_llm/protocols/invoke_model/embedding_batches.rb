@@ -81,7 +81,7 @@ module RubyLLM
           error = records.find { |record| !record['modelOutput'] }
           return unless error
 
-          batch_error_value(error['error']) || error['errorMessage'] || 'Bedrock returned no model output'
+          bedrock_batch_error(error) || 'Bedrock returned no model output'
         end
 
         def consistent_embedding_metadata?(metadata)

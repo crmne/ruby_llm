@@ -17,7 +17,8 @@ module RubyLLM
   # a +task+, everything the agent needs written to stand alone, plus the
   # agent's ::inputs that ::to_tool was not given. Each call runs a fresh
   # instance of the agent on the task, under the owner of the chat that
-  # called it, and returns the content of its last answer.
+  # called it, and returns the content of its last answer, or the value of
+  # the Agent::rescue_from handler that ran.
   #
   # The agent lives only as long as its call, so it has to finish within
   # it. When it stops to wait instead, for an approval, a question, or a
@@ -71,10 +72,10 @@ module RubyLLM
       agent = self.class.agent_class.new(**@inputs, **inputs.slice(*self.class.input_parameters))
       owner = Accounting::Usage.owner
       agent.with_owner(owner) unless owner.nil?
-      message = agent.ask(task)
+      answer = agent.ask(task)
       raise ConfigurationError, stopped(agent) if agent.waiting?
 
-      message&.content
+      answer.is_a?(Message) ? answer.content : answer
     end
 
     private

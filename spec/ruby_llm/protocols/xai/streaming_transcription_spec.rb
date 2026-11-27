@@ -62,6 +62,7 @@ RSpec.describe RubyLLM::Protocols::XAI::StreamingTranscription do
                                                    model: model_for(:xai, :transcription), language: nil)
 
     expect(result).to have_attributes(text: 'Ruby is useful.', language: 'en', duration: 3.7)
+    expect(result.tokens.audio_seconds).to eq(3.7)
     expect(result.words).to eq(segment['words'])
   end
 

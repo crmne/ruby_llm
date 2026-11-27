@@ -99,6 +99,35 @@ RSpec.describe 'Context connection settings' do # rubocop:disable RSpec/Describe
     end
   end
 
+  describe 'media whose type is only known once downloaded' do
+    let(:image_url) { 'https://files.example.test/image' }
+    let(:proxies) { [] }
+
+    before do
+      stub_request(:get, image_url).to_return(body: "\x89PNG\r\n\x1A\n", headers: { 'Content-Type' => 'image/png' })
+      allow(RubyLLM::Transport::Connection).to receive(:download).and_wrap_original do |original, url, config|
+        proxies << config.http_proxy
+        original.call(url, config)
+      end
+    end
+
+    it 'is moderated through the configuration of the context' do
+      stub_request(:post, 'https://api.openai.com/v1/moderations').to_return_json(body: { results: [] })
+
+      context.moderate('x', with: image_url, model: 'omni-moderation-latest', provider: :openai)
+
+      expect(proxies.uniq).to eq(['http://proxy.example:8080'])
+    end
+
+    it 'is embedded through the configuration of the context, downloaded once' do
+      stub_request(:post, /generativelanguage/).to_return_json(body: { embeddings: [{ values: [0.1] }] })
+
+      context.embed(nil, with: image_url, model: 'gemini-embedding-2', provider: :gemini)
+
+      expect(proxies).to eq(['http://proxy.example:8080'])
+    end
+  end
+
   describe RubyLLM::Image do
     def paint_with(config)
       provider = RubyLLM::Providers::OpenAI.new(config)

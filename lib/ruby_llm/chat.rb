@@ -228,7 +228,7 @@ module RubyLLM
       @provider_options = Support::Utils.deep_dup(@provider_options)
       @callbacks = @callbacks.dup.transform_values!(&:dup)
       @skill_loader = build_skill_loader
-      @tool_search_tool = nil
+      @local_tool_search = nil
       with_code_execution(**@code_execution) if @code_execution
       if @file_references
         with_file_store(file_store, inline_limit: @file_references.inline_limit, tools: @file_references.tools)
@@ -385,6 +385,7 @@ module RubyLLM
           steering_only ||= boundary
         end
       end
+      stop_waiting
       @cancelled = false
       turn_result
     end
@@ -518,10 +519,14 @@ module RubyLLM
     # ArgumentError, and the approval never applies to another call.
     # Raises ArgumentError for a Question that is not an approval.
     def approve(tool_call, remember: false)
+      question = tool_call
       tool_call = Question.decided_call(tool_call, 'answer')
       name = remembered_tool_identity(tool_call) if remember
       record_tool_call_decision(tool_call, true)
-      @tool_call_state.remember(name) if name && !tool_call_answered?(tool_call)
+      return self if tool_call_answered?(tool_call)
+
+      @tool_call_state.remember(name) if name
+      question.respond(Question::ACCEPTED) if question.is_a?(Question)
       self
     end
 
@@ -699,8 +704,11 @@ module RubyLLM
     def with_instructions(instructions, append: false, cache_until_here: false)
       boundary = Message.cache_boundary_options(cache_until_here) if cache_until_here
       @messages.reject! { |message| message.role == :system } unless append
-      @messages << Message.new(role: :system, content: instructions) unless instructions.nil?
-      @messages.last.cache_until_here(**boundary) if instructions && boundary
+      return self if instructions.nil?
+
+      message = Message.new(role: :system, content: instructions)
+      message.cache_until_here(**boundary) if boundary
+      @messages.insert(unfinished?(@messages.last) ? -2 : -1, message)
       self
     end
 
@@ -922,14 +930,17 @@ module RubyLLM
     # by name misses some, and an +on:+ that adds an error should splat the
     # default list into it. Cancelling the chat never triggers a fallback,
     # and neither does another process taking over a persisted chat or an
-    # error your streaming block raises. Pass +nil+ to remove all fallbacks
-    # and restore the default error classes. Returns +self+.
+    # error your streaming block or a message or fallback callback raises.
+    # Pass +nil+ to remove all fallbacks and restore the default error
+    # classes. Returns +self+.
     #
     # While a fallback is left, a timeout, a failed connection, or a retry
     # wait longer than two seconds moves on to it at once instead of
     # retrying the same model. A fallback that took over answers the rest
     # of that #complete, including its tool rounds; the next one starts on
-    # the chat's own model.
+    # the chat's own model. A fallback RubyLLM can't use is skipped: an
+    # unknown model, a provider without its configuration, or a model
+    # RubyLLM can't turn #with_thinking on or off for.
     #
     #   chat.with_fallbacks("gpt-4.1-mini", "claude-haiku-4-5")
     #   chat.with_fallbacks(nil)
@@ -1969,6 +1980,13 @@ module RubyLLM
             'to continue, or raise the limit with with_tool_options(rounds:).'
     end
 
+    def stop_waiting
+      raise_if_cancelled! if waiting?
+    rescue CancelledError
+      stop_tool_round
+      raise
+    end
+
     def stop_tool_round
       @cancelled = false
       cancel_tasks
@@ -2134,7 +2152,7 @@ module RubyLLM
       usage_start = usage_entries.length
       block_failed = false
       on_chunk = block && proc do |chunk|
-        block.call(chunk)
+        without_fallback_ready { block.call(chunk) }
       rescue StandardError
         block_failed = true
         raise
@@ -2148,17 +2166,20 @@ module RubyLLM
           result = with_fallback_ready(fallback_queue) do
             generate_once(stream_tracker: proc { chunks_yielded = true }, usage_start:, &on_chunk)
           end
-          finish_fallback(active_fallback, response: result)
-          return result
         rescue StandardError => e
+          callback_failed = e.equal?(@callback_error)
           finish_fallback(active_fallback, fallback_error: e)
-          raise e if block_failed || unfinished?(messages.last)
+          raise e if block_failed || callback_failed || unfinished?(messages.last)
 
           active_fallback, attempt = next_attempt!(fallback_queue, drops, error: e, attempt:, streaming:,
                                                                           chunks_yielded:)
+        else
+          finish_fallback(active_fallback, response: result)
+          return result
         end
       end
     ensure
+      @callback_error = nil
       @answering_fallback = false
       restore_parameters(drops)
     end
@@ -2193,6 +2214,10 @@ module RubyLLM
       return yield if fallback_queue.empty?
 
       Transport::Connection.with_fallback_ready(method(:fallback_error?), &)
+    end
+
+    def without_fallback_ready(&)
+      Transport::Connection.with_fallback_ready(nil, &)
     end
 
     # Retries the same model without each parameter it rejects, when the
@@ -2306,7 +2331,20 @@ module RubyLLM
     end
 
     def switch_to_usable_fallback(fallback_queue)
-      Fallback.next_usable(fallback_queue) { |fallback| switch_to_fallback_model(fallback) }&.first
+      Fallback.next_usable(fallback_queue) do |fallback|
+        from = [@model, @provider, @connection, @protocol]
+        switch_to_fallback_model(fallback)
+        check_fallback_thinking
+      rescue ConfigurationError
+        @model, @provider, @connection, @protocol = from
+        raise
+      end&.first
+    end
+
+    def check_fallback_thinking
+      resolved_thinking
+    rescue ArgumentError => e
+      raise ConfigurationError, e.message
     end
 
     def finish_fallback(fallback, response: nil, fallback_error: nil)
@@ -2524,7 +2562,10 @@ module RubyLLM
     end
 
     def run_callbacks(name, *args)
-      @callbacks[name].each { |callback| callback.call(*args) }
+      without_fallback_ready { @callbacks[name].each { |callback| callback.call(*args) } }
+    rescue StandardError => e
+      @callback_error = e
+      raise
     end
 
     def wrap_streaming_block(tool_call_ids:, stream_tracker: nil, &block)
@@ -2825,7 +2866,7 @@ module RubyLLM
       result = result.content if halted
       content, attachments = split_tool_result(result)
       content = @file_references.spill(tool_for(tool_call), tool_call, content) if @file_references
-      content = context_budget_for_model.cap(content) if @context_budget
+      content = context_budget_for_model.cap(content) if @context_budget && !tool_for(tool_call).is_a?(Tools::Search)
       mcp_result = result if result.is_a?(MCP::Result) && result.ui_uri
       message = add_message(role: :tool, content:, attachments:, tool_call_id: tool_call.id,
                             provider_call_id: tool_call.provider_call_id, mcp_result:,

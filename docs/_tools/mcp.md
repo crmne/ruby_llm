@@ -812,7 +812,7 @@ class LinearConnectionsController < ApplicationController
 end
 ```
 
-From then on, every request carries the user's token, and RubyLLM refreshes it when it expires. Check `linear.authorized?` before showing a chat that needs it, and call `linear.deauthorize` to forget the credentials. `authorize` raises `RubyLLM::MCP::Error` when the callback does not belong to the authorization it started, such as a wrong `state` or another issuer.
+From then on, every request carries the user's token, and RubyLLM refreshes it when it expires. Check `linear.authorized?` before showing a chat that needs it: it turns `false` once a refresh finds that the user revoked the grant. Call `linear.deauthorize` to forget the credentials. `authorize` raises `RubyLLM::MCP::Error` when the callback does not belong to the authorization it started, such as a wrong `state` or another issuer.
 
 Some servers, such as Slack's, only accept apps you registered with them. Pass that app's credentials:
 

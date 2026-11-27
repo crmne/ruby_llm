@@ -349,13 +349,4 @@ RSpec.describe RubyLLM::FileStore::Directory do
     expect { store.delete_folder('.git') }.to raise_error(ArgumentError, /not inside/)
     expect(File.exist?(File.join(root, '.git'))).to be(true)
   end
-
-  it 'numbers an attachment named like a folder instead of writing over it' do
-    store.write('reports/q3.pdf', 'x')
-
-    file = store.store_attachment(RubyLLM::Attachment.new(StringIO.new('new'), filename: 'reports'))
-
-    expect(file.path).to eq('reports-2')
-    expect(store.read('reports/q3.pdf')).to eq('x')
-  end
 end

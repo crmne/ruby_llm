@@ -111,13 +111,17 @@ module RubyLLM
       end
 
       def deep_merge(original, overrides)
-        original.merge(overrides) do |_key, original_value, overrides_value|
-          if original_value.is_a?(Hash) && overrides_value.is_a?(Hash)
-            deep_merge(original_value, overrides_value)
-          else
-            overrides_value
-          end
+        overrides.each_with_object(original.dup) do |(key, value), merged|
+          key = matching_key(merged, key)
+          existing = merged[key]
+          merged[key] = existing.is_a?(Hash) && value.is_a?(Hash) ? deep_merge(existing, value) : value
         end
+      end
+
+      def matching_key(hash, key)
+        return key if hash.key?(key)
+
+        hash.keys.find { |candidate| candidate.to_s == key.to_s } || key
       end
 
       def deep_dup(value)

@@ -104,10 +104,12 @@ module RubyLLM
         end
 
         def build_streamed_transcription(segments, completed, model:, language:)
+          duration = completed.filter_map { |event| event['duration'] }.max
+
           RubyLLM::Transcription.new(
             text: segments.map { |segment| segment.fetch('text') }.join(' '), model:,
             language: language || segments.filter_map { |segment| segment['language'] }.last,
-            duration: completed.filter_map { |event| event['duration'] }.max,
+            duration:, audio_seconds: duration,
             segments:, words: segments.flat_map { |segment| segment['words'] || [] }
           )
         end

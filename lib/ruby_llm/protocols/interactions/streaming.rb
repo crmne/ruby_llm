@@ -50,9 +50,9 @@ module RubyLLM
           when 'text'
             append_interaction_text(step, delta['text'])
             return Chunk.new(role: :assistant, content: delta['text'])
-          when 'text_annotation'
+          when 'text_annotation_delta'
             append_interaction_text(step, '')
-            (step['content'].last['annotations'] ||= []) << delta['annotation']
+            (step['content'].last['annotations'] ||= []).concat(delta['annotations'])
           when 'thought_summary'
             (step['summary'] ||= []) << delta['content']
             return Chunk.new(role: :assistant, content: nil,

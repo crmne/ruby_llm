@@ -80,6 +80,15 @@ RSpec.describe RubyLLM::Tool do
     expect(result).to eq('No seat chosen')
   end
 
+  it 'closes the call that waits for an answer when the chat is cancelled' do
+    asking(book_flight, 'destination' => 'Lisbon')
+    chat.cancel
+
+    expect { chat.complete }.to raise_error(RubyLLM::CancelledError)
+    expect(chat).not_to be_waiting
+    expect(chat.ask('Never mind').content).to eq('Done')
+  end
+
   it 'refuses a choice it did not offer' do
     asking(book_flight, 'destination' => 'Lisbon')
 

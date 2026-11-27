@@ -132,7 +132,7 @@ module RubyLLM
     def initialize(options = {}) # :nodoc:
       @role = options.fetch(:role).to_sym
       @tool_calls = coerce_tool_calls(options[:tool_calls])
-      @content = normalize_content(options.fetch(:content))
+      @content = normalize_content(options[:content])
       @config = options[:config]
       @attachments = Attachment.wrap(options[:attachments], config: @config)
       @model = options[:model]
@@ -447,7 +447,8 @@ module RubyLLM
     # Returns the response's Model from its provider's registry, falling
     # back to the requested model when the response ID is unknown.
     # Restored messages use the last successful attempt's provider and model.
-    # Messages without request context look up #model, or return +nil+ if unknown.
+    # Messages without request context look up #model at their #provider, or
+    # return +nil+ if unknown.
     def model_info
       return @model_info if @model_info
 
@@ -455,16 +456,16 @@ module RubyLLM
       @model_info = if entry&.model
                       RubyLLM.models.find(entry.model, provider: entry.provider)
                     elsif model
-                      RubyLLM.models.find(model)
+                      RubyLLM.models.find(model, **{ provider: }.compact)
                     end
-    rescue ModelNotFoundError
+    rescue ModelNotFoundError, ConfigurationError
       nil
     end
 
     private
 
     def answer_text
-      slug = ruby_llm_usage_entries.reverse.find(&:succeeded?)&.provider if raw_content || phase
+      slug = provider if raw_content || phase
       (Provider.resolve(slug)&.answer_text(self) if slug) || content
     end
 

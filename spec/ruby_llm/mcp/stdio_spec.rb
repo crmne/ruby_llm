@@ -44,6 +44,41 @@ RSpec.describe RubyLLM::MCP::Stdio do
     expect { child(directory: '/no/such/directory') }.to raise_error(described_class::Unavailable, /could not start/)
   end
 
+  context 'with a request in flight while a subscription listens' do
+    let(:server) do
+      <<~RUBY
+        require 'json'
+        $stdout.sync = true
+        meta = { 'io.modelcontextprotocol/subscriptionId' => 1 }
+        while (line = $stdin.gets)
+          next unless JSON.parse(line)['id'] == 2
+
+          change = JSON.generate(method: 'notifications/tools/list_changed', params: { _meta: meta })
+          puts change
+          sleep 0.3
+          puts change
+          puts JSON.generate(id: 2, result: {})
+        end
+      RUBY
+    end
+
+    before { stub_const("#{described_class}::CHECK_INTERVAL", 5) }
+
+    it 'hears each change the request reads as soon as it arrives' do
+      stdio = described_class.new([RbConfig.ruby, '-e', server])
+      heard = Queue.new
+      listener = Thread.new { stdio.listen({ id: 1, method: 'subscriptions/listen' }) { heard << :change } }
+      sleep 0.05 until stdio.instance_variable_get(:@subscriptions).any?
+      request = Thread.new { stdio.request({ id: 2, method: 'tools/call' }) }
+
+      expect(Array.new(2) { heard.pop(timeout: 3) }).to eq(%i[change change])
+    ensure
+      request&.join(10)
+      listener&.kill
+      stdio.close
+    end
+  end
+
   it 'keeps the application environment from the server' do
     parent = %w[
       FAKE_PROVIDER_API_KEY BUNDLE_GEMFILE BUNDLE_PATH RAILS_ENV SECRET_KEY_BASE NODE_EXTRA_CA_CERTS

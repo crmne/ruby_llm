@@ -6,6 +6,8 @@ RSpec.describe RubyLLM::MCP::ResourceTemplate do
   {
     ['file:///{path}', { path: 'docs/README.md' }] => 'file:///docs%2FREADME.md',
     ['file:///{+path}', { path: 'docs/README.md' }] => 'file:///docs/README.md',
+    ['file:///{+path}', { path: '50% off' }] => 'file:///50%25%20off',
+    ['file:///{+path}', { path: 'a%20b' }] => 'file:///a%20b',
     ['repo://{owner}/{repo}', { owner: 'crmne', repo: 'ruby llm' }] => 'repo://crmne/ruby%20llm',
     ['search{?q,limit}', { q: 'mcp', limit: 5 }] => 'search?q=mcp&limit=5',
     ['items{/id}', { id: 42 }] => 'items/42',
@@ -19,6 +21,8 @@ RSpec.describe RubyLLM::MCP::ResourceTemplate do
     ['search{?q,lang}', { q: 'ruby', lang: nil }] => 'search?q=ruby',
     ['search{?q,tags}', { q: 'ruby', tags: [] }] => 'search?q=ruby',
     ['search{?q,lang}', { q: 'ruby', lang: '' }] => 'search?q=ruby&lang=',
+    ['item{;id,lang}', { id: 5, lang: '' }] => 'item;id=5;lang',
+    ['item{;tags*}', { tags: ['x', ''] }] => 'item;tags=x;tags',
     ['file:///{root}{/dir,name}', { root: 'app', dir: nil, name: 'Gemfile' }] => 'file:///app/Gemfile'
   }.each do |(template, variables), expanded|
     it "expands #{template} with #{variables}" do

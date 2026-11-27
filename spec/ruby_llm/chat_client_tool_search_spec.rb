@@ -43,6 +43,36 @@ RSpec.describe RubyLLM::Chat do
     chat.add_message(role: :tool, content: chat.tools[:tool_search].call(query:).to_json, tool_call_id: id)
   end
 
+  def mistral_answer(**message)
+    { status: 200, headers: { 'Content-Type' => 'application/json' },
+      body: { id: 'c', model: model_for(:mistral), choices: [{ index: 0, message: { role: 'assistant', **message } }],
+              usage: { prompt_tokens: 1, completion_tokens: 1 } }.to_json }
+  end
+
+  def mistral_call(name, arguments)
+    mistral_answer(tool_calls: [{ id: "call_#{name}", type: 'function',
+                                  function: { name:, arguments: arguments.to_json } }])
+  end
+
+  describe 'on a fallback without tool search, for a model that has it' do
+    it 'loads the tools the fallback searched for' do
+      offered = []
+      answers = [mistral_call('tool_search', query: 'select:weather_lookup'),
+                 mistral_call('weather_lookup', city: 'Berlin'), mistral_answer(content: 'Sunny')]
+      stub_request(:post, /anthropic/).to_return(status: 529, body: '{"error":{"message":"overloaded"}}')
+      stub_request(:post, /mistral/).to_return do |request|
+        offered << JSON.parse(request.body)['tools'].map { |tool| tool.dig('function', 'name') }
+        answers.shift
+      end
+      chat = RubyLLM.chat(model: model_for(:anthropic), provider: :anthropic)
+                    .with_tools(WeatherLookup, defer: true).with_fallbacks(model_for(:mistral))
+
+      expect(chat.ask('Weather in Berlin?').content).to eq('Sunny')
+      expect(offered).to eq([%w[tool_search], %w[tool_search weather_lookup], %w[tool_search weather_lookup]])
+      expect(chat.messages.reverse.find(&:tool_result?).content).to eq('Sunny in Berlin')
+    end
+  end
+
   describe 'on a provider without tool search' do
     it 'offers the tools that are not deferred and a tool_search tool' do
       chat.add_message(role: :user, content: 'Hi')

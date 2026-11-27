@@ -9,33 +9,8 @@ module RubyLLM
 
         module_function
 
-        def build_chunk(data)
-          usage = data['usage'] || {}
-          delta = data.dig('choices', 0, 'delta') || {}
-
-          Chunk.new(
-            role: :assistant,
-            model: data['model'],
-            content: delta['content'] || delta['refusal'],
-            citations: parse_chunk_citations(delta, data),
-            thinking: Thinking.build(
-              text: parse_thinking_text(delta),
-              signature: parse_thinking_signature(delta)
-            ),
-            raw_reasoning: accumulate_raw_reasoning(delta['reasoning_details']),
-            tool_calls: parse_tool_calls(delta['tool_calls'], parse_arguments: false, stream_keys: true),
-            input_tokens: input_tokens(usage),
-            output_tokens: output_tokens(usage),
-            cache_read_tokens: cache_read_tokens(usage),
-            cache_write_tokens: cache_write_tokens(usage),
-            thinking_tokens: thinking_tokens(usage),
-            server_tool_use: server_tool_use(usage),
-            reported_cost: reported_cost(usage),
-            finish_reason: normalize_finish_reason(data.dig('choices', 0, 'finish_reason'))
-          )
-        end
-
-        def accumulate_raw_reasoning(details)
+        def accumulate_raw_reasoning(delta)
+          details = delta['reasoning_details']
           return @raw_reasoning unless details.is_a?(Array) && !details.empty?
 
           @raw_reasoning ||= []

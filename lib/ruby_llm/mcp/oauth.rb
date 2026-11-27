@@ -49,6 +49,7 @@ module RubyLLM
         authorization_response_iss_parameter_supported
       ].freeze
       CLIENT_FIELDS = %w[client_id client_secret issuer server redirect_uri dpop_key resource].freeze
+      TOKEN_FIELDS = %w[access_token refresh_token expires_at token_type].freeze
       TOKEN = /[!\#$%&'*+.^_`|~0-9A-Za-z-]+/
       PARAMETER = /#{TOKEN}\s*=/
       QUOTED = /"((?:[^"\\]|\\.)*)"/
@@ -179,8 +180,7 @@ module RubyLLM
           next true if credential && credential['access_token'] != used
           next false unless credential&.key?('refresh_token')
 
-          store_tokens(token_request('refresh_token', refresh_token: credential['refresh_token']))
-          true
+          refresh_tokens
         end
       rescue Error
         false
@@ -251,8 +251,22 @@ module RubyLLM
         store.write(key, data, owner: @owner)
       end
 
+      # A store may undo what the block wrote when it raises, so a rejected
+      # registration is forgotten once the store is done.
       def synchronize(&block)
         self.class.refreshing(key) { store.respond_to?(:synchronize) ? store.synchronize(key, &block) : yield }
+      ensure
+        forget_registration
+      end
+
+      def refresh_tokens
+        store_tokens(token_request('refresh_token', refresh_token: credential['refresh_token']))
+        true
+      rescue Error => e
+        raise unless oauth_error(e) == 'invalid_grant'
+
+        write(credential.except(*TOKEN_FIELDS))
+        false
       end
 
       def store_tokens(tokens, client: nil)
@@ -398,7 +412,7 @@ module RubyLLM
         server = client['server'] or raise Error, 'No authorization server known; authorize first'
         send_token_request(server, client, key, params.merge(grant_type:))
       rescue Error => e
-        forget_registration(client) if oauth_error(e) == 'invalid_client'
+        @rejected = client if oauth_error(e) == 'invalid_client'
         raise
       end
 
@@ -430,7 +444,9 @@ module RubyLLM
         error.data['error'] if error.data.is_a?(Hash)
       end
 
-      def forget_registration(client)
+      def forget_registration
+        client = @rejected or return
+        @rejected = nil
         registration = registration_key(client['issuer'], client['redirect_uri'])
         store.delete(registration) if store.read(registration)&.fetch('client_id', nil) == client['client_id']
       end
