@@ -161,10 +161,11 @@ RSpec.describe RubyLLM::Providers::MiniMax do
       expect(sent_body(url)['content'].last['role']).to eq('first_frame')
     end
 
-    it 'reads the task states of a running and a failed job' do
+    it 'reads the task states of a running, a failed, and a cancelled job' do
       statuses = {
         'running' => { status: :pending },
-        'failed' => { status: :failed, error: 'blocked' }
+        'failed' => { status: :failed, error: 'blocked' },
+        'cancelled' => { status: :failed, error: 'blocked' }
       }
 
       statuses.each do |status, expected|

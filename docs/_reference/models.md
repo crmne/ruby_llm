@@ -235,6 +235,8 @@ all_models = RubyLLM.models.all
 
 chat_models = RubyLLM.models.chat_models
 embedding_models = RubyLLM.models.embedding_models
+image_models = RubyLLM.models.image_models
+audio_models = RubyLLM.models.audio_models
 
 openai_models = RubyLLM.models.by_provider(:openai) # or 'openai'
 

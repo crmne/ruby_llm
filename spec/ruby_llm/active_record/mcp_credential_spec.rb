@@ -82,6 +82,41 @@ RSpec.describe RubyLLM::ActiveRecord::MCPCredential do
     expect(described_class.read('key')).to eq('access_token' => 'second')
   end
 
+  describe 'a registration the authorization server rejects' do
+    let(:server_url) { 'https://mcp.example.com/mcp' }
+    let(:key) { "#{owner.to_gid}@#{server_url}" }
+    let(:oauth) { RubyLLM::MCP::OAuth.new(server_url, owner:) }
+    let(:client) do
+      { 'client_id' => 'forgotten', 'issuer' => 'https://auth.example.com',
+        'redirect_uri' => 'https://app.example.com/callback',
+        'server' => { 'issuer' => 'https://auth.example.com', 'token_endpoint' => 'https://auth.example.com/token' } }
+    end
+
+    def registration = 'client:https://auth.example.com https://app.example.com/callback'
+
+    before do
+      described_class.write(registration, { 'client_id' => 'forgotten' })
+      stub_request(:post, 'https://auth.example.com/token')
+        .to_return(status: 401, body: { error: 'invalid_client' }.to_json)
+    end
+
+    it 'is forgotten on a refresh' do
+      described_class.write(key, client.merge('access_token' => 'access-1', 'refresh_token' => 'refresh-1'), owner:)
+
+      expect(oauth.refresh).to be(false)
+      expect(described_class.read(registration)).to be_nil
+    end
+
+    it 'is forgotten on a code exchange' do
+      pending = client.merge('state' => 'state-1', 'expires_at' => Time.now.to_i + 600)
+      described_class.write(key, { 'pending' => pending }, owner:)
+
+      expect { oauth.authorize(code: 'code-1', state: 'state-1', iss: 'https://auth.example.com') }
+        .to raise_error(RubyLLM::MCP::Error)
+      expect(described_class.read(registration)).to be_nil
+    end
+  end
+
   describe 'across processes' do
     let(:server_url) { 'https://mcp.example.com/mcp' }
     let(:key) { "#{owner.to_gid}@#{server_url}" }

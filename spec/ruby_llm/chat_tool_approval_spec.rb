@@ -73,6 +73,31 @@ RSpec.describe RubyLLM::Chat do
     expect(chat.waiting? && chat.pending_questions.any?(&:approval?)).to be(false)
   end
 
+  it 'marks an approval accepted when the question or the chat approves it' do
+    approved = %i[question chat].map do |approver|
+      chat = stubbed_chat(tool_call_message('call_1' => 'dangerous'), final_message, tools: [dangerous_tool])
+      chat.ask('Do the thing')
+      question = chat.pending_questions.find(&:approval?)
+
+      approver == :question ? question.approve : chat.approve(question)
+      question
+    end
+
+    expect(approved).to all(be_answered)
+    expect(approved.map(&:response)).to all(eq(RubyLLM::Question::ACCEPTED))
+  end
+
+  it 'leaves an approval unanswered when its call already has a result' do
+    chat = stubbed_chat(tool_call_message('call_1' => 'dangerous'), final_message, tools: [dangerous_tool])
+    chat.ask('Do the thing')
+    question = chat.pending_questions.find(&:approval?)
+    chat.add_message(role: :tool, content: 'done', tool_call_id: 'call_1')
+
+    chat.approve(question)
+
+    expect(question).not_to be_answered
+  end
+
   it 'accepts a ToolCall for approve' do
     chat = stubbed_chat(tool_call_message('call_1' => 'dangerous'), final_message, tools: [dangerous_tool])
     response = chat.ask('Do the thing')
@@ -206,6 +231,19 @@ RSpec.describe RubyLLM::Chat do
 
     expect(executions).to eq(%i[harmless dangerous])
     expect(response.content).to eq('All done')
+  end
+
+  it 'closes the calls that wait for a decision when the chat is cancelled' do
+    chat = stubbed_chat(tool_call_message('call_1' => 'dangerous'), final_message, tools: [dangerous_tool])
+    chat.ask('Do the thing')
+    chat.cancel
+
+    expect { chat.complete }.to raise_error(RubyLLM::CancelledError)
+    expect(chat).not_to be_waiting
+    expect(chat).not_to be_cancelled
+    expect(chat.messages.last).to be_cancelled
+    expect(chat.ask('Never mind').content).to eq('All done')
+    expect(executions).to be_empty
   end
 
   it 'returns the assistant message holding the pending call after another tool ran' do

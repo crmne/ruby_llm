@@ -134,6 +134,23 @@ RSpec.describe RubyLLM::ActiveRecord::Usage do
     expect(row.cost.total).to be_within(1e-10).of(0.03415)
   end
 
+  it 'reads back thinking billed inside output as priced' do
+    model = RubyLLM::Model.new(id: 'output-model', provider: 'anthropic',
+                               pricing: { text_tokens: { standard: { input_per_million: 1.0,
+                                                                     output_per_million: 2.0 } } })
+    tokens = RubyLLM::Tokens.new(input: 50, output: 1306, thinking: 1087)
+    entry = RubyLLM::Accounting::Usage::Entry.new(operation: :chat, provider: 'anthropic', model: 'output-model',
+                                                  status: :succeeded, tokens:, owner:,
+                                                  cost: RubyLLM::Cost.new(tokens:, model:))
+
+    described_class.record(entry)
+    row = rows_for(owner).sole
+
+    expect(row).to have_attributes(thinking_tokens: 1087, thinking_cost: nil)
+    expect(row.cost).not_to be_missing(:thinking)
+    expect(row.cost.total).to be_within(1e-10).of(0.002662)
+  end
+
   it 'writes a row for a guardrail moderation, naming the guardrail and version it ran' do
     RubyLLM.config.bedrock_guardrail_id = 'test-guardrail'
     RubyLLM.config.bedrock_guardrail_version = '1'

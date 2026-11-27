@@ -15,6 +15,16 @@ RSpec.describe RubyLLM::Providers::XAI::Speech do
     end.to raise_error(ArgumentError, /does not accept with_timestamps/)
   end
 
+  it 'counts the characters it is billed by' do
+    stub_request(:post, %r{api\.x\.ai/v1/tts})
+      .to_return(status: 200, headers: { 'Content-Type' => 'audio/mpeg' }, body: 'mp3')
+    context = RubyLLM.context { |config| config.xai_api_key = 'test' }
+
+    speech = context.speak('Hello there', model: model_for(:xai, :speech), provider: :xai)
+
+    expect(speech.tokens.characters).to eq(11)
+  end
+
   it 'streams speech and retains the complete audio through the public API', :live do
     chunks = []
     speech = RubyLLM.speak(

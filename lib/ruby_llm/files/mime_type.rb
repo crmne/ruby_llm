@@ -77,7 +77,6 @@ module RubyLLM
 
       DOCUMENT_MIME_TYPES = [
         'application/msword',
-        'application/rtf',
         'application/vnd.apple.keynote',
         'application/vnd.apple.numbers',
         'application/vnd.apple.pages',

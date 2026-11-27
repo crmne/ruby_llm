@@ -351,14 +351,11 @@ module RubyLLM
         end
       end
 
-      def add_provider_metadata(models_dev_model, provider_model) # rubocop:disable Metrics/PerceivedComplexity
+      def add_provider_metadata(models_dev_model, provider_model)
         data = models_dev_model.to_h
-        data[:name] = provider_model.name if blank_value?(data[:name])
-        data[:family] = provider_model.family if blank_value?(data[:family])
-        data[:created_at] = provider_model.created_at if blank_value?(data[:created_at])
-        data[:context_window] = provider_model.context_window if blank_value?(data[:context_window])
-        data[:max_output_tokens] = provider_model.max_output_tokens if blank_value?(data[:max_output_tokens])
-        data[:knowledge_cutoff] = provider_model.knowledge_cutoff if blank_value?(data[:knowledge_cutoff])
+        %i[name family created_at context_window max_output_tokens knowledge_cutoff].each do |field|
+          data[field] = provider_model.public_send(field) if blank_value?(data[field])
+        end
         data[:modalities] = provider_model.modalities.to_h if blank_value?(data[:modalities])
         if models_dev_model.type == :chat && provider_model.type != :chat
           data[:modalities] = provider_model.modalities.to_h

@@ -151,6 +151,21 @@ RSpec.describe RubyLLM::Agent do
     expect(events).to eq(['first'])
   end
 
+  it 'runs the callbacks of a copied chat on the agent that took the copy over' do
+    events = []
+    agent_class = Class.new(described_class) do
+      inputs :name
+      after_message { |message| events << [name, message.content] }
+    end
+    chat = agent_class.chat(name: 'first')
+    branch = agent_class.new(chat: chat.dup.dup, name: 'second')
+    stub_answers(branch.chat, answer)
+
+    branch.ask('Hi')
+
+    expect(events).to eq([%w[second Done]])
+  end
+
   it 'refuses a callback with both a method name and a block, or neither, and unknown options' do
     agent_class = Class.new(described_class)
 

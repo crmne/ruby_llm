@@ -158,7 +158,11 @@ module RubyLLM
             errors << result.error
           else
             results[result.index] = [result.tool_call, result.value]
-            on_result&.call(result.tool_call, result.value)
+            begin
+              on_result&.call(result.tool_call, result.value)
+            rescue StandardError => e
+              errors << e
+            end
           end
         end
 

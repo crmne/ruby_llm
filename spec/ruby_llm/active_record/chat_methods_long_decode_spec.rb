@@ -80,6 +80,24 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     end
   end
 
+  it 'resumes an unfinished answer in a new process that sets run-time instructions' do
+    requests = []
+    stub_request(:post, "https://generativelanguage.googleapis.com/v1beta/models/#{model}:generateContent")
+      .to_return_json(body: body('One ', reason: 'CONTINUATION', token: 'next'))
+      .then.to_return(status: 503, body: '{}')
+      .then.to_return do |request|
+        requests << JSON.parse(request.body)
+        { body: JSON.generate(body('two', reason: 'STOP')), headers: { 'Content-Type' => 'application/json' } }
+      end
+    job = -> { Chat.find(chat.id).with_instructions('Be brief', persist: false).with_max_output_tokens(262_144) }
+
+    expect { job.call.ask('Think') }.to raise_error(RubyLLM::ServiceUnavailableError)
+
+    expect(job.call.complete.content).to eq('One two')
+    expect(requests.sole['continuationToken']).to eq('next')
+    expect(chat.messages.where(role: 'assistant').sole.content).to eq('One two')
+  end
+
   it 'leaves no truncated answer behind when the messages table has no continuation column' do
     stub_request(:post, "https://generativelanguage.googleapis.com/v1beta/models/#{model}:generateContent")
       .to_return_json(body: body('One ', reason: 'CONTINUATION', token: 'next'))

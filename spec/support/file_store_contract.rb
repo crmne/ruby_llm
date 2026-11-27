@@ -41,6 +41,14 @@ RSpec.shared_examples 'a file store' do
     expect(store.delete_folder('reports')).to eq([])
   end
 
+  it 'refuses to write a file over a folder' do
+    store.write('reports/q3.md', 'Q3')
+
+    expect { store.write('reports', 'oops') }.to raise_error(ArgumentError, 'reports is a folder, not a file')
+    expect(store.list.map(&:path)).to eq(%w[reports/q3.md])
+    expect(store.read('reports/q3.md')).to eq('Q3')
+  end
+
   it 'refuses to delete a file with delete_folder' do
     store.write('notes.md', 'hello')
 
@@ -158,6 +166,15 @@ RSpec.shared_examples 'a file store' do
 
     expect([first, again, other, third].map(&:path)).to eq(%w[report.txt report.txt report-2.txt report-3.txt])
     expect(store.read('report-2.txt')).to eq('two')
+  end
+
+  it 'numbers an attachment named like a folder instead of writing over it' do
+    store.write('reports/q3.pdf', 'x')
+
+    file = store.store_attachment(RubyLLM::Attachment.new(StringIO.new('new'), filename: 'reports'))
+
+    expect(file.path).to eq('reports-2')
+    expect(store.read('reports/q3.pdf')).to eq('x')
   end
 
   it 'yields only the attachments it writes' do

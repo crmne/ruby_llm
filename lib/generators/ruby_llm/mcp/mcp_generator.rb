@@ -24,6 +24,7 @@ module RubyLLM
            'or bin/rails g ruby_llm:mcp Files --command "npx -y @modelcontextprotocol/server-filesystem ."'
 
       def check_server
+        return if behavior == :revoke
         return if url.present? ^ options[:command].present?
 
         raise Thor::Error, "Pass the server's URL or --command, not both"

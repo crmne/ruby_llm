@@ -31,10 +31,11 @@ module RubyLLM
       end
 
       def push(content:, attachments:, steer:, sender:)
+        attachments = read_attachments(RubyLLM::Attachment.wrap(attachments))
         QueuedMessage.transaction do
           @chat.forget_stale_cancellation
           queued = rows.create!(content:, steer:, sender:)
-          persist_content(queued, attachments) unless attachments.nil?
+          persist_content(queued, attachments) if attachments.any?
           queued
         end
       end
