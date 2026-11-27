@@ -6,8 +6,9 @@ require 'open3'
 module RubyLLM
   class MCP
     # stdio. The server is a child process that reads one JSON-RPC message
-    # per line on stdin and writes one per line on stdout. Reads never block
-    # past the deadline, even on a partial line. It starts on the
+    # per line on stdin and writes one per line on stdout. Reads and writes
+    # never block past the deadline, even on a partial line. A message
+    # written only in part ends the process. It starts on the
     # first request, restarts after it exits, and handles one request at a
     # time. Its stderr is the parent's. A server that predates 2026-07-28
     # keeps its session for the life of its process, so after a restart its
@@ -31,6 +32,7 @@ module RubyLLM
       SHUTDOWN_GRACE = 2
       SHUTDOWN_CHECK = 0.05
       CHECK_INTERVAL = 0.5
+      WRITE_CHECK = 0.01
       SUBSCRIPTION_ID = 'io.modelcontextprotocol/subscriptionId'
       INHERITED_ENV = %w[
         GEM_HOME GEM_PATH HOME LANG LC_ALL LC_CTYPE LOGNAME PATH SHELL TERM TMPDIR USER
@@ -70,9 +72,11 @@ module RubyLLM
       def request(message, version: nil, timeout: nil, **, &)
         @lock.synchronize do
           check_session(version)
-          write(message)
+          start unless @process&.alive?
+          deadline = monotonic_now + (timeout || @timeout)
+          write(message, deadline)
           @session = @process if message[:method] == 'initialize'
-          await(message[:id], timeout || @timeout, &)
+          await(message[:id], deadline, &)
         end
       end
 
@@ -82,7 +86,10 @@ module RubyLLM
       end
 
       def cancel(notification, **)
-        notify(notification)
+        @lock.synchronize { write(notification, monotonic_now + SHUTDOWN_GRACE) if @process&.alive? }
+        nil
+      rescue Unavailable
+        nil
       end
 
       def listen(message, **)
@@ -149,19 +156,15 @@ module RubyLLM
             message = parse(line)
             handled?(message) if message
           end
-          chunk = @stdout.read_nonblock(65_536, exception: false)
-          return if chunk == :wait_readable
-
-          exited unless chunk
-          @buffer << chunk
+          return unless fill
         end
       end
 
-      def handled?(message)
+      def handled?(message, deadline = nil)
         return true if route(message)
         return false unless message.key?('method') && message.key?('id')
 
-        answer(message)
+        answer(message, deadline)
         true
       end
 
@@ -173,25 +176,46 @@ module RubyLLM
         Thread.handle_interrupt(CancelledError => :never, &)
       end
 
-      def await(id, timeout)
-        deadline = monotonic_now + timeout
+      def await(id, deadline)
         loop do
           reply = read(deadline)
           return reply if reply['id'] == id && !reply.key?('method')
 
-          yield reply if !handled?(reply) && reply.key?('method') && block_given?
+          yield reply if !handled?(reply, deadline) && reply.key?('method') && block_given?
         end
       end
 
-      def write(message)
+      def write(message, deadline = nil)
         start unless @process&.alive?
-        begin
-          @stdin.puts JSON.generate(message)
-          @stdin.flush
-        rescue Errno::EPIPE, IOError
-          stop
-          raise Unavailable, "#{name} exited"
+        write_line("#{JSON.generate(message)}\n".b, deadline || (monotonic_now + @timeout))
+      end
+
+      def write_line(line, deadline)
+        written = 0
+        written += write_chunk(line.byteslice(written..), deadline) while written < line.bytesize
+      rescue Errno::EPIPE, IOError
+        exited
+      ensure
+        stop if written.positive? && written < line.bytesize
+      end
+
+      # Reads meanwhile, since a server blocked on a full stdout reads
+      # nothing more.
+      def write_chunk(line, deadline)
+        loop do
+          count = @stdin.write_nonblock(line, exception: false)
+          return count unless count == :wait_writable
+
+          fill if readable_before_write?(remaining_wait(deadline))
         end
+      end
+
+      # Windows reports a full pipe as writable.
+      def readable_before_write?(wait)
+        return @stdout.wait_readable([wait, WRITE_CHECK].min) if Gem.win_platform?
+
+        readable, = IO.select([@stdout], [@stdin], nil, wait)
+        readable&.any?
       end
 
       def read(deadline)
@@ -216,18 +240,24 @@ module RubyLLM
           line = @buffer.slice!(/\A[^\n]*\n/)
           return line if line
 
-          remaining = deadline - monotonic_now
-          raise Unavailable, "#{name} did not answer in time" unless remaining.positive?
-
-          Support::Cancellation.check
-          next unless @stdout.wait_readable([remaining, CHECK_INTERVAL].min)
-
-          chunk = @stdout.read_nonblock(65_536, exception: false)
-          next if chunk == :wait_readable
-
-          exited unless chunk
-          @buffer << chunk
+          fill if @stdout.wait_readable(remaining_wait(deadline))
         end
+      end
+
+      def remaining_wait(deadline)
+        remaining = deadline - monotonic_now
+        raise Unavailable, "#{name} did not answer in time" unless remaining.positive?
+
+        Support::Cancellation.check
+        [remaining, CHECK_INTERVAL].min
+      end
+
+      def fill
+        chunk = @stdout.read_nonblock(65_536, exception: false)
+        return if chunk == :wait_readable
+
+        exited unless chunk
+        @buffer << chunk
       end
 
       def exited
@@ -235,8 +265,8 @@ module RubyLLM
         raise Unavailable, "#{name} exited"
       end
 
-      def answer(request)
-        write(Client.reply(request))
+      def answer(request, deadline)
+        write(Client.reply(request), deadline)
       end
 
       def start
@@ -263,10 +293,17 @@ module RubyLLM
       end
 
       def terminate
-        signal('TERM')
-        signal('KILL') unless exited?
+        signal('KILL') unless terminated?
       rescue Errno::ESRCH, Errno::EPERM
         nil
+      end
+
+      # Windows has no TERM to send.
+      def terminated?
+        signal('TERM')
+        exited?
+      rescue Errno::EINVAL
+        false
       end
 
       def exited?

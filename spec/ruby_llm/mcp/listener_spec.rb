@@ -281,4 +281,39 @@ RSpec.describe RubyLLM::MCP::Listener do
       end
     end
   end
+
+  context 'with a process that stops reading' do
+    let(:client) { RubyLLM::MCP::Client.new(transport) }
+    let(:listener) { described_class.new(client, name: 'files', timeout: 20, &callback) }
+    let(:transport) do
+      script = <<~RUBY
+        require 'json'
+        $stdout.sync = true
+        discover = JSON.parse($stdin.gets)
+        puts JSON.generate(id: discover['id'], result: { supportedVersions: ['2026-07-28'] })
+        listen = JSON.parse($stdin.gets)
+        meta = { 'io.modelcontextprotocol/subscriptionId' => listen['id'] }
+        params = { _meta: meta, notifications: { toolsListChanged: true } }
+        puts JSON.generate(method: 'notifications/subscriptions/acknowledged', params:)
+        sleep
+      RUBY
+      RubyLLM::MCP::Stdio.new([RbConfig.ruby, '-e', script], timeout: 60)
+    end
+
+    before { stub_const('RubyLLM::MCP::Stdio::SHUTDOWN_GRACE', 0.2) }
+
+    after { transport.close }
+
+    it 'stops instead of subscribing again' do
+      listener.start(tools)
+      thread = listener.instance_variable_get(:@thread)
+      stdin = transport.instance_variable_get(:@stdin)
+      nil until stdin.write_nonblock('x' * 65_536, exception: false) == :wait_writable
+      nil until stdin.write_nonblock('x', exception: false) == :wait_writable
+
+      listener.stop
+
+      expect(thread.join(10)).to be(thread)
+    end
+  end
 end
