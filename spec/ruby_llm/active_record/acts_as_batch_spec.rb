@@ -262,6 +262,30 @@ RSpec.describe RubyLLM::Batch do # rubocop:disable RSpec/SpecFilePathFormat
       expect { pollers.each(&:messages) }.to change(RubyLLM::ActiveRecord::Usage, :count).by(1)
     end
 
+    context 'when a default scope hides the chat' do
+      let(:hidden_ids) { [] }
+
+      around do |example|
+        scopes = Chat.default_scopes
+        ids = hidden_ids
+        Chat.class_eval { default_scope { where.not(id: ids) } }
+        example.run
+      ensure
+        Chat.default_scopes = scopes
+      end
+
+      it 'delivers the answer once the chat is visible again' do
+        batch
+        hidden_ids << chat.id
+        described_class.find(batch_id).refresh.messages
+
+        hidden_ids.clear
+        2.times { described_class.find(batch_id).refresh.messages }
+
+        expect(chat.messages.reload.pluck(:role, :content)).to eq([['user', 'What is 2 + 2?'], %w[assistant 4]])
+      end
+    end
+
     it 'counts an answer another poller added as delivered' do
       batch
       record = RubyLLM::ActiveRecord::Batch.find_by!(provider_batch_id: batch_id)

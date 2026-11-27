@@ -18,8 +18,8 @@ module RubyLLM
     # [+completed+] Whether the provider has finished the batch.
     # [+request_counts+] The provider's request counts, as a Hash.
     # [+reported_cost+] The cost the provider reported, as a Hash.
-    # [+chat_type+, +chat_ids+] The class and ids of the submitted chats. The
-    #   id is +nil+ once the answer to a deleted chat arrived.
+    # [+chat_type+, +chat_ids+] The class and ids of the submitted chats. A
+    #   +nil+ id is a deleted chat whose result was collected.
     #
     # RubyLLM writes these rows. Read and query them, and add scopes and
     # columns of your own, but do not create or update them.
@@ -124,7 +124,10 @@ module RubyLLM
       # Two pollers can load a batch before either delivers, so the check
       # is repeated once this one holds the chat.
       def deliver_once(chat, index: nil, failed: false, &)
-        return bill_once(index, &).then { true } unless chat
+        unless chat
+          deleted?(chat_ids[index]) ? bill_once(index, &) : yield
+          return true
+        end
 
         chat.claiming_delivery do
           yield unless failed ? billed_failure?(chat) : answered?(chat)
@@ -132,8 +135,8 @@ module RubyLLM
         end
       end
 
-      # A deleted chat can't show that its answer came, so its id leaves the
-      # row once the answer's usage is recorded.
+      # A deleted chat can't show that its result came, so its id leaves the
+      # row with the report of its usage, even when the ledger skips the row.
       def bill_once(index)
         with_lock do
           next if chat_ids[index].nil?
@@ -141,6 +144,12 @@ module RubyLLM
           yield
           update!(chat_ids: chat_ids.dup.tap { |ids| ids[index] = nil })
         end
+      end
+
+      # A default scope can hide a chat that still exists.
+      def deleted?(id)
+        klass = chat_type.constantize.base_class
+        id.nil? || klass.uncached { klass.unscoped.where(klass.primary_key => [id]).none? }
       end
 
       # A failed slot adds no message, so its usage row is what marks it.
