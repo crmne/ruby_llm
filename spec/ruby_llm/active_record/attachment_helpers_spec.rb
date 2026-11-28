@@ -319,4 +319,42 @@ RSpec.describe RubyLLM::ActiveRecord::AttachmentHelpers do
       expect(helpers.instance_of_class?('anything', 'String')).to be(true)
     end
   end
+
+  describe 'Active Storage MIME normalization' do
+    it 'normalizes parameterized mixed-case blob content types before classifying' do
+      json_blob = ActiveStorage::Blob.create_and_upload!(
+        io: StringIO.new('{"a":1}'), filename: 'export.bin',
+        content_type: 'Application/JSON; charset=utf-8', identify: false
+      )
+
+      attachment = RubyLLM::Attachment.new(json_blob)
+
+      expect(attachment.mime_type).to eq('application/json')
+      expect(attachment).to be_text
+    end
+
+    it 'normalizes audio/x-wav blobs to audio/wav' do
+      wav_blob = ActiveStorage::Blob.create_and_upload!(
+        io: StringIO.new('RIFF'), filename: 'sound.bin',
+        content_type: 'audio/x-wav', identify: false
+      )
+
+      attachment = RubyLLM::Attachment.new(wav_blob)
+
+      expect(attachment.mime_type).to eq('audio/wav')
+      expect(attachment).to be_audio
+    end
+
+    it 'decodes text blobs using the charset from their content type' do
+      latin_blob = ActiveStorage::Blob.create_and_upload!(
+        io: StringIO.new("caf\xE9".b), filename: 'menu.bin',
+        content_type: 'text/plain; charset=iso-8859-1', identify: false
+      )
+
+      attachment = RubyLLM::Attachment.new(latin_blob)
+
+      expect(attachment.mime_type).to eq('text/plain')
+      expect(attachment.content).to eq('café')
+    end
+  end
 end
