@@ -114,6 +114,37 @@ RSpec.describe RubyLLM::Evaluation::Evidence do
     expect(evidence.data[:messages].last[:role]).to eq('tool')
   end
 
+  it 'takes the result a tool halted the last turn with as the output' do
+    chat.messages.pop(2)
+    chat.add_message(role: :tool, content: 'Refund queued', tool_call_id: call.id, finish_reason: :halted)
+    halted = described_class.new(chat)
+    chat.add_message(role: :user, content: 'Is it done?')
+    chat.add_message(role: :assistant, content: 'It is.')
+    answered = described_class.new(chat)
+
+    expect([halted.output, halted.data[:output]]).to eq(['Refund queued', 'Refund queued'])
+    expect([answered.output, answered.data[:output]]).to eq(['It is.', 'It is.'])
+  end
+
+  it 'waits for every result of a round before taking a halted one as the output' do
+    round = %w[call-2 call-3].to_h { |id| [id, RubyLLM::ToolCall.new(id:, name: 'issue_refund', arguments: {})] }
+    chat.messages.pop(2)
+    chat.add_message(role: :assistant, content: 'Working on it', tool_calls: round)
+    chat.add_message(role: :tool, content: 'Refund queued', tool_call_id: 'call-2', finish_reason: :halted)
+    pending = described_class.new(chat)
+    chat.add_message(role: :tool, content: 'Refunded', tool_call_id: 'call-3')
+    finished = described_class.new(chat)
+
+    expect([pending.output, pending.data[:output]]).to eq(['Working on it', 'Working on it'])
+    expect([finished.output, finished.data[:output]]).to eq(['Refund queued', 'Refund queued'])
+  end
+
+  it 'has no output for a chat without an assistant message' do
+    evidence = described_class.new(RubyLLM.chat(model: model_for(:openai)))
+
+    expect([evidence.output, evidence.data[:output]]).to eq([nil, nil])
+  end
+
   it 'distinguishes a change waiting for approval from an executed tool' do
     tool = Class.new(RubyLLM::Tool) do
       requires_approval

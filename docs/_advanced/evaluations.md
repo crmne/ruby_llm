@@ -488,7 +488,7 @@ These values are available inside `assertions`:
 | `expected_output` | The case's reference answer |
 | `metadata` | The case's metadata |
 | `result` | Exactly what `perform` returned |
-| `output` | The final answer: the last assistant message for a conversation or Message, otherwise `result` |
+| `output` | The final answer: for a conversation, the result a tool [ended the turn]({% link _tools/tool-execution.md %}#ending-the-turn) with, or else the last assistant message; for a Message, its content; otherwise `result` |
 | `messages` | The messages of a returned Chat, Agent, or Message |
 | `tool_calls` | The tool calls in those messages |
 

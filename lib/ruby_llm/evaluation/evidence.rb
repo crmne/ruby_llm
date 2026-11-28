@@ -87,15 +87,27 @@ module RubyLLM
 
       def primary_output(conversation, result)
         case conversation
-        when Chat then messages.reverse.find { |message| message.role == :assistant }&.content
+        when Chat then answer(messages)
         when Message then conversation.content
         else result
         end
       end
 
+      def answer(messages)
+        message = halted_result(messages) || messages.reverse.find { |candidate| candidate.role == :assistant }
+        message&.content
+      end
+
+      def halted_result(messages)
+        calls = messages.select(&:tool_call?).last(1).flat_map { |message| message.tool_calls.keys }
+        return if (calls - messages.map(&:tool_call_id)).any?
+
+        messages.reverse_each.take_while(&:tool_result?).find(&:halted?)
+      end
+
       def conversation_data(chat, parents)
-        answer = chat.messages.reverse.find { |message| message.role == :assistant }&.content
-        { output: answer, messages: serialize(chat.messages, parents), complete: chat.complete?, waiting: chat.waiting?,
+        { output: answer(chat.messages), messages: serialize(chat.messages, parents),
+          complete: chat.complete?, waiting: chat.waiting?,
           pending_questions: chat.pending_questions.map(&:id), cancelled: chat.cancelled?,
           model: chat.model.id }
       end
