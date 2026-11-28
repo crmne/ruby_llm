@@ -34,6 +34,26 @@ RSpec.describe RubyLLM::Protocol do
       end.to raise_error(RubyLLM::Error, 'Provider returned an unreadable response body')
     end
 
+    it 'raises RubyLLM::Error with the response when the protocol cannot read a hash body' do
+      converse_protocol_class = Class.new(described_class) do
+        private
+
+        def parse_completion_body(data, **)
+          data.dig('output', 'message').fetch('content')
+        end
+      end
+
+      [{ 'output' => 'busy' }, { 'output' => { 'message' => {} } }].each do |body|
+        response = instance_double(Faraday::Response, body: body)
+
+        expect do
+          converse_protocol_class.allocate.send(:parse_completion_response, response)
+        end.to raise_error(RubyLLM::Error, 'Provider returned an unreadable response body') { |error|
+          expect(error.response).to be(response)
+        }
+      end
+    end
+
     it 'passes non-empty bodies to the protocol parser' do
       protocol = protocol_class.allocate
       response = instance_double(Faraday::Response, body: { 'text' => 'hello' })
