@@ -1,5 +1,8 @@
 class <%= 'upgrade_ruby_llm_to_2_2'.camelize %> < ActiveRecord::Migration<%= migration_version %>
   def up
+    refuse_columns_of_another_type <%= chat_table_name %>: { claim_token: :string, claimed_until: :datetime },
+                                   <%= message_table_name %>: { phase: :string, continuation: :text }
+
     unless column_exists?(:ruby_llm_tool_calls, :provider_call_id)
       if column_exists?(:ruby_llm_tool_calls, :provider_id)
         rename_column :ruby_llm_tool_calls, :provider_id, :provider_call_id
@@ -122,6 +125,19 @@ class <%= 'upgrade_ruby_llm_to_2_2'.camelize %> < ActiveRecord::Migration<%= mig
   end
 
   private
+
+  def refuse_columns_of_another_type(tables)
+    tables.each do |table, types|
+      columns(table).each do |column|
+        type = types[column.name.to_sym]
+        next if type.nil? || column.type == type
+
+        raise ActiveRecord::MigrationError,
+              "#{table}.#{column.name} already exists as #{column.type}, and RubyLLM 2.2 adds it as #{type}. " \
+              'Rename your column, then run this migration again.'
+      end
+    end
+  end
 
   # Asks the database, since each one prints a check differently: a check
   # refusing the row leaves code runs unmetered, with only a warning at run time.
