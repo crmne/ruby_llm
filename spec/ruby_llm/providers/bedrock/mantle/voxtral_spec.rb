@@ -93,6 +93,26 @@ RSpec.describe RubyLLM::Providers::Bedrock::Mantle::Voxtral do
     expect(result.tokens).to have_attributes(input: 386, output: 11)
   end
 
+  it 'raises for a transcript cut off by the token limit and keeps the usage Bedrock billed' do
+    stub_request(:post, %r{/v1/chat/completions}).to_return(
+      body: { choices: [{ message: { content: 'cut off' }, finish_reason: 'length' }],
+              usage: { prompt_tokens: 386, completion_tokens: 11 } }.to_json,
+      headers: { 'Content-Type' => 'application/json' }
+    )
+    instrumenter = CaptureInstrumenter.new
+    context = RubyLLM.context do |config|
+      config.bedrock_region = 'us-west-2'
+      config.bedrock_api_key = config.bedrock_secret_key = 'test'
+      config.instrumenter = instrumenter
+    end
+
+    expect { context.transcribe(audio_path, model: model.id, provider: :bedrock) }
+      .to raise_error(RubyLLM::Error, 'Bedrock Voxtral did not complete the transcript')
+    usage = instrumenter.events.find { |name, _payload| name == 'usage.ruby_llm' }.last
+    expect(usage[:status]).to eq(:failed)
+    expect(usage[:tokens].output).to eq(11)
+  end
+
   it 'transcribes speech through Bedrock Voxtral with typed usage', :live do
     result = RubyLLM.transcribe(audio_path, model: model_for(:bedrock, :bedrock_transcription), provider: :bedrock)
 
