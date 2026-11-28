@@ -878,6 +878,63 @@ RSpec.describe RubyLLM::MCP::OAuth do
     expect { linear.authorization_url(redirect_uri:) }.to raise_error(RubyLLM::MCP::Error, /PKCE/)
   end
 
+  describe 'authorization server metadata at the server origin' do
+    def published(metadata)
+      stub_request(:get, %r{\Ahttps://mcp\.example\.com/\.well-known/oauth-protected-resource}).to_return(status: 404)
+      stub_request(:get, 'https://mcp.example.com/.well-known/oauth-authorization-server')
+        .to_return(body: authorization_server.merge(metadata).compact.to_json)
+    end
+
+    def client(url = server_url)
+      described_class.new(url, owner: 'ada', client_id: 'client', client_secret: 'secret')
+    end
+
+    def store = RubyLLM.config.mcp_credential_store
+
+    ['https://auth.example.com', 'https://mcp.example.com/tenant', 'https://mcp.example.com.example.net',
+     'http://mcp.example.com', nil].each do |issuer|
+      it "refuses the issuer #{issuer.inspect}" do
+        published(issuer:)
+
+        expect { client.authorization_url(redirect_uri:) }
+          .to raise_error(RubyLLM::MCP::Error, 'https://mcp.example.com metadata names a different issuer')
+        expect(store.read("issuer:client #{server_url}")).to be_nil
+        expect(store.read("ada@#{server_url}")).to be_nil
+      end
+    end
+
+    it 'requests no token under another issuer' do
+      published(issuer: 'https://auth.example.com')
+      oauth = described_class.new(server_url, owner: 'ada', client_id: 'client', client_secret: 'secret',
+                                              grant: :client_credentials)
+
+      expect { oauth.recover(nil) }.to raise_error(RubyLLM::UnauthorizedError, /names a different issuer/)
+      expect(a_request(:post, 'https://auth.example.com/token')).not_to have_been_made
+    end
+
+    %w[https://mcp.example.com https://mcp.example.com/].each do |issuer|
+      it "uses the endpoints published under the issuer #{issuer}" do
+        published(issuer:)
+        oauth = client
+
+        oauth.authorize(callback(oauth.authorization_url(redirect_uri:), iss: issuer))
+        oauth.refresh
+
+        expect(oauth).to be_authorized
+        expect(a_request(:post, 'https://auth.example.com/token')).to have_been_made.twice
+      end
+    end
+
+    %w[https://mcp.example.com https://MCP.example.com].each do |issuer|
+      it "accepts the issuer #{issuer} for a server URL with a capitalized host" do
+        published(issuer:)
+
+        expect(client('https://MCP.example.com/mcp').authorization_url(redirect_uri:))
+          .to start_with('https://auth.example.com/authorize?')
+      end
+    end
+  end
+
   it 'refreshes once when the server keeps rejecting the token' do
     linear.authorize(callback(linear.authorization_url(redirect_uri:)))
     stub_request(:post, server_url).to_return(status: 401)
