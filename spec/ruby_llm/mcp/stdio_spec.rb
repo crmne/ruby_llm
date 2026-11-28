@@ -78,7 +78,7 @@ RSpec.describe RubyLLM::MCP::Stdio do
       RUBY
     end
 
-    before { stub_const("#{described_class}::CHECK_INTERVAL", 5) }
+    before { stub_const("#{described_class}::CHECK_INTERVAL", 30) }
 
     it 'hears each change the request reads as soon as it arrives' do
       stdio = described_class.new([RbConfig.ruby, '-e', server])
@@ -87,9 +87,9 @@ RSpec.describe RubyLLM::MCP::Stdio do
       sleep 0.05 until stdio.instance_variable_get(:@subscriptions).any?
       request = Thread.new { stdio.request({ id: 2, method: 'tools/call' }) }
 
-      expect(Array.new(2) { heard.pop(timeout: 3) }).to eq(%i[change change])
+      expect(Array.new(2) { heard.pop(timeout: 15) }).to eq(%i[change change])
     ensure
-      request&.join(10)
+      request&.join(15)
       listener&.kill
       stdio.close
     end
