@@ -235,6 +235,40 @@ RSpec.describe RubyLLM::MCP::HTTP do
     expect(notifications.map { |message| message['method'] }).to eq(['notifications/progress'])
   end
 
+  it 'replaces invalid bytes in a JSON body' do
+    stub_method('server/discover', result: discover_result)
+    stub_method('tools/call', body: lambda { |request|
+      %({"jsonrpc":"2.0","id":"#{JSON.parse(request.body)['id']}","result":{"text":"caf\xE9 €"}}).b
+    })
+
+    expect(client.request('tools/call', { name: 'search' })).to eq('text' => "caf\uFFFD €")
+  end
+
+  context 'when the event parser yields bytes it keeps' do
+    let(:body) { %({"jsonrpc":"2.0","id":"1","result":{"text":"caf\xE9 €"}}).b }
+    let(:stream) { described_class::Stream.new('1') }
+
+    before do
+      parser = instance_double(RubyLLM::Transport::EventStreamParser)
+      allow(parser).to receive(:feed).and_yield('message', body)
+      allow(RubyLLM::Transport::EventStreamParser).to receive(:new).and_return(parser)
+    end
+
+    it 'reads a frozen body' do
+      body.freeze
+      stream.feed('data')
+
+      expect(stream.answer['result']).to eq('text' => "caf\uFFFD €")
+    end
+
+    it 'leaves the body as it was' do
+      original = body.dup
+      stream.feed('data')
+
+      expect(body).to have_attributes(encoding: Encoding::BINARY, bytes: original.bytes)
+    end
+  end
+
   it 'goes on with a call when the server refuses the answer to its own request' do
     stub_method('server/discover', result: discover_result)
     stub_request(:post, url).with { |request| JSON.parse(request.body)['id'] == 'roots-1' }.to_return(status: 401)

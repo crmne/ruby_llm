@@ -35,6 +35,31 @@ RSpec.describe RubyLLM::MCP::Stdio do
     expect { stdio.listen(nil) { nil } }.to raise_error(RubyLLM::MCP::Stdio::Unavailable, /exited/)
   end
 
+  it 'replaces invalid bytes the server writes' do
+    script = '$stdin.gets; puts %({"id":1,"text":"caf\xE9 €"}); $stdout.flush; $stdin.gets'
+    stdio = described_class.new([RbConfig.ruby, '-e', script])
+
+    expect(stdio.request({ id: 1, method: 'probe' })['text']).to eq("caf\uFFFD €")
+  ensure
+    stdio.close
+  end
+
+  context 'with a line of invalid bytes' do
+    let(:line) { %({"id":1,"text":"caf\xE9 €"}\n).b }
+    let(:stdio) { described_class.new([RbConfig.ruby]) }
+
+    it 'parses it frozen' do
+      expect(stdio.send(:parse, line.freeze)['text']).to eq("caf\uFFFD €")
+    end
+
+    it 'leaves it as it was' do
+      original = line.dup
+      stdio.send(:parse, line)
+
+      expect(line).to have_attributes(encoding: Encoding::BINARY, bytes: original.bytes)
+    end
+  end
+
   context 'with a request in flight while a subscription listens' do
     let(:server) do
       <<~RUBY
