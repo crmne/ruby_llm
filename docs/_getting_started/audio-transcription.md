@@ -68,7 +68,7 @@ RubyLLM.transcribe(
 
 Use ISO 639-1 language codes such as `en`, `es`, and `fr`. Google's dedicated transcription models also accept BCP-47 hints such as `en-US`, and Azure AI Speech requires them.
 
-When a recording may be in one of several languages, Azure AI Speech takes them all as candidates and reports the one it heard:
+When a recording may be in one of several languages, pass them all as candidates. `{{ site.models.default_transcription }}` and Azure AI Speech take a list, and Azure AI Speech reports the one it heard:
 
 ```ruby
 transcription = RubyLLM.transcribe(

@@ -178,6 +178,7 @@ module RubyLLM
           rendered = []
           tool_result_blocks = []
           assistant_attachments = []
+          dropped_assistant = false
           calls = {}
 
           messages.each do |msg|
@@ -194,16 +195,35 @@ module RubyLLM
             message = render_non_tool_message(msg, caching:, citations:, tool_text:)
             next tool_result_blocks.concat(message[:content]) if joins_tool_results?(message, tool_result_blocks)
 
-            unless tool_result_blocks.empty?
-              rendered << { role: 'user', content: tool_result_blocks }
-              tool_result_blocks = []
-            end
-            rendered << message if message
+            flush_user_blocks(rendered, tool_result_blocks, merge: dropped_assistant)
+            dropped_assistant = apply_rendered_message(rendered, msg, message, merge: dropped_assistant)
           end
 
           tool_result_blocks.concat(assistant_attachments)
-          rendered << { role: 'user', content: tool_result_blocks } unless tool_result_blocks.empty?
+          flush_user_blocks(rendered, tool_result_blocks, merge: dropped_assistant)
           rendered
+        end
+
+        def flush_user_blocks(rendered, blocks, merge: false)
+          return if blocks.empty?
+
+          append_rendered_message(rendered, { role: 'user', content: blocks.dup }, merge:)
+          blocks.clear
+        end
+
+        def apply_rendered_message(rendered, msg, message, merge: false)
+          return msg.role == :assistant || merge unless message
+
+          append_rendered_message(rendered, message, merge:)
+          false
+        end
+
+        def append_rendered_message(rendered, message, merge: false)
+          if merge && rendered.last&.fetch(:role) == message[:role]
+            rendered.last[:content].concat(message[:content])
+          else
+            rendered << message
+          end
         end
 
         # Only user messages take images and documents, so a replayed turn's

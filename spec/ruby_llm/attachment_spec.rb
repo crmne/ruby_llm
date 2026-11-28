@@ -40,6 +40,31 @@ RSpec.describe RubyLLM::Attachment do
     expect(attachment).to be_text
   end
 
+  it 'normalizes audio/x-wav to audio/wav for explicit and provider file MIME types' do
+    explicit = described_class.new(StringIO.new('RIFF'), filename: 'clip.bin', mime_type: 'AUDIO/X-WAV; rate=16000')
+    uploaded = RubyLLM::UploadedFile.new(id: 'file_wav', provider: 'openai', filename: 'clip.wav',
+                                         mime_type: 'audio/x-wav')
+
+    expect(explicit.mime_type).to eq('audio/wav')
+    expect(described_class.new(uploaded).mime_type).to eq('audio/wav')
+  end
+
+  it 'detects a provider file with empty MIME metadata from its filename alone' do
+    file = RubyLLM::UploadedFile.new(id: 'file_blank', provider: 'openai', filename: 'opaque.bin', mime_type: '')
+
+    expect(described_class.new(file).mime_type).to eq('application/octet-stream')
+  end
+
+  it 'normalizes a provider file MIME type before classifying it' do
+    file = RubyLLM::UploadedFile.new(id: 'file_json', provider: 'openai', filename: 'export.bin',
+                                     mime_type: 'Application/JSON; charset=utf-8')
+
+    attachment = described_class.new(file)
+
+    expect(attachment.mime_type).to eq('application/json')
+    expect(attachment).to be_text
+  end
+
   it 'reads binary text with the charset it was given' do
     bytes = StringIO.new("caf\xE9".b)
     attachment = described_class.new(bytes, filename: 'menu.txt', mime_type: 'text/plain; charset=iso-8859-1')
@@ -271,6 +296,35 @@ RSpec.describe RubyLLM::Attachment do
 
     expect(attachment).not_to be_active_storage
     expect(attachment.content).to eq('notes')
+  end
+
+  it 'normalizes an ActiveStorage blob content type before classifying it' do
+    blob_class = Class.new do
+      def filename = 'export.bin'
+      def content_type = 'Text/CSV; charset=utf-8'
+      def download = '{"a":1}'
+    end
+    stub_const('ActiveStorage', Module.new)
+    stub_const('ActiveStorage::Blob', blob_class)
+
+    attachment = described_class.new(blob_class.new)
+
+    expect(attachment.mime_type).to eq('text/csv')
+    expect(attachment).to be_text
+  end
+
+  it 'reads an ActiveStorage blob with its charset when the given MIME type has none' do
+    blob_class = Class.new do
+      def filename = 'menu.bin'
+      def content_type = 'text/plain; charset=iso-8859-1'
+      def download = "caf\xE9".b
+    end
+    stub_const('ActiveStorage', Module.new)
+    stub_const('ActiveStorage::Blob', blob_class)
+
+    attachment = described_class.new(blob_class.new, mime_type: 'text/plain')
+
+    expect(attachment.content).to eq('café')
   end
 
   describe 'provider-managed file accessors' do

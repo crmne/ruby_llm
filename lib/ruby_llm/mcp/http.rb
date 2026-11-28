@@ -439,7 +439,7 @@ module RubyLLM
         end
 
         def receive(data)
-          parsed = JSON.parse(data)
+          parsed = JSON.parse(data.dup.force_encoding(Encoding::UTF_8).scrub)
           (parsed.is_a?(Array) ? parsed : [parsed]).grep(Hash).each do |reply|
             reply['method'] ? deliver(reply) : @replies << reply
           end

@@ -202,6 +202,7 @@ module RubyLLM
       end
 
       def parse(line)
+        line = line.dup.force_encoding(Encoding::UTF_8).scrub
         return if line.strip.empty?
 
         message = JSON.parse(line)
