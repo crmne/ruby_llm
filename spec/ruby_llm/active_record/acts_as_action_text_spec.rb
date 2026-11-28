@@ -7,6 +7,7 @@ require_relative '../../support/query_helpers'
 
 RSpec.describe RubyLLM::ActiveRecord::ActsAs do
   include_context 'with configured RubyLLM'
+
   include ActiveSupport::Testing::TimeHelpers
 
   before(:all) do # rubocop:disable RSpec/BeforeAfterAll

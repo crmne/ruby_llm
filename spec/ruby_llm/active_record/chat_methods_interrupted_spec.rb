@@ -5,6 +5,7 @@ require 'active_support/testing/time_helpers'
 
 RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
   include_context 'with configured RubyLLM'
+
   include ActiveSupport::Testing::TimeHelpers
 
   after { travel_back }
