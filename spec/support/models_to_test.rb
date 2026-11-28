@@ -349,6 +349,7 @@ TEST_MODELS = {
     { provider: :xai, model: 'grok-imagine-image-2.0' }
   ],
   streaming_transcription: [{ provider: :openai, model: 'gpt-4o-transcribe' }],
+  language_list_transcription: [{ provider: :openai, model: 'gpt-transcribe' }],
   dedicated_transcription: [
     { provider: :gemini, model: 'gemini-3.5-transcribe' },
     { provider: :vertexai, model: 'gemini-3.5-transcribe-preview' }
