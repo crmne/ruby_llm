@@ -239,6 +239,53 @@ RSpec.describe RubyLLM::Batch do # rubocop:disable RSpec/SpecFilePathFormat
       expect(RubyLLM::Accounting::Usage).to have_received(:report).once
     end
 
+    it 'bills an answer for a deleted chat once, however many pollers collect it' do
+      batch
+      allow_any_instance_of(RubyLLM::Providers::Anthropic).to receive(:batch_results) do # rubocop:disable RSpec/AnyInstance
+        [[0, answer('4')]]
+      end
+      chat.destroy!
+
+      expect { 2.times { described_class.find(batch_id).refresh.messages } }
+        .to change(RubyLLM::ActiveRecord::Usage, :count).by(1)
+      expect(described_class.find(batch_id).messages.map(&:content)).to eq(['4'])
+    end
+
+    it 'bills an answer for a deleted chat once when both pollers load before either collects' do
+      batch
+      allow_any_instance_of(RubyLLM::Providers::Anthropic).to receive(:batch_results) do # rubocop:disable RSpec/AnyInstance
+        [[0, answer('4')]]
+      end
+      chat.destroy!
+      pollers = Array.new(2) { described_class.find(batch_id).refresh }
+
+      expect { pollers.each(&:messages) }.to change(RubyLLM::ActiveRecord::Usage, :count).by(1)
+    end
+
+    context 'when a default scope hides the chat' do
+      let(:hidden_ids) { [] }
+
+      around do |example|
+        scopes = Chat.default_scopes
+        ids = hidden_ids
+        Chat.class_eval { default_scope { where.not(id: ids) } }
+        example.run
+      ensure
+        Chat.default_scopes = scopes
+      end
+
+      it 'delivers the answer once the chat is visible again' do
+        batch
+        hidden_ids << chat.id
+        described_class.find(batch_id).refresh.messages
+
+        hidden_ids.clear
+        2.times { described_class.find(batch_id).refresh.messages }
+
+        expect(chat.messages.reload.pluck(:role, :content)).to eq([['user', 'What is 2 + 2?'], %w[assistant 4]])
+      end
+    end
+
     it 'counts an answer another poller added as delivered' do
       batch
       record = RubyLLM::ActiveRecord::Batch.find_by!(provider_batch_id: batch_id)
