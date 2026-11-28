@@ -382,7 +382,8 @@ module RubyLLM
     end
 
     def decoded_text(bytes)
-      charset = @given_mime_type.to_s[/charset="?([^";\s]+)/i, 1] || Encoding::UTF_8
+      charsets = [@given_mime_type, source_mime_type].filter_map { |type| type.to_s[/charset="?([^";\s]+)/i, 1] }
+      charset = charsets.first || Encoding::UTF_8
       bytes.dup.force_encoding(charset).encode(Encoding::UTF_8, invalid: :replace, undef: :replace)
     rescue ArgumentError, EncodingError
       bytes.dup.force_encoding(Encoding::UTF_8)
@@ -390,18 +391,26 @@ module RubyLLM
 
     def media_type(mime_type)
       type = mime_type.to_s.split(';').first.to_s.strip.downcase
-      type unless type.empty?
+      return if type.empty?
+
+      type == 'audio/x-wav' ? 'audio/wav' : type
     end
 
     def determine_mime_type
-      return @mime_type = provider_file_mime_type if provider_file? && provider_file_mime_type
-
-      content_type = active_storage? ? active_storage_content_type : nil
-      return @mime_type = content_type unless content_type.to_s.empty?
+      if (normalized = media_type(source_mime_type))
+        return @mime_type = normalized
+      end
 
       @mime_type = RubyLLM::Files::MimeType.for(url? ? nil : @source, name: @filename)
       @mime_type = content_mime_type if @mime_type == 'application/octet-stream'
-      @mime_type = 'audio/wav' if @mime_type == 'audio/x-wav'
+      @mime_type = media_type(@mime_type)
+    end
+
+    def source_mime_type
+      return provider_file_mime_type if provider_file?
+      return active_storage_content_type if active_storage?
+
+      nil
     end
 
     # An IO's bytes were examined already, so it isn't read in full for a
@@ -470,7 +479,7 @@ module RubyLLM
     end
 
     def provider_file_mime_type
-      @source.mime_type || RubyLLM::Files::MimeType.for(nil, name: @source.filename)
+      media_type(@source.mime_type) || RubyLLM::Files::MimeType.for(name: @source.filename)
     end
 
     def active_storage_blob
