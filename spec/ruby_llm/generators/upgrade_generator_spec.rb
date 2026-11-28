@@ -68,6 +68,23 @@ RSpec.describe RubyLLM::Generators::UpgradeGenerator, :generator do
     [Chat, Message, RubyLLM::ActiveRecord::ToolCall, RubyLLM::ActiveRecord::QueuedMessage].each(&:reset_column_information)
   end
 
+  it 'refuses an application column of another type before changing anything' do
+    upgrade = migration_class
+
+    ActiveRecord::Base.transaction do
+      connection.remove_column(:messages, :phase)
+      connection.add_column(:messages, :phase, :integer)
+      connection.remove_column(:ruby_llm_tool_calls, :namespace)
+
+      expect { ActiveRecord::Migration.suppress_messages { upgrade.migrate(:up) } }
+        .to raise_error(ActiveRecord::MigrationError, /messages\.phase already exists as integer/)
+      expect(connection.column_exists?(:ruby_llm_tool_calls, :namespace)).to be(false)
+      raise ActiveRecord::Rollback
+    end
+  ensure
+    [Message, RubyLLM::ActiveRecord::ToolCall].each(&:reset_column_information)
+  end
+
   it 'creates the queued messages table 2.2 needs' do
     upgrade = migration_class
 
